@@ -9,6 +9,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+    class Collection
+    {
+        public string Name { get;set; }
+        public string[] Files { get;set; }
+    }
+
     public class SiteManager : ISiteManager
     {
         private readonly IFileProvider _fileProvider;
@@ -26,23 +32,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             const string includeDir = "_includes";
             string[] templateDirs = new string[] { layoutDir, includeDir };
 
-
             var directoryContents = 
                 _fileProvider.GetDirectoryContents("")
                     .Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
 
-            var collections = directoryContents.Where(x => x.IsDirectory);
-            foreach(var collection in collections)
+            var collections = new List<Collection>();
+            var collectionDirectories = directoryContents.Where(x => x.IsDirectory);
+            foreach(var collection in collectionDirectories)
             {
-                _logger.LogInformation($"collection: {collection.Name}");
                 var collectionFiles = GetFiles(collection.Name);
-            }
-            var files = directoryContents.Where(x => !x.IsDirectory);
-            foreach(var file in files)
-            {
-                _logger.LogInformation($"file: {file.Name}");
+                collections.Add(new Collection { Name = collection.Name, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
             }
 
+            var rootFile = _fileProvider.GetDirectoryContents("").First();
+            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
+            var files = directoryContents.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
+            files.AddRange(collections.SelectMany(x => x.Files));
+            var relativeFileNames = files.Select(x => x.Replace(root, ""));
             return Task.CompletedTask;
         }
 
