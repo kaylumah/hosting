@@ -38,16 +38,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger = logger;
         }
 
-        private async Task<List<File<TMetadata>>> LoadTemplates<TMetadata>(string templateDirectory)
+        private async Task<List<File<Dictionary<string, object>>>> LoadTemplates(string templateDirectory)
         {
-            var result = new List<File<TMetadata>>();
+            var result = new List<File<Dictionary<string, object>>>();
             var templateDirectoryContents = _fileProvider.GetDirectoryContents(templateDirectory);
             foreach(var file in templateDirectoryContents)
             {
-                var fileInfo = await GetFileInfo<TMetadata>(Path.Combine(templateDirectory, file.Name));
+                var fileInfo = await GetFileInfo<Dictionary<string, object>>(Path.Combine(templateDirectory, file.Name));
                 result.Add(fileInfo);
             }
+
+            var baseTemplates = result
+                .Where(template => template.Data == null)
+                .ToList();
+
+            foreach(var template in baseTemplates)
+            {
+                Merge(template, result);
+            }
+
             return result;
+        }
+
+        private void Merge(File<Dictionary<string, object>> template, List<File<Dictionary<string, object>>> templates)
+        {
+            var dependencies = templates.Where(x => x.Data != null && x.Data.ContainsKey("layout") && template.Name.Equals(x.Data["layout"]));
+            foreach(var dependency in dependencies)
+            {
+                var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);
+                dependency.Content = mergedLayout;
+                Merge(dependency, templates);
+            }
         }
 
         public async Task GenerateSite()
@@ -56,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             const string includeDir = "_includes";
             string[] templateDirs = new string[] { layoutDir, includeDir };
 
-            var templates = await LoadTemplates<Dictionary<string, object>>(layoutDir);
+            var templates = await LoadTemplates(layoutDir);
 
             var directoryContents =
                             _fileProvider.GetDirectoryContents("");
