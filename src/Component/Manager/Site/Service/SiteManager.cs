@@ -12,6 +12,32 @@ using Microsoft.Extensions.Logging;
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
 
+    class FileUtil
+    {
+        private readonly IFileProvider _fileProvider;
+        public FileUtil(IFileProvider fileProvider)
+        {
+            _fileProvider = fileProvider;
+        }
+        public async Task<File<T>> GetFileInfo<T>(string relativePath)
+        {
+            var fileInfo = _fileProvider.GetFileInfo(relativePath);
+            var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
+            var fileName = fileInfo.Name;
+            using var streamReader = new StreamReader(fileInfo.CreateReadStream());
+            var text = await streamReader.ReadToEndAsync();
+            var metadata = new MetadataUtil().Retrieve<T>(text);
+            return new File<T>
+            {
+                Encoding = encoding.WebName,
+                Name = fileName,
+                Path = relativePath,
+                Content = metadata.Content,
+                Data = metadata.Data
+            };
+        }
+    }
+
     class File<TMetadata>
     {
         public string Encoding { get;set; }
@@ -44,7 +70,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var templateDirectoryContents = _fileProvider.GetDirectoryContents(templateDirectory);
             foreach(var file in templateDirectoryContents)
             {
-                var fileInfo = await GetFileInfo<Dictionary<string, object>>(Path.Combine(templateDirectory, file.Name));
+                var fileInfo = await new FileUtil(_fileProvider).GetFileInfo<Dictionary<string, object>>(Path.Combine(templateDirectory, file.Name));
                 result.Add(fileInfo);
             }
 
@@ -107,24 +133,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 //     await GetFileInfo(filePath);
                 // }
             }
-        }
-
-        private async Task<File<T>> GetFileInfo<T>(string relativePath)
-        {
-            var fileInfo = _fileProvider.GetFileInfo(relativePath);
-            var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
-            var fileName = fileInfo.Name;
-            using var streamReader = new StreamReader(fileInfo.CreateReadStream());
-            var text = await streamReader.ReadToEndAsync();
-            var metadata = new MetadataUtil().Retrieve<T>(text);
-            return new File<T>
-            {
-                Encoding = encoding.WebName,
-                Name = fileName,
-                Path = relativePath,
-                Content = metadata.Content,
-                Data = metadata.Data
-            };
         }
 
         private List<IFileInfo> GetFiles(string path)
