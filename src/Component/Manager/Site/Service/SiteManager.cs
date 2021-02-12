@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
@@ -10,6 +11,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+
+    class File<TMetadata>
+    {
+        public string Encoding { get;set; }
+        public string Name { get;set; }
+        public string Path { get;set; }
+        public string Content { get;set; }
+        public TMetadata Data { get;set; }
+    }
+
     class Collection
     {
         public string Name { get; set; }
@@ -27,11 +38,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger = logger;
         }
 
+        private async Task<List<File<TMetadata>>> LoadTemplates<TMetadata>(string templateDirectory)
+        {
+            var result = new List<File<TMetadata>>();
+            var templateDirectoryContents = _fileProvider.GetDirectoryContents(templateDirectory);
+            foreach(var file in templateDirectoryContents)
+            {
+                var fileInfo = await GetFileInfo<TMetadata>(Path.Combine(templateDirectory, file.Name));
+                result.Add(fileInfo);
+            }
+            return result;
+        }
+
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
             const string includeDir = "_includes";
             string[] templateDirs = new string[] { layoutDir, includeDir };
+
+            var templates = await LoadTemplates<Dictionary<string, object>>(layoutDir);
 
             var directoryContents =
                             _fileProvider.GetDirectoryContents("");
@@ -56,25 +81,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 files.AddRange(collections.SelectMany(x => x.Files));
                 var relativeFileNames = files.Select(x => x.Replace(root, ""));
 
-                foreach (var filePath in relativeFileNames)
-                {
-                    await GetFileInfo(filePath);
-                }
+                // foreach (var filePath in relativeFileNames)
+                // {
+                //     await GetFileInfo(filePath);
+                // }
             }
         }
 
-        private async Task GetFileInfo(string relativePath)
+        private async Task<File<T>> GetFileInfo<T>(string relativePath)
         {
             var fileInfo = _fileProvider.GetFileInfo(relativePath);
-
             var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
             var text = await streamReader.ReadToEndAsync();
-
-            var metadata = new MetadataUtil().Retrieve<Dictionary<string, object>>(text);
-            var content = metadata.Content;
-            var fileData = metadata.Data;
+            var metadata = new MetadataUtil().Retrieve<T>(text);
+            return new File<T>
+            {
+                Encoding = encoding.WebName,
+                Name = fileName,
+                Path = relativePath,
+                Content = metadata.Content,
+                Data = metadata.Data
+            };
         }
 
         private List<IFileInfo> GetFiles(string path)
