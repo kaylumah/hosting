@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Kaylumah.Ssg.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
