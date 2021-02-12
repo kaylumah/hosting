@@ -43,6 +43,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public bool ShouldExecute(IFileInfo file)
         {
+            // Could be SourceExtension and TargetExtension
+            // ie ".md" to ".html"
             return Path.GetExtension(file.Name).Equals(".md");
         }
     }
