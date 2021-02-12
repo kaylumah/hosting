@@ -58,6 +58,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 files.AddRange(collections.SelectMany(x => x.Files));
                 var relativeFileNames = files.Select(x => x.Replace(root, ""));
 
+                var extensions = new string[] { ".md" };
+
+                var contentFiles = relativeFileNames.Where(fileName => extensions.Contains(Path.GetExtension(fileName)));
+                var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
+
                 // foreach (var filePath in relativeFileNames)
                 // {
                 //     await GetFileInfo(filePath);
