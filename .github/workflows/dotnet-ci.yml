@@ -33,4 +33,4 @@ jobs:
     - name: Build
       run: dotnet build --configuration $config --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --configuration $config --no-build --verbosity normal
