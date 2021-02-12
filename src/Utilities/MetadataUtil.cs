@@ -2,10 +2,17 @@ using System.Text.RegularExpressions;
 
 namespace Kaylumah.Ssg.Utilities
 {
+
+    public class Metadata<T>
+    {
+        public T Data { get;set; }
+        public string Content { get;set;}
+    }
+
     public class MetadataUtil
     {
         private const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
-        public object Retrieve(string contents)
+        public Metadata<T> Retrieve<T>(string contents)
         {
             var frontMatterData = string.Empty;
             var match = Regex.Match(contents, _pattern);
@@ -15,11 +22,11 @@ namespace Kaylumah.Ssg.Utilities
                 var frontMatter = match.Value;
                 contents = contents.Replace(frontMatter, string.Empty).TrimStart();
             }
-
-            return new
+            var yamlParser = new YamlParser();
+            return new Metadata<T>
             {
-                Contents = contents,
-                FrontMatter = frontMatterData
+                Content = contents,
+                Data = yamlParser.Parse<T>(frontMatterData)
             };
         }
     }

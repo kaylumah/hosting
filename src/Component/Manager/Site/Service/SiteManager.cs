@@ -71,6 +71,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
             var text = await streamReader.ReadToEndAsync();
+
+            var metadata = new MetadataUtil().Retrieve<Dictionary<string, object>>(text);
+            var content = metadata.Content;
+            var fileData = metadata.Data;
         }
 
         private List<IFileInfo> GetFiles(string path)
