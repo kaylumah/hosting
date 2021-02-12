@@ -1,3 +1,10 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Scriban;
+using Scriban.Parsing;
+using Scriban.Runtime;
+
 namespace Kaylumah.Ssg.Utilities
 {
     public class LiquidUtil
@@ -27,9 +34,9 @@ namespace Kaylumah.Ssg.Utilities
             return File.ReadAllText(templatePath);
         }
 
-        public ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
+        public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
-            throw new NotImplementedException();
+            return await File.ReadAllTextAsync(templatePath);
         }
     }
 }
