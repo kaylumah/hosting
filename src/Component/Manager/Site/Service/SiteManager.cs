@@ -11,6 +11,44 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+
+    public interface IContentStrategy
+    {
+        bool ShouldExecute(IFileInfo file);
+        void Execute(IFileInfo file);
+    }
+
+    public class DefaultStrategy : IContentStrategy
+    {
+        public void Execute(IFileInfo file)
+        {
+            // throw new NotImplementedException();
+        }
+
+        public bool ShouldExecute(IFileInfo file)
+        {
+            return false;
+        }
+    }
+
+    public class MarkdownStrategy : IContentStrategy
+    {
+        public void Execute(IFileInfo file)
+        {
+            var stream = file.CreateReadStream();
+            using var reader = new StreamReader(stream);
+            var text = reader.ReadToEnd();
+            var renderedContent = new MarkdownUtil().Transform(text);
+        }
+
+        public bool ShouldExecute(IFileInfo file)
+        {
+            return Path.GetExtension(file.Name).Equals(".md");
+        }
+    }
+
+
+
     class Collection
     {
         public string Name { get; set; }
@@ -63,10 +101,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var contentFiles = relativeFileNames.Where(fileName => extensions.Contains(Path.GetExtension(fileName)));
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
 
+                Process(contentFiles);
                 // foreach (var filePath in relativeFileNames)
                 // {
                 //     await GetFileInfo(filePath);
                 // }
+            }
+        }
+
+        private void Process(IEnumerable<string> files)
+        {
+            var strategies = new List<IContentStrategy>();
+            var defaultStrategy = new DefaultStrategy();
+            var markdownStrategy = new MarkdownStrategy();
+            strategies.Add(markdownStrategy);
+            foreach(var file in files)
+            {
+                var fileInfo = _fileProvider.GetFileInfo(file);
+                
+                var strategy = strategies.FirstOrDefault(x => x.ShouldExecute(fileInfo)) ?? defaultStrategy;
+                strategy.Execute(fileInfo);
             }
         }
 

@@ -25,7 +25,7 @@ namespace Kaylumah.Ssg.Utilities
             // https://github.com/ilich/Markdig.Prism/blob/main/src/Markdig.Prism/PrismCodeBlockRenderer.cs
 
             var pipeline = new MarkdownPipelineBuilder()
-
+                .UseYamlFrontMatter()
                 // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmojiSpecs.md
                 //.UseEmojiAndSmiley(new Markdig.Extensions.Emoji.EmojiMapping(new Dictionary<string, string>() { { ":smiley:", "♥" } }, new Dictionary<string, string>()))
 
