@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Utilities\Kaylumah.Ssg.Utilities.csproj" />
+    <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </ItemGroup>
 
 </Project>
