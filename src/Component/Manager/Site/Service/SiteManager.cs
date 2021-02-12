@@ -11,8 +11,55 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+    public class LayoutMetadata
+    {
+        public string Layout { get;set; }
+    }
+    public class LayoutLoader
+    {
+        private readonly IFileProvider _fileProvider;
+        private readonly FileUtil _fileUtil;
+        public LayoutLoader(IFileProvider fileProvider)
+        {
+            _fileProvider = fileProvider;
+            _fileUtil = new FileUtil(_fileProvider);
+        }
 
-    class FileUtil
+        public async Task<List<File<LayoutMetadata>>> Load(string layoutFolder)
+        {
+            var result = new List<File<LayoutMetadata>>();
+            var templateDirectoryContents = _fileProvider.GetDirectoryContents(layoutFolder);
+            foreach (var file in templateDirectoryContents)
+            {
+                var fileInfo = await _fileUtil.GetFileInfo<LayoutMetadata>(Path.Combine(layoutFolder, file.Name));
+                result.Add(fileInfo);
+            }
+
+            var baseTemplates = result
+                .Where(template => template.Data == null)
+                .ToList();
+
+            foreach (var template in baseTemplates)
+            {
+                Merge(template, result);
+            }
+
+            return result;
+        }
+
+        private void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
+        {
+            var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout));
+            foreach (var dependency in dependencies)
+            {
+                var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);
+                dependency.Content = mergedLayout;
+                Merge(dependency, templates);
+            }
+        }
+    }
+
+    public class FileUtil
     {
         private readonly IFileProvider _fileProvider;
         public FileUtil(IFileProvider fileProvider)
@@ -38,7 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    class File<TMetadata>
+    public class File<TMetadata>
     {
         public string Encoding { get;set; }
         public string Name { get;set; }
@@ -63,47 +110,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _fileProvider = fileProvider;
             _logger = logger;
         }
-
-        private async Task<List<File<Dictionary<string, object>>>> LoadTemplates(string templateDirectory)
-        {
-            var result = new List<File<Dictionary<string, object>>>();
-            var templateDirectoryContents = _fileProvider.GetDirectoryContents(templateDirectory);
-            foreach(var file in templateDirectoryContents)
-            {
-                var fileInfo = await new FileUtil(_fileProvider).GetFileInfo<Dictionary<string, object>>(Path.Combine(templateDirectory, file.Name));
-                result.Add(fileInfo);
-            }
-
-            var baseTemplates = result
-                .Where(template => template.Data == null)
-                .ToList();
-
-            foreach(var template in baseTemplates)
-            {
-                Merge(template, result);
-            }
-
-            return result;
-        }
-
-        private void Merge(File<Dictionary<string, object>> template, List<File<Dictionary<string, object>>> templates)
-        {
-            var dependencies = templates.Where(x => x.Data != null && x.Data.ContainsKey("layout") && template.Name.Equals(x.Data["layout"]));
-            foreach(var dependency in dependencies)
-            {
-                var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);
-                dependency.Content = mergedLayout;
-                Merge(dependency, templates);
-            }
-        }
-
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
             const string includeDir = "_includes";
             string[] templateDirs = new string[] { layoutDir, includeDir };
 
-            var templates = await LoadTemplates(layoutDir);
+            var templates = await new LayoutLoader(_fileProvider).Load(layoutDir);
 
             var directoryContents =
                             _fileProvider.GetDirectoryContents("");
