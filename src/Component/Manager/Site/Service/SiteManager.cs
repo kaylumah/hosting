@@ -146,16 +146,38 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var liquidUtil = new LiquidUtil(_fileProvider);
                 var renderResults = await liquidUtil.Render(renderRequests.ToArray());
-
+                var outputDirectory = "dist";
                 var artifacts = contentFiles.Select((t, i) => {
                     var renderResult = renderResults[i];
-                    return new Artifact {};
+                    return new Artifact {
+                        Path = $"{outputDirectory}/{Guid.NewGuid()}",
+                        Contents = Encoding.UTF8.GetBytes(renderResult.Content)
+                    };
                 }).ToList();
-                artifacts.AddRange(staticFiles.Select(x => new Artifact {}));
+                artifacts.AddRange(staticFiles.Select(staticFile => {
+                    return new Artifact {
+                        Path = $"{outputDirectory}/{staticFile}",
+                        Contents = FileToByteArray(staticFile)
+                    };
+                }));
                 await _artifactAccess.Store(new StoreArtifactsRequest {
                     Artifacts = artifacts.ToArray()
                 });
             }
+        }
+
+        private byte[] FileToByteArray(string fileName)
+        {
+            var fileInfo = _fileProvider.GetFileInfo(fileName);
+            var fileStream = fileInfo.CreateReadStream();
+            return ToByteArray(fileStream);
+        }
+
+        private byte[] ToByteArray(Stream input)
+        {
+            using MemoryStream ms = new MemoryStream();
+            input.CopyTo(ms);
+            return ms.ToArray();
         }
 
         private List<ContentFile> ProcessContentFiles(IEnumerable<string> files)
