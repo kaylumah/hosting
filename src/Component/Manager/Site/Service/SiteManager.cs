@@ -11,6 +11,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+
+    class ContentFile
+    {
+        public string Layout { get;set; }
+        public string Content { get;set; }
+        public ContentFile(Metadata<Dictionary<string, object>> file)
+        {
+            Layout = (string) file.Data["layout"];
+            Content = file.Content;
+        }
+    }
+
+
+
+
+
+
     class RenderData
     {
         public SiteData Site { get;set; } = new SiteData();
@@ -110,12 +127,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 files.AddRange(collections.SelectMany(x => x.Files));
                 var relativeFileNames = files.Select(x => x.Replace(root, ""));
 
-                var extensions = new string[] { ".md" };
-
-                var contentFiles = relativeFileNames.Where(fileName => extensions.Contains(Path.GetExtension(fileName)));
+                var extensions = new string[] { ".md", ".html" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
-
-                Process(contentFiles);
+                var contentFiles = ProcessContentFiles(relativeFileNames.Where(fileName => extensions.Contains(Path.GetExtension(fileName))));
 
                 var liquidUtil = new LiquidUtil(_fileProvider);
                 var renderResults = await liquidUtil.Render(
@@ -141,19 +155,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void Process(IEnumerable<string> files)
+        private List<ContentFile> ProcessContentFiles(IEnumerable<string> files)
         {
-            var strategies = new List<IContentStrategy>();
-            var defaultStrategy = new DefaultStrategy();
-            var markdownStrategy = new MarkdownStrategy();
-            strategies.Add(markdownStrategy);
-            foreach(var file in files)
+            var result = new List<ContentFile>();
+            foreach (var file in files)
             {
                 var fileInfo = _fileProvider.GetFileInfo(file);
-                
-                var strategy = strategies.FirstOrDefault(x => x.ShouldExecute(fileInfo)) ?? defaultStrategy;
-                strategy.Execute(fileInfo);
+                var fileStream = fileInfo.CreateReadStream();
+                using var streamReader = new StreamReader(fileStream);
+                var rawContent = streamReader.ReadToEnd();
+                var metadata = new MetadataUtil().Retrieve<Dictionary<string, object>>(rawContent);
+                result.Add(new ContentFile(metadata));
             }
+            return result;
+            // var strategies = new List<IContentStrategy>();
+            // var defaultStrategy = new DefaultStrategy();
+            // var markdownStrategy = new MarkdownStrategy();
+            // strategies.Add(markdownStrategy);
+            // foreach(var file in files)
+            // {
+            //     var fileInfo = _fileProvider.GetFileInfo(file);
+                
+            //     var strategy = strategies.FirstOrDefault(x => x.ShouldExecute(fileInfo)) ?? defaultStrategy;
+            //     strategy.Execute(fileInfo);
+            // }
         }
 
         private List<IFileInfo> GetFiles(string path)
