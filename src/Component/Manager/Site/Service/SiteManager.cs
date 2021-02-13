@@ -106,7 +106,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
         }
     }
-    
+
     public interface IContentStrategy
     {
         bool ShouldExecute(IFileInfo file);
@@ -178,6 +178,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (rootFile != null)
             {
+                var buildInfo = new BuildData();
+                var siteInfo = new SiteData();
+
+
+
+
 
                 var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
                 var collectionDirectories = directoryInfos.Where(x => x.IsDirectory);
@@ -208,6 +214,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     {
                         TemplateName = contentFile.Layout,
                         Model = new RenderData {
+                            Build = buildInfo,
+                            Site = siteInfo,
                             Content = contentFile.Content
                         }
                     });
