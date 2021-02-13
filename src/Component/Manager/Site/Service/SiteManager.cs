@@ -188,6 +188,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var fileStream = fileInfo.CreateReadStream();
                 using var streamReader = new StreamReader(fileStream);
                 var rawContent = streamReader.ReadToEnd();
+
+                var originalExtension = Path.GetExtension(file);
+                var outputExtension = originalExtension;
+                var fileNameWithout = Path.GetFileNameWithoutExtension(file);
+
+                // permalink
+                var outputPath = $"{fileNameWithout}{outputExtension}";
+
                 var metadata = new MetadataUtil().Retrieve<Dictionary<string, object>>(rawContent);
                 var contentFile = new ContentFile {
                     Layout = (string)metadata.Data["layout"],
