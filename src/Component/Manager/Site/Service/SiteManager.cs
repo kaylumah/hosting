@@ -178,6 +178,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             input.CopyTo(ms);
             return ms.ToArray();
         }
+        
+        private string DetermineTargetExtension(string sourceExtension)
+        {
+            var mapping = new Dictionary<string, string> {
+                { ".md", ".html" }
+            };
+            return mapping.ContainsKey(sourceExtension) ? mapping[sourceExtension] : sourceExtension;
+        }
 
         private List<ContentFile> ProcessContentFiles(IEnumerable<string> files)
         {
@@ -190,7 +198,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var rawContent = streamReader.ReadToEnd();
 
                 var originalExtension = Path.GetExtension(file);
-                var outputExtension = originalExtension;
+                var outputExtension = DetermineTargetExtension(originalExtension);
                 var fileNameWithout = Path.GetFileNameWithoutExtension(file);
 
                 // permalink
