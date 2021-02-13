@@ -11,6 +11,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+    class RenderData
+    {
+        public SiteData Site { get;set; } = new SiteData();
+        public PageData Page { get;set; } = new PageData();
+    }
+
+    class SiteData
+    {
+        public string Title { get;set; } = $"{nameof(SiteData)}{nameof(Title)}";
+    }
+    class PageData
+    {
+        public string Title { get;set; } = $"{nameof(PageData)}{nameof(Title)}";
+    }
 
     public interface IContentStrategy
     {
@@ -48,8 +62,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return Path.GetExtension(file.Name).Equals(".md");
         }
     }
-
-
 
     class Collection
     {
@@ -111,20 +123,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     {
                         new RenderRequest
                         {
-                            TemplateName = "default.html",
-                            Model = new {
-
-                            }
-                        },
-                        new RenderRequest
-                        {
                             TemplateName = "post.html",
-                            Model = new {
-                                
-                            }
+                            Model = new RenderData()
                         }
                     }
                 );
+
+                foreach(var result in renderResults)
+                {
+                    _logger.LogInformation(result.Content);
+                }
 
                 // foreach (var filePath in relativeFileNames)
                 // {

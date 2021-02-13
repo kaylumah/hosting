@@ -46,7 +46,11 @@ namespace Kaylumah.Ssg.Utilities
                     {
                         TemplateLoader = templateLoader
                     };
+                    var scriptObject = new ScriptObject();
+                    scriptObject.Import(request.Model);
+                    context.PushGlobal(scriptObject);
                     var renderedContent = await liquidTemplate.RenderAsync(context);
+                    renderedResults.Add(new RenderResult { Content = renderedContent });
                 }
                 catch (Exception ex)
                 {
