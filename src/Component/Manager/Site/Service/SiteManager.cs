@@ -104,6 +104,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
 
                 Process(contentFiles);
+
+                var liquidUtil = new LiquidUtil(_fileProvider);
+                var renderResults = await liquidUtil.Render(
+                    new RenderRequest[]
+                    {
+                        new RenderRequest
+                        {
+                            TemplateName = "default.html",
+                            Model = new {
+
+                            }
+                        },
+                        new RenderRequest
+                        {
+                            TemplateName = "post.html",
+                            Model = new {
+                                
+                            }
+                        }
+                    }
+                );
+
                 // foreach (var filePath in relativeFileNames)
                 // {
                 //     await GetFileInfo(filePath);
