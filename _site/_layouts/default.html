@@ -15,7 +15,9 @@
                 My Body...
             </main>
             <footer class="py-5 bg-gray-700 text-center text-white">
-                Copyright Notice ...
+                {{ build.copyright }}
+                <a href="{{ build.source_base_uri }}/{{ build.git_hash}}">{{ build.short_git_hash }}</a>
+                <!-- Copyright (c) 2021 Kaylumah. All rights reserved. -->
             </footer>
         </div>
     </body>
