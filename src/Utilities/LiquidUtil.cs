@@ -40,8 +40,9 @@ namespace Kaylumah.Ssg.Utilities
             {
                 try
                 {
-                    var template = templates.Single(t => t.Name.Equals(request.TemplateName));
-                    var liquidTemplate = Template.ParseLiquid(template.Content);
+                    var template = templates.FirstOrDefault(t => t.Name.Equals(request.TemplateName));
+                    var content = template?.Content ?? "{{ content }}";
+                    var liquidTemplate = Template.ParseLiquid(content);
                     var context = new LiquidTemplateContext()
                     {
                         TemplateLoader = templateLoader

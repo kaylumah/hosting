@@ -11,6 +11,12 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
         {
             foreach(var artifact in request.Artifacts)
             {
+                var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
+                var artifactDirectory = artifact.Path.Substring(0, index);
+                if (!Directory.Exists(artifactDirectory))
+                {
+                    Directory.CreateDirectory(artifactDirectory);
+                }
                 await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
             }
         }
