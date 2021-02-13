@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
@@ -84,14 +85,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteManager : ISiteManager
     {
+        private readonly IArtifactAccess _artifactAccess;
         private readonly IFileProvider _fileProvider;
         private readonly ILogger _logger;
 
-        public SiteManager(IFileProvider fileProvider, ILogger<SiteManager> logger)
+        public SiteManager(IArtifactAccess artifactAccess, IFileProvider fileProvider, ILogger<SiteManager> logger)
         {
+            _artifactAccess = artifactAccess;
             _fileProvider = fileProvider;
             _logger = logger;
         }
+        
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";

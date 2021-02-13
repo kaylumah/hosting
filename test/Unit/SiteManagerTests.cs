@@ -6,6 +6,7 @@ using Microsoft.Extensions.FileProviders;
 using Moq;
 using Xunit;
 using System.Collections.Generic;
+using Kaylumah.Ssg.Access.Artifact.Interface;
 
 namespace Test.Unit
 {
@@ -20,7 +21,9 @@ namespace Test.Unit
             var loggerMock = new Mock<ILogger<SiteManager>>();
             var fileProviderMock = new Mock<IFileProvider>();
             fileProviderMock.Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
-            ISiteManager sut = new SiteManager(fileProviderMock.Object, loggerMock.Object);
+            
+            var artifactAccessMock = new Mock<IArtifactAccess>();
+            ISiteManager sut = new SiteManager(artifactAccessMock.Object, fileProviderMock.Object, loggerMock.Object);
             await sut.GenerateSite();
         }
     }
