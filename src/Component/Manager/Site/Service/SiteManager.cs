@@ -23,11 +23,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-
-
-
-
-
     class RenderData
     {
         public string Content { get;set; }
