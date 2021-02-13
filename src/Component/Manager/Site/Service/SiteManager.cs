@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
@@ -163,6 +164,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger = logger;
         }
 
+        private BuildData GetBuildData()
+        {
+            var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+
+            var version = "1.0.0+LOCALBUILD";
+            if (info.Version.Length > 6)
+            {
+                version = info.Version;
+            }
+            var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
+            var shortGitHash = gitHash.Substring(0, 7);
+            var repositoryType = info.Metadata["RepositoryType"];
+            var repositoryUrl = info.Metadata["RepositoryUrl"];
+            var sourceBaseUrl = repositoryUrl.Replace($".{repositoryType}", "/commit");
+
+            return new BuildData();
+        } 
+
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
@@ -178,8 +197,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (rootFile != null)
             {
-                var buildInfo = new BuildData();
+                var buildInfo = GetBuildData();
                 var siteInfo = new SiteData();
+
 
 
 
