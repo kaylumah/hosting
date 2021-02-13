@@ -180,13 +180,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var sourceBaseUrl = repositoryUrl.Replace($".{repositoryType}", "/commit");
 
             return new BuildData();
-        } 
+        }
+
+        private Dictionary<string, object> ParseData(string dataDirectory)
+        {
+            var extensions = new string[] { ".yml" };
+            var dataFiles = GetFiles(dataDirectory)
+                .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
+                .ToList();
+            var data = new Dictionary<string, object>();
+            foreach(var file in dataFiles)
+            {
+                var stream = file.CreateReadStream();
+                using var reader = new StreamReader(stream);
+                var raw = reader.ReadToEnd();
+                var result = new YamlParser().Parse<object>(raw);
+                data[Path.GetFileNameWithoutExtension(file.Name)] = result;
+            }
+            return data;
+        }
 
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
             const string includeDir = "_includes";
-            string[] templateDirs = new string[] { layoutDir, includeDir };
+            const string dataDir = "_data";
+            string[] templateDirs = new string[] { layoutDir, includeDir, dataDir };
 
             var templates = await new LayoutLoader(_fileProvider).Load(layoutDir);
 
@@ -198,7 +217,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (rootFile != null)
             {
                 var buildInfo = GetBuildData();
-                var siteInfo = new SiteData();
+                var siteInfo = new SiteData
+                {
+                    Data = ParseData(dataDir)
+                };
 
 
 
