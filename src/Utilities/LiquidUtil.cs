@@ -10,9 +10,13 @@ using Scriban.Runtime;
 
 namespace Kaylumah.Ssg.Utilities
 {
+    public interface IRenderModel
+    {
+        string Content { get;set; }
+    }
     public class RenderRequest
     {
-        public object Model { get;set; }
+        public IRenderModel Model { get;set; }
         public string TemplateName { get;set; }
     }
 
@@ -42,6 +46,7 @@ namespace Kaylumah.Ssg.Utilities
                 {
                     var template = templates.FirstOrDefault(t => t.Name.Equals(request.TemplateName));
                     var content = template?.Content ?? "{{ content }}";
+                    content = content.Replace("{{ content }}", request.Model.Content);
                     var liquidTemplate = Template.ParseLiquid(content);
                     var context = new LiquidTemplateContext()
                     {

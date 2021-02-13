@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    class RenderData
+    class RenderData : IRenderModel
     {
-        public string Content { get;set; }
         public BuildData Build { get;set; }
         public SiteData Site { get;set; } = new SiteData();
         public PageData Page { get;set; } = new PageData();
+        public string Content { get; set; }
     }
 
     class BuildData
