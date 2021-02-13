@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
+
+    <PropertyGroup>
+        <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+        <Copyright>$(CopyrightKaylumah)</Copyright>
+    </PropertyGroup>
+</Project>
