@@ -95,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _fileProvider = fileProvider;
             _logger = logger;
         }
-        
+
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
@@ -129,7 +129,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var extensions = new string[] { ".md", ".html" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
-
                 var contentFiles = ProcessContentFiles(relativeFileNames
                     .Where(fileName => extensions.Contains(Path.GetExtension(fileName)) )
                 );
@@ -150,15 +149,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var artifacts = contentFiles.Select((t, i) => {
                     var renderResult = renderResults[i];
-                    return new {};
-                }
-                ).ToList();
-
-
-                // foreach (var filePath in relativeFileNames)
-                // {
-                //     await GetFileInfo(filePath);
-                // }
+                    return new Artifact {};
+                }).ToList();
+                artifacts.AddRange(staticFiles.Select(x => new Artifact {}));
+                await _artifactAccess.Store(new StoreArtifactsRequest {
+                    Artifacts = artifacts.ToArray()
+                });
             }
         }
 
