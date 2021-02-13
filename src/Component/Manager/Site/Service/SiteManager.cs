@@ -30,6 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     class RenderData
     {
+        public string Content { get;set; }
         public SiteData Site { get;set; } = new SiteData();
         public PageData Page { get;set; } = new PageData();
     }
@@ -129,24 +130,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var extensions = new string[] { ".md", ".html" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
-                var contentFiles = ProcessContentFiles(relativeFileNames.Where(fileName => extensions.Contains(Path.GetExtension(fileName))));
+
+                var contentFiles = ProcessContentFiles(relativeFileNames
+                    .Where(fileName => extensions.Contains(Path.GetExtension(fileName)) )
+                );
+                var renderRequests = new List<RenderRequest>();
+                foreach(var contentFile in contentFiles)
+                {
+                    renderRequests.Add(new RenderRequest
+                    {
+                        TemplateName = contentFile.Layout,
+                        Model = new RenderData {
+                            Content = contentFile.Content
+                        }
+                    });
+                }
 
                 var liquidUtil = new LiquidUtil(_fileProvider);
-                var renderResults = await liquidUtil.Render(
-                    new RenderRequest[]
-                    {
-                        new RenderRequest
-                        {
-                            TemplateName = "post.html",
-                            Model = new RenderData()
-                        }
-                    }
-                );
+                var renderResults = await liquidUtil.Render(renderRequests.ToArray());
 
-                foreach(var result in renderResults)
-                {
-                    _logger.LogInformation(result.Content);
+                var artifacts = contentFiles.Select((t, i) => {
+                    var renderResult = renderResults[i];
+                    return new {};
                 }
+                ).ToList();
+
 
                 // foreach (var filePath in relativeFileNames)
                 // {
