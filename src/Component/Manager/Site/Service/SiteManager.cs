@@ -179,7 +179,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var repositoryUrl = info.Metadata["RepositoryUrl"];
             var sourceBaseUrl = repositoryUrl.Replace($".{repositoryType}", "/commit");
 
-            return new BuildData();
+            return new BuildData()
+            {
+                Copyright = info.Copyright,
+                GitHash = gitHash,
+                ShortGitHash = shortGitHash,
+                SourceBaseUri = sourceBaseUrl
+            };
         }
 
         private Dictionary<string, object> ParseData(string dataDirectory)
