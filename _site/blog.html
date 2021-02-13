@@ -16,9 +16,10 @@ layout: default.html
       </p>
     </div>
     <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-        {% include 'carda.html' %}
-        {% include 'cardb.html' %}
-        {% include 'cardc.html' %}
+        {% assign posts = site.collections['pages'] %}
+        {% for post in posts %}
+          {% include 'carda.html' %}
+        {% endfor %}
     </div>
   </div>
 </div>

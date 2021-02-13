@@ -225,7 +225,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var buildInfo = GetBuildData();
                 var siteInfo = new SiteData
                 {
-                    Data = ParseData(dataDir)
+                    Data = ParseData(dataDir),
+                    Collections = new Dictionary<string, object> {
+                        { "pages", new object[] { "1", "2" }}
+                    }
                 };
 
 

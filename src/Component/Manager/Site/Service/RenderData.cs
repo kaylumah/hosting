@@ -23,6 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public string Title { get;set; } = $"{nameof(SiteData)}{nameof(Title)}";
         public Dictionary<string, object> Data { get;set; }
+        public Dictionary<string, object> Collections { get;set; }
     }
 
     class PageData
