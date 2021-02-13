@@ -150,7 +150,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var artifacts = contentFiles.Select((t, i) => {
                     var renderResult = renderResults[i];
                     return new Artifact {
-                        Path = $"{outputDirectory}/{Guid.NewGuid()}",
+                        Path = $"{outputDirectory}/{Guid.NewGuid()}.txt",
                         Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                     };
                 }).ToList();
