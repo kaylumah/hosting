@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="/compiled.css" rel="stylesheet" />
+        <title>Temporary Title</title>
+    </head>
+    <body>
+        <div class="flex flex-col h-screen bg-red-900">
+            <header class="px-5 py-5 bg-gray-700 text-white text-center">
+                {% include 'nav.html' %}
+            </header>
+            <main class="flex-1 p-5 overflow-y-auto">
+                My Body...
+            </main>
+            <footer class="py-5 bg-gray-700 text-center text-white">
+                Copyright Notice ...
+            </footer>
+        </div>
+    </body>
+</html>
