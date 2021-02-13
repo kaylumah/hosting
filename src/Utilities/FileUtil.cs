@@ -1,10 +1,18 @@
 using System.IO;
 using System.Threading.Tasks;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Utilities
 {
+    public class File<TMetadata>
+    {
+        public string Encoding { get;set; }
+        public string Name { get;set; }
+        public string Path { get;set; }
+        public string Content { get;set; }
+        public TMetadata Data { get;set; }
+    }
+
     public class FileUtil
     {
         private readonly IFileProvider _fileProvider;

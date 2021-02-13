@@ -3,9 +3,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
+using YamlDotNet.Serialization;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Utilities
 {
+    public class LayoutMetadata
+    {
+        [YamlMember(Alias = "layout")]
+        public string Layout { get; set; }
+    }
+    
     public class LayoutLoader
     {
         private readonly IFileProvider _fileProvider;

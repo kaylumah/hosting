@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Scriban;
@@ -7,8 +8,31 @@ using Scriban.Runtime;
 
 namespace Kaylumah.Ssg.Utilities
 {
+    public class RenderRequest
+    {
+        public object Model { get;set; }
+        public string TemplateName { get;set; }
+    }
+
+    public class RenderResult
+    {
+        public string Content { get;set; }
+    }
+
     public class LiquidUtil
     {
+        public Task<RenderResult[]> Render(RenderRequest[] requests)
+        {
+            var renderedResults = new List<RenderResult>();
+
+            foreach(var request in requests)
+            {
+
+            }
+
+            return Task.FromResult(renderedResults.ToArray());
+        }
+
         public string Transform(string source)
         {
             var template = Template.ParseLiquid(source);
