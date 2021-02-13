@@ -15,12 +15,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     class ContentFile
     {
+        public string FileName { get;set;}
         public string Layout { get;set; }
         public string Content { get;set; }
-        public ContentFile(Metadata<Dictionary<string, object>> file)
+        public ContentFile()
         {
-            Layout = (string) file.Data["layout"];
-            Content = file.Content;
         }
     }
 
@@ -150,7 +149,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var artifacts = contentFiles.Select((t, i) => {
                     var renderResult = renderResults[i];
                     return new Artifact {
-                        Path = $"{outputDirectory}/{Guid.NewGuid()}.txt",
+                        Path = $"{outputDirectory}/{t.FileName}",
                         Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                     };
                 }).ToList();
@@ -190,7 +189,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 using var streamReader = new StreamReader(fileStream);
                 var rawContent = streamReader.ReadToEnd();
                 var metadata = new MetadataUtil().Retrieve<Dictionary<string, object>>(rawContent);
-                result.Add(new ContentFile(metadata));
+                var contentFile = new ContentFile {
+                    Layout = (string)metadata.Data["layout"],
+                    Content = metadata.Content,
+                    FileName = file
+                };
+                result.Add(contentFile);
             }
             return result;
             // var strategies = new List<IContentStrategy>();
