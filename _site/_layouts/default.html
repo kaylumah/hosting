@@ -12,11 +12,12 @@
                 {% include 'nav.html' %}
             </header>
             <main class="flex-1 p-5 overflow-y-auto">
-                My Body...
             </main>
             <footer class="py-5 bg-gray-700 text-center text-white">
-                {{ build.copyright }}
-                <a href="{{ build.source_base_uri }}/{{ build.git_hash}}">{{ build.short_git_hash }}</a>
+                <div class="flex flex-col">
+                    <span>{{ build.copyright }}</span>
+                    <span class="text-xs">Deployed from commit <a href="{{ build.source_base_uri }}/{{ build.git_hash}}">{{ build.short_git_hash }}</a></span>
+                </div>
                 <!-- Copyright (c) 2021 Kaylumah. All rights reserved. -->
             </footer>
         </div>
