@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 using Moq;
 
 namespace Test.Utilities
@@ -37,6 +38,7 @@ namespace Test.Utilities
 
         public class FakeDirectory
         {
+            public string FolderPath { get;set; }
             public string Name { get; }
             public int Depth { get; }
             public FakeFile[] Files { get; }
@@ -45,6 +47,16 @@ namespace Test.Utilities
             {
                 Name = name;
                 Depth = Name.Split(Path.DirectorySeparatorChar).Count();
+                var index = Name.LastIndexOf(Path.DirectorySeparatorChar);
+                if (index > 0)
+                {
+                    FolderPath = name.Substring(0, index);
+                }
+                else
+                {
+                    FolderPath = string.Empty;
+                }
+
                 Files = files;
             }
         }
@@ -53,23 +65,11 @@ namespace Test.Utilities
             string rootPath,
             FakeDirectory[] directories)
         {
-            var rootDirectories = directories.Where(x => x.Depth == 1);
+            var x = new List<IFileInfo>();
+            x.AddRange(new List<IFileInfo>());
+            x.AddRange(new List<IFileInfo>());
 
-            var directoryContents = new List<IFileInfo>()
-                {
-                    new Mock<IFileInfo>().Object
-                }
-                .CreateMock<IDirectoryContents, IFileInfo>()
-                .Object;
-
-            // foreach(var directory in directories)
-            // {
-                
-                
-                
-                
-            //     // fileProviderMock.AddFakeDirectory(rootPath, directory.Name);
-            // }
+            var directoryListing = x.CreateMock<IDirectoryContents, IFileInfo>().Object;
 
             return fileProviderMock;
         }
