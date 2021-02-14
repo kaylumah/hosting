@@ -13,7 +13,7 @@ namespace Test.Unit
     public class UnitTest1
     {
 
-        public void B(Mock<IFileProvider> fileProvider, FakeDirectory current, List<FakeDirectory> directories)
+        public void B(Mock<IFileProvider> fileProvider, string rootDirectory, FakeDirectory current, List<FakeDirectory> directories)
         {
             var subDirectories = directories.Where(x => x.FolderPath.Equals(current.Name)).ToList();
             directories = directories.Except(subDirectories).ToList();
@@ -21,8 +21,8 @@ namespace Test.Unit
             foreach(var file in current.Files)
             {
                 var fileMock = new Mock<IFileInfo>();
-
                 var relativePath = Path.Combine(current.Name, file.FilePath);
+                var physicalPath = Path.Combine(rootDirectory, relativePath);
                 fileMock.Setup(x => x.Name).Returns(file.FilePath);
                 fileInfos.Add(fileMock.Object);
                 fileProvider.Setup(x => x.GetFileInfo(It.Is<string>(p => p.Equals(relativePath))))
@@ -34,7 +34,7 @@ namespace Test.Unit
                 var fileMock = new Mock<IFileInfo>();
                 fileMock.Setup(x => x.Name).Returns(directory.Name);
                 fileInfos.Add(fileMock.Object);
-                B(fileProvider, directory, directories);
+                B(fileProvider, rootDirectory, directory, directories);
             }
 
             fileProvider
@@ -42,11 +42,11 @@ namespace Test.Unit
                 .Returns(fileInfos.CreateMock<IDirectoryContents, IFileInfo>().Object);
         }
 
-        public void A (Mock<IFileProvider> fileProvider, List<FakeDirectory> directories)
+        public void A (Mock<IFileProvider> fileProvider, string rootDirectory, List<FakeDirectory> directories)
         {
             var root = directories.SingleOrDefault(x => x.Name == string.Empty);
             directories.Remove(root);
-            B(fileProvider, root, directories);
+            B(fileProvider, rootDirectory, root, directories);
         }
 
 
@@ -84,11 +84,12 @@ namespace Test.Unit
                     new FakeFile("styles.css")
                 })
             };
-            A(provider, directories);
+            var root = "/a/b/c/";
+            A(provider, root, directories);
 
             var build = provider.Object;
 
-            var root = build.GetDirectoryContents(string.Empty);
+            var rootDir = build.GetDirectoryContents(string.Empty);
             var assets = build.GetDirectoryContents("assets");
             var cssAssets = build.GetDirectoryContents("assets/css");
 
