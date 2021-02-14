@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 
@@ -36,6 +38,22 @@ namespace Kaylumah.Ssg.Utilities
                 Content = metadata.Content,
                 Data = metadata.Data
             };
+        }
+
+        public List<IFileInfo> GetFiles(string path)
+        {
+            var result = new List<IFileInfo>();
+
+            var info = _fileProvider.GetDirectoryContents(path);
+            var directories = info.Where(x => x.IsDirectory);
+            result.AddRange(info.Where(x => !x.IsDirectory));
+
+            foreach (var directory in directories)
+            {
+                result.AddRange(GetFiles(Path.Combine(path, directory.Name)));
+            }
+
+            return result;
         }
     }
 }

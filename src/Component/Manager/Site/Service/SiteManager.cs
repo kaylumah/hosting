@@ -191,7 +191,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private Dictionary<string, object> ParseData(string dataDirectory)
         {
             var extensions = new string[] { ".yml" };
-            var dataFiles = GetFiles(dataDirectory)
+            var dataFiles = new FileUtil(_fileProvider).GetFiles(dataDirectory)
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
             var data = new Dictionary<string, object>();
@@ -206,12 +206,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return data;
         }
 
+        private void ProcessCollection(string[] collectionDirectories)
+        {
+            var collections = new List<Collection>();
+            foreach (var collection in collectionDirectories)
+            {
+                var collectionFiles = new FileUtil(_fileProvider).GetFiles(collection);
+                collections.Add(new Collection { Name = collection, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
+            }
+        }
+
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
             const string includeDir = "_includes";
             const string dataDir = "_data";
-            string[] templateDirs = new string[] { layoutDir, includeDir, dataDir };
+            const string assetDir = "assets";
+            string[] templateDirs = new string[] { layoutDir, includeDir, dataDir, assetDir };
 
             var templates = await new LayoutLoader(_fileProvider).Load(layoutDir);
 
@@ -256,24 +267,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     }
                 };
 
-
-
-
-
-
                 var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
-                var collectionDirectories = directoryInfos.Where(x => x.IsDirectory);
+                var collectionDirectories = directoryInfos.Where(x => x.IsDirectory).Select(x => x.Name).ToArray();
+                ProcessCollection(collectionDirectories);
+
                 var files = directoryInfos.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
-
-                var collections = new List<Collection>();
-                foreach (var collection in collectionDirectories)
-                {
-                    var collectionFiles = GetFiles(collection.Name);
-                    collections.Add(new Collection { Name = collection.Name, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
-                }
-
                 var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-                files.AddRange(collections.SelectMany(x => x.Files));
+                // files.AddRange(collections.SelectMany(x => x.Files));
                 var relativeFileNames = files.Select(x => x.Replace(root, ""));
 
                 var extensions = new string[] { ".md", ".html", ".xml" };
@@ -331,22 +331,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             using MemoryStream ms = new MemoryStream();
             input.CopyTo(ms);
             return ms.ToArray();
-        }
-        
-        private List<IFileInfo> GetFiles(string path)
-        {
-            var result = new List<IFileInfo>();
-
-            var info = _fileProvider.GetDirectoryContents(path);
-            var directories = info.Where(x => x.IsDirectory);
-            result.AddRange(info.Where(x => !x.IsDirectory));
-
-            foreach (var directory in directories)
-            {
-                result.AddRange(GetFiles(Path.Combine(path, directory.Name)));
-            }
-
-            return result;
         }
     }
 }
