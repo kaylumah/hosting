@@ -13,101 +13,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-
-    public class FileProcessor
-    {
-        private readonly MetadataUtil _metadataUtil;
-        private readonly IFileProvider _fileProvider;
-        public FileProcessor(IFileProvider fileProvider)
-        {
-            _fileProvider = fileProvider;
-            _metadataUtil = new MetadataUtil();
-        }
-
-        public ContentFile[] Process(string[] targetFiles)
-        {
-            var result = new List<ContentFile>();
-
-            foreach(var file in targetFiles)
-            {
-                var fileInfo = _fileProvider.GetFileInfo(file);
-                var fileStream = fileInfo.CreateReadStream();
-                using var streamReader = new StreamReader(fileStream);
-                var rawContent = streamReader.ReadToEnd();
-
-                var originalExtension = Path.GetExtension(file);
-                var outputExtension = DetermineTargetExtension(originalExtension);
-
-                var metadata = _metadataUtil.Retrieve<Dictionary<string, object>>(rawContent);
-                var layout = metadata.Data.GetValueOrDefault("layout");
-                var contentFile = new ContentFile
-                {                 
-                    Content = metadata.Content,
-                    FileName = file
-                };
-                if (layout != null)
-                {
-                    contentFile.Layout = (string)layout;
-                }
-                result.Add(contentFile);
-            }
-
-            return result.ToArray();
-        }
-
-        private string DetermineTargetExtension(string sourceExtension)
-        {
-            var mapping = new Dictionary<string, string> {
-                { ".md", ".html" }
-            };
-            return mapping.ContainsKey(sourceExtension) ? mapping[sourceExtension] : sourceExtension;
-        }
-
-        /*
-        
-         private List<ContentFile> ProcessContentFiles(IEnumerable<string> files)
-        {
-            var result = new List<ContentFile>();
-            foreach (var file in files)
-            {
-                var fileInfo = _fileProvider.GetFileInfo(file);
-                
-
-                
-                var fileNameWithout = Path.GetFileNameWithoutExtension(file);
-
-                // permalink
-                var outputPath = $"{fileNameWithout}{outputExtension}";
-
-
-            }
-            return result;
-            // var strategies = new List<IContentStrategy>();
-            // var defaultStrategy = new DefaultStrategy();
-            // var markdownStrategy = new MarkdownStrategy();
-            // strategies.Add(markdownStrategy);
-            // foreach(var file in files)
-            // {
-            //     var fileInfo = _fileProvider.GetFileInfo(file);
-                
-            //     var strategy = strategies.FirstOrDefault(x => x.ShouldExecute(fileInfo)) ?? defaultStrategy;
-            //     strategy.Execute(fileInfo);
-            // }
-        }
-        */
-    }
-
-
-    public class ContentFile
-    {
-        public string FileName { get;set;}
-        public string Layout { get;set; }
-        public string Content { get;set; }
-        public ContentFile()
-        {
-        }
-    }
-
     public interface IContentStrategy
     {
         bool ShouldExecute(IFileInfo file);
@@ -206,16 +111,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return data;
         }
 
-        private void ProcessCollection(string[] collectionDirectories)
-        {
-            var collections = new List<Collection>();
-            foreach (var collection in collectionDirectories)
-            {
-                var collectionFiles = new FileUtil(_fileProvider).GetFiles(collection);
-                collections.Add(new Collection { Name = collection, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
-            }
-        }
-
         public async Task GenerateSite()
         {
             const string layoutDir = "_layouts";
@@ -269,7 +164,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
                 var collectionDirectories = directoryInfos.Where(x => x.IsDirectory).Select(x => x.Name).ToArray();
-                ProcessCollection(collectionDirectories);
+                new CollectionLoader(_fileProvider).ProcessCollection(collectionDirectories);
 
                 var files = directoryInfos.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
                 var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
