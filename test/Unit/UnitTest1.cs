@@ -12,6 +12,39 @@ namespace Test.Unit
     public class UnitTest1
     {
 
+        public void B(Mock<IFileProvider> fileProvider, FakeDirectory current, List<FakeDirectory> directories)
+        {
+            var subDirectories = directories.Where(x => x.FolderPath.Equals(current.FolderPath)).ToList();
+            directories = directories.Except(subDirectories).ToList();
+            var fileInfos = new List<IFileInfo>();
+            foreach(var file in current.Files)
+            {
+                var fileMock = new Mock<IFileInfo>();
+                fileMock.Setup(x => x.Name).Returns(file.FilePath);
+                fileInfos.Add(fileMock.Object);
+            }
+
+            foreach(var directory in subDirectories)
+            {
+                var fileMock = new Mock<IFileInfo>();
+                fileMock.Setup(x => x.Name).Returns(directory.Name);
+                fileInfos.Add(fileMock.Object);
+                B(fileProvider, directory, directories);
+            }
+
+            fileProvider
+                .Setup(x => x.GetDirectoryContents(It.Is<string>(p => p.Equals(current.FolderPath))))
+                .Returns(fileInfos.CreateMock<IDirectoryContents, IFileInfo>().Object);
+        }
+
+        public void A (Mock<IFileProvider> fileProvider, List<FakeDirectory> directories)
+        {
+            var root = directories.SingleOrDefault(x => x.Name == string.Empty);
+            directories.Remove(root);
+            B(fileProvider, root, directories);
+        }
+
+
         private List<object> Process(Mock<IFileProvider> fileProvider, List<FakeDirectory> directories, string basePath = "", int depth = 1)
         {
             var result = new List<object>();
@@ -32,7 +65,26 @@ namespace Test.Unit
             return result;
         }
 
+        [Fact]
+        public void Test2()
+        {
+            var provider = new Mock<IFileProvider>();
+            var directories = new List<FakeDirectory>()
+            {
+                new FakeDirectory("", new FakeFile[] {
+                    new FakeFile("index.html")
+                }),
+                new FakeDirectory("assets", new FakeFile[] {}),
+                new FakeDirectory("assets/css", new FakeFile[] {})
+            };
+            A(provider, directories);
 
+            var build = provider.Object;
+
+            var root = build.GetDirectoryContents(string.Empty);
+            var assets = build.GetDirectoryContents("assets");
+            var cssAssets = build.GetDirectoryContents("assets/css");
+        }
 
         [Fact]
         public void Test1()
