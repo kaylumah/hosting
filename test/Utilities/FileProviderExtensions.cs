@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.Extensions.FileProviders;
@@ -6,8 +8,72 @@ using Moq;
 
 namespace Test.Utilities
 {
+
+    public static class EnumerableExtensions
+    {
+        public static Mock<TCollection> CreateMock<TCollection, TItem> (this IEnumerable<TItem> collection)
+            where TCollection : class, IEnumerable<TItem>, IEnumerable
+            where TItem : class
+            {
+                var mock = new Mock<TCollection>();
+                // mock.Setup(x => x.Count()).Returns(() => collection.Count());
+                // mock.Setup(m => m[It.IsAny<int>()]).Returns<int>(i => items.ElementAt(i));
+                mock.Setup(m => m.GetEnumerator()).Returns(() => collection.GetEnumerator());
+                return mock;
+            }
+    }
+
     public static class FileProviderExtensions
     {
+
+        public class FakeFile
+        {
+            public string FilePath { get; }
+            public FakeFile(string relativePath)
+            {
+                FilePath = relativePath;
+            }
+        }
+
+        public class FakeDirectory
+        {
+            public string Name { get; }
+            public int Depth { get; }
+            public FakeFile[] Files { get; }
+
+            public FakeDirectory(string name, FakeFile[] files)
+            {
+                Name = name;
+                Depth = Name.Split(Path.DirectorySeparatorChar).Count();
+                Files = files;
+            }
+        }
+
+        public static Mock<IFileProvider> SetupFileSystem(this Mock<IFileProvider> fileProviderMock,
+            string rootPath,
+            FakeDirectory[] directories)
+        {
+            var rootDirectories = directories.Where(x => x.Depth == 1);
+
+            var directoryContents = new List<IFileInfo>()
+                {
+                    new Mock<IFileInfo>().Object
+                }
+                .CreateMock<IDirectoryContents, IFileInfo>()
+                .Object;
+
+            // foreach(var directory in directories)
+            // {
+                
+                
+                
+                
+            //     // fileProviderMock.AddFakeDirectory(rootPath, directory.Name);
+            // }
+
+            return fileProviderMock;
+        }
+
         public static Mock<IFileProvider> AddFakeDirectory(this Mock<IFileProvider> fileProviderMock, string root, string folderPath)
         {
             var directoryMock = new Mock<IFileInfo>();
