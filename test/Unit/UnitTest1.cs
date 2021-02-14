@@ -6,6 +6,7 @@ using Test.Utilities;
 using System.Collections.Generic;
 using static Test.Utilities.FileProviderExtensions;
 using System.Linq;
+using System.IO;
 
 namespace Test.Unit
 {
@@ -14,14 +15,18 @@ namespace Test.Unit
 
         public void B(Mock<IFileProvider> fileProvider, FakeDirectory current, List<FakeDirectory> directories)
         {
-            var subDirectories = directories.Where(x => x.FolderPath.Equals(current.FolderPath)).ToList();
+            var subDirectories = directories.Where(x => x.FolderPath.Equals(current.Name)).ToList();
             directories = directories.Except(subDirectories).ToList();
             var fileInfos = new List<IFileInfo>();
             foreach(var file in current.Files)
             {
                 var fileMock = new Mock<IFileInfo>();
+
+                var relativePath = Path.Combine(current.Name, file.FilePath);
                 fileMock.Setup(x => x.Name).Returns(file.FilePath);
                 fileInfos.Add(fileMock.Object);
+                fileProvider.Setup(x => x.GetFileInfo(It.Is<string>(p => p.Equals(relativePath))))
+                    .Returns(fileMock.Object);
             }
 
             foreach(var directory in subDirectories)
@@ -33,7 +38,7 @@ namespace Test.Unit
             }
 
             fileProvider
-                .Setup(x => x.GetDirectoryContents(It.Is<string>(p => p.Equals(current.FolderPath))))
+                .Setup(x => x.GetDirectoryContents(It.Is<string>(p => p.Equals(current.Name))))
                 .Returns(fileInfos.CreateMock<IDirectoryContents, IFileInfo>().Object);
         }
 
@@ -75,7 +80,9 @@ namespace Test.Unit
                     new FakeFile("index.html")
                 }),
                 new FakeDirectory("assets", new FakeFile[] {}),
-                new FakeDirectory("assets/css", new FakeFile[] {})
+                new FakeDirectory("assets/css", new FakeFile[] {
+                    new FakeFile("styles.css")
+                })
             };
             A(provider, directories);
 
@@ -84,6 +91,9 @@ namespace Test.Unit
             var root = build.GetDirectoryContents(string.Empty);
             var assets = build.GetDirectoryContents("assets");
             var cssAssets = build.GetDirectoryContents("assets/css");
+
+            var index = build.GetFileInfo("index.html");
+            var css = build.GetFileInfo("assets/css/styles.css");
         }
 
         [Fact]
