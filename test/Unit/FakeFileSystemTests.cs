@@ -13,10 +13,11 @@ namespace Test.Unit
 {
     public class FakeFileSystemTests
     {
-        [Fact]
-        public void Test1()
+        private readonly IFileProvider _fileProvider;
+        private readonly string _rootDirectory;
+        public FakeFileSystemTests()
         {
-            var root = "/a/b/c/";
+            _rootDirectory = "/a/b/c/";
             var directories = new List<FakeDirectory>() {
                 new FakeDirectory(string.Empty, new FakeFile[] {
                     new FakeFile("index.html")
@@ -27,15 +28,35 @@ namespace Test.Unit
                 })
             };
             var providerMock = new Mock<IFileProvider>()
-                .SetupFileProviderMock(root, directories);
-            var fileProvider = providerMock.Object;
+                .SetupFileProviderMock(_rootDirectory, directories);
+            _fileProvider = providerMock.Object;
+        }
 
-            var rootDirectoryAsDirectoryContents = fileProvider.GetDirectoryContents("");
+        [Fact]
+        public void TestNonExistentDirectory()
+        {
+            // var nonExistentsAsDirectoryContents = fileProvider.GetDirectoryContents("other");
+            // exists false
+            // length 0
+        }
+
+        [Fact]
+        public void TestNonExistentFile()
+        {
+            // var nonExistentsAsFileInfo = fileProvider.GetFileInfo("other.txt");
+            // exist false, directory false // length throws
+        }
+
+
+        [Fact]
+        public void Test1()
+        {
+            var rootDirectoryAsDirectoryContents = _fileProvider.GetDirectoryContents("");
             rootDirectoryAsDirectoryContents.Should().NotBeNull();
             rootDirectoryAsDirectoryContents.Exists.Should().BeTrue();
             rootDirectoryAsDirectoryContents.Count().Should().Be(2);
 
-            var rootDirectoryAsFileInfo = fileProvider.GetFileInfo("");
+            var rootDirectoryAsFileInfo = _fileProvider.GetFileInfo("");
             rootDirectoryAsFileInfo.Should().NotBeNull();
             // rootDirectoryAsFileInfo.Exists.Should().BeFalse();
             rootDirectoryAsFileInfo.Name.Should().Be(string.Empty);
@@ -43,12 +64,12 @@ namespace Test.Unit
             // rootDirectoryAsFileInfo.Length.Should().Be(-1);
             rootDirectoryAsFileInfo.IsDirectory.Should().BeFalse();
 
-            var assetDirectoryAsDirectoryContents = fileProvider.GetDirectoryContents("assets");
+            var assetDirectoryAsDirectoryContents = _fileProvider.GetDirectoryContents("assets");
             assetDirectoryAsDirectoryContents.Should().NotBeNull();
             assetDirectoryAsDirectoryContents.Exists.Should().BeTrue();
             assetDirectoryAsDirectoryContents.Count().Should().Be(1);
 
-            var assetDirectoryAsFileInfo = fileProvider.GetFileInfo("assets");
+            var assetDirectoryAsFileInfo = _fileProvider.GetFileInfo("assets");
             assetDirectoryAsFileInfo.Should().NotBeNull();
             // exists false
             // isdirectory false
@@ -61,17 +82,10 @@ namespace Test.Unit
             // exists false
             // count = 0
 
-            var indexHtmlAsFileInfo = fileProvider.GetFileInfo("index.html");
+            var indexHtmlAsFileInfo = _fileProvider.GetFileInfo("index.html");
             indexHtmlAsFileInfo.Should().NotBeNull();
             // exists true directory false
             // length, name, physical path
-
-            // var nonExistentsAsDirectoryContents = fileProvider.GetDirectoryContents("other");
-            // exists false
-            // length 0
-
-            // var nonExistentsAsFileInfo = fileProvider.GetFileInfo("other.txt");
-            // exist false, directory false // length throws
         }
     }
 }
