@@ -59,12 +59,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class SiteManager : ISiteManager
     {
         private readonly IArtifactAccess _artifactAccess;
+        private readonly IFileSystem _fileSystem;
         private readonly IFileProvider _fileProvider;
         private readonly ILogger _logger;
 
-        public SiteManager(IArtifactAccess artifactAccess, IFileProvider fileProvider, ILogger<SiteManager> logger)
+        public SiteManager(IArtifactAccess artifactAccess,
+            IFileSystem fileSystem,
+            IFileProvider fileProvider,
+            ILogger<SiteManager> logger)
         {
             _artifactAccess = artifactAccess;
+            _fileSystem = fileSystem;
             _fileProvider = fileProvider;
             _logger = logger;
         }
@@ -96,7 +101,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private Dictionary<string, object> ParseData(string dataDirectory)
         {
             var extensions = new string[] { ".yml" };
-            var dataFiles = new FileUtil(_fileProvider).GetFiles(dataDirectory)
+            var dataFiles = _fileSystem.GetFiles(dataDirectory)
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
             var data = new Dictionary<string, object>();
@@ -164,7 +169,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
                 var collectionDirectories = directoryInfos.Where(x => x.IsDirectory).Select(x => x.Name).ToArray();
-                new CollectionLoader(_fileProvider).ProcessCollection(collectionDirectories);
+                new CollectionLoader(_fileSystem).ProcessCollection(collectionDirectories);
 
                 var files = directoryInfos.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
                 var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");

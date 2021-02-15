@@ -39,21 +39,5 @@ namespace Kaylumah.Ssg.Utilities
                 Data = metadata.Data
             };
         }
-
-        public List<IFileInfo> GetFiles(string path)
-        {
-            var result = new List<IFileInfo>();
-
-            var info = _fileProvider.GetDirectoryContents(path);
-            var directories = info.Where(x => x.IsDirectory);
-            result.AddRange(info.Where(x => !x.IsDirectory));
-
-            foreach (var directory in directories)
-            {
-                result.AddRange(GetFiles(Path.Combine(path, directory.Name)));
-            }
-
-            return result;
-        }
     }
 }

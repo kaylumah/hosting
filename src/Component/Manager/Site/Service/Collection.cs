@@ -111,10 +111,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class CollectionLoader
     {
-        private readonly IFileProvider _fileProvider;
-        public CollectionLoader(IFileProvider fileProvider)
+        private readonly IFileSystem _fileSystem;
+        public CollectionLoader(IFileSystem fileSystem)
         {
-            _fileProvider = fileProvider;
+            _fileSystem = fileSystem;
         }
 
         public void ProcessCollection(string[] collectionDirectories)
@@ -122,8 +122,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var collections = new List<Collection>();
             foreach (var collection in collectionDirectories)
             {
-                var collectionFilePath = _fileProvider.GetFileInfo(collection).PhysicalPath;
-                var collectionFiles = new FileUtil(_fileProvider).GetFiles(collection);
+                var collectionFilePath = _fileSystem.GetFile(collection).PhysicalPath;
+                var collectionFiles = _fileSystem.GetFiles(collection);
                 collections.Add(new Collection { Name = collection, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
             }
         }
