@@ -124,7 +124,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             const string assetDir = "assets";
             string[] templateDirs = new string[] { layoutDir, includeDir, dataDir, assetDir };
 
-            var templates = await new LayoutLoader(_fileProvider).Load(layoutDir);
+            var templates = await new LayoutLoader(_fileSystem).Load(layoutDir);
 
             var directoryContents =
                             _fileProvider.GetDirectoryContents("");
@@ -197,7 +197,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     });
                 }
 
-                var liquidUtil = new LiquidUtil(_fileProvider);
+                var liquidUtil = new LiquidUtil(_fileProvider, _fileSystem);
                 var renderResults = await liquidUtil.Render(renderRequests.ToArray());
                 var outputDirectory = "dist";
                 var artifacts = contentFiles.Select((t, i) => {

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.FileProviders;
 using YamlDotNet.Serialization;
 
 namespace Kaylumah.Ssg.Utilities
@@ -15,21 +14,19 @@ namespace Kaylumah.Ssg.Utilities
     
     public class LayoutLoader
     {
-        private readonly IFileProvider _fileProvider;
-        private readonly FileUtil _fileUtil;
-        public LayoutLoader(IFileProvider fileProvider)
+        private readonly IFileSystem _fileSystem;
+        public LayoutLoader(IFileSystem fileSystem)
         {
-            _fileProvider = fileProvider;
-            _fileUtil = new FileUtil(_fileProvider);
+            _fileSystem = fileSystem;
         }
 
         public async Task<List<File<LayoutMetadata>>> Load(string layoutFolder)
         {
             var result = new List<File<LayoutMetadata>>();
-            var templateDirectoryContents = _fileProvider.GetDirectoryContents(layoutFolder);
+            var templateDirectoryContents = _fileSystem.GetDirectoryContents(layoutFolder);
             foreach (var file in templateDirectoryContents)
             {
-                var fileInfo = await _fileUtil.GetFileInfo<LayoutMetadata>(Path.Combine(layoutFolder, file.Name));
+                var fileInfo = await _fileSystem.GetFile<LayoutMetadata>(Path.Combine(layoutFolder, file.Name));
                 result.Add(fileInfo);
             }
 

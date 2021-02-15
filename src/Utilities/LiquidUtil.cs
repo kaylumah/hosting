@@ -30,15 +30,17 @@ namespace Kaylumah.Ssg.Utilities
         private readonly string _layoutDirectory = "_layouts";
         private readonly string _templateDirectory = "_includes";
         private readonly IFileProvider _fileProvider;
-        public LiquidUtil(IFileProvider fileProvider)
+        private readonly IFileSystem _fileSystem;
+        public LiquidUtil(IFileProvider fileProvider, IFileSystem fileSystem)
         {
             _fileProvider = fileProvider;
+            _fileSystem = fileSystem;
         }
 
         public async Task<RenderResult[]> Render(RenderRequest[] requests)
         {
             var renderedResults = new List<RenderResult>();
-            var templates = await new LayoutLoader(_fileProvider).Load(_layoutDirectory);
+            var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
             var templateLoader = new MyIncludeFromDisk(_fileProvider, _templateDirectory);
             foreach(var request in requests)
             {
