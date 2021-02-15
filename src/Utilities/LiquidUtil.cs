@@ -29,11 +29,9 @@ namespace Kaylumah.Ssg.Utilities
     {
         private readonly string _layoutDirectory = "_layouts";
         private readonly string _templateDirectory = "_includes";
-        private readonly IFileProvider _fileProvider;
         private readonly IFileSystem _fileSystem;
-        public LiquidUtil(IFileProvider fileProvider, IFileSystem fileSystem)
+        public LiquidUtil(IFileSystem fileSystem)
         {
-            _fileProvider = fileProvider;
             _fileSystem = fileSystem;
         }
 
@@ -41,7 +39,7 @@ namespace Kaylumah.Ssg.Utilities
         {
             var renderedResults = new List<RenderResult>();
             var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
-            var templateLoader = new MyIncludeFromDisk(_fileProvider, _templateDirectory);
+            var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
             foreach(var request in requests)
             {
                 try
@@ -72,30 +70,30 @@ namespace Kaylumah.Ssg.Utilities
 
     internal class MyIncludeFromDisk : ITemplateLoader
     {
-        private readonly IFileProvider _fileProvider;
+        private readonly IFileSystem _fileSystem;
         private readonly string _templateFolder;
-        public MyIncludeFromDisk(IFileProvider fileProvider, string templateFolder)
+        public MyIncludeFromDisk(IFileSystem fileSystem, string templateFolder)
         {
-            _fileProvider = fileProvider;
+            _fileSystem = fileSystem;
             _templateFolder = templateFolder;
         }
 
         public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
         {
-            return Path.Combine(_fileProvider.GetFileInfo(_templateFolder).Name, templateName);
+            return Path.Combine(_fileSystem.GetFile(_templateFolder).Name, templateName);
             // return Path.Combine(Environment.CurrentDirectory, templateName);
         }
 
         public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
-            using var reader = new StreamReader(_fileProvider.GetFileInfo(templatePath).CreateReadStream());
+            using var reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
             return reader.ReadToEnd();
             //return File.ReadAllText(templatePath);
         }
 
         public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
-            using var reader = new StreamReader(_fileProvider.GetFileInfo(templatePath).CreateReadStream());
+            using var reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
             return await reader.ReadToEndAsync();
             // return await File.ReadAllTextAsync(templatePath);
         }

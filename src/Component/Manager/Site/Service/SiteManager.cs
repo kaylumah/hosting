@@ -197,7 +197,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     });
                 }
 
-                var liquidUtil = new LiquidUtil(_fileProvider, _fileSystem);
+                var liquidUtil = new LiquidUtil(_fileSystem);
                 var renderResults = await liquidUtil.Render(renderRequests.ToArray());
                 var outputDirectory = "dist";
                 var artifacts = contentFiles.Select((t, i) => {
