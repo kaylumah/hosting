@@ -29,10 +29,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class FileProcessor
     {
         private readonly MetadataUtil _metadataUtil;
-        private readonly IFileProvider _fileProvider;
-        public FileProcessor(IFileProvider fileProvider)
+        private readonly IFileSystem _fileSystem;
+        public FileProcessor(IFileSystem fileSystem)
         {
-            _fileProvider = fileProvider;
+            _fileSystem = fileSystem;
             _metadataUtil = new MetadataUtil();
         }
 
@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (var file in targetFiles)
             {
-                var fileInfo = _fileProvider.GetFileInfo(file);
+                var fileInfo = _fileSystem.GetFile(file);
                 var fileStream = fileInfo.CreateReadStream();
                 using var streamReader = new StreamReader(fileStream);
                 var rawContent = streamReader.ReadToEnd();

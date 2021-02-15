@@ -60,17 +60,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         private readonly IArtifactAccess _artifactAccess;
         private readonly IFileSystem _fileSystem;
-        private readonly IFileProvider _fileProvider;
         private readonly ILogger _logger;
 
         public SiteManager(IArtifactAccess artifactAccess,
             IFileSystem fileSystem,
-            IFileProvider fileProvider,
             ILogger<SiteManager> logger)
         {
             _artifactAccess = artifactAccess;
             _fileSystem = fileSystem;
-            _fileProvider = fileProvider;
             _logger = logger;
         }
 
@@ -127,7 +124,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var templates = await new LayoutLoader(_fileSystem).Load(layoutDir);
 
             var directoryContents =
-                            _fileProvider.GetDirectoryContents("");
+                            _fileSystem.GetDirectoryContents("");
 
             var rootFile = directoryContents.FirstOrDefault();
 
@@ -178,7 +175,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var extensions = new string[] { ".md", ".html", ".xml" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
-                var contentFiles = new FileProcessor(_fileProvider).Process(
+                var contentFiles = new FileProcessor(_fileSystem).Process(
                     relativeFileNames
                     .Where(fileName => extensions.Contains(Path.GetExtension(fileName)))
                     .ToArray()
@@ -221,7 +218,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private byte[] FileToByteArray(string fileName)
         {
-            var fileInfo = _fileProvider.GetFileInfo(fileName);
+            var fileInfo = _fileSystem.GetFile(fileName);
             var fileStream = fileInfo.CreateReadStream();
             return ToByteArray(fileStream);
         }
