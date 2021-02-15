@@ -83,6 +83,7 @@ namespace Test.Utilities
             }
 
             var directoryContents = fileInfos.CreateMock<IDirectoryContents, IFileInfo>();
+            directoryContents.Setup(x => x.Exists).Returns(true);
             fileProviderMock
                 .Setup(x => x.GetDirectoryContents(It.Is<string>(p => p.Equals(current.Name))))
                 .Returns(directoryContents.Object);
