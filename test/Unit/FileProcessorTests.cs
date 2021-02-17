@@ -28,7 +28,7 @@ namespace Test.Unit
                             new FakeFile("icon.png")
                         }),
                         new FakeDirectory("_posts", new FakeFile[] {
-                            new FakeFile("_posts/post.md")
+                            new FakeFile("_posts/post.md", Encoding.UTF8.GetBytes("---\r\nlayout: 'post'---"))
                         })
                     }
                 );
