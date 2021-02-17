@@ -4,7 +4,6 @@ using Moq;
 using Xunit;
 using Test.Utilities;
 using System.Collections.Generic;
-using static Test.Utilities.FileProviderExtensions;
 using System.Linq;
 using System.IO;
 using FluentAssertions;
