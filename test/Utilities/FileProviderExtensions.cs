@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Microsoft.Extensions.FileProviders;
 using Moq;
 
@@ -72,7 +73,7 @@ namespace Test.Utilities
             var fileInfos = new List<IFileInfo>();
             foreach (var file in current.Files)
             {
-                var fileInfo = fileProviderMock.CreateFile(root, file.FilePath, new byte[] {});
+                var fileInfo = fileProviderMock.CreateFile(root, file.FilePath, file.Bytes);
                 fileInfos.Add(fileInfo);
             }
             foreach (var directory in subDirectories)
@@ -93,9 +94,15 @@ namespace Test.Utilities
     public class FakeFile
     {
         public string FilePath { get; }
-        public FakeFile(string relativePath)
+        public byte[] Bytes { get; }
+        public FakeFile(string relativePath) : this(relativePath, Encoding.UTF8.GetBytes(string.Empty))
+        {
+        }
+
+        public FakeFile(string relativePath, byte[] bytes)
         {
             FilePath = relativePath;
+            Bytes = bytes;
         }
     }
 
