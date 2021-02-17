@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Moq;
@@ -29,6 +32,110 @@ namespace Test.Unit
             IFileSystem fileSystem = new FileSystem(fileProviderMock.Object);
             var sut = new TempCollectionProcessor(fileSystem);
             await sut.Process(new string[] { "_posts" });
+        }
+
+        [Theory]
+        [InlineData("index.html", "", "index.html")]
+        //[InlineData("404.html", "", "404.html")]
+        //[InlineData("_posts/my-post.md", "", "my-post.md")]
+        [InlineData("2021-01-01-my-post.md", "_posts", "my-post.md")]
+        public void Test2(string input, string instruction, string output)
+        {
+            var sut = new PermantUriRewriter();
+            var result = sut.Rewrite(string.Empty, instruction, input);
+            // result.Should().NotBeNullOrEmpty();
+            // result.Should().Be(output);
+
+            var a = Path.Combine("dist", result);
+            var b = Path.Combine("dist/", result);
+        }
+    }
+
+    public class PermantUriRewriter
+    {
+        public string Rewrite(string collection, string instruction, string fileName)
+        {
+            var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
+            var match = Regex.Match(fileName, pattern);
+
+            var date = match.FromFileName();
+            var outputFileName = match.FileNameByPattern();
+
+            var source = "/:year/:month/:day/:name:ext";
+            var result = source
+                .Replace("/:year", date == null ? string.Empty : $"/{date?.ToString("yyyy")}")
+                .Replace("/:month", date == null ? string.Empty : $"/{date?.ToString("MM")}")
+                .Replace("/:day", date == null ? string.Empty : $"/{date?.ToString("dd")}");
+
+            result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
+                .Replace(":ext", Path.GetExtension(outputFileName));
+            if (result.StartsWith("/"))
+            {
+                result = result[1..];
+            }
+
+            /*
+                        var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
+            var match = Regex.Match($"{model.ContentFileResourceName}{model.Extension}", pattern);
+            if (match.Success)
+            {
+                // We have a match...
+            }
+            // Determine Date
+            // FrontMatter vs FileName vs FolderStructure
+            var date = DateTime.Now;
+
+            // Determine Name (File-name vs FrontMatter)
+            var name = "my-post";
+
+            // Determine Extension (ie markdown should be html)
+            var extension = ".html";
+
+            // Determine pattern (Site, Collection, File)
+            var source = "/:year/:month/:day/:name:ext";
+            var result = source
+                            .Replace(":year", date.ToString("yyyy"))
+                            .Replace(":month", date.ToString("MM"))
+                            .Replace(":day", date.ToString("dd"))
+                            .Replace(":title", name)
+                            .Replace(":ext", extension);
+                            */
+
+
+            return result;
+        }
+    }
+
+    public static class ExtensionMethods
+    {
+        public static string FileNameByPattern(this System.Text.RegularExpressions.Match match)
+        {
+            if (match.Success)
+            {
+                var filename = match.Groups.GetValueOrDefault("filename");
+                var ext = match.Groups.GetValueOrDefault("ext");
+                if (filename.Success && ext.Success)
+                {
+                    return $"{filename}.{ext}";
+                }
+            }
+            return null;
+        }
+
+        public static DateTime? FromFileName(this System.Text.RegularExpressions.Match match)
+        {
+            if (match.Success)
+            {
+                var year = match.Groups.GetValueOrDefault("year");
+                var month = match.Groups.GetValueOrDefault("month");
+                var day = match.Groups.GetValueOrDefault("day");
+
+                if (year.Success && month.Success && day.Success)
+                {
+                    return DateTime.Parse($"{year.Value}-{month.Value}-{day.Value}");
+                }
+            }
+            return null;
         }
     }
 
