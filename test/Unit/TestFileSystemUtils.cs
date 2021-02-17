@@ -52,7 +52,12 @@ namespace Test.Unit
         public void Test3()
         {
             var parser = new YamlParser();
-            var result = parser.Parse<TempFileMetadata>("layout: 'default'");
+
+            var sb = new StringBuilder()
+                .AppendLine("layout: 'default'")
+                .AppendLine("permalink: '/:year/:month/:day/:name:ext'")
+                .ToString();
+            var result = parser.Parse<TempFileMetadata>(sb);
         }
     }
 
@@ -60,7 +65,8 @@ namespace Test.Unit
     {
         public Dictionary<string, object> Data { get; } = new Dictionary<string, object>();
 
-        [YamlMember(Alias = "layout" )]
+        public string Permalink { get;set; }
+
         public string Layout 
         { 
             get 

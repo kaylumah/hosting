@@ -1,4 +1,5 @@
 using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -12,7 +13,9 @@ namespace Kaylumah.Ssg.Utilities
         private readonly IDeserializer _deserializer;
         public YamlParser()
         {
-            _deserializer = new DeserializerBuilder().Build();
+            _deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
         }
 
         public T Parse<T>(string raw)
