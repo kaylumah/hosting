@@ -6,34 +6,8 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class FileData
-    {
-        public string Layout { get;set; }
-        public string Title { get;set; }
-        public string Description { get;set; }
-        public string Uri { get;set; }
-        public string Image { get;set; }
-        public string Type { get;set; }
-    }
-
     public class FileProcessor
     {
-        private readonly MetadataUtil _metadataUtil;
-        private readonly IFileSystem _fileSystem;
-        public FileProcessor(IFileSystem fileSystem)
-        {
-            _fileSystem = fileSystem;
-            _metadataUtil = new MetadataUtil();
-        }
-
-        private string DetermineTargetExtension(string sourceExtension)
-        {
-            var mapping = new Dictionary<string, string> {
-                { ".md", ".html" }
-            };
-            return mapping.ContainsKey(sourceExtension) ? mapping[sourceExtension] : sourceExtension;
-        }
-
         /*
         
          private List<ContentFile> ProcessContentFiles(IEnumerable<string> files)

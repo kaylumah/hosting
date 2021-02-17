@@ -57,11 +57,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IArtifactAccess _artifactAccess;
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
+        private readonly IFileProcessor _fileProcessor;
 
-        public SiteManager(IArtifactAccess artifactAccess,
+        public SiteManager(
+            IFileProcessor fileProcessor,
+            IArtifactAccess artifactAccess,
             IFileSystem fileSystem,
             ILogger<SiteManager> logger)
         {
+            _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
             _fileSystem = fileSystem;
             _logger = logger;
@@ -111,6 +115,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite()
         {
+
+            await _fileProcessor.Process();
+
+
+
+
+
+
+
+
+
+
             const string layoutDir = "_layouts";
             const string includeDir = "_includes";
             const string dataDir = "_data";

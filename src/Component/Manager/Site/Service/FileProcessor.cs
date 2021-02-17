@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Contents { get;set; }
     }
 
+    [DebuggerDisplay("{Name} {Files.Length} Files")]
     public class FileCollection
     {
         public string Name { get;set; }
@@ -48,6 +50,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly ILogger _logger;
         private readonly MetadataUtil _metadataUtil;
         private readonly string[] _extensions = new string[] { ".md", ".html", ".xml" };
+        private readonly Dictionary<string, string> _extensionMapping = new Dictionary<string, string>()
+        {
+            { ".md", ".html" }
+        };
+
         public CustomFileProcessor(IFileSystem fileSystem, ILogger<CustomFileProcessor> logger)
         {
             _fileSystem = fileSystem;
