@@ -10,6 +10,7 @@ using Microsoft.Extensions.FileProviders;
 using Moq;
 using Test.Utilities;
 using Xunit;
+using YamlDotNet.Serialization;
 
 namespace Test.Unit
 {
@@ -45,9 +46,47 @@ namespace Test.Unit
             var result = sut.Rewrite(string.Empty, instruction, input);
             // result.Should().NotBeNullOrEmpty();
             // result.Should().Be(output);
+        }
 
-            var a = Path.Combine("dist", result);
-            var b = Path.Combine("dist/", result);
+        [Fact]
+        public void Test3()
+        {
+            var parser = new YamlParser();
+            var result = parser.Parse<TempFileMetadata>("layout: 'default'");
+        }
+    }
+
+    public class TempFileMetadata
+    {
+        public Dictionary<string, object> Data { get; } = new Dictionary<string, object>();
+
+        [YamlMember(Alias = "layout" )]
+        public string Layout 
+        { 
+            get 
+            {
+                if (Data.ContainsKey(nameof(Layout)))
+                {
+                    return (string)Data[nameof(Layout)];
+                }
+                return null;
+            }
+            set
+            {
+                Data[nameof(Layout)] = value;
+            }
+        }
+
+        public object this[string key]
+        {
+            get
+            {
+                return Data[key];
+            }
+            set
+            {
+                Data[key] = value;
+            }
         }
     }
 
