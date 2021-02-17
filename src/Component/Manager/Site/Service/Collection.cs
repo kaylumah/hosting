@@ -16,16 +16,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Type { get;set; }
     }
 
-    public class ContentFile
-    {
-        public string FileName { get; set; }
-        public string Layout { get; set; }
-        public string Content { get; set; }
-        public ContentFile()
-        {
-        }
-    }
-
     public class FileProcessor
     {
         private readonly MetadataUtil _metadataUtil;
@@ -34,37 +24,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _fileSystem = fileSystem;
             _metadataUtil = new MetadataUtil();
-        }
-
-        public ContentFile[] Process(string[] targetFiles)
-        {
-            var result = new List<ContentFile>();
-
-            foreach (var file in targetFiles)
-            {
-                var fileInfo = _fileSystem.GetFile(file);
-                var fileStream = fileInfo.CreateReadStream();
-                using var streamReader = new StreamReader(fileStream);
-                var rawContent = streamReader.ReadToEnd();
-
-                var originalExtension = Path.GetExtension(file);
-                var outputExtension = DetermineTargetExtension(originalExtension);
-
-                var metadata = _metadataUtil.Retrieve<Dictionary<string, object>>(rawContent);
-                var layout = metadata.Data.GetValueOrDefault("layout");
-                var contentFile = new ContentFile
-                {
-                    Content = metadata.Content,
-                    FileName = file
-                };
-                if (layout != null)
-                {
-                    contentFile.Layout = (string)layout;
-                }
-                result.Add(contentFile);
-            }
-
-            return result.ToArray();
         }
 
         private string DetermineTargetExtension(string sourceExtension)
@@ -107,25 +66,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // }
         }
         */
-    }
-
-    public class CollectionLoader
-    {
-        private readonly IFileSystem _fileSystem;
-        public CollectionLoader(IFileSystem fileSystem)
-        {
-            _fileSystem = fileSystem;
-        }
-
-        public void ProcessCollection(string[] collectionDirectories)
-        {
-            var collections = new List<Collection>();
-            foreach (var collection in collectionDirectories)
-            {
-                var collectionFilePath = _fileSystem.GetFile(collection).PhysicalPath;
-                var collectionFiles = _fileSystem.GetFiles(collection);
-                collections.Add(new Collection { Name = collection, Files = collectionFiles.Select(x => x.PhysicalPath).ToArray() });
-            }
-        }
     }
 }

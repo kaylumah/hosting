@@ -50,11 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    class Collection
-    {
-        public string Name { get; set; }
-        public string[] Files { get; set; }
-    }
+
 
     public class SiteManager : ISiteManager
     {
@@ -166,7 +162,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
                 var collectionDirectories = directoryInfos.Where(x => x.IsDirectory).Select(x => x.Name).ToArray();
-                new CollectionLoader(_fileSystem).ProcessCollection(collectionDirectories);
 
                 var files = directoryInfos.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
                 var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
@@ -175,44 +170,44 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var extensions = new string[] { ".md", ".html", ".xml" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
-                var contentFiles = new FileProcessor(_fileSystem).Process(
-                    relativeFileNames
-                    .Where(fileName => extensions.Contains(Path.GetExtension(fileName)))
-                    .ToArray()
-                );
-                var renderRequests = new List<RenderRequest>();
-                foreach(var contentFile in contentFiles)
-                {
-                    renderRequests.Add(new RenderRequest
-                    {
-                        TemplateName = contentFile.Layout,
-                        Model = new RenderData {
-                            Build = buildInfo,
-                            Site = siteInfo,
-                            Content = contentFile.Content
-                        }
-                    });
-                }
+                // var contentFiles = new FileProcessor(_fileSystem).Process(
+                //     relativeFileNames
+                //     .Where(fileName => extensions.Contains(Path.GetExtension(fileName)))
+                //     .ToArray()
+                // );
+                // var renderRequests = new List<RenderRequest>();
+                // foreach(var contentFile in contentFiles)
+                // {
+                //     renderRequests.Add(new RenderRequest
+                //     {
+                //         TemplateName = contentFile.Layout,
+                //         Model = new RenderData {
+                //             Build = buildInfo,
+                //             Site = siteInfo,
+                //             Content = contentFile.Content
+                //         }
+                //     });
+                // }
 
-                var liquidUtil = new LiquidUtil(_fileSystem);
-                var renderResults = await liquidUtil.Render(renderRequests.ToArray());
-                var outputDirectory = "dist";
-                var artifacts = contentFiles.Select((t, i) => {
-                    var renderResult = renderResults[i];
-                    return new Artifact {
-                        Path = $"{outputDirectory}/{t.FileName}",
-                        Contents = Encoding.UTF8.GetBytes(renderResult.Content)
-                    };
-                }).ToList();
-                artifacts.AddRange(staticFiles.Select(staticFile => {
-                    return new Artifact {
-                        Path = $"{outputDirectory}/{staticFile}",
-                        Contents = FileToByteArray(staticFile)
-                    };
-                }));
-                await _artifactAccess.Store(new StoreArtifactsRequest {
-                    Artifacts = artifacts.ToArray()
-                });
+                // var liquidUtil = new LiquidUtil(_fileSystem);
+                // var renderResults = await liquidUtil.Render(renderRequests.ToArray());
+                // var outputDirectory = "dist";
+                // var artifacts = contentFiles.Select((t, i) => {
+                //     var renderResult = renderResults[i];
+                //     return new Artifact {
+                //         Path = $"{outputDirectory}/{t.FileName}",
+                //         Contents = Encoding.UTF8.GetBytes(renderResult.Content)
+                //     };
+                // }).ToList();
+                // artifacts.AddRange(staticFiles.Select(staticFile => {
+                //     return new Artifact {
+                //         Path = $"{outputDirectory}/{staticFile}",
+                //         Contents = FileToByteArray(staticFile)
+                //     };
+                // }));
+                // await _artifactAccess.Store(new StoreArtifactsRequest {
+                //     Artifacts = artifacts.ToArray()
+                // });
             }
         }
 

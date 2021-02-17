@@ -27,7 +27,7 @@ namespace Test.Utilities
         {
             var directoryMock = new Mock<IFileInfo>();
             var directoryName = folderPath.Split(Path.DirectorySeparatorChar).Last();
-            directoryMock.Setup(x => x.IsDirectory).Returns(false);
+            directoryMock.Setup(x => x.IsDirectory).Returns(true);
             directoryMock.Setup(x => x.Length).Throws(new FileNotFoundException());
             directoryMock.Setup(x => x.CreateReadStream()).Throws(new UnauthorizedAccessException());
             directoryMock.Setup(x => x.Exists).Returns(true);
@@ -78,7 +78,7 @@ namespace Test.Utilities
             }
             foreach (var directory in subDirectories)
             {
-                var directoryInfo = fileProviderMock.CreateDirectory(root, directory.FolderPath);
+                var directoryInfo = fileProviderMock.CreateDirectory(root, directory.Name);
                 fileInfos.Add(directoryInfo);
                 ProcessDirectory(fileProviderMock, root, directory, directories);
             }
