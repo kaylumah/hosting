@@ -8,6 +8,9 @@ using Test.Utilities;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Test.Unit
 {
@@ -36,6 +39,27 @@ namespace Test.Unit
             var sut = new CustomFileProcessor(fileSystem, loggerMock.Object);
 
             await sut.Process();
+        }
+
+        private string CreateEmptyXml()
+        {
+            var settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = false,
+                Encoding = Encoding.UTF8
+            };
+            var stream = new MemoryStream();
+            using (System.Xml.XmlWriter writer = XmlWriter.Create(stream, settings))
+            {
+                writer.WriteStartDocument();
+                writer.WriteStartElement("feed");
+                writer.WriteEndElement();
+                writer.Flush();
+                writer.Close();
+            }
+            stream.Position = 0;
+            var streamReader = new StreamReader(stream);
+            return streamReader.ReadToEnd();
         }
     }
 }
