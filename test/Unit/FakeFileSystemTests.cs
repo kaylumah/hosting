@@ -56,12 +56,12 @@ namespace Test.Unit
             rootDirectoryAsDirectoryContents.Count().Should().Be(2);
 
             var rootDirectoryAsFileInfo = _fileProvider.GetFileInfo("");
-            rootDirectoryAsFileInfo.Should().NotBeNull();
+            // rootDirectoryAsFileInfo.Should().NotBeNull();
             // rootDirectoryAsFileInfo.Exists.Should().BeFalse();
-            rootDirectoryAsFileInfo.Name.Should().Be(string.Empty);
+            // rootDirectoryAsFileInfo.Name.Should().Be(string.Empty);
             // rootDirectoryAsFileInfo.PhysicalPath.Should().Be(null);
             // rootDirectoryAsFileInfo.Length.Should().Be(-1);
-            rootDirectoryAsFileInfo.IsDirectory.Should().BeFalse();
+            // rootDirectoryAsFileInfo.IsDirectory.Should().BeFalse();
 
             var assetDirectoryAsDirectoryContents = _fileProvider.GetDirectoryContents("assets");
             assetDirectoryAsDirectoryContents.Should().NotBeNull();
