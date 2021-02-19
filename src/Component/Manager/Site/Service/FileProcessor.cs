@@ -26,19 +26,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _metadataUtil = new MetadataUtil();
         }
 
-        public async Task<IEnumerable<File>> Process()
+        public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
             var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
 
-            var directoriesToProcessAsCollection = directoryContents.Where(info => info.IsDirectory);
-            var filesWithoutCollections = directoryContents.Where(info => !info.IsDirectory);
+            var directoriesToProcessAsCollection = directoryContents
+                .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
+            var filesWithoutCollections = directoryContents.Where(info => 
+                !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+            );
             
             var files = 
                 await ProcessFiles(
                     filesWithoutCollections
-                    .Where(
-                        fileInfo => _extensions.Contains(Path.GetExtension(fileInfo.Name))
-                    )
                     .Select(x => x.Name)
                     .ToArray()
                 );

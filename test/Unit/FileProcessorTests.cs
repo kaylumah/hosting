@@ -16,7 +16,7 @@ namespace Test.Unit
 {
     public class FileProcessorTests
     {
-        [Fact]
+        [Fact(Skip = "Not Completed")]
         public async Task Test1()
         {
             var root = "/a/b/c";
@@ -38,7 +38,7 @@ namespace Test.Unit
             var fileSystem = new FileSystem(fileProviderMock.Object);
             var sut = new CustomFileProcessor(fileSystem, loggerMock.Object);
 
-            await sut.Process();
+            await sut.Process(null);
         }
 
         private string CreateEmptyXml()

@@ -115,7 +115,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            var processed = await _fileProcessor.Process();
+            var processed = await _fileProcessor.Process(new FileFilterCriteria {
+                DirectoriesToSkip = new string[] {
+                    request.Configuration.LayoutDirectory,
+                    request.Configuration.PartialsDirectory,
+                    request.Configuration.DataDirectory,
+                    request.Configuration.AssetDirectory
+                },
+                FileExtensionsToTarget = new string[] {
+                    ".md",
+                    ".html",
+                    ".xml"
+                }
+            });
             var processedAsRenderRequests = processed.ToRenderRequests();
 
 
