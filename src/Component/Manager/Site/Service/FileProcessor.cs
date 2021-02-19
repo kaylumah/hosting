@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,41 +8,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-
-    public class File
-    {
-        public FileMetaData MetaData { get;set; }
-        public string Contents { get;set; }
-    }
-
-    [DebuggerDisplay("{Name} {Files.Length} Files")]
-    public class FileCollection
-    {
-        public string Name { get;set; }
-        public File[] Files { get;set; }
-    }
-
-    public class FileMetaData : Dictionary<string, object>
-    {
-        public string Layout
-        {
-            get {
-                if (ContainsKey(nameof(Layout).ToLower()))
-                {
-                    return (string) this[nameof(Layout).ToLower()];
-                }
-                return null;
-            }
-            set {
-                this[nameof(Layout).ToLower()] = value;
-            }
-        }
-    }
-
-    public interface IFileProcessor {
-        Task<IEnumerable<File>> Process();
-    }
-
     public class CustomFileProcessor : IFileProcessor
     {
         private readonly IFileSystem _fileSystem;
