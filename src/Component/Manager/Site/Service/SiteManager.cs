@@ -91,10 +91,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             });
             var processedAsRenderRequests = processed.ToRenderRequests();
 
+            var liquidUtil = new LiquidUtil(_fileSystem);
+            var renderResults = await liquidUtil.Render(processedAsRenderRequests.ToArray());
 
-
-
-
+            var artifacts = processed.Select((t, i) => {
+                var renderResult = renderResults[i];
+                return new Artifact {
+                    Path = $"{request.Configuration.Destination}/{t.MetaData.Uri}",
+                    Contents = Encoding.UTF8.GetBytes(renderResult.Content)
+                };
+            }).ToList();
+            // artifacts.AddRange(staticFiles.Select(staticFile => {
+            //     return new Artifact {
+            //         Path = $"{outputDirectory}/{staticFile}",
+            //         Contents = FileToByteArray(staticFile)
+            //     };
+            // }));
+            // await _artifactAccess.Store(new StoreArtifactsRequest {
+            //     Artifacts = artifacts.ToArray()
+            // });
 
 
 
@@ -159,6 +174,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 var extensions = new string[] { ".md", ".html", ".xml" };
                 var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
+
                 // var contentFiles = new FileProcessor(_fileSystem).Process(
                 //     relativeFileNames
                 //     .Where(fileName => extensions.Contains(Path.GetExtension(fileName)))
@@ -178,25 +194,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 //     });
                 // }
 
-                // var liquidUtil = new LiquidUtil(_fileSystem);
-                // var renderResults = await liquidUtil.Render(renderRequests.ToArray());
+                
                 // var outputDirectory = "dist";
-                // var artifacts = contentFiles.Select((t, i) => {
-                //     var renderResult = renderResults[i];
-                //     return new Artifact {
-                //         Path = $"{outputDirectory}/{t.FileName}",
-                //         Contents = Encoding.UTF8.GetBytes(renderResult.Content)
-                //     };
-                // }).ToList();
-                // artifacts.AddRange(staticFiles.Select(staticFile => {
-                //     return new Artifact {
-                //         Path = $"{outputDirectory}/{staticFile}",
-                //         Contents = FileToByteArray(staticFile)
-                //     };
-                // }));
-                // await _artifactAccess.Store(new StoreArtifactsRequest {
-                //     Artifacts = artifacts.ToArray()
-                // });
+                
             }
         }
 

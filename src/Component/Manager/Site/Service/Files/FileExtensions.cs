@@ -9,7 +9,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static RenderRequest ToRenderRequest(this File file)
         {
             return new RenderRequest() {
-                TemplateName = file.MetaData?.Layout
+                TemplateName = file.MetaData?.Layout,
+                Model = null
             };
         }
 
