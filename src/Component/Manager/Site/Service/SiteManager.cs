@@ -12,46 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
-{
-    public interface IContentStrategy
-    {
-        bool ShouldExecute(IFileInfo file);
-        void Execute(IFileInfo file);
-    }
-
-    public class DefaultStrategy : IContentStrategy
-    {
-        public void Execute(IFileInfo file)
-        {
-            // throw new NotImplementedException();
-        }
-
-        public bool ShouldExecute(IFileInfo file)
-        {
-            return false;
-        }
-    }
-
-    public class MarkdownStrategy : IContentStrategy
-    {
-        public void Execute(IFileInfo file)
-        {
-            var stream = file.CreateReadStream();
-            using var reader = new StreamReader(stream);
-            var text = reader.ReadToEnd();
-            var renderedContent = new MarkdownUtil().Transform(text);
-        }
-
-        public bool ShouldExecute(IFileInfo file)
-        {
-            // Could be SourceExtension and TargetExtension
-            // ie ".md" to ".html"
-            return Path.GetExtension(file.Name).Equals(".md");
-        }
-    }
-
-
-
+{    
     public class SiteManager : ISiteManager
     {
         private readonly IArtifactAccess _artifactAccess;

@@ -12,15 +12,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
+        private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
         private readonly MetadataUtil _metadataUtil;
-        private readonly string[] _extensions = new string[] { ".md", ".html", ".xml" };
         private readonly Dictionary<string, string> _extensionMapping = new Dictionary<string, string>()
         {
             { ".md", ".html" }
         };
 
-        public CustomFileProcessor(IFileSystem fileSystem, ILogger<CustomFileProcessor> logger)
+        public CustomFileProcessor(IFileSystem fileSystem, ILogger<CustomFileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies)
         {
+            _preprocessorStrategies = preprocessorStrategies;
             _fileSystem = fileSystem;
             _logger = logger;
             _metadataUtil = new MetadataUtil();
@@ -83,9 +84,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 var fileStream = fileInfo.CreateReadStream();
                 using var streamReader = new StreamReader(fileStream);
-                var rawContent = await streamReader.ReadToEndAsync();
 
+                var rawContent = await streamReader.ReadToEndAsync();
                 var response = _metadataUtil.Retrieve<FileMetaData>(rawContent);
+
+                var fileMeta = response.Data;
+                var fileContents = response.Content;
+
+                var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                if (preprocessor != null)
+                {
+                    fileContents = preprocessor.Execute(fileContents);
+                }
+
                 result.Add(new File {
                     MetaData = response.Data,
                     Contents = response.Content,

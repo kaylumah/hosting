@@ -36,7 +36,7 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new CustomFileProcessor(fileSystem, loggerMock.Object);
+            var sut = new CustomFileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {});
 
             await sut.Process(null);
         }

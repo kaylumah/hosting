@@ -27,7 +27,7 @@ namespace Test.Unit
             var artifactAccessMock = new Mock<IArtifactAccess>();
 
 
-            IFileProcessor fileProcessor = new CustomFileProcessor(fileSystem, new Mock<ILogger<CustomFileProcessor>>().Object);
+            IFileProcessor fileProcessor = new CustomFileProcessor(fileSystem, new Mock<ILogger<CustomFileProcessor>>().Object, new IContentPreprocessorStrategy[] { });
             ISiteManager sut = new SiteManager(fileProcessor, artifactAccessMock.Object, fileSystem, loggerMock.Object);
             await sut.GenerateSite(new GenerateSiteRequest {
                 Configuration = new SiteConfiguration {}
