@@ -88,7 +88,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var response = _metadataUtil.Retrieve<FileMetaData>(rawContent);
                 result.Add(new File {
                     MetaData = response.Data,
-                    Contents = response.Content
+                    Contents = response.Content,
+                    Name = fileInfo.Name
                 });
             }
             return result;
