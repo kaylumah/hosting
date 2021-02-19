@@ -19,5 +19,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 this[nameof(Layout).ToLower()] = value;
             }
         }
+
+        public string Permalink
+        {
+            get
+            {
+                if (ContainsKey(nameof(Permalink).ToLower()))
+                {
+                    return (string)this[nameof(Permalink).ToLower()];
+                }
+                return null;
+            }
+            set
+            {
+                this[nameof(Permalink).ToLower()] = value;
+            }
+        }
+
+        public string Uri
+        {
+            get
+            {
+                if (ContainsKey(nameof(Uri).ToLower()))
+                {
+                    return (string)this[nameof(Uri).ToLower()];
+                }
+                return null;
+            }
+            set
+            {
+                this[nameof(Uri).ToLower()] = value;
+            }
+        }
     }
 }

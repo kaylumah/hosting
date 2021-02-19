@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
@@ -91,6 +92,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var fileMeta = response.Data;
                 var fileContents = response.Content;
 
+                fileMeta = Process(fileMeta);
+                DetermineOutputLocation(fileInfo, fileMeta);
+
                 var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
                 if (preprocessor != null)
                 {
@@ -98,12 +102,73 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }
 
                 result.Add(new File {
-                    MetaData = response.Data,
-                    Contents = response.Content,
+                    MetaData = fileMeta,
+                    Contents = fileContents,
                     Name = fileInfo.Name
                 });
             }
             return result;
+        }
+
+        private FileMetaData Process(FileMetaData source)
+        {
+            var result = new FileMetaData();
+
+            // TODO extend with defaults
+            // TODO extend with collection / path defaults
+            
+            if (source != null)
+            {
+                foreach(var entry in source)
+                {
+                    if (result.ContainsKey(entry.Key))
+                    {
+                        // TODO log that its overwritten...
+                    }
+                    result[entry.Key] = entry.Value;
+                }
+            }
+
+            return result;
+        }
+
+        private void DetermineOutputLocation(IFileInfo fileInfo, FileMetaData metaData)
+        {
+            // TODO
+            metaData.Permalink = "/:year/:month/:day/:name:ext";
+
+            var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
+            var match = Regex.Match(fileInfo.Name, pattern);
+
+            var outputFileName = match.FileNameByPattern();
+            var fileDate = match.DateByPattern();
+            var outputExtension = RetrieveExtension(outputFileName);
+
+            var result = metaData.Permalink
+                .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy")}")
+                .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM")}")
+                .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd")}");
+
+            result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
+                .Replace(":ext", outputExtension);
+
+            if (result.StartsWith("/"))
+            {
+                result = result[1..];
+            }
+
+            metaData.Uri = result;
+            metaData.Remove(nameof(metaData.Permalink).ToLower());
+        }
+
+        private string RetrieveExtension(string fileName)
+        {
+            var ext = Path.GetExtension(fileName);
+            if (_extensionMapping.ContainsKey(ext))
+            {
+                return _extensionMapping[ext];
+            }
+            return ext;
         }
     }
 }
