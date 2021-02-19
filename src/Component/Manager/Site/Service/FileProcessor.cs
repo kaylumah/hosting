@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     }
 
     public interface IFileProcessor {
-        Task Process();
+        Task<IEnumerable<File>> Process();
     }
 
     public class CustomFileProcessor : IFileProcessor
@@ -62,7 +62,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _metadataUtil = new MetadataUtil();
         }
 
-        public async Task Process()
+        public async Task<IEnumerable<File>> Process()
         {
             var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
 
@@ -79,6 +79,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .ToArray()
                 );
             var collections = await ProcessCollections(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+
+            var result = new List<File>();
+            result.AddRange(files);
+            result.AddRange(collections.SelectMany(x => x.Files));
+            return result;
         }
 
         private async Task<List<FileCollection>> ProcessCollections(string[] collections)

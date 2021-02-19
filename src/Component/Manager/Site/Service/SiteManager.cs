@@ -115,8 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite()
         {
-
-            await _fileProcessor.Process();
+            var processed = await _fileProcessor.Process();
 
 
 
