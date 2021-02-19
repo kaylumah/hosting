@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
@@ -6,6 +7,7 @@ using Kaylumah.Ssg.Access.Artifact.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
@@ -16,6 +18,17 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
     {
         static async Task Main(string[] args)
         {
+            var configurationBuilder = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string> {
+                    { $"{nameof(SiteConfiguration)}:Source", "_site" },
+                    { $"{nameof(SiteConfiguration)}:Destination", "dist" },
+                    { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
+                    { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
+                    { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
+                    { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
+                });
+            IConfiguration configuration = configurationBuilder.Build();
+
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder => builder.AddConsole());
             services.AddFileSystem(Path.Combine(Environment.CurrentDirectory, "_site"));
@@ -23,7 +36,13 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddSingleton<ISiteManager, SiteManager>();
             var serviceProvider = services.BuildServiceProvider();
             var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
-            await siteManager.GenerateSite();
+
+            var siteConfiguration = new SiteConfiguration();
+            configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
+
+            await siteManager.GenerateSite(new GenerateSiteRequest {
+                Configuration = siteConfiguration
+            });
         }
     }
 

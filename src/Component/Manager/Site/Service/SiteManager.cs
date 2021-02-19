@@ -113,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return data;
         }
 
-        public async Task GenerateSite()
+        public async Task GenerateSite(GenerateSiteRequest request)
         {
             var processed = await _fileProcessor.Process();
             var processedAsRenderRequests = processed.ToRenderRequests();

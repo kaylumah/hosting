@@ -29,7 +29,9 @@ namespace Test.Unit
 
             IFileProcessor fileProcessor = new CustomFileProcessor(fileSystem, new Mock<ILogger<CustomFileProcessor>>().Object);
             ISiteManager sut = new SiteManager(fileProcessor, artifactAccessMock.Object, fileSystem, loggerMock.Object);
-            await sut.GenerateSite();
+            await sut.GenerateSite(new GenerateSiteRequest {
+                Configuration = new SiteConfiguration {}
+            });
         }
     }
 }
