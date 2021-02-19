@@ -107,9 +107,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             //         Contents = FileToByteArray(staticFile)
             //     };
             // }));
-            // await _artifactAccess.Store(new StoreArtifactsRequest {
-            //     Artifacts = artifacts.ToArray()
-            // });
+            await _artifactAccess.Store(new StoreArtifactsRequest {
+                Artifacts = artifacts.ToArray()
+            });
 
 
 

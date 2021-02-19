@@ -103,7 +103,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 result.Add(new File {
                     MetaData = fileMeta,
-                    Contents = fileContents,
+                    Content = fileContents,
                     Name = fileInfo.Name
                 });
             }
