@@ -142,6 +142,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     processed
                     .Where(x => x.MetaData.ContainsKey("Collection") 
                         && x.MetaData["Collection"].Equals(collection))
+                    .Select(x => x.MetaData)
                     .ToList()
                 );
             }
