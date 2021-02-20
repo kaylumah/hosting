@@ -47,6 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 version = info.Version;
             }
+            var appVersion = version.Substring(0, version.IndexOf('+'));
             var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
             var shortGitHash = gitHash.Substring(0, 7);
             var repositoryType = info.Metadata["RepositoryType"];
@@ -55,6 +56,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return new BuildData()
             {
+                Version = appVersion,
                 Copyright = info.Copyright,
                 GitHash = gitHash,
                 ShortGitHash = shortGitHash,
