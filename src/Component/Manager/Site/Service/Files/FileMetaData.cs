@@ -4,19 +4,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class FileMetaData : Dictionary<string, object>
     {
+
+        private T GetValue<T>(string key) where T : class
+        {
+            TryGetValue(key.ToLower(), out object o);
+            if (o is T t)
+            {
+                return t;
+            }
+            return null;
+        }
+
+        private void SetValue(string key, object value)
+        {
+            this[key.ToLower()] = value;
+        }
+
         public string Layout
         {
             get
             {
-                if (ContainsKey(nameof(Layout).ToLower()))
-                {
-                    return (string)this[nameof(Layout).ToLower()];
-                }
-                return null;
+                return GetValue<string>(nameof(Layout));
             }
             set
             {
-                this[nameof(Layout).ToLower()] = value;
+                SetValue(nameof(Layout), value);
             }
         }
 
@@ -24,15 +36,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             get
             {
-                if (ContainsKey(nameof(Permalink).ToLower()))
-                {
-                    return (string)this[nameof(Permalink).ToLower()];
-                }
-                return null;
+                return GetValue<string>(nameof(Permalink));
             }
             set
             {
-                this[nameof(Permalink).ToLower()] = value;
+                SetValue(nameof(Permalink), value);
             }
         }
 
@@ -40,15 +48,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             get
             {
-                if (ContainsKey(nameof(Uri).ToLower()))
-                {
-                    return (string)this[nameof(Uri).ToLower()];
-                }
-                return null;
+                return GetValue<string>(nameof(Uri));
             }
             set
             {
-                this[nameof(Uri).ToLower()] = value;
+                SetValue(nameof(Uri), value);
             }
         }
     }
