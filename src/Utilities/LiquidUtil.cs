@@ -55,6 +55,23 @@ namespace Kaylumah.Ssg.Utilities
                     var scriptObject = new ScriptObject();
                     scriptObject.Import(request.Model);
                     context.PushGlobal(scriptObject);
+
+                    var plugins = new IPlugin[] { new SeoPlugin() };
+                    foreach(var plugin in plugins)
+                    {
+                        scriptObject.Import(plugin.Name, new Func<string>(() => plugin.Render(request.Model)));
+                        // scriptObject.Import(plugin.Name, new Func<string>(() => 
+                        //     return plugin.Render(request.Model)
+                        // );
+                        // scriptObject.Import(plugin.Name, new Func<TemplateContext, string>(templateContext => {
+                        //     return plugin.Render(templateContext.CurrentGlobal);
+                        // }));
+                    }
+
+                    // scriptObject.Import("seo", new Func<TemplateContext, string>(templateContext => {
+                    //     return "<strong>{{ build.git_hash }}</strong>";
+                    // }));
+
                     var renderedContent = await liquidTemplate.RenderAsync(context);
                     renderedResults.Add(new RenderResult { Content = renderedContent });
                 }
@@ -65,6 +82,30 @@ namespace Kaylumah.Ssg.Utilities
             }
 
             return renderedResults.ToArray();
+        }
+    }
+
+    public interface IPlugin
+    {
+        string Name { get; }
+        string Render(object data);
+    }
+
+    public class SeoPlugin : IPlugin
+    {
+        private readonly string _raw = "<strong>{{ build.git_hash }}</strong>";
+
+        public string Name => "seo";
+
+        public string Render(object data)
+        {
+            var liquidTemplate = Template.ParseLiquid(_raw);
+            var context = new LiquidTemplateContext();
+            var scriptObject = new ScriptObject();
+            scriptObject.Import(data);
+            context.PushGlobal(scriptObject);
+            var pluginResult = liquidTemplate.Render(context);
+            return pluginResult;
         }
     }
 
