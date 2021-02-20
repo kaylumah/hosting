@@ -21,8 +21,10 @@
     <body>
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
-            <main class="flex-1 p-5 overflow-y-auto">
-                {{ content }}
+            <main class="flex-1 overflow-y-auto py-4">
+                <div class="prose lg:prose-lg mx-auto px-4 lg:px-0">
+                    {{ content }}
+                </div>
             </main>
             {% include 'footer.html' %}
         </div>
