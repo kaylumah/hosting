@@ -34,6 +34,13 @@ Create css file
 * Text-color is `text-gray-100`
 * Anchor hover is `text-gray-400`
 
+## MSBuild Extensions
+
+https://www.hanselman.com/blog/adding-a-git-commit-hash-and-azure-devops-build-number-and-build-id-to-an-aspnet-website 
+
+* `SourceRevisionId`
+* `BuildNumber` or `BuildId`
+
 ## Reading list
 
 - https://github.com/tailwindlabs/tailwindcss-typography
