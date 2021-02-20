@@ -12,6 +12,15 @@
 4. npx tailwindcss init -p
 5. ./node_modules/.bin/postcss styles.css -o compiled.css (npm run dev)
 
+npx tailwindcss init tailwind-full.config.js --full
+posscss 
+tailwindcss: {
+    config: './tailwind-full.config.js'
+}
+
+const colors = require('tailwindcss/colors')
+
+
 Create css file
 
 ```css
