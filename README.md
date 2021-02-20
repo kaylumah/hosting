@@ -52,6 +52,32 @@ https://www.hanselman.com/blog/adding-a-git-commit-hash-and-azure-devops-build-n
 
 ## Reading list
 
+https://tailwindcss.com/docs/optimizing-for-production#enabling-manually
+
+https://refactoringui.com/book/
+
+https://v1.tailwindcss.com/resources
+
+http://www.zondicons.com/
+
+https://simpleicons.org/
+
+https://heroicons.com/
+
+https://github.com/tailwindlabs/blog.tailwindcss.com
+
+
+Taftse02/16/2021
+The Logos come from https://simpleicons.org/ as far as I know
+
+I think they only used simple Icons for the brand logos because they are not part of heroicons
+
+They could also be part of http://www.zondicons.com/ which is also made by Steve as far as I know
+
+
+
+
+
 - https://github.com/tailwindlabs/tailwindcss-typography
 
 - https://medium.com/@mattront/the-complete-guide-to-customizing-a-tailwind-css-theme-ef423eccf863
