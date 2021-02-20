@@ -33,3 +33,18 @@ Create css file
 * Background-color is `bg-gray-900`
 * Text-color is `text-gray-100`
 * Anchor hover is `text-gray-400`
+
+## Reading list
+
+- https://github.com/tailwindlabs/tailwindcss-typography
+
+- https://medium.com/@mattront/the-complete-guide-to-customizing-a-tailwind-css-theme-ef423eccf863
+
+- https://tjaddison.com/blog/2020/08/updating-to-tailwind-typography-to-style-markdown-posts/
+
+- https://github.com/tailwindlabs/tailwindcss.com/blob/master/tailwind.config.js
+
+- https://github.com/tailwindlabs/tailwindcss.com/blob/bb5eacf1778bb377b9bb190bccc2cac494cdfb56/src/css/utilities.css#L101
+
+- https://github.com/tailwindlabs/tailwindcss.com/blob/bb5eacf1778bb377b9bb190bccc2cac494cdfb56/src/components/Heading.js
+
