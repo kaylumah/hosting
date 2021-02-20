@@ -11,3 +11,11 @@
 3. npm install @tailwindcss/typography
 4. npx tailwindcss init -p
 5. ./node_modules/.bin/postcss styles.css -o compiled.css (npm run dev)
+
+Create css file
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
