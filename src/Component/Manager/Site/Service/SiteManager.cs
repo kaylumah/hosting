@@ -13,6 +13,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {    
+
+    internal class Package
+    {
+        public string Name { get;set; }
+    }
+
     public class SiteManager : ISiteManager
     {
         private readonly IArtifactAccess _artifactAccess;
@@ -101,12 +107,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                 };
             }).ToList();
-            // artifacts.AddRange(staticFiles.Select(staticFile => {
-            //     return new Artifact {
-            //         Path = $"{outputDirectory}/{staticFile}",
-            //         Contents = FileToByteArray(staticFile)
-            //     };
-            // }));
+
+            // TODO can we do this better?
+            var directoryContents =
+                            _fileSystem.GetDirectoryContents("");
+            var rootFile = directoryContents.FirstOrDefault();
+            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
+
+            var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
+                .Select(x => x.PhysicalPath.Replace(root, string.Empty));
+            artifacts.AddRange(assets.Select(asset => {
+                return new Artifact {
+                    Path = $"{request.Configuration.Destination}/{asset}",
+                    Contents = FileToByteArray(asset)
+                };
+            }));
+
             await _artifactAccess.Store(new StoreArtifactsRequest {
                 Artifacts = artifacts.ToArray()
             });
@@ -122,11 +138,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string[] templateDirs = new string[] { layoutDir, includeDir, dataDir, assetDir };
 
             var templates = await new LayoutLoader(_fileSystem).Load(layoutDir);
-
-            var directoryContents =
-                            _fileSystem.GetDirectoryContents("");
-
-            var rootFile = directoryContents.FirstOrDefault();
 
             if (rootFile != null)
             {
@@ -163,17 +174,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         }
                     }
                 };
-
-                var directoryInfos = directoryContents.Where(fileInfo => !(fileInfo.IsDirectory && templateDirs.Contains(fileInfo.Name)));
-                var collectionDirectories = directoryInfos.Where(x => x.IsDirectory).Select(x => x.Name).ToArray();
-
-                var files = directoryInfos.Where(x => !x.IsDirectory).Select(x => x.PhysicalPath).ToList();
-                var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-                // files.AddRange(collections.SelectMany(x => x.Files));
-                var relativeFileNames = files.Select(x => x.Replace(root, ""));
-
-                var extensions = new string[] { ".md", ".html", ".xml" };
-                var staticFiles = relativeFileNames.Where(fileName => !extensions.Contains(Path.GetExtension(fileName)));
 
                 // var contentFiles = new FileProcessor(_fileSystem).Process(
                 //     relativeFileNames

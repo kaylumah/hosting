@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             return new RenderRequest() {
                 TemplateName = file.MetaData?.Layout,
-                Model = null
+                Model = file
             };
         }
 
