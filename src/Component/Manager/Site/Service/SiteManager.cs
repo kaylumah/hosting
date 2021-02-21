@@ -155,7 +155,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Model = new RenderData {
                     Build = buildInfo,
                     Site = siteInfo,
-                    Content = x.Content
+                    Page = new PageData(x)
                 },
                 TemplateName = x.MetaData.Layout
             });
