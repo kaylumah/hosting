@@ -110,7 +110,8 @@
 {% endif %}
 
 <script type="application/ld+json">
-  {{ seo_tag.json_ld }}
+  {{ json_ld | to_json }}
 </script>
 
 <!-- End Jekyll SEO tag -->
+
