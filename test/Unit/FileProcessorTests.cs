@@ -20,7 +20,7 @@ namespace Test.Unit
         public async Task Test1()
         {
             var root = "/a/b/c";
-            var loggerMock = new Mock<ILogger<CustomFileProcessor>>();
+            var loggerMock = new Mock<ILogger<FileProcessor>>();
             var fileProviderMock = new Mock<IFileProvider>()
                 .SetupFileProviderMock(
                     root,
@@ -36,7 +36,7 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new CustomFileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {});
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {});
 
             await sut.Process(null);
         }

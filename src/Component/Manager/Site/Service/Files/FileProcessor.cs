@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class CustomFileProcessor : IFileProcessor
+    public class FileProcessor : IFileProcessor
     {
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             { ".md", ".html" }
         };
 
-        public CustomFileProcessor(IFileSystem fileSystem, ILogger<CustomFileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies)
+        public FileProcessor(IFileSystem fileSystem, ILogger<FileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies)
         {
             _preprocessorStrategies = preprocessorStrategies;
             _fileSystem = fileSystem;

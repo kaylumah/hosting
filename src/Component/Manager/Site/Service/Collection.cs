@@ -6,7 +6,7 @@ using Microsoft.Extensions.FileProviders;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class FileProcessor
+    public class OldFileProcessor
     {
         /*
         

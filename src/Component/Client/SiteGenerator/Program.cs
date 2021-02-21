@@ -53,7 +53,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
             services.AddSingleton<IFileSystem, FileSystem>();
             services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
-            services.AddSingleton<IFileProcessor, CustomFileProcessor>();
+            services.AddSingleton<IFileProcessor, FileProcessor>();
             return services;
         }
     }
