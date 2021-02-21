@@ -101,38 +101,7 @@ namespace Kaylumah.Ssg.Utilities
             return renderedResults.ToArray();
         }
     }
-
-    public interface IPlugin
-    {
-        string Name { get; }
-        string Render(object data);
-    }
-
-    public class SeoPlugin : IPlugin
-    {
-        private readonly string _raw;
-        public string Name => "seo";
-
-        public SeoPlugin()
-        {
-            _raw = System.IO.File.ReadAllText("seo_template.html");
-        }
-
-        public string Render(object data)
-        {
-            var liquidTemplate = Template.ParseLiquid(_raw);
-            var context = new LiquidTemplateContext();
-            var scriptObject = new ScriptObject
-            {
-                ["seo_tag"] = data
-            };
-            scriptObject.Import(typeof(GlobalFunctions));
-            context.PushGlobal(scriptObject);
-            var pluginResult = liquidTemplate.Render(context);
-            return pluginResult;
-        }
-    }
-
+    
     internal class MyIncludeFromDisk : ITemplateLoader
     {
         private readonly IFileSystem _fileSystem;
