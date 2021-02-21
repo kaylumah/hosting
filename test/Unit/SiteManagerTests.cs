@@ -13,7 +13,7 @@ namespace Test.Unit
 {
     public class SiteManagerTests
     {
-        [Fact]
+        [Fact(Skip = "wip")]
         public async Task Test_SiteManager_GenerateSite()
         {
             var directoryContentsMock = new Mock<IDirectoryContents>();
