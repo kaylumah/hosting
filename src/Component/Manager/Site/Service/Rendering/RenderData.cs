@@ -3,19 +3,26 @@ using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    class RenderData : IRenderModel
+    class RenderData : IRenderModel, IMetadata
     {
         public BuildData Build { get;set; }
         public SiteData Site { get;set; } = new SiteData();
         public PageData Page { get;set; }
         public string Content => Page?.Content ?? string.Empty;
+        public string Title => Page?.Title ?? Site?.Title ?? null;
+        public string Description => Page?.Description ?? Site?.Description ?? null;
+        public string Language => Page?.Language ?? Site?.Language ?? null;
+        public string Author => Page?.Author ?? Site?.Author ?? null;
 
-        public string Title => "Hello World!";
     }
 
-    class SiteData : Dictionary<string, object>, ISiteMetadata
+    class SiteData : Dictionary<string, object>, IMetadata, ISiteMetadata
     {
-        public string Title { get; set; } = $"{nameof(SiteData)}{nameof(Title)}";
+        public string Title => this.GetValue<string>(nameof(Title));
+        public string Description => this.GetValue<string>(nameof(Description));
+        public string Language => this.GetValue<string>(nameof(Language));
+        public string Author => this.GetValue<string>(nameof(Author));
+
         public Dictionary<string, object> Data
         {
             get
