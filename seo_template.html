@@ -1,5 +1,5 @@
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
-{% if seo_tag.title? %}
+{% if seo_tag.title %}
   <title>{{ seo_tag.title }}</title>
 {% endif %}
 
@@ -110,7 +110,7 @@
 {% endif %}
 
 <script type="application/ld+json">
-  {{ seo_tag.json_ld | jsonify }}
+  {{ seo_tag.json_ld }}
 </script>
 
 <!-- End Jekyll SEO tag -->
