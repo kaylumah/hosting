@@ -9,6 +9,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public SiteData Site { get;set; } = new SiteData();
         public PageData Page { get;set; }
         public string Content => Page?.Content ?? string.Empty;
+
+        public string Title => "Hello World!";
     }
 
     class SiteData : Dictionary<string, object>, ISiteMetadata

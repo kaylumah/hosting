@@ -117,8 +117,11 @@ namespace Kaylumah.Ssg.Utilities
         {
             var liquidTemplate = Template.ParseLiquid(_raw);
             var context = new LiquidTemplateContext();
-            var scriptObject = new ScriptObject();
-            scriptObject.Import(data);
+            var scriptObject = new ScriptObject
+            {
+                ["seo_tag"] = data
+            };
+            scriptObject.Import(typeof(GlobalFunctions));
             context.PushGlobal(scriptObject);
             var pluginResult = liquidTemplate.Render(context);
             return pluginResult;
