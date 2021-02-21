@@ -147,6 +147,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             var outputFileName = match.FileNameByPattern();
             var fileDate = match.DateByPattern();
+            metaData["date"] = fileDate;
             var outputExtension = RetrieveExtension(outputFileName);
 
             var result = metaData.Permalink
