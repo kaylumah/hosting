@@ -28,6 +28,11 @@ namespace Kaylumah.Ssg.Utilities
 
     public static class GlobalFunctions
     {
+        public static string DateToXmlschema(DateTime date)
+        {
+            return date.ToUniversalTime().ToString("o");
+        }
+
         public static string ToJson(object o)
         {
             return JsonSerializer.Serialize(o, new JsonSerializerOptions {
