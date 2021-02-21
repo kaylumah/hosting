@@ -19,6 +19,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         static async Task Main(string[] args)
         {
             var configurationBuilder = new ConfigurationBuilder()
+                .AddJsonFile(Path.Combine(Environment.CurrentDirectory, "settings.json"))
                 .AddInMemoryCollection(new Dictionary<string, string> {
                     { $"{nameof(SiteConfiguration)}:Source", "_site" },
                     { $"{nameof(SiteConfiguration)}:Destination", "dist" },
@@ -31,7 +32,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder => builder.AddConsole());
-            services.AddFileSystem(Path.Combine(Environment.CurrentDirectory, "_site"));
+            services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory,  "_site"));
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
             services.AddSingleton<ISiteManager, SiteManager>();
             var serviceProvider = services.BuildServiceProvider();
@@ -39,7 +40,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
             var siteConfiguration = new SiteConfiguration();
             configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
-
+            
             await siteManager.GenerateSite(new GenerateSiteRequest {
                 Configuration = siteConfiguration
             });
@@ -48,8 +49,9 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
     static class FileSystemServiceCollectionExtensions
     {
-        public static IServiceCollection AddFileSystem(this IServiceCollection services, string rootDirectory)
+        public static IServiceCollection AddFileSystem(this IServiceCollection services, IConfiguration configuration, string rootDirectory)
         {
+            services.Configure<SiteInfo>(configuration.GetSection("X"));
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
             services.AddSingleton<IFileSystem, FileSystem>();
             services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();

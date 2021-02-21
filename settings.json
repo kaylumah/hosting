@@ -1,0 +1,20 @@
+{
+    "X": {
+        "collections": {
+            "posts": {
+                "output": true
+            }
+        },
+        "Defaults": [
+            {
+                "Scope": {
+                    "Path": "1",
+                    "Type": "2"
+                },
+                "Values": {
+                    "layout": "default"
+                }
+            }
+        ]
+    }
+}

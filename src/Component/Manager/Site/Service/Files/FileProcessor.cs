@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -20,8 +22,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             { ".md", ".html" }
         };
 
-        public FileProcessor(IFileSystem fileSystem, ILogger<FileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies)
+        private readonly SiteInfo _siteInfo;
+
+        public FileProcessor(IFileSystem fileSystem, ILogger<FileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies, IOptions<SiteInfo> options)
         {
+            _siteInfo = options.Value;
             _preprocessorStrategies = preprocessorStrategies;
             _fileSystem = fileSystem;
             _logger = logger;

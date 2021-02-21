@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
-using System.Xml.Linq;
+using Microsoft.Extensions.Options;
+using Kaylumah.Ssg.Manager.Site.Interface;
 
 namespace Test.Unit
 {
@@ -20,6 +21,7 @@ namespace Test.Unit
         public async Task Test1()
         {
             var root = "/a/b/c";
+            var configurationMock = Options.Create<SiteInfo>(new SiteInfo {});
             var loggerMock = new Mock<ILogger<FileProcessor>>();
             var fileProviderMock = new Mock<IFileProvider>()
                 .SetupFileProviderMock(
@@ -36,7 +38,7 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {});
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {}, configurationMock);
 
             await sut.Process(null);
         }
