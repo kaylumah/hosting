@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 using Scriban;
@@ -12,7 +13,7 @@ namespace Kaylumah.Ssg.Utilities
 {
     public interface IRenderModel
     {
-        string Content { get;set; }
+        string Content { get; }
     }
     public class RenderRequest
     {
@@ -23,6 +24,16 @@ namespace Kaylumah.Ssg.Utilities
     public class RenderResult
     {
         public string Content { get;set; }
+    }
+
+    public static class GlobalFunctions
+    {
+        public static string ToJson(object o)
+        {
+            return JsonSerializer.Serialize(o, new JsonSerializerOptions {
+                WriteIndented = true
+            });
+        }
     }
 
     public class LiquidUtil
@@ -55,6 +66,7 @@ namespace Kaylumah.Ssg.Utilities
                     var scriptObject = new ScriptObject();
                     scriptObject.Import(request.Model);
                     context.PushGlobal(scriptObject);
+                    scriptObject.Import(typeof(GlobalFunctions));
 
                     var plugins = new IPlugin[] { new SeoPlugin() };
                     foreach(var plugin in plugins)
@@ -93,9 +105,13 @@ namespace Kaylumah.Ssg.Utilities
 
     public class SeoPlugin : IPlugin
     {
-        private readonly string _raw = "<strong>{{ build.git_hash }}</strong>";
-
+        private readonly string _raw;
         public string Name => "seo";
+
+        public SeoPlugin()
+        {
+            _raw = System.IO.File.ReadAllText("seo_template.html");
+        }
 
         public string Render(object data)
         {
