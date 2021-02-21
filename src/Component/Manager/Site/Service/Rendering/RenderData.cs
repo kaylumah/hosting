@@ -11,19 +11,40 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Content => Page?.Content ?? string.Empty;
     }
 
-    class SiteData 
+    class SiteData : Dictionary<string, object>, ISiteMetadata
     {
         public string Title { get; set; } = $"{nameof(SiteData)}{nameof(Title)}";
-        public Dictionary<string, object> Data { get; set; }
-        public Dictionary<string, object> Collections { get; set; }
+        public Dictionary<string, object> Data
+        {
+            get
+            {
+                return this.GetValue<Dictionary<string, object>>(nameof(Data));
+            }
+            set
+            {
+                this.SetValue(nameof(Data), value);
+            }
+        }
+
+        public Dictionary<string, object> Collections            
+        {
+            get
+            {
+                return this.GetValue<Dictionary<string, object>>(nameof(Collections));
+            }
+            set
+            {
+                this.SetValue(nameof(Collections), value);
+            }
+        }
     }
 
     class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
     {
-        public string Title { get; }
-        public string Description { get; }
-        public string Language { get; }
-        public string Author { get; }
+        public string Title => this.GetValue<string>(nameof(Title));
+        public string Description => this.GetValue<string>(nameof(Description));
+        public string Language => this.GetValue<string>(nameof(Language));
+        public string Author => this.GetValue<string>(nameof(Author));
         public string Content { get; }
 
         public PageData(File file) : base(file.MetaData)
@@ -43,5 +64,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public interface IPageMetadata
     {
         string Content { get; }
+    }
+
+    public interface ISiteMetadata
+    {
+        Dictionary<string, object> Data { get; set; }
+        Dictionary<string, object> Collections { get; set; }
     }
 }
