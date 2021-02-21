@@ -50,7 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             result.AddRange(files);
             result.AddRange(collections.SelectMany(x => 
                 x.Files.Select(file => {
-                    file.MetaData["Collection"] = x.Name;
+                    file.MetaData["Collection"] = x.Name[1..];
                     return file;
                 })
             ));
