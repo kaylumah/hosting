@@ -91,6 +91,19 @@ namespace Test.Unit
             result.Count().Should().Be(1);
         }
 
+        private string CreateFrontMatter(Dictionary<string, object> data = null)
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("---");
+            if (data != null)
+            {
+                var raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
+                stringBuilder.Append(raw);
+            }
+            stringBuilder.AppendLine("---");
+            return stringBuilder.ToString();
+        }
+
         private string CreateEmptyXml()
         {
             var settings = new XmlWriterSettings
