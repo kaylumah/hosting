@@ -91,32 +91,6 @@ namespace Test.Unit
             result.Count().Should().Be(1);
         }
 
-        [Fact(Skip = "Not Completed")]
-        public async Task Test1()
-        {
-            var root = "/a/b/c";
-            var configurationMock = Options.Create<SiteInfo>(new SiteInfo {});
-            var loggerMock = new Mock<ILogger<FileProcessor>>();
-            var fileProviderMock = new Mock<IFileProvider>()
-                .SetupFileProviderMock(
-                    root,
-                    new List<FakeDirectory>()
-                    {
-                        new FakeDirectory(string.Empty, new FakeFile[] {
-                            new FakeFile("index.html", Encoding.UTF8.GetBytes("---\r\nlayout: 'default'---")),
-                            new FakeFile("icon.png")
-                        }),
-                        new FakeDirectory("_posts", new FakeFile[] {
-                            new FakeFile("_posts/post.md", Encoding.UTF8.GetBytes("---\r\nlayout: 'post'---"))
-                        })
-                    }
-                );
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] {}, configurationMock);
-
-            await sut.Process(null);
-        }
-
         private string CreateEmptyXml()
         {
             var settings = new XmlWriterSettings
