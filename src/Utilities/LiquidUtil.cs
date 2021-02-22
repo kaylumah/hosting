@@ -92,7 +92,7 @@ namespace Kaylumah.Ssg.Utilities
                     var renderedContent = await liquidTemplate.RenderAsync(context);
                     renderedResults.Add(new RenderResult { Content = renderedContent });
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }

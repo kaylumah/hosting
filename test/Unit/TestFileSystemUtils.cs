@@ -17,7 +17,7 @@ namespace Test.Unit
     public class TestFileSystemUtils
     {
         [Fact]
-        public async Task Test1()
+        public void Test1()
         {
             var fileProviderMock = new Mock<IFileProvider>();
             var rootFolder = "/a/b/c/";
@@ -31,18 +31,18 @@ namespace Test.Unit
             });
         }
 
-        [Theory]
-        [InlineData("index.html", "", "index.html")]
-        //[InlineData("404.html", "", "404.html")]
-        //[InlineData("_posts/my-post.md", "", "my-post.md")]
-        [InlineData("2021-01-01-my-post.md", "_posts", "my-post.md")]
-        public void Test2(string input, string instruction, string output)
-        {
-            var sut = new PermantUriRewriter();
-            var result = sut.Rewrite(string.Empty, instruction, input);
-            // result.Should().NotBeNullOrEmpty();
-            // result.Should().Be(output);
-        }
+        // [Theory]
+        // [InlineData("index.html", "", "index.html")]
+        // //[InlineData("404.html", "", "404.html")]
+        // //[InlineData("_posts/my-post.md", "", "my-post.md")]
+        // [InlineData("2021-01-01-my-post.md", "_posts", "my-post.md")]
+        // public void Test2(string input, string instruction, string output)
+        // {
+        //     var sut = new PermantUriRewriter();
+        //     var result = sut.Rewrite(string.Empty, instruction, input);
+        //     // result.Should().NotBeNullOrEmpty();
+        //     // result.Should().Be(output);
+        // }
 
         [Fact]
         public void Test3()
