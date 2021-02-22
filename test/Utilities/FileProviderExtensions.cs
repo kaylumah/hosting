@@ -19,6 +19,10 @@ namespace Test.Utilities
             {
                 directories.Remove(rootDirectory);
             }
+            else
+            {
+                rootDirectory = new FakeDirectory(string.Empty, new FakeFile[] {});
+            }
             ProcessDirectory(fileProviderMock, root, rootDirectory, directories);
             return fileProviderMock;
         }
