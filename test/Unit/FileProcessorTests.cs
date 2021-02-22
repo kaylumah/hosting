@@ -13,6 +13,7 @@ using System.Xml;
 using Microsoft.Extensions.Options;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using FluentAssertions;
+using System.Linq;
 
 namespace Test.Unit
 {
@@ -63,6 +64,32 @@ namespace Test.Unit
             result.Should().BeEmpty();
         }
 
+        [Fact]
+        public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
+        {
+            var root = "/a/b/c";
+            var optionsMock = Options.Create(new SiteInfo() { });
+            var loggerMock = new Mock<ILogger<FileProcessor>>();
+            var fileProviderMock = new Mock<IFileProvider>()
+                .SetupFileProviderMock(
+                    root,
+                    new List<FakeDirectory>() {
+                        new FakeDirectory(string.Empty, new FakeFile[] {
+                            new FakeFile("index.html"),
+                            new FakeFile("other.png")
+                        })
+                    }
+                );
+            var fileSystem = new FileSystem(fileProviderMock.Object);
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var result = await sut.Process(new FileFilterCriteria
+            {
+                DirectoriesToSkip = new string[] { },
+                FileExtensionsToTarget = new string[] { ".html" }
+            });
+            result.Should().NotBeEmpty();
+            result.Count().Should().Be(1);
+        }
 
         [Fact(Skip = "Not Completed")]
         public async Task Test1()
