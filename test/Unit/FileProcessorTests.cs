@@ -38,6 +38,31 @@ namespace Test.Unit
             result.Should().BeEmpty();
         }
 
+        [Fact]
+        public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
+        {
+            var root = "/a/b/c";
+            var optionsMock = Options.Create(new SiteInfo() { });
+            var loggerMock = new Mock<ILogger<FileProcessor>>();
+            var fileProviderMock = new Mock<IFileProvider>()
+                .SetupFileProviderMock(
+                    root,
+                    new List<FakeDirectory>() { 
+                        new FakeDirectory(string.Empty, new FakeFile[] {
+                            new FakeFile("index.html")
+                        })
+                    }
+                );
+            var fileSystem = new FileSystem(fileProviderMock.Object);
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var result = await sut.Process(new FileFilterCriteria
+            {
+                DirectoriesToSkip = new string[] { },
+                FileExtensionsToTarget = new string[] { }
+            });
+            result.Should().BeEmpty();
+        }
+
 
         [Fact(Skip = "Not Completed")]
         public async Task Test1()
