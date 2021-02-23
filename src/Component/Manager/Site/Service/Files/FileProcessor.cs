@@ -114,7 +114,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 result.Add(new File {
                     MetaData = fileMeta,
                     Content = fileContents,
-                    Name = fileInfo.Name
+                    Name = Path.GetFileName(fileMeta.Uri)
                 });
             }
             return result;

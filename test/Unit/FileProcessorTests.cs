@@ -20,6 +20,33 @@ namespace Test.Unit
     public class FileProcessorTests
     {
         [Fact]
+        public async Task Test_FileProcessor_ChangedFileExtension()
+        {
+            var root = "/a/b/c";
+            var optionsMock = Options.Create(new SiteInfo() { });
+            var loggerMock = new Mock<ILogger<FileProcessor>>();
+            var fileProviderMock = new Mock<IFileProvider>()
+                .SetupFileProviderMock(
+                    root,
+                    new List<FakeDirectory>()
+                    {
+                        new FakeDirectory(string.Empty, new FakeFile[] {
+                            new FakeFile("test.md")
+                        })
+                    });
+            var fileSystem = new FileSystem(fileProviderMock.Object);
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var result = await sut.Process(new FileFilterCriteria
+            {
+                DirectoriesToSkip = new string[] { },
+                FileExtensionsToTarget = new string[] { ".md" }
+            });
+            result.Should().NotBeEmpty();
+            result.Count().Should().Be(1);
+            var testFile = result.Single(x => x.Name.Equals("test.html"));
+        }
+
+        [Fact]
         public async Task Test_FileProcessor_Subdirectories()
         {
             var root = "/a/b/c";
