@@ -129,7 +129,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 FileExtensionsToTarget = new string[] {
                     ".md",
                     ".html",
-                    ".xml"
+                    ".xml",
+                    ".css",
+                    ".js",
+                    ".json",
+                    ".txt"
                 }
             });
             
