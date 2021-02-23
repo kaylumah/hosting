@@ -15,3 +15,5 @@ dotnet test --configuration $CONFIGURATION --no-build --verbosity normal
 
 # Generate coverage report
 # Publish coverage report
+
+# dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./lcov.info
