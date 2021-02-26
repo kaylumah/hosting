@@ -16,35 +16,42 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     }
 
-    class SiteData : Dictionary<string, object>, IMetadata, ISiteMetadata
+    class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
     {
-        public string Title => this.GetValue<string>(nameof(Title));
-        public string Description => this.GetValue<string>(nameof(Description));
-        public string Language => this.GetValue<string>(nameof(Language));
-        public string Author => this.GetValue<string>(nameof(Author));
+        public string Title => GetTitle();
+        public string Description => GetDescription();
+        public string Language => GetLanguage();
+        public string Author => GetAuthor();
 
-        public Dictionary<string, object> Data
+        private string GetTitle()
         {
-            get
-            {
-                return this.GetValue<Dictionary<string, object>>(nameof(Data));
-            }
-            set
-            {
-                this.SetValue(nameof(Data), value);
-            }
+            return string.Empty;
         }
 
-        public Dictionary<string, object> Collections            
+        private string GetDescription()
         {
-            get
-            {
-                return this.GetValue<Dictionary<string, object>>(nameof(Collections));
-            }
-            set
-            {
-                this.SetValue(nameof(Collections), value);
-            }
+            return string.Empty;
+        }
+
+        private string GetLanguage()
+        {
+            return string.Empty;
+        }
+
+        private string GetAuthor()
+        {
+            return string.Empty;
+        }
+
+        public Dictionary<string, object> Data { get;set; }
+
+        public Dictionary<string, object> Collections { get;set; }
+
+        public object Pages => GetPages();
+
+        public object GetPages()
+        {
+            return Collections["pages"];
         }
     }
 

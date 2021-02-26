@@ -153,6 +153,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 );
             }
 
+            siteInfo.Collections["pages"] = processed
+                .Where(x => !x.MetaData.ContainsKey("Collection"))
+                .Where(x => Path.GetExtension(x.Name).Equals(".html"))
+                .Where(x => !"index.html".Equals(x.Name) && !"404.html".Equals(x.Name))
+                .Select(x => x.MetaData).ToList();
 
             // var pages = processed.Select(x => new PageData {});
             var renderRequests = processed.Select(x => new RenderRequest {
