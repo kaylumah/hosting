@@ -54,10 +54,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var result = new List<File>();
             result.AddRange(files);
             result.AddRange(collections.SelectMany(x => 
-                x.Files.Select(file => {
-                    file.MetaData["Collection"] = x.Name[1..];
-                    return file;
-                })
+                x.Files
+                    .Where(info => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name)))
+                    .Select(file => { file.MetaData["Collection"] = x.Name[1..]; return file; })
             ));
             return result;
         }
