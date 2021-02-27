@@ -51,7 +51,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public object GetPages()
         {
-            return Collections["pages"];
+            //return Collections["pages"];
+            return new object[] {};
         }
     }
 
