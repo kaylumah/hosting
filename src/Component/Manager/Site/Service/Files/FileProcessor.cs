@@ -50,42 +50,46 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .ToArray()
                 );
 
-            var collectionDirectories = new List<string>();
-            var otherDirectories = new List<string>();
-            foreach(var dir in directoriesToProcessAsCollection)
+            var result = new List<File>();
+            result.AddRange(files);
+
+            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+            foreach(var collection in collections)
             {
-                var collectionName = dir.Name[1..];
-                var exists = _siteInfo.Collections.Contains(collectionName);
+                var targetFiles = collection
+                    .Files
+                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
+                    .ToList();
+                _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+                var keyName = collection.Name[1..];
+                var exists = _siteInfo.Collections.Contains(keyName);
                 if (!exists)
                 {
-                    _logger.LogInformation($"{collectionName} is not a collection, processing a directory");
-                    otherDirectories.Add(dir.Name);
+                    _logger.LogInformation($"{keyName} is not a collection, treated as directory");
+                    result.AddRange(targetFiles);
                 }
-                if (exists && _siteInfo.Collections[collectionName].Output)
+
+                if (exists && _siteInfo.Collections[keyName].Output)
                 {
-                    _logger.LogInformation($"{collectionName} is a collection, processing as collection");
-                    collectionDirectories.Add(dir.Name);
+                    _logger.LogInformation($"{keyName} is a collection, processing as collection");
+                    targetFiles = targetFiles
+                        .Select(x => {
+                            x.MetaData["Collection"] = keyName;
+                            return x;
+                        })
+                        .ToList();
+                    result.AddRange(targetFiles);
                 }
                 else
                 {
-                    _logger.LogInformation($"{collectionName} is a collection, but output == false");
+                    _logger.LogInformation($"{keyName} is a collection, but output == false");
                 }
             }
 
-
-            var collections = await ProcessCollections(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
-
-            var result = new List<File>();
-            result.AddRange(files);
-            result.AddRange(collections.SelectMany(x => 
-                x.Files
-                    .Where(info => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name)))
-                    .Select(file => { file.MetaData["Collection"] = x.Name[1..]; return file; })
-            ));
             return result;
         }
 
-        private async Task<List<FileCollection>> ProcessCollections(string[] collections)
+        private async Task<List<FileCollection>> ProcessDirectories(string[] collections)
         {
             var result = new List<FileCollection>();
             foreach(var collection in collections)
