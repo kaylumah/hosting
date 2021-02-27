@@ -49,6 +49,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .Select(x => x.Name)
                     .ToArray()
                 );
+
+            var collectionDirectories = new List<string>();
+            var otherDirectories = new List<string>();
+            foreach(var dir in directoriesToProcessAsCollection)
+            {
+                var collectionName = dir.Name[1..];
+                var exists = _siteInfo.Collections.Contains(collectionName);
+                if (!exists)
+                {
+                    _logger.LogInformation($"{collectionName} is not a collection, processing a directory");
+                    otherDirectories.Add(dir.Name);
+                }
+                if (exists && _siteInfo.Collections[collectionName].Output)
+                {
+                    _logger.LogInformation($"{collectionName} is a collection, processing as collection");
+                    collectionDirectories.Add(dir.Name);
+                }
+                else
+                {
+                    _logger.LogInformation($"{collectionName} is a collection, but output == false");
+                }
+            }
+
+
             var collections = await ProcessCollections(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
 
             var result = new List<File>();
