@@ -16,8 +16,29 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 {
     class Program
     {
+        private static void ShowKaylumahLogo()
+        {
+            var applicationName = typeof(Program).Namespace;
+            const string message = @"
+  _  __           _                       _     
+ | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__  
+ | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \ 
+ | . \ (_| | |_| | | |_| | | | | | | (_| | | | |
+ |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|
+            |___/                               ";
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(message);
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(applicationName);
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
         static async Task Main(string[] args)
         {
+            ShowKaylumahLogo();
             var configurationBuilder = new ConfigurationBuilder()
                 .AddJsonFile(Path.Combine(Environment.CurrentDirectory, "settings.json"))
                 .AddInMemoryCollection(new Dictionary<string, string> {
