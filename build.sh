@@ -2,8 +2,6 @@
 
 CONFIGURATION=Release
 
-echo "$CONFIGURATION"
-
 dotnet restore
 
 dotnet build --configuration $CONFIGURATION --no-restore
