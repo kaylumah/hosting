@@ -35,7 +35,8 @@ namespace Test.Unit
                         })
                     });
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -62,7 +63,8 @@ namespace Test.Unit
                         })
                     });
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -107,7 +109,8 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -139,7 +142,8 @@ namespace Test.Unit
                     new List<FakeDirectory>() {}
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria {
                 DirectoriesToSkip = new string[] {},
                 FileExtensionsToTarget = new string[] {}
@@ -163,7 +167,8 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -189,7 +194,8 @@ namespace Test.Unit
                     }
                 );
             var fileSystem = new FileSystem(fileProviderMock.Object);
-            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock);
+            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+            var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
