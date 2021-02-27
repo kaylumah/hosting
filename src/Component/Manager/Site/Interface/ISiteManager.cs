@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
@@ -8,6 +9,23 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     {
         Task GenerateSite(GenerateSiteRequest request);
     }
+
+    public class Collection
+    {
+        public string Name { get;set; }
+        public bool Output { get;set; }
+    }
+
+    public class Collections : KeyedCollection<string, Collection>
+    {
+        protected override string GetKeyForItem(Collection item) => item.Name;
+    }
+
+
+
+
+
+
 
     [DataContract]
     public class GenerateSiteRequest
@@ -21,6 +39,9 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     {
         [DataMember]
         public Defaults[] Defaults { get; set; }
+
+        [DataMember]
+        public Collections Collections { get;set; }
     }
 
     [DataContract]

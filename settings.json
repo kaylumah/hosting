@@ -1,10 +1,15 @@
 {
     "X": {
-        "collections": {
-            "posts": {
-                "output": true
+        "Collections": [
+            {
+                "Name": "posts",
+                "Output": true
+            },
+            {
+                "Name": "drafts",
+                "Output": false
             }
-        },
+        ],
         "Defaults": [
             {
                 "Scope": {
