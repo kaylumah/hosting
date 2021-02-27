@@ -62,7 +62,6 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
             var siteConfiguration = new SiteConfiguration();
             configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
-
             Stopwatch watch = new Stopwatch();
             Console.WriteLine("Start Site Generation");
             watch.Start();
@@ -79,6 +78,8 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         public static IServiceCollection AddFileSystem(this IServiceCollection services, IConfiguration configuration, string rootDirectory)
         {
             services.Configure<SiteInfo>(configuration.GetSection("X"));
+            services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
+
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
             services.AddSingleton<IFileSystem, FileSystem>();
             services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();

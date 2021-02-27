@@ -1,4 +1,20 @@
 {
+    "Metadata": {
+        "Defaults": [
+            {
+                "Path": "",
+                "Values": {
+                    "Layout": "A"
+                }
+            },
+            {
+                "Path": "2021",
+                "Values": {
+                    "Author": "A"
+                }
+            }
+        ]
+    },
     "X": {
         "ExtensionMapping": 
         {

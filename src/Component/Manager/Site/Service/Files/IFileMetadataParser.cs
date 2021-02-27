@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -25,22 +27,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
+    public class DefaultMetadatas : KeyedCollection<string, DefaultMetadata>
+    {
+        protected override string GetKeyForItem(DefaultMetadata item)
+        {
+            return item.Path;
+        }
+    }
+
+    public class DefaultMetadata
+    {
+        public string Path { get;set; }
+        public FileMetaData Values { get;set; }
+
+    }
+
+    public class MetadataParserOptions
+    {
+        public const string Options = "Metadata";
+        public DefaultMetadatas Defaults { get;set; } = new DefaultMetadatas();
+    }
+
     public class FileMetadataParser : IFileMetadataParser
     {
         private readonly ILogger _logger;
         private readonly MetadataUtil _metadataUtil;
-        private Dictionary<string, FileMetaData> _defaults;
-        public FileMetadataParser(ILogger<FileMetadataParser> logger)
+        private readonly DefaultMetadatas _defaults;
+        public FileMetadataParser(ILogger<FileMetadataParser> logger, IOptions<MetadataParserOptions> options)
         {
             _logger = logger;
             _metadataUtil = new MetadataUtil();
-            _defaults = new Dictionary<string, FileMetaData>
-            {
-                [Path.DirectorySeparatorChar.ToString()] = new FileMetaData()
-                {
-                    // Layout = "default.html"
-                }
-            };
+            _defaults = options.Value.Defaults;
         }
 
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
@@ -60,9 +77,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var fileMetaData = new FileMetaData();
             foreach (var path in paths)
             {
-                if (_defaults.ContainsKey(path))
+                var meta = _defaults.SingleOrDefault(x => x.Path.Equals(path));
+                if (meta != null)
                 {
-                    Merge(fileMetaData, _defaults[path], $"default:{path}");
+                    Merge(fileMetaData, meta.Values, $"default:{path}");
                 }
             }
 
