@@ -160,15 +160,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
             return result;
         }
-
-        private string RetrieveExtension(string fileName)
-        {
-            var ext = Path.GetExtension(fileName);
-            if (_siteInfo.ExtensionMapping.ContainsKey(ext))
-            {
-                return _siteInfo.ExtensionMapping[ext];
-            }
-            return ext;
-        }
     }
 }

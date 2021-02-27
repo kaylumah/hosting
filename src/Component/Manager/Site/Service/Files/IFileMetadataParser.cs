@@ -46,18 +46,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public const string Options = "Metadata";
         public DefaultMetadatas Defaults { get;set; } = new DefaultMetadatas();
+        public Dictionary<string, string> ExtensionMapping { get; set; } = new Dictionary<string, string>();
     }
 
     public class FileMetadataParser : IFileMetadataParser
     {
         private readonly ILogger _logger;
         private readonly MetadataUtil _metadataUtil;
-        private readonly DefaultMetadatas _defaults;
+        private readonly MetadataParserOptions _options;
         public FileMetadataParser(ILogger<FileMetadataParser> logger, IOptions<MetadataParserOptions> options)
         {
             _logger = logger;
             _metadataUtil = new MetadataUtil();
-            _defaults = options.Value.Defaults;
+            _options = options.Value;
         }
 
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
@@ -77,7 +78,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var fileMetaData = new FileMetaData();
             foreach (var path in paths)
             {
-                var meta = _defaults.SingleOrDefault(x => x.Path.Equals(path));
+                var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(path));
                 if (meta != null)
                 {
                     Merge(fileMetaData, meta.Values, $"default:{path}");
@@ -89,6 +90,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             result.Data = fileMetaData;
             result.Data.Uri = outputLocation;
             return result;
+        }
+
+        private string RetrieveExtension(string fileName)
+        {
+            var ext = Path.GetExtension(fileName);
+            if (_options.ExtensionMapping.ContainsKey(ext))
+            {
+                return _options.ExtensionMapping[ext];
+            }
+            return ext;
         }
 
         private List<string> DetermineFilters(string input)
@@ -130,7 +141,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // {
             //     metaData["date"] = fileDate;
             // }
-            var outputExtension = Path.GetExtension(fileName);//RetrieveExtension(outputFileName);
+            var outputExtension = RetrieveExtension(outputFileName);
 
             var result = permalink
                 .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy")}")

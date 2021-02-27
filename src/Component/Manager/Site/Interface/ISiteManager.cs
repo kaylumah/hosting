@@ -38,9 +38,6 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     public class SiteInfo
     {
         [DataMember]
-        public Dictionary<string, string> ExtensionMapping { get;set; } = new Dictionary<string, string>();
-
-        [DataMember]
         public Defaults[] Defaults { get; set; } = new Defaults[] {};
 
         [DataMember]

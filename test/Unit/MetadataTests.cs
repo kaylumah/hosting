@@ -2,6 +2,7 @@ using System.IO;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
 
@@ -18,13 +19,12 @@ namespace Test.Unit
             var criteria = new MetadataCriteria
             {
                 FileName = fileName,
-                FilePath = filePath,
-                Root = root,
                 Content = string.Empty
             };
 
             var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-            IFileMetadataParser sut = new Kaylumah.Ssg.Manager.Site.Service.FileMetadataParser(loggerMock.Object);
+            var optionsMock = Options.Create(new MetadataParserOptions());
+            IFileMetadataParser sut = new Kaylumah.Ssg.Manager.Site.Service.FileMetadataParser(loggerMock.Object, optionsMock);
             var result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.Data.Should().NotBeNull();
@@ -39,13 +39,12 @@ namespace Test.Unit
             var criteria = new MetadataCriteria
             {
                 FileName = fileName,
-                FilePath = filePath,
-                Root = root,
                 Content = string.Empty
             };
 
             var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-            IFileMetadataParser sut = new FileMetadataParser(loggerMock.Object);
+            var optionsMock = Options.Create(new MetadataParserOptions());
+            IFileMetadataParser sut = new Kaylumah.Ssg.Manager.Site.Service.FileMetadataParser(loggerMock.Object, optionsMock);
             var result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.Data.Should().NotBeNull();

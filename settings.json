@@ -1,5 +1,9 @@
 {
     "Metadata": {
+        "ExtensionMapping": 
+        {
+            ".md": ".html"
+        },
         "Defaults": [
             {
                 "Path": "",
@@ -16,10 +20,6 @@
         ]
     },
     "X": {
-        "ExtensionMapping": 
-        {
-            ".md": ".html"
-        },
         "Collections": [
             {
                 "Name": "posts",
