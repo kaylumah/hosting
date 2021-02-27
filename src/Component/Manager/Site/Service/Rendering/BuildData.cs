@@ -1,3 +1,5 @@
+using System;
+
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
     class BuildData
@@ -7,5 +9,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string SourceBaseUri { get;set; }
         public string GitHash { get;set; }
         public string ShortGitHash { get;set; }
+        public DateTimeOffset Time { get; set; }
     }
 }

@@ -56,6 +56,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return new BuildData()
             {
+                Time = DateTimeOffset.Now,
                 Version = appVersion,
                 Copyright = info.Copyright,
                 GitHash = gitHash,
