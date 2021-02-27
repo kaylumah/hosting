@@ -3,6 +3,7 @@
     <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
 
     <PropertyGroup>
+        <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
         <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
         <Copyright>$(CopyrightKaylumah)</Copyright>
     </PropertyGroup>

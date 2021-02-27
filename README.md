@@ -119,3 +119,17 @@ dotnet reportgenerator "-reports:test/Unit/TestResults/2a416370-74ff-4c37-9418-b
 | name | The filename of the post or page, e.g. |
 | path | The path to the raw post or page. |
 |  |  |
+
+https://stu.dev/adding-assemblymetadataattribute-using-new-sdk-project-with-msbuild/
+
+# https://docs.microsoft.com/en-us/dotnet/core/tools/csproj
+RepositoryType="git"
+echo "$RepositoryType"
+RepositoryUrl=$(git config --get remote.origin.url)
+echo "$RepositoryUrl"
+RepositoryBranch=$(git rev-parse --abbrev-ref HEAD)
+echo "$RepositoryBranch"
+RepositoryCommit=$(git rev-parse HEAD)
+echo "$RepositoryCommit"
+
+dotnet publish -c Release /property:CommitHash=MyHash
