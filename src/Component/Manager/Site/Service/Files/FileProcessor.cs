@@ -16,22 +16,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
         private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
-        private readonly MetadataUtil _metadataUtil;
-
+        private readonly IFileMetadataParser _fileMetaDataProcessor;
         private readonly SiteInfo _siteInfo;
 
-        public FileProcessor(IFileSystem fileSystem, ILogger<FileProcessor> logger, IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies, IOptions<SiteInfo> options)
+        public FileProcessor(
+            IFileSystem fileSystem,
+            ILogger<FileProcessor> logger,
+            IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
+            IOptions<SiteInfo> options,
+            IFileMetadataParser fileMetadataParser)
         {
             _siteInfo = options.Value;
             _preprocessorStrategies = preprocessorStrategies;
             _fileSystem = fileSystem;
             _logger = logger;
-            _metadataUtil = new MetadataUtil();
+            _fileMetaDataProcessor = fileMetadataParser;
         }
 
         public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
             var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
+            var rootFile = directoryContents.First();
+            var root = rootFile.PhysicalPath.Replace(rootFile.Name, string.Empty);
 
             var directoriesToProcessAsCollection = directoryContents
                 .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
@@ -43,13 +49,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 await ProcessFiles(
                     filesWithoutCollections
                     .Select(x => x.Name)
-                    .ToArray()
+                    .ToArray(),
+                    root
                 );
 
             var result = new List<File>();
             result.AddRange(files);
 
-            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray(), root);
             foreach(var collection in collections)
             {
                 var targetFiles = collection
@@ -85,13 +92,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        private async Task<List<FileCollection>> ProcessDirectories(string[] collections)
+        private async Task<List<FileCollection>> ProcessDirectories(string[] collections, string root)
         {
             var result = new List<FileCollection>();
             foreach(var collection in collections)
             {
                 var targetFiles = _fileSystem.GetFiles(collection);
-                var files = await ProcessFiles(targetFiles.ToArray());
+                var files = await ProcessFiles(targetFiles.ToArray(), root);
 
                 result.Add(new FileCollection {
                     Name = collection,
@@ -101,17 +108,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        private async Task<List<File>> ProcessFiles(string[] files)
+        private async Task<List<File>> ProcessFiles(string[] files, string root)
         {
             var fileInfos = new List<IFileInfo>();
             foreach(var file in files)
             {
                 fileInfos.Add(_fileSystem.GetFile(file));
             }
-            return await ProcessFiles(fileInfos.ToArray());
+            return await ProcessFiles(fileInfos.ToArray(), root);
         }
 
-        private async Task<List<File>> ProcessFiles(IFileInfo[] files)
+        private async Task<List<File>> ProcessFiles(IFileInfo[] files, string root)
         {
             var result = new List<File>();
             foreach(var fileInfo in files)
@@ -120,7 +127,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 using var streamReader = new StreamReader(fileStream);
 
                 var rawContent = await streamReader.ReadToEndAsync();
-                var response = _metadataUtil.Retrieve<FileMetaData>(rawContent);
+                var response = _fileMetaDataProcessor.Parse(new MetadataCriteria {
+                    Content = rawContent,
+                    FileName = fileInfo.Name,
+                    FilePath = fileInfo.PhysicalPath,
+                    Root = root
+                });
 
                 var fileMeta = response.Data;
                 var fileContents = response.Content;

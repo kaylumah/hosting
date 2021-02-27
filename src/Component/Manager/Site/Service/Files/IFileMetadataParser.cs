@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 [Path.DirectorySeparatorChar.ToString()] = new FileMetaData()
                 {
-                    Layout = "default.html"
+                    // Layout = "default.html"
                 }
             };
         }
@@ -77,18 +77,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void Merge(FileMetaData target, FileMetaData source, string reason)
         {
-            if (target == null)
-            {
-                target = new FileMetaData();
-            }
-
             if (source != null)
             {
                 foreach (var entry in source)
                 {
                     if (target.ContainsKey(entry.Key))
                     {
-                        // TODO log that its overwritten...
+                        _logger.LogInformation($"Overwritting '{entry.Key}' with '{entry.Value}' instead of {target[entry.Key]} because '{reason}'");
+
                     }
                     target[entry.Key] = entry.Value;
                 }
