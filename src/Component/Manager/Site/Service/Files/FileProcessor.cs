@@ -17,10 +17,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly ILogger _logger;
         private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
         private readonly MetadataUtil _metadataUtil;
-        private readonly Dictionary<string, string> _extensionMapping = new Dictionary<string, string>()
-        {
-            { ".md", ".html" }
-        };
 
         private readonly SiteInfo _siteInfo;
 
@@ -205,9 +201,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private string RetrieveExtension(string fileName)
         {
             var ext = Path.GetExtension(fileName);
-            if (_extensionMapping.ContainsKey(ext))
+            if (_siteInfo.ExtensionMapping.ContainsKey(ext))
             {
-                return _extensionMapping[ext];
+                return _siteInfo.ExtensionMapping[ext];
             }
             return ext;
         }

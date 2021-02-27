@@ -1,5 +1,9 @@
 {
     "X": {
+        "ExtensionMapping": 
+        {
+            ".md": ".html"
+        },
         "Collections": [
             {
                 "Name": "posts",
@@ -7,7 +11,7 @@
             },
             {
                 "Name": "drafts",
-                "Output": false
+                "Output": true
             }
         ],
         "Defaults": [
