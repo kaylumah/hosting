@@ -35,72 +35,77 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
-            var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
-            var rootFile = directoryContents.First();
-            var root = rootFile.PhysicalPath.Replace(rootFile.Name, string.Empty);
+            var result = new List<File>();
 
-            var directoriesToProcessAsCollection = directoryContents
-                .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
-            var filesWithoutCollections = directoryContents.Where(info => 
-                !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
-            );
-            
-            var files = 
-                await ProcessFiles(
-                    filesWithoutCollections
-                    .Select(x => x.Name)
-                    .ToArray(),
-                    root
+            var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
+            if (directoryContents.Count() > 0)
+            {
+                var rootFile = directoryContents.First();
+                var root = rootFile.PhysicalPath.Replace(rootFile.Name, string.Empty);
+
+                var directoriesToProcessAsCollection = directoryContents
+                    .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
+                var filesWithoutCollections = directoryContents.Where(info =>
+                    !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
                 );
 
-            var result = new List<File>();
-            result.AddRange(files);
+                var files =
+                    await ProcessFiles(
+                        filesWithoutCollections
+                        .Select(x => x.Name)
+                        .ToArray(),
+                        root
+                    );
 
-            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray(), root);
-            foreach(var collection in collections)
-            {
-                var targetFiles = collection
-                    .Files
-                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
-                    .ToList();
-                _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
-                var keyName = collection.Name[1..];
-                var exists = _siteInfo.Collections.Contains(keyName);
-                if (!exists)
-                {
-                    _logger.LogInformation($"{keyName} is not a collection, treated as directory");
-                    result.AddRange(targetFiles);
-                }
+                result.AddRange(files);
 
-                if (exists && _siteInfo.Collections[keyName].Output)
+                var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray(), root);
+                foreach (var collection in collections)
                 {
-                    _logger.LogInformation($"{keyName} is a collection, processing as collection");
-                    targetFiles = targetFiles
-                        .Select(x => {
-                            x.MetaData.Collection = keyName;
-                            return x;
-                        })
+                    var targetFiles = collection
+                        .Files
+                        .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                         .ToList();
-                    result.AddRange(targetFiles);
-                }
-                else
-                {
-                    _logger.LogInformation($"{keyName} is a collection, but output == false");
+                    _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+                    var keyName = collection.Name[1..];
+                    var exists = _siteInfo.Collections.Contains(keyName);
+                    if (!exists)
+                    {
+                        _logger.LogInformation($"{keyName} is not a collection, treated as directory");
+                        result.AddRange(targetFiles);
+                    }
+
+                    if (exists && _siteInfo.Collections[keyName].Output)
+                    {
+                        _logger.LogInformation($"{keyName} is a collection, processing as collection");
+                        targetFiles = targetFiles
+                            .Select(x =>
+                            {
+                                x.MetaData.Collection = keyName;
+                                return x;
+                            })
+                            .ToList();
+                        result.AddRange(targetFiles);
+                    }
+                    else
+                    {
+                        _logger.LogInformation($"{keyName} is a collection, but output == false");
+                    }
                 }
             }
-
             return result;
         }
 
         private async Task<List<FileCollection>> ProcessDirectories(string[] collections, string root)
         {
             var result = new List<FileCollection>();
-            foreach(var collection in collections)
+            foreach (var collection in collections)
             {
                 var targetFiles = _fileSystem.GetFiles(collection);
                 var files = await ProcessFiles(targetFiles.ToArray(), root);
 
-                result.Add(new FileCollection {
+                result.Add(new FileCollection
+                {
                     Name = collection,
                     Files = files.ToArray()
                 });
@@ -111,7 +116,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private async Task<List<File>> ProcessFiles(string[] files, string root)
         {
             var fileInfos = new List<IFileInfo>();
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 fileInfos.Add(_fileSystem.GetFile(file));
             }
@@ -121,13 +126,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private async Task<List<File>> ProcessFiles(IFileInfo[] files, string root)
         {
             var result = new List<File>();
-            foreach(var fileInfo in files)
+            foreach (var fileInfo in files)
             {
                 var fileStream = fileInfo.CreateReadStream();
                 using var streamReader = new StreamReader(fileStream);
 
                 var rawContent = await streamReader.ReadToEndAsync();
-                var response = _fileMetaDataProcessor.Parse(new MetadataCriteria {
+                var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
+                {
                     Content = rawContent,
                     FileName = fileInfo.Name,
                     FilePath = fileInfo.PhysicalPath,
@@ -137,7 +143,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var fileMeta = response.Data;
                 var fileContents = response.Content;
 
-                fileMeta = Process(fileMeta);
                 DetermineOutputLocation(fileInfo, fileMeta);
 
                 var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
@@ -146,34 +151,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     fileContents = preprocessor.Execute(fileContents);
                 }
 
-                result.Add(new File {
+                result.Add(new File
+                {
                     MetaData = fileMeta,
                     Content = fileContents,
                     Name = Path.GetFileName(fileMeta.Uri)
                 });
             }
-            return result;
-        }
-
-        private FileMetaData Process(FileMetaData source)
-        {
-            var result = new FileMetaData();
-
-            // TODO extend with defaults
-            // TODO extend with collection / path defaults
-            
-            if (source != null)
-            {
-                foreach(var entry in source)
-                {
-                    if (result.ContainsKey(entry.Key))
-                    {
-                        // TODO log that its overwritten...
-                    }
-                    result[entry.Key] = entry.Value;
-                }
-            }
-
             return result;
         }
 

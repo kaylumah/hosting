@@ -38,13 +38,13 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     public class SiteInfo
     {
         [DataMember]
-        public Dictionary<string, string> ExtensionMapping { get;set; }
+        public Dictionary<string, string> ExtensionMapping { get;set; } = new Dictionary<string, string>();
 
         [DataMember]
-        public Defaults[] Defaults { get; set; }
+        public Defaults[] Defaults { get; set; } = new Defaults[] {};
 
         [DataMember]
-        public Collections Collections { get;set; }
+        public Collections Collections { get;set; } = new Collections();
     }
 
     [DataContract]
