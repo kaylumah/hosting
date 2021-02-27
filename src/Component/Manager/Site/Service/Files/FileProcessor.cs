@@ -74,23 +74,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         _logger.LogInformation($"{keyName} is not a collection, treated as directory");
                         result.AddRange(targetFiles);
                     }
-
-                    if (exists && _siteInfo.Collections[keyName].Output)
-                    {
-                        _logger.LogInformation($"{keyName} is a collection, processing as collection");
-                        targetFiles = targetFiles
-                            .Select(x =>
-                            {
-                                x.MetaData.Collection = keyName;
-                                return x;
-                            })
-                            .ToList();
-                        result.AddRange(targetFiles);
-                    }
                     else
                     {
-                        _logger.LogInformation($"{keyName} is a collection, but output == false");
+                        if (exists && _siteInfo.Collections[keyName].Output)
+                        {
+                            _logger.LogInformation($"{keyName} is a collection, processing as collection");
+                            targetFiles = targetFiles
+                                .Select(x =>
+                                {
+                                    x.MetaData.Collection = keyName;
+                                    return x;
+                                })
+                                .ToList();
+                            result.AddRange(targetFiles);
+                        }
+                        else
+                        {
+                            _logger.LogInformation($"{keyName} is a collection, but output == false");
+                        }
                     }
+
+
                 }
             }
             return result;
