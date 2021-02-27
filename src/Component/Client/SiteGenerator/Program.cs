@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
@@ -61,10 +62,15 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
             var siteConfiguration = new SiteConfiguration();
             configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
-            
+
+            Stopwatch watch = new Stopwatch();
+            Console.WriteLine("Start Site Generation");
+            watch.Start();
             await siteManager.GenerateSite(new GenerateSiteRequest {
                 Configuration = siteConfiguration
             });
+            watch.Stop();
+            Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
         }
     }
 
