@@ -139,15 +139,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
                 {
                     Content = rawContent,
-                    FileName = fileInfo.Name,
-                    FilePath = fileInfo.PhysicalPath,
-                    Root = root
+                    FileName = fileInfo.Name
                 });
 
                 var fileMeta = response.Data;
                 var fileContents = response.Content;
-
-                DetermineOutputLocation(fileInfo, fileMeta);
 
                 var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
                 if (preprocessor != null)
@@ -163,39 +159,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 });
             }
             return result;
-        }
-
-        private void DetermineOutputLocation(IFileInfo fileInfo, FileMetaData metaData)
-        {
-            // TODO
-            metaData.Permalink = "/:year/:month/:day/:name:ext";
-
-            var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
-            var match = Regex.Match(fileInfo.Name, pattern);
-
-            var outputFileName = match.FileNameByPattern();
-            var fileDate = match.DateByPattern();
-            if (fileDate != null)
-            {
-                metaData["date"] = fileDate;
-            }
-            var outputExtension = RetrieveExtension(outputFileName);
-
-            var result = metaData.Permalink
-                .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy")}")
-                .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM")}")
-                .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd")}");
-
-            result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
-                .Replace(":ext", outputExtension);
-
-            if (result.StartsWith("/"))
-            {
-                result = result[1..];
-            }
-
-            metaData.Uri = result;
-            metaData.Remove(nameof(metaData.Permalink).ToLower());
         }
 
         private string RetrieveExtension(string fileName)
