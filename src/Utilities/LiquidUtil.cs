@@ -76,8 +76,8 @@ namespace Kaylumah.Ssg.Utilities
 
         public async Task<RenderResult[]> Render(RenderRequest[] requests)
         {
-            GlobalFunctions.Instance.BaseUrl = "my-baseurl";
-            GlobalFunctions.Instance.Url = "http://example.com";
+            //GlobalFunctions.Instance.BaseUrl = "my-baseurl";
+            GlobalFunctions.Instance.Url = "https://localhost:5001";
             var renderedResults = new List<RenderResult>();
             var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
             var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
