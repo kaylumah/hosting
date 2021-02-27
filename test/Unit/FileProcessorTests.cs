@@ -71,7 +71,7 @@ namespace Test.Unit
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
             var testFile = result.Single(x => x.Name.Equals("test.txt"));
-            testFile.MetaData["Collection"].Should().Be("subdir");
+            testFile.MetaData.Collection.Should().Be("subdir");
         }
 
         [Fact]

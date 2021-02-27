@@ -139,26 +139,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             });
             
             var collections = processed
-                .Where(x => x.MetaData.ContainsKey("Collection"))
-                .Select(x => x.MetaData["Collection"] as string)
+                .Where(x => x.MetaData.Collection != null)
+                .Select(x => x.MetaData.Collection)
                 .Distinct();
             
             foreach(var collection in collections)
             {
                 siteInfo.Collections.Add(collection,
                     processed
-                    .Where(x => x.MetaData.ContainsKey("Collection") 
-                        && x.MetaData["Collection"].Equals(collection))
+                    .Where(x => x.MetaData.Collection != null 
+                        && x.MetaData.Collection.Equals(collection))
                     .Select(x => x.MetaData)
                     .ToList()
                 );
             }
 
-            siteInfo.Collections["pages"] = processed
-                .Where(x => !x.MetaData.ContainsKey("Collection"))
-                .Where(x => Path.GetExtension(x.Name).Equals(".html"))
-                //.Where(x => !"index.html".Equals(x.Name) && !"404.html".Equals(x.Name))
-                .Select(x => x.MetaData).ToList();
+            // siteInfo.Collections["pages"] = processed
+            //     .Where(x => !x.MetaData.ContainsKey("Collection"))
+            //     .Where(x => Path.GetExtension(x.Name).Equals(".html"))
+            //     //.Where(x => !"index.html".Equals(x.Name) && !"404.html".Equals(x.Name))
+            //     .Select(x => x.MetaData).ToList();
 
             // var pages = processed.Select(x => new PageData {});
             var renderRequests = processed.Select(x => new RenderRequest {

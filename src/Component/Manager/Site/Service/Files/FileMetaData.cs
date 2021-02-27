@@ -40,5 +40,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 this.SetValue(nameof(Uri), value);
             }
         }
+
+        public string Collection
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Collection));
+            }
+            set
+            {
+                this.SetValue(nameof(Collection), value);
+            }
+        }
     }
 }
