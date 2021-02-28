@@ -38,28 +38,7 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     public class SiteInfo
     {
         [DataMember]
-        public Defaults[] Defaults { get; set; } = new Defaults[] {};
-
-        [DataMember]
         public Collections Collections { get;set; } = new Collections();
-    }
-
-    [DataContract]
-    public class Defaults
-    {
-        [DataMember]
-        public Scope Scope { get; set; }
-        [DataMember]
-        public Dictionary<string, object> Values { get; set; }
-    }
-
-    [DataContract]
-    public class Scope
-    {
-        [DataMember]
-        public string Path { get; set; }
-        [DataMember]
-        public string Type { get; set; }
     }
 
     [DataContract]
