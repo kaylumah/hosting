@@ -56,13 +56,16 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
                     { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
             });
 
-            configurationBuilder.AddEnvironmentVariables();
+            // configurationBuilder.AddEnvironmentVariables();
 
             if (args != null)
             {
                 configurationBuilder.AddCommandLine(args);
             }
             IConfiguration configuration = configurationBuilder.Build();
+            var root = (IConfigurationRoot)configuration;
+            var debugView = root.GetDebugView();
+            Console.WriteLine(debugView);
 
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder => builder.AddConsole());
