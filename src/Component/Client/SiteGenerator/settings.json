@@ -23,17 +23,6 @@
                 "Name": "drafts",
                 "Output": false
             }
-        ],
-        "Defaults": [
-            {
-                "Scope": {
-                    "Path": "1",
-                    "Type": "2"
-                },
-                "Values": {
-                    "layout": "default"
-                }
-            }
         ]
     }
 }
