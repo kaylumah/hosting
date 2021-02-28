@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 .icon::before {
     display: none;
@@ -56,6 +55,7 @@
 
 .svg-inline--fa {
     margin-right: 0.5rem;
+
 }
 
 .theme-kaylumah {
@@ -66,6 +66,11 @@
 
 h2 a
 {
+    /* marginLeft: '-1em', paddingRight: '0.5em'*/
     @apply icon icon-duotone icon-hashtag theme-kaylumah;
     /*opacity-0 hover:opacity-100*/
 }
+
+
+@tailwind utilities;
+
