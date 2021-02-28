@@ -51,7 +51,7 @@ jobs:
       - name: Download a single artifact
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: dist-folder
       - name: Use Node.js 15.x
         uses: actions/setup-node@v1
         with:
