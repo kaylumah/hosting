@@ -66,7 +66,7 @@
 
 h2 a
 {
-    /*@apply icon icon-duotone icon-hashtag theme-kaylumah;*/
+    @apply icon icon-duotone icon-hashtag theme-kaylumah;
 }
 
 h2 a:hover::before {
@@ -75,6 +75,19 @@ h2 a:hover::before {
   color: var(--prime-color);
   font-size: 150%;
   transform: translate(-3.2rem, -15%);
+}
+
+a.external::after {
+  position: absolute;
+  display: none;
+  padding-left:2px;
+  font-weight: 400;
+  content: "\f08e";
+  font-family: "Font Awesome 5 Regular";
+}
+
+a.external svg {
+  margin-left: .25em;
 }
 
 
