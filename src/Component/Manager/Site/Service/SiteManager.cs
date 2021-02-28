@@ -38,33 +38,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger = logger;
         }
 
-        private BuildData GetBuildData()
-        {
-            var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
-
-            var version = "1.0.0+LOCALBUILD";
-            if (info.Version.Length > 6)
-            {
-                version = info.Version;
-            }
-            var appVersion = version.Substring(0, version.IndexOf('+'));
-            var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
-            var shortGitHash = gitHash.Substring(0, 7);
-            var repositoryType = info.Metadata["RepositoryType"];
-            var repositoryUrl = info.Metadata["RepositoryUrl"];
-            var sourceBaseUrl = repositoryUrl.Replace($".{repositoryType}", "/commit");
-
-            return new BuildData()
-            {
-                Time = DateTimeOffset.Now,
-                Version = appVersion,
-                Copyright = info.Copyright,
-                GitHash = gitHash,
-                ShortGitHash = shortGitHash,
-                SourceBaseUri = sourceBaseUrl
-            };
-        }
-
         private Dictionary<string, object> ParseData(string dataDirectory)
         {
             var extensions = new string[] { ".yml" };
@@ -85,7 +58,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            var buildInfo = GetBuildData();
+            var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            var buildInfo = new BuildData(info);
             var siteInfo = new SiteData()
             {
                 Data = ParseData(request.Configuration.DataDirectory),
