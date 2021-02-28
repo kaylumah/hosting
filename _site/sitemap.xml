@@ -7,3 +7,4 @@
     </url>
     {% endfor %}
 </urlset>
+<!-- https://github.com/jekyll/jekyll-sitemap/blob/master/lib/sitemap.xml -->
