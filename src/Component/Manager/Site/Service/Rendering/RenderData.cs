@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 
@@ -60,8 +62,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public object GetPages()
         {
-            //return Collections["pages"];
-            return new object[] {};
+            return _files
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
+                .Select(x => new {
+                    Url = x.MetaData.Uri,
+                    x.LastModified
+                });
         }
     }
 

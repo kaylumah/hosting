@@ -51,7 +51,7 @@ namespace Kaylumah.Ssg.Utilities
             var relativeSource = RelativeUrl(source);
             if (!string.IsNullOrWhiteSpace(Instance.Url))
             {
-                return Path.Combine(Instance.Url, relativeSource[1..]);
+                return Path.Combine(Instance.Url, relativeSource);
             }
             return relativeSource;
         }
