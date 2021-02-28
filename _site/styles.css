@@ -1,3 +1,71 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.icon::before {
+    display: none;
+}
+
+.icon-solid::before,
+.icon-regular::before,
+.icon-light::before {
+    font-family: "Font Awesome 5 Pro";
+}
+
+.icon-brand::before {
+    font-family: "Font Awesome 5 Brands";
+}
+
+.icon-duotone::before {
+    font-family: "Font Awesome 5 Duotone";
+}
+
+.icon-solid::before, .icon-duotone::before {
+    font-weight: 900;
+}
+
+.icon-regular::before {
+    font-weight: 400;
+}
+
+.icon-light::before {
+    font-weight: 300;
+}
+
+.icon-brand::before {
+    font-weight: 400;
+}
+
+/* BEGIN */
+.icon-chainlink::before {
+    content: "\f0c1";
+}
+
+.icon-external-link::before {
+    content: "\f08e";
+    /* https://fontawesome.com/icons/external-link?style=duotone */
+}
+
+.icon-hashtag::before {
+    content: "\f292";
+    /* https://fontawesome.com/icons/hashtag?style=duotone */
+}
+
+
+/* END */
+
+.svg-inline--fa {
+    margin-right: 0.5rem;
+}
+
+.theme-kaylumah {
+    --fa-secondary-opacity: 1.0;
+    --fa-primary-color: #4cae50;
+    --fa-secondary-color: #55557b;
+}
+
+h2 a
+{
+    @apply icon icon-duotone icon-hashtag theme-kaylumah;
+    /*opacity-0 hover:opacity-100*/
+}
