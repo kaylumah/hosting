@@ -8,13 +8,7 @@
             {
                 "Path": "",
                 "Values": {
-                    "Layout": "A"
-                }
-            },
-            {
-                "Path": "2021",
-                "Values": {
-                    "Author": "A"
+                    "Author": "max"
                 }
             }
         ]
@@ -27,7 +21,7 @@
             },
             {
                 "Name": "drafts",
-                "Output": true
+                "Output": false
             }
         ],
         "Defaults": [
