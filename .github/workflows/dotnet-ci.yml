@@ -74,3 +74,15 @@ jobs:
             !node_modules
       # - run: npm test
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
