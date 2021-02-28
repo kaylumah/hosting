@@ -69,6 +69,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dist
-          path: .
+          path: |
+            .
+            !node_modules
       # - run: npm test
 
