@@ -66,9 +66,15 @@
 
 h2 a
 {
-    /* marginLeft: '-1em', paddingRight: '0.5em'*/
-    @apply icon icon-duotone icon-hashtag theme-kaylumah;
-    /*opacity-0 hover:opacity-100*/
+    /*@apply icon icon-duotone icon-hashtag theme-kaylumah;*/
+}
+
+h2 a:hover::before {
+  content: '#';
+  position: absolute;
+  color: var(--prime-color);
+  font-size: 150%;
+  transform: translate(-3.2rem, -15%);
 }
 
 
