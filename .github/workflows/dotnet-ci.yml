@@ -43,3 +43,20 @@ jobs:
         path: |
           dist
 
+  prepare:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+
