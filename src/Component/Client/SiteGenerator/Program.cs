@@ -92,7 +92,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
     {
         public static IServiceCollection AddFileSystem(this IServiceCollection services, IConfiguration configuration, string rootDirectory)
         {
-            services.Configure<SiteInfo>(configuration.GetSection("X"));
+            services.Configure<SiteInfo>(configuration.GetSection("Site"));
             services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
 
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
