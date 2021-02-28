@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Utilities
         public string Url { get;set; }
         public string BaseUrl { get; set; }
 
-        public static string DateToXmlschema(DateTime date)
+        public static string DateToXmlschema(DateTimeOffset date)
         {
             return date.ToUniversalTime().ToString("o");
         }
