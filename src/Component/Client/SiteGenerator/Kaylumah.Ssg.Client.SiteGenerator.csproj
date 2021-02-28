@@ -9,6 +9,8 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(DotNetPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(DotNetPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="$(DotNetPackageVersion)" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -17,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="settings.json">
+    <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -40,16 +40,28 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         static async Task Main(string[] args)
         {
             ShowKaylumahLogo();
-            var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("settings.json")
-                .AddInMemoryCollection(new Dictionary<string, string> {
+
+            // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
+            var configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddJsonFile("appsettings.json");
+
+            // todo UserSecrets?
+
+            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
                     { $"{nameof(SiteConfiguration)}:Source", "_site" },
                     { $"{nameof(SiteConfiguration)}:Destination", "dist" },
                     { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
                     { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
                     { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
                     { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
-                });
+            });
+
+            configurationBuilder.AddEnvironmentVariables();
+
+            if (args != null)
+            {
+                configurationBuilder.AddCommandLine(args);
+            }
             IConfiguration configuration = configurationBuilder.Build();
 
             IServiceCollection services = new ServiceCollection();
