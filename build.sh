@@ -15,4 +15,4 @@ dotnet test --configuration $CONFIGURATION --no-build --verbosity normal /p:Coll
 
 # Generate coverage report
 # Publish coverage report
-
+dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll"
