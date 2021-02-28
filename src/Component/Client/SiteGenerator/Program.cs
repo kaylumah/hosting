@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         {
             ShowKaylumahLogo();
             var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile(Path.Combine(Environment.CurrentDirectory, "settings.json"))
+                .AddJsonFile("settings.json")
                 .AddInMemoryCollection(new Dictionary<string, string> {
                     { $"{nameof(SiteConfiguration)}:Source", "_site" },
                     { $"{nameof(SiteConfiguration)}:Destination", "dist" },
