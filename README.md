@@ -177,3 +177,6 @@ dotnet publish -c Release /property:CommitHash=MyHash
     <AssemblyMetadata Include="Bar" Value="Baz" />
     <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
   </ItemGroup>
+
+
+  https://jekyllrb.com/tutorials/convert-site-to-jekyll/#9-simplify-your-site-with-includes
