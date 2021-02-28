@@ -68,6 +68,7 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: site
+          name: dist
+          path: .
       # - run: npm test
 
