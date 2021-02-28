@@ -64,6 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             return _files
                 .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
+                .Where(file => !"404.html".Equals(file.Name))
                 .Select(x => new {
                     Url = x.MetaData.Uri,
                     x.LastModified
