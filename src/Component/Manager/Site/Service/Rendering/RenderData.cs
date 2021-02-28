@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -6,7 +7,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     class RenderData : IRenderModel, IMetadata
     {
         public BuildData Build { get;set; }
-        public SiteData Site { get;set; } = new SiteData();
+        public SiteData Site { get;set; }
         public PageData Page { get;set; }
         public string Content => Page?.Content ?? string.Empty;
         public string Title => Page?.Title ?? Site?.Title ?? null;
@@ -18,24 +19,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
     {
+        private readonly SiteInfo _siteInfo;
+        private readonly File[] _files;
         public string Title => GetTitle();
         public string Description => GetDescription();
         public string Language => GetLanguage();
         public string Author => GetAuthor();
 
+        public SiteData(SiteInfo siteInfo, File[] files)
+        {
+            _siteInfo = siteInfo;
+            _files = files;
+        }
+
         private string GetTitle()
         {
-            return string.Empty;
+            return _siteInfo.Title;
         }
 
         private string GetDescription()
         {
-            return string.Empty;
+            return _siteInfo.Description;
         }
 
         private string GetLanguage()
         {
-            return string.Empty;
+            return _siteInfo.Lang;
         }
 
         private string GetAuthor()

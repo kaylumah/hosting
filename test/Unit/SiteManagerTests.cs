@@ -12,29 +12,29 @@ using Microsoft.Extensions.Options;
 
 namespace Test.Unit
 {
-    public class SiteManagerTests
-    {
-        [Fact(Skip = "wip")]
-        public async Task Test_SiteManager_GenerateSite()
-        {
-            var configurationMock = Options.Create<SiteInfo>(new SiteInfo { });
+    // public class SiteManagerTests
+    // {
+    //     [Fact(Skip = "wip")]
+    //     public async Task Test_SiteManager_GenerateSite()
+    //     {
+    //         var configurationMock = Options.Create<SiteInfo>(new SiteInfo { });
 
-            var directoryContentsMock = new Mock<IDirectoryContents>();
-            directoryContentsMock.Setup(dc => dc.GetEnumerator()).Returns(new List<IFileInfo>().GetEnumerator());
-            directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
-            var loggerMock = new Mock<ILogger<SiteManager>>();
-            var fileProviderMock = new Mock<IFileProvider>();
-            fileProviderMock.Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
-            var fileProvider = fileProviderMock.Object;
-            var fileSystem = new FileSystem(fileProvider);
-            var artifactAccessMock = new Mock<IArtifactAccess>();
+    //         var directoryContentsMock = new Mock<IDirectoryContents>();
+    //         directoryContentsMock.Setup(dc => dc.GetEnumerator()).Returns(new List<IFileInfo>().GetEnumerator());
+    //         directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
+    //         var loggerMock = new Mock<ILogger<SiteManager>>();
+    //         var fileProviderMock = new Mock<IFileProvider>();
+    //         fileProviderMock.Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
+    //         var fileProvider = fileProviderMock.Object;
+    //         var fileSystem = new FileSystem(fileProvider);
+    //         var artifactAccessMock = new Mock<IArtifactAccess>();
 
-            var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
-            IFileProcessor fileProcessor = new FileProcessor(fileSystem, new Mock<ILogger<FileProcessor>>().Object, new IContentPreprocessorStrategy[] { }, configurationMock, fileMetadataParserMock);
-            ISiteManager sut = new SiteManager(fileProcessor, artifactAccessMock.Object, fileSystem, loggerMock.Object);
-            await sut.GenerateSite(new GenerateSiteRequest {
-                Configuration = new SiteConfiguration {}
-            });
-        }
-    }
+    //         var fileMetadataParserMock = new Mock<IFileMetadataParser>().Object;
+    //         IFileProcessor fileProcessor = new FileProcessor(fileSystem, new Mock<ILogger<FileProcessor>>().Object, new IContentPreprocessorStrategy[] { }, configurationMock, fileMetadataParserMock);
+    //         ISiteManager sut = new SiteManager(fileProcessor, artifactAccessMock.Object, fileSystem, loggerMock.Object);
+    //         await sut.GenerateSite(new GenerateSiteRequest {
+    //             Configuration = new SiteConfiguration {}
+    //         });
+    //     }
+    // }
 }

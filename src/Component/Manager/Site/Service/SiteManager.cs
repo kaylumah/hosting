@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {    
@@ -25,17 +26,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
         private readonly IFileProcessor _fileProcessor;
+        private readonly SiteInfo _siteInfo;
 
         public SiteManager(
             IFileProcessor fileProcessor,
             IArtifactAccess artifactAccess,
             IFileSystem fileSystem,
-            ILogger<SiteManager> logger)
+            ILogger<SiteManager> logger,
+            IOptions<SiteInfo> options)
         {
             _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
             _fileSystem = fileSystem;
             _logger = logger;
+            _siteInfo = options.Value;
         }
 
         private Dictionary<string, object> ParseData(string dataDirectory)
@@ -58,9 +62,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
+            var processed = await _fileProcessor.Process(new FileFilterCriteria
+            {
+                DirectoriesToSkip = new string[] {
+                    request.Configuration.LayoutDirectory,
+                    request.Configuration.PartialsDirectory,
+                    request.Configuration.DataDirectory,
+                    request.Configuration.AssetDirectory
+                },
+                FileExtensionsToTarget = new string[] {
+                    ".md",
+                    ".html",
+                    ".xml",
+                    ".css",
+                    ".js",
+                    ".json",
+                    ".txt"
+                }
+            });
+
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
             var buildInfo = new BuildData(info);
-            var siteInfo = new SiteData()
+            var siteInfo = new SiteData(_siteInfo, processed.ToArray())
             {
                 Data = ParseData(request.Configuration.DataDirectory),
                 Collections = new Dictionary<string, object>()
@@ -93,24 +116,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     // }
                 }
             };
-
-            var processed = await _fileProcessor.Process(new FileFilterCriteria {
-                DirectoriesToSkip = new string[] {
-                    request.Configuration.LayoutDirectory,
-                    request.Configuration.PartialsDirectory,
-                    request.Configuration.DataDirectory,
-                    request.Configuration.AssetDirectory
-                },
-                FileExtensionsToTarget = new string[] {
-                    ".md",
-                    ".html",
-                    ".xml",
-                    ".css",
-                    ".js",
-                    ".json",
-                    ".txt"
-                }
-            });
             
             var collections = processed
                 .Where(x => x.MetaData.Collection != null)

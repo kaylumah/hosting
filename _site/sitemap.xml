@@ -6,3 +6,5 @@
     </url>
     {% endfor %}
 </urlset>
+
+{{ site | to_json }}
