@@ -3,6 +3,7 @@ layout: post
 author: max
 title: Guiding my thoughts home
 cover_image: /assets/images/posts/20200801/welcome/cover.png
+image: /assets/images/posts/20200801/welcome/cover.png
 tags: Announcement
 comments: false
 # draft: false

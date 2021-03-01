@@ -1,6 +1,6 @@
 ---
 layout: 'post.html'
-image: 'assets/images/social_preview.png'
+# image: 'assets/images/social_preview.png'
 type: 'Post'
 title: 'Using C# code in your git hooks'
 description: 'This is desc..'
