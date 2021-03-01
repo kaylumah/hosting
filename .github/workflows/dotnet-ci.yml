@@ -87,4 +87,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: .
-          cname: v2.kaylumah.nl
+          # cname: v2.kaylumah.nl
