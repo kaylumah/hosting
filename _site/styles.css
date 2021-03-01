@@ -1,10 +1,12 @@
 @tailwind base;
 @tailwind components;
 
+/* general reset/setup styling for icons - needed on all */
 .icon::before {
     display: none;
 }
 
+/* defining the right font-family/font-face for each style */
 .icon-solid::before,
 .icon-regular::before,
 .icon-light::before {
@@ -19,6 +21,7 @@
     font-family: "Font Awesome 5 Duotone";
 }
 
+/* defining the right weight for each style */
 .icon-solid::before, .icon-duotone::before {
     font-weight: 900;
 }
@@ -35,7 +38,7 @@
     font-weight: 400;
 }
 
-/* BEGIN */
+/* defining the right unicode values for each icon */
 .icon-chainlink::before {
     content: "\f0c1";
 }
@@ -50,12 +53,8 @@
     /* https://fontawesome.com/icons/hashtag?style=duotone */
 }
 
-
-/* END */
-
 .svg-inline--fa {
     margin-right: 0.5rem;
-
 }
 
 .theme-kaylumah {
@@ -64,19 +63,21 @@
     --fa-secondary-color: #55557b;
 }
 
-h2 a
+/* h2 a
 {
     @apply icon icon-duotone icon-hashtag theme-kaylumah;
-}
+} */
+
 
 h2 a:hover::before {
-  /*https://timdeschryver.dev/blog/reading-code-coverage*/
+  https://timdeschryver.dev/blog/reading-code-coverage
   content: '#';
   position: absolute;
   color: var(--prime-color);
   font-size: 150%;
   transform: translate(-3.2rem, -15%);
 }
+
 
 a.external::after {
   position: absolute;
