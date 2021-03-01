@@ -1,0 +1,174 @@
+- name: Workflow4People Liferay Integratie
+  position: Intern
+  company: NLcom
+  description: >
+    I did my first internship at NLcom.
+    As an intern, I was responsible for the complete development cycle.
+    I developed a portlet in Liferay to interface / communicate with Workflow4People.
+  technologies:
+    - Grails
+    - Groovy
+    - Java
+  from: 2014-09-01
+  to: 2015-02-01
+- name: JustAsk V2
+  position: Junior Software Engineer
+  company: NLcom
+  description: >
+    NLcom hired me to work parttime on version 2 of their JustAsk questionnaire platform.
+    It included some mobile development via Xamarin and backend development using grails.
+  technologies:
+    - AngularJS
+    - Groovy
+    - Xamarin
+    - C#
+  from: 2015-02-01
+  to: 2016-02-01
+- name: Sollicitatie Opvolgsysteem
+  position: Graduate intern
+  company: QNH
+  description: >
+    
+  technologies:
+    - Angular
+    - C#
+    - Dotnet Core
+  from: 2016-02-01
+  to: 2016-07-01
+- name: Cloud InControl
+  position: Junior Software Engineer
+  company: QNH
+  description: >
+    
+  technologies:
+    - Azure
+    - C#
+    - ASP.NET Web MVC
+    - AngularJS
+  from: 2016-09-01
+  to: 2017-01-01
+- name: Turbine - DAF Specsheets
+  position: Junior Software Engineer
+  via: QNH
+  company: DAF Trucks
+  description: >
+    
+  technologies:
+  from: 2017-01-01
+  to: 2017-02-28
+- name: Turbine - DAF 3D Visualization
+  position: Junior Software Engineer
+  via: QNH
+  company: DAF Trucks
+  description: >
+    
+  technologies:
+  from: 2017-01-01
+  to: 2017-02-28
+- name: Turbine - Sekisui Esheet
+  position: Junior Software Engineer
+  company: Sekisui Alveo
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2017-01-01
+  to: 2017-02-28
+- name: Vertex Platform
+  position: Junior Software Engineer
+  company: Energy Essentials
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2017-03-01
+  to: 2017-08-01
+- name: RAP
+  position: Junior Software Engineer
+  company: Gemeente Zaanstad
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2017-03-01
+  to: 2017-08-01
+- name: OinB
+  position: Software Engineer
+  company: Hollandsnieuwe
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2017-08-01
+  to: 2018-07-01
+- name: OinB v2 poc
+  position: Software Engineer
+  company: Hollandsnieuwe
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2018-06-01
+  to: 2018-07-01
+- name: Clifford Chance
+  position: Software Engineer
+  company: Clifford Chance
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2018-08-01
+  to: 2018-08-31
+- name: DTH
+  position: Software Engineer
+  company: VodafoneZiggo
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2018-08-31
+  to: 2018-12-31
+- name: Clutter
+  position: Software Engineer
+  company: VodafoneZiggo
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2018-08-31
+  to: 2018-12-31
+- name: Coverage
+  position: Software Engineer
+  company: VodafoneZiggo
+  via: QNH
+  description: >
+    
+  technologies:
+  from: 2018-08-31
+  to: 2018-12-31
+- name: SelfService portal
+  position: Software Engineer
+  company: VodafoneZiggo
+  via: ilionx
+  description: >
+    
+  technologies:
+  from: 2019-01-01
+  to: 2020-03-31
+- name: iCaptur
+  position: Software Engineer
+  company: iCaptur
+  via: ilionx
+  description: >
+    
+  technologies:
+  from: 2020-05-01
+  to: 2020-05-31
+- name: Copper
+  position: Software Engineer
+  company: ilionx
+  description: >
+    
+  technologies:
+  from: 2020-04-01
+  to:
