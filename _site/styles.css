@@ -70,7 +70,7 @@
 
 
 h2 a:hover::before {
-  https://timdeschryver.dev/blog/reading-code-coverage
+  /* https://timdeschryver.dev/blog/reading-code-coverage */
   content: '#';
   position: absolute;
   color: var(--prime-color);
