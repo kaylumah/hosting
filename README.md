@@ -189,3 +189,6 @@ The <meta> tag defines metadata about an HTML document. Metadata is data (inform
 <meta name="keywords" content="HTML, CSS, JavaScript">
 <meta name="description" content="Free Web tutorials for HTML and CSS">
 <meta name="author" content="John Doe">
+https://www.geeksforgeeks.org/whats-the-difference-between-meta-name-and-meta-property/
+https://www.wordstream.com/meta-tags 
+https://www.searchenginejournal.com/technical-seo/meta-robots-tags-robots-txt/#close
