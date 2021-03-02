@@ -66,12 +66,15 @@ namespace Kaylumah.Ssg.Utilities
 
     public class LiquidUtil
     {
+        private readonly IPlugin[] _plugins;
         private readonly string _layoutDirectory = "_layouts";
         private readonly string _templateDirectory = "_includes";
         private readonly IFileSystem _fileSystem;
         public LiquidUtil(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
+            _plugins = new IPlugin[] { new SeoPlugin(), new FeedPlugin() };
+
         }
 
         public async Task<RenderResult[]> Render(RenderRequest[] requests)
@@ -98,8 +101,7 @@ namespace Kaylumah.Ssg.Utilities
                     context.PushGlobal(scriptObject);
                     scriptObject.Import(typeof(GlobalFunctions));
 
-                    var plugins = new IPlugin[] { new SeoPlugin() };
-                    foreach(var plugin in plugins)
+                    foreach(var plugin in _plugins)
                     {
                         scriptObject.Import(plugin.Name, new Func<string>(() => plugin.Render(request.Model)));
                         // scriptObject.Import(plugin.Name, new Func<string>(() => 
