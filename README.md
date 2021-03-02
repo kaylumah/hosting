@@ -180,3 +180,12 @@ dotnet publish -c Release /property:CommitHash=MyHash
 
 
   https://jekyllrb.com/tutorials/convert-site-to-jekyll/#9-simplify-your-site-with-includes
+
+
+The <meta> tag defines metadata about an HTML document. Metadata is data (information) about data.
+
+<meta> tags always go inside the <head> element, and are typically used to specify character set, page description, keywords, author of the document, and viewport settings.
+
+<meta name="keywords" content="HTML, CSS, JavaScript">
+<meta name="description" content="Free Web tutorials for HTML and CSS">
+<meta name="author" content="John Doe">
