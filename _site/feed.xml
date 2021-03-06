@@ -5,7 +5,8 @@
     <id>{{ page.uri | absolute_url }}</id>
     <updated>{{ build.time | date_to_xmlschema }}</updated>
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
-    <title>Feed Title</title>
+    <title>{{ site.title | html.escape }}</title>
+    <subtitle>{{ site.description }}</subtitle>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
     {% assign post_author = site.data.authors[post.author] %}
