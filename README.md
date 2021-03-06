@@ -245,3 +245,5 @@ https://socialsharepreview.com/?url=https://kaylumah.nl
 
 https://sitechecker.pro/nl/open-graph/
 https://www.riffonlinemarketing.nl/blog/social-media-marketing/wat-is-het-open-graph-protocol-en-hoe-en-waarom-gebruik-je-het/
+
+https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markups
