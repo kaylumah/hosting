@@ -3,6 +3,8 @@ type: 'Announcement'
 title: Guiding my thoughts home
 cover_image: /assets/images/posts/20200801/welcome/cover.png
 image: /assets/images/posts/20200801/welcome/cover.png
+description: >
+    Moving all content to my own platform
 tags:
     - Announcement
 ---
