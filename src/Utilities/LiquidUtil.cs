@@ -26,45 +26,6 @@ namespace Kaylumah.Ssg.Utilities
         public string Content { get;set; }
     }
 
-    public class GlobalFunctions
-    {
-        public static readonly GlobalFunctions Instance = new GlobalFunctions();
-        public string Url { get;set; }
-        public string BaseUrl { get; set; }
-
-        public static string DateToXmlschema(DateTimeOffset date)
-        {
-            return date.ToUniversalTime().ToString("o");
-        }
-
-        public static string RelativeUrl(string source)
-        {
-            if (!string.IsNullOrWhiteSpace(Instance.BaseUrl))
-            {
-                return Path.Combine($"{Path.DirectorySeparatorChar}", Instance.BaseUrl, source);
-            }
-            return source;
-        }
-
-        public static string AbsoluteUrl(string source)
-        {
-            var relativeSource = RelativeUrl(source);
-            if (!string.IsNullOrWhiteSpace(Instance.Url))
-            {
-                return Path.Combine(Instance.Url, relativeSource);
-            }
-            return relativeSource;
-        }
-
-        public static string ToJson(object o)
-        {
-            var options = new JsonSerializerOptions {
-                WriteIndented = true
-            };
-            return JsonSerializer.Serialize(o, options);
-        }
-    }
-
     public class LiquidUtil
     {
         private readonly IPlugin[] _plugins;
@@ -80,8 +41,6 @@ namespace Kaylumah.Ssg.Utilities
 
         public async Task<RenderResult[]> Render(RenderRequest[] requests)
         {
-            //GlobalFunctions.Instance.BaseUrl = "my-baseurl";
-            GlobalFunctions.Instance.Url = "https://localhost:5001";
             var renderedResults = new List<RenderResult>();
             var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
             var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
