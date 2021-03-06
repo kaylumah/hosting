@@ -41,7 +41,7 @@
 
 
 {% if seo_tag.site.data.organization.twitter %}  
-  <meta name="twitter:site" content="@{{ seo_tag.site.data.organization.twitter | remove '@' }}" />"
+  <meta name="twitter:site" content="@{{ seo_tag.site.data.organization.twitter | remove '@' }}" />
   {% if seo_tag.site.data.authors[seo_tag.page.author].twitter %}
     <meta name="twitter:creator" content="@{{ seo_tag.site.data.authors[seo_tag.page.author].twitter | remove:'@' }}" />
   {% endif %}
