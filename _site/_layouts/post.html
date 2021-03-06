@@ -1,8 +1,16 @@
 ---
 layout: 'default.html'
 ---
-<div class="prose lg:prose-lg mx-auto px-4 lg:px-0">
-    {{ content }}
-    {% include 'share.html' %}
-    {% include 'disqus.html' %}
-</div>
+<article>
+    <header class="prose lg:prose-lg mx-auto px-4 lg:px-0">
+        <h1>{{ page.title }}</h1>
+        <img src="{{ page.cover_image }}" />
+    </header>
+    <div class="mt-2 prose lg:prose-lg mx-auto px-4 lg:px-0">
+        {{ content }}
+    </div>
+    <footer class="mx-auto px-4">
+        {% include 'share.html' %}
+        {% include 'disqus.html' %}
+    </footer>
+</article>
