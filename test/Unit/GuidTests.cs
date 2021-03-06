@@ -18,7 +18,7 @@ namespace Test.Unit
             var nsRoot2 = GuidUtility.Create(GuidUtility.DnsNamespace, "app.kaylumah.nl", 5);
             var nsRoot3 = GuidUtility.Create(GuidUtility.DnsNamespace, "kaylumah.nl/other", 5);
 
-            var title = "guiding-my-thoughts-home.html";
+            var title = "2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html";
             var id1a = GuidUtility.Create(nsRoot1, title, 5);
             var id1b = GuidUtility.Create(nsRoot1, title, 5);
             var id2 = GuidUtility.Create(nsRoot2, title, 5);

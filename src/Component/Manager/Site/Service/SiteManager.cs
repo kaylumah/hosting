@@ -140,11 +140,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             //     .Select(x => x.MetaData).ToList();
 
             // var pages = processed.Select(x => new PageData {});
+
+            var siteGuid = _siteInfo.Url.CreateSiteGuid();
+            siteInfo.Id = siteGuid.ToString();
             var renderRequests = processed.Select(x => new RenderRequest {
                 Model = new RenderData {
                     Build = buildInfo,
                     Site = siteInfo,
-                    Page = new PageData(x)
+                    Page = new PageData(x) {
+                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
+                    }
                 },
                 TemplateName = x.MetaData.Layout
             });

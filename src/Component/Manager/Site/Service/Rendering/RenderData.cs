@@ -23,6 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         private readonly SiteInfo _siteInfo;
         private readonly File[] _files;
+        public string Id { get; set; }
         public string Title => GetTitle();
         public string Description => GetDescription();
         public string Language => GetLanguage();
@@ -74,6 +75,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
     {
+        public string Id { 
+            get {
+                return this.GetValue<string>(nameof(Id));
+            }
+            set {
+                this.SetValue(nameof(Id), value);
+            }
+        }
         public string Title => this.GetValue<string>(nameof(Title));
         public string Description => this.GetValue<string>(nameof(Description));
         public string Language => this.GetValue<string>(nameof(Language));

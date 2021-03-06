@@ -5,6 +5,18 @@ using System.Text;
 
 namespace Kaylumah.Ssg.Utilities
 {
+    public static class GuidUtilityExtensions
+    {
+        public static Guid CreateSiteGuid(this string site)
+        {
+            return GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
+        }
+
+        public static Guid CreatePageGuid(this Guid guid, string url)
+        {
+            return GuidUtility.Create(guid, url, 5);
+        }
+    }
     public static class GuidUtility
     {
         // https://gist.github.com/angularsen/92a3ba9d9a94d250accd257f9f5a3d54
