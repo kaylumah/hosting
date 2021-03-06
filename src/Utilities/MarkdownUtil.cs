@@ -50,7 +50,7 @@ namespace Kaylumah.Ssg.Utilities
                 // .UseDiagrams()
                 // .UseAutoLinks()
                 // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
-                // .UseGenericAttributes()
+                .UseGenericAttributes()
                 .Build();
 
             var doc = Markdown.Parse(source, pipeline);
@@ -63,6 +63,19 @@ namespace Kaylumah.Ssg.Utilities
                 headingBlock.Inline = null;
                 inline.AppendChild(previousInline);
                 headingBlock.Inline = inline;
+            }
+
+            var anchorTags = doc.Descendants<LinkInline>();
+            foreach(var anchor in anchorTags)
+            {
+                if (anchor is LinkInline link && !link.IsImage)
+                {
+                    if (!anchor.Url.StartsWith(GlobalFunctions.Instance.Url))
+                    {
+                        link.GetAttributes().AddClass("external");
+                    }
+                    
+                }
             }
 
             // Render the doc
