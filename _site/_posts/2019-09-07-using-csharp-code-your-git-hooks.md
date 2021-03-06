@@ -4,6 +4,7 @@ layout: 'post.html'
 type: 'Post'
 title: 'Using C# code in your git hooks'
 description: 'This is desc..'
+cover_image: /assets/images/posts/20190907/githooks/cover.png
 ---
 
 ## Why use hooks?
