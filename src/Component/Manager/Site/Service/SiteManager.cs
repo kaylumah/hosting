@@ -85,6 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             });
 
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            _logger.LogInformation(info.Metadata["RepositoryUrl"]);
             var buildInfo = new BuildData(info);
             var siteGuid = _siteInfo.Url.CreateSiteGuid();
             var siteInfo = new SiteData(_siteInfo, processed.ToArray())
