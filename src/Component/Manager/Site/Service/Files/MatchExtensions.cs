@@ -19,7 +19,7 @@ namespace System.Text.RegularExpressions
             return null;
         }
 
-        public static DateTime? DateByPattern(this System.Text.RegularExpressions.Match match)
+        public static DateTimeOffset? DateByPattern(this System.Text.RegularExpressions.Match match)
         {
             if (match.Success)
             {

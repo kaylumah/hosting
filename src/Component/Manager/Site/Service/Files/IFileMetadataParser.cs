@@ -64,7 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
             var result = _metadataUtil.Retrieve<FileMetaData>(criteria.Content);
-            var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink);
+            var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
 
             var paths = new List<string>() { string.Empty };
             var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
@@ -130,13 +130,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        private string DetermineOutputLocation(string fileName, string permalink)
+        private string DetermineOutputLocation(string fileName, string permalink, FileMetaData metaData)
         {
             var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
             var match = Regex.Match(fileName, pattern);
 
             var outputFileName = match.FileNameByPattern();
             var fileDate = match.DateByPattern();
+            if (fileDate != null)
+            {
+                metaData["date"] = fileDate;
+            }
             // if (fileDate != null)
             // {
             //     metaData["date"] = fileDate;

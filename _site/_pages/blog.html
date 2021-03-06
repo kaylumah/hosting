@@ -10,7 +10,7 @@ layout: 'collection.html'
   </p>
 </div>
 <div class="mt-6 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
-    {% assign posts = site.collections['posts'] | array.sort "date" %}
+    {% assign posts = site.collections['posts'] | array.sort "date" | array.reverse %}
     {% for post in posts %}
       {% include 'post-card.html' %}
     {% endfor %}
