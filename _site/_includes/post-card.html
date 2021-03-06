@@ -32,8 +32,8 @@
           </a>
         </p>
         <div class="flex space-x-1 text-sm text-gray-500">
-          <time datetime="2020-03-16">
-            {{ post.lastmodified }}
+          <time datetime="{{ post.lastmodified | date_to_pattern 'yyyy-MM-dd' }}">
+            {{ post.lastmodified | date_to_pattern 'yyyy/MM/dd' }}
           </time>
           <!-- <span aria-hidden="true">
             &middot;

@@ -10,6 +10,11 @@ namespace Kaylumah.Ssg.Utilities
         public string Url { get; set; }
         public string BaseUrl { get; set; }
 
+        public static string DateToPattern(DateTimeOffset date, string pattern)
+        {
+            return date.ToUniversalTime().ToString(pattern);
+        }
+
         public static string DateToXmlschema(DateTimeOffset date)
         {
             return date.ToUniversalTime().ToString("o");
