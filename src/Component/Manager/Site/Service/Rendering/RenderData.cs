@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -87,11 +88,34 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Description => this.GetValue<string>(nameof(Description));
         public string Language => this.GetValue<string>(nameof(Language));
         public string Author => this.GetValue<string>(nameof(Author));
-        public string Content { get; }
+        public string Content {
+            get
+            {
+                return this.GetValue<string>(nameof(Content));
+            }
+            set
+            {
+                this.SetValue(nameof(Content), value);
+            }
+        }
+
+        public DateTimeOffset LastModified
+        {
+            get
+            {
+                return this.GetValue<DateTimeOffset>(nameof(LastModified));
+            }
+            set
+            {
+                this.SetValue(nameof(LastModified), value);
+            }
+        }
+        
 
         public PageData(File file) : base(file.MetaData)
         {
             Content = file.Content;
+            LastModified = file.LastModified;
         }
     }
 

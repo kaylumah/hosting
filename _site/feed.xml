@@ -14,10 +14,10 @@
     <entry>
         <id>{{ post.uri | absolute_url }}</id>
         <title>{{ post.title }}</title>
-        <updated>{{ build.time | date_to_xmlschema }}</updated>
+        <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
         <link href="{{ post.uri | absolute_url }}" />
-        <content>
-            {{ post | to_json }}
+        <content type="html">
+            {{ post.content | string.strip | html.escape }}
         </content>
     </entry>
     {% endfor %}

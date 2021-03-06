@@ -83,8 +83,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
             var buildInfo = new BuildData(info);
+            var siteGuid = _siteInfo.Url.CreateSiteGuid();
             var siteInfo = new SiteData(_siteInfo, processed.ToArray())
             {
+                Id = siteGuid.ToString(),
                 Data = ParseData(request.Configuration.DataDirectory),
                 Collections = new Dictionary<string, object>()
                 {
@@ -128,7 +130,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     processed
                     .Where(x => x.MetaData.Collection != null 
                         && x.MetaData.Collection.Equals(collection))
-                    .Select(x => x.MetaData)
+                    .Select(x => new PageData(x) {
+                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
+                    })
                     .ToList()
                 );
             }
@@ -141,8 +145,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             // var pages = processed.Select(x => new PageData {});
 
-            var siteGuid = _siteInfo.Url.CreateSiteGuid();
-            siteInfo.Id = siteGuid.ToString();
+
             var renderRequests = processed.Select(x => new RenderRequest {
                 Model = new RenderData {
                     Build = buildInfo,
