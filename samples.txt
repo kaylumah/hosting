@@ -1,0 +1,44 @@
+{
+	"description": "A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák",
+	"@type": "WebSite",
+	"publisher": {
+		"@type": "Organization",
+		"logo": {
+			"@type": "ImageObject",
+			"url": "https://kaylumah.nl/assets/logo.svg"
+		}
+	},
+	"headline": "Kaylumah, Max Hamulyák Portfolio &amp; Blog",
+	"sameAs": ["https://twitter.com/maxhamulyak", "https://www.linkedin.com/in/maxhamulyak", "https://github.com/maxhamulyak", "https://twitter.com/kaylumah", "https://www.linkedin.com/company/kaylumah", "https://github.com/Kaylumah", "https://medium.com/@kaylumah", "https://dev.to/kaylumah", "https://maxhamulyak.nl"],
+	"url": "https://kaylumah.nl/",
+	"name": "Max Hamulyák",
+	"image": "https://kaylumah.nl/assets/images/social_preview.png",
+	"@context": "https://schema.org"
+}
+
+{
+	"description": "I have decided to pick up blogging again. I wrote a blog post in September 2019 on GitHooks in the past that you can find here. At the time, I decided to use the platform Medium to voice my thoughts. After I tweeted too @shanselman I got way more views on the article then I had expected. So when in 2020, I decided to found Kaylumah, I knew I wanted more than just a regular portfolio website. Since I am learning a lot from my mentor over at ilionx, I want to share lessons learned and start building my brand and identity.",
+	"@type": "BlogPosting",
+	"publisher": {
+		"@type": "Organization",
+		"logo": {
+			"@type": "ImageObject",
+			"url": "https://kaylumah.nl/assets/logo.svg"
+		},
+		"name": "max"
+	},
+	"headline": "Guiding my thoughts home",
+	"dateModified": "2020-08-01T00:00:00+00:00",
+	"datePublished": "2020-08-01T00:00:00+00:00",
+	"author": {
+		"@type": "Person",
+		"name": "max"
+	},
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": "https://kaylumah.nl/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html"
+	},
+	"url": "https://kaylumah.nl/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html",
+	"image": "https://kaylumah.nl/assets/images/social_preview.png",
+	"@context": "https://schema.org"
+}
