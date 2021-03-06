@@ -98,14 +98,21 @@ h2 a svg {
   transform: translate(-3.2rem, -15%);
 } */
 
+a.external {
+  --fa-secondary-opacity: 1.0;
+  --fa-primary-color: #4cae50;
+  --fa-secondary-color: #55557b;
+}
 
 a.external::after {
   position: absolute;
   display: none;
   padding-left:2px;
-  font-weight: 400;
+  /* font-weight: 400; */
+  font-weight: 900;
   content: "\f08e";
-  font-family: "Font Awesome 5 Regular";
+  /* font-family: "Font Awesome 5 Regular"; */
+  font-family: "Font Awesome 5 Duotone";
 }
 
 a.external svg {
