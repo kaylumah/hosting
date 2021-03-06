@@ -31,7 +31,7 @@ dotnet tool install dotnet-format
 mkdir .githooks
 ```
 
-## Pre-Commit Hook
+### Pre-Commit Hook
 
 To demonstrate we are going to create a plain hook. To check if it is working **git commit -m “”** (using empty commit message will abort the commit). You should see the line pre-commit hook printed.
 
@@ -164,7 +164,7 @@ if (exitCode != 0) {
 // All checks have passed
 ```
 
-## Prepare-commit-message hook
+### Prepare-commit-message hook
 
 Thus far we have not really used anything we need C# for; Admittedly we are using C# to execute shell commands. For our next hook we are going to use System.IO. Imagine as a team you have a commit-message convention. Lets say you want each commit message to include a reference to your issue tracker.
 
@@ -212,7 +212,7 @@ Create a new helper called **util.csx**
 public class Util{public static string CommandLineArgument(IList<string> Args, int position){if (Args.Count() >= position + 1){return Args\[position\];}return string.Empty;}}
 ```
 
-## Commit-msg Hook
+### Commit-msg Hook
 
 The final local git hook I took for a spin is the commit-msg hook. It uses a regex to make sure the commit message is according the specified format.
 
@@ -235,7 +235,7 @@ var match = Regex.Match(message, regex);if (!match.Success) {
 }
 ```
 
-## pre push Hook
+### pre push Hook
 
 It is even possible to use NuGet packages in our hooks. Let say we want to prevent pushes to master (perhaps not even commits?) we can read a config file using Newtonsoft.Json and look for a protected branch and abort.
 
