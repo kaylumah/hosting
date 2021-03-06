@@ -69,7 +69,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => !"404.html".Equals(file.Name))
                 .Select(x => new {
                     Url = x.MetaData.Uri,
-                    x.LastModified
+                    x.LastModified,
+                    Sitemap = x.MetaData["sitemap"]
                 });
         }
     }
