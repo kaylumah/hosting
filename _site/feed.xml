@@ -6,14 +6,21 @@
     <updated>{{ build.time | date_to_xmlschema }}</updated>
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
     <title>Feed Title</title>
-    <author>
-        <name>Max</name>
-    </author>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
+    {% assign post_author = site.data.authors[post.author] %}
     <entry>
         <id>{{ post.uri | absolute_url }}</id>
         <title>{{ post.title }}</title>
+        <author>
+            <name>{{ post_author.full_name }}</name>
+            {% if post_author.email %}
+            <email>{{ post_author.email }}</email>
+            {% endif %}
+            {% if post_author.uri %}
+            <uri>{{ post_author.uri }}</uri>
+            {% endif %}
+        </author>
         <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
