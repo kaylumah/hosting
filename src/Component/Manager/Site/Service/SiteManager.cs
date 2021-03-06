@@ -62,6 +62,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
+            GlobalFunctions.Instance.Url = _siteInfo.Url;
+            GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+            
             var processed = await _fileProcessor.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] {
@@ -161,8 +164,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // var renderRequests = processed.ToRenderRequests();
 
             var liquidUtil = new LiquidUtil(_fileSystem);
-            GlobalFunctions.Instance.Url = _siteInfo.Url;
-            GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+
             var renderResults = await liquidUtil.Render(renderRequests.ToArray());
 
             var artifacts = processed.Select((t, i) => {
