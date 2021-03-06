@@ -1,4 +1,5 @@
-- name: Workflow4People Liferay Integratie
+- 
+  name: Workflow4People Liferay Integratie
   position: Intern
   company: NLcom
   description: >
@@ -11,7 +12,8 @@
     - Java
   from: 2014-09-01
   to: 2015-02-01
-- name: JustAsk V2
+- 
+  name: JustAsk V2
   position: Junior Software Engineer
   company: NLcom
   description: >
@@ -24,22 +26,22 @@
     - C#
   from: 2015-02-01
   to: 2016-02-01
-- name: Sollicitatie Opvolgsysteem
+- 
+  name: Sollicitatie Opvolgsysteem
   position: Graduate intern
   company: QNH
-  description: >
-    
+  description:
   technologies:
     - Angular
     - C#
     - Dotnet Core
   from: 2016-02-01
   to: 2016-07-01
-- name: Cloud InControl
+- 
+  name: Cloud InControl
   position: Junior Software Engineer
   company: QNH
-  description: >
-    
+  description:
   technologies:
     - Azure
     - C#
@@ -47,128 +49,128 @@
     - AngularJS
   from: 2016-09-01
   to: 2017-01-01
-- name: Turbine - DAF Specsheets
+- 
+  name: Turbine - DAF Specsheets
   position: Junior Software Engineer
   via: QNH
   company: DAF Trucks
-  description: >
-    
+  description:
   technologies:
   from: 2017-01-01
   to: 2017-02-28
-- name: Turbine - DAF 3D Visualization
+- 
+  name: Turbine - DAF 3D Visualization
   position: Junior Software Engineer
   via: QNH
   company: DAF Trucks
-  description: >
-    
+  description:
   technologies:
   from: 2017-01-01
   to: 2017-02-28
-- name: Turbine - Sekisui Esheet
+- 
+  name: Turbine - Sekisui Esheet
   position: Junior Software Engineer
   company: Sekisui Alveo
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2017-01-01
   to: 2017-02-28
-- name: Vertex Platform
+- 
+  name: Vertex Platform
   position: Junior Software Engineer
   company: Energy Essentials
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2017-03-01
   to: 2017-08-01
-- name: RAP
+- 
+  name: RAP
   position: Junior Software Engineer
   company: Gemeente Zaanstad
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2017-03-01
   to: 2017-08-01
-- name: OinB
+- 
+  name: OinB
   position: Software Engineer
   company: Hollandsnieuwe
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2017-08-01
   to: 2018-07-01
-- name: OinB v2 poc
+- 
+  name: OinB v2 poc
   position: Software Engineer
   company: Hollandsnieuwe
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2018-06-01
   to: 2018-07-01
-- name: Clifford Chance
+- 
+  name: Clifford Chance
   position: Software Engineer
   company: Clifford Chance
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2018-08-01
   to: 2018-08-31
-- name: DTH
+- 
+  name: DTH
   position: Software Engineer
   company: VodafoneZiggo
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2018-08-31
   to: 2018-12-31
-- name: Clutter
+- 
+  name: Clutter
   position: Software Engineer
   company: VodafoneZiggo
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2018-08-31
   to: 2018-12-31
-- name: Coverage
+- 
+  name: Coverage
   position: Software Engineer
   company: VodafoneZiggo
   via: QNH
-  description: >
-    
+  description:
   technologies:
   from: 2018-08-31
   to: 2018-12-31
-- name: SelfService portal
+- 
+  name: SelfService portal
   position: Software Engineer
   company: VodafoneZiggo
   via: ilionx
-  description: >
-    
+  description:
   technologies:
   from: 2019-01-01
   to: 2020-03-31
-- name: iCaptur
+- 
+  name: iCaptur
   position: Software Engineer
   company: iCaptur
   via: ilionx
-  description: >
-    
+  description:
   technologies:
   from: 2020-05-01
   to: 2020-05-31
-- name: Copper
+- 
+  name: Copper
   position: Software Engineer
   company: ilionx
-  description: >
-    
+  description:
   technologies:
   from: 2020-04-01
   to:
