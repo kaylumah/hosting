@@ -58,9 +58,10 @@ namespace Kaylumah.Ssg.Utilities
 
         public static string ToJson(object o)
         {
-            return JsonSerializer.Serialize(o, new JsonSerializerOptions {
+            var options = new JsonSerializerOptions {
                 WriteIndented = true
-            });
+            };
+            return JsonSerializer.Serialize(o, options);
         }
     }
 
