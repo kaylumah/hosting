@@ -1,34 +1,18 @@
 <!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
-{% if seo_tag.title %}
-  <title>{{ seo_tag.title }}</title>
-{% endif %}
-
+{% if seo_tag.title %}<title>{{ seo_tag.title }}</title>{% endif %}
 <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
-
-{% if seo_tag.page_title %}
-  <meta property="og:title" content="{{ seo_tag.page_title }}" />
-{% endif %}
-
-{% if seo_tag.author.name %}
-  <meta name="author" content="{{ seo_tag.author.name }}" />
-{% endif %}
-
+{% if seo_tag.page_title %}<meta property="og:title" content="{{ seo_tag.page_title }}" />{% endif %}
+{% if seo_tag.author.name %}<meta name="author" content="{{ seo_tag.author.name }}" />{% endif %}
 <meta property="og:locale" content="{{ seo_tag.page_locale }}" />
-
 {% if seo_tag.description %}
-  <meta name="description" content="{{ seo_tag.description }}" />
-  <meta property="og:description" content="{{ seo_tag.description }}" />
+<meta name="description" content="{{ seo_tag.description }}" />
+<meta property="og:description" content="{{ seo_tag.description }}" />
 {% endif %}
-
 {% if site.url %}
-  <link rel="canonical" href="{{ seo_tag.canonical_url }}" />
-  <meta property="og:url" content="{{ seo_tag.canonical_url }}" />
+<link rel="canonical" href="{{ seo_tag.canonical_url }}" />
+<meta property="og:url" content="{{ seo_tag.canonical_url }}" />
 {% endif %}
-
-{% if seo_tag.site_title %}
-  <meta property="og:site_name" content="{{ seo_tag.site_title }}" />
-{% endif %}
-
+{% if seo_tag.site_title %}<meta property="og:site_name" content="{{ seo_tag.site_title }}" />{% endif %}
 {% if seo_tag.image %}
   <meta property="og:image" content="{{ seo_tag.image.path }}" />
   {% if seo_tag.image.height %}
@@ -43,14 +27,6 @@
   <meta property="og:type" content="article" />
   <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
 {% endif %}
-
-{% if paginator.previous_page %}
-  <link rel="prev" href="{{ paginator.previous_page_path | absolute_url }}" />
-{% endif %}
-{% if paginator.next_page %}
-  <link rel="next" href="{{ paginator.next_page_path | absolute_url }}" />
-{% endif %}
-
 
 {% if seo_tag.image %}
   <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" }}" />
