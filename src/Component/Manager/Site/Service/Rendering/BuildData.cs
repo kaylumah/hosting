@@ -24,8 +24,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var shortGitHash = gitHash.Substring(0, 7);
             var repositoryType = info.Metadata["RepositoryType"];
             var repositoryUrl = info.Metadata["RepositoryUrl"];
-            var sourceBaseUrl = repositoryUrl.Replace($".{repositoryType}", "/commit");
 
+            var index = repositoryUrl.LastIndexOf($".{repositoryType}");
+            var sourceBaseUrl = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
+            
             Time = DateTimeOffset.Now;
             Version = appVersion;
             Copyright = info.Copyright;
