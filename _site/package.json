@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "postcss styles.css -o compiled.css",
+    "build:prod": "NODE_ENV=production postcss styles.css -o compiled.css",
     "serve": "npx http-server"
   },
   "keywords": [],
