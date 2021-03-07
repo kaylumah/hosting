@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
             else
             {
-                SourceBaseUri = repositoryUrl;
+                SourceBaseUri = repositoryUrl + "/commit";
             }
 
             
