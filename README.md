@@ -93,3 +93,6 @@ dotnet publish -c Release /property:CommitHash=MyHash
 
 
 
+
+
+https://khalidabuhakmeh.com/parse-markdown-front-matter-with-csharp
