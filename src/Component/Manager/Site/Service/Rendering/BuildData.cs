@@ -25,15 +25,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var repositoryType = info.Metadata["RepositoryType"];
             var repositoryUrl = info.Metadata["RepositoryUrl"];
 
-            var index = repositoryUrl.LastIndexOf($".{repositoryType}");
-            var sourceBaseUrl = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
+            if (repositoryUrl.EndsWith($".{repositoryType}"))
+            {
+                var index = repositoryUrl.LastIndexOf($".{repositoryType}");
+                SourceBaseUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
+            }
+            else
+            {
+                SourceBaseUri = repositoryUrl;
+            }
+
             
             Time = DateTimeOffset.Now;
             Version = appVersion;
             Copyright = info.Copyright;
             GitHash = gitHash;
             ShortGitHash = shortGitHash;
-            SourceBaseUri = sourceBaseUrl;
         }
     }
 }
