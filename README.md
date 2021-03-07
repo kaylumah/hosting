@@ -193,34 +193,6 @@ https://www.geeksforgeeks.org/whats-the-difference-between-meta-name-and-meta-pr
 https://www.wordstream.com/meta-tags 
 https://www.searchenginejournal.com/technical-seo/meta-robots-tags-robots-txt/#close
 
-```cs
-            for(var i = 0; i < processed.Count(); i++)
-            {
-                var element = processed.ElementAt(i);
-                if (".html".Equals(Path.GetExtension(element.Name)))
-                {
-                    // https://html-agility-pack.net/knowledge-base/16645257/how-to-use-html-agility-pack-for-html-validations
-                    // https://html-agility-pack.net/knowledge-base/2354653/grabbing-meta-tags-and-comments-using-html-agility-pack
-                    var html = renderResults[i].Content;
-                    var document = new HtmlAgilityPack.HtmlDocument
-                    {
-                        OptionFixNestedTags = true
-                    };
-                    // html += "<p>ssds";
-                    document.LoadHtml(html);
-                    var errors = document.ParseErrors;
-                    bool hasHead = document.DocumentNode.SelectSingleNode("html/head") != null;
-                    bool hasBody = document.DocumentNode.SelectSingleNode("html/body") != null;
-
-                    var rootNode = document.DocumentNode.SelectSingleNode("html");
-
-                    var head = document.DocumentNode.SelectSingleNode("html/head");
-                    var metaTags = head.SelectNodes("meta");
-                    var titleTag = head.SelectSingleNode("title");
-                }
-            }
-```
-
 # maxhamulyak.github.io
 
 ```sh
