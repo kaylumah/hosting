@@ -3,6 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Identifiers\Kaylumah.Ssg.Utilities.Identifiers.csproj" />
     <ProjectReference Include="..\..\..\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
   </ItemGroup>
 
