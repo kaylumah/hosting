@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Utilities\Kaylumah.Ssg.Utilities.csproj" />
+    <ProjectReference Include="..\..\src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
     <ProjectReference Include="..\Utilities\Test.Utilities.csproj" />

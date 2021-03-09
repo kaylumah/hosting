@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
-    <ProjectReference Include="..\..\..\..\Utilities\Kaylumah.Ssg.Utilities.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\..\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
   </ItemGroup>
 
