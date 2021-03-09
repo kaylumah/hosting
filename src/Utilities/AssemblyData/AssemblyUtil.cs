@@ -22,25 +22,4 @@ namespace Kaylumah.Ssg.Utilities
             };
         }
     }
-
-    public class AssemblyInfo
-    {
-        public string Copyright { get;set; }
-        public string Version { get;set; }
-        public Dictionary<string, string> Metadata { get; set; }
-    }
-
-    public static class AssemblyExtensions
-    {
-        public static T GetAttribute<T>(this Assembly assembly)
-        {
-            return assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
-        }
-
-        public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
-        {
-            return assembly.GetCustomAttributes(typeof(T))
-                .Cast<T>();
-        }
-    }
 }
