@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Web;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -46,6 +47,12 @@ namespace Kaylumah.Ssg.Utilities
                 WriteIndented = true
             };
             return JsonSerializer.Serialize(o, options);
+        }
+
+        public static string Encode()
+        {
+            // https://github.com/scriban/scriban/blob/4ee719b54df1c4f58e4bfc7d863197674d693783/src/Scriban/Functions/HtmlFunctions.cs
+            return "";
         }
     }
 }
