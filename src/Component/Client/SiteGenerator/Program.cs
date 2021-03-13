@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Data.Yaml;
+using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator
 {
@@ -70,6 +73,8 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder => builder.AddConsole());
             services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory,  "_site"));
+            services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
+            services.AddSingleton<IYamlParser, YamlParser>();
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
             services.AddSingleton<ISiteManager, SiteManager>();
             var serviceProvider = services.BuildServiceProvider();

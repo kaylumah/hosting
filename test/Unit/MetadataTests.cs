@@ -4,6 +4,9 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
+using Ssg.Extensions.Data.Yaml;
+using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Xunit;
 
 namespace Test.Unit
@@ -24,7 +27,9 @@ namespace Test.Unit
 
             var loggerMock = new Mock<ILogger<FileMetadataParser>>();
             var optionsMock = Options.Create(new MetadataParserOptions());
-            IFileMetadataParser sut = new Kaylumah.Ssg.Manager.Site.Service.FileMetadataParser(loggerMock.Object, optionsMock);
+            IYamlParser yamlParser = new YamlParser();
+            IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
+            IFileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProvider, optionsMock);
             var result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.Data.Should().NotBeNull();
@@ -44,7 +49,9 @@ namespace Test.Unit
 
             var loggerMock = new Mock<ILogger<FileMetadataParser>>();
             var optionsMock = Options.Create(new MetadataParserOptions());
-            IFileMetadataParser sut = new Kaylumah.Ssg.Manager.Site.Service.FileMetadataParser(loggerMock.Object, optionsMock);
+            IYamlParser yamlParser = new YamlParser();
+            IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
+            IFileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProvider, optionsMock);
             var result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.Data.Should().NotBeNull();

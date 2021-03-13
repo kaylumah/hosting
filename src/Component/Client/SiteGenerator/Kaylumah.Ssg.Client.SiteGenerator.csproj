@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
     <ProjectReference Include="..\..\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
+    <ProjectReference Include="..\..\..\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,6 +8,7 @@ using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Moq;
+using Ssg.Extensions.Data.Yaml;
 using Test.Utilities;
 using Xunit;
 using YamlDotNet.Serialization;

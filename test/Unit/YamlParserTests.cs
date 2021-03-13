@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
+using Ssg.Extensions.Data.Yaml;
 using Xunit;
 
 namespace Test.Unit
 {
     public class YamlParserTests
     {
-        private readonly IParser _sut;
+        private readonly IYamlParser _sut;
 
         public YamlParserTests()
         {

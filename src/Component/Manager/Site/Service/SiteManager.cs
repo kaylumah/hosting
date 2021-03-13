@@ -11,6 +11,7 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {    
@@ -26,18 +27,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
         private readonly IFileProcessor _fileProcessor;
+        private readonly IYamlParser _yamlParser;
         private readonly SiteInfo _siteInfo;
 
         public SiteManager(
             IFileProcessor fileProcessor,
             IArtifactAccess artifactAccess,
             IFileSystem fileSystem,
+            IYamlParser yamlParser,
             ILogger<SiteManager> logger,
             IOptions<SiteInfo> options)
         {
             _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
             _fileSystem = fileSystem;
+            _yamlParser = yamlParser;
             _logger = logger;
             _siteInfo = options.Value;
         }
@@ -54,7 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var stream = file.CreateReadStream();
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
-                var result = new YamlParser().Parse<object>(raw);
+                var result = _yamlParser.Parse<object>(raw);
                 data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
             return data;

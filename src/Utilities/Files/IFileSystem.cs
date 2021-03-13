@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -26,10 +27,12 @@ namespace Kaylumah.Ssg.Utilities
     public class FileSystem : IFileSystem
     {
         private readonly IFileProvider _fileProvider;
+        private readonly IMetadataProvider _metadataProvider;
 
-        public FileSystem(IFileProvider fileProvider)
+        public FileSystem(IFileProvider fileProvider, IMetadataProvider metadataProvider)
         {
             _fileProvider = fileProvider;
+            _metadataProvider = metadataProvider;
         }
 
         public IDirectoryContents GetDirectoryContents(string path)
@@ -49,7 +52,7 @@ namespace Kaylumah.Ssg.Utilities
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
             var text = await streamReader.ReadToEndAsync();
-            var metadata = new MetadataUtil().Retrieve<TData>(text);
+            var metadata = _metadataProvider.Retrieve<TData>(text);
             return new File<TData>
             {
                 Encoding = encoding.WebName,

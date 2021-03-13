@@ -14,6 +14,9 @@ using Microsoft.Extensions.Options;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using FluentAssertions;
 using System.Linq;
+using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Ssg.Extensions.Data.Yaml;
 
 namespace Test.Unit
 {
@@ -35,8 +38,9 @@ namespace Test.Unit
                             new FakeFile("test.md")
                         })
                     });
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object,
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
                 Options.Create(new MetadataParserOptions() { 
                     ExtensionMapping = new Dictionary<string, string> {
                         { ".md", ".html" }
@@ -69,8 +73,9 @@ namespace Test.Unit
                             new FakeFile(Path.Combine(root, "test.txt"))
                         })
                     });
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, Options.Create(new MetadataParserOptions()));
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
             var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
@@ -115,8 +120,9 @@ namespace Test.Unit
                         })
                     }
                 );
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, Options.Create(new MetadataParserOptions()));
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
             var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
@@ -148,8 +154,9 @@ namespace Test.Unit
                     root,
                     new List<FakeDirectory>() {}
                 );
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, Options.Create(new MetadataParserOptions()));
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
             var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria {
                 DirectoriesToSkip = new string[] {},
@@ -173,8 +180,9 @@ namespace Test.Unit
                         })
                     }
                 );
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, Options.Create(new MetadataParserOptions()));
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
             var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {
@@ -200,8 +208,9 @@ namespace Test.Unit
                         })
                     }
                 );
-            var fileSystem = new FileSystem(fileProviderMock.Object);
-            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, Options.Create(new MetadataParserOptions()));
+            var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+            var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+            var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
             var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
             var result = await sut.Process(new FileFilterCriteria
             {

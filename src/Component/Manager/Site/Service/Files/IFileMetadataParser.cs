@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -52,18 +53,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class FileMetadataParser : IFileMetadataParser
     {
         private readonly ILogger _logger;
-        private readonly MetadataUtil _metadataUtil;
+        private readonly IMetadataProvider _metadataProvider;
         private readonly MetadataParserOptions _options;
-        public FileMetadataParser(ILogger<FileMetadataParser> logger, IOptions<MetadataParserOptions> options)
+        public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, IOptions<MetadataParserOptions> options)
         {
             _logger = logger;
-            _metadataUtil = new MetadataUtil();
+            _metadataProvider = metadataProvider;
             _options = options.Value;
         }
 
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
-            var result = _metadataUtil.Retrieve<FileMetaData>(criteria.Content);
+            var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
             var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
 
             var paths = new List<string>() { string.Empty };
