@@ -41,13 +41,10 @@
     <body>
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
-            <div class="overflow-y-auto">
             <main class="flex-1 py-4">
                 {{ content }}
             </main>
             {% include 'footer.html' %}
-            </div>
-
         </div>
         <script src="/assets/prism.js"></script>
     </body>
