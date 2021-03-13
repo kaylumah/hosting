@@ -115,5 +115,9 @@ a.external svg {
   margin-left: .25em;
 }
 
+.svg-inline--fa {
+    margin-right: 0.5rem;
+}
+
 @tailwind utilities;
 
