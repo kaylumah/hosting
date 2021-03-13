@@ -126,7 +126,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var collections = processed
                 .Where(x => x.MetaData.Collection != null)
                 .Select(x => x.MetaData.Collection)
-                .Distinct();
+                .Distinct()
+                .ToList();
+
+            for(var i = collections.Count - 1; i > 0; i--)
+            {
+                var collection = collections[i];
+                if (_siteInfo.Collections.Contains(collection))
+                {
+                    var collectionSettings = _siteInfo.Collections[collection];
+                    if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
+                    {
+                        if (_siteInfo.Collections.Contains(collectionSettings.TreatAs))
+                        {
+                            // todo log
+                            var collectionFiles = processed
+                                .Where(x => x.MetaData.Collection != null && x.MetaData.Collection.Equals(collection));
+                            foreach (var file in collectionFiles)
+                            {
+                                file.MetaData.Collection = collectionSettings.TreatAs;
+                            }
+                            collections.RemoveAt(i);
+                        }
+                    }
+                }
+            }
             
             foreach(var collection in collections)
             {

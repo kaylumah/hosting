@@ -4,5 +4,6 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     {
         public string Name { get; set; }
         public bool Output { get; set; }
+        public string TreatAs { get;set; }
     }
 }
