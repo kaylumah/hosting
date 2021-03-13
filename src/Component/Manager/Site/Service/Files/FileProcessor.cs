@@ -40,9 +40,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
             if (directoryContents.Count() > 0)
             {
-                var rootFile = directoryContents.First();
-                var root = rootFile.PhysicalPath.Replace(rootFile.Name, string.Empty);
-
                 var directoriesToProcessAsCollection = directoryContents
                     .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
                 var filesWithoutCollections = directoryContents.Where(info =>
@@ -53,13 +50,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     await ProcessFiles(
                         filesWithoutCollections
                         .Select(x => x.Name)
-                        .ToArray(),
-                        root
+                        .ToArray()
                     );
 
                 result.AddRange(files);
 
-                var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray(), root);
+                var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
                 foreach (var collection in collections)
                 {
                     var targetFiles = collection
@@ -100,13 +96,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        private async Task<List<FileCollection>> ProcessDirectories(string[] collections, string root)
+        private async Task<List<FileCollection>> ProcessDirectories(string[] collections)
         {
             var result = new List<FileCollection>();
             foreach (var collection in collections)
             {
                 var targetFiles = _fileSystem.GetFiles(collection);
-                var files = await ProcessFiles(targetFiles.ToArray(), root);
+                var files = await ProcessFiles(targetFiles.ToArray());
 
                 result.Add(new FileCollection
                 {
@@ -117,17 +113,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        private async Task<List<File>> ProcessFiles(string[] files, string root)
+        private async Task<List<File>> ProcessFiles(string[] files)
         {
             var fileInfos = new List<IFileInfo>();
             foreach (var file in files)
             {
                 fileInfos.Add(_fileSystem.GetFile(file));
             }
-            return await ProcessFiles(fileInfos.ToArray(), root);
+            return await ProcessFiles(fileInfos.ToArray());
         }
 
-        private async Task<List<File>> ProcessFiles(IFileInfo[] files, string root)
+        private async Task<List<File>> ProcessFiles(IFileInfo[] files)
         {
             var result = new List<File>();
             foreach (var fileInfo in files)
