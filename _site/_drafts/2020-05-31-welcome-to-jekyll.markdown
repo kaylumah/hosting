@@ -2,6 +2,7 @@
 layout: post
 author: max
 title:  "Welcome to Jekyll!"
+description: '...'
 date:   2020-05-31 14:32:11 +0200
 # categories: jekyll update
 category: jekyll

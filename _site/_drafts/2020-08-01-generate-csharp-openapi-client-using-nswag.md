@@ -2,6 +2,7 @@
 layout: post
 author: max
 title: NSWAG WIP
+description: '...'
 cover_image: /assets/images/posts/drafts/nswag/ToolchainDiagram.png
 tags:
     - C# 
