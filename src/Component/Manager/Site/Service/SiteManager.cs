@@ -60,6 +60,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return data;
         }
 
+        private void EnrichSiteWithTags(SiteData site, List<File> files)
+        {
+            var tags = files
+                .Where(x => x.MetaData.Tags != null)
+                .SelectMany(x => x.MetaData.Tags)
+                .Distinct();
+            foreach(var tag in tags)
+            {
+                var tagFiles = files.Where(x => x.MetaData.Tags != null && x.MetaData.Tags.Contains(tag)).ToList();
+                site.Tags.Add(tag, tagFiles);
+            }
+        }
+
         private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<File> files)
         {
             var collections = files
@@ -138,6 +151,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 Id = siteGuid.ToString(),
                 Data = ParseData(request.Configuration.DataDirectory),
+                Tags = new Dictionary<string, object>(),
                 Collections = new Dictionary<string, object>()
                 {
                     // { 
@@ -170,6 +184,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             };
 
             EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
+            EnrichSiteWithTags(siteInfo, processed.ToList());
 
             // siteInfo.Collections["pages"] = processed
             //     .Where(x => !x.MetaData.ContainsKey("Collection"))

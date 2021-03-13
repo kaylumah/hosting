@@ -60,6 +60,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public Dictionary<string, object> Collections { get;set; }
 
+        public Dictionary<string, object> Tags { get; set; }
+
         public object Pages => GetPages();
 
         public object GetPages()
@@ -137,5 +139,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Dictionary<string, object> Data { get; set; }
         Dictionary<string, object> Collections { get; set; }
+        Dictionary<string, object> Tags { get;set; }
     }
 }
