@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -50,6 +51,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             set
             {
                 this.SetValue(nameof(Collection), value);
+            }
+        }
+
+        public List<string> Tags
+        {
+            get
+            {
+                return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            }
+            set
+            {
+                this.SetValue(nameof(Tags), value);
             }
         }
     }
