@@ -1,15 +1,13 @@
 ---
-layout: post
-author: max
-title: NSWAG WIP
-description: '...'
-cover_image: /assets/images/posts/drafts/nswag/ToolchainDiagram.png
+title: "NSWAG WIP"
+description: "..."
+cover_image: "/assets/images/posts/drafts/nswag/ToolchainDiagram.png"
 tags:
-    - C# 
-    - OpenAPI
-    - ASP.NET Core
+    - "C#" 
+    - "OpenAPI"
+    - "ASP.NET Core"
 comments: false
-source_url: https://github.com/Kaylumah/lab-generate-csharp-openapi-client-using-nswag
+source_url: "https://github.com/Kaylumah/lab-generate-csharp-openapi-client-using-nswag"
 draft: true
 sitemap: false
 hidden: true

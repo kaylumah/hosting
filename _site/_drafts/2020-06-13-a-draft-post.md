@@ -1,9 +1,7 @@
 ---
-layout: post
-author: max
-description: '...'
-# title:  "Welcome to Jekyll!"
-image: https://cdn.pixabay.com/photo/2017/04/22/22/50/sea-2252564_1280.jpg
+title: "Welcome to Jekyll!"
+description: "..."
+image: "https://cdn.pixabay.com/photo/2017/04/22/22/50/sea-2252564_1280.jpg"
 ---
 
 # Intro
