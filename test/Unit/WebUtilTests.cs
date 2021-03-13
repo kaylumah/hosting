@@ -10,7 +10,7 @@ namespace Test.Unit
         public void Test1()
         {
             var sut = new Class1();
-            var input = "using-c#-in-your-git-hooks";
+            var input = "using-c#-in-your-git-hooks.html";
             
             var encodedInput = sut.Encode(input);
             var decoded = sut.Decode(encodedInput);
