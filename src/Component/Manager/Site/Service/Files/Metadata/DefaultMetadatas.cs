@@ -6,6 +6,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         protected override string GetKeyForItem(DefaultMetadata item)
         {
+            if (item.Scope != null)
+            {
+                return $"{item.Path}.{item.Scope}";
+            }
             return item.Path;
         }
     }
