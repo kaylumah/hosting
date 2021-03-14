@@ -222,5 +222,54 @@ namespace Test.Unit
             result.Data.Collection.Should().NotBeNull();
             result.Data.Collection.Should().Be("test");
         }
+
+        [Fact]
+        public void Test_FilemetadataParser_MultipleLayers()
+        {
+            // Arange
+            var options = Options.Create(new MetadataParserOptions
+            {
+                Defaults = new DefaultMetadatas {
+                    new DefaultMetadata {
+                        Path = string.Empty,
+                        Values = new FileMetaData {
+                            Layout = "default.html"
+                        }
+                    },
+                    new DefaultMetadata {
+                        Path = "test",
+                        Values = new FileMetaData {
+                            Collection = "test"
+                        }
+                    }
+                }
+            });
+            var metadataProviderMock = new Mock<IMetadataProvider>();
+
+            metadataProviderMock
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData> { });
+
+            var loggerMock = new Mock<ILogger<FileMetadataParser>>();
+            var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+            var criteria = new MetadataCriteria
+            {
+                Content = string.Empty,
+                FileName = "posts/2021/file.html",
+                Permalink = "posts/2021/:name:ext"
+            };
+
+            // Act
+            var result = sut.Parse(criteria);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Data.Should().NotBeNull();
+            result.Data.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
+            result.Data.Uri.Should().NotBeNull();
+            result.Data.Uri.Should().Be("posts/2021/file.html");
+            result.Data.Layout.Should().NotBeNull();
+            result.Data.Layout.Should().Be("default.html");
+        }
     }
 }
