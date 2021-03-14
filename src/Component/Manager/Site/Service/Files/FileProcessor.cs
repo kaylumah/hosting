@@ -63,22 +63,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                         .ToList();
                     _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
-                    var keyName = collection.Name[1..];
-                    var exists = _siteInfo.Collections.Contains(keyName);
+                    var exists = _siteInfo.Collections.Contains(collection.Name);
                     if (!exists)
                     {
-                        _logger.LogInformation($"{keyName} is not a collection, treated as directory");
+                        _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
                         result.AddRange(targetFiles);
                     }
                     else
                     {
-                        if (exists && _siteInfo.Collections[keyName].Output)
+                        if (exists && _siteInfo.Collections[collection.Name].Output)
                         {
-                            _logger.LogInformation($"{keyName} is a collection, processing as collection");
+                            _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
                             targetFiles = targetFiles
                                 .Select(x =>
                                 {
-                                    x.MetaData.Collection = keyName;
+                                    x.MetaData.Collection = collection.Name;
                                     return x;
                                 })
                                 .ToList();
@@ -86,11 +85,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         }
                         else
                         {
-                            _logger.LogInformation($"{keyName} is a collection, but output == false");
+                            _logger.LogInformation($"{collection.Name} is a collection, but output == false");
                         }
                     }
-
-
                 }
             }
             return result;
@@ -101,12 +98,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var result = new List<FileCollection>();
             foreach (var collection in collections)
             {
+                var keyName = collection[1..];
                 var targetFiles = _fileSystem.GetFiles(collection);
-                var files = await ProcessFiles(targetFiles.ToArray());
+                var files = await ProcessFiles(targetFiles.ToArray(), keyName);
 
                 result.Add(new FileCollection
                 {
-                    Name = collection,
+                    Name = keyName,
                     Files = files.ToArray()
                 });
             }
@@ -120,10 +118,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 fileInfos.Add(_fileSystem.GetFile(file));
             }
-            return await ProcessFiles(fileInfos.ToArray());
+            return await ProcessFiles(fileInfos.ToArray(), scope: null);
         }
 
-        private async Task<List<File>> ProcessFiles(IFileInfo[] files)
+        private async Task<List<File>> ProcessFiles(IFileInfo[] files, string scope)
         {
             var result = new List<File>();
             foreach (var fileInfo in files)
@@ -135,6 +133,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
                 {
                     Content = rawContent,
+                    Scope = scope,
                     FileName = fileInfo.Name
                 });
 
