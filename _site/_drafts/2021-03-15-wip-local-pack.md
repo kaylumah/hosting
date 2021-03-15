@@ -81,7 +81,7 @@ The cool thing is that you don't need a server to try out new packages. NuGet su
 ## Reading Material
 
 dotnet msbuild -pp:fullproject.xml
-
+https://github.com/maxhamulyak/nswag-test/blob/master/Directory.Build.props
 
 - https://github.com/jerriepelser-blog/AnalyzeDotNetProject/blob/master/Program.cs
 - https://github.com/dotnet/docs/pull/22277
