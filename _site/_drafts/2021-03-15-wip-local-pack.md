@@ -16,6 +16,11 @@ https://docs.microsoft.com/en-us/nuget/what-is-nuget
 
 https://en.wikipedia.org/wiki/NuGet
 
+https://github.com/features/packages
+
+https://docs.github.com/en/packages/learn-github-packages/about-github-packages
+
+https://docs.github.com/en/packages/guides/configuring-dotnet-cli-for-use-with-github-packages
 
 -------
 
@@ -66,3 +71,45 @@ You can create a `nuget.config` by running `dotnet new nugetconfig` Which looks 
 ```
 
 The cool thing is that you don't need a server to try out new packages. NuGet supports the use of a local feed. You can create a local feed by running `dotnet nuget add source ./packages --name "Local Feed"` whichs adds the following line to the package sources in the NuGet config. `<add key="Local Feed" value="./packages" />`
+
+----------
+
+# Arcade
+
+> This repository is based on https://github.com/dotnet/arcade and customizations from https://github.com/dotnet/runtime
+
+## Reading Material
+
+dotnet msbuild -pp:fullproject.xml
+
+
+- https://github.com/jerriepelser-blog/AnalyzeDotNetProject/blob/master/Program.cs
+- https://github.com/dotnet/docs/pull/22277
+- https://webcache.googleusercontent.com/search?q=cache:zgvWC1R5e98J:https://docs.microsoft.com/en-us/dotnet/core/tools/csproj+&cd=2&hl=nl&ct=clnk&gl=nl&client=safari
+- https://github.com/dotnet/arcade/pull/6798/files
+- https://github.com/dotnet/iot/blob/master/Directory.Build.props
+- https://github.com/dotnet/arcade/commit/c60e650b76eb71dfc63d74152fa5a1da8d83f02c
+- 
+- https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/
+- https://devblogs.microsoft.com/dotnet/a-deep-dive-into-how-net-builds-and-ships/
+- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview
+- https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019
+- https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props
+- https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties?view=vs-2019
+
+
+## Customize Package Assets
+
+### Package Icon
+
+| Element | Outputs |
+| - | - |
+| `<PackageIcon>` | The name of the icon file in the NuGet Package. |
+| `<PackageIconFullPath>` | Resolves to `SDK/Assets/DotNetPackageIcon.png`.|
+
+### Package License
+
+| Element | Outputs |
+| - | - |
+| `<PackageLicenseFile>` | The name of the license file in the NuGet Package. |
+| `<PackageLicenseFileFullPath>` | The full path to the LICENSE file, tries to resolve via `$(RepoRoot)/License.txt` or defaults to `SDK/Assets/License.txt`. |
