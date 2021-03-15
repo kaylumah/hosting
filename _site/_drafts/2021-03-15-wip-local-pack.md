@@ -12,6 +12,10 @@ Today we are looking at local package feeds.
 
 -------
 
+image https://github.com/NuGet/Home/blob/dev/README.md
+
+[image https://docs.microsoft.com/en-us/nuget/nuget-org/overview-nuget-org]
+
 https://docs.microsoft.com/en-us/nuget/what-is-nuget
 
 https://en.wikipedia.org/wiki/NuGet
