@@ -2,6 +2,20 @@
 title: 'Share NuGet packages via local feed.'
 description: ''
 ---
+NuGet is the Microsoft-supported package manager for .NET. A NuGet package is a single zip file with the `.nupkg` extension.
+It contains the dlls and other files related to the code, such as a descriptive manifest.
+
+NuGet package can be shared via both public and private hosts. This way you can share code that is exclusive to your organization. In fact the package is just a shareable unit of code, but the means of sharing is up to you. For example, you might want to use a local copy of a package to test it in a project before sharing it with others.
+
+Today we are looking at local package feeds.
+
+
+-------
+
+https://docs.microsoft.com/en-us/nuget/what-is-nuget
+
+https://en.wikipedia.org/wiki/NuGet
+
 
 -------
 
