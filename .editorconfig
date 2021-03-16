@@ -1,5 +1,7 @@
 # https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
+# To learn more about .editorconfig see https://aka.ms/editorconfigdocs
+
 root = true
 
 # C# files
@@ -205,3 +207,8 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix =
 dotnet_naming_style.begins_with_i.word_separator =
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+# License header
+file_header_template=Copyright (c) Kaylumah, 2021. All rights reserved.\nSee LICENSE file in the project root for full license information.
+# IDE0073: The file header does not match the required text
+dotnet_diagnostic.IDE0073.severity = error
