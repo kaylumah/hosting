@@ -72,7 +72,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder => builder.AddConsole());
-            services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory,  "_site"));
+            services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory, "_site"));
             services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
@@ -85,7 +85,8 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             Stopwatch watch = new Stopwatch();
             Console.WriteLine("Start Site Generation");
             watch.Start();
-            await siteManager.GenerateSite(new GenerateSiteRequest {
+            await siteManager.GenerateSite(new GenerateSiteRequest
+            {
                 Configuration = siteConfiguration
             });
             watch.Stop();

@@ -148,7 +148,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                 result.Add(new File
                 {
-                    LastModified  = fileInfo.LastModified,
+                    LastModified = fileInfo.LastModified,
                     MetaData = fileMeta,
                     Content = fileContents,
                     Name = Path.GetFileName(fileMeta.Uri)

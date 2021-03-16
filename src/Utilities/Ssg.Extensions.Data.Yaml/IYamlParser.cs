@@ -2,7 +2,7 @@
 
 namespace Ssg.Extensions.Data.Yaml
 {
-    public interface IYamlParser: IParser
+    public interface IYamlParser : IParser
     {
     }
 }

@@ -40,12 +40,12 @@ namespace Kaylumah.Ssg.Utilities
                 { "@type", "BlogPosting" },
                 { "url", "https://kaylumah.nl/..." },
                 { "image", "https://kaylumah.nl/assets/images/social_preview.png" },
-                { 
+                {
                     "publisher",
                     new Dictionary<string, object>()
                     {
                         { "@type", "Organization" },
-                        { 
+                        {
                             "logo",
                             new Dictionary<string, object>()
                             {
@@ -62,7 +62,7 @@ namespace Kaylumah.Ssg.Utilities
                         { "@id", "https://kaylumah.nl/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html" }
                     }
                 },
-                { 
+                {
                     "author",
                     new Dictionary<string, object>()
                     {

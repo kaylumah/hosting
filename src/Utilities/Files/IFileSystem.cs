@@ -72,7 +72,7 @@ namespace Kaylumah.Ssg.Utilities
             if (recursive)
             {
                 var directories = directoryContents.Where(x => x.IsDirectory);
-                foreach(var directory in directories)
+                foreach (var directory in directories)
                 {
                     result.AddRange(GetFiles(Path.Combine(path, directory.Name), recursive));
                 }

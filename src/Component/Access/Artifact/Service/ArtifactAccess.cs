@@ -9,7 +9,7 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
     {
         public async Task Store(StoreArtifactsRequest request)
         {
-            foreach(var artifact in request.Artifacts)
+            foreach (var artifact in request.Artifacts)
             {
                 var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
                 var artifactDirectory = artifact.Path.Substring(0, index);

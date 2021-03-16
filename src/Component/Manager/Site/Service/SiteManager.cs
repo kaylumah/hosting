@@ -14,11 +14,11 @@ using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
-{    
+{
 
     internal class Package
     {
-        public string Name { get;set; }
+        public string Name { get; set; }
     }
 
     public class SiteManager : ISiteManager
@@ -53,7 +53,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
             var data = new Dictionary<string, object>();
-            foreach(var file in dataFiles)
+            foreach (var file in dataFiles)
             {
                 var stream = file.CreateReadStream();
                 using var reader = new StreamReader(stream);
@@ -70,7 +70,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(x => x.MetaData.Tags != null)
                 .SelectMany(x => x.MetaData.Tags)
                 .Distinct();
-            foreach(var tag in tags)
+            foreach (var tag in tags)
             {
                 var tagFiles = files.Where(x => x.MetaData.Tags != null && x.MetaData.Tags.Contains(tag)).ToList();
                 site.Tags.Add(tag, tagFiles);
@@ -127,7 +127,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             GlobalFunctions.Instance.Url = _siteInfo.Url;
             GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
-            
+
             var processed = await _fileProcessor.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] {
@@ -199,11 +199,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // var pages = processed.Select(x => new PageData {});
 
 
-            var renderRequests = processed.Select(x => new RenderRequest {
-                Model = new RenderData {
+            var renderRequests = processed.Select(x => new RenderRequest
+            {
+                Model = new RenderData
+                {
                     Build = buildInfo,
                     Site = siteInfo,
-                    Page = new PageData(x) {
+                    Page = new PageData(x)
+                    {
                         Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
                     }
                 },
@@ -217,9 +220,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             var renderResults = await liquidUtil.Render(renderRequests.ToArray());
 
-            var artifacts = processed.Select((t, i) => {
+            var artifacts = processed.Select((t, i) =>
+            {
                 var renderResult = renderResults[i];
-                return new Artifact {
+                return new Artifact
+                {
                     Path = $"{request.Configuration.Destination}/{t.MetaData.Uri}",
                     Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                 };
@@ -233,13 +238,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
                 .Select(x => x.PhysicalPath.Replace(root, string.Empty));
-            artifacts.AddRange(assets.Select(asset => {
-                return new Artifact {
+            artifacts.AddRange(assets.Select(asset =>
+            {
+                return new Artifact
+                {
                     Path = $"{request.Configuration.Destination}/{asset}",
                     Contents = FileToByteArray(asset)
                 };
             }));
-            await _artifactAccess.Store(new StoreArtifactsRequest {
+            await _artifactAccess.Store(new StoreArtifactsRequest
+            {
                 Artifacts = artifacts.ToArray()
             });
         }

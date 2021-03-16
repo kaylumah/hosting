@@ -66,7 +66,7 @@ namespace Kaylumah.Ssg.Utilities
             }
 
             var anchorTags = doc.Descendants<LinkInline>();
-            foreach(var anchor in anchorTags)
+            foreach (var anchor in anchorTags)
             {
                 if (anchor is LinkInline link && !link.IsImage)
                 {
@@ -74,7 +74,7 @@ namespace Kaylumah.Ssg.Utilities
                     {
                         link.GetAttributes().AddClass("external");
                     }
-                    
+
                 }
             }
 

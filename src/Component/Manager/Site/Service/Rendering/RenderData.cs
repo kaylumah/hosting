@@ -9,9 +9,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     class RenderData : IRenderModel, IMetadata
     {
-        public BuildData Build { get;set; }
-        public SiteData Site { get;set; }
-        public PageData Page { get;set; }
+        public BuildData Build { get; set; }
+        public SiteData Site { get; set; }
+        public PageData Page { get; set; }
         public string Content => Page?.Content ?? string.Empty;
         public string Title => Page?.Title ?? Site?.Title ?? null;
         public string Description => Page?.Description ?? Site?.Description ?? null;
@@ -56,9 +56,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return string.Empty;
         }
 
-        public Dictionary<string, object> Data { get;set; }
+        public Dictionary<string, object> Data { get; set; }
 
-        public Dictionary<string, object> Collections { get;set; }
+        public Dictionary<string, object> Collections { get; set; }
 
         public Dictionary<string, object> Tags { get; set; }
 
@@ -69,7 +69,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return _files
                 .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
                 .Where(file => !"404.html".Equals(file.Name))
-                .Select(x => new {
+                .Select(x => new
+                {
                     Url = x.MetaData.Uri,
                     x.LastModified,
                     Sitemap = x.MetaData["sitemap"]
@@ -79,11 +80,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
     {
-        public string Id { 
-            get {
+        public string Id
+        {
+            get
+            {
                 return this.GetValue<string>(nameof(Id));
             }
-            set {
+            set
+            {
                 this.SetValue(nameof(Id), value);
             }
         }
@@ -91,7 +95,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Description => this.GetValue<string>(nameof(Description));
         public string Language => this.GetValue<string>(nameof(Language));
         public string Author => this.GetValue<string>(nameof(Author));
-        public string Content {
+        public string Content
+        {
             get
             {
                 return this.GetValue<string>(nameof(Content));
@@ -113,7 +118,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 this.SetValue(nameof(LastModified), value);
             }
         }
-        
+
 
         public PageData(File file) : base(file.MetaData)
         {
@@ -139,6 +144,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Dictionary<string, object> Data { get; set; }
         Dictionary<string, object> Collections { get; set; }
-        Dictionary<string, object> Tags { get;set; }
+        Dictionary<string, object> Tags { get; set; }
     }
 }

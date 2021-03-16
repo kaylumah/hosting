@@ -94,12 +94,13 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
                     var body = document.DocumentNode.SelectSingleNode("html/body");
                     var links = new HashSet<string>();
-                    foreach(var link in body.SelectNodes("//a[@href]"))
+                    foreach (var link in body.SelectNodes("//a[@href]"))
                     {
                         string hrefValue = link.GetAttributeValue("href", string.Empty);
                         links.Add(hrefValue);
                     }
-                    var uris = links.Where(x => !string.IsNullOrEmpty(x) && "#" != x && "/" != x).Select(x => {
+                    var uris = links.Where(x => !string.IsNullOrEmpty(x) && "#" != x && "/" != x).Select(x =>
+                    {
                         if (x.StartsWith("http://") || x.StartsWith("https://"))
                         {
                             return new Uri(x);
@@ -109,13 +110,13 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
                     var fileUris = uris.Where(x => !x.IsAbsoluteUri);
 
-                   foreach (var fileUri in fileUris)
-                   {
-                       if (!files.Any(file => file.EndsWith(fileUri.ToString())))
-                       {
-                           Console.WriteLine($"Failed to find {fileUri}");
-                       }
-                   }
+                    foreach (var fileUri in fileUris)
+                    {
+                        if (!files.Any(file => file.EndsWith(fileUri.ToString())))
+                        {
+                            Console.WriteLine($"Failed to find {fileUri}");
+                        }
+                    }
 
                     // doc.DocumentNode.SelectNodes("")
                 }

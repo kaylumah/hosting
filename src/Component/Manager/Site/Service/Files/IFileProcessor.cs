@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class FileFilterCriteria
     {
-        public string[] DirectoriesToSkip { get;set; }
-        public string[] FileExtensionsToTarget { get;set; }
+        public string[] DirectoriesToSkip { get; set; }
+        public string[] FileExtensionsToTarget { get; set; }
     }
 }

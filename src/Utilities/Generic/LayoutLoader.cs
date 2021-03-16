@@ -11,7 +11,7 @@ namespace Kaylumah.Ssg.Utilities
         [YamlMember(Alias = "layout")]
         public string Layout { get; set; }
     }
-    
+
     public class LayoutLoader
     {
         private readonly IFileSystem _fileSystem;

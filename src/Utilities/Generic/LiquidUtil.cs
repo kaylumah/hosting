@@ -17,13 +17,13 @@ namespace Kaylumah.Ssg.Utilities
     }
     public class RenderRequest
     {
-        public IRenderModel Model { get;set; }
-        public string TemplateName { get;set; }
+        public IRenderModel Model { get; set; }
+        public string TemplateName { get; set; }
     }
 
     public class RenderResult
     {
-        public string Content { get;set; }
+        public string Content { get; set; }
     }
 
     public class LiquidUtil
@@ -44,7 +44,7 @@ namespace Kaylumah.Ssg.Utilities
             var renderedResults = new List<RenderResult>();
             var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
             var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
-            foreach(var request in requests)
+            foreach (var request in requests)
             {
                 try
                 {
@@ -61,7 +61,7 @@ namespace Kaylumah.Ssg.Utilities
                     context.PushGlobal(scriptObject);
                     scriptObject.Import(typeof(GlobalFunctions));
 
-                    foreach(var plugin in _plugins)
+                    foreach (var plugin in _plugins)
                     {
                         scriptObject.Import(plugin.Name, new Func<string>(() => plugin.Render(request.Model)));
                         // scriptObject.Import(plugin.Name, new Func<string>(() => 
@@ -88,7 +88,7 @@ namespace Kaylumah.Ssg.Utilities
             return renderedResults.ToArray();
         }
     }
-    
+
     internal class MyIncludeFromDisk : ITemplateLoader
     {
         private readonly IFileSystem _fileSystem;

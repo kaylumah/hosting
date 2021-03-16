@@ -7,7 +7,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities
 {
-public static class MarkdownPipelineBuilderExtensions
+    public static class MarkdownPipelineBuilderExtensions
     {
         public static MarkdownPipelineBuilder UseLinkExtension(this MarkdownPipelineBuilder pipeline)
         {

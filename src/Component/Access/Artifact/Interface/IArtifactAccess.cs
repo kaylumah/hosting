@@ -5,13 +5,13 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
 {
     public class Artifact
     {
-        public byte[] Contents { get;set; }
-        public string Path { get;set; }
+        public byte[] Contents { get; set; }
+        public string Path { get; set; }
     }
 
     public class StoreArtifactsRequest
     {
-        public Artifact[] Artifacts { get;set; }
+        public Artifact[] Artifacts { get; set; }
     }
 
     public interface IArtifactAccess
