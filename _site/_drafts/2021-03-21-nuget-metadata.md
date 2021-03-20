@@ -75,6 +75,8 @@ There are a couple of ways code can be shared with other developers. One of thos
 
 A NuGet package is more than just the dlls.
 
+https://github.com/NuGet/docs.microsoft.com-nuget/blob/main/docs/quickstart/create-and-publish-a-package-using-the-dotnet-cli.md
+
 https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
 https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli
 
