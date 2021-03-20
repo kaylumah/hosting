@@ -17,7 +17,7 @@ namespace Test.Unit
             result.Should().NotBeNull();
             result.Copyright.Should().NotBeNull();
             result.Version.Should().NotBeNull();
-            result.Metadata.Count.Should().Be(4);
+            result.Metadata.Count.Should().Be(6);
         }
     }
 }
