@@ -11,6 +11,15 @@ module.exports = {
           purple: '#55557b'
         }
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            a: {
+              textDecoration: 'none'
+            },
+          },
+        },
+      }
       // fontFamily: {
       //   headline: "Poppins, sans-serif" // font-headline
       // }
@@ -20,6 +29,8 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    // https://github.com/tailwindlabs/tailwindcss-typography#responsive-variants
+    // https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js
     require('@tailwindcss/typography')
   ]
 }
