@@ -8,6 +8,7 @@ A NuGet package is more than just the dlls.
 
 https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target
 https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli
+
 ### Local
 
 ### GitHub
