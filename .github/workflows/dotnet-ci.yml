@@ -43,7 +43,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration $config --no-restore /p:BuildId=1 /p:BuildNumber=2
+      run: dotnet build --configuration $config --no-restore /p:BuildId=$GITHUB_RUN_ID /p:BuildNumber=$GITHUB_RUN_NUMBER
     - name: Test
       run: dotnet test --configuration $config --no-build --verbosity normal
     - name: Run Client
