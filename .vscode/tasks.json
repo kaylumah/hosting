@@ -9,7 +9,10 @@
                 "build",
                 "${workspaceFolder}/src/Component/Client/SiteGenerator/Kaylumah.Ssg.Client.SiteGenerator.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary",
+                "/p:BuildId=1",
+                "/p:BuildNumber=20210320.1"
+
             ],
             "problemMatcher": "$msCompile"
         },

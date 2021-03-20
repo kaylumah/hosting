@@ -17,7 +17,7 @@
         </div>
         <div class="pt-2 flex flex-col text-center text-gray-100">
             <span>{{ build.copyright }}</span>
-            <span class="text-xs">Deployed from commit <a class="hover:text-gray-400" href="{{ build.source_base_uri }}/{{ build.git_hash }}">{{ build.short_git_hash }}</a></span>
+            <span class="text-xs">Deployed from commit <a class="hover:text-gray-400" href="{{ build.source_base_uri }}/{{ build.git_hash }}">{{ build.short_git_hash }}</a> via build <a class="hover:text-gray-400" href="{{ build.source_build_uri }}/{{ build.build_number }}">{{ build.build_id }}</a></span>
         </div>
         <div class="pt-2 flex justify-center space-x-6">
             <a href="/" class="text-gray-100 hover:text-gray-400">

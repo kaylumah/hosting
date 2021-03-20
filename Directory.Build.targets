@@ -4,6 +4,8 @@
 
     <ItemGroup>
         <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
+        <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
+        <AssemblyMetadata Include="BuildNumber" Value="$(BuildNumber)" />
     </ItemGroup>
 
     <Target Name="IncludeSourceRevisionId" BeforeTargets="GetAssemblyAttributes">
