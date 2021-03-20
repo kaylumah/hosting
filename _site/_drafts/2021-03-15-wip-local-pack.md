@@ -117,3 +117,14 @@ https://github.com/maxhamulyak/nswag-test/blob/master/Directory.Build.props
 | - | - |
 | `<PackageLicenseFile>` | The name of the license file in the NuGet Package. |
 | `<PackageLicenseFileFullPath>` | The full path to the LICENSE file, tries to resolve via `$(RepoRoot)/License.txt` or defaults to `SDK/Assets/License.txt`. |
+
+
+https://cezarypiatek.github.io/post/setting-assembly-and-package-metadata/
+
+https://docs.github.com/en/packages/guides/configuring-dotnet-cli-for-use-with-github-packages
+
+https://docs.microsoft.com/en-us/nuget/what-is-nuget
+
+https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props
+
+https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli
