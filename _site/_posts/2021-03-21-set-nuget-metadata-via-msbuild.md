@@ -1,6 +1,9 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
-description: '...'
+description: 'TODO Write summary'
+tags:
+    - MSBuild
+    - NuGet
 ---
 
 TODO write short introducition...
