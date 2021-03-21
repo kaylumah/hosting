@@ -215,6 +215,20 @@ For more details see [here](https://docs.microsoft.com/en-us/visualstudio/msbuil
 
 ### Repo Info
 
+When looking [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target) some other intressting fields caught my eye.
+
+| NuSpec | MSBuild | Description |
+| - | - | - |
+| Repository/Url | RepositoryUrl | URL where sourcecode is located i.e. https://github.com/NuGet/NuGet.Client.git |
+| Repository/Type | RepositoryType | The repository type i.e. git |
+| Repository/Branch | RepositoryBranch | Optional repository branch info i.e. main |
+| Repository/Commit | RepositoryCommit | Optional commit information |
+
+
+
+
+
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
