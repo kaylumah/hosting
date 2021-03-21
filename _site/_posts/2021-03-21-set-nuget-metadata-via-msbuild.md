@@ -188,13 +188,6 @@ In this example I am only setting a couple of the values.
 ![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv3.png)
 
 
-=====================
-# NugetMetadata
-
-Based on https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
-
-https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation
-https://licenses.nuget.org/MIT
 
 ### Repo Info
 
@@ -261,6 +254,9 @@ This time we use `Directory.Build.targets` which runs after the project. Since I
 </Project>
 ```
 
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_buildpropsv2.png)
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv2.png)
+
 #
 
 dotnet pack
@@ -274,3 +270,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Kaylumah.Logging.Extensions.Abstractions -> C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
 C:\Program Files\dotnet\sdk\5.0.103\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets(207,5): error NU5046: The icon file 'Logo.png' does not exist in the package. [C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj]
 ```
+
+
+Based on https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
+
+https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation
+https://licenses.nuget.org/MIT
