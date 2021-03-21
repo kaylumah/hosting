@@ -47,13 +47,14 @@ Project `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extension
 
 ## Setting Metadata
 
-### Defaults
-
-For starters let see what we get by default
+We now have an empty project, so lets check what values get set by default.
+Run the following command
 
 ```shell
 dotnet pack
 ```
+
+Which outputs:
 
 ```output
 Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
@@ -64,6 +65,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Kaylumah.Logging.Extensions.Abstractions -> C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 ```
+
+We have succesfully our first package, which gets put in the `bin/Configuration` folder. In this case `bin/Debug`.
 
 ![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_initial_metadata.png)
 ![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_initial_metadata.png)
