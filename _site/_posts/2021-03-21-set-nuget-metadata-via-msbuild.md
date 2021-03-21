@@ -220,6 +220,10 @@ dotnet build -p:RepositoryUrl="$REPO_URL" -p:RepositoryBranch="$REPO_BRANCH" -p:
 
 ### SourceLink
 
+While it is certainly possible to do it like above, there is an alternative that I prefer. It goes further than just setting some values. It is called [sourcelink](https://github.com/dotnet/sourcelink). Just like we used `Directory.Build.props` to add metadata to every project file in the solution, we can also add nuget packages to every project.
+This time we use `Directory.Build.targets` which runs after the project. Since I host my projects on GitHub I use the `Microsoft.SourceLink.GitHub` package.
+
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
  <Project>
