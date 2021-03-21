@@ -11,13 +11,13 @@ tags:
 
 ## Why use hooks?
 
-We as developers love platforms like GitHub, GitLab, Atlassian, Azure DevOps etc. as our managed git system and collaboration platform. We also love clean code, and keep inventing new linters and rules to enforce it. In my opinion every commit should allow the code base to be deployed. There is nothing worse than commits like “fixed style errors” or “fixed build”. These are often small mistakes you want to know as early as possible in your development cycle. You don’t want to break the build for the next developer just because he pulled your ‘mistake’, or waste precious build minutes of your CI server. Say you have asked your teammate to review your code, in the mean time the build server says No. This means you have to go back and fix this, and your teammate has to come back and possibly review again after the changes (ie: approvals reset on new commit). This would waste a lot of time and effort.
+We, as developers, love platforms like GitHub, GitLab, Atlassian, Azure DevOps etc., as our managed git system and collaboration platform. We also love clean code and keep inventing new linters and rules to enforce it. In my opinion, every commit should allow the codebase to deploy to production. There is nothing worse than commits like “fixed style errors” or “fixed build”. These are often small mistakes you want to know as early as possible in your development cycle. You don’t want to break the build for the next developer because he pulled your ‘mistake’ or waste precious build minutes of your CI server. Say you have asked your teammate to review your code; in the meantime, the build server rejects your code. That means you have to go back and fix this, and your teammate has to come back and possibly review again after the changes (i.e., approvals reset on new commit). Doing so would waste a lot of time and effort.
 
-> **note**: I am in favour of server-side hooks, but when using an SaaS solution this is not always a possibility. I know I would not want someone to run arbitrary code on my servers. client hooks can be bypassed, but until we can (sandboxed?) use server side hooks on the platform of our choice we have to make the best of it using client hooks.
+> **note**: I favour server-side hooks, but when using a SaaS solution, this is not always a possibility. I know I would not want someone to run arbitrary code on my servers. Unfortunately, a developer can bypass the client-side hooks. Until we can run, possibly sandboxed, server-side hooks on our prefered platform, we have to make the best of it by using client-side hooks.
 
-Githooks are scripts that can be executed on certain parts of the git lifecycle. Hooks must be executable, but other than that the power of hooks is only limited to the developers imagination. I have seen many samples of hooks written in JavaScript (node) using tools like [husky](https://github.com/typicode/husky) and [commitlint](https://github.com/conventional-changelog/commitlint) to enforce a certain way of working. When I was browsing the changes in the upcoming .NET Core 3.0 release, the concept of [local-tools](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0#local-dotnet-tools) got me thinking. I knew of the existence of [dotnet-script](https://www.hanselman.com/blog/CAndNETCoreScriptingWithTheDotnetscriptGlobalTool.aspx), would that make it possible to C# in my GitHooks?
+Githooks are scripts that can execute on certain parts of the git lifecycle. Hooks must be executable, but other than that, hooks' power is only limited to the developer's imagination. I have seen many samples of hooks written in JavaScript (node) using tools like [husky](https://github.com/typicode/husky) and [commitlint](https://github.com/conventional-changelog/commitlint) to enforce a certain way of working. When I was browsing the changes in the upcoming .NET Core 3.0 release, the concept of [local-tools](https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0#local-dotnet-tools) got me thinking. I knew of the existence of [dotnet-script](https://www.hanselman.com/blog/CAndNETCoreScriptingWithTheDotnetscriptGlobalTool.aspx), would that make it possible to C# in my GitHooks?
 
-> **note**: in the past I have used a set-up with node since I occasionally work with front-end frameworks like Angular. Since I had node installed I could use it even in my pure backend projects to enforce commit messages and such. For me personally it felt dirty, since that would require team members to have node installed. Using the dotnet cli feels less as a forced decision since members are likely to have it installed already.
+> **note**: in the past I have used a set-up with node since I occasionally work with front-end frameworks like Angular. Since I had node installed I could use it even in my pure backend projects to enforce commit messages and such. For me it felt dirty, since that would require team members to have node installed. Using the dotnet cli feels less as a forced decision since members are likely to have it installed already.
 
 ## Let’s get started!
 
@@ -51,7 +51,7 @@ find .githooks -type f -exec chmod +x {} \;
 find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
 ```
 
-Since we can reference other files (and even load nuget packages) in our csx we are first going create a couple of files so we can have code-reuse between the hooks.
+Since we can reference other files (and even load nuget packages) in our csx we will first create a couple of files so we can have code-reuse between the hooks.
 
 Create a file called **logger.csx**
 
@@ -145,7 +145,7 @@ public class GitCommands
 }
 ```
 
-With know have a utility in place for Logging and running GIT and dotnet commands. Next we are going to start with out pre-commit hook. Create a file called **pre-commit** The difference between this file and the others we just made is that we don’t specify the extension, and that using Shebang we explicitly load dotnet-script. For an explanation on what each hook see the article posted below.
+We now have a utility in place for Logging and running GIT and dotnet commands. Next we are going to start with out pre-commit hook. Create a file called **pre-commit** The difference between this file and the others we just made is that we don’t specify the extension, and that using Shebang we explicitly load dotnet-script. For an explanation of each hook see the article posted below.
 
 [Git Hooks | Atlassian Git Tutorial](https://www.atlassian.com/git/tutorials/git-hooks)
 
@@ -211,13 +211,13 @@ if (exitCode != 0) {
 
 ### Prepare-commit-message hook
 
-Thus far we have not really used anything we need C# for; Admittedly we are using C# to execute shell commands. For our next hook we are going to use System.IO. Imagine as a team you have a commit-message convention. Lets say you want each commit message to include a reference to your issue tracker.
+Thus far, we have not really used anything we need C# for; Admittedly we are using C# to execute shell commands. For our next hook we are going to use System.IO. Imagine as a team you have a commit-message convention. Let's say you want each commit message to include a reference to your issue tracker.
 
 ```text
 type(scope?): subject  #scope is optional
 ```
 
-Create a file **prepare-commit-msg** in this hook we can provide a convenient commit message place holder if the user did not supply a message. To actual enforce the message you need the **commit-msg** hook. In this example we only create a message for feature branches.
+Create a file **prepare-commit-msg** in this hook we can provide a convenient commit message place holder if the user did not supply a message. To actual enforce the message, you need the **commit-msg** hook. In this example, we only create a message for feature branches.
 
 ```csharp
 #!/usr/bin/env dotnet dotnet-script
@@ -315,7 +315,7 @@ public static string GetCommitedMessage(string filePath) {
 
 ### pre push Hook
 
-It is even possible to use NuGet packages in our hooks. Let say we want to prevent pushes to master (perhaps not even commits?) we can read a config file using Newtonsoft.Json and look for a protected branch and abort.
+It is even possible to use NuGet packages in our hooks. Let say we want to prevent pushes to master (perhaps not even commits?). We can read a config file using Newtonsoft.Json and look for a protected branch and abort.
 
 ```csharp
 #!/usr/bin/env dotnet dotnet-script
@@ -342,13 +342,13 @@ public static Config GetConfig()
 
 ## Conclusion
 
-My current hooks are far from the best, and perhaps C# is not the fastest language to use in git hook. I do however consider the experiment a success. I much rather code in C# than in shell script. Ideas for further improvement include
+My current hooks are far from the best, and perhaps C# is not the fastest language to use in git hook. I do, however consider the experiment a success. I much rather code in C# than in shell script. Ideas for further improvement include
 
-*   based on the list of changes determine the scope of the change (ie only one directory changed we might know the scope)
+*   based on the list of changes, determine the scope of the change (i.e. only one directory changed we might know the scope)
 *   configure the regex, allowed scopes, allowed types
 *   improve pre-commit-msg for more scenarios
 *   enforce users to use the hooks
-*   managing versions of the hooks, on checkout old / different version of pull (with an update of the hooks) sync the directory. [(perhape githook location)](https://www.viget.com/articles/two-ways-to-share-git-hooks-with-your-team/)
+*   managing versions of the hooks, on checkout old / different version of pull (with an update of the hooks) sync the directory. [(perhaps githook location)](https://www.viget.com/articles/two-ways-to-share-git-hooks-with-your-team/)
 
 Let me know what you think :-)
 
