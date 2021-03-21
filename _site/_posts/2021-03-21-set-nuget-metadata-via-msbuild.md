@@ -61,6 +61,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 ```
 
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_initial_metadata.png)
 
 
 
