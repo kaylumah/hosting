@@ -219,15 +219,13 @@ When looking [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-tar
 
 | NuSpec | MSBuild | Description |
 | - | - | - |
-| Repository/Url | RepositoryUrl | URL where sourcecode is located i.e. https://github.com/NuGet/NuGet.Client.git |
-| Repository/Type | RepositoryType | The repository type i.e. git |
-| Repository/Branch | RepositoryBranch | Optional repository branch info i.e. main |
-| Repository/Commit | RepositoryCommit | Optional commit information |
+| Repository/Url | RepositoryUrl | URL where sourcecode is located i.e. `https://github.com/NuGet/NuGet.Client.git` |
+| Repository/Type | RepositoryType | The repository type i.e. `git` |
+| Repository/Branch | RepositoryBranch | Optional repository branch info i.e. `main` |
+| Repository/Commit | RepositoryCommit | Optional commit information i.e. `0e4d1b598f350b3dc675018d539114d1328189ef` |
 
-
-
-
-
+This metadata makes sure that I can always determine which version of my source lead to which artifact.
+Before I demonstrate this I need a small change to make generate packages a little bit easier. Change our csproj to match the following:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -240,6 +238,10 @@ When looking [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-tar
 </Project>
 ```
 
+What this does, it that every time we build the project we also generate a nuget package.
+Now how do we pass values like RepositoryCommit to MSBuild? For that we can use the `-property` or `-p` switches.
+For demo purposes I created a small shell script that reads the values based on a couple of git commands.
+
 ```shell
 #!/bin/sh -x
 
@@ -248,6 +250,11 @@ REPO_BRANCH=$(git branch --show-current)
 REPO_COMMIT=$(git rev-parse HEAD)
 dotnet build -p:RepositoryUrl="$REPO_URL" -p:RepositoryBranch="$REPO_BRANCH" -p:RepositoryCommit="$REPO_COMMIT" -p:RepositoryType="git"
 ```
+
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_repoinfo.png)
+
+Unlike Company, Author etc set via the command line this won't make it appear in Visual Studio.
+
 
 ### SourceLink
 
