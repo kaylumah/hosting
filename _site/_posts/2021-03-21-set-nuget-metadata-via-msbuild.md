@@ -1,6 +1,7 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
 description: 'TODO Write summary'
+cover_image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
 tags:
     - MSBuild
     - NuGet
