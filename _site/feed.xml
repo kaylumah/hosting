@@ -25,6 +25,7 @@
             <uri>{{ post_author.uri }}</uri>
             {% endif %}
         </author>
+        <published>{{ post.date | date_to_xmlschema }}</published>
         <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
