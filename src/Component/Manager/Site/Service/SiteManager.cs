@@ -120,6 +120,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     {
                         Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
                     })
+                    .OrderBy(x => x["date"])
                     .ToList()
                 );
             }
