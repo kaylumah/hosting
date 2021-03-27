@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 
-h2 a {
+/*h2 a {
   --fa-secondary-opacity: 1.0;
   --fa-primary-color: #4cae50;
   --fa-secondary-color: #55557b;
@@ -117,7 +117,7 @@ a.external svg {
 
 .svg-inline--fa {
     margin-right: 0.5rem;
-}
+}*/
 
 @tailwind utilities;
 
