@@ -2,17 +2,18 @@
 title: 'Set NuGet metadata via MSBuild'
 description: "Discover how to use MSBuild to set your NuGet package's metadata."
 cover_image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
+image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
 tags:
     - MSBuild
     - NuGet
 ---
 For .NET, the standard mechanism for sharing packages is NuGet. A `.nupkg` file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata ([source](https://docs.microsoft.com/en-us/nuget/what-is-nuget)). This blog post will show you how data in this manifest can be controlled by using MSBuild.
 
-For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime).
+For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime).The sky is the limit.
 
 ## Setup
 
-There are bits of this demo that work cross-platform and bits that require you to run on windows. For example, I like the control the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) gives me when creating a new project. If you prefer to use [Visual Studio](https://visualstudio.microsoft.com/vs/), the result will remain the same.
+There are bits of this demo that work cross-platform and bits that require you to run on Windows. For example, I like the control the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) gives me when creating a new project. If you prefer to use [Visual Studio](https://visualstudio.microsoft.com/vs/), the result will remain the same.
 
 ```shell
 $ dotnet new sln
