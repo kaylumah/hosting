@@ -339,6 +339,10 @@ To prove that it is still working, here is the entire `.nuspec` file after addin
 
 We looked at setting metadata via MSBuild and sharing metadata between projects. You can take this even further by using MSBuild tasks to verify that packages must have a description like [this](https://github.com/dotnet/arcade/blob/9a72efb067b74bb9147f9413ade6173b568ea1af/src/Microsoft.DotNet.Arcade.Sdk/tools/Workarounds.targets#L79). It is also possible to create an entire SDK as Microsoft did with [Arcade](https://github.com/dotnet/arcade). Of course, Arcade goes much further than just specifying some metadata. You can read about how / why Microsoft did that [here](https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/). I experimented with a custom SDK heavily inspired by Arcade, but that is a blog post for another day.
 
+For now, I hope I was able to teach you something about the power of MSBuild and how we can use it to manipulate our NuGet packages. If you have any questions, feel free to reach out.
+
+See you next time, stay healthy and happy coding to all 🧸!
+
 ## Sources
 
 This blog was written based on personal experience when creating packages. If not already explicitly linked in the text, here are some of the primary sources used in the article.
