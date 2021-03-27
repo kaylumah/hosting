@@ -1,8 +1,8 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
 description: "Discover how to use MSBuild to set your NuGet package's metadata."
-cover_image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
-image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
+cover_image: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
+image: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
 tags:
     - MSBuild
     - NuGet
@@ -55,11 +55,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
 This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`? My prefered way is the [NuGet Package Explorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer), which is unfortunately only available on Windows.
 
-![Without Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/001_npe_initial_metadata.png)
+![Without Metadata in Package Explorer](/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png)
 
 There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading [the package](https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13) from nuget.org and view it like we just did for `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.
 
-![Microsoft Extensions Logging Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/002_console_logger_info.png)
+![Microsoft Extensions Logging Metadata in Package Explorer](/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png)
 
 Now that is what I call metadata. Remember that `.nupkg` files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from `.nupkg` to `.zip` and then extracting it. It contains `Kaylumah.Logging.Extensions.Abstractions.nuspec`, which is the manifest I was talking about in the introduction. At the moment, it looks like this:
 
@@ -106,11 +106,11 @@ So behind the scenes, what happens is that specific MSBuild properties map to pr
 
 If we run `dotnet pack` now, we can immediately see that our package no longer has empty metadata.
 
-![With Author Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/003_npe_author_metadata.png)
+![With Author Metadata in Package Explorer](/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png)
 
 You can also verify this in Visual Studio by checking your projects properties and clicking on the `Package` tab.
 
-![With Author Metadata in VS2019](/assets/images/posts/20210321/nuget-metadata/004_vs2019_author_metadata.png)
+![With Author Metadata in VS2019](/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png)
 
 In the introduction, I talked about what exactly is a NuGet package. We are now at the part regarding other files. Since we already took care of branding, let us also add an icon. Our code is under license; how do we include it in the package?
 
@@ -138,7 +138,31 @@ Add files named `Logo.png` and `LICENSE` to the folder containing our project. W
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/005_npe_includingfiles_metadata.png)
+![Including FileMetadata](/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png)
+
+Regarding these files, I like to say a couple of things before moving on to more advanced use cases.
+There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs describe [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target). Both used to have a `Url` variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of `PackageLicenseFile`, the alternative is  `PackageLicenseExpression`, which uses `SDPX` license identifiers.
+
+> **note**: For backwards compatibility, `PackageLicenseUrl` gets populated with `https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation` if you choose to use `PackageLicenseFile` and with `https://licenses.nuget.org/MIT` for example, if your SPDX would be MIT.
+
+The second point I like to raise is regarding the file names. 
+In my example, the value for `PackageIcon` and the name of my icon file match precisely; this is not necessary. What does matter is the name we specify in the package path. Failing to do so would, for example, trigger "NU5046: The icon file 'NotAnIcon.png' does not exist in the package. See a couple of samples below:
+
+```xml
+<!-- Visible 'False' hides the file in the Visual Studio explorer but still packages it under Logo.png -->
+<None Include="Logo.png" Pack="true" PackagePath="" Visible="false" />
+
+<!-- Link changes the name Visual Studio displays in the explorer but still packages it under Logo.png -->
+<None Include="Logo.png" Pack="true" PackagePath="" Link="NotAnIcon.png" />
+
+<!-- PackagePath rewrites the filename to Icon.png so PackageIcon remains unchanged -->
+<None Include="KaylumahLogo.png" Pack="true" PackagePath="Icon.png" />
+
+<!-- PackagePath rewrites the filename to KaylumahLogo.png so set PackageIcon to "KaylumahLogo" -->
+<None Include="Icon.png" Pack="true" PackagePath="KaylumahLogo.png" />
+```
+
+Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example.For more information regarding Package Icons, see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
 
 
 ### Set metadata for multiple projects
@@ -156,7 +180,7 @@ To get started, create a file called `Directory.Build.props` at the root of your
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/006_npe_buildpropsv1.png)
+![Using BuildProps V1](/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png)
 
 What happened? Something is wrong; why do I see the copyright year 2021, but not my company name? Before explaining it, let me prove it by adding a company tag to the `Directory.Build.props` with a different value. For example:
 
@@ -172,7 +196,7 @@ What happened? Something is wrong; why do I see the copyright year 2021, but not
 
 This time do not remove the tag from the `.csproj` file. The result, this time, is a little different.
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/007_npe_buildpropsv2.png)
+![Using BuildProps V2](/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png)
 
 Now it appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
 
@@ -199,7 +223,7 @@ Now it appears that I have two different values for `Company`; this happens beca
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/008_npe_buildpropsv3.png)
+![Using BuildProps V3](/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png)
 
 ### Bonus Chapter
 
@@ -310,3 +334,12 @@ To prove that it is still working here is the entire `.nuspec` file after adding
 ## Closing Thoughts
 
 We looked at setting metadata via MSBuild and sharing metadata between projects. You can take this even further by using MSBuild tasks to verify that packages must have a description like [this](https://github.com/dotnet/arcade/blob/9a72efb067b74bb9147f9413ade6173b568ea1af/src/Microsoft.DotNet.Arcade.Sdk/tools/Workarounds.targets#L79). It is also possible to create an entire SDK as Microsoft did with [Arcade](https://github.com/dotnet/arcade). Of course, Arcade goes much further than just specifying some metadata. You can read about how / why Microsoft did that [here](https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/). I experimented with a custom SDK heavily inspired by Arcade, but that is a blog post for another day.
+
+## Sources
+
+This blog was written based on personal experience when creating packages. If not already explicitly linked in the text, here are some of the primary sources used in the article.
+
+- [Customize your build](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019)
+- [MSBuild targets](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets)
+- [Create a package dotnet cli](https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli)
+- [Create and publish a package using dotnet cli](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)

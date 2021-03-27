@@ -150,38 +150,10 @@ C:\Program Files\dotnet\sdk\5.0.103\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Buil
 
 Based on https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
 
-https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation
-https://licenses.nuget.org/MIT
-
-https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019
-
-https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
 
 
 
-> TODO include alternate license
+ 
 
-<!--
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Max Hamulyák</Authors>
-    <Company>Kaylumah</Company>
-    <Description>Logging abstractions for Kaylumah.</Description>
-    <PackageTags>logging;abstractions</PackageTags>
-    <Copyright>Copyright (c) 2021 Kaylumah</Copyright>
-    <PackageIcon>Logo.png</PackageIcon>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="Logo.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-</Project>
-```
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_licenseexpression_metadata.png)
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_licenseexpression_metadata.png)
--->
+>
