@@ -225,6 +225,8 @@ Now it appears that I have two different values for `Company`; this happens beca
 
 ![Using BuildProps V3](/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png)
 
+In case you are wondering where did `$(MSBuildThisFileDirectory)` come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the [Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019) on the topic.
+
 ### Bonus Chapter
 
 I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.
@@ -343,3 +345,4 @@ This blog was written based on personal experience when creating packages. If no
 - [MSBuild targets](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets)
 - [Create a package dotnet cli](https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli)
 - [Create and publish a package using dotnet cli](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)
+- [MSBuild reserved and well-known properties](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019)
