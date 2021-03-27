@@ -87,7 +87,7 @@ Now that we have covered our basis, we can finally explain how we can set metada
 
 ### Set metadata from csproj
 
-Since we are working on a single project, the logical place to set metadata is by editing our .csproj file. I will not cover every property today, so I refer you to [this](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target) link. I will, however, cover properties I often use in my projects.
+Since we are working on a single project, the logical place to set metadata is by editing our .csproj file. I will not cover every property today, so I refer you to [pack target docs](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target) link. I will, however, cover properties I often use in my projects.
 
 So behind the scenes, what happens is that specific MSBuild properties map to properties in the .nuspec file. We have to either edit the existing `PropertyGroup` in our file or add one to set properties. In my opinion, every package should contain branding (like authors, company and copyright information), a helpful description and categorized by a series of tags. So in the example below, I have set these values.
 
@@ -142,7 +142,7 @@ Add files named `Logo.png` and `LICENSE` to the folder containing our project. W
 ![Including FileMetadata](/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png)
 
 Regarding these files, I like to say a couple of things before moving on to more advanced use cases.
-There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs describe [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target). Both used to have a `Url` variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of `PackageLicenseFile`, the alternative is  `PackageLicenseExpression`, which uses `SDPX` license identifiers.
+There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs [describe](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target). Both used to have a `Url` variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of `PackageLicenseFile`, the alternative is  `PackageLicenseExpression`, which uses `SDPX` license identifiers.
 
 > **note**: For backwards compatibility, `PackageLicenseUrl` gets populated with `https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation` if you choose to use `PackageLicenseFile` and with `https://licenses.nuget.org/MIT` for example, if your SPDX would be MIT.
 
@@ -163,7 +163,7 @@ In my example, the value for `PackageIcon` and the name of my icon file match pr
 <None Include="Icon.png" Pack="true" PackagePath="KaylumahLogo.png" />
 ```
 
-Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example. For more information regarding Package Icons, see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
+Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example. For more information regarding Package Icons, see [package-icon](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [package-license-1](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [package-license-2](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
 
 > Keep in mind that by adding both Icon and License files to the package, the overall package size slightly increases; this can cause slower restore times on initial package downloads. This performance penalty is a trade-off you have to decide for your self. Given today's network speeds, I think the impact isn't noticeable.
 
@@ -200,7 +200,7 @@ Unlike the `Copyright` tag do not remove the `Company` tag from the `.csproj` fi
 
 ![Using BuildProps V2](/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png)
 
-It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why if we would read the `System.Reflection.AssemblyCopyrightAttribute` the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
+It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why if we would read the `System.Reflection.AssemblyCopyrightAttribute` the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [msbuild comand line reference](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
 
 > Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, `Company` and `Copyright` are likely to be the same for every project. The `Authors` and `PackageTags` could be project-specific; heck, even `Description` could be reused if so desired. One thing for sure is that `Id` can not be recycled since every package requires a unique Id.
 
@@ -337,7 +337,7 @@ To prove that it is still working, here is the entire `.nuspec` file after addin
 
 ## Closing Thoughts
 
-We looked at setting metadata via MSBuild and sharing metadata between projects. You can take this even further by using MSBuild tasks to verify that packages must have a description like [this](https://github.com/dotnet/arcade/blob/9a72efb067b74bb9147f9413ade6173b568ea1af/src/Microsoft.DotNet.Arcade.Sdk/tools/Workarounds.targets#L79). It is also possible to create an entire SDK as Microsoft did with [Arcade](https://github.com/dotnet/arcade). Of course, Arcade goes much further than just specifying some metadata. You can read about how / why Microsoft did that [here](https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/). I experimented with a custom SDK heavily inspired by Arcade, but that is a blog post for another day.
+We looked at setting metadata via MSBuild and sharing metadata between projects. You can take this even further by using MSBuild tasks to verify that packages must have a description like [shown here](https://github.com/dotnet/arcade/blob/9a72efb067b74bb9147f9413ade6173b568ea1af/src/Microsoft.DotNet.Arcade.Sdk/tools/Workarounds.targets#L79). It is also possible to create an entire SDK as Microsoft did with [Arcade](https://github.com/dotnet/arcade). Of course, Arcade goes much further than just specifying some metadata. You can read about how / why Microsoft did that [on the devblogs](https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/). I experimented with a custom SDK heavily inspired by Arcade, but that is a blog post for another day.
 
 For now, I hope I was able to teach you something about the power of MSBuild and how we can use it to manipulate our NuGet packages. If you have any questions, feel free to reach out.
 
