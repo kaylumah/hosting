@@ -7,6 +7,7 @@ tags:
     - GitHook
     - CSharp
     - Dotnet Core
+modified: '2021-03-21'
 ---
 
 ## Why use hooks?
