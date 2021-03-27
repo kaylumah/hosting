@@ -12,6 +12,9 @@
     <icon>{{ "assets/logo_small.svg" | absolute_url }}</icon>
     <logo>{{ "assets/logo.svg" | absolute_url }}</logo>
     <rights>{{ build.copyright }}</rights>
+    <generator uri="/feed.xml" version="{{ build.short_git_hash }}">
+        Kaylumah Site Generator
+    </generator>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
     {% assign post_author = site.data.authors[post.author] %}
