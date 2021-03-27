@@ -9,7 +9,12 @@
     <link href="{{ '' | absolute_url }}" rel="alternate" type="text/html" />
     <title>{{ site.title | html.escape }}</title>
     <subtitle>{{ site.description }}</subtitle>
-
+    <icon>{{ "assets/logo_small.svg" | absolute_url }}</icon>
+    <logo>{{ "assets/logo.svg" | absolute_url }}</logo>
+    <rights>{{ build.copyright }}</rights>
+    <generator uri="/feed.xml" version="{{ build.short_git_hash }}">
+        Kaylumah Site Generator
+    </generator>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
     {% assign post_author = site.data.authors[post.author] %}
@@ -25,6 +30,7 @@
             <uri>{{ post_author.uri }}</uri>
             {% endif %}
         </author>
+        <published>{{ post.date | date_to_xmlschema }}</published>
         <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
