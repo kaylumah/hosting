@@ -1,21 +1,18 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
-description: 'TODO Write summary'
+description: "Discover how to use MSBuild to set your NuGet package's metadata."
 cover_image: '/assets/images/posts/20210321/nuget-metadata/cover_image.png'
 tags:
     - MSBuild
     - NuGet
 ---
+For .NET, the standard mechanism for sharing packages is NuGet. A `.nupkg` file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata ([source](https://docs.microsoft.com/en-us/nuget/what-is-nuget)). This blog post will show you how data in this manifest can be controlled by using MSBuild.
 
-Nuget packages are the way to share bundles of your code with other developers. A `.nupkg` file is basically an archive that contains your dll's and metadata about your code. Most commonly this is data relating to owernship/copyright and data about the repository where the package originated.
+For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime).
 
-## Scenario
+## Setup
 
-Starting with .netcore Microsoft started with a library of extension points called `Microsoft.Extensions`. This library consists of interfaces and some implementations for common things like logging or dependency injection. Keeping up with that trend we decided that we can do something similiar and want to share our code with the world.
-
-For this demo I am using the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) to create my project. Since the CLI is not the focus of this post I am not going to delve deeply in the inner workings of the tool. The important bit is that you end up with a `classlibrary` project, so if you prefer to use VisualStudio to accomplish this go ahead and do so.
-
-The following commands are grouped for convenience.
+There are bits of this demo that work cross-platform and bits that require you to run on windows. For example, I like the control the [.NET CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) gives me when creating a new project. If you prefer to use [Visual Studio](https://visualstudio.microsoft.com/vs/), the result will remain the same.
 
 ```shell
 $ dotnet new sln
@@ -37,11 +34,11 @@ $ dotnet sln add src/Kaylumah.Logging.Extensions.Abstractions/Kaylumah.Logging.E
 Project `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj` added to the solution.
 ```
 
-For the purpose of this demo it is fine that we don't create any implementation. In the real world of course you would also populate the code.
+I chose `Kaylumah.Logging.Extensions.Abstractions` to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like `https://nuget.org`. That is not this article's scope, as publishing the default template with only the empty `Class1.cs` file would not benefit anyone by sharing it.
 
-## Package Metadata
+## Why do we even need metadata in our packages?
 
-I said that we were going to enrich the package with MSBuild data. Before we do that I want to show you what you get before we changed anything for the defaults.
+Before showing you how I set metadata, I like to show you what happens without specifying any metadata. You can run the command [`dotnet pack`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-pack#description) for a single project or an entire solution. If you do it for the solution, only projects that are `<IsPackable>true</IsPackable>` generate a package. The class library we created uses the `Microsoft.NET.Sdk` and is packable by default.
 
 ```shell
 $ dotnet pack
@@ -55,25 +52,43 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 ```
 
-The package gets created in the bin folder, since the default configuration is `Debug` our file is located under `bin/Debug`. We have a couple of ways to look at the resulting package. My prefered way is to use [NuGetPackageExplorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer), unfortunatly that is only available on windows.
+This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`? My prefered way is the [NuGet Package Explorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer), which is unfortunately only available on Windows.
 
-If we open `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg` it looks like the screenshot below.
+![Without Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/001_npe_initial_metadata.png)
 
-![initial metadata in nuget package explorer](/assets/images/posts/20210321/nuget-metadata/npe_initial_metadata.png)
+There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading [the package](https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13) from nuget.org and view it like we just did for `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.
 
-It does not look very promising yet. Similar we can use Visual Studio to look at the data that is already set.
-It looks like PackageId, Authors, Company and Product all default to the assembly name.
+![Microsoft Extensions Logging Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/002_console_logger_info.png)
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_initial_metadata.png)
+Now that is what I call metadata. Remember that `.nupkg` files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from `.nupkg` to `.zip` and then extracting it. It contains `Kaylumah.Logging.Extensions.Abstractions.nuspec`, which is the manifest I was talking about in the introduction. At the moment, it looks like this:
 
-### Set data from csproj
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Kaylumah.Logging.Extensions.Abstractions</id>
+    <version>1.0.0</version>
+    <authors>Kaylumah.Logging.Extensions.Abstractions</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
+```
 
-#### The basics
+So as expected, it matches what NuGet Package Explorer shows us. The default for both id and authors is the assembly namespace, whereas description defaults to "Package Description", which tells our users nothing about what the package does.
 
-So how do we change the fields? What other fields can we change? For the full list of mappings I reffer you to [Nuget MSBuld Targets](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target). For now we will focus on some common fields like who authored the package, and what copyright applies.
+## How do we set metadata?
 
-The only thing we need to do is modify the project file `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj`.
-Add the properties you want to change to the existing PropertyGroup, or create a second one under the `Project` node. For example if I were to create a package it would look something like this.
+Now that we have covered our basis, we can finally explain how we can set metadata via MSBuild.
+
+### Set metadata from csproj
+
+Since we are working on a single project, the logical place to set metadata is by editing our .csproj file. I will not cover every property today, so I refer you to [this](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target) link. I will, however, cover properties I often use in my projects.
+
+So behind the scenes, what happens is that specific MSBuild properties map to properties in the .nuspec file. We have to either edit the existing `PropertyGroup` in our file or add one to set properties. In my opinion, every package should contain branding (like authors, company and copyright information), a helpful description and categorized by a series of tags. So in the example below, I have set these values.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -88,12 +103,17 @@ Add the properties you want to change to the existing PropertyGroup, or create a
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_author_metadata.png)
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_author_metadata.png)
+If we run `dotnet pack` now, we can immediately see that our package no longer has empty metadata.
 
-#### Including License / Branding
+![With Author Metadata in Package Explorer](/assets/images/posts/20210321/nuget-metadata/003_npe_author_metadata.png)
 
-TODO write text...
+You can also verify this in Visual Studio by checking your projects properties and clicking on the `Package` tab.
+
+![With Author Metadata in VS2019](/assets/images/posts/20210321/nuget-metadata/004_vs2019_author_metadata.png)
+
+In the introduction, I talked about what exactly is a NuGet package. We are now at the part regarding other files. Since we already took care of branding, let us also add an icon. Our code is under license; how do we include it in the package?
+
+Add files named `Logo.png` and `LICENSE` to the folder containing our project. We can then use the tags `PackageIcon` and `PackageLicenseFile` respectfully. We also need to tell MSBuild that these files should be part of the package. The updated project file looks like this:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -117,40 +137,14 @@ TODO write text...
 </Project>
 ```
 
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/005_npe_includingfiles_metadata.png)
 
 
-##### Alternative License
+### Set metadata for multiple projects
 
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
+So lets for a moment, assume our project is a huge success. We are creating more and more extension libraries. Think about the vast number of packages in `dotnet/runtime`. Even if we would only include an implementation for `.Abstractions` package, it would be very time consuming to do this for every project. It would also violate the [DRY principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Max Hamulyák</Authors>
-    <Company>Kaylumah</Company>
-    <Description>Logging abstractions for Kaylumah.</Description>
-    <PackageTags>logging;abstractions</PackageTags>
-    <Copyright>Copyright (c) 2021 Kaylumah</Copyright>
-    <PackageIcon>Logo.png</PackageIcon>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="Logo.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-</Project>
-```
-
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_licenseexpression_metadata.png)
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_licenseexpression_metadata.png)
-
-### Set data for multiple projects
-
-So the approach I demonstrated works fine if you have a single project. But for a moment suppose you want to release multiple packages from a single repo. You can of course do this on a per project basis, but maintaining it would become annoying really fast. Luckily we have the full power of MSBuild at our command. Let's say you want to set the same Copyright notice for all projects in the solution. Remove the `<Copyright>` tag from the csproj file, and create a new file called `Directory.Build.props` in the root of your repository.
-
-The build props file follows the same syntax we know from our csproj files. So we can add a PropertyGroup and add the Copyright tag to it. This time we will reference the Company tag, and use MSBuild to set the year. I don't know about you, but I prefer to not update the copyright every year.
-This would look like this:
+To get started, create a file called `Directory.Build.props` at the root of your solution. The way Microsoft handles this file, and in precisely that casing, is starting from your project folder; it goes up till it finds a match or it reaches the root of your drive. This `Directory.Build.props` file follows the same syntax we use in our `.csproj` files. To demonstrate, remove only the `Copyright` tag from the project and recreate it in the `Directory.Build.props` file. Now is the perfect moment to also demonstrate something I have not yet told you. We are using MSBuild to populate our metadata, and thus we can use the full force of MSBuild. For example, we can reference other variables and even use built-in functions. So the thing about our current Copyright implementation is that if after `31/12/2021` I want to release the next version, I have to remember to update my copyright notice. We can achieve this by setting the copyright tag like below.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -161,11 +155,9 @@ This would look like this:
 </Project>
 ```
 
-If we create the package again (`dotnet pack`) it would look like this:
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/006_npe_buildpropsv1.png)
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv1.png)
-
-Something went wrong here. Why is it just showing `Copyright © 2021` instead of `Copyright © Kaylumah 2021` as expected. This is because of how MSBuild operates. I will demonstrate with another example. For this we also set the `Company` tag in `Directory.Build.props` just before the `Copyright` tag. But this time keep it in the `.csproj` file. This time I explicitly set it to something other than my actual company name.
+What happened? Something is wrong; why do I see the copyright year 2021, but not my company name? Before explaining it, let me prove it by adding a company tag to the `Directory.Build.props` with a different value. For example:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -177,9 +169,13 @@ Something went wrong here. Why is it just showing `Copyright © 2021` instead of
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv2.png)
+This time do not remove the tag from the `.csproj` file. The result, this time, is a little different.
 
-As you can see the csproj overwrites the value
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/007_npe_buildpropsv2.png)
+
+Now it appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
+
+> Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, `Company` and `Copyright` are likely to be the same for every project. The `Authors` and `PackageTags` could be project-specific; heck, even `Description` could be reused if so desired. One thing for sure is that `Id` can not be recycled since every package requires a unique Id.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -202,20 +198,11 @@ As you can see the csproj overwrites the value
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_buildpropsv3.png)
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv3.png)
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/008_npe_buildpropsv3.png)
 
-For more details see [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019)
+### Bonus Chapter
 
-
-
-
-
-
-
-### Repo Info
-
-When looking [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target) some other intressting fields caught my eye.
+I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.
 
 | NuSpec | MSBuild | Description |
 | - | - | - |
@@ -224,8 +211,7 @@ When looking [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-tar
 | Repository/Branch | RepositoryBranch | Optional repository branch info i.e. `main` |
 | Repository/Commit | RepositoryCommit | Optional commit information i.e. `0e4d1b598f350b3dc675018d539114d1328189ef` |
 
-This metadata makes sure that I can always determine which version of my source lead to which artifact.
-Before I demonstrate this I need a small change to make generate packages a little bit easier. Change our csproj to match the following:
+Before I explain this, I am getting a bit tired of running `dotnet pack` every time. Lucky for me, there is a way to generate a package on build. Update the `.csproj` file to look like this:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -238,9 +224,7 @@ Before I demonstrate this I need a small change to make generate packages a litt
 </Project>
 ```
 
-What this does, it that every time we build the project we also generate a nuget package.
-Now how do we pass values like RepositoryCommit to MSBuild? For that we can use the `-property` or `-p` switches.
-For demo purposes I created a small shell script that reads the values based on a couple of git commands.
+So back to repository info. MSBuild itself is not aware of things like source control. Fortunately, we can pass parameters from the outside to use inside MSBuild. For this, we have the `-p` or `-property` switch. The following script retrieves the URL, branch name and SHA1 hash from the current commit.
 
 ```shell
 #!/bin/sh -x
@@ -251,16 +235,13 @@ REPO_COMMIT=$(git rev-parse HEAD)
 dotnet build -p:RepositoryUrl="$REPO_URL" -p:RepositoryBranch="$REPO_BRANCH" -p:RepositoryCommit="$REPO_COMMIT" -p:RepositoryType="git"
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_repoinfo.png)
+Remember, we now generate a package on build. Let us verify we see repo info by opening the created package in NuGet Package Explorer.
 
-Unlike Company, Author etc set via the command line this won't make it appear in Visual Studio.
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/009_npe_repoinfo.png)
 
+Even though it is OK to add repo metadata this way, there is a better alternative. This alternative does more than add metadata; it also enables source code debugging from NuGet packages. How cool is that? This technology is called [Source Link](https://github.com/dotnet/sourcelink).
 
-### SourceLink
-
-While it is certainly possible to do it like above, there is an alternative that I prefer. It goes further than just setting some values. It is called [sourcelink](https://github.com/dotnet/sourcelink). Just like we used `Directory.Build.props` to add metadata to every project file in the solution, we can also add nuget packages to every project.
-This time we use `Directory.Build.targets` which runs after the project. Since I host my projects on GitHub I use the `Microsoft.SourceLink.GitHub` package.
-
+Like before with the properties, I have no wish to add source link to every package separately. For this, create `Directory.Build.targets`, which looks like this:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -270,6 +251,8 @@ This time we use `Directory.Build.targets` which runs after the project. Since I
      </ItemGroup>
  </Project>
 ```
+
+To configure source link, we need to update `Directory.Build.props` as well.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -299,25 +282,28 @@ This time we use `Directory.Build.targets` which runs after the project. Since I
 </Project>
 ```
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_buildpropsv2.png)
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_buildpropsv2.png)
+To prove that it is still working here is the entire `.nuspec` file after adding Source Link
 
-#
-
-dotnet pack
-
-```output
-Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
-Copyright (C) Microsoft Corporation. All rights reserved.
-
-  Determining projects to restore...
-  All projects are up-to-date for restore.
-  Kaylumah.Logging.Extensions.Abstractions -> C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
-C:\Program Files\dotnet\sdk\5.0.103\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets(207,5): error NU5046: The icon file 'Logo.png' does not exist in the package. [C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj]
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Kaylumah.Logging.Extensions.Abstractions</id>
+    <version>1.0.0</version>
+    <authors>Max Hamulyák</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE</license>
+    <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
+    <icon>Logo.png</icon>
+    <description>Logging abstractions for Kaylumah.</description>
+    <copyright>Copyright © Kaylumah 2021</copyright>
+    <tags>logging abstractions</tags>
+    <repository type="git" url="https://github.com/Kaylumah/NugetMetadataDemo.git" commit="3378cf33e0061b234c1f58e060489efd81e08586" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
 ```
 
-
-Based on https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
-
-https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation
-https://licenses.nuget.org/MIT
+## Closing Thoughts...
