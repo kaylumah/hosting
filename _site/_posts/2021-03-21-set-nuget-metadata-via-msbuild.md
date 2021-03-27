@@ -306,4 +306,6 @@ To prove that it is still working here is the entire `.nuspec` file after adding
 </package>
 ```
 
-## Closing Thoughts...
+## Closing Thoughts
+
+We looked at setting metadata via MSBuild and sharing metadata between projects. You can take this even further by using MSBuild tasks to verify that packages must have a description like [this](https://github.com/dotnet/arcade/blob/9a72efb067b74bb9147f9413ade6173b568ea1af/src/Microsoft.DotNet.Arcade.Sdk/tools/Workarounds.targets#L79). It is also possible to create an entire SDK as Microsoft did with [Arcade](https://github.com/dotnet/arcade). Of course, Arcade goes much further than just specifying some metadata. You can read about how / why Microsoft did that [here](https://devblogs.microsoft.com/dotnet/the-evolving-infrastructure-of-net-core/). I experimented with a custom SDK heavily inspired by Arcade, but that is a blog post for another day.
