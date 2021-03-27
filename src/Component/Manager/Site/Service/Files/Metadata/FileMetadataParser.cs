@@ -100,12 +100,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var fileDate = match.DateByPattern();
             if (fileDate != null)
             {
-                metaData["date"] = fileDate;
+                metaData.Date = fileDate;
             }
-            // if (fileDate != null)
-            // {
-            //     metaData["date"] = fileDate;
-            // }
+
             var outputExtension = RetrieveExtension(outputFileName);
 
             var result = permalink
