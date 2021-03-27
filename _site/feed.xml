@@ -9,7 +9,8 @@
     <link href="{{ '' | absolute_url }}" rel="alternate" type="text/html" />
     <title>{{ site.title | html.escape }}</title>
     <subtitle>{{ site.description }}</subtitle>
-
+    <icon>{{ "assets/logo_small.svg" | absolute_url }}</icon>
+    <logo>{{ "assets/logo.svg" | absolute_url }}</logo>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
     {% assign post_author = site.data.authors[post.author] %}
