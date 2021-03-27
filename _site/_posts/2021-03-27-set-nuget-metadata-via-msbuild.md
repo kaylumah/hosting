@@ -341,6 +341,8 @@ We looked at setting metadata via MSBuild and sharing metadata between projects.
 
 For now, I hope I was able to teach you something about the power of MSBuild and how we can use it to manipulate our NuGet packages. If you have any questions, feel free to reach out.
 
+The corresponding source code for this article is on [GitHub](https://github.com/Kaylumah/NugetMetadataDemo), there you can see all the changes I addressed in sequence.
+
 See you next time, stay healthy and happy coding to all 🧸!
 
 ---
