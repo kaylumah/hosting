@@ -96,6 +96,7 @@ So behind the scenes, what happens is that specific MSBuild properties map to pr
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Max Hamulyák</Authors>
+    <!-- Note: Company does not get added to the .nuspec but it is part of the Assembly...Attribute so I often set them all -->
     <Company>Kaylumah</Company>
     <Description>Logging abstractions for Kaylumah.</Description>
     <PackageTags>logging;abstractions</PackageTags>
@@ -195,11 +196,11 @@ What happened? Something is wrong; why do I see the copyright year 2021, but not
 </Project>
 ```
 
-This time do not remove the tag from the `.csproj` file. The result, this time, is a little different.
+Unlike the `Copyright` tag do not remove the `Company` tag from the `.csproj` file. The result, this time, is a little different.
 
 ![Using BuildProps V2](/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png)
 
-It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
+It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why if we would read the `System.Reflection.AssemblyCopyrightAttribute` the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
 
 > Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, `Company` and `Copyright` are likely to be the same for every project. The `Authors` and `PackageTags` could be project-specific; heck, even `Description` could be reused if so desired. One thing for sure is that `Id` can not be recycled since every package requires a unique Id.
 
@@ -347,3 +348,4 @@ This blog was written based on personal experience when creating packages. If no
 - [Create a package dotnet cli](https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli)
 - [Create and publish a package using dotnet cli](https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli)
 - [MSBuild reserved and well-known properties](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019)
+- [Setting assembly and nuget package metadata in .NET Core](https://cezarypiatek.github.io/post/setting-assembly-and-package-metadata/)
