@@ -9,7 +9,7 @@ tags:
 ---
 For .NET, the standard mechanism for sharing packages is NuGet. A `.nupkg` file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata ([source](https://docs.microsoft.com/en-us/nuget/what-is-nuget)). This blog post will show you how data in this manifest can be controlled by using MSBuild.
 
-For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime).The sky is the limit.
+For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime). The sky is the limit.
 
 ## Setup
 
@@ -164,6 +164,7 @@ In my example, the value for `PackageIcon` and the name of my icon file match pr
 
 Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example.For more information regarding Package Icons, see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
 
+> Keep in mind that by adding both Icon and License files to the package, the overall package size slightly increases; this can cause slower restore times on initial package downloads. This performance penalty is a trade-off you have to decide for your self. Given today's network speeds, I think the impact isn't noticeable.
 
 ### Set metadata for multiple projects
 

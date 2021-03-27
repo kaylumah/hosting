@@ -96,6 +96,8 @@ h6 a svg {
   margin-left: -2rem;
 }
 
+*/
+
 a.external {
   --fa-secondary-opacity: 1.0;
   --fa-primary-color: #4cae50;
@@ -117,7 +119,7 @@ a.external svg {
 
 .svg-inline--fa {
     margin-right: 0.5rem;
-}*/
+}
 
 @tailwind utilities;
 
