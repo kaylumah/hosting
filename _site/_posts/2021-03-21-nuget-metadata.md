@@ -89,3 +89,99 @@ https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-u
 ### Nuget.org
 
 https://docs.microsoft.com/en-us/nuget/create-packages/overview-and-workflow
+
+
+
+
+
+
+
+### SourceLink
+
+While it is certainly possible to do it like above, there is an alternative that I prefer. It goes further than just setting some values. It is called [sourcelink](). Just like we used `Directory.Build.props` to add metadata to every project file in the solution, we can also add nuget packages to every project.
+This time we use `Directory.Build.targets` which runs after the project. Since I host my projects on GitHub I use the `Microsoft.SourceLink.GitHub` package.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TODO (Screenshots)
+ - https://www.nuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.13
+ - https://www.nuget.org
+ - https://www.fuget.org/packages/Microsoft.Extensions.Logging.Console/3.1.13
+ - NuGetPackageExplorer
+
+---
+
+
+> TODO include error section 
+#
+
+dotnet pack
+
+```output
+Microsoft (R) Build Engine version 16.8.3+39993bd9d for .NET
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Kaylumah.Logging.Extensions.Abstractions -> C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
+C:\Program Files\dotnet\sdk\5.0.103\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets(207,5): error NU5046: The icon file 'Logo.png' does not exist in the package. [C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj]
+```
+
+
+Based on https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
+
+https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation
+https://licenses.nuget.org/MIT
+
+https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019
+
+https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli
+
+
+
+> TODO include alternate license
+
+<!--
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Max Hamulyák</Authors>
+    <Company>Kaylumah</Company>
+    <Description>Logging abstractions for Kaylumah.</Description>
+    <PackageTags>logging;abstractions</PackageTags>
+    <Copyright>Copyright (c) 2021 Kaylumah</Copyright>
+    <PackageIcon>Logo.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>
+```
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/vs2019_licenseexpression_metadata.png)
+![initial metadata](/assets/images/posts/20210321/nuget-metadata/npe_licenseexpression_metadata.png)
+-->
