@@ -146,7 +146,7 @@ There is more than one way to set both the Icon and the License files for starte
 
 > **note**: For backwards compatibility, `PackageLicenseUrl` gets populated with `https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation` if you choose to use `PackageLicenseFile` and with `https://licenses.nuget.org/MIT` for example, if your SPDX would be MIT.
 
-The second point I like to raise is regarding the file names. 
+The second point I like to raise is regarding the file names.
 In my example, the value for `PackageIcon` and the name of my icon file match precisely; this is not necessary. What does matter is the name we specify in the package path. Failing to do so would, for example, trigger "NU5046: The icon file 'NotAnIcon.png' does not exist in the package. See a couple of samples below:
 
 ```xml
