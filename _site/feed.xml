@@ -11,6 +11,7 @@
     <subtitle>{{ site.description }}</subtitle>
     <icon>{{ "assets/logo_small.svg" | absolute_url }}</icon>
     <logo>{{ "assets/logo.svg" | absolute_url }}</logo>
+    <rights>{{ build.copyright }}</rights>
     {% assign posts = site.collections['posts'] %}
     {% for post in posts %}
     {% assign post_author = site.data.authors[post.author] %}
