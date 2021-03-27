@@ -162,7 +162,7 @@ In my example, the value for `PackageIcon` and the name of my icon file match pr
 <None Include="Icon.png" Pack="true" PackagePath="KaylumahLogo.png" />
 ```
 
-Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example.For more information regarding Package Icons, see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
+Rewriting via package path only works for files with an extension. For historical purposes, both NuGet and MSBuild treat these files as directories. If we had used `LICENSE.txt` over `LICENSE`, we would have been able to modify the name in the package. However, our `LICENSE` file can apply both the `Visible` and the `Link` example. For more information regarding Package Icons, see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-an-icon-image-file). For packing licenses without an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-file-without-an-extension), and licenses with an extension see [here](https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#packing-a-license-expression-or-a-license-file)
 
 > Keep in mind that by adding both Icon and License files to the package, the overall package size slightly increases; this can cause slower restore times on initial package downloads. This performance penalty is a trade-off you have to decide for your self. Given today's network speeds, I think the impact isn't noticeable.
 
@@ -199,7 +199,7 @@ This time do not remove the tag from the `.csproj` file. The result, this time, 
 
 ![Using BuildProps V2](/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png)
 
-Now it appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
+It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [here](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
 
 > Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, `Company` and `Copyright` are likely to be the same for every project. The `Authors` and `PackageTags` could be project-specific; heck, even `Description` could be reused if so desired. One thing for sure is that `Id` can not be recycled since every package requires a unique Id.
 
@@ -310,7 +310,7 @@ To configure source link, we need to update `Directory.Build.props` as well.
 </Project>
 ```
 
-To prove that it is still working here is the entire `.nuspec` file after adding Source Link
+To prove that it is still working, here is the entire `.nuspec` file after adding Source Link
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
