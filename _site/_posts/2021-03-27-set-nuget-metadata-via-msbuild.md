@@ -343,6 +343,8 @@ For now, I hope I was able to teach you something about the power of MSBuild and
 
 See you next time, stay healthy and happy coding to all 🧸!
 
+---
+
 ## Sources
 
 This blog was written based on personal experience when creating packages. If not already explicitly linked in the text, here are some of the primary sources used in the article.
