@@ -265,7 +265,7 @@ dotnet build -p:RepositoryUrl="$REPO_URL" -p:RepositoryBranch="$REPO_BRANCH" -p:
 
 Remember, we now generate a package on build. Let us verify we see repo info by opening the created package in NuGet Package Explorer.
 
-![initial metadata](/assets/images/posts/20210321/nuget-metadata/009_npe_repoinfo.png)
+![Repo Info in Package Explorer](/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png)
 
 Even though it is OK to add repo metadata this way, there is a better alternative. This alternative does more than add metadata; it also enables source code debugging from NuGet packages. How cool is that? This technology is called [Source Link](https://github.com/dotnet/sourcelink).
 
