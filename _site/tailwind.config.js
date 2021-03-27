@@ -17,12 +17,12 @@ module.exports = {
             a: {
               textDecoration: 'none'
             },
-            'code::before': {
-              content: '""',
-            },
-            'code::after': {
-              content: '""',
-            }
+            // 'code::before': {
+            //   content: '""',
+            // },
+            // 'code::after': {
+            //   content: '""',
+            // }
           },
         },
       }
