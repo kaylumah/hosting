@@ -5,7 +5,7 @@ using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    class BuildData
+    public class BuildData
     {
         public string BuildId { get;set; }
         public string BuildNumber { get;set; }

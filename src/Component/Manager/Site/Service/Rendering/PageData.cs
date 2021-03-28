@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
+    public class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
     {
         public string Id
         {

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
+    public class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
     {
         private readonly SiteInfo _siteInfo;
         private readonly File[] _files;
