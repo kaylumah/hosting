@@ -15,12 +15,13 @@ namespace Kaylumah.Ssg.Utilities
 
         public static string DateToPattern(DateTimeOffset date, string pattern)
         {
-            return date.ToUniversalTime().ToString(pattern);
+            // date.ToUniversalTime()
+            return date.ToString(pattern);
         }
 
         public static string DateToXmlschema(DateTimeOffset date)
         {
-            return date.ToUniversalTime().ToString("o");
+            return DateToPattern(date,"o");
         }
 
         public static string RelativeUrl(string source)
