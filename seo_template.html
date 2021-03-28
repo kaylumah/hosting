@@ -1,6 +1,17 @@
-<!-- Begin Kaylumah SEO tag v{{ seo_tag.version }} -->
+<!-- Begin Kaylumah SEO tag v{{ seo_tag.build.short_git_hash }} -->
+
+
+
+
+
+
+
+
+
+
+
 {% if seo_tag.title %}<title>{{ seo_tag.title }}</title>{% endif %}
-<meta name="generator" content="Kaylumah v{{ seo_tag.version }}" />
+<meta name="generator" content="Kaylumah v{ seo_tag.build.short_git_hash }}" />
 {% if seo_tag.page_title %}<meta property="og:title" content="{{ seo_tag.page_title }}" />{% endif %}
 {% if seo_tag.author.name %}<meta name="author" content="{{ seo_tag.author.name }}" />{% endif %}
 <meta property="og:locale" content="{{ seo_tag.page_locale }}" />
