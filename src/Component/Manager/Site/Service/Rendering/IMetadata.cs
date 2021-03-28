@@ -8,5 +8,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         string Description { get; }
         string Language { get; }
         string Author { get; }
+        string Url { get; }
     }
 }

@@ -17,6 +17,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Language => GetLanguage();
         public string Author => GetAuthor();
 
+        public string Url => GetUrl();
+
         public SiteData(SiteInfo siteInfo, File[] files)
         {
             _siteInfo = siteInfo;
@@ -41,6 +43,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private string GetAuthor()
         {
             return string.Empty;
+        }
+
+        private string GetUrl()
+        {
+            return _siteInfo.Url;
         }
 
         public Dictionary<string, object> Data { get; set; }

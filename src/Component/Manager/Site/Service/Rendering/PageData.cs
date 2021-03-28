@@ -22,6 +22,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public string Description => this.GetValue<string>(nameof(Description));
         public string Language => this.GetValue<string>(nameof(Language));
         public string Author => this.GetValue<string>(nameof(Author));
+        public string Url => this.GetValue<string>(nameof(Url));
         public string Content
         {
             get
@@ -51,6 +52,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             Content = file.Content;
             LastModified = file.LastModified;
+            // TODO sync this...
+            this.SetValue("url", this.GetValue<string>("uri"));
         }
     }
 }
