@@ -8,6 +8,24 @@ layout: 'collection.html'
   <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
     Welcome to the blog! Here you can find anything I post.
   </p>
+  <p class="mt-1 max-w-2xl mx-auto text-xl text-gray-500">
+    You can stay up to date by subscribing below.
+  </p>
+  <div class="mt-1 flex justify-center space-x-6">
+    <a target="_blank" rel=”noopener” href="https://dev.to/{{ site.data.authors[page.author].devto }}" class="text-gray-900 hover:text-gray-400">
+        <span class="sr-only">Dev.to</span>
+        <em class="fab fa-dev fa-lg"></em>
+    </a>
+    <a target="_blank" rel=”noopener” href="/feed.xml" class="text-gray-900 hover:text-gray-400">
+        <span class="sr-only">RSS Feed</span>
+        <em class="fas fa-rss-square fa-lg"></em>
+    </a>
+    <a target="_blank" rel=”noopener” href="https://medium.com/@{{ site.data.authors[page.author].medium }}" class="text-gray-900 hover:text-gray-400">
+        <span class="sr-only">Medium</span>
+        <em class="fab fa-medium fa-lg"></em>
+    </a>
+
+  </div>
 </div>
 <div class="mt-6 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
     {% assign posts = site.collections['posts'] | array.sort "date" | array.reverse %}
