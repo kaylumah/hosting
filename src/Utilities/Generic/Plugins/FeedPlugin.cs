@@ -19,11 +19,12 @@ namespace Kaylumah.Ssg.Utilities
             var liquidTemplate = Template.ParseLiquid(_raw);
             var context = new LiquidTemplateContext();
             // var ld = LdJson(data);
-            var scriptObject = new ScriptObject();
-            // {
+            var scriptObject = new ScriptObject()
+            {
+                ["feed_tag"] = data
             //     ["seo_tag"] = data,
             //     ["json_ld"] = ld
-            // };
+            };
             scriptObject.Import(typeof(GlobalFunctions));
             context.PushGlobal(scriptObject);
             var pluginResult = liquidTemplate.Render(context);
