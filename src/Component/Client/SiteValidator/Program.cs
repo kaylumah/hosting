@@ -50,6 +50,11 @@ namespace Kaylumah.Ssg.Client.SiteValidator
             if (Directory.Exists(path))
             {
                 var bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
+
+                var assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                    .Where(s => Path.GetDirectoryName(s).ToUpper().Contains("ASSETS"))
+                    .ToList();
+
                 var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                     .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper().Contains(d)))
                     .ToList();
