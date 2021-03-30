@@ -10,7 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build-sitegenerator",
             "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/Debug/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll",
-            "args": [],
+            "args": [
+                "Site:Url=http://localhost:8080"
+            ],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
