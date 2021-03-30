@@ -2,7 +2,6 @@
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" {% if site.language %}xml:lang="{{ site.language }}"{% endif %}>
-    
     <id>{{ page.uri | absolute_url }}</id>
     <updated>{{ build.time | date_to_xmlschema }}</updated>
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
