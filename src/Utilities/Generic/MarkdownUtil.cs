@@ -79,13 +79,14 @@ namespace Kaylumah.Ssg.Utilities
 
                 }
 
-                if (anchor is LinkInline imageLink && imageLink.IsImage)
-                {
-                    if (imageLink.Url.StartsWith("/assets"))
-                    {
-                        imageLink.Url = GlobalFunctions.Instance.Url + imageLink.Url;
-                    }
-                }
+                // TODO disable pending Medium response...
+                // if (anchor is LinkInline imageLink && imageLink.IsImage)
+                // {
+                //     if (imageLink.Url.StartsWith("/assets"))
+                //     {
+                //         imageLink.Url = GlobalFunctions.Instance.Url + imageLink.Url;
+                //     }
+                // }
             }
 
             // Render the doc
