@@ -49,7 +49,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
             var path = Path.Combine(Environment.CurrentDirectory, "dist");
             if (Directory.Exists(path))
             {
-                var bannedDirectories = new string[] { "NODE_MODULES" };
+                var bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
                 var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                     .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper().Contains(d)))
                     .ToList();
