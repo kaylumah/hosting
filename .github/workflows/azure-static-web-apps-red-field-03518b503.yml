@@ -47,8 +47,6 @@ jobs:
           npm run build:prod
           rm styles.css
           rm -rf node_modules
-          rm -rf package.json
-          rm -rf package-lock.json
           ls
 
       - name: Build And Deploy
@@ -63,6 +61,7 @@ jobs:
           app_location: "/" # App source code path
           api_location: "api" # Api source code path - optional
           output_location: "dist/" # Built app content directory - optional
+          skip_app_build: true
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
