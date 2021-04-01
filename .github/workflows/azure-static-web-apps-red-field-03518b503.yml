@@ -14,10 +14,40 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+    env:
+      config: 'Release'
     steps:
+
+      - name: Setup .NET (3.1.x)
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+      - name: Setup .NET (5.0.x)
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration $config --no-restore /p:BuildId=$GITHUB_RUN_ID /p:BuildNumber=$GITHUB_RUN_NUMBER
+      - name: Test
+        run: dotnet test --configuration $config --no-build --verbosity normal
+      - name: Run Client
+        run: dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$config/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll"
+
+      - run: npm i
+      - run: npm run build:prod --if-present
+      - run: rm styles.css
+      - run: rm -rf node_modules
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v0.0.1-preview
