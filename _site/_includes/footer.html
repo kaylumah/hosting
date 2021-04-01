@@ -1,16 +1,16 @@
 <footer class="bg-gray-900">
     <div class="py-4 px-4">
         <div class="flex justify-center space-x-6">
-
-            <a target="_blank" rel=”noopener” href="https://www.linkedin.com/company/{{ site.data.organization.linkedin }}" class="text-gray-100 hover:text-gray-400">
+            {% assign page_author = site.data.authors[page.author] %}
+            <a target="_blank" rel=”noopener” href="https://www.linkedin.com/in/{{ page_author.linkedin }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">LinkedIn</span>
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://github.com/{{ site.data.organization.github }}" class="text-gray-100 hover:text-gray-400">
+            <a target="_blank" rel=”noopener” href="https://github.com/{{ page_author.github }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://twitter.com/{{ site.data.organization.twitter }}" class="text-gray-100 hover:text-gray-400">
+            <a target="_blank" rel=”noopener” href="https://twitter.com/{{ page_author.twitter }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Twitter</span>
                 <em class="fab fa-twitter-square fa-lg"></em>
             </a>
