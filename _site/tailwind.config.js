@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        headline: "'Architects Daughter', cursive",
-        body: "'Roboto', sans-serif"
+        architect: "'Architects Daughter', cursive",
+        roboto: "'Roboto', sans-serif"
       },
       colors: {
         brand: {
