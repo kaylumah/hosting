@@ -18,7 +18,12 @@
         </p>
       </a>
     </div>
-    <div class="mt-6 flex items-center">
+    <div class="mt-2">
+      {%for tag in post.tags %}
+        <span class="text-gray-500"><span class="text-gray-600">#</span>{{tag}}</span>
+      {% endfor %}
+    </div>
+    <div class="mt-2 flex items-center">
       <div class="flex-shrink-0">
         <a href="#">
           <span class="sr-only">{{ site.data.authors[page.author].full_name }}</span>
