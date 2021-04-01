@@ -40,12 +40,13 @@ jobs:
         run: dotnet test --configuration $config --no-build --verbosity normal
       - name: Run Client
         run: dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$config/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll"
-
-      - run: cd dist
-      - run: npm i
-      - run: npm run build:prod
-      - run: rm styles.css
-      - run: rm -rf node_modules
+      - name: Process
+        run: |
+          cd dist
+          npm i
+          npm run build:prod
+          rm styles.css
+          rm -rf node_modules
 
       - name: Build And Deploy
         id: builddeploy
