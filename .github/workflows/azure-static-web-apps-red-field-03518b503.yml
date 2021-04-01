@@ -47,6 +47,7 @@ jobs:
           npm run build:prod
           rm styles.css
           rm -rf node_modules
+          ls
 
       - name: Build And Deploy
         id: builddeploy
