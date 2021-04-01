@@ -47,6 +47,8 @@ jobs:
           npm run build:prod
           rm styles.css
           rm -rf node_modules
+          rm -rf package.json
+          rm -rf package-lock.json
           ls
 
       - name: Build And Deploy
