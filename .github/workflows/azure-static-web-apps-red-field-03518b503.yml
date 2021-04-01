@@ -18,10 +18,10 @@ jobs:
       config: 'Release'
     steps:
 
-      - name: Setup .NET (3.1.x)
+      - name: Setup .NET (3.1.406)
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.x
+          dotnet-version: 3.1.406
       - name: Setup .NET (5.0.102)
         uses: actions/setup-dotnet@v1
         with:
