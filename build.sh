@@ -20,3 +20,6 @@ dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/netcoreap
 
 cd dist
 npm i
+npm run build:prod
+rm styles.css
+rm -rf node_modules
