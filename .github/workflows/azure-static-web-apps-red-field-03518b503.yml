@@ -43,7 +43,7 @@ jobs:
 
       - run: cd dist
       - run: npm i
-      - run: npm run build:prod --if-present
+      - run: npm run build:prod
       - run: rm styles.css
       - run: rm -rf node_modules
 
