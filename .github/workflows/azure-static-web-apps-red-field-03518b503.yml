@@ -32,8 +32,6 @@ jobs:
           node-version: 15.x
 
       - uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
