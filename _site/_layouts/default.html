@@ -11,9 +11,6 @@
         <link rel="manifest" href="{{ '/assets/images/site.webmanifest' | relative_url }}" />
         <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' | relative_url }}" color="hotpink" />
         
-        <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet"> -->
-        
         <link href="/compiled.css?v={{ build.short_git_hash }}" rel="stylesheet" />
         <link href="/assets/prism.css?v={{ build.short_git_hash }}" rel="stylesheet" />
         
@@ -24,16 +21,7 @@
         
         <!-- Place your kit's code here -->
         <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
-          <!-- <script>
-        window.FontAwesomeConfig = {
-        searchPseudoElements: true
-        }
-    </script>
-         -->
-        <style>
-
-        </style>
-
+        
         {% include 'analytics.html' %}
 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
