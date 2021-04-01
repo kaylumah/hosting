@@ -108,13 +108,41 @@
         },
         {
             "type": "func",
-            "dependsOn": "build",
-            "options": {
-                "cwd": "${workspaceFolder}/api/bin/Debug/net5.0"
-            },
             "command": "host start",
+            "problemMatcher": "$func-node-watch",
             "isBackground": true,
-            "problemMatcher": "$func-dotnet-watch"
+            "dependsOn": "npm build",
+            "options": {
+                "cwd": "${workspaceFolder}/api"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "npm build",
+            "command": "npm run build",
+            "dependsOn": "npm install",
+            "problemMatcher": "$tsc",
+            "options": {
+                "cwd": "${workspaceFolder}/api"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "npm install",
+            "command": "npm install",
+            "options": {
+                "cwd": "${workspaceFolder}/api"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "npm prune",
+            "command": "npm prune --production",
+            "dependsOn": "npm build",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}/api"
+            }
         }
     ]
 }
