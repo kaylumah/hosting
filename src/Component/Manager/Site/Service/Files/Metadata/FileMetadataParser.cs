@@ -28,16 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             
             var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
             var paths = DetermineFilters(outputLocation);
-
-            var fileMetaData = new FileMetaData();
-            foreach (var path in paths)
-            {
-                var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(path));
-                if (meta != null)
-                {
-                    Merge(fileMetaData, meta.Values, $"default:{path}");
-                }
-            }
+            var fileMetaData = ApplyDefaults(paths);
 
             Merge(fileMetaData, result.Data, "file");
 
@@ -54,6 +45,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return _options.ExtensionMapping[ext];
             }
             return ext;
+        }
+
+        private FileMetaData ApplyDefaults(List<string> filters)
+        {
+            var fileMetaData = new FileMetaData();
+            foreach (var filter in filters)
+            {
+                var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter));
+                if (meta != null)
+                {
+                    Merge(fileMetaData, meta.Values, $"default:{filter}");
+                }
+            }
+            return fileMetaData;
         }
 
         private List<string> DetermineFilters(string outputLocation)
