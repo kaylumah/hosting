@@ -23,3 +23,5 @@ npm i
 npm run build:prod
 rm styles.css
 rm -rf node_modules
+rm package.json package-lock.json
+rm tailwind.config.js postcss.config.js
