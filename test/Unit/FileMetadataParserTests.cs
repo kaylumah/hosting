@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Ssg.Extensions.Metadata.Abstractions;
+using Test.Unit.Mocks;
 using Xunit;
 
 namespace Test.Unit
@@ -23,7 +24,7 @@ namespace Test.Unit
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
                 .Returns(new Metadata<FileMetaData> { });
 
-            var loggerMock = new Mock<ILogger<FileMetadataParser>>();
+            var loggerMock = new LoggerMock<FileMetadataParser>();
             var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
             var criteria = new MetadataCriteria
             {
@@ -201,7 +202,7 @@ namespace Test.Unit
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
                 .Returns(new Metadata<FileMetaData> { });
 
-            var loggerMock = new Mock<ILogger<FileMetadataParser>>();
+            var loggerMock = new LoggerMock<FileMetadataParser>();
             var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
             var criteria = new MetadataCriteria
             {
