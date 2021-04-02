@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (index >= 0)
             {
                 var input = outputLocation.Substring(0, index);
-                paths.AddRange(DetermineFilters(input));
+                paths.AddRange(DetermineFilterDirectories(input));
                 paths = paths.OrderBy(x => x.Length).ToList();
             }
 
@@ -63,7 +63,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return ext;
         }
 
-        private List<string> DetermineFilters(string input)
+        private List<string> DetermineFilterDirectories(string input)
         {
             var result = new List<string>();
             int index;
