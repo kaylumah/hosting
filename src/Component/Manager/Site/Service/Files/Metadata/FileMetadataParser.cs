@@ -77,17 +77,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 result.Add(input);
             }
-
-            // var current = input.Replace(root, "");
-            // if (!current.Equals(string.Empty))
-            // {
-            //     paths.Add(current);
-            //     var index = current.LastIndexOf(Path.DirectorySeparatorChar);
-            //     if (index > 0)
-            //     {
-            //         Recursive(root, current.Substring(0, index), paths);
-            //     }
-            // }
             return result;
         }
 
