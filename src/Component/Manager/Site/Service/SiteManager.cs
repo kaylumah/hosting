@@ -32,13 +32,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IYamlParser _yamlParser;
         private readonly SiteInfo _siteInfo;
 
+        private readonly LiquidUtil _liquidUtil;
+
         public SiteManager(
             IFileProcessor fileProcessor,
             IArtifactAccess artifactAccess,
             IFileSystem fileSystem,
             IYamlParser yamlParser,
             ILogger<SiteManager> logger,
-            IOptions<SiteInfo> options)
+            IOptions<SiteInfo> options,
+            LiquidUtil liquidUtil)
         {
             _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
@@ -46,6 +49,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _yamlParser = yamlParser;
             _logger = logger;
             _siteInfo = options.Value;
+            _liquidUtil = liquidUtil;
         }
 
         private Dictionary<string, object> ParseData(string dataDirectory)
@@ -218,9 +222,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             // var renderRequests = processed.ToRenderRequests();
 
-            var liquidUtil = new LiquidUtil(_fileSystem);
-
-            var renderResults = await liquidUtil.Render(renderRequests.ToArray());
+            var renderResults = await _liquidUtil.Render(renderRequests.ToArray());
 
             var artifacts = processed.Select((t, i) =>
             {
@@ -237,6 +239,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                             _fileSystem.GetDirectoryContents("");
             var rootFile = directoryContents.FirstOrDefault();
             var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
+            // var root2 = Directory.GetCurrentDirectory();
 
             var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
                 .Select(x => x.PhysicalPath.Replace(root, string.Empty));

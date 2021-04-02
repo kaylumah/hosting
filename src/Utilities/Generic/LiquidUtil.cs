@@ -34,11 +34,10 @@ namespace Kaylumah.Ssg.Utilities
         private readonly string _layoutDirectory = "_layouts";
         private readonly string _templateDirectory = "_includes";
         private readonly IFileSystem _fileSystem;
-        public LiquidUtil(IFileSystem fileSystem)
+        public LiquidUtil(IFileSystem fileSystem, IEnumerable<IPlugin> plugins)
         {
             _fileSystem = fileSystem;
-            _plugins = new IPlugin[] { new SeoPlugin(), new FeedPlugin() };
-
+            _plugins = plugins.ToArray();
         }
 
         public async Task<RenderResult[]> Render(RenderRequest[] requests)
