@@ -30,6 +30,7 @@
     <ProjectReference Include="..\..\src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
+    <ProjectReference Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
     <ProjectReference Include="..\Utilities\Test.Utilities.csproj" />
     <ProjectReference Include="..\..\src\Utilities\Web\Kaylumah.Ssg.Utilities.Web.csproj" />
     <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj" />
