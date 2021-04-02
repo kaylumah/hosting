@@ -25,16 +25,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
             var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+            
             var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
-
-            var paths = new List<string>() { string.Empty };
-            var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
-            if (index >= 0)
-            {
-                var input = outputLocation.Substring(0, index);
-                paths.AddRange(DetermineFilterDirectories(input));
-                paths = paths.OrderBy(x => x.Length).ToList();
-            }
+            var paths = DetermineFilters(outputLocation);
 
             var fileMetaData = new FileMetaData();
             foreach (var path in paths)
@@ -61,6 +54,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return _options.ExtensionMapping[ext];
             }
             return ext;
+        }
+
+        private List<string> DetermineFilters(string outputLocation)
+        {
+            var paths = new List<string>() { string.Empty };
+            var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+            if (index >= 0)
+            {
+                var input = outputLocation.Substring(0, index);
+                paths.AddRange(DetermineFilterDirectories(input));
+                paths = paths.OrderBy(x => x.Length).ToList();
+            }
+            return paths;
         }
 
         private List<string> DetermineFilterDirectories(string input)
