@@ -11,37 +11,24 @@ using System.Collections.Generic;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Options;
+using Test.Unit.Mocks;
 
 namespace Test.Unit
 {
-    public class FileProcessorMock : Mock<IFileProcessor>
-    {
-        public FileProcessorMock()
-        {
-
-        }
-    }
-
-    public class LoggerMock<T> : Mock<ILogger<T>>
-    {
-
-    }
-
-
     public class SiteManagerTests
     {
         [Fact]
         public async Task Test_SiteManager_GenerateSite()
         {
             var fileProcessorMock = new FileProcessorMock();
-            // IArtifactAccess
-            // IFileSystem
-            // IYamlParser
+            var artifactAccessMock = new ArtifactAccessMock();
+            var fileSystemMock = new FileSystemMock();
+            var yamlParserMock = new YamlParserMock();
             var loggerMock = new LoggerMock<SiteManager>();
             var siteInfo = Options.Create(new SiteInfo { 
                 Url = "https://example.com"
             });
-            var siteManager = new SiteManager(fileProcessorMock.Object, null, null, null, loggerMock.Object, siteInfo);
+            var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo);
             await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = new SiteConfiguration {
 
             }});
