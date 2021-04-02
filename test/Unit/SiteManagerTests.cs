@@ -14,6 +14,41 @@ using Microsoft.Extensions.Options;
 
 namespace Test.Unit
 {
+    public class FileProcessorMock : Mock<IFileProcessor>
+    {
+        public FileProcessorMock()
+        {
+
+        }
+    }
+
+    public class LoggerMock<T> : Mock<ILogger<T>>
+    {
+
+    }
+
+
+    public class SiteManagerTests
+    {
+        [Fact]
+        public async Task Test_SiteManager_GenerateSite()
+        {
+            var fileProcessorMock = new FileProcessorMock();
+            // IArtifactAccess
+            // IFileSystem
+            // IYamlParser
+            var loggerMock = new LoggerMock<SiteManager>();
+            var siteInfo = Options.Create(new SiteInfo { 
+                Url = "https://example.com"
+            });
+            var siteManager = new SiteManager(fileProcessorMock.Object, null, null, null, loggerMock.Object, siteInfo);
+            await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = new SiteConfiguration {
+
+            }});
+        }
+    }
+
+
     // public class SiteManagerTests
     // {
     //     [Fact(Skip = "wip")]
