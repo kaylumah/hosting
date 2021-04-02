@@ -66,7 +66,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private List<string> DetermineFilters(string input)
         {
             var result = new List<string>();
-            var index = -1;
+            int index;
             while ((index = input.LastIndexOf(Path.DirectorySeparatorChar)) >= 0)
             {
                 result.Add(input);
