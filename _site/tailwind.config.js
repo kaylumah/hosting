@@ -5,6 +5,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        architect: "'Architects Daughter', cursive",
+        roboto: "'Roboto', sans-serif"
+      },
       colors: {
         brand: {
           green: '#4cae50',
@@ -17,18 +21,15 @@ module.exports = {
             a: {
               textDecoration: 'none'
             },
-            'code::before': {
-              content: '""',
-            },
-            'code::after': {
-              content: '""',
-            }
+            // 'code::before': {
+            //   content: '""',
+            // },
+            // 'code::after': {
+            //   content: '""',
+            // }
           },
         },
       }
-      // fontFamily: {
-      //   headline: "Poppins, sans-serif" // font-headline
-      // }
     },
   },
   variants: {

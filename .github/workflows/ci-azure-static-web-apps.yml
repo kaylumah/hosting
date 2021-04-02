@@ -1,0 +1,77 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    env:
+      config: 'Release'
+    steps:
+
+      - name: Setup .NET (3.1.406)
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.406
+      - name: Setup .NET (5.0.102)
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.102
+      - name: Use Node.js 15.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+
+      - uses: actions/checkout@v2
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration $config --no-restore /p:BuildId=$GITHUB_RUN_ID /p:BuildNumber=$GITHUB_RUN_NUMBER
+      - name: Test
+        run: dotnet test --configuration $config --no-build --verbosity normal
+      - name: Run Client
+        run: dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$config/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll"
+      - name: Process
+        run: |
+          cd dist
+          npm i
+          npm run build:prod
+          rm styles.css
+          rm -rf node_modules
+          ls
+
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v0.0.1-preview
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_RED_FIELD_03518B503 }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "dist" # App source code path
+          api_location: "api" # Api source code path - optional
+          output_location: "" # Built app content directory - optional
+          skip_app_build: true
+          ###### End of Repository/Build Configurations ######
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v0.0.1-preview
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_RED_FIELD_03518B503 }}
+          action: "close"

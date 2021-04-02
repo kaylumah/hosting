@@ -49,12 +49,19 @@ namespace Kaylumah.Ssg.Client.SiteValidator
             var path = Path.Combine(Environment.CurrentDirectory, "dist");
             if (Directory.Exists(path))
             {
-                var bannedDirectories = new string[] { "NODE_MODULES" };
+                var bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
+
+                var assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                    .Where(s => Path.GetDirectoryName(s).ToUpper().Contains("ASSETS"))
+                    .ToList();
+
                 var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
                     .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper().Contains(d)))
                     .ToList();
 
-                var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file))).Take(1).ToList();
+                var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file)))/*.Take(1)*/.ToList();
+
+                var pageResults = new List<PageLinkResult>();
 
                 // https://html-agility-pack.net/knowledge-base/16645257/how-to-use-html-agility-pack-for-html-validations
                 // https://html-agility-pack.net/knowledge-base/2354653/grabbing-meta-tags-and-comments-using-html-agility-pack
@@ -95,34 +102,63 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                     var titleTag = head.SelectSingleNode("title");
 
                     var body = document.DocumentNode.SelectSingleNode("html/body");
-                    var links = new HashSet<string>();
-                    foreach (var link in body.SelectNodes("//a[@href]"))
-                    {
-                        string hrefValue = link.GetAttributeValue("href", string.Empty);
-                        links.Add(hrefValue);
-                    }
-                    var uris = links.Where(x => !string.IsNullOrEmpty(x) && "#" != x && "/" != x).Select(x =>
-                    {
-                        if (x.StartsWith("http://") || x.StartsWith("https://"))
-                        {
-                            return new Uri(x);
-                        }
-                        return new Uri(x, UriKind.Relative);
-                    }).ToList();
-
-                    var fileUris = uris.Where(x => !x.IsAbsoluteUri);
-
-                    foreach (var fileUri in fileUris)
-                    {
-                        if (!files.Any(file => file.EndsWith(fileUri.ToString())))
-                        {
-                            Console.WriteLine($"Failed to find {fileUri}");
-                        }
-                    }
-
-                    // doc.DocumentNode.SelectNodes("")
+                    var page = new PageLinkResult(html, body);
+                    pageResults.Add(page);
                 }
             }
+        }
+    }
+
+    internal class PageLinkResult
+    {
+        private readonly string _fileName;
+        private readonly HtmlNode _node;
+
+        public HashSet<string> ExternalAnchors { get; } = new HashSet<string>();
+        public HashSet<string> InternalAnchors { get; } = new HashSet<string>();
+        public HashSet<string> ExternalImages { get; } = new HashSet<string>();
+        public HashSet<string> InternalImages { get; } = new HashSet<string>();
+
+        public PageLinkResult(string fileName, HtmlNode node)
+        {
+            _fileName = fileName;
+            _node = node;
+            Process();
+        }
+
+        private void Process()
+        {
+            var anchorTags = _node.SelectNodes("//a[@href]");
+            foreach(var tag in anchorTags)
+            {
+                var attrValue = tag.GetAttributeValue("href", string.Empty);
+                if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue) && !"/".Equals(attrValue))
+                {
+                    if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+                    {
+                        ExternalAnchors.Add(attrValue);
+                    }
+                    else
+                    {
+                        InternalAnchors.Add(attrValue);
+                    }
+                }
+            }
+
+            var imageTags = _node.SelectNodes("//img[@src]");
+            foreach(var tag in imageTags)
+            {
+                var attrValue = tag.GetAttributeValue("src", string.Empty);
+                if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+                {
+                    ExternalImages.Add(attrValue);
+                }
+                else
+                {
+                    InternalImages.Add(attrValue);
+                }
+            }
+
         }
     }
 }

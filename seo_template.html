@@ -1,47 +1,53 @@
-<!-- Begin Jekyll SEO tag v{{ seo_tag.version }} -->
-{% if seo_tag.title %}<title>{{ seo_tag.title }}</title>{% endif %}
-<meta name="generator" content="Jekyll v{{ jekyll.version }}" />
-{% if seo_tag.page_title %}<meta property="og:title" content="{{ seo_tag.page_title }}" />{% endif %}
-{% if seo_tag.author.name %}<meta name="author" content="{{ seo_tag.author.name }}" />{% endif %}
-<meta property="og:locale" content="{{ seo_tag.page_locale }}" />
+<!-- Begin Kaylumah SEO tag v{{ seo_tag.build.short_git_hash }} -->
+{% if seo_tag.title %}
+    <title>{{ seo_tag.title }}</title>
+{% endif %}
+    <meta name="generator" content="Kaylumah v{ seo_tag.build.short_git_hash }}" />
+{% if seo_tag.page.title %}
+    <meta property="og:title" content="{{ seo_tag.page.title }}" />
+{% endif %}
+{% if seo_tag.author %}
+    <meta name="author" content="{{ seo_tag.author }}" />
+{% endif %}
+    <meta property="og:locale" content="{{ seo_tag.language }}" />
 {% if seo_tag.description %}
-<meta name="description" content="{{ seo_tag.description }}" />
-<meta property="og:description" content="{{ seo_tag.description }}" />
-{% endif %}
-{% if site.url %}
-<link rel="canonical" href="{{ seo_tag.canonical_url }}" />
-<meta property="og:url" content="{{ seo_tag.canonical_url }}" />
-{% endif %}
-{% if seo_tag.site_title %}<meta property="og:site_name" content="{{ seo_tag.site_title }}" />{% endif %}
-{% if seo_tag.image %}
-  <meta property="og:image" content="{{ seo_tag.image.path }}" />
-  {% if seo_tag.image.height %}
-    <meta property="og:image:height" content="{{ seo_tag.image.height }}" />
-  {% endif %}
-  {% if seo_tag.image.width %}
-    <meta property="og:image:width" content="{{ seo_tag.image.width }}" />
-  {% endif %}
+    <meta name="description" content="{{ seo_tag.description }}" />
+    <meta property="og:description" content="{{ seo_tag.description }}" />
 {% endif %}
 
-{% if page.date %}
-  <meta property="og:type" content="article" />
-  <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+{% if seo_tag.site.url %}
+    {% assign page_url = seo_tag.page.url | absolute_url %}
+    <link rel="canonical" href="{{ seo_tag.page.canonical_url | default: page_url }}" />
+    <meta property="og:url" content="{{ seo_tag.page.canonical_url | default: page_url }}" />
 {% endif %}
 
-{% if seo_tag.image %}
-  <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" }}" />
-  <meta property="twitter:image" content="{{ seo_tag.image.path }}" />
+
+{% if seo_tag.site.title %}
+    <meta property="og:site_name" content="{{ seo_tag.site.title }}" />
+{% endif %}
+
+{% if seo_tag.page.image %}
+    <meta property="og:image" content="{{ seo_tag.page.image | absolute_url }}" />
+{% endif %}
+
+{% if seo_tag.page.date %}
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="{{ seo_tag.page.date | date_to_xmlschema }}" />
+{% endif %}
+
+{% if seo_tag.page.image %}
+    <meta name="twitter:card" content="{{ page.twitter.card | default: site.twitter.card | default: "summary_large_image" }}" />
+    <meta property="twitter:image" content="{{ seo_tag.page.image | absolute_url }}" />
 {% else %}
-  <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary" />
 {% endif %}
-
-{% if seo_tag.page_title %}
-  <meta property="twitter:title" content="{{ seo_tag.page_title }}" />
+{% if seo_tag.page.title %}
+    <meta property="twitter:title" content="{{ seo_tag.page.title }}" />
 {% endif %}
 
 
 {% if seo_tag.site.data.organization.twitter %}  
-  <meta name="twitter:site" content="@{{ seo_tag.site.data.organization.twitter | remove '@' }}" />
+    <meta name="twitter:site" content="@{{ seo_tag.site.data.organization.twitter | remove '@' }}" />
   {% if seo_tag.site.data.authors[seo_tag.page.author].twitter %}
     <meta name="twitter:creator" content="@{{ seo_tag.site.data.authors[seo_tag.page.author].twitter | remove:'@' }}" />
   {% endif %}
@@ -67,4 +73,10 @@
 }
 </script>
 
-<!-- End Jekyll SEO tag -->
+
+
+
+{% if seo_tag.page.tags %}
+<meta name="keywords" content="{{ seo_tag.page.tags | array.join "," }}">
+{% endif %}
+<!-- End Kaylumah SEO tag -->

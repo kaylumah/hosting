@@ -11,11 +11,8 @@
         <link rel="manifest" href="{{ '/assets/images/site.webmanifest' | relative_url }}" />
         <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' | relative_url }}" color="hotpink" />
         
-        <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet"> -->
-        
-        <link href="/compiled.css" rel="stylesheet" />
-        <link href="/assets/prism.css" rel="stylesheet" />
+        <link href="/compiled.css?v={{ build.short_git_hash }}" rel="stylesheet" />
+        <link href="/assets/prism.css?v={{ build.short_git_hash }}" rel="stylesheet" />
         
         {{ seo }}
         {{ feed_meta }}
@@ -24,28 +21,26 @@
         
         <!-- Place your kit's code here -->
         <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
-          <!-- <script>
-        window.FontAwesomeConfig = {
-        searchPseudoElements: true
-        }
-    </script>
-         -->
-        <style>
-
-        </style>
-
+        
         {% include 'analytics.html' %}
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        </noscript>
 
 
     </head>
-    <body class="line-numbers">
+    <body class="line-numbers bg-gray-50">
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
-            <main class="flex-1 py-4">
+            <main class="flex-1 py-4 text-gray-900">
                 {{ content }}
             </main>
             {% include 'footer.html' %}
         </div>
-        <script src="/assets/prism.js"></script>
+        <script src="/assets/prism.js?v={{ build.short_git_hash }}"></script>
     </body>
 </html>

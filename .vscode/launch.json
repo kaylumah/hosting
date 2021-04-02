@@ -10,7 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build-sitegenerator",
             "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/Debug/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll",
-            "args": [],
+            "args": [
+                "Site:Url=http://localhost:8080"
+            ],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -31,6 +33,19 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
+        },
+        {
+            "name": "Attach to .NET Functions",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:azureFunctions.pickProcess}"
+        },
+        {
+            "name": "Attach to Node Functions",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "preLaunchTask": "func: host start"
         }
     ]
 }
