@@ -30,7 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var paths = DetermineFilters(outputLocation);
             var fileMetaData = ApplyDefaults(paths);
 
-            Merge(fileMetaData, result.Data, "file");
+            OverwriteMetaData(fileMetaData, result.Data, "file");
 
             result.Data = fileMetaData;
             result.Data.Uri = outputLocation;
@@ -55,7 +55,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter));
                 if (meta != null)
                 {
-                    Merge(fileMetaData, meta.Values, $"default:{filter}");
+                    OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");
                 }
             }
             return fileMetaData;
@@ -122,7 +122,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             //metaData.Remove(nameof(metaData.Permalink).ToLower());
         }
 
-        private void Merge(FileMetaData target, FileMetaData source, string reason)
+        private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
         {
             if (source != null)
             {
