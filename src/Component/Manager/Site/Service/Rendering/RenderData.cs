@@ -4,7 +4,7 @@ using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class RenderData : IRenderModel, IMetadata
+    public class RenderData : IMetadata
     {
         public BuildData Build { get; set; }
         public SiteData Site { get; set; }

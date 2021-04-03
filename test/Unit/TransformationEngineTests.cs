@@ -4,6 +4,8 @@
 using Xunit;
 using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Test.Unit.Mocks;
+using Kaylumah.Ssg.Utilities;
 
 namespace Test.Unit
 {
@@ -12,7 +14,8 @@ namespace Test.Unit
         [Fact]
         public void Test1()
         {
-            ITransformationEngine transformEngine = new TransformationEngine();
+            var fileSystemMock = new FileSystemMock();
+            ITransformationEngine transformEngine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {});
         }
     }
 }

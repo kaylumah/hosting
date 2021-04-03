@@ -2,6 +2,23 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Files\Kaylumah.Ssg.Utilities.Files.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(DotNetPackageVersion)" />
+    <PackageReference Include="Scriban" Version="3.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Plugins/seo_template.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Plugins/feed_template.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <PropertyGroup>

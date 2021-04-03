@@ -27,9 +27,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileProcessor _fileProcessor;
         private readonly IYamlParser _yamlParser;
         private readonly SiteInfo _siteInfo;
-
-        private readonly LiquidUtil _liquidUtil;
-
         private readonly IMetadataRenderer _metadataRenderer;
 
         public SiteManager(
@@ -39,7 +36,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IYamlParser yamlParser,
             ILogger<SiteManager> logger,
             IOptions<SiteInfo> options,
-            LiquidUtil liquidUtil,
             IMetadataRenderer metadataRenderer
             )
         {
@@ -49,7 +45,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _yamlParser = yamlParser;
             _logger = logger;
             _siteInfo = options.Value;
-            _liquidUtil = liquidUtil;
             _metadataRenderer = metadataRenderer;
         }
 
@@ -175,11 +170,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Template = file.MetaData.Layout
             })
             .ToArray();
-            var results = await _metadataRenderer.Render(requests);
-
-            var renderRequests = processed.ToRenderRequests(buildInfo, siteInfo, siteGuid);
-
-            var renderResults = await _liquidUtil.Render(renderRequests.ToArray());
+            var renderResults = await _metadataRenderer.Render(requests);
 
             var artifacts = processed.Select((t, i) =>
             {

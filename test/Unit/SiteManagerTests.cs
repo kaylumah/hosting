@@ -29,9 +29,8 @@ namespace Test.Unit
             var siteInfo = Options.Create(new SiteInfo { 
                 Url = "https://example.com"
             });
-            var liquid = new LiquidUtil(fileSystemMock.Object, new IPlugin[] {});
             var transformEngineMock = new Mock<IMetadataRenderer>();
-            var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo, liquid, transformEngineMock.Object);
+            var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo, transformEngineMock.Object);
             await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = new SiteConfiguration {
 
             }});

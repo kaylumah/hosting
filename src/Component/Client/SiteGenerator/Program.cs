@@ -86,7 +86,6 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
             services.AddTransient<IPlugin, SeoPlugin>();
             services.AddTransient<IPlugin, FeedPlugin>();
-            services.AddSingleton<LiquidUtil>();
 
             services.AddSingleton<ITransformationEngine, TransformationEngine>();
             services.AddSingleton<IMetadataRenderer, TransformationEngine>();
