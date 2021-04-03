@@ -16,6 +16,8 @@ using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Rendering;
+
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

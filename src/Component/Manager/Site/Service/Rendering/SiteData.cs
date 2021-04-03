@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 {
     public class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
     {
