@@ -5,6 +5,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

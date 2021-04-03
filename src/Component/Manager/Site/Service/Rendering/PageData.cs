@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

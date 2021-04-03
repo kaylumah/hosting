@@ -20,6 +20,8 @@ using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Engine.Transformation.Service;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator
 {
@@ -85,6 +87,10 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddTransient<IPlugin, SeoPlugin>();
             services.AddTransient<IPlugin, FeedPlugin>();
             services.AddSingleton<LiquidUtil>();
+
+            services.AddSingleton<ITransformationEngine, TransformationEngine>();
+            services.AddSingleton<IMetadataRenderer, TransformationEngine>();
+
             services.AddSingleton<ISiteManager, SiteManager>();
             var serviceProvider = services.BuildServiceProvider();
             var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
