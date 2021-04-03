@@ -12,6 +12,9 @@ namespace Test.Unit.Mocks
     {
         public FileSystemMock()
         {
+            // https://stackoverflow.com/questions/63957361/how-to-mock-a-fileprovider-in-c
+            // https://www.javaer101.com/en/article/6947747.html
+
             // Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(new NotFoundDirectoryContents());
 
 
