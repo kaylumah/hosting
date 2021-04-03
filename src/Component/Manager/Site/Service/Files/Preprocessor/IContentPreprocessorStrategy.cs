@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using Microsoft.Extensions.FileProviders;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 {
     public interface IContentPreprocessorStrategy
     {
