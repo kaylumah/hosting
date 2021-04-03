@@ -1,13 +1,11 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.Reflection;
 using FluentAssertions;
-using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service;
-using Kaylumah.Ssg.Manager.Site.Service.Rendering;
+using Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Xunit;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Utilities;
 
 namespace Test.Unit
 {

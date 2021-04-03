@@ -2,11 +2,9 @@
 // See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
+namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
 {
     public class PageData : Dictionary<string, object>, IPageMetadata
     {

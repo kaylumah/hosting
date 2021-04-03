@@ -3,7 +3,7 @@
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using System.Collections.Generic;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
+namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
 {
     public interface IPageMetadata : IMetadata
     {

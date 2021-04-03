@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
-namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
+namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
 {
     public class RenderData : IMetadata
     {
