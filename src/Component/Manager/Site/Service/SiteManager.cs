@@ -255,7 +255,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }));
                 await _artifactAccess.Store(new StoreArtifactsRequest
                 {
-                    Artifacts = artifacts.ToArray()
+                    Artifacts = artifacts.ToArray(),
+                    OutputLocation = new FileSystemOutputLocation() {
+                        Clean = false,
+                        Path = request.Configuration.Destination
+                    }
                 });
             }
         }

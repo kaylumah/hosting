@@ -77,6 +77,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory, "_site"));
             services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
+            services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
             services.AddTransient<IPlugin, SeoPlugin>();
             services.AddTransient<IPlugin, FeedPlugin>();
