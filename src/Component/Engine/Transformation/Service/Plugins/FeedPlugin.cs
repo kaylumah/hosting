@@ -1,11 +1,12 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
+using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Runtime;
 using System.IO;
 using System.Reflection;
 
-namespace Kaylumah.Ssg.Utilities
+namespace Kaylumah.Ssg.Engine.Transformation.Service.Plugins
 {
     public class FeedPlugin : IPlugin
     {

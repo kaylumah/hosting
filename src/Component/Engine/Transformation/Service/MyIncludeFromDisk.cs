@@ -1,31 +1,14 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Parsing;
 using Scriban.Runtime;
 
-namespace Kaylumah.Ssg.Utilities
+namespace Kaylumah.Ssg.Engine.Transformation.Service
 {
-    public interface IRenderModel
-    {
-        string Content { get; }
-    }
-    public class RenderRequest
-    {
-        public IRenderModel Model { get; set; }
-        public string TemplateName { get; set; }
-    }
-
-    public class RenderResult
-    {
-        public string Content { get; set; }
-    }
-
     internal class MyIncludeFromDisk : ITemplateLoader
     {
         private readonly IFileSystem _fileSystem;

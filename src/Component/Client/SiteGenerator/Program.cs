@@ -22,6 +22,7 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
+using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator
 {

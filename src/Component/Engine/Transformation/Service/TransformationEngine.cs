@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Service
 {

@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Runtime;
 
-namespace Kaylumah.Ssg.Utilities
+namespace Kaylumah.Ssg.Engine.Transformation.Service.Plugins
 {
     public class SeoPlugin : IPlugin
     {

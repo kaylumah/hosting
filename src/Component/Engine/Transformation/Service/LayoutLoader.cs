@@ -1,19 +1,13 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
+using Kaylumah.Ssg.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using YamlDotNet.Serialization;
 
-namespace Kaylumah.Ssg.Utilities
+namespace Kaylumah.Ssg.Engine.Transformation.Service
 {
-    public class LayoutMetadata
-    {
-        [YamlMember(Alias = "layout")]
-        public string Layout { get; set; }
-    }
-
     public class LayoutLoader
     {
         private readonly IFileSystem _fileSystem;

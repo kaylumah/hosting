@@ -6,6 +6,7 @@ using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Test.Unit.Mocks;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 
 namespace Test.Unit
 {
