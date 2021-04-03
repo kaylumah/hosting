@@ -49,11 +49,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
             }
         }
 
-
-        public PageData(File file) : base(file.MetaData)
+        public PageData(Dictionary<string, object> metadata, string content, DateTimeOffset lastModified): base(metadata)
         {
-            Content = file.Content;
-            LastModified = file.LastModified;
+            Content = content;
+            LastModified = lastModified;
             // TODO sync this...
             this.SetValue("url", this.GetValue<string>("uri"));
         }

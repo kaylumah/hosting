@@ -118,9 +118,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     files
                     .Where(x => x.MetaData.Collection != null
                         && x.MetaData.Collection.Equals(collection))
-                    .Select(x => new PageData(x)
+                    .Select(x =>
                     {
-                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
+                        var page = x.ToPage();
+                        page.Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString();
+                        return page;
                     })
                     .ToList()
                 );
@@ -159,17 +161,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
             EnrichSiteWithTags(siteInfo, processed.ToList());
 
-            var requests = processed.Select(file => new MetadataRenderRequest {
-                Metadata = new RenderData()
-                {
-                    Build = buildInfo,
-                    Site = siteInfo,
-                    Page = new PageData(file)
+            var requests = processed.Select(file => 
+            {
+                var page = file.ToPage();
+                page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
+                return new MetadataRenderRequest {
+                    Metadata = new RenderData()
                     {
-                        Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString()
-                    }
-                },
-                Template = file.MetaData.Layout
+                        Build = buildInfo,
+                        Site = siteInfo,
+                        Page = page
+                    },
+                    Template = file.MetaData.Layout
+                };
             })
             .ToArray();
             var renderResults = await _metadataRenderer.Render(requests);
