@@ -133,6 +133,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             GlobalFunctions.Instance.Url = _siteInfo.Url;
             GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+            var siteGuid = _siteInfo.Url.CreateSiteGuid();
 
             var processed = await _fileProcessor.Process(new FileFilterCriteria
             {
@@ -144,12 +145,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 },
                 FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
             });
+            var pages = processed.ToArray().ToPages(siteGuid);
 
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
             _logger.LogInformation(info.Metadata["RepositoryUrl"]);
             var buildInfo = new BuildData(info);
-            var siteGuid = _siteInfo.Url.CreateSiteGuid();
-            var siteInfo = new SiteData(_siteInfo, processed.ToArray())
+            var siteInfo = new SiteData(_siteInfo, pages)
             {
                 Id = siteGuid.ToString(),
                 Data = new Dictionary<string, object>(),

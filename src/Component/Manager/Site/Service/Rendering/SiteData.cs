@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
     public class SiteData : ISiteMetadata
     {
         private readonly SiteInfo _siteInfo;
-        private readonly Files.Processor.File[] _files;
+        private readonly PageData[] _pages;
         public string Id { get; set; }
         public string Content => null;
         public string Title => GetTitle();
@@ -20,10 +20,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 
         public string Url => GetUrl();
 
-        public SiteData(SiteInfo siteInfo, Files.Processor.File[] files)
+        public SiteData(SiteInfo siteInfo, PageData[] pages)
         {
             _siteInfo = siteInfo;
-            _files = files;
+            _pages = pages;
         }
 
         private string GetTitle()
@@ -61,14 +61,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 
         public object GetPages()
         {
-            return _files
+            return _pages
                 .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
                 .Where(file => !"404.html".Equals(file.Name))
                 .Select(x => new
                 {
-                    Url = x.MetaData.Uri,
+                    Url = x["url"],
                     x.LastModified,
-                    Sitemap = x.MetaData["sitemap"]
+                    Sitemap = x["sitemap"]
                 });
         }
     }

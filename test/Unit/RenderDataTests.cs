@@ -35,8 +35,8 @@ namespace Test.Unit
                 },
                 Content = "-"
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Content.Should().Be(file.Content);
@@ -53,8 +53,8 @@ namespace Test.Unit
                 },
                 Content = null
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Content.Should().Be(string.Empty);
@@ -70,8 +70,8 @@ namespace Test.Unit
                 }
                 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().Be("1");
@@ -90,8 +90,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().Be("2");
@@ -110,8 +110,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().BeNull();
@@ -128,8 +128,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().Be("1");
@@ -149,8 +149,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().Be("2");
@@ -169,8 +169,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().BeNull();
@@ -187,8 +187,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().Be("1");
@@ -208,8 +208,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().Be("2");
@@ -228,8 +228,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().BeNull();
@@ -246,8 +246,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Author.Should().Be("1");
@@ -266,8 +266,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Author.Should().Be(string.Empty);
@@ -286,8 +286,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
             var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             // sut.Author.Should().BeNull();

@@ -6,5 +6,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 {
     public interface IPageMetadata : IMetadata
     {
+        string Name { get;set; }
     }
 }

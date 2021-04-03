@@ -25,6 +25,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
         public string Language => this.GetValue<string>(nameof(Language));
         public string Author => this.GetValue<string>(nameof(Author));
         public string Url => this.GetValue<string>(nameof(Url));
+        
+        public string Name
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Name));
+            }
+            set
+            {
+                this.SetValue(nameof(Name), value);
+            }
+        }
+
         public string Content
         {
             get
@@ -49,8 +62,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
             }
         }
 
-        public PageData(Dictionary<string, object> metadata, string content, DateTimeOffset lastModified): base(metadata)
+        public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified): base(metadata)
         {
+            Name = name;
             Content = content;
             LastModified = lastModified;
             // TODO sync this...
