@@ -22,6 +22,7 @@ namespace Kaylumah.Ssg.Utilities
     {
         IEnumerable<IFileInfo> GetFiles(string path, bool recursive = false);
         IFileInfo GetFile(string path);
+        byte[] GetFileBytes(string path);
         Task<File<TData>> GetFile<TData>(string path);
         IDirectoryContents GetDirectoryContents(string path);
         void CreateDirectory(string path);
@@ -70,6 +71,13 @@ namespace Kaylumah.Ssg.Utilities
                 Content = metadata.Content,
                 Data = metadata.Data
             };
+        }
+
+        public byte[] GetFileBytes(string path)
+        {
+            var fileInfo = GetFile(path);
+            var fileStream = fileInfo.CreateReadStream();
+            return fileStream.ToByteArray();
         }
 
         public IEnumerable<IFileInfo> GetFiles(string path, bool recursive = false)

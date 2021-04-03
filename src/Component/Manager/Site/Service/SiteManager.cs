@@ -246,7 +246,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     return new Artifact
                     {
                         Path = $"{asset}",
-                        Contents = FileToByteArray(asset)
+                        Contents = _fileSystem.GetFileBytes(asset)
                     };
                 }));
                 await _artifactAccess.Store(new StoreArtifactsRequest
@@ -258,13 +258,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     }
                 });
             }
-        }
-
-        private byte[] FileToByteArray(string fileName)
-        {
-            var fileInfo = _fileSystem.GetFile(fileName);
-            var fileStream = fileInfo.CreateReadStream();
-            return fileStream.ToByteArray();
         }
     }
 }
