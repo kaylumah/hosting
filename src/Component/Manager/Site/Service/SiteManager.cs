@@ -68,24 +68,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             site.Data = data;
         }
 
-        private void EnrichSiteWithTags(SiteData site, List<Files.Processor.File> files)
+        private void EnrichSiteWithTags(SiteData site, List<PageData> pages)
         {
-            var tags = files
-                .Where(x => x.MetaData.Tags != null)
-                .SelectMany(x => x.MetaData.Tags)
+            var tags = pages
+                .Where(x => x.Tags != null)
+                .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
-                var tagFiles = files.Where(x => x.MetaData.Tags != null && x.MetaData.Tags.Contains(tag)).ToList();
+                var tagFiles = pages.Where(x => x.Tags != null && x.Tags.Contains(tag)).ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
         }
 
-        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<Files.Processor.File> files)
+        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<PageData> files)
         {
             var collections = files
-                .Where(x => x.MetaData.Collection != null)
-                .Select(x => x.MetaData.Collection)
+                .Where(x => x.Collection != null)
+                .Select(x => x.Collection)
                 .Distinct()
                 .ToList();
 
@@ -101,10 +101,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         {
                             // todo log
                             var collectionFiles = files
-                                .Where(x => x.MetaData.Collection != null && x.MetaData.Collection.Equals(collection));
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection));
                             foreach (var file in collectionFiles)
                             {
-                                file.MetaData.Collection = collectionSettings.TreatAs;
+                                file.Collection = collectionSettings.TreatAs;
                             }
                             collections.RemoveAt(i);
                         }
@@ -116,15 +116,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 site.Collections.Add(collection,
                     files
-                    .Where(x => x.MetaData.Collection != null
-                        && x.MetaData.Collection.Equals(collection))
-                    .Select(x =>
-                    {
-                        var page = x.ToPage();
-                        page.Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString();
-                        return page;
-                    })
-                    .ToList()
+                    .Where(x => x.Collection != null
+                        && x.Collection.Equals(collection))
+                    .ToArray()
                 );
             }
         }
@@ -154,13 +148,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 Id = siteGuid.ToString(),
                 Data = new Dictionary<string, object>(),
-                Tags = new Dictionary<string, object>(),
-                Collections = new Dictionary<string, object>()
+                Tags = new Dictionary<string, PageData[]>(),
+                Collections = new Dictionary<string, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
-            EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
-            EnrichSiteWithTags(siteInfo, processed.ToList());
+            EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
+            EnrichSiteWithTags(siteInfo, pages.ToList());
 
             var requests = processed.Select(file => 
             {

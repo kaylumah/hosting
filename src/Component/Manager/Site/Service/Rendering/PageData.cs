@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 {
@@ -59,6 +60,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
             set
             {
                 this.SetValue(nameof(LastModified), value);
+            }
+        }
+
+        public string Collection
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Collection));
+            }
+            set
+            {
+                this.SetValue(nameof(Collection), value);
+            }
+        }
+
+        public List<string> Tags
+        {
+            get
+            {
+                return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            }
+            set
+            {
+                this.SetValue(nameof(Tags), value);
             }
         }
 

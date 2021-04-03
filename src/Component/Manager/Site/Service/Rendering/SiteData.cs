@@ -53,9 +53,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 
         public Dictionary<string, object> Data { get; set; }
 
-        public Dictionary<string, object> Collections { get; set; }
+        public Dictionary<string, PageData[]> Collections { get; set; }
 
-        public Dictionary<string, object> Tags { get; set; }
+        public Dictionary<string, PageData[]> Tags { get; set; }
 
         public object Pages => GetPages();
 
