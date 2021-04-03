@@ -157,7 +157,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithTags(siteInfo, processed.ToList());
 
             var renderRequests = processed.ToRenderRequests(buildInfo, siteInfo, siteGuid);
-
             var renderResults = await _liquidUtil.Render(renderRequests.ToArray());
 
             var artifacts = processed.Select((t, i) =>
