@@ -264,14 +264,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var fileInfo = _fileSystem.GetFile(fileName);
             var fileStream = fileInfo.CreateReadStream();
-            return ToByteArray(fileStream);
-        }
-
-        private byte[] ToByteArray(Stream input)
-        {
-            using MemoryStream ms = new MemoryStream();
-            input.CopyTo(ms);
-            return ms.ToArray();
+            return fileStream.ToByteArray();
         }
     }
 }
