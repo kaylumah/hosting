@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _liquidUtil = liquidUtil;
         }
 
-        private Dictionary<string, object> EnrichSiteWithData(string dataDirectory)
+        private void EnrichSiteWithData(SiteData site, string dataDirectory)
         {
             var extensions = new string[] { ".yml" };
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -62,7 +62,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var result = _yamlParser.Parse<object>(raw);
                 data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
-            return data;
+            site.Data = data;
         }
 
         private void EnrichSiteWithTags(SiteData site, List<Files.Processor.File> files)
@@ -155,7 +155,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var siteInfo = new SiteData(_siteInfo, processed.ToArray())
             {
                 Id = siteGuid.ToString(),
-                Data = EnrichSiteWithData(request.Configuration.DataDirectory),
+                Data = new Dictionary<string, object>(),
                 Tags = new Dictionary<string, object>(),
                 Collections = new Dictionary<string, object>()
                 {
@@ -188,6 +188,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }
             };
 
+            EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
             EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
             EnrichSiteWithTags(siteInfo, processed.ToList());
 
