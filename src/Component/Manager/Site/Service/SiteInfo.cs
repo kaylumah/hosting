@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using System.Runtime.Serialization;
 
-namespace Kaylumah.Ssg.Manager.Site.Interface
+namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class SiteInfo
     {
