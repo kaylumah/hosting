@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # https://unix.stackexchange.com/questions/129391/passing-named-arguments-to-shell-scripts
 for ARGUMENT in "$@"
