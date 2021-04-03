@@ -17,7 +17,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface
     {
         public IMetadata Metadata { get;set; }
         public string Template { get;set; }
-        public string Content { get;set; }
     }
 
     public class MetadataRenderResult
@@ -32,5 +31,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface
         string Language { get; }
         string Author { get; }
         string Url { get; }
+        string Content { get; }
     }
 }

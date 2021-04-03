@@ -10,7 +10,8 @@ namespace Kaylumah.Ssg.Engine.Transformation.Service
     {
         public Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
         {
-            throw new System.NotImplementedException();
+            // throw new System.NotImplementedException();
+            return Task.FromResult(new MetadataRenderResult[] {});
         }
     }
 }

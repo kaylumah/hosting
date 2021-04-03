@@ -14,6 +14,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly SiteInfo _siteInfo;
         private readonly Files.Processor.File[] _files;
         public string Id { get; set; }
+        public string Content => null;
         public string Title => GetTitle();
         public string Description => GetDescription();
         public string Language => GetLanguage();

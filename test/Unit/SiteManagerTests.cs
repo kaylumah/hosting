@@ -12,6 +12,7 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Options;
 using Test.Unit.Mocks;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Test.Unit
 {
@@ -29,7 +30,8 @@ namespace Test.Unit
                 Url = "https://example.com"
             });
             var liquid = new LiquidUtil(fileSystemMock.Object, new IPlugin[] {});
-            var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo, liquid);
+            var transformEngineMock = new Mock<IMetadataRenderer>();
+            var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo, liquid, transformEngineMock.Object);
             await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = new SiteConfiguration {
 
             }});

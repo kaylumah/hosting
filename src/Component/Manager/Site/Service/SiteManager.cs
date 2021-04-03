@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -29,6 +30,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private readonly LiquidUtil _liquidUtil;
 
+        private readonly IMetadataRenderer _metadataRenderer;
+
         public SiteManager(
             IFileProcessor fileProcessor,
             IArtifactAccess artifactAccess,
@@ -36,7 +39,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IYamlParser yamlParser,
             ILogger<SiteManager> logger,
             IOptions<SiteInfo> options,
-            LiquidUtil liquidUtil)
+            LiquidUtil liquidUtil,
+            IMetadataRenderer metadataRenderer
+            )
         {
             _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
@@ -45,6 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger = logger;
             _siteInfo = options.Value;
             _liquidUtil = liquidUtil;
+            _metadataRenderer = metadataRenderer;
         }
 
         private void EnrichSiteWithData(SiteData site, string dataDirectory)
@@ -156,7 +162,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
             EnrichSiteWithTags(siteInfo, processed.ToList());
 
+            var requests = processed.Select(file => new MetadataRenderRequest {
+                Metadata = new RenderData()
+                {
+                    Build = buildInfo,
+                    Site = siteInfo,
+                    Page = new PageData(file)
+                    {
+                        Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString()
+                    }
+                },
+                Template = file.MetaData.Layout
+            })
+            .ToArray();
+            var results = await _metadataRenderer.Render(requests);
+
             var renderRequests = processed.ToRenderRequests(buildInfo, siteInfo, siteGuid);
+
             var renderResults = await _liquidUtil.Render(renderRequests.ToArray());
 
             var artifacts = processed.Select((t, i) =>
