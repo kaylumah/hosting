@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using System.Collections.ObjectModel;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Utilities
 {
     public class Collections : KeyedCollection<string, Collection>
     {
