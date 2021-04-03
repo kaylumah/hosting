@@ -2,6 +2,8 @@
 // See LICENSE file in the project root for full license information.
 using Scriban;
 using Scriban.Runtime;
+using System.IO;
+using System.Reflection;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -11,7 +13,12 @@ namespace Kaylumah.Ssg.Utilities
         public string Name => "feed_meta";
         public FeedPlugin()
         {
-            _raw = System.IO.File.ReadAllText("feed_template.html");
+            var template = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "Plugins",
+                "feed_template.html"
+            );
+            _raw = File.ReadAllText(template);
         }
 
         public string Render(object data)
@@ -22,8 +29,8 @@ namespace Kaylumah.Ssg.Utilities
             var scriptObject = new ScriptObject()
             {
                 ["feed_tag"] = data
-            //     ["seo_tag"] = data,
-            //     ["json_ld"] = ld
+                //     ["seo_tag"] = data,
+                //     ["json_ld"] = ld
             };
             scriptObject.Import(typeof(GlobalFunctions));
             context.PushGlobal(scriptObject);

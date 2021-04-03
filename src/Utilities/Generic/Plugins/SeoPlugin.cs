@@ -2,6 +2,8 @@
 // See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Scriban;
 using Scriban.Runtime;
 
@@ -14,7 +16,12 @@ namespace Kaylumah.Ssg.Utilities
 
         public SeoPlugin()
         {
-            _raw = System.IO.File.ReadAllText("seo_template.html");
+            var template = Path.Combine(
+                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                "Plugins",
+                "seo_template.html"
+            );
+            _raw = File.ReadAllText(template);
         }
 
         public string Render(object data)
