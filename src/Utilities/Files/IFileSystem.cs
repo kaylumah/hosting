@@ -24,6 +24,8 @@ namespace Kaylumah.Ssg.Utilities
         IFileInfo GetFile(string path);
         Task<File<TData>> GetFile<TData>(string path);
         IDirectoryContents GetDirectoryContents(string path);
+        void CreateDirectory(string path);
+        Task WriteAllBytesAsync(string path, byte[] bytes);
     }
 
     public class FileSystem : IFileSystem
@@ -35,6 +37,11 @@ namespace Kaylumah.Ssg.Utilities
         {
             _fileProvider = fileProvider;
             _metadataProvider = metadataProvider;
+        }
+
+        public void CreateDirectory(string path)
+        {
+            Directory.CreateDirectory(path);
         }
 
         public IDirectoryContents GetDirectoryContents(string path)
@@ -80,6 +87,11 @@ namespace Kaylumah.Ssg.Utilities
                 }
             }
             return result;
+        }
+
+        public async Task WriteAllBytesAsync(string path, byte[] bytes)
+        {
+            await File.WriteAllBytesAsync(path, bytes);
         }
     }
 }
