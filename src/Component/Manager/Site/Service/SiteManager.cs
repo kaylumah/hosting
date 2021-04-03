@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _liquidUtil = liquidUtil;
         }
 
-        private Dictionary<string, object> ParseData(string dataDirectory)
+        private Dictionary<string, object> EnrichSiteWithData(string dataDirectory)
         {
             var extensions = new string[] { ".yml" };
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -155,7 +155,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var siteInfo = new SiteData(_siteInfo, processed.ToArray())
             {
                 Id = siteGuid.ToString(),
-                Data = ParseData(request.Configuration.DataDirectory),
+                Data = EnrichSiteWithData(request.Configuration.DataDirectory),
                 Tags = new Dictionary<string, object>(),
                 Collections = new Dictionary<string, object>()
                 {
