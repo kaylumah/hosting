@@ -229,7 +229,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var renderResult = renderResults[i];
                 return new Artifact
                 {
-                    Path = $"{request.Configuration.Destination}/{t.MetaData.Uri}",
+                    Path = $"{t.MetaData.Uri}",
                     Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                 };
             }).ToList();
@@ -249,7 +249,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 {
                     return new Artifact
                     {
-                        Path = $"{request.Configuration.Destination}/{asset}",
+                        Path = $"{asset}",
                         Contents = FileToByteArray(asset)
                     };
                 }));

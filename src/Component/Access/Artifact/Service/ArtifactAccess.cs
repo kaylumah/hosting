@@ -22,16 +22,40 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
     {
         public async Task Execute(StoreArtifactsRequest request)
         {
-            foreach (var artifact in request.Artifacts)
+            if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
             {
-                var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
-                var artifactDirectory = artifact.Path.Substring(0, index);
-                if (!Directory.Exists(artifactDirectory))
+                // TODO look at clean
+
+                foreach (var artifact in request.Artifacts)
                 {
-                    Directory.CreateDirectory(artifactDirectory);
+                    var filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
+                    var directory = Path.GetDirectoryName(filePath);
+
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    //_logger.LogDebug($"Writing file: {filePath}");
+                    //_logger.LogDebug($"{file.Contents}");
+
+                    await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
                 }
-                await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
+
+
+                return;
             }
+            throw new InvalidOperationException();
+            // foreach (var artifact in request.Artifacts)
+            // {
+            //     var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
+            //     var artifactDirectory = artifact.Path.Substring(0, index);
+            //     if (!Directory.Exists(artifactDirectory))
+            //     {
+            //         Directory.CreateDirectory(artifactDirectory);
+            //     }
+            //     await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
+            // }
         }
 
         public bool ShouldExecute(StoreArtifactsRequest request) => request.OutputLocation is FileSystemOutputLocation;
