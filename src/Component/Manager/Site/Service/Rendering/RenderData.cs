@@ -7,8 +7,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
     public class RenderData : IMetadata
     {
         public BuildData Build { get; set; }
-        public SiteData Site { get; set; }
-        public PageData Page { get; set; }
+        public ISiteMetadata Site { get; set; }
+        public IPageMetadata Page { get; set; }
         public string Content => Page?.Content ?? string.Empty;
         public string Title => Page?.Title ?? Site?.Title ?? null;
         public string Description => Page?.Description ?? Site?.Description ?? null;

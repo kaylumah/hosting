@@ -1,15 +1,13 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 {
-    public class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
+    public class SiteData : ISiteMetadata
     {
         private readonly SiteInfo _siteInfo;
         private readonly Files.Processor.File[] _files;

@@ -7,7 +7,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Rendering
 {
-    public class PageData : Dictionary<string, object>, IMetadata, IPageMetadata
+    public class PageData : Dictionary<string, object>, IPageMetadata
     {
         public string Id
         {
