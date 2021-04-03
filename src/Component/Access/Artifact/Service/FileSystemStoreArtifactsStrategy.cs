@@ -1,6 +1,8 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,6 +11,15 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
 {
     public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
     {
+        private readonly IFileSystem _fileSystem;
+        private readonly ILogger _logger;
+
+        public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
+        {
+            _logger = logger;
+            _fileSystem = fileSystem;
+        }
+
         public async Task Execute(StoreArtifactsRequest request)
         {
             if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
