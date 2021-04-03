@@ -33,13 +33,15 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
 
                     if (!Directory.Exists(directory))
                     {
-                        Directory.CreateDirectory(directory);
+                        // Directory.CreateDirectory(directory);
+                        _fileSystem.CreateDirectory(directory);
                     }
 
                     //_logger.LogDebug($"Writing file: {filePath}");
                     //_logger.LogDebug($"{file.Contents}");
 
-                    await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                    // await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                    await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
                 }
 
 
