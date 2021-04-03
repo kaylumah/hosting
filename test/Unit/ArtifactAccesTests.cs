@@ -3,6 +3,7 @@
 using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
+using System.Text;
 using System.Threading.Tasks;
 using Test.Unit.Mocks;
 using Xunit;
@@ -23,12 +24,14 @@ namespace Test.Unit
             await sut.Store(new StoreArtifactsRequest {
                 OutputLocation = new FileSystemOutputLocation()
                 {
-                    Path = "dist"
+                    Path = "dist",
+                    Clean = false
                 },
                 Artifacts = new Artifact[] {
                     new Artifact()
                     {
-                        Path = "test.txt"
+                        Path = "test.txt",
+                        Contents = Encoding.UTF8.GetBytes(string.Empty)
                     }
                 }
             });
