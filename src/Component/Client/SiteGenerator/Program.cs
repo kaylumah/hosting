@@ -9,6 +9,7 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

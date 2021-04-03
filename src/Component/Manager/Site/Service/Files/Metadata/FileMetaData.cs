@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetaData : Dictionary<string, object>
     {

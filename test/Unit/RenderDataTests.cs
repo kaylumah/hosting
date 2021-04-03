@@ -4,6 +4,7 @@ using System.Reflection;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Xunit;
 
 namespace Test.Unit

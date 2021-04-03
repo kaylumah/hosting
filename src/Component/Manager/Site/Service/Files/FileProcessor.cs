@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;

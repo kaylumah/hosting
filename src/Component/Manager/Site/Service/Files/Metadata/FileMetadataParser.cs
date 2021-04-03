@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetadataParser : IFileMetadataParser
     {
