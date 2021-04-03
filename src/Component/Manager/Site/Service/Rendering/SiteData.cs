@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using Kaylumah.Ssg.Manager.Site.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class SiteData /*: Dictionary<string, object>,*/ : IMetadata, ISiteMetadata
     {
         private readonly SiteInfo _siteInfo;
-        private readonly File[] _files;
+        private readonly Files.Processor.File[] _files;
         public string Id { get; set; }
         public string Title => GetTitle();
         public string Description => GetDescription();
@@ -19,7 +20,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string Url => GetUrl();
 
-        public SiteData(SiteInfo siteInfo, File[] files)
+        public SiteData(SiteInfo siteInfo, Files.Processor.File[] files)
         {
             _siteInfo = siteInfo;
             _files = files;

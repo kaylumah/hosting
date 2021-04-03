@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using System.Diagnostics;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     [DebuggerDisplay("{Name} {Files.Length} Files")]
     public class FileCollection

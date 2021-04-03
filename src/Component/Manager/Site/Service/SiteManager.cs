@@ -14,15 +14,10 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-
-    internal class Package
-    {
-        public string Name { get; set; }
-    }
-
     public class SiteManager : ISiteManager
     {
         private readonly IArtifactAccess _artifactAccess;
@@ -70,7 +65,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return data;
         }
 
-        private void EnrichSiteWithTags(SiteData site, List<File> files)
+        private void EnrichSiteWithTags(SiteData site, List<Files.Processor.File> files)
         {
             var tags = files
                 .Where(x => x.MetaData.Tags != null)
@@ -83,7 +78,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<File> files)
+        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<Files.Processor.File> files)
         {
             var collections = files
                 .Where(x => x.MetaData.Collection != null)

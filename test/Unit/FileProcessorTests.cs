@@ -21,6 +21,7 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 namespace Test.Unit
 {

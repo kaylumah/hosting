@@ -4,7 +4,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using System;
 using System.Diagnostics;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     [DebuggerDisplay("File (Name={Name})")]
     public class File

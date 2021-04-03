@@ -19,6 +19,7 @@ using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator
 {
