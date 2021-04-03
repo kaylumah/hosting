@@ -49,7 +49,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithData(SiteData site, string dataDirectory)
         {
-            var extensions = new string[] { ".yml" };
+            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
@@ -137,15 +137,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     request.Configuration.DataDirectory,
                     request.Configuration.AssetDirectory
                 },
-                FileExtensionsToTarget = new string[] {
-                    ".md",
-                    ".html",
-                    ".xml",
-                    ".css",
-                    ".js",
-                    ".json",
-                    ".txt"
-                }
+                FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
             });
 
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
