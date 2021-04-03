@@ -21,9 +21,18 @@ namespace Test.Unit
             };
             var sut = new ArtifactAccess(loggerMock.Object, strategies);
             await sut.Store(new StoreArtifactsRequest {
-                OutputLocation = new FileSystemOutputLocation(),
-                Artifacts = new Artifact[] {}
+                OutputLocation = new FileSystemOutputLocation()
+                {
+                    Path = "dist"
+                },
+                Artifacts = new Artifact[] {
+                    new Artifact()
+                    {
+                        Path = "test.txt"
+                    }
+                }
             });
+            fileSystemMock.CreatedDirectories.Count.Should().Be(1);
         }
     }
 }

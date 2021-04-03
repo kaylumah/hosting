@@ -10,6 +10,7 @@ namespace Test.Unit.Mocks
 {
     public class FileSystemMock : Mock<IFileSystem>
     {
+        public List<string> CreatedDirectories { get; } = new List<string>();
         public FileSystemMock()
         {
             // https://stackoverflow.com/questions/63957361/how-to-mock-a-fileprovider-in-c
@@ -22,6 +23,11 @@ namespace Test.Unit.Mocks
             directoryContentsMock.Setup(dc => dc.GetEnumerator()).Returns(new List<IFileInfo>().GetEnumerator());
             directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
             Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
+
+            Setup(x => x.CreateDirectory(It.IsAny<string>()))
+                .Callback<string>(path => {
+                    CreatedDirectories.Add(path);
+                });
         }
     }
 }
