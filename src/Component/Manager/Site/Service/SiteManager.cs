@@ -156,22 +156,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
             EnrichSiteWithTags(siteInfo, processed.ToList());
 
-            var renderRequests = processed.Select(x => new RenderRequest
-            {
-                Model = new RenderData
-                {
-                    Build = buildInfo,
-                    Site = siteInfo,
-                    Page = new PageData(x)
-                    {
-                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
-                    }
-                },
-                TemplateName = x.MetaData.Layout
-            });
-
-
-            // var renderRequests = processed.ToRenderRequests();
+            var renderRequests = processed.ToRenderRequests(buildInfo, siteInfo, siteGuid);
 
             var renderResults = await _liquidUtil.Render(renderRequests.ToArray());
 
