@@ -12,7 +12,13 @@ namespace Test.Unit.Mocks
     {
         public FileSystemMock()
         {
-            Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(new NotFoundDirectoryContents());
+            // Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(new NotFoundDirectoryContents());
+
+
+            var directoryContentsMock = new Mock<IDirectoryContents>();
+            directoryContentsMock.Setup(dc => dc.GetEnumerator()).Returns(new List<IFileInfo>().GetEnumerator());
+            directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
+            Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
         }
     }
 }

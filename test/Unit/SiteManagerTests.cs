@@ -17,7 +17,7 @@ namespace Test.Unit
 {
     public class SiteManagerTests
     {
-        [Fact(Skip = "SKIP NOT READY")]
+        [Fact]
         public async Task Test_SiteManager_GenerateSite()
         {
             var fileProcessorMock = new FileProcessorMock();

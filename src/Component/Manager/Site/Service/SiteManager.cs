@@ -238,23 +238,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var directoryContents =
                             _fileSystem.GetDirectoryContents("");
             var rootFile = directoryContents.FirstOrDefault();
-            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-            // var root2 = Directory.GetCurrentDirectory();
+            if (rootFile != null)
+            {
+                var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
+                // var root2 = Directory.GetCurrentDirectory();
 
-            var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
-                .Select(x => x.PhysicalPath.Replace(root, string.Empty));
-            artifacts.AddRange(assets.Select(asset =>
-            {
-                return new Artifact
+                var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
+                    .Select(x => x.PhysicalPath.Replace(root, string.Empty));
+                artifacts.AddRange(assets.Select(asset =>
                 {
-                    Path = $"{request.Configuration.Destination}/{asset}",
-                    Contents = FileToByteArray(asset)
-                };
-            }));
-            await _artifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray()
-            });
+                    return new Artifact
+                    {
+                        Path = $"{request.Configuration.Destination}/{asset}",
+                        Contents = FileToByteArray(asset)
+                    };
+                }));
+                await _artifactAccess.Store(new StoreArtifactsRequest
+                {
+                    Artifacts = artifacts.ToArray()
+                });
+            }
         }
 
         private byte[] FileToByteArray(string fileName)
