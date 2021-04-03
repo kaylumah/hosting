@@ -2,7 +2,7 @@
 {% if seo_tag.title %}
     <title>{{ seo_tag.title }}</title>
 {% endif %}
-    <meta name="generator" content="Kaylumah v{ seo_tag.build.short_git_hash }}" />
+    <meta name="generator" content="Kaylumah v{{ seo_tag.build.short_git_hash }}" />
 {% if seo_tag.page.title %}
     <meta property="og:title" content="{{ seo_tag.page.title }}" />
 {% endif %}
