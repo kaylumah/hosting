@@ -8,6 +8,13 @@ layout: 'default.html'
             <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{{ page.title }}</span>
         </h1>
         <img alt="post cover-image" class="mx-auto" src="{{ page.cover_image }}" />
+        <div class="mt-2">
+        {% for tag in page.tags %}
+            <a href="/tags.html#{{ tag | html.url_encode }}" class="text-gray-500">
+            <span class="text-gray-600">#</span>{{tag}}
+            </a>
+        {% endfor %}
+        </div>
         <hr class="mt-8 border-t-2 w-20 mx-auto" />
     </header>
     <div class="mt-8 mx-auto prose md:prose-lg lg:prose-xl">
