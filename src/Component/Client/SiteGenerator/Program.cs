@@ -9,6 +9,8 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,10 @@ using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Engine.Transformation.Service;
+using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator
 {
@@ -77,7 +83,14 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory, "_site"));
             services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
+            services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
+            services.AddTransient<IPlugin, SeoPlugin>();
+            services.AddTransient<IPlugin, FeedPlugin>();
+
+            services.AddSingleton<ITransformationEngine, TransformationEngine>();
+            services.AddSingleton<IMetadataRenderer, TransformationEngine>();
+
             services.AddSingleton<ISiteManager, SiteManager>();
             var serviceProvider = services.BuildServiceProvider();
             var siteManager = serviceProvider.GetRequiredService<ISiteManager>();

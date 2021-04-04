@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetadataParser : IFileMetadataParser
     {
@@ -25,31 +25,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
             var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+            
             var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
+            var paths = DetermineFilters(outputLocation);
 
-            var paths = new List<string>() { string.Empty };
-            var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
-            if (index >= 0)
-            {
-                var input = outputLocation.Substring(0, index);
-                paths.AddRange(DetermineFilters(input));
-                paths = paths.OrderBy(x => x.Length).ToList();
-            }
+            var fileMetaData = ApplyDefaults(paths);
+            OverwriteMetaData(fileMetaData, result.Data, "file");
 
-            var fileMetaData = new FileMetaData();
-            foreach (var path in paths)
-            {
-                var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(path));
-                if (meta != null)
-                {
-                    Merge(fileMetaData, meta.Values, $"default:{path}");
-                }
-            }
-
-            Merge(fileMetaData, result.Data, "file");
-
+            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
+
+            // TODO: is this the right moment to store it back in the metadata?
             result.Data.Uri = outputLocation;
+
             return result;
         }
 
@@ -63,10 +51,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return ext;
         }
 
-        private List<string> DetermineFilters(string input)
+        private FileMetaData ApplyDefaults(List<string> filters)
+        {
+            var fileMetaData = new FileMetaData();
+            foreach (var filter in filters)
+            {
+                var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter));
+                if (meta != null)
+                {
+                    OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");
+                }
+            }
+            return fileMetaData;
+        }
+
+        private List<string> DetermineFilters(string outputLocation)
+        {
+            var paths = new List<string>() { string.Empty };
+            var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+            if (index >= 0)
+            {
+                var input = outputLocation.Substring(0, index);
+                paths.AddRange(DetermineFilterDirectories(input));
+                paths = paths.OrderBy(x => x.Length).ToList();
+            }
+            return paths;
+        }
+
+        private List<string> DetermineFilterDirectories(string input)
         {
             var result = new List<string>();
-            var index = -1;
+            int index;
             while ((index = input.LastIndexOf(Path.DirectorySeparatorChar)) >= 0)
             {
                 result.Add(input);
@@ -77,17 +92,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 result.Add(input);
             }
-
-            // var current = input.Replace(root, "");
-            // if (!current.Equals(string.Empty))
-            // {
-            //     paths.Add(current);
-            //     var index = current.LastIndexOf(Path.DirectorySeparatorChar);
-            //     if (index > 0)
-            //     {
-            //         Recursive(root, current.Substring(0, index), paths);
-            //     }
-            // }
             return result;
         }
 
@@ -122,7 +126,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             //metaData.Remove(nameof(metaData.Permalink).ToLower());
         }
 
-        private void Merge(FileMetaData target, FileMetaData source, string reason)
+        private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
         {
             if (source != null)
             {

@@ -5,7 +5,7 @@ using System.Linq;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 {
     public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
     {

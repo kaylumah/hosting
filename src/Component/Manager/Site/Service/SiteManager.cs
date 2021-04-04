@@ -10,19 +10,15 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-
-    internal class Package
-    {
-        public string Name { get; set; }
-    }
-
     public class SiteManager : ISiteManager
     {
         private readonly IArtifactAccess _artifactAccess;
@@ -31,6 +27,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileProcessor _fileProcessor;
         private readonly IYamlParser _yamlParser;
         private readonly SiteInfo _siteInfo;
+        private readonly IMetadataRenderer _metadataRenderer;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -38,7 +35,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFileSystem fileSystem,
             IYamlParser yamlParser,
             ILogger<SiteManager> logger,
-            IOptions<SiteInfo> options)
+            IOptions<SiteInfo> options,
+            IMetadataRenderer metadataRenderer
+            )
         {
             _fileProcessor = fileProcessor;
             _artifactAccess = artifactAccess;
@@ -46,11 +45,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _yamlParser = yamlParser;
             _logger = logger;
             _siteInfo = options.Value;
+            _metadataRenderer = metadataRenderer;
         }
 
-        private Dictionary<string, object> ParseData(string dataDirectory)
+        private void EnrichSiteWithData(SiteData site, string dataDirectory)
         {
-            var extensions = new string[] { ".yml" };
+            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
@@ -63,27 +63,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var result = _yamlParser.Parse<object>(raw);
                 data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
-            return data;
+            site.Data = data;
         }
 
-        private void EnrichSiteWithTags(SiteData site, List<File> files)
+        private void EnrichSiteWithTags(SiteData site, List<PageData> pages)
         {
-            var tags = files
-                .Where(x => x.MetaData.Tags != null)
-                .SelectMany(x => x.MetaData.Tags)
+            var tags = pages
+                .Where(x => x.Tags != null)
+                .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
-                var tagFiles = files.Where(x => x.MetaData.Tags != null && x.MetaData.Tags.Contains(tag)).ToList();
+                var tagFiles = pages.Where(x => x.Tags != null && x.Tags.Contains(tag)).ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
         }
 
-        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<File> files)
+        private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<PageData> files)
         {
             var collections = files
-                .Where(x => x.MetaData.Collection != null)
-                .Select(x => x.MetaData.Collection)
+                .Where(x => x.Collection != null)
+                .Select(x => x.Collection)
                 .Distinct()
                 .ToList();
 
@@ -99,10 +99,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         {
                             // todo log
                             var collectionFiles = files
-                                .Where(x => x.MetaData.Collection != null && x.MetaData.Collection.Equals(collection));
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection));
                             foreach (var file in collectionFiles)
                             {
-                                file.MetaData.Collection = collectionSettings.TreatAs;
+                                file.Collection = collectionSettings.TreatAs;
                             }
                             collections.RemoveAt(i);
                         }
@@ -114,13 +114,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 site.Collections.Add(collection,
                     files
-                    .Where(x => x.MetaData.Collection != null
-                        && x.MetaData.Collection.Equals(collection))
-                    .Select(x => new PageData(x)
-                    {
-                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
-                    })
-                    .ToList()
+                    .Where(x => x.Collection != null
+                        && x.Collection.Equals(collection))
+                    .ToArray()
                 );
             }
         }
@@ -129,6 +125,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             GlobalFunctions.Instance.Url = _siteInfo.Url;
             GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+            var siteGuid = _siteInfo.Url.CreateSiteGuid();
 
             var processed = await _fileProcessor.Process(new FileFilterCriteria
             {
@@ -138,96 +135,48 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     request.Configuration.DataDirectory,
                     request.Configuration.AssetDirectory
                 },
-                FileExtensionsToTarget = new string[] {
-                    ".md",
-                    ".html",
-                    ".xml",
-                    ".css",
-                    ".js",
-                    ".json",
-                    ".txt"
-                }
+                FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
             });
+            var pages = processed.ToArray().ToPages(siteGuid);
 
             var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
             _logger.LogInformation(info.Metadata["RepositoryUrl"]);
             var buildInfo = new BuildData(info);
-            var siteGuid = _siteInfo.Url.CreateSiteGuid();
-            var siteInfo = new SiteData(_siteInfo, processed.ToArray())
+            var siteInfo = new SiteData(_siteInfo, pages)
             {
                 Id = siteGuid.ToString(),
-                Data = ParseData(request.Configuration.DataDirectory),
-                Tags = new Dictionary<string, object>(),
-                Collections = new Dictionary<string, object>()
-                {
-                    // { 
-                    //     "pages",
-                    //     new object[] {
-                    //         new {
-                    //             Uri = "https://kaylumah.nl",
-                    //             Image = "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixqx=ek9gmnUEHF&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80", 
-                    //             Type = "Article",
-                    //             Title = "Boost your conversion rate",
-                    //             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum."
-                    //         },
-                    //         new {
-                    //             Uri = "https://kaylumah.nl",
-                    //             Image = "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixqx=ek9gmnUEHF&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-                    //             Type = "Video",
-                    //             Title = "How to use search engine optimization to drive sales",
-                    //             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit facilis asperiores porro quaerat doloribus, eveniet dolore. Adipisci tempora aut inventore optio animi., tempore temporibus quo laudantium."
-                    //         },
-                    //         new {
-                    //             Uri = "https://kaylumah.nl",
-                    //             Image = "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-1.2.1&ixqx=ek9gmnUEHF&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-                    //             Type = "Case Study",
-                    //             Title = "Improve your customer experience",
-                    //             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic."
-                    //         }
-                    //     }
-                    // }
-                }
+                Data = new Dictionary<string, object>(),
+                Tags = new SortedDictionary<string, PageData[]>(),
+                Collections = new SortedDictionary<string, PageData[]>()
             };
 
-            EnrichSiteWithCollections(siteInfo, siteGuid, processed.ToList());
-            EnrichSiteWithTags(siteInfo, processed.ToList());
+            EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
+            EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
+            EnrichSiteWithTags(siteInfo, pages.ToList());
 
-            // siteInfo.Collections["pages"] = processed
-            //     .Where(x => !x.MetaData.ContainsKey("Collection"))
-            //     .Where(x => Path.GetExtension(x.Name).Equals(".html"))
-            //     //.Where(x => !"index.html".Equals(x.Name) && !"404.html".Equals(x.Name))
-            //     .Select(x => x.MetaData).ToList();
-
-            // var pages = processed.Select(x => new PageData {});
-
-
-            var renderRequests = processed.Select(x => new RenderRequest
+            var requests = processed.Select(file => 
             {
-                Model = new RenderData
-                {
-                    Build = buildInfo,
-                    Site = siteInfo,
-                    Page = new PageData(x)
+                var page = file.ToPage();
+                page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
+                return new MetadataRenderRequest {
+                    Metadata = new RenderData()
                     {
-                        Id = siteGuid.CreatePageGuid(x.MetaData.Uri).ToString()
-                    }
-                },
-                TemplateName = x.MetaData.Layout
-            });
-
-
-            // var renderRequests = processed.ToRenderRequests();
-
-            var liquidUtil = new LiquidUtil(_fileSystem);
-
-            var renderResults = await liquidUtil.Render(renderRequests.ToArray());
+                        Build = buildInfo,
+                        Site = siteInfo,
+                        Page = page
+                    },
+                    Template = file.MetaData.Layout
+                };
+            })
+            .ToArray();
+            var renderResults = await _metadataRenderer.Render(requests);
 
             var artifacts = processed.Select((t, i) =>
             {
                 var renderResult = renderResults[i];
                 return new Artifact
                 {
-                    Path = $"{request.Configuration.Destination}/{t.MetaData.Uri}",
+                    Path = $"{t.MetaData.Uri}",
                     Contents = Encoding.UTF8.GetBytes(renderResult.Content)
                 };
             }).ToList();
@@ -236,36 +185,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var directoryContents =
                             _fileSystem.GetDirectoryContents("");
             var rootFile = directoryContents.FirstOrDefault();
-            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-
-            var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
-                .Select(x => x.PhysicalPath.Replace(root, string.Empty));
-            artifacts.AddRange(assets.Select(asset =>
+            if (rootFile != null)
             {
-                return new Artifact
+                var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
+                // var root2 = Directory.GetCurrentDirectory();
+
+                var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
+                    .Select(x => x.PhysicalPath.Replace(root, string.Empty));
+                artifacts.AddRange(assets.Select(asset =>
                 {
-                    Path = $"{request.Configuration.Destination}/{asset}",
-                    Contents = FileToByteArray(asset)
-                };
-            }));
-            await _artifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray()
-            });
-        }
-
-        private byte[] FileToByteArray(string fileName)
-        {
-            var fileInfo = _fileSystem.GetFile(fileName);
-            var fileStream = fileInfo.CreateReadStream();
-            return ToByteArray(fileStream);
-        }
-
-        private byte[] ToByteArray(Stream input)
-        {
-            using MemoryStream ms = new MemoryStream();
-            input.CopyTo(ms);
-            return ms.ToArray();
+                    return new Artifact
+                    {
+                        Path = $"{asset}",
+                        Contents = _fileSystem.GetFileBytes(asset)
+                    };
+                }));
+                await _artifactAccess.Store(new StoreArtifactsRequest
+                {
+                    Artifacts = artifacts.ToArray(),
+                    OutputLocation = new FileSystemOutputLocation() {
+                        Clean = false,
+                        Path = request.Configuration.Destination
+                    }
+                });
+            }
         }
     }
 }

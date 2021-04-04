@@ -6,6 +6,7 @@
     <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Identifiers\Kaylumah.Ssg.Utilities.Identifiers.csproj" />
     <ProjectReference Include="..\..\..\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
+    <ProjectReference Include="..\..\..\Engine\Transformation\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj" />
   </ItemGroup>
 

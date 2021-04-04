@@ -38,6 +38,7 @@ module.exports = {
   plugins: [
     // https://github.com/tailwindlabs/tailwindcss-typography#responsive-variants
     // https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js
-    require('@tailwindcss/typography')
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp')
   ]
 }

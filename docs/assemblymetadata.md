@@ -1,0 +1,1 @@
+https://dev.to/stuartblang/adding-assemblymetadataattribute-using-new-sdk-project-with-msbuild-2akl

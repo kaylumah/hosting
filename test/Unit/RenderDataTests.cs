@@ -1,10 +1,11 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.Reflection;
 using FluentAssertions;
-using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Xunit;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Utilities;
 
 namespace Test.Unit
 {
@@ -18,7 +19,7 @@ namespace Test.Unit
         //         MetaData = new FileMetaData {}
         //     };
         //     var siteData = new SiteData(siteInfo, new File[] { file });
-        //     var pageData = new PageData(file);
+        //     var pageData = file.ToPage();
         //     var sut = new RenderData { Site = siteData, Page = pageData };
         //     sut.Should().NotBeNull();
         // }
@@ -32,8 +33,8 @@ namespace Test.Unit
                 },
                 Content = "-"
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Content.Should().Be(file.Content);
@@ -50,8 +51,8 @@ namespace Test.Unit
                 },
                 Content = null
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Content.Should().Be(string.Empty);
@@ -67,8 +68,8 @@ namespace Test.Unit
                 }
                 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().Be("1");
@@ -87,8 +88,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().Be("2");
@@ -107,8 +108,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Title.Should().BeNull();
@@ -125,8 +126,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().Be("1");
@@ -146,8 +147,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().Be("2");
@@ -166,8 +167,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Description.Should().BeNull();
@@ -184,8 +185,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().Be("1");
@@ -205,8 +206,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().Be("2");
@@ -225,8 +226,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Language.Should().BeNull();
@@ -243,8 +244,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Author.Should().Be("1");
@@ -263,8 +264,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             sut.Author.Should().Be(string.Empty);
@@ -283,8 +284,8 @@ namespace Test.Unit
                 }
 
             };
-            var siteData = new SiteData(siteInfo, new File[] { file });
-            var pageData = new PageData(file);
+            var pageData = file.ToPage();
+            var siteData = new SiteData(siteInfo, new PageData[] { pageData });
             var sut = new RenderData { Site = siteData, Page = pageData };
             sut.Should().NotBeNull();
             // sut.Author.Should().BeNull();

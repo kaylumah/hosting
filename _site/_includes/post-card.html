@@ -19,8 +19,10 @@
       </a>
     </div>
     <div class="mt-2">
-      {%for tag in post.tags %}
-        <span class="text-gray-500"><span class="text-gray-600">#</span>{{tag}}</span>
+      {% for tag in post.tags %}
+        <a href="/tags.html#{{ tag | html.url_encode }}" class="text-gray-500">
+          <span class="text-gray-600">#</span>{{tag}}
+        </a>
       {% endfor %}
     </div>
     <div class="mt-2 flex items-center">

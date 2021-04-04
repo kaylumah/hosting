@@ -33,19 +33,6 @@
             "type": "coreclr",
             "request": "attach",
             "processId": "${command:pickProcess}"
-        },
-        {
-            "name": "Attach to .NET Functions",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:azureFunctions.pickProcess}"
-        },
-        {
-            "name": "Attach to Node Functions",
-            "type": "node",
-            "request": "attach",
-            "port": 9229,
-            "preLaunchTask": "func: host start"
         }
     ]
 }

@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public interface IFileMetadataParser
     {
