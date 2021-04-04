@@ -7,6 +7,9 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Test.Unit.Mocks;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
+using Moq;
+using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace Test.Unit
 {
@@ -17,6 +20,98 @@ namespace Test.Unit
         {
             var fileSystemMock = new FileSystemMock();
             ITransformationEngine transformEngine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {});
+        }
+
+        [Fact]
+        public async Task Test_SeoPlugin_WithoutUsingResultsInEmptyString()
+        {
+            var pluginUnderTest = new SeoPlugin();
+            var fileSystemMock = new FileSystemMock();
+            var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+                pluginUnderTest
+            });
+
+            var model = new Mock<IMetadata>();
+            var renderResult = await engine.Render(new MetadataRenderRequest[] {
+                new MetadataRenderRequest {
+                    Metadata = model.Object
+                }
+            });
+            renderResult.Should().NotBeNull();
+            renderResult.Length.Should().Be(1);
+
+            var renderContent = renderResult[0].Content;
+            renderContent.Should().BeEmpty();
+        }
+
+
+        [Fact]
+        public async Task Test_SeoPlugin_ResultsInEmptyTags()
+        {
+            var pluginUnderTest = new SeoPlugin();
+            var fileSystemMock = new FileSystemMock();
+            var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+                pluginUnderTest
+            });
+
+            var model = new Mock<IMetadata>();
+            model.Setup(x => x.Content).Returns($"{{{{ {pluginUnderTest.Name} }}}}");
+            var renderResult = await engine.Render(new MetadataRenderRequest[] {
+                new MetadataRenderRequest {
+                    Metadata = model.Object
+                }
+            });
+            renderResult.Should().NotBeNull();
+            renderResult.Length.Should().Be(1);
+
+            var renderContent = renderResult[0].Content;
+            renderContent.Should().NotBeEmpty();
+        }
+
+        [Fact]
+        public async Task Test_FeedPlugin_WithoutUsingResultsInEmptyString()
+        {
+            var pluginUnderTest = new FeedPlugin();
+            var fileSystemMock = new FileSystemMock();
+            var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+                pluginUnderTest
+            });
+
+            var model = new Mock<IMetadata>();
+            var renderResult = await engine.Render(new MetadataRenderRequest[] {
+                new MetadataRenderRequest {
+                    Metadata = model.Object
+                }
+            });
+            renderResult.Should().NotBeNull();
+            renderResult.Length.Should().Be(1);
+
+            var renderContent = renderResult[0].Content;
+            renderContent.Should().BeEmpty();
+        }
+
+
+        [Fact]
+        public async Task Test_FeedPlugin_ResultsInEmptyTags()
+        {
+            var pluginUnderTest = new FeedPlugin();
+            var fileSystemMock = new FileSystemMock();
+            var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+                pluginUnderTest
+            });
+
+            var model = new Mock<IMetadata>();
+            model.Setup(x => x.Content).Returns($"{{{{ {pluginUnderTest.Name} }}}}");
+            var renderResult = await engine.Render(new MetadataRenderRequest[] {
+                new MetadataRenderRequest {
+                    Metadata = model.Object
+                }
+            });
+            renderResult.Should().NotBeNull();
+            renderResult.Length.Should().Be(1);
+
+            var renderContent = renderResult[0].Content;
+            renderContent.Should().NotBeEmpty();
         }
     }
 }
