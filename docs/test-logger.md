@@ -45,3 +45,6 @@ https://dev.to/matheusrodrigues/mock-multiple-calls-to-the-same-method-with-fake
 
 https://dev.to/seankilleen/quick-tip-when-testing-with-moq-try-lambdas-for-more-flexible-tests-1k9o
 
+
+
+TODO https://adamstorr.azurewebsites.net/tags/C%23
