@@ -1,0 +1,15 @@
+{
+  "name": "codeimage",
+  "version": "1.0.0",
+  "description": "https://www.npmjs.com/package/carbon-now-cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "npx carbon-now-cli $FILE --config local-config.json -p vscode-nowindow",
+    "generate2": "npx carbon-now-cli $FILE --config local-config.json -p kebab",
+    "interactive": "npx carbon-now-cli $FILE -i"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
