@@ -54,9 +54,9 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
 
         public Dictionary<string, object> Data { get; set; }
 
-        public Dictionary<string, PageData[]> Collections { get; set; }
+        public SortedDictionary<string, PageData[]> Collections { get; set; }
 
-        public Dictionary<string, PageData[]> Tags { get; set; }
+        public SortedDictionary<string, PageData[]> Tags { get; set; }
 
         public object Pages => GetPages();
 

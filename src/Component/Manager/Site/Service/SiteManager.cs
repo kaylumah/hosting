@@ -146,8 +146,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 Id = siteGuid.ToString(),
                 Data = new Dictionary<string, object>(),
-                Tags = new Dictionary<string, PageData[]>(),
-                Collections = new Dictionary<string, PageData[]>()
+                Tags = new SortedDictionary<string, PageData[]>(),
+                Collections = new SortedDictionary<string, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);

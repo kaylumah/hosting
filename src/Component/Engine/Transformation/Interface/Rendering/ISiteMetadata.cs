@@ -8,7 +8,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
     public interface ISiteMetadata : IMetadata
     {
         Dictionary<string, object> Data { get; set; }
-        Dictionary<string, PageData[]> Collections { get; set; }
-        Dictionary<string, PageData[]> Tags { get; set; }
+        SortedDictionary<string, PageData[]> Collections { get; set; }
+        SortedDictionary<string, PageData[]> Tags { get; set; }
     }
 }
