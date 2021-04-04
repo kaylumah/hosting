@@ -1,6 +1,6 @@
 ---
-title: "NSWAG WIP"
-description: "..."
+title: "NSWAG (WIP)"
+description: "Someone like you. Someone who'll rattle the cages. Does it come in black? Bruce Wayne, eccentric billionaire. Hero can be anyone. Even a man knowing something as simple and reassuring as putting a coat around a young boy shoulders to let him know the world hadn't ended."
 cover_image: "/assets/images/posts/drafts/nswag/ToolchainDiagram.png"
 tags:
     - "C#" 

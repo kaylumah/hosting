@@ -1,6 +1,6 @@
 ---
 name: 'Setup NuGet with different publishing sources'
-description: '...'
+description: "It was a dog. It was a big dog. Does it come in black? My anger outweights my guilt. I'll be standing where l belong. Between you and the peopIe of Gotham."
 ---
 
 ```xml
