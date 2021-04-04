@@ -26,3 +26,22 @@ https://stackoverflow.com/questions/43424095/how-to-unit-test-with-ilogger-in-as
 https://gist.github.com/cknaap/6919df54820853f7a3ef054303cebfc3
 
 https://alastaircrabtree.com/using-logging-in-unit-tests-in-net-core/
+
+---
+
+https://dev.to/sparky/sparkytesthelpers-moq-307h
+
+https://dev.to/chaitanyasuvarna/writing-unit-tests-for-httpclient-using-nunit-and-moq-in-c-37jh
+
+https://dev.to/kritner/getting-started-with-unit-testing-and-moq---part-2-406
+
+https://dev.to/rajmondburgaj/how-to-setup-methods-which-return-a-built-int-type-and-implement-ienumerable-interface-in-moq--20of
+
+https://dev.to/dotnet/how-you-can-learn-mock-testing-in-net-core-and-c-with-moq-4ikd
+
+https://dev.to/canro91/how-to-create-fakes-with-moq-and-what-i-don-t-like-about-it-45m4
+
+https://dev.to/matheusrodrigues/mock-multiple-calls-to-the-same-method-with-fakeiteasy-moq-and-nsubstitute-45lp
+
+https://dev.to/seankilleen/quick-tip-when-testing-with-moq-try-lambdas-for-more-flexible-tests-1k9o
+
