@@ -1,0 +1,47 @@
+---
+layout: 'default.html'
+sitemap: False
+---
+
+<ul>
+    {% for tag in site.tags %}
+    <li>
+        <a href="/tags?tag={{ tag.key | html.url_encode }}">{{ tag.key }} ({{ tag.value | array.size }})</a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% for tag in site.tags %}
+<section id="tag-{{ tag.key }}" style="display: none;">
+    <h1 class="font-architect text-xl">{{ tag.key }}</h1>
+    {% for article in tag.value %}
+    <h2>{{ article.title }}</h2>
+    <hr />
+    {% endfor %}
+</section>
+{% endfor %}
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedTag = urlParams.get('tag');
+    var tag = decodeURI(selectedTag);
+
+    var sections = document.getElementsByTagName("section");
+    for (var i = 0; i < sections.length; i++)
+    {
+        var section = sections[i];
+        var id = section.id;
+        if (id.startsWith("tag-"))
+        {
+            if (id === `tag-${tag}`)
+            {
+                section.style.display = 'block';
+            }
+            else
+            {
+                section.style.display = 'none';
+            }
+        }
+    }
+
+</script>
