@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 using Moq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using HtmlAgilityPack;
 
 namespace Test.Unit
 {
@@ -66,6 +67,11 @@ namespace Test.Unit
 
             var renderContent = renderResult[0].Content;
             renderContent.Should().NotBeEmpty();
+
+            var document = new HtmlDocument();
+            document.LoadHtml(renderContent);
+            var metaTags = document.DocumentNode.SelectNodes("meta");
+            metaTags.Count.Should().Be(3);
         }
 
         [Fact]
