@@ -889,8 +889,8 @@ See you next time, stay healthy and happy coding to all 🧸!
 
 ## Sources
 
-- https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/
-- https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq
-- https://github.com/Moq/moq4/wiki/Quickstart
-- https://medium.com/webcom-engineering-and-product/a-cleaner-way-to-create-mocks-in-net-6e039c3d1db0
-- https://stackoverflow.com/a/57199040/1936600
+- [Fluent Mocks](https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/)
+- [Testing ILogger](https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq)
+- [Moq Quickstart](https://github.com/Moq/moq4/wiki/Quickstart)
+- [Cleaner way to create mocks](https://medium.com/webcom-engineering-and-product/a-cleaner-way-to-create-mocks-in-net-6e039c3d1db0)
+- [Testing HttpClient](https://stackoverflow.com/a/57199040/1936600)
