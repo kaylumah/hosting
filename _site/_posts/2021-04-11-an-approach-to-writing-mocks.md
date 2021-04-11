@@ -39,7 +39,7 @@ Site - -> Author
 @enduml
  -->
 
-![Architecture](assets/images/posts/20210411/approach-to-writing-mocks/architecture.png)
+![Architecture](/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png)
 
 Since I am writing this blog post, what better example than a use case for a blogging platform. Imagine a platform where users can create and share their content. But you can only successfully start posts after you verified your account. In a sequence diagram, it might look something like this.
 
@@ -57,7 +57,7 @@ ArticleAccess - -> SiteManager: CreateArticleResponse
 @enduml
  -->
 
-![Sequence](assets/images/posts/20210411/approach-to-writing-mocks/sequence.png)
+![Sequence](/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png)
 
 I am going to use the dotnet CLI to create my project structure.
 
@@ -96,7 +96,7 @@ If everything went fine, you should have the following directory structure on di
 
 > You may be wondering why I specified `--framework` after each dotnet new command; this is because it would otherwise default to `NET5.0`, which would be fine for a blog post like this, but since NET5 is not LTS, I mostly abstain from using it in my projects.
 
-I will not include every little DTO as part of this article since those classes will be available as part of the source code in the end. For now, assume we have created our implementation to look like this.
+I will not include every little DTO as part of this article since those classes will be available as part of [the source code](https://github.com/kaylumah/AdventuresWithMock) in the end. For now, assume we have created our implementation to look like this.
 
 Our Article Access
 
@@ -788,7 +788,7 @@ public async Task<CreateArticlesResponse> CreateArticles(CreateArticlesRequest c
 }
 ```
 
-Unfortunately, you cannot achieve this by mocking HttpClient. You need to Mock HttpMessageHandler. Depending on your needs, it might look something like the following snippet.
+Unfortunately, you cannot achieve this by mocking HttpClient. You need to Mock HttpMessageHandler. Depending on your needs, it might look something like the following snippet. (Based on [this stackoverflow answer](https://stackoverflow.com/a/57199040/1936600))
 
 ```csharp
 using System;
@@ -879,9 +879,11 @@ That concludes my experiment for the day. I have shown three instances where you
 
 Of course, creating a mock library will take some time. You could argue if it's worth the time to make a duplicate, albeit a simplified version of your data access. My personal opinion is that it makes debugging and reasoning about my tests easier than taking a deep dive in Invocations and Verify mock provides. As I have hopefully demonstrated is that one does not exclude the other. I think it can complement one and other. 
 
-I am glad about the early results of my experiment, hence me writing this blog post. Over time you can evolve these mocks to be even better. For example, change tracking of entities could potentially be used cross mock. The HttpClientMock could use some more love. Imagine hiding every detail like StatusCode, HttpResponseContent from the tester. I could have saved it for another blog, but I shared this abstraction to start a dialogue with my team about testing and test set up.
+I am glad about the early results of my experiment, hence me writing this blog post. Over time you can evolve these mocks to be even better. For example, change tracking of entities could potentially be used cross mock. The HttpClientMock could use some more love. Imagine hiding every detail like StatusCode, HttpResponseMessage from the tester. I could have saved it for another blog, but I shared this abstraction to start a dialogue with my team about testing and test set up.
 
 As always, if you have any questions, feel free to reach out. I am curious to hear what you all think about this approach. Do you have suggestions or alternatives? I would love to hear about them.
+
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/AdventuresWithMock).
 
 See you next time, stay healthy and happy coding to all 🧸!
 
