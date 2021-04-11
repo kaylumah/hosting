@@ -1,6 +1,6 @@
 ---
 title: "Experiment with Moq, an approach to writing mocks"
-description: "TODO"
+description: "An experiment to create reusable mocks in my testing code."
 cover_image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 tags:
