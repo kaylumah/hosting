@@ -1,8 +1,12 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
+using HtmlAgilityPack;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace Kaylumah.Ssg.Utilities
@@ -12,6 +16,51 @@ namespace Kaylumah.Ssg.Utilities
         public static readonly GlobalFunctions Instance = new GlobalFunctions();
         public string Url { get; set; }
         public string BaseUrl { get; set; }
+
+        public static string ReadingTime(string content)
+        {
+            // http://www.craigabbott.co.uk/blog/how-to-calculate-reading-time-like-medium
+            //https://stackoverflow.com/questions/12787449/html-agility-pack-removing-unwanted-tags-without-removing-content
+            var document = new HtmlDocument();
+            document.LoadHtml(content);
+
+            document.DocumentNode.Descendants()
+                .Where(n => n.Name == "pre")
+                .ToList()
+                .ForEach(n => n.Remove());
+
+            var acceptableTags = new string[] {};
+            var nodes = new Queue<HtmlNode>(document.DocumentNode.SelectNodes("./*|./text()"));
+            while (nodes.Count > 0)
+            {
+                var node = nodes.Dequeue();
+                var parentNode = node.ParentNode;
+
+                if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+                {
+                    var childNodes = node.SelectNodes("./*|./text()");
+
+                    if (childNodes != null)
+                    {
+                        foreach (var child in childNodes)
+                        {
+                            nodes.Enqueue(child);
+                            parentNode.InsertBefore(child, node);
+                        }
+                    }
+
+                    parentNode.RemoveChild(node);
+
+                }
+            }
+
+            var text = document.DocumentNode.InnerHtml;
+
+            const int wordsPerMinute = 265;
+            var numberOfWords = text.Split(' ').Length;
+            var minutes = numberOfWords / wordsPerMinute;
+            return "";
+        }
 
         public static string DateToAgo(DateTimeOffset date)
         {
