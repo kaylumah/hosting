@@ -1,0 +1,43 @@
+---
+layout: 'default.html'
+---
+<div class="flex flex-col text-center px-4">
+  <h1 class="font-architect text-xl">More about me</h1>
+  <hr class="mt-4 border-t-2 w-20 mx-auto" />
+  <section class="pt-4 font-roboto mx-auto">
+        <p>
+            Hi There!
+        </p>
+        <div class="flow-root">
+            <ul class="-mb-8">
+                {% for event in site.data.events %}
+                <li>
+                    <div class="relative pb-8">
+                        {% unless forloop.last %}
+                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
+                        {% endunless %}
+                        <div class="relative flex space-x-3">
+                            <div>
+                                <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
+                                <!-- Heroicon name: solid/user -->
+                                <svg class="h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                </svg>
+                                </span>
+                            </div>
+                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                <div>
+                                <p class="text-sm text-gray-500">Applied to <a href="#" class="font-medium text-gray-900">Front End Developer</a></p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                                <time datetime="2020-09-20">Sep 20</time>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+  </section>
+</div>
