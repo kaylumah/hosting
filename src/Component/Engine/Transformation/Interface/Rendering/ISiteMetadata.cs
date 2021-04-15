@@ -10,5 +10,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
         Dictionary<string, object> Data { get; set; }
         SortedDictionary<string, PageData[]> Collections { get; set; }
         SortedDictionary<string, PageData[]> Tags { get; set; }
+        SortedDictionary<string, PageData[]> Types { get; set; }
     }
 }
