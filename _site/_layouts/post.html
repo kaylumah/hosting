@@ -45,4 +45,20 @@ layout: 'default.html'
     <div class="mt-8 mx-auto max-w-prose md:max-w-full prose md:prose-lg lg:prose-xl">
         {{ content }}
     </div>
+    {% if page.social_share != 'False' %}
+    <footer class="flex flex-col mt-8">
+        <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+        <div class="flex justify-center space-x-6">
+            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                <em class="fab fa-linkedin"></em>
+            </a>
+            <a target="_blank" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <em class="fab fa-twitter"></em>
+            </a>
+            <a target="_blank" href="https://facebook.com/sharer.php?u={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                <em class="fab fa-facebook"></em>
+            </a>
+        </div>
+    </footer>
+    {% endif %}
 </article>
