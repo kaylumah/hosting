@@ -1,20 +1,53 @@
+- 
+  name: 'ilionx'
 -
-  name: 'NLcom ICT Solutions'
+  name: 'PropAz (via ilionx)'
+-
+  name: 'iCaptur (via ilionx)'
+- 
+  name: 'VodafoneZiggo - Digital Department (via ilionx)'
+- 
+  name: 'VodafoneZiggo - OSSA&T Department (via QNH)'
+-
+  name: 'Clifford Chance (via QNH)'
+- 
+  name: 'hollandsnieuwe (via QNH)'
+- 
+  name: 'Energy Essentials (via QNH)'
+- 
+  name: 'Municipality Zaanstad (via QNH)'
+- 
+  name: 'DAF Trucks (via QNH)'
+-
+  name: 'Sekisui Alveo (via QNH)'
+- 
+  name: 'QNH Consulting'
   projects:
     -
-      name: 'Workflow4People'
+      name: 'Tussenstage - Workflow4People Liferay Integratie'
       job_title: 'Intern'
-      description: 'bla'
-      start_date: 2021-04-15
-      end_date: 2021-04-15
+      description: '...'
+      start_date: 2014-09-01
+      end_date: 2015-02-01
       skills:
         - 'C#'
+-
+  name: 'NLcom ICT Solutions'
+  branch: 'ICT Services'
+  projects:
+    -
+      name: 'JustAsk - V2'
+      job_title: 'Part-time Software Engineer'
+      description: '...'
+      start_date: 2015-02-01
+      end_date: 2016-02-01
+      skills:
         - 'C#'
+    -
+      name: 'Tussenstage - Workflow4People Liferay Integratie'
+      job_title: 'Intern'
+      description: '...'
+      start_date: 2014-09-01
+      end_date: 2015-02-01
+      skills:
         - 'C#'
-        - 'C#'
-        - 'C#'
-        - 'C#'
-        - 'C#'
-        - 'C#'
-- name: 'QNH Consulting'
-- name: 'ilionx'

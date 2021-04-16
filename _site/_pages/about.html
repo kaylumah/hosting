@@ -59,12 +59,12 @@ layout: 'default.html'
                             </div>
                             <div>
                                 <time datetime="{{ project.start_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-                                    {{ project.start_date | to_date | date_to_pattern "MMMM yy" }}
+                                    {{ project.start_date | to_date | date_to_pattern "MMM yy" }}
                                 </time>
                                 <span> - </span>
                                 {%if project.end_date %}
                                 <time datetime="{{ project.end_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-                                    {{ project.end_date | to_date | date_to_pattern "MMMM yy" }}
+                                    {{ project.end_date | to_date | date_to_pattern "MMM yy" }}
                                 </time>
                                 {% else %}
                                 <span>present</span>
