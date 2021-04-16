@@ -276,3 +276,9 @@ Prop-AZ is een self-service applicatie waarmee de huurder van een woning diverse
 
 C#
 
+
+
+- compare with linkedin
+
+https://www.linkedin.com/in/maxhamulyak/
+
