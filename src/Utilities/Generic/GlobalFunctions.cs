@@ -24,42 +24,62 @@ namespace Kaylumah.Ssg.Utilities
             var document = new HtmlDocument();
             document.LoadHtml(content);
 
-            document.DocumentNode.Descendants()
-                .Where(n => n.Name == "pre")
-                .ToList()
-                .ForEach(n => n.Remove());
+            // document.DocumentNode.Descendants()
+            //     .Where(n => n.Name == "pre")
+            //     .ToList()
+            //     .ForEach(n => n.Remove());
 
-            var acceptableTags = new string[] {};
-            var nodes = new Queue<HtmlNode>(document.DocumentNode.SelectNodes("./*|./text()"));
-            while (nodes.Count > 0)
+            // var acceptableTags = new string[] {};
+            // var nodes = new Queue<HtmlNode>(document.DocumentNode.SelectNodes("./*|./text()"));
+            // while (nodes.Count > 0)
+            // {
+            //     var node = nodes.Dequeue();
+            //     var parentNode = node.ParentNode;
+
+            //     if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+            //     {
+            //         var childNodes = node.SelectNodes("./*|./text()");
+
+            //         if (childNodes != null)
+            //         {
+            //             foreach (var child in childNodes)
+            //             {
+            //                 nodes.Enqueue(child);
+            //                 parentNode.InsertBefore(child, node);
+            //             }
+            //         }
+
+            //         parentNode.RemoveChild(node);
+
+            //     }
+            // }
+
+            // var text = document.DocumentNode.InnerHtml;
+
+            // https://stackoverflow.com/questions/60929281/number-of-words-by-htmlagilitypack
+            char[] delimiter = new char[] { ' ' };
+            int kelime = 0;
+            foreach (string text in document.DocumentNode
+                .SelectNodes("//text()")
+                .Select(node => node.InnerText))
             {
-                var node = nodes.Dequeue();
-                var parentNode = node.ParentNode;
-
-                if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
+                var words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
+                    .Where(s => Char.IsLetter(s[0]));
+                int wordCount = words.Count();
+                if (wordCount > 0)
                 {
-                    var childNodes = node.SelectNodes("./*|./text()");
-
-                    if (childNodes != null)
-                    {
-                        foreach (var child in childNodes)
-                        {
-                            nodes.Enqueue(child);
-                            parentNode.InsertBefore(child, node);
-                        }
-                    }
-
-                    parentNode.RemoveChild(node);
-
+                    // Console.WriteLine(String.Join(" ", words));
+                    kelime += wordCount;
                 }
             }
 
-            var text = document.DocumentNode.InnerHtml;
 
-            const int wordsPerMinute = 265;
-            var numberOfWords = text.Split(' ').Length;
-            var minutes = numberOfWords / wordsPerMinute;
-            return "";
+
+
+            double wordsPerMinute = 265;
+            double numberOfWords = kelime;//text.Split(' ').Length;
+            var minutes = (int) Math.Ceiling(numberOfWords / wordsPerMinute);
+            return $"{minutes} minute read";
         }
 
         public static string DateToAgo(DateTimeOffset date)
