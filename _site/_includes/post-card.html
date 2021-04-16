@@ -41,14 +41,13 @@
         <div class="flex space-x-1 text-sm text-gray-500">
           <time datetime="{{ post.date | date_to_pattern 'yyyy-MM-dd' }}">
             {{ post.date | date_to_pattern 'yyyy/MM/dd' }}
-            {{ post.content | reading_time }}
           </time>
-          <!-- <span aria-hidden="true">
+          <span aria-hidden="true">
             &middot;
           </span>
           <span>
-            6 min read
-          </span> -->
+            {{ post.content | reading_time }} read
+          </span>
         </div>
       </div>
     </div>

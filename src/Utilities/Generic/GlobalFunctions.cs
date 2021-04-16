@@ -79,7 +79,7 @@ namespace Kaylumah.Ssg.Utilities
             double wordsPerMinute = 265;
             double numberOfWords = kelime;//text.Split(' ').Length;
             var minutes = (int) Math.Ceiling(numberOfWords / wordsPerMinute);
-            return $"{minutes} minute read";
+            return $"{minutes} minute";
         }
 
         public static string DateToAgo(DateTimeOffset date)
