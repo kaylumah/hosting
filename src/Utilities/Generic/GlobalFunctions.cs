@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Web;
@@ -12,6 +13,12 @@ namespace Kaylumah.Ssg.Utilities
         public static readonly GlobalFunctions Instance = new GlobalFunctions();
         public string Url { get; set; }
         public string BaseUrl { get; set; }
+
+        public static DateTimeOffset ToDate(string input)
+        {
+            IFormatProvider culture = new CultureInfo("en-US", true);
+            return DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        }
 
         public static string DateToAgo(DateTimeOffset date)
         {

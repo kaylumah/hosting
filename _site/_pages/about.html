@@ -40,3 +40,54 @@ layout: 'default.html'
         </div>
   </section>
 </div>
+<div class="py-16 px-6 sm:px-8">
+    <div class="mx-auto">
+    {% for experience in site.data.workexperiences %}
+        <section>
+            <h2 class="font-architect text-xl">
+                {{ experience.name }}
+            </h2>
+                <ul class="divide-y divide-gray-200 mt-1">
+                    {% for project in experience.projects %}
+                    <li class="relative py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                        <div class="flex justify-between space-x-3">
+                            <div class="min-w-0 flex-1">
+                                <a href="#" class="block focus:outline-none">
+                                    <span class="absolute inset-0" aria-hidden="true"></span>
+                                    <p class="text-sm font-medium text-gray-900 truncate">{{ project.name }}<span class="text-gray-600"> / {{ project.job_title }}</span></p>
+                                </a>
+                            </div>
+                            <div>
+                                <time datetime="{{ project.start_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
+                                    {{ project.start_date | to_date | date_to_pattern "MMMM yy" }}
+                                </time>
+                                <span> - </span>
+                                {%if project.end_date %}
+                                <time datetime="{{ project.end_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
+                                    {{ project.end_date | to_date | date_to_pattern "MMMM yy" }}
+                                </time>
+                                {% else %}
+                                <span>present</span>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                        <div class="mt-1">
+                            <p class="line-clamp-2 text-sm text-gray-600">
+                                {{ project.description }}
+                            </p>
+                        </div>
+                        <div class="mt-1">
+                            {% for skill in project.skills %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                Badge
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+        </section>
+    {% endfor %}
+    </div>
+</div>
