@@ -5,8 +5,9 @@
     -
       name: "Copper Framework"
       job_title: "Software Engineer"
-      # description: "Binnen ilionx wordt het Copper Framework ontwikkeld. Copper is een framework dat ontwikkeling van service-oriented standaardiseert. Het framework richting zich op cross-cutting concerns en operational concepten. Zodat ontwikkelaars zich kunnen focussen op ontwikkeling i.p.v. randzaken. Vanaf versie 3 is Max aangehaakt aan de door ontwikkeling van het framework. "
       start_date: 2020-04-01
+      description: >
+        TODO
       skills:
         - "C#"
         - "Technische Ontwerp"
@@ -20,8 +21,9 @@
     -
       name: "Platform backend"
       job_title: "Software Engineer"
-      # description: "Als lead softwareontwikkelaar van het ontwikkel-team was Max verantwoordelijk om de voor opgezette architectuur te realiseren voor de backend van de nieuwe Prop-AZ huurders app. Deze architectuur heeft hij eerst vertaalt naar gedetailleerde technische ontwerpen en vervolgens gerealiseerd in een service oriented .net applicatie. Max heeft verschillende integratie punten geïmplementeerd en deze middels de Open API standaard beschikbaar gemaakt voor de app. Prop-AZ is een self-service applicatie waarmee de huurder van een woning diverse diensten kan gebruiken, denk daarbij aan het aanvragen van reparaties of chatten met een medewerker van de verhuurder. Onderdelen van de oplossing zijn: 1.	De data-uitwisseling met het vastgoedbeheersysteem van de firma Prop-AZ. 2.	Integratie met Firebase diensten voor het versturen push notificaties. 3.	Integratie met het chat platform van Twilio."
       start_date: 2020-08-01
+      description: >
+        TODO
       skills:
         - "C#"
 -
@@ -31,9 +33,10 @@
     -
       name: "Function CI/CD Pipeline"
       job_title: "Software Engineer"
-      # description: "ICaptur is een platform dat helpt bij het correct uit voeren fitness oefeningen. Het platform berekent met behulp van een python script de correctheid van de oefening. Voor het platform heeft Max een Azure Function ontwikkeld die de request/response richting de function opslaat in Azure Blob Storage. Daarnaast was Max verantwoordelijk voor het inrichten van de CI/CD pipeline in DevOps."
       start_date: "2020-05-01"
       end_date: "2020-05-01"
+      description: >
+        TODO
       skills:
        - "ARM Templates"
        - "Azure Devops"
@@ -46,9 +49,10 @@
     -
       name: "Bright - addfixed"
       job_title: "Software Engineer"
-      # description: "WIP: Addfixed heet tegenwoordig Bright, want the future is Bright. Bright is een van de grotere projecten die momenteel bij VodafoneZiggo lopen. Met de fusie van Vodafone en Ziggo is het moment om ook op IT vlak meer samen te gaan doen. Binnen Bright word de SAFE methodiek gehanteerd. Als backender zal je roulerend meedraaien in de L2 (high level design) en L3 (development). Het idee is dat eind 2020 een groot aantal van de systemen aan de Ziggo kant uit gaan. Deze worden geïntegreerd in het Vodafone landschap. Dit heeft gevolgen voor zaken als netwerk provisioning en dergelijke. Samen met 35 vendoren word er aan het programma gewerkt. Binnen DE zijn we verantwoordelijk voor het bouwen van een volledig nieuw Hawaii backend en Fe. Hierbij maken we gebruik van Java11 en Spring Boot. Binnen het L3 team word hard gewerkt aan het selfservice portaal. Hierin kan vind je alles van facturen, product en account informatie. Dit is een samenraapsel van gegevens die al voor Vodafone gedaan werden, en dingen die volledig nieuw zijn voor fixed producten. Het is een dynamische omgeving waarin in program increments van 7 weken gewerkt word aan een eind resultaat."
       start_date: 2019-01-01
       end_date: 2020-03-31
+      description: >
+        TODO
       skills:
         - "Technische Ontwerp"
         - "Java"
@@ -59,27 +63,30 @@
     -
       name: 'DTH XML Parser'
       job_title: 'Software Engineer'
-      description: "Vanuit het DTH-team (Data Transfer Hub) bij VodafoneZiggo bestaat de informatiebehoefte om XML-bestanden te kunnen verwerken. Met name bestanden die voldoen aan de 3GPP standaard (Third Generation Partnership Project). Max is als ontwikkelaar verantwoordelijk om XML-bestanden te verwerken en deze in te lezen in een dataset. Daarnaast is een builder gemaakt om 3GPP data te verwerken naar het gewenst formaat."
       start_date: 2018-08-31
       end_date: 2018-12-31
+      description: >
+        TODO
       skills:
         - "C#"
         - "Technisch Ontwerp"
     -
       name: 'Cluttter Tool'
       job_title: 'Software Engineer'
-      # description: "Radioplanners gebruiken clutterdata om de mogelijke afzwakking van mobiele signalen in kaart te brengen. Max heeft als software engineer samen met een team een applicatie gerealiseerd om deze clutterdata te genereren. Het nieuwe systeem maakt gebruik van AHN (Actueel Hoogtebestand Nederland) en vereikt deze data met data uit Open Street Map."
       start_date: 2018-08-31
       end_date: 2018-12-31
+      description: >
+        TODO
       skills:
         - "C#"
         - "Technische Ontwerp"
     -
       name: 'Coverage Tool'
       job_title: 'Software Engineer'
-      # description: "Binnen de afdeling OSSA&T wordt de netwerkdekking van Vodafone in kaart gebracht voor de publieke website en voor netwerkoperators. Om deze performant te houden worden afbeeldingen gegenereerd die op de kaart van Nederland worden geprojecteerd. Vanwege verouderde technologieën (gebouwd in C++) en performance issues is besloten om een volledig nieuwe applicatie te realiseren.  Max heeft deze applicatie gebouwd, middels een nieuwe architectuur, om elke nacht deze afbeeldingen te genereren. Naast de rol als ontwikkelaar vervulde hij ook de rol van teamlead. Hij schakelde tussen architect en het projectteam, daarnaast was Max ook verantwoordelijk voor de demo’s."
       start_date: 2018-08-31
       end_date: 2018-12-31
+      description: >
+        TODO
       skills:
         - "C#"
         - "Technische Ontwerp"
@@ -90,7 +97,9 @@
     -
       name: "SMCR"
       job_title: "Software Engineer"
-      # description: "Max heeft als frontend ontwikkelaar gewerkt om binnen BettyBlocks, een Rapid Application Development platform, generieke Angular componenten te realiseren. Deze heeft hij vervolgens toegepast binnen een project voor Clifford Chance (advocatenkanatoor Londen)."
+      description: >
+        TODO
+      skills:
       start_date: 2018-08-01
       end_date: 2018-08-31
 - 
@@ -100,9 +109,10 @@
     -
       name: "OinB"
       job_title: "Software Engineer"
-      # description: "OinB is een systeem dat door een ander bedrijf is gemaakt en op dit moment wordt onderhouden en uitgebreid door QNH voor hollandsnieuwe. Dit systeem draait op Oracle Weblogic 9 en maakt gebruikt van Java 1.6."
       start_date: 2017-08-01
       end_date: 2018-07-01
+      description: >
+        TODO
       skills:
         - "AngularJS"
         - "Java"
@@ -110,9 +120,10 @@
     -
       name: "OinB 2 POC"
       job_title: "Software Engineer"
-      # description: "Omdat de OinB stack van hollandsnieuwe erg verouderd is is er een eerste aanzet gedaan om dit pratform opnieuw te bouwen in de nieuwste technologieën. Momenteel zit dit nog in de conceptueele versie maar er zijn wel al een aantal Proof of Concepts gedaan. Twee van deze Proof of Concepts heb ik gedaan. De eerste was om te kijken of de Microservice stack van Netflix (Ribbon, Eureka en Hystrix) gRPC konden ondersteunen. De twee was om te onderzoeken in hoevere Kafka te gebruiken is."
       start_date: 2018-06-01
       end_date: 2018-07-01
+      description: >
+        TODO
       skills:
         - "Technisch Ontwerp"
         - "Java"
@@ -124,9 +135,10 @@
     -
       name: "Vertex Platform"
       job_title: "Junior Software Engineer"
-      # description: "Max had in zijn rol als (web)ontwikkelaar de verantwoordelijkheid om een dynamische front-end te ontwikkelen. Daarnaast was Max verantwoordelijk om de ontwikkelaars van Energy Essentials mee te nemen in het ontwikkelen van Angular applicaties."
       start_date: 2017-03-01
       end_date: 2017-08-01
+      description: >
+        TODO
       skills:
         - "AngularJS"
         - "ICT Services"
@@ -137,9 +149,10 @@
    -
     name: "Regionaal Administratieplatform (RAP)"
     job_title: "Junior Software Engineer"
-    # description: "QNH heeft voor gemeente Zaanstad de applicatie RAP (Regionaal Applicatie Platform) ontwikkeld ten behoeve van de jeugdzorg en WMO. Max heeft als ontwikkelaar in sprints van twee weken functionaliteiten ontwikkeld binnen dit zorgplatform. Deze werkzaamheden betrof een AngularJS frontend en een Betty Blocks backend."
     start_date: 2017-03-01
     end_date: 2017-08-01
+    description: >
+        TODO
     skills:
       - "AngularJS"
       - "Betty Blocks"
@@ -153,7 +166,8 @@
       job_title: 'Junior Software Engineer'
       start_date: 2017-01-01
       end_date: 2017-02-28
-      description: "Max had de verantwoordelijkheid om te kijken naar de Azure Service Bus die gebruikt zou worden om het proces van de data verrijking in gang te zetten."
+      description: >
+        TODO
       skills:
         - "Agile development"
         - "ICT Services"
@@ -163,7 +177,8 @@
       job_title: 'Junior Software Engineer'
       start_date: 2017-01-01
       end_date: 2017-02-28
-      # description: "Binnen de ontwikkelstraat heeft Max meegewerkt aan het specsheets project. Max had de verantwoordelijkheid om een bestaande WinForm applicatie van DAF uit te breiden. Deze tool wordt gebruikt voor het beheren van de data die nodig is om SpecSheets te kunnen genereren."
+      description: >
+        TODO
       skills:
         - "C#"
         - "ICT Services"
@@ -175,7 +190,8 @@
     -
       name: "Turbine - Sekisui Esheet"
       job_title: 'Junior Software Engineer'
-      # description: "Max had de verantwoordelijkheid om een van de modules te analyseren en deze om te bouwen vanuit VB6 naar C#."
+      description: >
+        TODO
       start_date: 2017-01-01
       end_date: 2017-02-28
       skills:
@@ -193,7 +209,8 @@
     -
       name: 'Cloud InControl'
       job_title: 'Junior Software Engineer'
-      # description: "Cloud InControl biedt de mogelijkheid om van meerdere cloudleveranciers de bestaande resources te beheren en nieuwe te genereren, inclusief overzichten van de financiële gegevens. Max had de verantwoordelijkheid om aan de hand van de roadmap functionaliteiten door te ontwikkelen aan Cloud InControl. Deze werkzaamheden hebben betrekking op Modules Asset Insight, Auditing en Chargeback."
+      description: >
+        TODO
       start_date: 2016-09-01
       end_date: 2017-01-01
       skils:
