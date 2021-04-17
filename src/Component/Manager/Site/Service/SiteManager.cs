@@ -79,6 +79,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
+        private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
+        {
+            var types = pages
+                .Where(x => x.Type != null)
+                .Select(x => x.Type)
+                .Distinct();
+            foreach(var type in types)
+            {
+                var typeFiles = pages.Where(x => x.Type != null && x.Type.Equals(type)).ToArray();
+                site.Types.Add(type, typeFiles);
+            }
+        }
+
         private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<PageData> files)
         {
             var collections = files
@@ -147,12 +160,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Id = siteGuid.ToString(),
                 Data = new Dictionary<string, object>(),
                 Tags = new SortedDictionary<string, PageData[]>(),
-                Collections = new SortedDictionary<string, PageData[]>()
+                Collections = new SortedDictionary<string, PageData[]>(),
+                Types = new SortedDictionary<string, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
             EnrichSiteWithTags(siteInfo, pages.ToList());
+            EnrichSiteWithTypes(siteInfo, pages.ToList());
 
             var requests = processed.Select(file => 
             {

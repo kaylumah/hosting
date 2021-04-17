@@ -85,6 +85,18 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
             }
         }
 
+        public string Type
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Type));
+            }
+            set
+            {
+                this.SetValue(nameof(Type), value);
+            }
+        }
+
         public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified): base(metadata)
         {
             Name = name;

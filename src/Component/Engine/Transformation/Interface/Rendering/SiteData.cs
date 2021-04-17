@@ -58,6 +58,8 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
 
         public SortedDictionary<string, PageData[]> Tags { get; set; }
 
+        public SortedDictionary<string, PageData[]> Types { get; set; }
+
         public object Pages => GetPages();
 
         public object GetPages()

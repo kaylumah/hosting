@@ -10,5 +10,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
         string Name { get;set; }
         string Collection { get;set; }
         List<string> Tags { get;set; }
+        string Type { get;set; }
     }
 }

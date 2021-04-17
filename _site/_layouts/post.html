@@ -9,7 +9,7 @@ layout: 'default.html'
         </h1>
         <img alt="post cover-image" class="mx-auto mt-1" src="{{ page.cover_image }}" />
         <div class="mx-auto mt-1">
-            <dl class="rounded-lg sm:grid sm:grid-cols-3">
+            <dl class="rounded-lg sm:grid sm:grid-cols-4">
                 <div class="flex flex-col p-6 text-center">
                     <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                         Authored by
@@ -24,6 +24,14 @@ layout: 'default.html'
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
                         <time datetime="{{ page.date | date_to_pattern 'yyyy-MM-dd' }}">{{ page.date | date_to_pattern 'yyyy/MM/dd' }}</time>
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                        Reading time
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        {{ page.content | reading_time }}
                     </dd>
                 </div>
                 <div class="flex flex-col p-6 text-center">
@@ -45,4 +53,20 @@ layout: 'default.html'
     <div class="mt-8 mx-auto max-w-prose md:max-w-full prose md:prose-lg lg:prose-xl">
         {{ content }}
     </div>
+    {% if page.social_share != 'False' %}
+    <footer class="flex flex-col mt-8">
+        <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+        <div class="flex justify-center space-x-6">
+            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                <em class="fab fa-linkedin"></em>
+            </a>
+            <a target="_blank" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                <em class="fab fa-twitter"></em>
+            </a>
+            <a target="_blank" href="https://facebook.com/sharer.php?u={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                <em class="fab fa-facebook"></em>
+            </a>
+        </div>
+    </footer>
+    {% endif %}
 </article>
