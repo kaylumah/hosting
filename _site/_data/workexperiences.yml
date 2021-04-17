@@ -20,12 +20,7 @@
     -
       name: "Platform backend"
       job_title: "Software Engineer"
-      description: "Als lead softwareontwikkelaar van het ontwikkel-team was Max verantwoordelijk om de voor opgezette architectuur te realiseren voor de backend van de nieuwe Prop-AZ huurders app. Deze architectuur heeft hij eerst vertaalt naar gedetailleerde technische ontwerpen en vervolgens gerealiseerd in een service oriented .net applicatie. Max heeft verschillende integratie punten geïmplementeerd en deze middels de Open API standaard beschikbaar gemaakt voor de app.
-  Prop-AZ is een self-service applicatie waarmee de huurder van een woning diverse diensten kan gebruiken, denk daarbij aan het aanvragen van reparaties of chatten met een medewerker van de verhuurder. Onderdelen van de oplossing zijn:
-  1.	De data-uitwisseling met het vastgoedbeheersysteem van de firma Prop-AZ.
-  2.	Integratie met Firebase diensten voor het versturen push notificaties.
-  3.	Integratie met het chat platform van Twilio.
-  "
+      description: "Als lead softwareontwikkelaar van het ontwikkel-team was Max verantwoordelijk om de voor opgezette architectuur te realiseren voor de backend van de nieuwe Prop-AZ huurders app. Deze architectuur heeft hij eerst vertaalt naar gedetailleerde technische ontwerpen en vervolgens gerealiseerd in een service oriented .net applicatie. Max heeft verschillende integratie punten geïmplementeerd en deze middels de Open API standaard beschikbaar gemaakt voor de app. Prop-AZ is een self-service applicatie waarmee de huurder van een woning diverse diensten kan gebruiken, denk daarbij aan het aanvragen van reparaties of chatten met een medewerker van de verhuurder. Onderdelen van de oplossing zijn: 1.	De data-uitwisseling met het vastgoedbeheersysteem van de firma Prop-AZ. 2.	Integratie met Firebase diensten voor het versturen push notificaties. 3.	Integratie met het chat platform van Twilio."
       start_date: 2020-08-01
       skills:
         - "C#"
@@ -36,8 +31,7 @@
     -
       name: "Function CI/CD Pipeline"
       job_title: "Software Engineer"
-      description: "ICaptur is een platform dat helpt bij het correct uit voeren fitness oefeningen. Het platform berekent met behulp van een python script de correctheid van de oefening. Voor het platform heeft Max een Azure Function ontwikkeld die de request/response richting de function opslaat in Azure Blob Storage.
-Daarnaast was Max verantwoordelijk voor het inrichten van de CI/CD pipeline in DevOps."
+      description: "ICaptur is een platform dat helpt bij het correct uit voeren fitness oefeningen. Het platform berekent met behulp van een python script de correctheid van de oefening. Voor het platform heeft Max een Azure Function ontwikkeld die de request/response richting de function opslaat in Azure Blob Storage. Daarnaast was Max verantwoordelijk voor het inrichten van de CI/CD pipeline in DevOps."
       start_date: "2020-05-01"
       end_date: "2020-05-01"
       skills:
@@ -52,8 +46,7 @@ Daarnaast was Max verantwoordelijk voor het inrichten van de CI/CD pipeline in D
     -
       name: "Bright - addfixed"
       job_title: "Software Engineer"
-      description: "WIP:
-Addfixed heet tegenwoordig Bright, want the future is Bright. Bright is een van de grotere projecten die momenteel bij VodafoneZiggo lopen. Met de fusie van Vodafone en Ziggo is het moment om ook op IT vlak meer samen te gaan doen. Binnen Bright word de SAFE methodiek gehanteerd. Als backender zal je roulerend meedraaien in de L2 (high level design) en L3 (development). Het idee is dat eind 2020 een groot aantal van de systemen aan de Ziggo kant uit gaan. Deze worden geïntegreerd in het Vodafone landschap. Dit heeft gevolgen voor zaken als netwerk provisioning en dergelijke. Samen met 35 vendoren word er aan het programma gewerkt. Binnen DE zijn we verantwoordelijk voor het bouwen van een volledig nieuw Hawaii backend en Fe. Hierbij maken we gebruik van Java11 en Spring Boot. Binnen het L3 team word hard gewerkt aan het selfservice portaal. Hierin kan vind je alles van facturen, product en account informatie. Dit is een samenraapsel van gegevens die al voor Vodafone gedaan werden, en dingen die volledig nieuw zijn voor fixed producten. Het is een dynamische omgeving waarin in program increments van 7 weken gewerkt word aan een eind resultaat."
+      description: "WIP: Addfixed heet tegenwoordig Bright, want the future is Bright. Bright is een van de grotere projecten die momenteel bij VodafoneZiggo lopen. Met de fusie van Vodafone en Ziggo is het moment om ook op IT vlak meer samen te gaan doen. Binnen Bright word de SAFE methodiek gehanteerd. Als backender zal je roulerend meedraaien in de L2 (high level design) en L3 (development). Het idee is dat eind 2020 een groot aantal van de systemen aan de Ziggo kant uit gaan. Deze worden geïntegreerd in het Vodafone landschap. Dit heeft gevolgen voor zaken als netwerk provisioning en dergelijke. Samen met 35 vendoren word er aan het programma gewerkt. Binnen DE zijn we verantwoordelijk voor het bouwen van een volledig nieuw Hawaii backend en Fe. Hierbij maken we gebruik van Java11 en Spring Boot. Binnen het L3 team word hard gewerkt aan het selfservice portaal. Hierin kan vind je alles van facturen, product en account informatie. Dit is een samenraapsel van gegevens die al voor Vodafone gedaan werden, en dingen die volledig nieuw zijn voor fixed producten. Het is een dynamische omgeving waarin in program increments van 7 weken gewerkt word aan een eind resultaat."
       start_date: 2019-01-01
       end_date: 2020-03-01
       skills:
@@ -84,9 +77,7 @@ Addfixed heet tegenwoordig Bright, want the future is Bright. Bright is een van 
     -
       name: 'Coverage Tool'
       job_title: 'Software Engineer'
-      description: "Binnen de afdeling OSSA&T wordt de netwerkdekking van Vodafone in kaart gebracht voor 
- de publieke website en voor netwerkoperators. Om deze performant te houden worden afbeeldingen gegenereerd die op de kaart van Nederland worden geprojecteerd. Vanwege verouderde technologieën (gebouwd in C++) en performance issues is besloten om een volledig nieuwe applicatie te realiseren. 
-Max heeft deze applicatie gebouwd, middels een nieuwe architectuur, om elke nacht deze afbeeldingen te genereren. Naast de rol als ontwikkelaar vervulde hij ook de rol van teamlead. Hij schakelde tussen architect en het projectteam, daarnaast was Max ook verantwoordelijk voor de demo’s."
+      description: "Binnen de afdeling OSSA&T wordt de netwerkdekking van Vodafone in kaart gebracht voor de publieke website en voor netwerkoperators. Om deze performant te houden worden afbeeldingen gegenereerd die op de kaart van Nederland worden geprojecteerd. Vanwege verouderde technologieën (gebouwd in C++) en performance issues is besloten om een volledig nieuwe applicatie te realiseren.  Max heeft deze applicatie gebouwd, middels een nieuwe architectuur, om elke nacht deze afbeeldingen te genereren. Naast de rol als ontwikkelaar vervulde hij ook de rol van teamlead. Hij schakelde tussen architect en het projectteam, daarnaast was Max ook verantwoordelijk voor de demo’s."
       start_date: 2018-08-01
       end_date: 2018-08-01
       skills:
