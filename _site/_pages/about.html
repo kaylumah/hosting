@@ -2,7 +2,7 @@
 layout: 'default.html'
 ---
 <div class="flex flex-col text-center px-4">
-  <h1 class="font-architect text-xl">More about me</h1>
+  <h1 class="font-architect text-3xl">More about me</h1>
   <hr class="mt-4 border-t-2 w-20 mx-auto" />
   <section class="pt-4 font-roboto mx-auto">
         <p>
@@ -40,23 +40,19 @@ layout: 'default.html'
         </div>
   </section>
 </div>
-<div class="py-16 px-6 sm:px-8">
+<section id="cv" class="py-8 px-6 sm:px-8">
     <div class="mx-auto">
-    {% for experience in site.data.workexperiences %}
-        <section>
-            <h2 class="font-architect text-xl">
-                {{ experience.name }}
-            </h2>
+        <h2 class="font-architect text-2xl">Curriculum vitae</h2>
+        {% for experience in site.data.workexperiences %}
+            <section>
+                <h3 class="font-architect text-lg">
+                    {{ experience.name }}
+                </h3>
                 <ul class="divide-y divide-gray-200 mt-1">
                     {% for project in experience.projects %}
                     <li class="relative py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
                         <div class="flex justify-between space-x-3">
-                            <div class="min-w-0 flex-1">
-                                <a href="#" class="block focus:outline-none">
-                                    <span class="absolute inset-0" aria-hidden="true"></span>
-                                    <p class="text-sm font-medium text-gray-900 truncate">{{ project.name }}<span class="text-gray-600"> / {{ project.job_title }}</span></p>
-                                </a>
-                            </div>
+                            <p class="text-sm font-medium text-gray-900 truncate">{{ project.name }}<span class="text-gray-600"> / {{ project.job_title }}</span></p>
                             <div>
                                 <time datetime="{{ project.start_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
                                     {{ project.start_date | to_date | date_to_pattern "MMM yy" }}
@@ -70,42 +66,41 @@ layout: 'default.html'
                                 <span>present</span>
                                 {% endif %}
                             </div>
-
                         </div>
-                        <div class="mt-1">
-                            <p class="line-clamp-2 text-sm text-gray-600">
-                                {{ project.description }}
-                            </p>
-                        </div>
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ project.description }}
+                        </p>
                         <div class="mt-1">
                             {% for skill in project.skills %}
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                Badge
+                                {{ skill }}
                             </span>
                             {% endfor %}
                         </div>
                     </li>
                     {% endfor %}
                 </ul>
-        </section>
-    {% endfor %}
-    </div>
-</div>
-<section id="certifications" class="py-16 px-6 sm:px-8">
-    <h2>Certifications</h2>
-    <ul class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2">
-        {% for certificate in site.data.certifications %}
-        <li class="flex items-center border-t border-r border-l border-b border-gray-200">
-            <div class="px-4 py-2 items-center justify-center w-8">
-                <img src="{{ certificate.logo }}" alt="Certificate - {{ certificate.name }}" />
-            </div>
-            <div class="px-4 py-2 flex flex-col">
-                <span>{{ certificate.name }}</span>
-                <time datetime="{{ certificate.earned | to_date | date_to_xmlschema }}" class="text-sm text-gray-500">
-                    {{ certificate.earned | to_date | date_to_pattern "MMM yy" }}
-                </time>
-            </div>
-        </li>
+            </section>
         {% endfor %}
-    </ul>
+    </div>
+</section>
+<section id="certifications" class="py-8 px-6 sm:px-8">
+    <div class="mx-auto">
+        <h2 class="font-architect text-2xl">Certifications</h2>
+        <ul class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2">
+            {% for certificate in site.data.certifications %}
+            <li class="flex items-center border-t border-r border-l border-b border-gray-200">
+                <div class="px-4 py-2 items-center justify-center w-8">
+                    <img src="{{ certificate.logo }}" alt="Certificate - {{ certificate.name }}" />
+                </div>
+                <div class="px-4 py-2 flex flex-col">
+                    <span>{{ certificate.name }}</span>
+                    <time datetime="{{ certificate.earned | to_date | date_to_xmlschema }}" class="text-sm text-gray-500">
+                        {{ certificate.earned | to_date | date_to_pattern "MMM yy" }}
+                    </time>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </section>
