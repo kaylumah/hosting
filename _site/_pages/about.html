@@ -51,8 +51,22 @@ layout: 'default.html'
 </section> -->
 <section id="cv" class="py-8 px-6 sm:px-8">
     <div class="mx-auto">
+        <h2 class="font-architect text-2xl">Personal</h2>
+        <p>
+            People describe me as passionate and eager in my working life; they say I can pick up new stuff quickly. You might not expect it since I also blog in my spare time; I am not always working on my technical skills.
+        </p>
+        <p>
+            Among other things, I love to read (or listen) to an epic fantasy novel. I listen to film music and occasionally join discussions online. In my downtime, I also enjoy movies or tv series. If any time left, I also enjoy casual gaming.
+        </p>
+    </div>
+</section>
+<section id="cv" class="py-8 px-6 sm:px-8">
+    <div class="mx-auto">
         <h2 class="font-architect text-2xl">Curriculum vitae</h2>
-        {% for experience in site.data.workexperiences %}
+            <p>
+                I have worked at two different companies in my professional life: NLCom and ilionx (merged with QNH). For ilionx, I have worked on internal projects, customer projects and consulting bases. In my spare time, I work for Kaylumah and write blog posts about my experiences. In the "Curriculum vitae" section, you can find skills I exercised professionally, which might spark new articles on the blog.
+            </p>
+            {% for experience in site.data.workexperiences %}
             <section>
                 <h3 class="font-architect text-lg">
                     {{ experience.name }}
@@ -90,12 +104,15 @@ layout: 'default.html'
                     {% endfor %}
                 </ul>
             </section>
-        {% endfor %}
+            {% endfor %}
     </div>
 </section>
 <section id="certifications" class="py-8 px-6 sm:px-8">
     <div class="mx-auto">
         <h2 class="font-architect text-2xl">Certifications</h2>
+        <p>
+            I do not believe that certifications add a lot. They don't prove that I know something, just that I knew something at the moment of the test. I would instead look at someone's CV and see the years of experience with a particular skill. However, since this is my portfolio website, I decided to include them.
+        </p>
         <ul class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2">
             {% for certificate in site.data.certifications %}
             <li class="flex border-t border-r border-l border-b border-gray-200">

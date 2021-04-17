@@ -89,8 +89,8 @@
     -
       name: "SMCR"
       job_title: "Software Engineer"
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "Angular"
         - "Betty Blocks"
