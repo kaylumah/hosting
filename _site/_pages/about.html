@@ -99,8 +99,8 @@ layout: 'default.html'
         <h2 class="font-architect text-2xl">Certifications</h2>
         <ul class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2">
             {% for certificate in site.data.certifications %}
-            <li class="flex items-center border-t border-r border-l border-b border-gray-200">
-                <div class="px-4 py-2 items-center justify-center w-8">
+            <li class="flex border-t border-r border-l border-b border-gray-200">
+                <div class="px-4 py-2 w-16">
                     <img src="{{ certificate.logo }}" alt="Certificate - {{ certificate.name }}" />
                 </div>
                 <div class="px-4 py-2 flex flex-col">
