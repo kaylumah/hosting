@@ -5,7 +5,7 @@
   <div class="flex-1 bg-white p-6 flex flex-col justify-between">
     <div class="flex-1">
       <p class="text-sm font-medium text-indigo-600">
-        <a href="#" class="hover:underline">
+        <a href="/types.html#{{ post.type | html.url_encode }}" class="hover:underline">
           {{ post.type }}
         </a>
       </p>
@@ -42,12 +42,12 @@
           <time datetime="{{ post.date | date_to_pattern 'yyyy-MM-dd' }}">
             {{ post.date | date_to_pattern 'yyyy/MM/dd' }}
           </time>
-          <!-- <span aria-hidden="true">
+          <span aria-hidden="true">
             &middot;
           </span>
           <span>
-            6 min read
-          </span> -->
+            {{ post.content | reading_time }} read
+          </span>
         </div>
       </div>
     </div>
