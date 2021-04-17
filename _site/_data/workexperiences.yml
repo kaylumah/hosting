@@ -6,14 +6,10 @@
       name: "Copper Framework"
       job_title: "Software Engineer"
       start_date: 2020-04-01
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
-        - "Technische Ontwerp"
-        - "Microsoft Azure"
-        - "ASP.NET"
-        - "Object Orientatie."
 -
   name: 'PropAz (via ilionx)'
   branch: "Dienstverlenging"
@@ -22,8 +18,8 @@
       name: "Platform backend"
       job_title: "Software Engineer"
       start_date: 2020-08-01
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
 -
@@ -35,8 +31,8 @@
       job_title: "Software Engineer"
       start_date: "2020-05-01"
       end_date: "2020-05-01"
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
        - "ARM Templates"
        - "Azure Devops"
@@ -51,10 +47,9 @@
       job_title: "Software Engineer"
       start_date: 2019-01-01
       end_date: 2020-03-31
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
-        - "Technische Ontwerp"
         - "Java"
 - 
   name: 'VodafoneZiggo - OSSA&T Department (via QNH)'
@@ -65,31 +60,28 @@
       job_title: 'Software Engineer'
       start_date: 2018-08-31
       end_date: 2018-12-31
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
-        - "Technisch Ontwerp"
     -
       name: 'Cluttter Tool'
       job_title: 'Software Engineer'
       start_date: 2018-08-31
       end_date: 2018-12-31
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
-        - "Technische Ontwerp"
     -
       name: 'Coverage Tool'
       job_title: 'Software Engineer'
       start_date: 2018-08-31
       end_date: 2018-12-31
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
-        - "Technische Ontwerp"
 -
   name: 'Clifford Chance (via QNH)'
   branch: "Dienstverlening"
@@ -100,6 +92,8 @@
       description: >
         TODO
       skills:
+        - "Angular"
+        - "Betty Blocks"
       start_date: 2018-08-01
       end_date: 2018-08-31
 - 
@@ -111,21 +105,18 @@
       job_title: "Software Engineer"
       start_date: 2017-08-01
       end_date: 2018-07-01
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
-        - "AngularJS"
         - "Java"
-        - "Angular"
     -
       name: "OinB 2 POC"
       job_title: "Software Engineer"
       start_date: 2018-06-01
       end_date: 2018-07-01
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
-        - "Technisch Ontwerp"
         - "Java"
         - "Angular"
 - 
@@ -137,11 +128,10 @@
       job_title: "Junior Software Engineer"
       start_date: 2017-03-01
       end_date: 2017-08-01
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
-        - "AngularJS"
-        - "ICT Services"
+        - "Angular"
 - 
   name: 'Municipality of Zaanstad (via QNH)'
   branch: "Healthcare"
@@ -151,12 +141,11 @@
     job_title: "Junior Software Engineer"
     start_date: 2017-03-01
     end_date: 2017-08-01
-    description: >
-        TODO
+    # description: >
+    #     TODO
     skills:
       - "AngularJS"
       - "Betty Blocks"
-      - "Zorg"
 - 
   name: 'DAF Trucks (via QNH)'
   branch: 'ICT Services'
@@ -166,22 +155,20 @@
       job_title: 'Junior Software Engineer'
       start_date: 2017-01-01
       end_date: 2017-02-28
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
-        - "Agile development"
-        - "ICT Services"
-        - "Microsoft Visual Studio 2015"
+        - "C#"
+        - "Azure Service Bus"
     -
       name: "Turbine - DAF Specsheets"
       job_title: 'Junior Software Engineer'
       start_date: 2017-01-01
       end_date: 2017-02-28
-      description: >
-        TODO
+      # description: >
+      #   TODO
       skills:
         - "C#"
-        - "ICT Services"
         - "SQL Server 2014"
 -
   name: 'Sekisui Alveo (via QNH)'
@@ -190,15 +177,12 @@
     -
       name: "Turbine - Sekisui Esheet"
       job_title: 'Junior Software Engineer'
-      description: >
-        TODO
+      # description: >
+      #   TODO
       start_date: 2017-01-01
       end_date: 2017-02-28
       skills:
-        - "Agile development"
         - "C#"
-        - "ICT Services"
-        - "Microsoft Visual Studio 2015"
         - "MS Access"
         - "SQL Server 2014"
         - "VB6"
@@ -209,20 +193,21 @@
     -
       name: 'Cloud InControl'
       job_title: 'Junior Software Engineer'
-      description: >
-        TODO
+      # description: >
+      #   TODO
       start_date: 2016-09-01
       end_date: 2017-01-01
       skils:
         - "Azure"
+        - "AWS"
         - "C#"
         - "ASP.NET Web MVC"
         - "AngularJS" 
     -
       name: 'Afstudeerstage - Sollicitatie Opvolgsysteem'
       job_title: 'Graduate intern'
-      description: >
-        To get a feeling for different companies, I did my graduate internship at QNH. I designed and built a system to track applicants as they applied for positions in the Application Development team of QNH.
+      # description: >
+      #   To get a feeling for different companies, I did my graduate internship at QNH. I designed and built a system to track applicants as they applied for positions in the Application Development team of QNH.
       start_date: 2016-02-01
       end_date: 2016-07-01
       skills:
@@ -236,8 +221,8 @@
     -
       name: 'JustAsk V2'
       job_title: 'Junior Software Engineer'
-      description: >
-        After my internship, NLCom hired me to work part-time as I continued my study. I was responsible for integrating the renewed front-end application with the backend of the JustAsk questionnaire platform.
+      # description: >
+      #   After my internship, NLCom hired me to work part-time as I continued my study. I was responsible for integrating the renewed front-end application with the backend of the JustAsk questionnaire platform.
       start_date: 2015-02-01
       end_date: 2016-02-01
       skills:
@@ -248,8 +233,8 @@
     -
       name: 'Internship - Workflow4People / Liferay Integration'
       job_title: 'Intern'
-      description: >
-        My first internship was at NLCom, and it was my job to integrate the Workflow4People product with Lifefray via portlet technology.
+      # description: >
+      #   My first internship was at NLCom, and it was my job to integrate the Workflow4People product with Lifefray via portlet technology.
       start_date: 2014-09-01
       end_date: 2015-02-01
       skills:
