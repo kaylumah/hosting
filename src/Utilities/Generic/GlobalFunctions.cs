@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using HtmlAgilityPack;
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +17,12 @@ namespace Kaylumah.Ssg.Utilities
         public static readonly GlobalFunctions Instance = new GlobalFunctions();
         public string Url { get; set; }
         public string BaseUrl { get; set; }
+
+        public static DateTimeOffset ToDate(string input)
+        {
+            IFormatProvider culture = new CultureInfo("en-US", true);
+            return DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        }
 
         public static string ReadingTime(string content)
         {
@@ -72,9 +79,6 @@ namespace Kaylumah.Ssg.Utilities
                     kelime += wordCount;
                 }
             }
-
-
-
 
             double wordsPerMinute = 265;
             double numberOfWords = kelime;//text.Split(' ').Length;
