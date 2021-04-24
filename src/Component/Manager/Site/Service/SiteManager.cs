@@ -70,6 +70,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var tags = pages
                 .Where(x => x.Tags != null)
+                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
@@ -81,14 +82,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
         {
+            var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
             var types = pages
-                .Where(x => x.Type != null)
+                .Where(x => !blockedTypes.Contains(x.Type))
                 .Select(x => x.Type)
                 .Distinct();
             foreach(var type in types)
             {
-                var typeFiles = pages.Where(x => x.Type != null && x.Type.Equals(type)).ToArray();
-                site.Types.Add(type, typeFiles);
+                var typeFiles = pages.Where(x => /*x.Type != null && */ x.Type.Equals(type)).ToArray();
+                site.Types.Add(type.ToString(), typeFiles);
             }
         }
 

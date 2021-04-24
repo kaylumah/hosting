@@ -85,11 +85,13 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
             }
         }
 
-        public string Type
+        public ContentType Type
         {
             get
             {
-                return this.GetValue<string>(nameof(Type));
+                var contentType = this.GetValue<string>(nameof(Type));
+                var x = Enum.Parse<ContentType>(contentType);
+                return x;
             }
             set
             {
