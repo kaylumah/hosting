@@ -78,3 +78,98 @@ Go to https://propaz-stage.herokuapp.com/api/tenant/swagger/
 
 
 
+
+
+
+{
+    "runtime": "NetCore31",
+    "defaultVariables": null,
+    "documentGenerator": {
+        "fromDocument": {
+            "json": "$(InputSwagger)"
+        }
+    },
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "generateClientInterfaces": true,
+            "output": "Client.g.cs"
+        }
+    }
+}
+
+
+
+
+
+
+
+  <Target Name="GenerateNSwagClient" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <InputSwagger>swagger.json</InputSwagger>
+    </PropertyGroup>
+    <Exec Command="dotnet swagger tofile --output swagger.json ../MyApi/bin/Debug/net5.0/MyApi.dll v1" />
+    <Exec Command="$(NSwagExe_Core31) run nswag.json /variables:InputSwagger=$(InputSwagger),Configuration=$(Configuration)" />
+  </Target>
+
+
+   <Target Name="NSwag" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <InputSwagger>swagger.json</InputSwagger>
+    </PropertyGroup>
+    <Exec Command="dotnet swagger tofile --output $(InputSwagger) ../Api/bin/Debug/netcoreapp3.1/Api.dll v1" />
+    <Exec Command="$(NSwagExe_Core31) run nswag.json /variables:InputSwagger=$(InputSwagger),Configuration=$(Configuration)" />
+  </Target>
+
+
+
+    <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.MSBuild" Version="13.11.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <Target Name="NSwag" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <InputSwagger>petstore.json</InputSwagger>
+    </PropertyGroup>
+    <Exec Command="$(NSwagExe_Core31) run nswag.json /variables:InputSwagger=$(InputSwagger),Configuration=$(Configuration)" />
+  </Target>
+
+
+
+
+
+{
+    "runtime": "NetCore31",
+    "defaultVariables": null,
+    "documentGenerator": {
+        "fromDocument": {
+            "json": "$(InputSwagger)"
+        }
+    },
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "generateClientInterfaces": true,
+            "output": "Client.g.cs"
+        }
+    }
+}
+
+{
+    "runtime": "NetCore31",
+    "documentGenerator": {
+        "aspNetCoreToOpenApi": {
+            "project": "../../Api/NSwagApi/Kaylumah.GenerateCSharpOpenApiClient.Api.NSwagApi.csproj"
+        }
+    },
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "output": "Client.g.cs"
+        }
+    }
+}
+
+propaz
