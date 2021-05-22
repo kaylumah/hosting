@@ -80,6 +80,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
+        private void EnrichSiteWithSeries(SiteData site, List<PageData> pages)
+        {
+            var series = pages
+                .Where(x => x.Series != null)
+                .Select(x => x.Series)
+                .Distinct();
+
+            foreach (var serie in series)
+            {
+                var seriesFiles = pages.Where(x => x.Series != null && serie.Equals(x.Series)).OrderBy(x => x.Url).ToArray();
+                site.Series.Add(serie, seriesFiles);
+            }
+        }
+
         private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
         {
             var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
@@ -163,13 +177,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Data = new Dictionary<string, object>(),
                 Tags = new SortedDictionary<string, PageData[]>(),
                 Collections = new SortedDictionary<string, PageData[]>(),
-                Types = new SortedDictionary<string, PageData[]>()
+                Types = new SortedDictionary<string, PageData[]>(),
+                Series = new SortedDictionary<string, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
             EnrichSiteWithTags(siteInfo, pages.ToList());
             EnrichSiteWithTypes(siteInfo, pages.ToList());
+            EnrichSiteWithSeries(siteInfo, pages.ToList());
 
             var requests = processed.Select(file => 
             {

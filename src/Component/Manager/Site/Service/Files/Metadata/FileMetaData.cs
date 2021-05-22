@@ -9,6 +9,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     public class FileMetaData : Dictionary<string, object>
     {
 
+        public string Series
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Series));
+            }
+            set
+            {
+                this.SetValue(nameof(Series), value);
+            }
+        }
+
         public string Layout
         {
             get

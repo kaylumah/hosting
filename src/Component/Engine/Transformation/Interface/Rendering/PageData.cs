@@ -73,6 +73,18 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
             }
         }
 
+        public string Series
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Series));
+            }
+            set
+            {
+                this.SetValue(nameof(Series), value);
+            }
+        }
+
         public List<string> Tags
         {
             get

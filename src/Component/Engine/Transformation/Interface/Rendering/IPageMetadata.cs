@@ -7,6 +7,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
     public interface IPageMetadata : IMetadata
     {
         string Name { get;set; }
+        string Series { get;set; }
         string Collection { get;set; }
         List<string> Tags { get;set; }
         ContentType Type { get;set; }
