@@ -877,7 +877,7 @@ That concludes my experiment for the day. I have shown three instances where you
 2. Mock code is reusable across tests.
 3. Stateful mocking allows for more readable verification in tests.
 
-Of course, creating a mock library will take some time. You could argue if it's worth the time to make a duplicate, albeit a simplified version of your data access. My personal opinion is that it makes debugging and reasoning about my tests easier than taking a deep dive in Invocations and Verify mock provides. As I have hopefully demonstrated is that one does not exclude the other. I think it can complement one and other. 
+Of course, creating a mock library will take some time. You could argue if it's worth the time to make a duplicate, albeit a simplified version of your data access. My personal opinion is that it makes debugging and reasoning about my tests easier than taking a deep dive in Invocations and Verify mock provides. As I have hopefully demonstrated is that one does not exclude the other. I think it can complement one and other.
 
 I am glad about the early results of my experiment, hence me writing this blog post. Over time you can evolve these mocks to be even better. For example, change tracking of entities could potentially be used cross mock. The HttpClientMock could use some more love. Imagine hiding every detail like StatusCode, HttpResponseMessage from the tester. I could have saved it for another blog, but I shared this abstraction to start a dialogue with my team about testing and test set up.
 
