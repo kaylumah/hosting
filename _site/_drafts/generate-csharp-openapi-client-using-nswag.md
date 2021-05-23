@@ -173,3 +173,16 @@ Go to https://propaz-stage.herokuapp.com/api/tenant/swagger/
 }
 
 propaz
+
+
+
+
+
+
+| Property | Description | Notes |
+| - | - | - |
+| `namespace` and `contractsNamespace` | Control the namespace of the generated code | Where `namespace` defaults to `MyNamespace` the `contractsNamespace` defaults to `null` |
+| `generateContractsOutput` and `contractsOutputFilePath` | Control seperation of contract and implementation. | |
+
+generateClientInterfaces
+
