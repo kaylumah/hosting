@@ -9,6 +9,7 @@ tags:
     - CSharp
     - Dotnet Core
 modified: '2021-03-21'
+comment_id: '12'
 ---
 
 ## Why use hooks?
