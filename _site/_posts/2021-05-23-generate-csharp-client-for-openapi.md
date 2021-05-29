@@ -312,7 +312,11 @@ dotnet new tool-manifest
 dotnet tool install --version 6.1.4 Swashbuckle.AspNetCore.Cli
 ```
 
-This allows us to run `swagger tofile --output [output] [startupassembly] [swaggerdoc]`. For example, in the FromSwashbuckleApi folder we would run `dotnet swagger tofile --output swagger.json ../../Apis/Swashbuckle/WeatherForecastApi/bin/Debug/netcoreapp3.1/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi.dll v1`.
+This allows us to run
+
+```sh
+swagger tofile --output [output] [startupassembly] [swaggerdoc]`. For example, in the FromSwashbuckleApi folder we would run `dotnet swagger tofile --output swagger.json ../../Apis/Swashbuckle/WeatherForecastApi/bin/Debug/netcoreapp3.1/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi.dll v1
+```
 
 At the moment, this returns an error if you target a netcoreapp3.1 project when using a net5 SDK. This [issue](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/issues/2006) describes a change in 6.x of the tool. A workaround for this is using a global.json file.
 
