@@ -1,6 +1,8 @@
 {
   "sdk": {
-    "version": "5.0.102"
+    "version": "5.0.203",
+    "allowPrerelease": false,
+    "rollForward": "latestFeature"
   },
   "msbuild-sdks": {
     "Kaylumah.DotNet.Arcade.Sdk": "1.0.0"

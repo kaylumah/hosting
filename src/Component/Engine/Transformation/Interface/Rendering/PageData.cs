@@ -73,6 +73,18 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
             }
         }
 
+        public string Series
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(Series));
+            }
+            set
+            {
+                this.SetValue(nameof(Series), value);
+            }
+        }
+
         public List<string> Tags
         {
             get
@@ -85,11 +97,13 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
             }
         }
 
-        public string Type
+        public ContentType Type
         {
             get
             {
-                return this.GetValue<string>(nameof(Type));
+                var contentType = this.GetValue<string>(nameof(Type));
+                var x = Enum.Parse<ContentType>(contentType);
+                return x;
             }
             set
             {

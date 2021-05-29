@@ -117,9 +117,18 @@ a.external svg {
   margin-left: .25em;
 }
 
-.svg-inline--fa {
+/* .svg-inline--fa {
     margin-right: 0.5rem;
+} */
+
+
+.fa-color
+{
+  --fa-secondary-opacity: 1.0;
+  --fa-primary-color: #4cae50;
+  --fa-secondary-color: #55557b;
 }
+
 
 @tailwind utilities;
 

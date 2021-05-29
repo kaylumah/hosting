@@ -70,6 +70,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var tags = pages
                 .Where(x => x.Tags != null)
+                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
@@ -79,16 +80,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
+        private void EnrichSiteWithSeries(SiteData site, List<PageData> pages)
+        {
+            var series = pages
+                .Where(x => x.Series != null)
+                .Select(x => x.Series)
+                .Distinct();
+
+            foreach (var serie in series)
+            {
+                var seriesFiles = pages.Where(x => x.Series != null && serie.Equals(x.Series)).OrderBy(x => x.Url).ToArray();
+                site.Series.Add(serie, seriesFiles);
+            }
+        }
+
         private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
         {
+            var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
             var types = pages
-                .Where(x => x.Type != null)
+                .Where(x => !blockedTypes.Contains(x.Type))
                 .Select(x => x.Type)
                 .Distinct();
             foreach(var type in types)
             {
-                var typeFiles = pages.Where(x => x.Type != null && x.Type.Equals(type)).ToArray();
-                site.Types.Add(type, typeFiles);
+                var typeFiles = pages.Where(x => /*x.Type != null && */ x.Type.Equals(type)).ToArray();
+                site.Types.Add(type.ToString(), typeFiles);
             }
         }
 
@@ -161,13 +177,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Data = new Dictionary<string, object>(),
                 Tags = new SortedDictionary<string, PageData[]>(),
                 Collections = new SortedDictionary<string, PageData[]>(),
-                Types = new SortedDictionary<string, PageData[]>()
+                Types = new SortedDictionary<string, PageData[]>(),
+                Series = new SortedDictionary<string, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
             EnrichSiteWithTags(siteInfo, pages.ToList());
             EnrichSiteWithTypes(siteInfo, pages.ToList());
+            EnrichSiteWithSeries(siteInfo, pages.ToList());
 
             var requests = processed.Select(file => 
             {
