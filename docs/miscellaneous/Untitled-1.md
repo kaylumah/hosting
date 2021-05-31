@@ -138,3 +138,12 @@ namespace GitIntrospection {
 }
 ```
 
+
+
+  https://jekyllrb.com/tutorials/convert-site-to-jekyll/#9-simplify-your-site-with-includes
+
+
+
+
+
+https://khalidabuhakmeh.com/parse-markdown-front-matter-with-csharp
