@@ -1,5 +1,7 @@
 - 
   company: "NLCOM ICT Solutions"
+  url: "https://www.linkedin.com/company/nlcom/"
+  image: "assets/images/cv/companies/nlcom.png"
   branch: "ICT Services"
   location: "Maastricht"
   job_title: "Intern"
@@ -23,6 +25,8 @@
 
 - 
   company: "NLCOM ICT Solutions"
+  url: "https://www.linkedin.com/company/nlcom/"
+  image: "assets/images/cv/companies/nlcom.png"
   branch: "ICT Services"
   location: "Maastricht"
   job_title: "Software Engineer"
@@ -45,6 +49,8 @@
 
 -
   company: "QNH Consulting Zuid"
+  url: "https://www.linkedin.com/company/qnh/"
+  image: "assets/images/cv/companies/qnh.gif"
   branch: "ICT Services"
   location: "Maastricht-Airport"
   job_title: "Graduate Intern"
@@ -69,6 +75,8 @@
 
 - 
   company: "QNH Consulting Zuid"
+  url: "https://www.linkedin.com/company/qnh/"
+  image: "assets/images/cv/companies/qnh.gif"
   branch: "ICT Services"
   location: "Maastricht-Airport"
   job_title: "Software Engineer"
@@ -94,6 +102,8 @@
 
 -
   company: "Sekisui Alveo"
+  url: "https://www.linkedin.com/company/sekisui-alveo/"
+  image: "assets/images/cv/companies/sekisui-alveo.jpeg"
   branch: "Other services"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -115,6 +125,8 @@
 
 -
   company: "DAF"
+  url: "https://www.linkedin.com/company/daf-trucks/"
+  image: "assets/images/cv/companies/daf-trucks.png"
   branch: "Other services"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -144,6 +156,8 @@
 
 -
   company: "Gemeente Zaanstad"
+  url: "https://www.linkedin.com/company/gemeente-zaanstad/"
+  image: "assets/images/cv/companies/gemeente-zaanstad.png"
   branch: "Gezondheidszorg"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -164,6 +178,8 @@
 
 -
   company: "Energy Essentials"
+  url: "https://www.linkedin.com/company/energy-essentials-group-b-v-/"
+  image: "assets/images/cv/companies/energy-essentials.png"
   branch: "Energy Services"
   location: "Maastricht"
   job_title: "Software Engineer (via QNH)"
@@ -182,6 +198,8 @@
 
 -
   company: "Hollandsnieuwe"
+  url: "https://www.linkedin.com/company/hollandsnieuwe/"
+  image: "assets/images/cv/companies/hollandsnieuwe.png"
   branch: "Telecom"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -243,6 +261,8 @@
 
 - 
   company: "Clifford Chance"
+  url: "https://www.linkedin.com/company/clifford-chance-llp/"
+  image: "assets/images/cv/companies/clifford-chance.jpeg"
   branch: "Services"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -264,6 +284,8 @@
 
 -
   company: "VodafoneZiggo OSSA&T"
+  url: "https://www.linkedin.com/company/vodafoneziggo/"
+  image: "assets/images/cv/companies/vodafoneziggo.jpeg"
   branch: "Telecom"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via QNH)"
@@ -305,6 +327,8 @@
 
 -
   company: "VodafoneZiggo Digital"
+  url: "https://www.linkedin.com/company/vodafoneziggo/"
+  image: "assets/images/cv/companies/vodafoneziggo.jpeg"
   branch: "Telecom"
   location: "Maastricht"
   job_title: "Software Consultant / Engineer (via ilionx)"
@@ -338,6 +362,8 @@
 
 -
   company: "ilionx"
+  url: "https://www.linkedin.com/company/ilionx/"
+  image: "assets/images/cv/companies/ilionx.png"
   branch: "ICT Services"
   location: "Maastricht-Airport"
   job_title: "Software Engineer"
@@ -364,6 +390,8 @@
 
 - 
   company: "iCaptur"
+  url: "https://www.linkedin.com/company/icaptur/"
+  image: "assets/images/cv/companies/icaptur.png"
   branch: "Cultuur, sport en recreatie"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via ilionx)"
@@ -386,6 +414,8 @@
 
 - 
   company: "Prop.Az"
+  url: "https://www.linkedin.com/company/prop-az/"
+  image: "assets/images/cv/companies/propaz.png"
   branch: "Verhuur van en handel in onroerend goed"
   location: "Maastricht-Airport"
   job_title: "Software Engineer (via ilionx)"
