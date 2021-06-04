@@ -203,63 +203,34 @@ layout: 'default.html'
                 <li>
                     <a href="#" class="block hover:bg-gray-50">
                         <div class="px-4 py-4 sm:px-6">
-                        <div class="flex items-center justify-between">
-                            <div class="text-sm font-medium text-indigo-600 truncate">
-                            Back End Developer
+                            <div class="flex items-center justify-between">
+                                <div class="text-sm font-medium text-indigo-600 truncate">
+                                {{ project.title }}
+                                </div>
+                                <span>
+                                {% if project.from %}
+                                    {% assign project_from = project.from | to_date %}
+                                    {% assign project_form_formatted = project_from | date_to_pattern "MMM yyyy" %}
+                                    {{ project_form_formatted }}
+                                    {% if project.to %}
+                                        {% assign project_to = project.to | to_date %}
+                                        {% assign project_to_formatted = project_to | date_to_pattern "MMM yyyy" %}
+                                        {% if project_form_formatted != project_to_formatted %}
+                                            / {{ project_to_formatted }}
+                                        {% endif %}
+                                    {% else %}
+                                        / present
+                                    {% endif %}
+                                {% endif %}
+                                </span>
                             </div>
-                            <div class="ml-2 flex-shrink-0 flex">
-                            <span
-                                class="
-                                px-2
-                                inline-flex
-                                text-xs
-                                leading-5
-                                font-semibold
-                                rounded-full
-                                bg-green-100
-                                text-green-800
-                                "
-                            >
-                                Full-time
-                            </span>
+                            <div class="mt-2 flex justify-between">
+                                <div class="sm:flex">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    {{ project.description }}
+                                </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-2 flex justify-between">
-                            <div class="sm:flex">
-                            <div class="flex items-center text-sm text-gray-500">
-                                <svg
-                                class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                x-description="Heroicon name: solid/users"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                                >
-                                <path
-                                    d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"
-                                ></path>
-                                </svg>
-                                Engineering
-                            </div>
-                            </div>
-                            <div class="ml-2 flex items-center text-sm text-gray-500">
-                            <svg
-                                class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-                                x-description="Heroicon name: solid/location-marker"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                            >
-                                <path
-                                fill-rule="evenodd"
-                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                clip-rule="evenodd"
-                                ></path>
-                            </svg>
-                            Remote
-                            </div>
-                        </div>
                         </div>
                     </a>
                 </li>
