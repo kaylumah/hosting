@@ -207,6 +207,7 @@ layout: 'default.html'
                                 <div class="text-sm font-medium text-indigo-600 truncate">
                                 {{ project.title }}
                                 </div>
+                                <span>{{ experience.job_title }}</span>
                                 <span>
                                 {% if project.from %}
                                     {% assign project_from = project.from | to_date %}
