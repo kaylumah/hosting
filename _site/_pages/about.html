@@ -24,46 +24,13 @@ modified: '2021-04-24'
   </div>
   <hr class="mt-4 border-t-2 w-20 mx-auto" />
 </div>
-<!-- <section class="py-8 px-6 sm:px-8">
-    <div class="mx-auto">
-        <h2 class="font-architect text-2xl">Timeline</h2>
-        <div class="flow-root">
-            <ul class="-mb-8">
-                {% for event in site.data.events %}
-                <li>
-                    <div class="relative pb-8">
-                        {% unless forloop.last %}
-                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
-                        {% endunless %}
-                        <div class="relative flex space-x-3">
-                            <div class="fa-color">
-                                <span class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center ring-4 ring-white">
-                                    <em class="{{ event.icon }}"></em>
-                                </span>
-                            </div>
-                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                <div>
-                                    <p>{{ event.name }}</p>
-                                </div>
-                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                <time datetime="2020-09-20">Sep 20</time>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</section> -->
 <section id="personal" class="px-4">
     <div class="pb-5 border-b border-gray-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
             Personal
         </h3>
     </div>
-    <div class="mt-2">
+    <div class="mt-2 text-sm text-gray-500">
         <p>
             People describe me as passionate and eager in my working life; they say I can pick up new stuff quickly. You might not expect it since I also blog in my spare time; I am not always working on my technical skills.
         </p>
@@ -136,27 +103,32 @@ modified: '2021-04-24'
     </div>
 </section>
 <hr class="mt-4 border-t-2 w-20 mx-auto" />
-
-<section id="certifications" class="py-8 px-6 sm:px-8">
-    <div class="mx-auto">
-        <h2 class="font-architect text-2xl">Certifications</h2>
-        <p>
-            I do not believe that certifications add a lot. They don't prove that I know something, just that I knew something at the moment of the test. I would instead look at someone's CV and see the years of experience with a particular skill. However, since this is my portfolio website, I decided to include them.
-        </p>
-        <ul class="grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2">
-            {% for certificate in site.data.certifications %}
-            <li class="flex border-t border-r border-l border-b border-gray-200">
-                <div class="px-4 py-2 w-16">
-                    <img src="{{ certificate.logo }}" alt="Certificate - {{ certificate.name }}" />
-                </div>
-                <div class="px-4 py-2 flex flex-col">
-                    <span>{{ certificate.name }}</span>
+<section id="certifications" class="px-4">
+    <div class="pb-5 border-b border-gray-200">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+            Certifications
+        </h3>
+        <p class="mt-2 max-w-4xl text-sm text-gray-500">I do not believe that certifications add a lot. They don't prove that I know something, just that I knew something at the moment of the test. I would instead look at someone's CV and see the years of experience with a particular skill. However, since this is my portfolio website, I decided to include them.</p>
+    </div>
+    <div class="grid grid-cols-1 gap-4 mt-2">
+        <!-- BEGIN CARD-->
+        {% for certificate in site.data.certifications %}
+        <div class="bg-white overflow-hidden sm:rounded-lg sm:shadow">
+            <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 flex items-center space-x-3">
+                <img
+                            class="h-12 w-12 flex-shrink-0"
+                            src="{{ certificate.logo }}"
+                            alt=""
+                        />
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 flex-1 min-w-0">{{ certificate.name }}</h3>
                     <time datetime="{{ certificate.earned | to_date | date_to_xmlschema }}" class="text-sm text-gray-500">
-                        {{ certificate.earned | to_date | date_to_pattern "MMM yy" }}
+                            {{ certificate.earned | to_date | date_to_pattern "MMM yy" }}
                     </time>
                 </div>
-            </li>
-            {% endfor %}
-        </ul>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- END CARD -->
     </div>
 </section>
