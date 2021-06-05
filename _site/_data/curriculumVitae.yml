@@ -4,12 +4,12 @@
   image: "assets/images/cv/companies/nlcom.png"
   branch: "ICT Services"
   location: "Maastricht"
-  job_title: "Intern"
   from: 2014-09-01
-  to: 2015-02-01
+  to: 2016-02-01
   projects:
     -
       title: "Tussenstage - Workflow4People Liferay Integratie"
+      job_title: "Intern"
       from: 2014-09-01
       to: 2015-02-01
       description: "Als stagiair had Max de verantwoordelijkheid om alle taken met betrekking tot systeemontwikkeling (ontwerpen, testen, ontwikkelen en beheren) van een nieuwe Liferay Portlet te realiseren dat het mogelijk moest maken om te communiceren met Workflow4People. Het pakket Workflow4People geeft bedrijven de mogelijkheid om grip te krijgen op processen en formulieren. Workflow4People voorziet in procesbewaking, opvolging en taakbeheer zodat bedrijven echt controle hebben over hun processen. Het gaat hier om het verminderen van doorlooptijden en het meer vraag gestuurd inrichten van processen."
@@ -22,19 +22,9 @@
         - "Groovy"
         - "Grails"
         - "Software Architecture"
-
-- 
-  company: "NLCOM ICT Solutions"
-  url: "https://www.linkedin.com/company/nlcom/"
-  image: "assets/images/cv/companies/nlcom.png"
-  branch: "ICT Services"
-  location: "Maastricht"
-  job_title: "Software Engineer"
-  from: 2015-02-01
-  to: 2016-02-01
-  projects:
     -
       title: "JustAsk V2"
+      job_title: "Software Engineer"
       from: 2015-02-01
       to: 2016-02-01
       description: "Max had als parttime ontwikkelaar de verantwoordelijkheid om in kaart te brengen om het vernieuwde front-end aan te sluiten op de backend om zo klanten V2 van Just Ask te kunnen aanbieden. JustAsk is een door NLCom ontwikkeld enquête platform. Het platform ondersteund verschillende vraag types en biedt ondersteuning voor open, anonieme en semi-anonieme vragenlijsten."
@@ -46,7 +36,6 @@
         - "Groovy"
         - "Java"
         - "Grails"
-
 -
   company: "QNH Consulting Zuid"
   url: "https://www.linkedin.com/company/qnh/"
