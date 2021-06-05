@@ -3,6 +3,7 @@ layout: 'default.html'
 title: 'Kaylumah | More about me'
 description: "Kaylumah's Curriculum vitae and certifications"
 tags:
+    - "Personal"
     - "CV"
     - "Curriculum vitae"
     - "Certifications"
@@ -56,9 +57,13 @@ modified: '2021-04-24'
         </div>
     </div>
 </section> -->
-<section id="cv" class="py-8 px-6 sm:px-8">
-    <div class="mx-auto">
-        <h2 class="font-architect text-2xl">Personal</h2>
+<section id="personal" class="px-4">
+    <div class="pb-5 border-b border-gray-200">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">
+            Personal
+        </h3>
+    </div>
+    <div class="mt-2">
         <p>
             People describe me as passionate and eager in my working life; they say I can pick up new stuff quickly. You might not expect it since I also blog in my spare time; I am not always working on my technical skills.
         </p>
@@ -67,13 +72,13 @@ modified: '2021-04-24'
         </p>
     </div>
 </section>
-
+<hr class="mt-4 border-t-2 w-20 mx-auto" />
 <section id="cv" class="px-4">
     <div class="pb-5 border-b border-gray-200">
         <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Job Postings
+            Curriculum vitae
         </h3>
-        <p class="mt-2 max-w-4xl text-sm text-gray-500">Workcation is a property rental website. Etiam ullamcorper massa viverra consequat, consectetur id nulla tempus. Fringilla egestas justo massa purus sagittis malesuada.</p>
+        <p class="mt-2 max-w-4xl text-sm text-gray-500">Below is a list of the projects I have done over the year. So far, I worked with two different companies. After finishing my internship with NLCom in 2016, I worked there for a year part-time. For my graduate internship, I chose the consultancy company QNH and ended up working there. I continued working there after the merger with ilionx. Some of the projects were in-house, and some were on a consultancy basis.</p>
     </div>
     <div class="grid grid-cols-1 gap-4 mt-2">
       <!-- BEGIN CARD-->
@@ -130,56 +135,8 @@ modified: '2021-04-24'
       <!-- END CARD -->
     </div>
 </section>
+<hr class="mt-4 border-t-2 w-20 mx-auto" />
 
-
-
-<section id="cv" class="py-8 px-6 sm:px-8">
-    <div class="mx-auto">
-        <h2 class="font-architect text-2xl">Curriculum vitae</h2>
-            <p>
-                I have worked at two different companies in my professional life: NLCom and ilionx (merged with QNH). For ilionx, I have worked on internal projects, customer projects and consulting bases. In my spare time, I work for Kaylumah and write blog posts about my experiences. In the "Curriculum vitae" section, you can find skills I exercised professionally, which might spark new articles on the blog.
-            </p>
-            {% for experience in site.data.workexperiences %}
-            <section>
-                <h3 class="font-architect text-lg">
-                    {{ experience.name }}
-                </h3>
-                <ul class="divide-y divide-gray-200 mt-1">
-                    {% for project in experience.projects %}
-                    <li class="relative py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-                        <div class="flex justify-between space-x-3">
-                            <p class="text-sm font-medium text-gray-900 truncate">{{ project.name }}<span class="text-gray-600"> / {{ project.job_title }}</span></p>
-                            <div>
-                                <time datetime="{{ project.start_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-                                    {{ project.start_date | to_date | date_to_pattern "MMM yy" }}
-                                </time>
-                                <span> - </span>
-                                {%if project.end_date %}
-                                <time datetime="{{ project.end_date | to_date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-                                    {{ project.end_date | to_date | date_to_pattern "MMM yy" }}
-                                </time>
-                                {% else %}
-                                <span>present</span>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <p class="mt-1 text-sm text-gray-600">
-                            {{ project.description }}
-                        </p>
-                        <div class="mt-1">
-                            {% for skill in project.skills %}
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                {{ skill }}
-                            </span>
-                            {% endfor %}
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </section>
-            {% endfor %}
-    </div>
-</section>
 <section id="certifications" class="py-8 px-6 sm:px-8">
     <div class="mx-auto">
         <h2 class="font-architect text-2xl">Certifications</h2>
