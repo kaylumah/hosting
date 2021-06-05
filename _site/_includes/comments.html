@@ -1,3 +1,4 @@
+<script src="  https://unpkg.com/showdown/dist/showdown.min.js"></script>
 <script>
 const GH_ISSUE_API = 'https://api.github.com/repos/kaylumah/kaylumah.github.io/issues/{{ page.comment_id }}/comments?per_page=100';
 let request = new XMLHttpRequest();
@@ -34,6 +35,11 @@ function createCommentEl( response ) {
     let commentContents = document.createElement('p');
     commentContents.classList.add('text-sm', 'text-gray-500');
     commentContents.innerHTML = response.body;
+    // Progressive enhancement.
+	if ( window.showdown ) {
+		let converter = new showdown.Converter();
+		commentContents.innerHTML = converter.makeHtml( response.body );
+	}
 
     let commentWrapper = document.createElement('div');
     commentWrapper.classList.add('flex-1', 'space-y-1');
