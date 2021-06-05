@@ -60,7 +60,7 @@ modified: '2021-04-24'
                 <h3 class="text-lg leading-6 font-medium text-gray-900 flex-1 min-w-0">{{ experience.company }}</h3>
             </div>
             <ul class="divide-y divide-gray-200 opacity-25">
-                {% for project in experience.projects %}
+                {% for project in experience.projects | array.reverse %}
                 <li>
                     <a href="#" class="block hover:bg-gray-50">
                         <div class="px-4 py-4 sm:px-6">
