@@ -392,3 +392,20 @@ https://github.com/NLog/NLog/wiki/Exception-Layout-Renderer
 https://github.com/NLog/NLog/wiki/Identity-Layout-Renderer
 
 
+---
+
+
+
+https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/
+
+https://stackoverflow.com/questions/42138418/equivalent-to-assemblyinfo-in-dotnet-core-csproj
+
+https://neelbhatt.com/2018/06/02/create-an-application-with-angular-6-and-net-core-step-by-step-guide/
+
+
+https://jonhilton.net/2017/10/11/secure-your-asp.net-core-2.0-api-part-1---issuing-a-jwt/
+
+http://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
+
+https://developer.okta.com/blog/2018/03/23/token-authentication-aspnetcore-complete-guide
+
