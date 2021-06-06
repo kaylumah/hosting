@@ -84,8 +84,31 @@ dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
 dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
 dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
 
+
+
+
+
+
+
+
+
+
+https://www.hanselman.com/blog/editorconfig-code-formatting-from-the-command-line-with-net-cores-dotnet-format-global-tool
+https://github.com/dotnet/format
+https://docs.microsoft.com/en-us/visualstudio/ide/create-portable-custom-editor-options?view=vs-2019
+https://www.meziantou.net/enforce-dotnet-code-style-in-ci-with-dotnet-format.htm
+
+https://asp.net-hacker.rocks/2020/07/08/editorconfig-msbuild.html
+https://asp.net-hacker.rocks/2020/07/24/editorconfig-netframework.html
+
+https://www.meziantou.net/enforce-dotnet-code-style-in-ci-with-dotnet-format.htm
+https://devkimchi.com/2019/09/25/static-code-analysis-with-editorconfig/
+
+
+
+https://newbedev.com/enabling-microsoft-s-code-analysis-on-net-core-projects
+
+https://dev.to/ssukhpinder/enforce-code-cleanup-on-build-5hnd
+
+
 --- https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019
-
-
-
-
