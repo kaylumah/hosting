@@ -44,7 +44,13 @@ NET compiler platform (Roslyn) analyzers inspect your C# or Visual Basic code fo
 
 .NET analyzers are target-framework agnostic. That is, your project does not need to target a specific .NET implementation. The analyzers work for projects that target net5.0 as well as earlier .NET versions, such as netcoreapp3.1 and net472. However, to enable code analysis using the EnableNETAnalyzers property, your project must reference a project SDK.
 see:
-https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview
+
+https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview -> sdk style project https://docs.microsoft.com/en-us/nuget/resources/check-project-format
+
+
+
+
+
 https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties
 
 | MSBuild Property | Description |
