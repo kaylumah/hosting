@@ -47,6 +47,17 @@ see:
 https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview
 https://docs.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties
 
+| MSBuild Property | Description |
+| - | - |
+| AnalysisLevel | The AnalysisLevel property lets you specify a code-analysis level. For example, if you want access to preview code analyzers, set AnalysisLevel to preview. |
+| AnalysisMode | Starting with .NET 5.0, the .NET SDK ships with all of the "CA" code quality rules. By default, only some rules are enabled as build warnings. The AnalysisMode property lets you customize the set of rules that are enabled by default. |
+| CodeAnalysisTreatWarningsAsErrors | The CodeAnalysisTreatWarningsAsErrors property lets you configure whether code quality analysis warnings (CAxxxx) should be treated as warnings and break the build. |
+| EnableNETAnalyzers | .NET code quality analysis is enabled, by default, for projects that target .NET 5.0 or later. You can enable .NET code analysis for SDK-style projects that target earlier versions of .NET by setting the EnableNETAnalyzers property to true. To disable code analysis in any project, set this property to false. |
+| EnforceCodeStyleInBuild | NET code style analysis is disabled, by default, on build for all .NET projects. You can enable code style analysis for .NET projects by setting the EnforceCodeStyleInBuild property to true. |
+
+
+
+
 https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/configuration-options
 https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/configuration-files
 
@@ -68,3 +79,7 @@ dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
 dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
 
 --- https://docs.microsoft.com/en-us/visualstudio/code-quality/use-roslyn-analyzers?view=vs-2019
+
+
+
+
