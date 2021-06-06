@@ -110,3 +110,24 @@ https://github.com/dotnet/roslyn/blob/master/.editorconfig
 —
 https://www.hanselman.com/blog/editorconfig-code-formatting-from-the-command-line-with-net-cores-dotnet-format-global-tool
 
+
+
+
+
+https://gist.github.com/davidfowl/ed7564297c61fe9ab814
+
+https://softwareengineering.stackexchange.com/questions/86914/whats-the-best-structure-for-a-repository/392461
+
+
+https://github.com/dazinator/Dazinator.Extensions.FileProviders/blob/develop/src/Dazinator.Extensions.FileProviders/StringFileInfo.cs 
+
+https://github.com/maxhamulyak/nswag-test/blob/master/Directory.Build.props
+
+https://github.com/dazinator/DotNet.Cabinet/blob/develop/src/DotNet.Cabinet/DotNet.Cabinets.csproj
+https://github.com/dazinator/Dazinator.Extensions.FileProviders/blob/develop/src/Dazinator.Extensions.FileProviders/InMemory/InMemoryFileProvider.cs
+
+
+
+https://github.com/microsoft/vscode
+
+https://dotnetfoundation.org
