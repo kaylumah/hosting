@@ -22,3 +22,7 @@ todo local dev secrets
 
 https://stevetalkscode.co.uk/using-iconfigureoptions
 
+
+
+https://github.com/dotnet/runtime/blob/01b7e73cd378145264a7cb7a09365b41ed42b240/src/libraries/Microsoft.Extensions.Options/src/OptionsServiceCollectionExtensions.cs
+
