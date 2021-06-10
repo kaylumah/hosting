@@ -53,7 +53,7 @@ Safe the pet store OpenAPI JSON in the project we just created under the name `s
 }
 ```
 
-We use an MSBuild task that calls NSwag. Update `Kaylumah.GenerateCSharpClientForOpenAPI.Sdks.PetStore.csproj` to look like this.
+We use an MSBuild task that calls NSwag. Update the `...Sdks.Petstore.csproj` project file to look like this.
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
