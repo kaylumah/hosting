@@ -99,18 +99,7 @@ h6 a svg {
 */
 
 a.external {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-a.external::after {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f08e";
-  font-family: "Font Awesome 5 Duotone";
+  @apply after:content-['\f08e'] after:font-faduotone after:font-black after:pl-0.5 after:absolute after:hidden
 }
 
 a.external svg {

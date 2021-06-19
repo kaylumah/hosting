@@ -1,13 +1,18 @@
 module.exports = {
+  mode: "jit",
   purge: [
     "**/*.html"
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      content: {
+        quote: "'&'"
+      },
       fontFamily: {
         architect: "'Architects Daughter', cursive",
-        roboto: "'Roboto', sans-serif"
+        roboto: "'Roboto', sans-serif",
+        faduotone: "'Font Awesome 5 Duotone'"
       },
       colors: {
         brand: {
