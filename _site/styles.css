@@ -16,7 +16,7 @@ h4 a svg,
 h5 a svg, 
 h6 a svg 
 {
-  margin-right: 0.25em;
+  @apply mr-1;
 }
 
 a.external {
@@ -24,7 +24,7 @@ a.external {
 }
 
 a.external svg {
-  margin-left: .25em;
+  @apply ml-1;
 }
 
 .fa-colors
