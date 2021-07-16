@@ -23,3 +23,29 @@ Body...
 https://www.jetbrains.com/help/rider/Managing_Projects_and_Solutions.html
 
 https://andrewlock.net/creating-and-editing-solution-files-with-the-net-cli/
+
+
+
+
+
+
+
+
+
+
+
+
+
+Do you ever have the feeling that you are late to the party when discovering a feature?
+
+
+
+
+You have probably heard that [Visual Studio 2022](https://devblogs.microsoft.com/visualstudio/visual-studio-2022-preview-1-now-available) is around the corner. This Visual Studio release moves from the 32-bit to the 64-bit architecture which paves the way for performances improvements. 
+
+I am a big fan of the Single Solution Model for managing my projects. 
+
+In my projects both personal and professional I prefer to use the so called Single Solution Model. It offers benefits like a single entry point to contribute to the project
+
+
+
