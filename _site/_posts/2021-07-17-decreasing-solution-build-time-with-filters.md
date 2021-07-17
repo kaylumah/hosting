@@ -85,6 +85,25 @@ The image below shows the difference between the three filters we created. It lo
 
 ![slnf_project_overview](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png)
 
+For example, the `SlnFilter.Alpha.slnf` I created for `Concept.ConcreteAlpha` implementation looks like this:
+
+```json
+{
+  "solution": {
+    "path": "SlnFilter.sln",
+    "projects": [
+      "src\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions.csproj",
+      "src\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.csproj",
+      "src\\Kaylumah.SlnFilter.Extensions.Concept\\Kaylumah.SlnFilter.Extensions.Concept.csproj",
+      "test\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests.csproj",
+      "test\\Kaylumah.SlnFilter.Extensions.Concept.Tests\\Kaylumah.SlnFilter.Extensions.Concept.Tests.csproj"
+    ]
+  }
+}
+```
+
+It contains a reference to the `sln-file` and relative paths to all my `*.csprojs` I included in the `.slnf-file`.
+
 ## Manage solution changes
 
 You might be wondering what happens when I need to add new projects to my solution?
