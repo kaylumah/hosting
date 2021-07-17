@@ -29,6 +29,9 @@ https://www.jetbrains.com/help/rider/Managing_Projects_and_Solutions.html
 
 https://andrewlock.net/creating-and-editing-solution-files-with-the-net-cli/
 
+---
+
+---
 
 
 ![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png)
