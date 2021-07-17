@@ -66,6 +66,27 @@ Many of the projects in the repo follow this pattern:
 - Concept provides default implementation for Concept.Abstractions
 - Concept.Concrete technology specific implementation for Concept.Abstractions
 
+```shell
+dotnet new sln --name "SlnFilter"
+
+dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept.Abstractions --output src/Kaylumah.SlnFilter.Extensions.Concept.Abstractions
+dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept --output src/Kaylumah.SlnFilter.Extensions.Concept
+dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha --output src/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha
+dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo --output src/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo
+
+dotnet new xunit --framework netcoreapp3.1 --name Kaylumah.SlnFilter.Extensions.Concept.Tests --output test/Kaylumah.SlnFilter.Extensions.Concept.Tests
+dotnet new xunit --framework netcoreapp3.1 --name Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests --output test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests
+dotnet new xunit --framework netcoreapp3.1 --name Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests --output test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests
+
+dotnet sln add src/Kaylumah.SlnFilter.Extensions.Concept.Abstractions/Kaylumah.SlnFilter.Extensions.Concept.Abstractions.csproj
+dotnet sln add src/Kaylumah.SlnFilter.Extensions.Concept/Kaylumah.SlnFilter.Extensions.Concept.csproj
+dotnet sln add src/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.csproj
+dotnet sln add src/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.csproj
+dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.Tests/Kaylumah.SlnFilter.Extensions.Concept.Tests.csproj
+dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests.csproj
+dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests.csproj
+```
+
 ## Setting up our filters
 
 After following these steps, our project should look like the picture below in Visual Studio.
