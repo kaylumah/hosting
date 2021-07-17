@@ -125,5 +125,5 @@ See you next time, stay healthy and happy coding to all 🧸!
 
 ## Sources
 
-- https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019
-- https://docs.microsoft.com/en-us/visualstudio/msbuild/solution-filters?view=vs-2019
+- [slnf in VisualStudio](https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019)
+- [slnf in MSBuild](https://docs.microsoft.com/en-us/visualstudio/msbuild/solution-filters?view=vs-2019)
