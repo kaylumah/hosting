@@ -30,7 +30,13 @@ https://www.jetbrains.com/help/rider/Managing_Projects_and_Solutions.html
 https://andrewlock.net/creating-and-editing-solution-files-with-the-net-cli/
 
 ---
+There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following xkcd joke or some variant of it:
 
+https://imgs.xkcd.com/comics/compiling.png
+
+The [next version](https://devblogs.microsoft.com/visualstudio/visual-studio-2022-preview-1-now-available) of Visual Studio will come with a lot of promised performance improvements. VisualStudio 2022 is the first version that takes advantage of the 64-bit processor architecture. I have not yet tested it, but I am hopeful for a more performant experience developing when it ships.
+
+That brings me to the topic of today's post. I recently discovered a VS2019 feature I did not know that can bring some improvement to my experience. VS2019 introduced a new feature called [solution filters](https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019).
 ---
 
 
