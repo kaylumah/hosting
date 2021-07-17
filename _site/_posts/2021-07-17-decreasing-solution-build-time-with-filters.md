@@ -6,6 +6,7 @@ image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filter
 tags:
   - "Visual Studio 2019"
   - "MSBuild"
+comment_id: '33'
 ---
 There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following [xkcd joke](https://imgs.xkcd.com/comics/compiling.png) or some variant of it:
 
