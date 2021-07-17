@@ -127,6 +127,8 @@ You might be wondering what happens when I need to add new projects to my soluti
 
 To demonstrate, let us assume our test projects have a shared helper project. At this time, I want to update our "Concept.Bravo" solution filter. This time I don't want to use dotnet CLI but use "Add existing project".
 
+> You cannot use `dotnet sln add` on slnf files.
+
 ![slnf_add_existing_project](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png)
 
 As soon as you did this, you get this pop-up stating a mismatch between the loaded projects and the project specified in the filter.
@@ -159,12 +161,6 @@ I like this new feature as a way to manage my larger solutions. Of course, it's 
 The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/GenerateCSharpClientForOpenAPI).
 
 See you next time, stay healthy and happy coding to all 🧸!
-
-
-## Todos
-
-- [] build CLI
-- [] update filter with dotnet cli
 
 ## Sources
 
