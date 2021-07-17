@@ -85,6 +85,8 @@ dotnet sln add src/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo/Kaylumah.
 dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.Tests/Kaylumah.SlnFilter.Extensions.Concept.Tests.csproj
 dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests/Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests.csproj
 dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests.csproj
+
+dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Utilities --output test/Kaylumah.SlnFilter.Test.Utilities
 ```
 
 ## Setting up our filters
