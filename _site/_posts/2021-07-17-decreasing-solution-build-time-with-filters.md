@@ -1,6 +1,6 @@
 ---
 title: 'Decreasing Solution Build time with Filters'
-description: ''
+description: 'How to use solution filters to increase focus and decrease build time'
 cover_image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
 image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
 tags:
@@ -19,13 +19,13 @@ That brings me to the topic of today's post. I recently discovered a VS2019 feat
 
 ## Project Setup
 
-I think over my past couple of posts; it's become clear that I am a fan of the `Microsoft.Extensions` repository. While Microsoft uses multiple solution files throughout the repository, I would opt for the single solution model.
+I think over my past couple of posts, it's become clear that I am a fan of the `Microsoft.Extensions` repository. While Microsoft uses multiple solution files throughout the repository, I would opt for the single solution model.
 
 Many of the projects in the repo follow this pattern:
 
-- Concept.Abstractions provides interfaces
-- Concept provides default implementation for Concept.Abstractions
-- Concept.Concrete technology specific implementation for Concept.Abstractions
+- `Concept.Abstractions` provides interfaces
+- `.Concept` provides default implementation for `Concept.Abstractions`
+- `Concept.Concrete` technology specific implementation for `Concept.Abstractions`
 
 ```shell
 dotnet new sln --name "SlnFilter"
@@ -50,6 +50,8 @@ dotnet sln add test/Kaylumah.SlnFilter.Extensions.Concept.ConcreteBravo.Tests/Ka
 dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Utilities --output test/Kaylumah.SlnFilter.Test.Utilities
 ```
 
+> Note `Kaylumah.SlnFilter.Test.Utilities` should not yet be added to the solution.
+
 ## Setting up our filters
 
 After following these steps, our project should look like the picture below in Visual Studio.
@@ -70,11 +72,11 @@ An alternative can be to unload all projects, select the project you want, and u
 
 ![sln_reload_project_dependencies](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png)
 
-Like before, we can save the solution filter with the "Save As Solution Filter" option. The only difference is that we now get 4/7 projects as opposed to 5/7 projects. That's because we loaded the "ConcreteBravo.Tests" projects and it's dependencies. Even though that loads "Extensions.Concept" it does not load "Extensions.Concept.Tests" since it is not a dependency of "ConcreteBravo.Tests".
+Like before, we can save the solution filter with the `Save As Solution Filter` option. The only difference is that we now get 4/7 projects as opposed to 5/7 projects. That's because we loaded the `ConcreteBravo.Tests` projects and it's dependencies. Even though that loads `Extensions.Concept` it does not load `Extensions.Concept.Tests` since it is not a dependency of `ConcreteBravo.Tests`.
 
 ![sln_save_filter_002](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png)
 
-While researching something unrelated to this post, I noticed that the [EF Core team](https://github.com/dotnet/efcore) used this feature I did not even know existed. The cool thing was that they also had a filter for all projects. So I had to try that out, and as it turns out, you can create a filter without unloading projects.
+While researching something unrelated to this post, I noticed that the [EF Core team](https://github.com/dotnet/efcore) used this feature I did not know existed. The cool thing was that they also had a filter for all projects. So I had to try that out, and as it turns out, you can create a filter without unloading projects.
 
 ![sln_save_filter_003](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png)
 
@@ -86,15 +88,15 @@ The image below shows the difference between the three filters we created. It lo
 
 You might be wondering what happens when I need to add new projects to my solution?
 
-To demonstrate, let us assume our test projects have a shared helper project. At this time, I want to update our "Concept.Bravo" solution filter. This time I don't want to use dotnet CLI but use "Add existing project".
+To demonstrate, let us assume our test projects have a shared helper project. At this time, I want to update our "Concept.Bravo" solution filter. This time I don't want to use dotnet CLI but use `Add existing project`.
 
-> You cannot use `dotnet sln add` on slnf files.
+> You cannot use `dotnet sln add` on slnf files, but you can use them with `dotnet build`
 
 ![slnf_add_existing_project](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png)
 
 As soon as you did this, you get this pop-up stating a mismatch between the loaded projects and the project specified in the filter.
 
-If you followed the steps in a GIT environment, you would see that even before pressing " Update Solution Filter" the underlying solution is already updated.
+If you followed the steps in a GIT environment, you would see that even before pressing `Update Solution Filter` the underlying solution is already updated.
 
 ![slnf_update_solution_filter](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png)
 
@@ -150,12 +152,11 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
 
 ## Closing Thoughts
 
+I like this new feature as a way to manage my larger solutions. Of course, it's not practical to maintain my (very basic) script for this. It will be a huge help if you think this is a valuable feature to upvote the Visual Studio Community forum issue.
 
 As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
-I like this new feature as a way to manage my larger solutions. Of course, it's not practical to maintain my (very basic) script for this. It will be a huge help if you think this is a valuable feature to upvote the issue at the Visual Studio Community forum.
-
-The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/GenerateCSharpClientForOpenAPI).
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/SolutionFilter).
 
 See you next time, stay healthy and happy coding to all 🧸!
 
