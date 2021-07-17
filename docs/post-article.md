@@ -2,6 +2,8 @@
 
 ## Cross posting
 
+Are you interested in sharing your thoughts on my work? Consider commenting on this https://github.com/kaylumah/kaylumah.github.io/issues/XXX GitHub issue. That way, your reactions will also be available on my blog!
+
 ### DevTo
 
 #### Replace all styling from snippets
