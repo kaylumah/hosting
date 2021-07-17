@@ -15,7 +15,7 @@ The [next version](https://devblogs.microsoft.com/visualstudio/visual-studio-202
 
 > While I think the 1600+ projects in a solution demo are cool, I would not see myself using the single solution model at that scale.
 
-That brings me to the topic of today's post. I recently discovered a VS2019 feature I did not know that can bring some improvement to my experience. VS2019 introduced a new feature called [solution filters](https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019).
+That brings me to the topic of today's post. I recently discovered a VS2019 feature I did not know that can bring some improvement to my experience. VS2019 introduced a new feature called [solution filters](https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019). I googled a bit against it and did not find a lot about it, except for the Microsoft Docs itself. So I wrote this post to help raise awareness for something I found very useful.
 
 ## Project Setup
 
