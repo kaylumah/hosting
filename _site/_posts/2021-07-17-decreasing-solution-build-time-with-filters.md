@@ -86,11 +86,30 @@ If you followed the steps in a GIT environment, you would see that even before p
 
 ![slnf_update_solution_filter](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png)
 
+## The missing bit
+
+I discussed this feature at work as a potential workaround for an issue we had in structuring our projects. One of my colleagues remembered looking at it about a year ago and finding it lacking. A few minutes later, he found a [post](https://developercommunity.visualstudio.com/t/Solution-Filter-should-allow-for-Include/1090914?space=8&q=solution+filter) on the developer community for Visual Studio. Funnily enough, it's a small world; the user-post links to a GitHub issue he created in this matter.
+
+The problem is the management of multiple solutions filters because the filters are inclusive with relative paths following the sln-filter location. A proposed improvement would be to use glob patterns to include/exclude projects. That would make it easier when following naming conventions to have always up-to-date filters.
+
+At a customer I work for, they use PowerShell as their script platform of choice, so I needed a deeper understanding of PowerShell. With PowerShell, it's reasonably easy to work with the file system and convert from and to JSON. So I thought, how hard can it be to script this.
+
+The following script loads the paths of all *.csproj present in the solution directory and filters them out by RegEx. It then writes it to disk in the .slnf-format.
+
+```ps
+$todo
+```
+
+## Closing Thoughts
 
 
+As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
+I like this new feature as a way to manage my larger solutions. Of course, it's not practical to maintain my (very basic) script for this. It will be a huge help if you think this is a valuable feature to upvote the issue at the Visual Studio Community forum.
 
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/GenerateCSharpClientForOpenAPI).
 
+See you next time, stay healthy and happy coding to all 🧸!
 
 
 ## Todos
