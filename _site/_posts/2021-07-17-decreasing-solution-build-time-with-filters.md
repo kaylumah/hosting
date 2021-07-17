@@ -1,7 +1,12 @@
 ---
-title: ''
+title: 'Decreasing Solution Build time with Filters'
 description: ''
+cover_image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
+image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
+tags:
+  - "Visual Studio 2019"
 ---
+
 Body...
 
 - https://docs.microsoft.com/en-us/visualstudio/ide/filtered-solutions?view=vs-2019
@@ -26,6 +31,15 @@ https://andrewlock.net/creating-and-editing-solution-files-with-the-net-cli/
 
 
 
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/002_vs2019_sln_unload_projects.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/003_vs2019_sln_save_filter_001.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png)
+![Architecture](/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png)
 
 
 
