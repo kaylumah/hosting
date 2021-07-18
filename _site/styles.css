@@ -1,134 +1,37 @@
 @tailwind base;
 @tailwind components;
 
-/*h2 a {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a 
+{
+    @apply before:content-['\f292'] before:font-faduotone before:font-black before:pl-1 before:absolute before:hidden
 }
 
-h2 a::before {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f292";
-  font-family: "Font Awesome 5 Duotone";
+h2 a svg, 
+h3 a svg,
+h4 a svg, 
+h5 a svg, 
+h6 a svg 
+{
+  @apply mr-1;
 }
-
-h2 a svg {
-  margin-left: -2rem;
-}
-
-h3 a {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-h3 a::before {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f292";
-  font-family: "Font Awesome 5 Duotone";
-}
-
-h3 a svg {
-  margin-left: -2rem;
-}
-
-h4 a {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-h4 a::before {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f292";
-  font-family: "Font Awesome 5 Duotone";
-}
-
-h4 a svg {
-  margin-left: -2rem;
-}
-
-h5 a {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-h5 a::before {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f292";
-  font-family: "Font Awesome 5 Duotone";
-}
-
-h5 a svg {
-  margin-left: -2rem;
-}
-
-h6 a {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-h6 a::before {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f292";
-  font-family: "Font Awesome 5 Duotone";
-}
-
-h6 a svg {
-  margin-left: -2rem;
-}
-
-*/
 
 a.external {
-  --fa-secondary-opacity: 1.0;
-  --fa-primary-color: #4cae50;
-  --fa-secondary-color: #55557b;
-}
-
-a.external::after {
-  position: absolute;
-  display: none;
-  padding-left:2px;
-  font-weight: 900;
-  content: "\f08e";
-  font-family: "Font Awesome 5 Duotone";
+  @apply after:content-['\f08e'] after:font-faduotone after:font-black after:pl-0.5 after:absolute after:hidden
 }
 
 a.external svg {
-  margin-left: .25em;
+  @apply ml-1;
 }
 
-/* .svg-inline--fa {
-    margin-right: 0.5rem;
-} */
-
-
-.fa-color
+.fa-colors
 {
   --fa-secondary-opacity: 1.0;
   --fa-primary-color: #4cae50;
   --fa-secondary-color: #55557b;
 }
 
-
 @tailwind utilities;
-

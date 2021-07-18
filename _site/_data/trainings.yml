@@ -1,0 +1,111 @@
+-
+  name: "Scrum Master PSMI"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Est.09"
+
+-
+  name: "Angular Essentials"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Global Knowledge Network"
+
+-
+  name: "Java 8 Programming Language"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Vijfhart"
+
+-
+  name: "Getting Things Done"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Meereffect"
+
+-
+  name: "SQL Advanced"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Global Knowledge Network"
+
+-
+  name: "Persoonlijke effectiviteit met LIFO (Life Orientations)"
+  from: 2017-01-01
+  to: 2017-01-01
+  type: "Training"
+  achieved: true
+  by: "Next Step Talent"
+
+-
+  name: "OCA-JP-I SE 8 1Z0-808 "
+  from: 2018-01-01
+  to: 2018-01-01
+  type: "Training"
+  achieved: true
+  by: "Oracle"
+
+-
+  name: "UX voor developers"
+  from: 2018-01-01
+  to: 2018-01-01
+  type: "Training"
+  achieved: true
+  by: "QNH"
+
+-
+  name: "Spring Boot"
+  from: 2018-01-01
+  to: 2018-01-01
+  type: "Training"
+  achieved: true
+  by: "SpiralTrain"
+
+-
+  name: "Spring Advanced"
+  from: 2018-01-01
+  to: 2018-01-01
+  type: "Training"
+  achieved: true
+  by: "SpiralTrain"
+
+-
+  name: "Adviesvaardigheden"
+  from: 2019-01-01
+  to: 2019-01-01
+  type: "Training"
+  achieved: true
+  by: "Forces to Explore"
+
+-
+  name: "Pyramid denken en schrijven"
+  from: 2019-01-01
+  to: 2019-01-01
+  type: "Training"
+  achieved: true
+  by: "Westerhuis Training"
+
+-
+  name: "Didactische Vaardigheden"
+  from: 2019-01-01
+  to: 2019-01-01
+  type: "Training"
+  achieved: true
+  by: "Forces to Explore"
+
+-
+  name: "Architect's Master Class"
+  from: 2021-05-01
+  to: 2021-05-01
+  type: "Training"
+  achieved: true
+  by: "IDesign"
