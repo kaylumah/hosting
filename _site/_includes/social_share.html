@@ -1,17 +1,21 @@
 <div class="social-share">
     <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
     <div class="flex justify-center space-x-6">
-            <a target="_blank" rel=”noopener” href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'width=550,height=435');return false;">
+            <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'width=550,height=435');return false;">
                 <span class="sr-only">LinkedIn Share</span>
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://twitter.com/intent/tweet?text={{ page.title | html.url_encode }}&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+            <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text={{ page.title | html.url_encode }}&url={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                 <span class="sr-only">Twitter Share</span>
                 <em class="fab fa-twitter-square fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://facebook.com/sharer.php?u={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
-                <span class="sr-only">Twitter Share</span>
+            <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u={{ page.uri | absolute_url }}" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                <span class="sr-only">Facebook Share</span>
                 <em class="fab fa-facebook fa-lg"></em>
+            </a>
+            <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject={{ page.title}}&amp;body=Thought you might like this article {{ page.uri | absolute_url }}">
+                <span class="sr-only">Email Share</span>
+                <em class="fas fa-envelope-open-text fa-lg"></em>
             </a>
     </div>
 </div>
