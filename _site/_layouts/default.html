@@ -30,17 +30,17 @@
         <noscript>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
         </noscript>
-
-
     </head>
     <body class="line-numbers bg-gray-100 fa-colors">
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
             <main class="flex-1 py-4 text-gray-900">
                 {{ content }}
+                {% include 'backToTop.html' %}
             </main>
             {% include 'footer.html' %}
         </div>
         <script src="/assets/prism.js?v={{ build.short_git_hash }}"></script>
+        
     </body>
 </html>
