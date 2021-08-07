@@ -5,8 +5,8 @@ cover_image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/c
 image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
 tags:
   - "CSharp"
-  - "OpenAPI"
   - "NSwag"
+  - "OpenAPI"
   - "Swashbuckle"
 comment_id: '15'
 ---
