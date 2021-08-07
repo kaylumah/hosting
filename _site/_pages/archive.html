@@ -15,7 +15,12 @@ description: "The vault of all articles I wrote for Kaylumah ordered by tag, typ
 <div class="py-16 px-6 sm:px-8">
     <div>
         {% for tag in site.tags %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">{{ tag.key }} ({{ tag.value.size }})</span>
+        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+            <svg class="-ml-1 mr-1.5 h-2 w-2 text-indigo-400" fill="currentColor" viewBox="0 0 8 8">
+                <circle cx="4" cy="4" r="3" />
+            </svg>  
+            <a href="#{{ tag.key | html.url_encode }}">{{ tag.key }} ({{ tag.value.size }})</a>
+        </span>
         {% endfor %}
     </div>
     {% for tag in site.tags %}
@@ -24,8 +29,8 @@ description: "The vault of all articles I wrote for Kaylumah ordered by tag, typ
             <div class="w-full border-t border-gray-300"></div>
         </div>
         <div class="relative flex justify-center">
-            <span class="px-3 bg-white text-lg font-medium text-gray-900">
-                Projects
+            <span class="px-3 bg-white text-lg font-medium text-gray-900" id="{{ tag.key | html.url_encode }}">
+                <a href="#{{ tag.key | html.url_encode }}">{{ tag.key }}</a>
             </span>
         </div>
     </div>
