@@ -80,6 +80,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
+        private void EnrichSiteWithYears(SiteData site, List<PageData> pages)
+        {
+            var years = pages
+                .Where(x => x.ContainsKey("date"))
+                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
+                .Select(x => ((DateTimeOffset)x["date"]).Year)
+                .Distinct();
+            foreach (var year in years)
+            {
+                var yearFiles = pages.Where(x => x.ContainsKey("date") && ((DateTimeOffset)x["date"]).Year.Equals(year)).ToArray();
+                site.Years.Add(year, yearFiles);
+            }
+        }
+
         private void EnrichSiteWithSeries(SiteData site, List<PageData> pages)
         {
             var series = pages
@@ -178,12 +192,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Tags = new SortedDictionary<string, PageData[]>(),
                 Collections = new SortedDictionary<string, PageData[]>(),
                 Types = new SortedDictionary<string, PageData[]>(),
-                Series = new SortedDictionary<string, PageData[]>()
+                Series = new SortedDictionary<string, PageData[]>(),
+                Years = new SortedDictionary<int, PageData[]>()
             };
 
             EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages.ToList());
             EnrichSiteWithTags(siteInfo, pages.ToList());
+            EnrichSiteWithYears(siteInfo, pages.ToList());
             EnrichSiteWithTypes(siteInfo, pages.ToList());
             EnrichSiteWithSeries(siteInfo, pages.ToList());
 
