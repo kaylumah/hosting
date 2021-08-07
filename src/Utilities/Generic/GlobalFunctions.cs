@@ -148,13 +148,16 @@ namespace Kaylumah.Ssg.Utilities
         public static string AbsoluteUrl(string source)
         {
             var relativeSource = RelativeUrl(source);
-            if (relativeSource.StartsWith(Path.DirectorySeparatorChar))
+            if (!string.IsNullOrWhiteSpace(relativeSource))
             {
-                relativeSource = relativeSource[1..];
-            }
-            if (!string.IsNullOrWhiteSpace(Instance.Url))
-            {
-                return Path.Combine(Instance.Url, relativeSource);
+                if (relativeSource.StartsWith(Path.DirectorySeparatorChar))
+                {
+                    relativeSource = relativeSource[1..];
+                }
+                if (!string.IsNullOrWhiteSpace(Instance.Url))
+                {
+                    return Path.Combine(Instance.Url, relativeSource);
+                }
             }
             return relativeSource;
         }
