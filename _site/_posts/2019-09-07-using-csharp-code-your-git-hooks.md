@@ -4,10 +4,8 @@ description: 'Getting started with C# script in your client-side git hooks'
 image: /assets/images/posts/20190907/githooks/cover.png
 cover_image: /assets/images/posts/20190907/githooks/cover.png
 tags:
-    - Git
-    - GitHook
     - CSharp
-    - Dotnet Core
+    - Git
 modified: '2021-03-21'
 comment_id: '12'
 featured: true
