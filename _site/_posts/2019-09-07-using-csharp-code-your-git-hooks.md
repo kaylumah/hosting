@@ -10,6 +10,7 @@ tags:
     - Dotnet Core
 modified: '2021-03-21'
 comment_id: '12'
+featured: true
 ---
 
 ## Why use hooks?
