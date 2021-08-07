@@ -5,7 +5,7 @@
   <div class="flex-1 bg-white p-6 flex flex-col justify-between">
     <div class="flex-1">
       <p class="text-sm font-medium text-indigo-600">
-        <a href="/types.html#{{ post.type | html.url_encode }}" class="hover:underline">
+        <a href="/archive.html#{{ post.type | html.url_encode }}" class="hover:underline">
           {{ post.type }}
         </a>
       </p>
@@ -20,7 +20,7 @@
     </div>
     <div class="mt-2">
       {% for tag in post.tags %}
-        <a href="/tags.html#{{ tag | html.url_encode }}" class="text-gray-500">
+        <a href="/archive.html#{{ tag | html.url_encode }}" class="text-gray-500">
           <span class="text-gray-600">#</span>{{tag}}
         </a>
       {% endfor %}
