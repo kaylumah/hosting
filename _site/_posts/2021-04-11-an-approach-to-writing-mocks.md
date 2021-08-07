@@ -145,7 +145,7 @@ namespace Kaylumah.AdventuresWithMock.Access.Author.Service
             throw new NotImplementedException();
         }
     }
-
+}
 ```
 
 And finally, our Site Manager, which should match our sequence diagram, looks like this.
