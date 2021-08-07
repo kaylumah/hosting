@@ -1,4 +1,4 @@
-{% assign page_url = seo_tag.page.url | absolute_url %}
+{% assign page_url = seo_tag.page.url | absolute_url | string.replace '/index.html' '/' %}
 {% assign page_author = seo_tag.site.data.authors[seo_tag.page.author].full_name %}
 {% assign page_image = seo_tag.page.image | absolute_url %}
 <!-- Begin Kaylumah SEO tag v{{ seo_tag.build.short_git_hash }} -->
