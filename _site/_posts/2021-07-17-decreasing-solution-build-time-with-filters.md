@@ -4,8 +4,8 @@ description: 'How to use solution filters to increase focus and decrease build t
 cover_image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
 image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
 tags:
-  - "Visual Studio 2019"
   - "MSBuild"
+  - "Visual Studio 2019"
 comment_id: '33'
 ---
 There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following [xkcd joke](https://imgs.xkcd.com/comics/compiling.png) or some variant of it:
