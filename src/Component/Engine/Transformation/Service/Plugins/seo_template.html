@@ -57,8 +57,8 @@
   },
   "headline": "{{ seo_tag.page.title }}",
   "image": "{{ page_image }}",
-  "datePublished": "{{ seo_tag.page.date }}",
-  "dateModified": "{{ seo_tag.page.lastmodified }}"
+  "datePublished": "{{ seo_tag.page.date | date_to_pattern "yyyy-MM-dd"  }}",
+  "dateModified": "{{ seo_tag.page.lastmodified | date_to_pattern "yyyy-MM-dd" }}"
 }
 </script>
 {% endif %}
