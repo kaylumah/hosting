@@ -1,3 +1,15 @@
 CSharp:
   name: "C#"
   icon: "/assets/tags/csharp.svg"
+Git:
+  name: "Git"
+  icon: "/assets/tags/git.svg"
+NuGet:
+  name: "NuGet"
+  icon: "/assets/tags/nuget.svg"
+OpenAPI:
+  name: "OpenAPI"
+  icon: "/assets/tags/openapiinitiative.svg"
+"Visual Studio 2019":
+  name: "Visual Studio 2019"
+  icon: "/assets/tags/visualstudio.svg"
