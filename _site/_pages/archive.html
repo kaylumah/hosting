@@ -21,7 +21,7 @@ modified: '2021-08-07'
             <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
                 <circle cx="4" cy="4" r="3" />
             </svg>  
-            <a href="#{{ tag.key | html.url_encode }}">{{ tag.key }} ({{ tag.value.size }})</a>
+            <a href="#{{ tag.key }}">{{ site.data.tags[tag.key].name }} ({{ tag.value.size }})</a>
         </span>
         {% endfor %}
         {% for type in site.types %}
@@ -48,8 +48,8 @@ modified: '2021-08-07'
                 <div class="w-full border-t border-gray-300"></div>
             </div>
             <div class="relative flex justify-center">
-                <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ tag.key | html.url_encode }}">
-                    <a href="#{{ tag.key | html.url_encode }}">
+                <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ tag.key }}">
+                    <a href="#{{ tag.key }}">
                     {% if site.data.tags[tag.key].icon %}
                         <img class="h-10 w-10 text-gray-900" src="{{ site.data.tags[tag.key].icon | relative_url }}" alt="{{ tag.key }}" />
                     {% else %}
