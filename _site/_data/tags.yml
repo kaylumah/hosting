@@ -1,15 +1,35 @@
 CSharp:
   name: "C#"
+  description: "for the C# programming language"
   icon: "/assets/tags/csharp.svg"
 Git:
   name: "Git"
+  description: "for the Git version control system"
   icon: "/assets/tags/git.svg"
+Moq:
+  name: "Moq"
+  description: "for the Moq mocking library in .NET"
+MSBuild:
+  name: "MSBuild"
+  description: "for the Microsoft Build Engine"
+NSwag:
+  name: "NSwag"
+  description: "for the NSwag swagger tooling in .NET"
 NuGet:
   name: "NuGet"
+  description: "for the .NET package manager"
   icon: "/assets/tags/nuget.svg"
 OpenAPI:
   name: "OpenAPI"
+  description: "for the OpenAPI Specification (formerly Swagger Specification)"
   icon: "/assets/tags/openapiinitiative.svg"
+Swashbuckle:
+  name: "Swashbuckle"
+  description: "for the Swashbuckle swagger tooling in .NET"
+Testing:
+  name: "Testing"
+  description: "for test related matters"
 "Visual Studio 2019":
   name: "Visual Studio 2019"
+  description: "for the 2019 version of the Microsoft IDE"
   icon: "/assets/tags/visualstudio.svg"
