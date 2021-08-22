@@ -51,7 +51,7 @@ modified: '2021-08-07'
                 <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ tag.key }}">
                     <a href="#{{ tag.key }}">
                     {% if site.data.tags[tag.key].icon %}
-                        <img class="h-10 w-10 text-gray-900" src="{{ site.data.tags[tag.key].icon | relative_url }}" alt="{{ tag.key }}" />
+                        <img class="h-10 w-10 text-gray-900" width="40" height="40" src="{{ site.data.tags[tag.key].icon | relative_url }}" alt="{{ tag.key }}" />
                     {% else %}
                         {{ site.data.tags[tag.key].name }}
                     {% endif %}
