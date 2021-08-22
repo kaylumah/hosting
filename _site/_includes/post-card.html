@@ -20,8 +20,9 @@
     </div>
     <div class="mt-2">
       {% for tag in post.tags %}
-        <a href="/archive.html#{{ tag | html.url_encode }}" class="text-gray-500">
-          <span class="text-gray-600">#</span>{{tag}}
+        <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-500">
+                        <!-- <span class="text-gray-600">#</span> -->
+                        {{ site.data.tags[tag].name }}
         </a>
       {% endfor %}
     </div>
