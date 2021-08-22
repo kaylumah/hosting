@@ -49,7 +49,7 @@ modified: '2021-08-07'
             </div>
             <div class="relative flex justify-center">
                 <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ tag.key }}">
-                    <a href="#{{ tag.key }}">
+                    <a href="#{{ tag.key }}" title="{{ site.data.tags[tag.key].description }}">
                     {% if site.data.tags[tag.key].icon %}
                         <img class="h-10 w-10 text-gray-900" width="40" height="40" src="{{ site.data.tags[tag.key].icon | relative_url }}" alt="{{ tag.key }}" />
                     {% else %}
@@ -89,7 +89,7 @@ modified: '2021-08-07'
             </div>
             <div class="relative flex justify-center">
                 <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ type.key | html.url_encode }}">
-                    <a href="#{{ type.key | html.url_encode }}">
+                    <a href="#{{ type.key | html.url_encode }}" title="Posts in the {{ type.key }} category">
                         {{ type.key }}
                     </a>
                 </span>
@@ -125,7 +125,7 @@ modified: '2021-08-07'
             </div>
             <div class="relative flex justify-center">
                 <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ year.key | html.url_encode }}">
-                    <a href="#{{ year.key | html.url_encode }}">
+                    <a href="#{{ year.key | html.url_encode }}" title="Articles written in {{ year.key }}">
                         {{ year.key }}
                     </a>
                 </span>
