@@ -4,9 +4,9 @@ description: "An experiment to create reusable mocks in my testing code."
 cover_image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 tags:
-  - "CSharp"
-  - "Moq"
-  - "Testing"
+  - "csharp"
+  - "moq"
+  - "testing"
 comment_id: '14'
 featured: true
 ---
