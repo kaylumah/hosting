@@ -53,7 +53,7 @@ modified: '2021-08-07'
                     {% if site.data.tags[tag.key].icon %}
                         <img class="h-10 w-10 text-gray-900" src="{{ site.data.tags[tag.key].icon | relative_url }}" alt="{{ tag.key }}" />
                     {% else %}
-                        {{ tag.key }}
+                        {{ site.data.tags[tag.key].name }}
                     {% endif %}
                     </a>
                 </span>
