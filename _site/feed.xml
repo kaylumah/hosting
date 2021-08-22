@@ -33,7 +33,7 @@
         <summary>{{ post.description | string.strip | html.escape }}</summary>
         {% endif %}
         {% for tag in post.tags %}
-        <category term="{{ tag | string.strip | html.escape }}" />
+        <category term="{{ site.data.tags[tag].name }}" />
         {% endfor %}
         {% assign post_image = post.image %}
         {% if post_image %}
