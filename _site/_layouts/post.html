@@ -40,8 +40,9 @@ layout: 'default.html'
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
                     {% for tag in page.tags %}
-                    <a href="/archive.html#{{ tag | html.url_encode }}" class="text-gray-500">
-                        <span class="text-gray-600">#</span>{{tag}}
+                    <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-500">
+                        <!-- <span class="text-gray-600">#</span> -->
+                        {{ site.data.tags[tag].name }}
                     </a>
                     {% endfor %}
                     </dd>
