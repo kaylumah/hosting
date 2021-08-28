@@ -33,3 +33,15 @@ visualstudio2019:
   name: "Visual Studio 2019"
   description: "for the 2019 version of the Microsoft IDE"
   icon: "/assets/icons/simpleicons/visualstudio.svg"
+2019:
+  name: "2019"
+  description: "posts from 2019"
+  icon: "/assets/icons/custom/2019.svg"
+2020:
+  name: "2020"
+  description: "posts from 2020"
+  icon: "/assets/icons/custom/2020.svg"
+2021:
+  name: "2021"
+  description: "posts from 2021"
+  icon: "/assets/icons/custom/2021.svg"
