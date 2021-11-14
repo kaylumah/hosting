@@ -363,5 +363,11 @@ The first time I ran this test, I was baffled. I could only see the console outp
 
 However, explicitly passing `--settings` every time does not solve anything. On the [Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022) I found the solution. We can tell MSBuild to use `RunSettingsFilePath`, which takes care of it for us. If we now run `dotnet test` we get proper output.
 
-## Conclusion
+## Closing Thoughts
 I know I am not the first to write about this topic, but I hope to provide fresh insight into the subject matter. The different techniques all have their merit. I have used all three on other occasions and remind you that the NullLogger is a viable option in many cases. Nine times out of 10, you probably only care about the business logic to test. For the final remaining time, I can only say the well-known programming wisdom: "It depends".
+
+As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
+
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/CaptureLogsInUnitTests).
+
+See you next time, stay healthy and happy coding to all 🧸!
