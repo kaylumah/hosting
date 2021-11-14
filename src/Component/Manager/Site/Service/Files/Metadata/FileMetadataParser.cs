@@ -50,7 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
             if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
             {
-                fileMetaData.ModifiedTime = fileMetaData.ModifiedTime;
+                fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
             }
 
             if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
