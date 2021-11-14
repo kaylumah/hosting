@@ -44,6 +44,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 fileMetaData.Date = publishedDate;
             }
 
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+            {
+                fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
+            }
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
+            {
+                fileMetaData.ModifiedTime = fileMetaData.ModifiedTime;
+            }
+
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
 
