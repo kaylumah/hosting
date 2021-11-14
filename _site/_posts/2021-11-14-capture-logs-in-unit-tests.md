@@ -94,6 +94,8 @@ public async Task Test_DependencyInjection_EmptyLoggingBuilder()
 }
 ```
 
+![no logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png)
+
 ```cs
 [Fact]
 public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
@@ -112,6 +114,8 @@ public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
 }
 ```
 
+![console logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png)
+
 If, however, you cannot rely on dependency injection in your tests, you have the alternative of manual creating your SUT and relevant dependencies. The only dependency of our EchoService is an instance of ILogger. For testing purposes, you can use the NullLoggerFactory, which creates a logger that logs into the void.
 
 ```cs
@@ -124,6 +128,10 @@ public async Task Test_Manuel_NullLoggingFactory()
     testResult.Should().Be(testInput, "the input should have been returned");
 }
 ```
+
+![null logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png)
+
+> As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.
 
 ## Option 2
 The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, "Adventures with Mock", I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.
@@ -213,6 +221,8 @@ public async Task Test_Moq_LogLevelDisabledMockedLogger()
     loggerMock.LogMessages.Should().BeEmpty();
 }
 ```
+
+![mock logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png)
 
 ## Options 3
 Thus far, we have discussed options that would work outside `Xunit`. The third technique is not limited to `Xunit`, but its implementation is restricted to use in a `Xunit` project because we will now rely on Xunit's `ITestOutputHelper` mechanism. In most cases, we would use `ITestOutputHelper` to log lines inside the test case itself; it is, however, possible to create an `ILogger` that writes to `ITestOutputHelper` so we can also capture logs our SUT produces.
@@ -344,6 +354,8 @@ public async Task Test_Custom_XunitLoggingBuilder()
 }
 ```
 
+![xunit logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png)
+
 The first time I ran this test, I was baffled. I could only see the console output from ConsoleLogger test we did previously. A quick google search brought me to the [solution](https://github.com/xunit/xunit/issues/1141#issuecomment-555717377). We need to tell the dotnet test runner to display it with `dotnet test --logger:"console;verbosity=detailed"`. Telling an entire team they can no longer simply run `dotnet test` was not a real solution; luckily, we can simplify things with `dotnet test --settings runsettings.xml`.
 
 ```xml
@@ -361,7 +373,15 @@ The first time I ran this test, I was baffled. I could only see the console outp
 </RunSettings>
 ```
 
-However, explicitly passing `--settings` every time does not solve anything. On the [Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022) I found the solution. We can tell MSBuild to use `RunSettingsFilePath`, which takes care of it for us. If we now run `dotnet test` we get proper output.
+However, explicitly passing `--settings` every time does not solve anything. On the [Microsoft Docs](https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022) I found the solution. We can tell MSBuild to use `RunSettingsFilePath`, which takes care of it for us. If we now run `dotnet test` we get proper output. For example, you can add a `Directory.Build.props` to the root of your project.
+
+```xml
+<Project>
+  <PropertyGroup>
+    <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
+  </PropertyGroup>
+</Project>
+```
 
 ## Closing Thoughts
 I know I am not the first to write about this topic, but I hope to provide fresh insight into the subject matter. The different techniques all have their merit. I have used all three on other occasions and remind you that the NullLogger is a viable option in many cases. Nine times out of 10, you probably only care about the business logic to test. For the final remaining time, I can only say the well-known programming wisdom: "It depends".
