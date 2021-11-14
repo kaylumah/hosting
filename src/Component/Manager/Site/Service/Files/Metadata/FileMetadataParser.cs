@@ -57,7 +57,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
                 var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-                var modifiedDate = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
+                var modifiedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
+                fileMetaData.Modified = modifiedDateTime;
             }
 
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.

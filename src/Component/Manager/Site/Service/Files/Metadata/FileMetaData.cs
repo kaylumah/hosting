@@ -141,7 +141,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        /*
         public DateTimeOffset? Modified
         {
             get
@@ -151,7 +150,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 DateTimeOffset result;
                 if (txt != null)
                 {
-                    result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd", null);
+                    result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd HH:mm", null);
                     this.SetValue(nameof(Modified), result);
                     return result;
                 } 
@@ -165,6 +164,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 this.SetValue(nameof(Modified), value);
             }
         }
-        */
     }
 }
