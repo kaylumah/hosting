@@ -145,7 +145,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-
+                return this.GetValue<DateTimeOffset?>(nameof(Modified));
+                /*
                 var txt = this.GetValue<string>(nameof(Modified));
                 DateTimeOffset result;
                 if (txt != null)
@@ -158,6 +159,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 {
                     return this.GetValue<DateTime?>(nameof(Modified));
                 }
+                */
             }
             set
             {
