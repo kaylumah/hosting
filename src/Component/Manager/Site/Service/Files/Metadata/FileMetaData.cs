@@ -93,6 +93,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        /*
         public DateTimeOffset? Modified
         {
             get
@@ -116,5 +117,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 this.SetValue(nameof(Modified), value);
             }
         }
+        */
     }
 }
