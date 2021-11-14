@@ -32,6 +32,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             var fileMetaData = ApplyDefaults(paths);
             OverwriteMetaData(fileMetaData, result.Data, "file");
 
+            if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
+            {
+                fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd");
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && !string.IsNullOrEmpty(fileMetaData.PublishedTime))
+            {
+                var publishedDateTimeString = $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}";
+                var publishedDate = System.DateTimeOffset.ParseExact(publishedDateTimeString, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                fileMetaData.Date = publishedDate;
+            }
+
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
 

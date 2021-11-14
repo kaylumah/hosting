@@ -93,6 +93,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string PublishedDate
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedDate), value);
+            }
+        }
+
+        public string PublishedTime
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedTime), value);
+            }
+        }
+
         /*
         public DateTimeOffset? Modified
         {
