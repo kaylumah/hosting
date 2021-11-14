@@ -2,6 +2,21 @@
 
 1. https://github.com/users/kaylumah/projects/2
 2. Convert to issue in GitHub repo
+3. 
+
+```md
+### Blog Discussion
+
+Article: [Capture Logs in Unit Tests](https://kaylumah.nl/2021/11/14/capture-logs-in-unit-tests.html)
+Source: [GitHub](https://github.com/kaylumah/CaptureLogsInUnitTests)
+```
+
+label with "Article"
+
+
+https://dev.to/settings/extensions
+
+https://github.com/kaylumah/kaylumah/actions
 
 
 ## Cross posting
