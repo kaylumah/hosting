@@ -6,7 +6,7 @@ cover_image: /assets/images/posts/20190907/githooks/cover.png
 tags:
     - csharp
     - git
-modified: '2021-03-21'
+modifieddate: '2021-03-21'
 comment_id: '12'
 featured: true
 ---

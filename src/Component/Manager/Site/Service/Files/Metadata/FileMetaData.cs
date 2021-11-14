@@ -93,16 +93,65 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string PublishedDate
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedDate), value);
+            }
+        }
+
+        public string PublishedTime
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedTime), value);
+            }
+        }
+
+        public string ModifiedDate
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedDate), value);
+            }
+        }
+
+        public string ModifiedTime
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedTime), value);
+            }
+        }
+
         public DateTimeOffset? Modified
         {
             get
             {
-
+                return this.GetValue<DateTimeOffset?>(nameof(Modified));
+                /*
                 var txt = this.GetValue<string>(nameof(Modified));
                 DateTimeOffset result;
                 if (txt != null)
                 {
-                    result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd", null);
+                    result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd HH:mm", null);
                     this.SetValue(nameof(Modified), result);
                     return result;
                 } 
@@ -110,6 +159,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 {
                     return this.GetValue<DateTime?>(nameof(Modified));
                 }
+                */
             }
             set
             {

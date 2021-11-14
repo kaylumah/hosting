@@ -32,6 +32,35 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             var fileMetaData = ApplyDefaults(paths);
             OverwriteMetaData(fileMetaData, result.Data, "file");
 
+            if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
+            {
+                fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd");
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && !string.IsNullOrEmpty(fileMetaData.PublishedTime))
+            {
+                var publishedDateTimeString = $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}";
+                var publishedDate = System.DateTimeOffset.ParseExact(publishedDateTimeString, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                fileMetaData.Date = publishedDate;
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+            {
+                fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
+            }
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
+            {
+                fileMetaData.ModifiedTime = fileMetaData.ModifiedTime;
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+            {
+                var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
+                var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+                var modifiedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
+                fileMetaData.Modified = modifiedDateTime;
+            }
+
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
 
