@@ -117,6 +117,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string ModifiedDate
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedDate), value);
+            }
+        }
+
+        public string ModifiedTime
+        {
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedTime), value);
+            }
+        }
+
         /*
         public DateTimeOffset? Modified
         {
