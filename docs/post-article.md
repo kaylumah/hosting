@@ -14,6 +14,14 @@ Source: [GitHub](https://github.com/kaylumah/CaptureLogsInUnitTests)
 label with "Article"
 
 
+Create rpo
+description "Blog post"
+Website blog link
+topcs: tags
+
+include in home page nothing
+
+
 https://dev.to/settings/extensions
 
 https://github.com/kaylumah/kaylumah/actions
