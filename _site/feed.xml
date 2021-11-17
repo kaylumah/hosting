@@ -14,6 +14,7 @@
     <generator uri="/feed.xml" version="{{ build.short_git_hash }}">Kaylumah Site Generator</generator>
     {%- assign posts = site.collections['posts'] | array.sort "date" | array.reverse -%}
     {%- for post in posts -%}
+    {% if post.feed != 'False' %}
     {% assign post_author = site.data.authors[post.author] %}
     <entry>
         <id>{{ post.uri | absolute_url }}</id>
@@ -46,5 +47,6 @@
 
         {% endif %}
     </entry>
+    {% endif %}
     {% endfor %}
 </feed>
