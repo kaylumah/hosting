@@ -874,7 +874,7 @@ public async Task Test_ArticleAccess_Returns200OK()
 
 ## Summary
 
-That concludes my experiment for the day. I have shown three instances where you can apply your custom subclasses of Mock<T>. The way I see it, it offers three distinct advantages:
+That concludes my experiment for the day. I have shown three instances where you can apply your custom subclasses of `Mock<T>`. The way I see it, it offers three distinct advantages:
 
 1. Test code and mock code is separated.
 2. Mock code is reusable across tests.
