@@ -236,7 +236,7 @@ public class XunitLoggerConfiguration
 }
 ```
 
-Next up is our Xunit logger itself. The ColoredConsole sample from the docs does nothing with scope, but to not limit ourselves later, we changed the implementation of `BeginScope` to use `IExternalScopeProvider`. To print the log line, we need the last argument of Log<TState>, which is the formatter. We then pass it the Xunit's ITestOutputHelper to [capture output](https://xunit.net/docs/capturing-output). Depending on your specific needs, you can log the logger's category (name), event, log level, scope or even exception. For now, let's keep it simple.
+Next up is our Xunit logger itself. The ColoredConsole sample from the docs does nothing with scope, but to not limit ourselves later, we changed the implementation of `BeginScope` to use `IExternalScopeProvider`. To print the log line, we need the last argument of `Log<TState>`, which is the formatter. We then pass it the Xunit's ITestOutputHelper to [capture output](https://xunit.net/docs/capturing-output). Depending on your specific needs, you can log the logger's category (name), event, log level, scope or even exception. For now, let's keep it simple.
 
 ```cs
 public class XunitLogger : ILogger
