@@ -6,6 +6,7 @@
     <updated>{{ build.time | date_to_xmlschema }}</updated>
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
     <link href="{{ 'blog.html' | absolute_url }}" rel="alternate" type="text/html" />
+    <link href="{{ 'archive.html' | absolute_url }}" rel="related" type="text/html" />
     <title>{{ site.title | html.escape }}</title>
     <subtitle>{{ site.description }}</subtitle>
     <icon>{{ "assets/logo_alt.svg" | absolute_url }}</icon>
