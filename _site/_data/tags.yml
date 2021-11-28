@@ -1,3 +1,6 @@
+configuration:
+  name: "Configuration"
+  description: "Application configuration"
 csharp:
   name: "C#"
   description: "for the C# programming language"
