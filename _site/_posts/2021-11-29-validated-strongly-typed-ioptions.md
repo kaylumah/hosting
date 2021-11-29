@@ -139,7 +139,7 @@ As I see it, there are two distinct ways configuration can fail.
 
 ### Missing Configuration Sections
 
-The first variant is binding configuration at a section that does not exist. That is because `configuration.GetSection` does not throw but [returns null](https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0) for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an IOptions<TOptions> but with null values.
+The first variant is binding configuration at a section that does not exist. That is because `configuration.GetSection` does not throw but [returns null](https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0) for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an `IOptions<TOptions>` but with null values.
 
 When specifying a section by name, I expect that section to exist. Therefore I want my application to not boot with missing configuration sections. The following extension method takes care of that.
 
