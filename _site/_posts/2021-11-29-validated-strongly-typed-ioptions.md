@@ -6,8 +6,8 @@ image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_im
 tags:
   - "csharp"
   - "configuration"
-# comment_id: '50'
-# publishedtime: '20:30'
+comment_id: '56'
+publishedtime: '19:00'
 ---
 Almost every project will have some settings that are configured differently per environment. Chapter three of "The Twelve-Factor App" [explains](https://12factor.net/config) why separating configuration from code is a good idea. In `.NET`, we use the `IConfigurationBuilder` to manage our configuration. An `IOptions<>` is used to make a configuration available as a strongly typed type in our applications.
 
