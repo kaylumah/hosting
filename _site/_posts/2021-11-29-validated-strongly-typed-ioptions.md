@@ -1,0 +1,589 @@
+---
+title: "Validated Strongly Typed IOptions"
+description: "Find configuration errors early with data annotations validation for IOptions in .NET"
+cover_image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
+image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
+tags:
+  - "csharp"
+  - "configuration"
+comment_id: '56'
+publishedtime: '19:00'
+---
+Almost every project will have some settings that are configured differently per environment. Chapter three of "The Twelve-Factor App" [explains](https://12factor.net/config) why separating configuration from code is a good idea. In `.NET`, we use the `IConfigurationBuilder` to manage our configuration. An `IOptions<>` is used to make a configuration available as a strongly typed type in our applications.
+
+As I understand it, the `configuration` concept in `.NET` is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the `options` concept provides access to `configuration` from our application code. I've attempted to illustrate it with the image below. 
+
+![configuration sources](/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg)
+
+## Configuration in .NET
+
+Technically the image above is an over-simplification. In reality, you use an `IConfigurationBuilder` where different providers are provided, and the configuration block in the middle is the merged build-result of the configuration builder. In fact, you get a preconfigured configuration builder every time you use the `ASP.NET` Web templates. You get a [default HostBuilder](https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/Host.cs#L53) that setups an [IHost](https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostBuilder.cs#L124). This default builder also takes care of the [default configuration](https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostingHostBuilderExtensions.cs#L188).
+
+The default configuration adds in order
+- appsettings.json
+- appsettings.Environment.json
+- user secrets (if the environment is development)
+- environment variables
+- command-line arguments
+
+The priority of settings is in the reverse order of adding them to the builder. Passing a setting via the `command line` will always win from a setting in the `appsettings.json` file. Fun fact, there are two configurations in `ASP.NET`. You have the `AppConfiguration` we just discussed, and you have the `HostConfiguration`. The `HostConfiguration` is used to set variables like the `DOTNET_ENVIRONMENT`, which is used to load the proper `appsettings.json` and user secrets. Via means of `ChainedConfiguration` the entire `HostConfiguration` is also available as part of `AppConfiguration`.
+
+Let's look at an example. Take the following JSON configuration:
+
+```json
+{
+    "MySample": {
+        "MyText": "Hello World!",
+        "MyCollection": [
+            {
+                "MyOtherText": "Goodbye Cruel World!"
+            }
+        ]
+    }
+}
+```
+
+That would result in the following two settings being present in our IConfiguration.
+- `MySample:MyText`
+- `MySample:MyCollection:0:MyOtherText`
+
+With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.
+
+![configuration builder](/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg)
+
+>  As pointed out by the "The Twelve-Factor App" article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.
+
+You can [read about changes to IConfiguration](https://andrewlock.net/exploring-dotnet-6-part-1-looking-inside-configurationmanager-in-dotnet-6/) in `.NET6` in a post from Andrew Lock. It also contains a different visual representation of configuration, which neatly displays the merging of the different levels.
+
+## Options in .NET
+
+According to the [Microsoft Docs](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0#bind-hierarchical-configuration) the options pattern is the preferred way to read related configuration values. The options pattern comes in three different flavours, `IOptions<>`, `IOptionsSnapshot<>` and `IOptionsMonitor<>`. Probably the most used one is the default `IOptions` one, with the drawback that you cannot read configuration after your app starts. Others have taken the task upon themself to explain the differences between the interfaces, for example [Andrew Lock](https://andrewlock.net/creating-singleton-named-options-with-ioptionsmonitor) and [Khalid Abuhakmeh](https://khalidabuhakmeh.com/aspnet-core-ioptions-configuration). For this post, I will keep it simple with the regular `IOptions`.
+
+A typical registration of configuration would look like this:
+
+```csharp
+public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddDemo(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<DemoOptions>(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
+        return services;
+    }
+}
+```
+
+> This snippet requires the `Microsoft.Extensions.Options.ConfigurationExtensions` package to work
+
+Looking at our dependency injection container right after this registration, we see more than just `IOptions`. We have a total of seven registrations at this point.
+
+```output
+ServiceType = 'Microsoft.Extensions.Options.IOptions`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.UnnamedOptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsSnapshot`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitor`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsMonitor`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsFactory`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsFactory`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitorCache`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsCache`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsChangeTokenSource`1[Test.Unit.DemoOptions]' ImplementationType = ''
+ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.DemoOptions]' ImplementationType = ''
+```
+
+The problem with the above approach is that it assumes the configuration exists at a predefined section, which is not very flexible. An alternative approach to register `IOptions` is the use of an `Action<>`.
+
+```csharp
+public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddExample(this IServiceCollection services, Action<ExampleOptions> configureDelegate)
+    {
+        services.Configure(configureDelegate);
+        return services;
+    }
+}
+```
+
+With this approach, we get a total of six DI registrations.
+
+```output
+ServiceType = 'Microsoft.Extensions.Options.IOptions`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.UnnamedOptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsSnapshot`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitor`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsMonitor`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsFactory`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsFactory`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitorCache`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsCache`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.ExampleOptions]' ImplementationType = ''
+```
+
+The only difference is that we do not get the `IOptionsChangeTokenSource`. To be most flexible, you can combine both techniques like this.
+
+```csharp
+public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddExample(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddExample(options => config.GetSection(ExampleOptions.DefaultConfigurationSectionName).Bind(options));
+        return services;
+    }
+
+    public static IServiceCollection AddExample(this IServiceCollection services, Action<ExampleOptions> configureDelegate)
+    {
+        services.Configure(configureDelegate);
+        return services;
+    }
+}
+```
+
+## Validated Options
+
+Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.
+
+In my article [Generate C# client for OpenAPI](https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html), I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter "not-an-url" as its value, which causes your application to crash and burn.
+
+As I see it, there are two distinct ways configuration can fail.
+
+### Missing Configuration Sections
+
+The first variant is binding configuration at a section that does not exist. That is because `configuration.GetSection` does not throw but [returns null](https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0) for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an `IOptions<TOptions>` but with null values.
+
+When specifying a section by name, I expect that section to exist. Therefore I want my application to not boot with missing configuration sections. The following extension method takes care of that.
+
+```cs
+public static IConfigurationSection GetExistingSectionOrThrow(this IConfiguration configuration, string key)
+{
+    var configurationSection = configuration.GetSection(key);
+
+    if (!configurationSection.Exists())
+    {
+        throw configuration switch
+        {
+            IConfigurationRoot configurationIsRoot => new ArgumentException($"Section with key '{key}' does not exist. Existing values are: {configurationIsRoot.GetDebugView()}", nameof(key)),
+            IConfigurationSection configurationIsSection => new ArgumentException($"Section with key '{key}' does not exist at '{configurationIsSection.Path}'. Expected configuration path is '{configurationSection.Path}'", nameof(key)),
+            _ => new ArgumentException($"Failed to find configuration at '{configurationSection.Path}'", nameof(key))
+        };
+    }
+
+    return configurationSection;
+}
+```
+
+> **caution**: configurationIsRoot.GetDebugView() prints all configuration settings and their value, if you have secrets you should add log masking to prevent them from being logged.
+
+### DataAnnotations Validation
+
+The second variant is the most likely to occur. That is, settings are present but not valid in the context of the application. I recently browsed the Microsoft Docs after (again) losing time chasing configuration issues when I came across `IValidateOptions`. I also rediscovered `ValidateDataAnnotations` on the `IOptionsBuilder`, which I previously dismissed since it was a different API (`AddOptions<>`) than the `Configure<>` APIs. With Resharper by my side, I checked the implementation and discovered that it uses `DataAnnotationValidateOptions` a class that is a `IValidateOptions`.
+
+When consuming an IOptions, there are three hooks we can use. We have `IConfigureOptions`, `IPostConfigureOptions` and `IValidateOptions`. If you head back up to where I printed the dependency injection container, you see that every time you use `Configure<>`, you get an `IConfigureOptions`. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered "option services".
+
+![options factory](/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg)
+
+You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an `IPostConfigureOptions` or `IValidateOptions` before the normal `IConfigureOptions`, it won't run before it. The factory runs through 0 or more `IConfigureOptions`, 0 or more `IPostConfigureOptions` and finally 0 or more `IValidateOptions` and always in that order.
+
+To demonstrate how this works, consider the following example:
+
+```csharp
+public class ConfigureLibraryExampleServiceOptions : IConfigureOptions<LibraryExampleServiceOptions>, IPostConfigureOptions<LibraryExampleServiceOptions>, IValidateOptions<LibraryExampleServiceOptions>
+{
+    private readonly ILogger _logger;
+
+    public ConfigureLibraryExampleServiceOptions(ILogger<ConfigureLibraryExampleServiceOptions> logger)
+    {
+        _logger = logger;
+    }
+    
+    public void Configure(LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation("ConfigureExampleServiceOptions Configure");
+    }
+
+    public void PostConfigure(string name, LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation("ConfigureExampleServiceOptions PostConfigure");
+    }
+
+    public ValidateOptionsResult Validate(string name, LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation("ConfigureExampleServiceOptions ValidateOptionsResult");
+        return ValidateOptionsResult.Skip;
+    }
+}
+```
+
+You might assume that this validation triggers the moment we resolve an IOptions from the DI container. Unfortunately, this is not the case; it only triggers when using the `.Value` property.
+
+```csharp
+var configuration = new ConfigurationBuilder()
+    .AddInMemoryCollection(new Dictionary<string, string>() {
+        [string.Join(":", LibraryExampleServiceOptions.DefaultConfigurationSectionName, nameof(LibraryExampleServiceOptions.BaseUrl))] = "http://example.com"
+    })
+    .Build();
+var serviceProvider = new ServiceCollection()
+    .AddLogging(builder => builder.AddConsole())
+    .AddExampleLibrary(configuration)
+    .BuildServiceProvider();
+
+var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Before retrieving IOptions");
+var options = serviceProvider.GetRequiredService<IOptions<LibraryExampleServiceOptions>>();
+logger.LogInformation("After retrieving IOptions; before IOptions.Value");
+var optionsValue = options.Value;
+logger.LogInformation("After IOptions.Value");
+
+Console.ReadLine();
+```
+
+Which outputs:
+
+```output
+info: Program[0]
+      Before retrieving IOptions
+info: Program[0]
+      After retrieving IOptions; before IOptions.Value
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions Configure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions PostConfigure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions ValidateOptionsResult
+info: Program[0]
+      After IOptions.Value
+```
+
+Circling back to validation, I've created an extension method that registers `DataAnnotationValidateOptions `for us. One thing to note is that `IValidateOptions` is a named option, whereas the normal `IOptions` is an unnamed option. Microsoft solved this by providing a "DefaultName" for an options object which is an empty string.
+
+```csharp
+public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection ConfigureWithValidation<TOptions>(this IServiceCollection services, IConfiguration config) where TOptions : class
+        => services.ConfigureWithValidation<TOptions>(Options.Options.DefaultName, config);
+    
+    public static IServiceCollection ConfigureWithValidation<TOptions>(this IServiceCollection services, string name, IConfiguration config) where TOptions : class
+    {
+        _ = config ?? throw new ArgumentNullException(nameof(config));
+        services.Configure<TOptions>(name, config);
+        services.AddDataAnnotationValidatedOptions<TOptions>(name);
+        return services;
+    }
+
+    public static IServiceCollection ConfigureWithValidation<TOptions>(this IServiceCollection services, Action<TOptions> configureOptions) where TOptions : class
+        => services.ConfigureWithValidation<TOptions>(Options.Options.DefaultName, configureOptions);
+
+    public static IServiceCollection ConfigureWithValidation<TOptions>(this IServiceCollection services, string name, Action<TOptions> configureOptions) where TOptions : class
+    {
+        services.Configure(name, configureOptions);
+        services.AddDataAnnotationValidatedOptions<TOptions>(name);
+        return services;
+    }
+
+    private static IServiceCollection AddDataAnnotationValidatedOptions<TOptions>(this IServiceCollection services, string name) where TOptions : class
+    {
+        services.TryAddEnumerable(ServiceDescriptor.Singleton<IValidateOptions<TOptions>>(new DataAnnotationValidateOptions<TOptions>(name)));
+        return services;
+    }
+}
+```
+
+If we put it to the test, our settings object could look like this. In this case, we use the `Required` and `Url` attributes. You can use [any of the attributes](https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-6.0) provided by default, or create your custom attributes.
+
+
+```csharp
+public class LibraryExampleServiceOptions
+{
+    public const string DefaultConfigurationSectionName = nameof(LibraryExampleServiceOptions);
+
+    [Required, Url]
+    public string? BaseUrl { get;set; }
+}
+```
+
+> Consider nullability and default values of properties when defining them. In the spirit of the example, you might have a retry-count if it has the value 0; is that because you specified it or forgot to define it? That's why I always define properties as `[Required]` and `Nullable`.
+
+```output
+info: Program[0]
+      Before retrieving IOptions
+info: Program[0]
+      After retrieving IOptions; before IOptions.Value
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions Configure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions PostConfigure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions ValidateOptionsResult
+Unhandled exception. Microsoft.Extensions.Options.OptionsValidationException: DataAnnotation validation failed for 'LibraryExampleServiceOptions' members: 'BaseUrl' with the error: 'The BaseUrl field is not a valid fully-qualified http, https, or ftp URL.'.
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Program.<Main>$(String[] args) 
+```
+
+I think that is pretty neat. But I am not a big fan of the formatting. I remember the last time I used the `Web API` template, which resulted in a nicely formatted error. I had to dig in the ASPNET code, and it's the [ModelStateInvalidFilter](https://github.com/dotnet/aspnetcore/blob/a450cb69b5e4549f5515cdb057a68771f56cefd7/src/Mvc/Mvc.Core/src/Infrastructure/ModelStateInvalidFilter.cs#L80) that transforms [ModelStateDictionary.cs](https://github.com/dotnet/aspnetcore/blob/d9660d157627af710b71c636fa8cb139616cadba/src/Mvc/Mvc.Abstractions/src/ModelBinding/ModelStateDictionary.cs#L147) into a ValidationProblemDetails. I've added an example of this to the source repo, with the output shown below.
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+    "title": "One or more validation errors occurred.",
+    "status": 400,
+    "traceId": "00-50f5816f844377e66f37688f297dfd29-ab771434a82ee290-00",
+    "errors": {
+        "Name": ["The Name field is required."],
+        "EmailAddresses[0].Label": ["The Label field is required."],
+        "EmailAddresses[0].Address": ["The Address field is required."]
+    }
+}
+```
+
+In the example above, I added validation on both the parent and the child DTO. It appears, however, that doing the same with DataAnnotations does not work. To enable the same behaviour for DataAnnotations, we can create custom `ValidationAttributes`. We begin with defining a special `ValidationResult` that is a composite of multiple ValidationResults.
+
+```csharp
+public class CompositeValidationResult : System.ComponentModel.DataAnnotations.ValidationResult
+{
+    private readonly List<System.ComponentModel.DataAnnotations.ValidationResult> results = new();
+
+    public IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> Results => results;
+
+    public CompositeValidationResult(string? errorMessage) : base(errorMessage)
+    {
+    }
+
+    public CompositeValidationResult(string errorMessage, IEnumerable<string>? memberNames) : base(errorMessage, memberNames)
+    {
+    }
+
+    protected CompositeValidationResult(System.ComponentModel.DataAnnotations.ValidationResult validationResult) : base(validationResult)
+    {
+    }
+
+    public void AddResult(System.ComponentModel.DataAnnotations.ValidationResult validationResult)
+    {
+        results.Add(validationResult);
+    }
+}
+```
+
+Next we create a custom `ValidationAttribute` for objects.
+
+```csharp
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+public sealed class ValidateObjectAttribute : ValidationAttribute
+{
+    protected override System.ComponentModel.DataAnnotations.ValidationResult IsValid(object? value, ValidationContext validationContext)
+    {
+        if (value != null && validationContext != null)
+        {
+            var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+            var context = new ValidationContext(value, null, null);
+
+            System.ComponentModel.DataAnnotations.Validator.TryValidateObject(value, context, results, true);
+
+            if (results.Count != 0)
+            {
+                var compositeValidationResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed.", new[] { validationContext.MemberName });
+                results.ForEach(compositeValidationResult.AddResult);
+
+                return compositeValidationResult;
+            }
+        }
+
+        return System.ComponentModel.DataAnnotations.ValidationResult.Success;
+    }
+}
+```
+
+And finally, we need a `ValidationAttribute` for collections.
+
+```csharp
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+public sealed class ValidateCollectionAttribute : ValidationAttribute
+{
+    protected override System.ComponentModel.DataAnnotations.ValidationResult IsValid(object? value, ValidationContext validationContext)
+    {
+        CompositeValidationResult? collectionCompositeValidationResult = null;
+
+        if (value is IEnumerable collection && validationContext != null)
+        {
+            var index = 0;
+            foreach (var obj in collection)
+            {
+                var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+                var context = new ValidationContext(obj, null, null);
+
+                System.ComponentModel.DataAnnotations.Validator.TryValidateObject(obj, context, results, true);
+
+                if (results.Count != 0)
+                {
+                    var compositeValidationResult = new CompositeValidationResult($"Validation for {validationContext.MemberName}[{index}] failed.", new[] { $"{validationContext.MemberName}[{index}]" });
+                    results.ForEach(compositeValidationResult.AddResult);
+
+                    if (collectionCompositeValidationResult == null)
+                    {
+                        collectionCompositeValidationResult = new CompositeValidationResult($"Validation for {validationContext.MemberName} failed.", new[] { validationContext.MemberName });
+                    }
+
+                    collectionCompositeValidationResult.AddResult(compositeValidationResult);
+                }
+
+                index++;
+            }
+
+            if (collectionCompositeValidationResult != null)
+            {
+                return collectionCompositeValidationResult;
+            }
+        }
+
+        return System.ComponentModel.DataAnnotations.ValidationResult.Success;
+    }
+}
+```
+
+Our validation would already trigger with just these attributes. But we are also interested in handling our CompositeValidationResult and pretty-printing it.
+
+```csharp
+public static class Validator
+{
+    public static ValidationResult[] ValidateReturnValue(object objectToValidate)
+    {
+        var validationResults = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+
+        if (objectToValidate == null)
+        {
+            validationResults.Add(new System.ComponentModel.DataAnnotations.ValidationResult("Return value is required."));
+        }
+        else
+        {
+            var validationContext = new ValidationContext(objectToValidate);
+
+            System.ComponentModel.DataAnnotations.Validator.TryValidateObject(objectToValidate, validationContext, validationResults, true);
+
+            if (validationResults.Count != 0)
+            {
+                var compositeValidationResult = new CompositeValidationResult($"Validation for {validationContext.DisplayName} failed.", new[] { validationContext.MemberName });
+                validationResults.ForEach(compositeValidationResult.AddResult);
+            }
+        }
+
+        var structuredValidationResults = StructureValidationResults(validationResults);
+        return structuredValidationResults;
+    }
+
+    private static ValidationResult[] StructureValidationResults(IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> validationResults)
+    {
+        var structuredValidationResults = new List<ValidationResult>();
+        foreach (var validationResult in validationResults)
+        {
+            var structuredValidationResult = new ValidationResult
+            {
+                ErrorMessage = validationResult.ErrorMessage,
+                MemberNames = validationResult.MemberNames.ToArray()
+            };
+
+            if (validationResult is CompositeValidationResult compositeValidationResult)
+            {
+                structuredValidationResult.ValidationResults = StructureValidationResults(compositeValidationResult.Results);
+            }
+
+            structuredValidationResults.Add(structuredValidationResult);
+        }
+
+        return structuredValidationResults.ToArray();
+    }
+}
+```
+
+You can then use it in an `IValidateOptions` like this
+
+```csharp
+internal class CustomValidate : IValidateOptions<NestedParent>
+{
+    public ValidateOptionsResult Validate(string name, NestedParent options)
+    {
+        var validationResults = Kaylumah.ValidatedStronglyTypedIOptions.Utilities.Validation.Validator.ValidateReturnValue(options);
+        if (validationResults.Any())
+        {
+            var builder = new StringBuilder();
+            foreach (var result in validationResults)
+            {
+                var pretty = PrettyPrint(result, string.Empty, true);
+                builder.Append(pretty);
+            }
+            return ValidateOptionsResult.Fail(builder.ToString());
+        }
+
+        return ValidateOptionsResult.Success;
+    }
+
+    private string PrettyPrint(Kaylumah.ValidatedStronglyTypedIOptions.Utilities.Validation.ValidationResult root, string indent, bool last)
+    {
+        // Based on https://stackoverflow.com/a/1649223
+        var sb = new StringBuilder();
+        sb.Append(indent);
+        if (last)
+        {
+            sb.Append("|-");
+            indent += "  ";
+        }
+        else
+        {
+            sb.Append("|-");
+            indent += "| ";
+        }
+
+        sb.AppendLine(root.ToString());
+
+        if (root.ValidationResults != null)
+        {
+            for (var i = 0; i < root.ValidationResults.Length; i++)
+            {
+                var child = root.ValidationResults[i];
+                var pretty = PrettyPrint(child, indent, i == root.ValidationResults.Length - 1);
+                sb.Append(pretty);
+            }
+        }
+
+        return sb.ToString();
+    }
+}
+```
+
+Which prints
+
+```output
+Microsoft.Extensions.Options.OptionsValidationException : |-Children => Validation for Children failed.
+  |-Children[0] => Validation for Children[0] failed.
+    |-Name => The Name field is required.
+
+    Stack Trace:
+       at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+```
+
+That looks more like it. One thing this approach, unfortunately, cannot solve is that errors occur at runtime. Wherewith `IConfiguration`, we could get the error at startup; we don't have the same luxury with `IOptions` since, as demonstrated, `Value` triggers at runtime. It is, however, a step in the right direction.
+
+> **Note**: since IOptions<> is an unbound generic you cannot retrieve all instances of it from the DI container to trigger this behaviour at startup
+
+## Bonus: Strongly typed options
+
+I never liked using `IOptions<>` all over the place. I've found it especially bothersome in unit tests. I would either need `Options.Create` or create an `IOptions` Moq. If you don't rely on reloading configuration (remember `IOptions` is a Singleton), you can register a typed instance, which I find pretty neat.
+
+```csharp
+var serviceProvider = new ServiceCollection()
+            .Configure<StronglyTypedOptions>(builder => {
+                builder.Name = "TestStronglyTypedOptions";
+            })
+            .AddSingleton(sp => sp.GetRequiredService<IOptions<StronglyTypedOptions>>().Value)
+            .BuildServiceProvider();
+var options = serviceProvider.GetRequiredService<IOptions<StronglyTypedOptions>>().Value;
+var typedOptions = serviceProvider.GetRequiredService<StronglyTypedOptions>();
+typedOptions.Name.Should().Be(options.Name);
+```
+
+## Closing Thoughts
+
+Using the options and configuration patterns described in this article makes it a lot less likely to run into configuration errors, or at the very least, it makes it easier to troubleshoot configuration mistakes. 
+
+As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
+
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/ValidatedStronglyTypedIOptions).
+
+See you next time, stay healthy and happy coding to all 🧸!
+
+## Resources
+
+- [Configuration in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration)
+- [Configuration in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0)
+- [Options pattern in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/options)
+- [Options pattern in ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0)
