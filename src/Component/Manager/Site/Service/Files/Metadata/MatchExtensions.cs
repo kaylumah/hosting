@@ -1,5 +1,6 @@
 // Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
+using System.Collections.Generic;
 using System.Linq;
 
 namespace System.Text.RegularExpressions
@@ -10,8 +11,8 @@ namespace System.Text.RegularExpressions
         {
             if (match.Success)
             {
-                var fileName = match.Groups.FirstOrDefault(x => "filename".Equals(x.Name));
-                var extension = match.Groups.FirstOrDefault(x => "ext".Equals(x.Name));
+                var fileName = match.Groups.Cast<Group>().FirstOrDefault(x => "filename".Equals(x.Name));
+                var extension = match.Groups.Cast<Group>().FirstOrDefault(x => "ext".Equals(x.Name));
 
                 if (fileName != null && fileName.Success && extension != null && extension.Success)
                 {
@@ -25,9 +26,9 @@ namespace System.Text.RegularExpressions
         {
             if (match.Success)
             {
-                var year = match.Groups.FirstOrDefault(x => "year".Equals(x.Name));
-                var month = match.Groups.FirstOrDefault(x => "month".Equals(x.Name));
-                var day = match.Groups.FirstOrDefault(x => "day".Equals(x.Name));
+                var year = match.Groups.Cast<Group>().FirstOrDefault(x => "year".Equals(x.Name));
+                var month = match.Groups.Cast<Group>().FirstOrDefault(x => "month".Equals(x.Name));
+                var day = match.Groups.Cast<Group>().FirstOrDefault(x => "day".Equals(x.Name));
 
                 if (year != null && year.Success && month != null && month.Success && day != null && day.Success)
                 {
