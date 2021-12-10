@@ -14,14 +14,11 @@ jobs:
   # Setup build dependencies
   setup-dotnet:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet: [ 6.0.x ]
     steps:
-      - name: Setup .NET (${{ matrix.dotnet }})
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: ${{ matrix.dotnet }}
+    - uses: actions/setup-dotnet@v1.9.0
+      with:
+        dotnet-version: |
+          6.0.x
 
   setup-node:
     runs-on: ubuntu-latest
