@@ -12,15 +12,15 @@ on:
 jobs:
 
   # Setup build dependencies
-  setup-dotnet:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-dotnet@v1.9.0
-      with:
-        dotnet-version: |
-          6.0.x
-    - name: 'List Sdks'
-      run: dotnet --list-sdks
+  # setup-dotnet:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/setup-dotnet@v1.9.0
+  #     with:
+  #       dotnet-version: |
+  #         6.0.x
+  #   - name: 'List Sdks'
+  #     run: dotnet --list-sdks
 
   setup-node:
     runs-on: ubuntu-latest
@@ -34,13 +34,18 @@ jobs:
           node-version: ${{ matrix.node }}
 
   build:
-    needs: [ setup-dotnet, setup-node ]
+    # needs: [ setup-dotnet, setup-node ]
+    needs: [ setup-node ]
     runs-on: ubuntu-latest
     env:
       config: 'Release'
 
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1.9.0
+      with:
+        dotnet-version: |
+          6.0.x
     - name: 'Run'
       run: sh build.sh BUILD_ID=$GITHUB_RUN_ID BUILD_NUMBER=$GITHUB_RUN_NUMBER
     - name: Archive production artifacts
