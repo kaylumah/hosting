@@ -7,6 +7,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <DotNetPackageVersion>3.1.12</DotNetPackageVersion>
+        <DotNetPackageVersion>6.0.0</DotNetPackageVersion>
     </PropertyGroup>
 </Project>
