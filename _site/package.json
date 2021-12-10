@@ -1,25 +1,20 @@
 {
-  "name": "dist",
+  "name": "kaylumah_site",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "postcss styles.css -o compiled.css",
-    "build:prod": "NODE_ENV=production postcss styles.css -o compiled.css",
+    "build": "npx tailwindcss -i styles.css -o compiled.css",
+    "build:prod": "npx tailwindcss -i styles.css -o compiled.css --minify",
     "serve": "npx http-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
-    "@tailwindcss/line-clamp": "^0.2.1",
-    "@tailwindcss/typography": "^0.4.1",
-    "autoprefixer": "^10.2.6",
-    "cssnano": "^5.0.8",
-    "postcss": "^8.3.0",
-    "postcss-cli": "^8.3.1",
-    "tailwindcss": "2.2.2"
+    "@tailwindcss/line-clamp": "^0.3.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "tailwindcss": "^3.0.0"
   }
 }
