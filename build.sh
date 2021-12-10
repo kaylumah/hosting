@@ -35,6 +35,11 @@ echo "BUILD_NUMBER = '$BUILD_NUMBER'"
 _cwd="$PWD"
 CONFIGURATION=Release
 
+DIR="dist"
+if [ -d "$DIR" ]; then
+  rm -rf $DIR
+fi
+
 dotnet restore
 # build with MSBuild vars
 dotnet build --configuration $CONFIGURATION --no-restore /p:BuildId=$BUILD_ID /p:BuildNumber=$BUILD_NUMBER
@@ -49,4 +54,4 @@ npm run build:prod
 rm styles.css
 rm -rf node_modules
 rm package.json package-lock.json
-rm tailwind.config.js postcss.config.js
+rm tailwind.config.js
