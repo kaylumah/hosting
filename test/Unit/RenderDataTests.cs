@@ -28,7 +28,7 @@ namespace Test.Unit
         public void Test_RenderData_ContentEqualsPageContentIfNotNull()
         {
             var siteInfo = new SiteInfo();
-            var file = new File() {
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File() {
                 MetaData = new FileMetaData {
                 },
                 Content = "-"
@@ -44,7 +44,7 @@ namespace Test.Unit
         public void Test_RenderData_ContentEqualsEmptyStringWhenPageContentIsNull()
         {
             var siteInfo = new SiteInfo();
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -62,7 +62,7 @@ namespace Test.Unit
         public void Test_RenderData_TitleEqualsPageTitleIfExists()
         {
             var siteInfo = new SiteInfo();
-            var file = new File() {
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File() {
                 MetaData = new FileMetaData {
                     { "title", "1" }
                 }
@@ -81,7 +81,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo() {
                 Title = "2"
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -101,7 +101,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo()
             {
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -119,7 +119,7 @@ namespace Test.Unit
         public void Test_RenderData_DescriptionEqualsPageTitleIfExists()
         {
             var siteInfo = new SiteInfo();
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File ()
             {
                 MetaData = new FileMetaData {
                     { "description", "1" }
@@ -140,7 +140,7 @@ namespace Test.Unit
             {
                 Description = "2"
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -160,7 +160,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo()
             {
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -178,7 +178,7 @@ namespace Test.Unit
         public void Test_RenderData_LanguageEqualsPageTitleIfExists()
         {
             var siteInfo = new SiteInfo();
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData {
                     { "language", "1" }
@@ -199,7 +199,7 @@ namespace Test.Unit
             {
                 Lang = "2"
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -219,7 +219,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo()
             {
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -237,7 +237,7 @@ namespace Test.Unit
         public void Test_RenderData_AuthorEqualsPageTitleIfExists()
         {
             var siteInfo = new SiteInfo();
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData {
                     { "author", "1" }
@@ -257,7 +257,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo()
             {
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
@@ -277,7 +277,7 @@ namespace Test.Unit
             var siteInfo = new SiteInfo()
             {
             };
-            var file = new File()
+            var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
             {
                 MetaData = new FileMetaData
                 {
