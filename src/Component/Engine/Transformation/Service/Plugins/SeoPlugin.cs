@@ -1,4 +1,4 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
@@ -8,42 +8,42 @@ using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Runtime;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Service.Plugins
+namespace Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
+
+public class SeoPlugin : IPlugin
 {
-    public class SeoPlugin : IPlugin
+    private readonly string _raw;
+    public string Name => "seo";
+
+    public SeoPlugin()
     {
-        private readonly string _raw;
-        public string Name => "seo";
+        var template = Path.Combine(
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+            "Plugins",
+            "seo_template.html"
+        );
+        _raw = File.ReadAllText(template);
+    }
 
-        public SeoPlugin()
+    public string Render(object data)
+    {
+        var liquidTemplate = Template.ParseLiquid(_raw);
+        var context = new LiquidTemplateContext();
+        var ld = LdJson(data);
+        var scriptObject = new ScriptObject
         {
-            var template = Path.Combine(
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                "Plugins",
-                "seo_template.html"
-            );
-            _raw = File.ReadAllText(template);
-        }
+            ["seo_tag"] = data,
+            ["json_ld"] = ld
+        };
+        scriptObject.Import(typeof(GlobalFunctions));
+        context.PushGlobal(scriptObject);
+        var pluginResult = liquidTemplate.Render(context);
+        return pluginResult;
+    }
 
-        public string Render(object data)
-        {
-            var liquidTemplate = Template.ParseLiquid(_raw);
-            var context = new LiquidTemplateContext();
-            var ld = LdJson(data);
-            var scriptObject = new ScriptObject
-            {
-                ["seo_tag"] = data,
-                ["json_ld"] = ld
-            };
-            scriptObject.Import(typeof(GlobalFunctions));
-            context.PushGlobal(scriptObject);
-            var pluginResult = liquidTemplate.Render(context);
-            return pluginResult;
-        }
-
-        private Dictionary<string, object> LdJson(object o)
-        {
-            return new Dictionary<string, object>()
+    private Dictionary<string, object> LdJson(object o)
+    {
+        return new Dictionary<string, object>()
             {
                 { "datePublished", DateTime.Now.ToShortDateString() },
                 { "dateModified", DateTime.Now.ToShortDateString() },
@@ -84,6 +84,5 @@ namespace Kaylumah.Ssg.Engine.Transformation.Service.Plugins
                 { "description", "TODO" },
                 { "@context", "https://schema.org" }
             };
-        }
     }
 }

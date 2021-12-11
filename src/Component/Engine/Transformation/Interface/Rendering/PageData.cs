@@ -1,123 +1,122 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering
+namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+
+public class PageData : Dictionary<string, object>, IPageMetadata
 {
-    public class PageData : Dictionary<string, object>, IPageMetadata
+    public string Id
     {
-        public string Id
+        get
         {
-            get
-            {
-                return this.GetValue<string>(nameof(Id));
-            }
-            set
-            {
-                this.SetValue(nameof(Id), value);
-            }
+            return this.GetValue<string>(nameof(Id));
         }
-        public string Title => this.GetValue<string>(nameof(Title));
-        public string Description => this.GetValue<string>(nameof(Description));
-        public string Language => this.GetValue<string>(nameof(Language));
-        public string Author => this.GetValue<string>(nameof(Author));
-        public string Url => this.GetValue<string>(nameof(Url));
-        
-        public string Name
+        set
         {
-            get
-            {
-                return this.GetValue<string>(nameof(Name));
-            }
-            set
-            {
-                this.SetValue(nameof(Name), value);
-            }
+            this.SetValue(nameof(Id), value);
         }
+    }
+    public string Title => this.GetValue<string>(nameof(Title));
+    public string Description => this.GetValue<string>(nameof(Description));
+    public string Language => this.GetValue<string>(nameof(Language));
+    public string Author => this.GetValue<string>(nameof(Author));
+    public string Url => this.GetValue<string>(nameof(Url));
 
-        public string Content
+    public string Name
+    {
+        get
         {
-            get
-            {
-                return this.GetValue<string>(nameof(Content));
-            }
-            set
-            {
-                this.SetValue(nameof(Content), value);
-            }
+            return this.GetValue<string>(nameof(Name));
         }
+        set
+        {
+            this.SetValue(nameof(Name), value);
+        }
+    }
 
-        public DateTimeOffset LastModified
+    public string Content
+    {
+        get
         {
-            get
-            {
-                return this.GetValue<DateTimeOffset>(nameof(LastModified));
-            }
-            set
-            {
-                this.SetValue(nameof(LastModified), value);
-            }
+            return this.GetValue<string>(nameof(Content));
         }
+        set
+        {
+            this.SetValue(nameof(Content), value);
+        }
+    }
 
-        public string Collection
+    public DateTimeOffset LastModified
+    {
+        get
         {
-            get
-            {
-                return this.GetValue<string>(nameof(Collection));
-            }
-            set
-            {
-                this.SetValue(nameof(Collection), value);
-            }
+            return this.GetValue<DateTimeOffset>(nameof(LastModified));
         }
+        set
+        {
+            this.SetValue(nameof(LastModified), value);
+        }
+    }
 
-        public string Series
+    public string Collection
+    {
+        get
         {
-            get
-            {
-                return this.GetValue<string>(nameof(Series));
-            }
-            set
-            {
-                this.SetValue(nameof(Series), value);
-            }
+            return this.GetValue<string>(nameof(Collection));
         }
+        set
+        {
+            this.SetValue(nameof(Collection), value);
+        }
+    }
 
-        public List<string> Tags
+    public string Series
+    {
+        get
         {
-            get
-            {
-                return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
-            }
-            set
-            {
-                this.SetValue(nameof(Tags), value);
-            }
+            return this.GetValue<string>(nameof(Series));
         }
+        set
+        {
+            this.SetValue(nameof(Series), value);
+        }
+    }
 
-        public ContentType Type
+    public List<string> Tags
+    {
+        get
         {
-            get
-            {
-                var contentType = this.GetValue<string>(nameof(Type));
-                var x = Enum.Parse<ContentType>(contentType);
-                return x;
-            }
-            set
-            {
-                this.SetValue(nameof(Type), value);
-            }
+            return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
         }
+        set
+        {
+            this.SetValue(nameof(Tags), value);
+        }
+    }
 
-        public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified): base(metadata)
+    public ContentType Type
+    {
+        get
         {
-            Name = name;
-            Content = content;
-            LastModified = lastModified;
-            // TODO sync this...
-            this.SetValue("url", this.GetValue<string>("uri"));
+            var contentType = this.GetValue<string>(nameof(Type));
+            var x = Enum.Parse<ContentType>(contentType);
+            return x;
         }
+        set
+        {
+            this.SetValue(nameof(Type), value);
+        }
+    }
+
+    public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
+    {
+        Name = name;
+        Content = content;
+        LastModified = lastModified;
+        // TODO sync this...
+        this.SetValue("url", this.GetValue<string>("uri"));
     }
 }

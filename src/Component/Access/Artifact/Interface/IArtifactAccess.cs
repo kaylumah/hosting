@@ -3,10 +3,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Kaylumah.Ssg.Access.Artifact.Interface
+namespace Kaylumah.Ssg.Access.Artifact.Interface;
+
+public interface IArtifactAccess
 {
-    public interface IArtifactAccess
-    {
-        Task Store(StoreArtifactsRequest request);
-    }
+    Task Store(StoreArtifactsRequest request);
 }

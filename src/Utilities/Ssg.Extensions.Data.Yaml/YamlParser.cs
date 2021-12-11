@@ -1,24 +1,23 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Ssg.Extensions.Data.Yaml
+namespace Ssg.Extensions.Data.Yaml;
+
+public class YamlParser : IYamlParser
 {
-    public class YamlParser : IYamlParser
+    private readonly IDeserializer _deserializer;
+
+    public YamlParser()
     {
-        private readonly IDeserializer _deserializer;
+        _deserializer = new DeserializerBuilder()
+           .WithNamingConvention(CamelCaseNamingConvention.Instance)
+           .Build();
+    }
 
-        public YamlParser()
-        {
-            _deserializer = new DeserializerBuilder()
-               .WithNamingConvention(CamelCaseNamingConvention.Instance)
-               .Build();
-        }
-
-        public T Parse<T>(string raw)
-        {
-            return _deserializer.Deserialize<T>(raw);
-        }
+    public T Parse<T>(string raw)
+    {
+        return _deserializer.Deserialize<T>(raw);
     }
 }

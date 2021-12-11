@@ -2,9 +2,8 @@
 // See LICENSE file in the project root for full license information.
 using Ssg.Extensions.Data.Abstractions;
 
-namespace Ssg.Extensions.Data.Yaml
+namespace Ssg.Extensions.Data.Yaml;
+
+public interface IYamlParser : IParser
 {
-    public interface IYamlParser : IParser
-    {
-    }
 }
