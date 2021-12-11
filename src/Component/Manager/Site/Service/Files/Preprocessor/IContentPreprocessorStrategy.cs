@@ -1,12 +1,11 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using Microsoft.Extensions.FileProviders;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+
+public interface IContentPreprocessorStrategy
 {
-    public interface IContentPreprocessorStrategy
-    {
-        bool ShouldExecute(IFileInfo fileInfo);
-        string Execute(string raw);
-    }
+    bool ShouldExecute(IFileInfo fileInfo);
+    string Execute(string raw);
 }

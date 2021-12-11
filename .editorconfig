@@ -21,7 +21,7 @@ indent_size = 2
 # Code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
-insert_final_newline = true
+insert_final_newline = false
 charset = utf-8-bom
 ###############################
 # .NET Coding Conventions     #
@@ -128,6 +128,8 @@ csharp_space_between_method_call_empty_parameter_list_parentheses = false
 # Wrapping preferences
 csharp_preserve_single_line_statements = true
 csharp_preserve_single_line_blocks = true
+
+csharp_style_namespace_declarations = file_scoped:warning
 
 # License header
 file_header_template=Copyright (c) Kaylumah, 2021. All rights reserved.\nSee LICENSE file in the project root for full license information.

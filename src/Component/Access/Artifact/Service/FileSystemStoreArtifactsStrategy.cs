@@ -1,65 +1,64 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Utilities;
-using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 
-namespace Kaylumah.Ssg.Access.Artifact.Service
+namespace Kaylumah.Ssg.Access.Artifact.Service;
+
+public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
 {
-    public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
+    private readonly IFileSystem _fileSystem;
+    private readonly ILogger _logger;
+
+    public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
     {
-        private readonly IFileSystem _fileSystem;
-        private readonly ILogger _logger;
+        _logger = logger;
+        _fileSystem = fileSystem;
+    }
 
-        public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
+    public async Task Execute(StoreArtifactsRequest request)
+    {
+        if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
         {
-            _logger = logger;
-            _fileSystem = fileSystem;
-        }
+            // TODO look at clean
 
-        public async Task Execute(StoreArtifactsRequest request)
-        {
-            if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
+            foreach (var artifact in request.Artifacts)
             {
-                // TODO look at clean
+                var filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
+                var directory = Path.GetDirectoryName(filePath);
 
-                foreach (var artifact in request.Artifacts)
+                if (!Directory.Exists(directory))
                 {
-                    var filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
-                    var directory = Path.GetDirectoryName(filePath);
-
-                    if (!Directory.Exists(directory))
-                    {
-                        // Directory.CreateDirectory(directory);
-                        _fileSystem.CreateDirectory(directory);
-                    }
-
-                    //_logger.LogDebug($"Writing file: {filePath}");
-                    //_logger.LogDebug($"{file.Contents}");
-
-                    // await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
-                    await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                    // Directory.CreateDirectory(directory);
+                    _fileSystem.CreateDirectory(directory);
                 }
 
+                //_logger.LogDebug($"Writing file: {filePath}");
+                //_logger.LogDebug($"{file.Contents}");
 
-                return;
+                // await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
             }
-            throw new InvalidOperationException();
-            // foreach (var artifact in request.Artifacts)
-            // {
-            //     var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
-            //     var artifactDirectory = artifact.Path.Substring(0, index);
-            //     if (!Directory.Exists(artifactDirectory))
-            //     {
-            //         Directory.CreateDirectory(artifactDirectory);
-            //     }
-            //     await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
-            // }
-        }
 
-        public bool ShouldExecute(StoreArtifactsRequest request) => request.OutputLocation is FileSystemOutputLocation;
+
+            return;
+        }
+        throw new InvalidOperationException();
+        // foreach (var artifact in request.Artifacts)
+        // {
+        //     var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
+        //     var artifactDirectory = artifact.Path.Substring(0, index);
+        //     if (!Directory.Exists(artifactDirectory))
+        //     {
+        //         Directory.CreateDirectory(artifactDirectory);
+        //     }
+        //     await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
+        // }
     }
+
+    public bool ShouldExecute(StoreArtifactsRequest request) => request.OutputLocation is FileSystemOutputLocation;
 }
