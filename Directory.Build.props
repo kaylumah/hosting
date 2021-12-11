@@ -12,4 +12,8 @@
         <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
         <Copyright>$(CopyrightKaylumah)</Copyright>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
+    </PropertyGroup>
 </Project>
