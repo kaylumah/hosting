@@ -1,8 +1,8 @@
 ---
 title: 'Using C# code in your git hooks'
 description: 'Getting started with C# script in your client-side git hooks'
-image: /assets/images/posts/20190907/githooks/cover.png
-cover_image: /assets/images/posts/20190907/githooks/cover.png
+image: /assets/images/posts/20190907/githooks/cover_image.png
+cover_image: /assets/images/posts/20190907/githooks/cover_image.png
 tags:
     - csharp
     - git
