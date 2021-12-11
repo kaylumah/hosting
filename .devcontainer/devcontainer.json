@@ -1,8 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.202.5/containers/dotnet
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.205.2/containers/dotnet
 {
-	"name": "C# (.NET)",
-	"runArgs": ["--init"],
+	"name": "Kaylumah.nl",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { 
@@ -14,12 +13,29 @@
 		}
 	},
 
+	"containerEnv": {
+		"DOTNET_CLI_TELEMETRY_OPTOUT": "true"
+	},
+
 	// Set *default* container specific settings.json values on container create.
-	"settings": {},
+	"settings": {
+		"omnisharp.enableEditorConfigSupport": true,
+    	"omnisharp.enableImportCompletion": true,
+    	"omnisharp.enableRoslynAnalyzers": true,
+    	"omnisharp.organizeImportsOnFormat": true,
+    	"dotnet-test-explorer.enableTelemetry": false,
+    	"cSpell.words": [ "kaylumah" ]
+	},
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"ms-dotnettools.csharp"
+		"ms-dotnettools.csharp",
+		"formulahendry.dotnet-test-explorer",
+		"pflannery.vscode-versionlens",
+		"Editorconfig.editorconfig",
+		"esbenp.prettier-vscode",
+		"ryanluker.vscode-coverage-gutters",
+		"streetsidesoftware.code-spell-checker"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
