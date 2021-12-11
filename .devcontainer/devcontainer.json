@@ -35,7 +35,8 @@
 		"Editorconfig.editorconfig",
 		"esbenp.prettier-vscode",
 		"ryanluker.vscode-coverage-gutters",
-		"streetsidesoftware.code-spell-checker"
+		"streetsidesoftware.code-spell-checker",
+        "bradlc.vscode-tailwindcss"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
