@@ -57,3 +57,9 @@ nlcom:
   display_name: "NLcom"
   logo: "assets/images/cv/companies/nlcom.png"
   website: "https://www.linkedin.com/company/nlcom/"
+
+daftrucks:
+  display_name: "DAF Trucks NV"
+  logo: "assets/images/cv/companies/daf-trucks.png"
+  website: "https://www.linkedin.com/company/daf-trucks/"
+

@@ -18,3 +18,163 @@
     type: "Project"
     from: 2020-05-01
     to: 2020-05-31
+
+-
+    name: "Copper"
+    company: "ilionx"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "AddFixed L2"
+    company: "vfz"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "AddFixed L3"
+    company: "vfz"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Data Transfer Hub - XML Parser"
+    company: "vfz"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Clutter Tool"
+    company: "vfz"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Coverage Tool"
+    company: "vfz"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Senior Managers and Certification Regime (SMCR)"
+    company: "clifford"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "OinB 2 | POC"
+    company: "hn"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "OinB | Push Notification Service"
+    company: "hn"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "OinB | R51 - Porting on Demand"
+    company: "hn"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "OinB | BAU / SPOC"
+    company: "hn"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Vertex Platfom"
+    company: "energyessentials"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Rap"
+    company: "zaanstad"
+    role: "Intern"
+    type: "Project"
+    from: 2017-03-01
+    to: 2017-08-01
+
+-
+    name: "Turbine - DAF Specsheets"
+    company: "daftrucks"
+    role: "Intern"
+    type: "Project"
+    from: 2017-01-01
+    to: 2017-02-01
+
+-
+    name: "Turbine - DAF 3D Visualization"
+    company: "daftrucks"
+    role: "Intern"
+    type: "Project"
+    from: 2017-01-01
+    to: 2017-02-01
+
+-
+    name: "Turbine - Sekisui Esheet"
+    company: "sekisui"
+    role: "Intern"
+    type: "Project"
+    from: 2017-01-01
+    to: 2017-02-01
+
+-
+    name: "CloudInControl"
+    company: "qnh"
+    role: "Intern"
+    type: "Project"
+    from: 2016-09-01
+    to: 2017-01-01
+
+-
+    name: "Graduate Internship - Applicant follow-up system"
+    company: "qnh"
+    role: "Intern"
+    type: "Project"
+    from: 2016-02-01
+    to: 2016-07-01
+
+-
+    name: "JustAsk V2"
+    company: "nlcom"
+    role: "Intern"
+    type: "Project"
+    from: 2015-02-01
+    to: 2016-02-01
+
+-
+    name: "Internship - Workflow4People Liferay Integrtion"
+    company: "nlcom"
+    role: "Intern"
+    type: "Project"
+    from: 2014-09-01
+    to: 2015-02-01
