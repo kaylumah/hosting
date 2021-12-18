@@ -1,0 +1,20 @@
+-
+    name: "Step"
+    company: "dnb"
+    role: "Software Engineer"
+    type: "Project"
+    from: 2021-06-01
+-
+    name: "Platform"
+    company: "propaz"
+    role: "Software Engineer"
+    type: "Project"
+    from: 2020-08-01
+    to: 2021-01-31
+-
+    name: "CICD Pipeline"
+    company: "icaptur"
+    role: "Software Engineer"
+    type: "Project"
+    from: 2020-05-01
+    to: 2020-05-31
