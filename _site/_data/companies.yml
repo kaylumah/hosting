@@ -1,65 +1,64 @@
-dnb:
-  display_name: "De Nederlandsche Bank"
-  logo: "assets/images/cv/companies/dnb.jpeg"
-  website: "https://www.linkedin.com/company/de-nederlandsche-bank/"
+nlcom:
+  display_name: "NLcom"
+  logo: "assets/images/cv/companies/nlcom.png"
+  website: "https://www.linkedin.com/company/nlcom/"
 
-propaz:
-  display_name: "Prop-AZ"
-  logo: "assets/images/cv/companies/propaz.png"
-  website: "https://www.linkedin.com/company/prop-az/"
+qnh:
+  display_name: "QNH Consulting"
+  logo: "assets/images/cv/companies/qnh.png"
+  website: "https://www.linkedin.com/company/qnh/"
 
-icaptur:
-  display_name: "iCaptur"
-  logo: "assets/images/cv/companies/icaptur.png"
-  website: "https://www.linkedin.com/company/icaptur/"
+sekisui:
+  display_name: "Sekisui Alveo"
+  logo: "assets/images/cv/companies/sekisui.png"
+  website: "https://www.linkedin.com/company/sekisui-alveo/"
+
+daftrucks:
+  display_name: "DAF Trucks NV"
+  logo: "assets/images/cv/companies/daftrucks.png"
+  website: "https://www.linkedin.com/company/daf-trucks/"
+
+zaanstad:
+  display_name: "Gemeente Zaanstad"
+  logo: "assets/images/cv/companies/zaanstad.png"
+  website: "https://www.linkedin.com/company/gemeente-zaanstad/"
+
+energyessentials:
+  display_name: "Energy Essentials"
+  logo: "assets/images/cv/companies/energyessentials.png"
+  website: "https://www.linkedin.com/company/energy-essentials-group-b-v-/"
+
+hollandsnieuwe:
+  display_name: "Hollandsnieuwe"
+  logo: "assets/images/cv/companies/hollandsnieuwe.png"
+  website: "https://www.linkedin.com/company/hollandsnieuwe/"
+
+clifford:
+  display_name: "Clifford Chance"
+  logo: "assets/images/cv/companies/clifford.png"
+  website: "https://www.linkedin.com/company/clifford-chance-llp/"
+
+vodafoneziggo:
+  display_name: "VodafoneZiggo"
+  logo: "assets/images/cv/companies/vodafoneziggo.png"
+  website: "https://www.linkedin.com/company/vodafoneziggo/"
 
 ilionx:
   display_name: "ilionx"
   logo: "assets/images/cv/companies/ilionx.png"
   website: "https://www.linkedin.com/company/ilionx/"
 
-vfz:
-  display_name: "VodafoneZiggo"
-  logo: "assets/images/cv/companies/vodafoneziggo.jpeg"
-  website: "https://www.linkedin.com/company/vodafoneziggo/"
+icaptur:
+  display_name: "iCaptur"
+  logo: "assets/images/cv/companies/icaptur.png"
+  website: "https://www.linkedin.com/company/icaptur/"
 
-hn:
-  display_name: "Hollandsnieuwe"
-  logo: "assets/images/cv/companies/hollandsnieuwe.png"
-  website: "https://www.linkedin.com/company/hollandsnieuwe/"
+propaz:
+  display_name: "Prop-AZ"
+  logo: "assets/images/cv/companies/propaz.png"
+  website: "https://www.linkedin.com/company/prop-az/"
 
-energyessentials:
-  display_name: "Energy Essentials"
-  logo: "assets/images/cv/companies/energy-essentials.png"
-  website: "https://www.linkedin.com/company/energy-essentials-group-b-v-/"
-
-clifford:
-  display_name: "Clifford Chance"
-  logo: "assets/images/cv/companies/clifford-chance.jpeg"
-  website: "https://www.linkedin.com/company/clifford-chance-llp/"
-
-zaanstad:
-  display_name: "Gemeente Zaanstad"
-  logo: "assets/images/cv/companies/gemeente-zaanstad.png"
-  website: "https://www.linkedin.com/company/gemeente-zaanstad/"
-
-sekisui:
-  display_name: "Sekisui Alveo"
-  logo: "assets/images/cv/companies/sekisui-alveo.jpeg"
-  website: "https://www.linkedin.com/company/sekisui-alveo/"
-
-qnh:
-  display_name: "QNH Consulting"
-  logo: "assets/images/cv/companies/qnh.gif"
-  website: "https://www.linkedin.com/company/qnh/"
-
-nlcom:
-  display_name: "NLcom"
-  logo: "assets/images/cv/companies/nlcom.png"
-  website: "https://www.linkedin.com/company/nlcom/"
-
-daftrucks:
-  display_name: "DAF Trucks NV"
-  logo: "assets/images/cv/companies/daf-trucks.png"
-  website: "https://www.linkedin.com/company/daf-trucks/"
-
+dnb:
+  display_name: "De Nederlandsche Bank"
+  logo: "assets/images/cv/companies/dnb.png"
+  website: "https://www.linkedin.com/company/de-nederlandsche-bank/"
