@@ -1,6 +1,7 @@
 -
     name: "Step"
     type: "Project"
+    duration: "Fulltime"
     company: "dnb"
     role: "Software Engineer"
     type: "Project"
@@ -12,6 +13,7 @@
 -
     name: "Platform"
     type: "Project"
+    duration: "Fulltime"
     company: "propaz"
     role: "Software Engineer"
     from: 2020-08-01
@@ -35,6 +37,7 @@
 -
     name: "CICD Pipeline"
     type: "Project"
+    duration: "Fulltime"
     company: "icaptur"
     role: "Software Engineer"
     from: 2020-05-01
@@ -52,6 +55,7 @@
 -
     name: "Copper"
     type: "Project"
+    duration: "Fulltime"
     company: "ilionx"
     role: "Intern"
     from: 2020-04-01
@@ -73,6 +77,7 @@
 -
     name: "AddFixed L2"
     type: "Project"
+    duration: "Fulltime"
     company: "vodafoneziggo"
     role: "Intern"
     from: 2019-06-01
@@ -87,6 +92,7 @@
 -
     name: "AddFixed L3"
     type: "Project"
+    duration: "Fulltime"
     company: "vodafoneziggo"
     role: "Intern"
     from: 2019-01-01
@@ -104,6 +110,7 @@
 -
     name: "Data Transfer Hub - XML Parser"
     type: "Project"
+    duration: "Fulltime"
     company: "vodafoneziggo"
     role: "Intern"
     from: 2018-11-01
@@ -120,6 +127,7 @@
 -
     name: "Clutter Tool"
     type: "Project"
+    duration: "Fulltime"
     company: "vodafoneziggo"
     role: "Intern"
     from: 2018-09-01
@@ -135,6 +143,7 @@
 -
     name: "Coverage Tool"
     type: "Project"
+    duration: "Fulltime"
     company: "vodafoneziggo"
     role: "Intern"
     type: "Project"
@@ -152,6 +161,7 @@
 -
     name: "Senior Managers and Certification Regime (SMCR)"
     type: "Project"
+    duration: "Fulltime"
     company: "clifford"
     role: "Intern"
     type: "Project"
@@ -169,6 +179,7 @@
 -
     name: "OinB 2 | POC"
     type: "Project"
+    duration: "Fulltime"
     company: "hollandsnieuwe"
     role: "Intern"
     type: "Project"
@@ -184,6 +195,7 @@
 -
     name: "OinB | Push Notification Service"
     type: "Project"
+    duration: "Fulltime"
     company: "hollandsnieuwe"
     role: "Intern"
     type: "Project"
@@ -202,6 +214,7 @@
 -
     name: "OinB | R51 - Porting on Demand"
     type: "Project"
+    duration: "Fulltime"
     company: "hollandsnieuwe"
     role: "Intern"
     from: 2017-10-05
@@ -220,6 +233,7 @@
 -
     name: "OinB | BAU / SPOC"
     type: "Project"
+    duration: "Fulltime"
     company: "hollandsnieuwe"
     role: "Intern"
     from: 2017-08-01
@@ -238,6 +252,7 @@
 -
     name: "Vertex Platfom"
     type: "Project"
+    duration: "Fulltime"
     company: "energyessentials"
     role: "Intern"
     from: 2017-03-01
@@ -252,6 +267,7 @@
 -
     name: "Rap"
     type: "Project"    
+    duration: "Fulltime"
     company: "zaanstad"
     role: "Intern"
     from: 2017-03-01
@@ -267,6 +283,7 @@
 -
     name: "Turbine - DAF Specsheets"
     type: "Project"
+    duration: "Fulltime"
     company: "daftrucks"
     role: "Intern"
     from: 2017-01-01
@@ -281,6 +298,7 @@
 -
     name: "Turbine - DAF 3D Visualization"
     type: "Project"
+    duration: "Fulltime"
     company: "daftrucks"
     role: "Intern"
     from: 2017-01-01
@@ -295,6 +313,7 @@
 -
     name: "Turbine - Sekisui Esheet"
     type: "Project"
+    duration: "Fulltime"
     company: "sekisui"
     role: "Intern"
     from: 2017-01-01
@@ -311,6 +330,7 @@
 -
     name: "CloudInControl"
     type: "Project"
+    duration: "Fulltime"
     company: "qnh"
     role: "Intern"
     from: 2016-09-01
@@ -331,6 +351,7 @@
 -
     name: "Graduate Internship - Applicant follow-up system"
     type: "Project"
+    duration: "Fulltime"
     company: "qnh"
     role: "Intern"
     from: 2016-02-01
@@ -350,6 +371,7 @@
 -
     name: "JustAsk V2"
     type: "Project"
+    duration: "Fulltime"
     company: "nlcom"
     role: "Intern"
     from: 2015-02-01
@@ -367,6 +389,7 @@
 -
     name: "Internship - Workflow4People Liferay Integration"
     type: "Project"
+    duration: "Fulltime"
     company: "nlcom"
     role: "Intern"
     from: 2014-09-01
