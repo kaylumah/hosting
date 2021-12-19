@@ -37,7 +37,7 @@
 -
     name: "CICD Pipeline"
     type: "Project"
-    duration: "Fulltime"
+    duration: "Parttime"
     company: "icaptur"
     role: "Software Engineer"
     from: 2020-05-01
@@ -54,9 +54,9 @@
 -
     name: "Copper"
     type: "Project"
-    duration: "Fulltime"
+    duration: "Parttime"
     company: "ilionx"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2020-04-01
     # description: "Max heeft als .NET ontwikkelaar gebouwd aan het Copper framework van ilionx. Hij heeft gewerkt  om het programmeermodel voor gebruikers te verbeteren. Daarnaast heeft Max ontwikkeld  aan de tooling rond om Copper, die ilionx gebruikt in de projecten. Deze tooling genereert Copper projecten volgens een standaard structuur waardoor de opstarttijd van projecten wordt verkort. Copper is een framework voor het bouwen van gedistribueerde service-oriented applicaties. Dit framework wordt ingezet voor en door verschillende klanten als versneller voor de ontwikkeling van hun maatwerk applicaties."
     location: "Maastricht-Airport"
@@ -77,7 +77,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "vodafoneziggo"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2019-06-01
     to: 2020-03-31
     # description: "Het Bright project is aangevlogen volgens de SAFe-methodiek. Voor de mijn-ziggo omgeving was er een roulerende rol om te bouwen en mee te praten met de designers. Max heeft in een rol als proxyproduct owner de belangen van het portal behartigt. Hier was hij verantwoordelijk voor highlevel-designs die de integratie van de nieuwe portal met de Ziggo-systemen zou voorzien. Hier was Max verantwoordelijk voor het afstemmen met  internationaal verspreide teams om tot een high level design te komen."
@@ -91,7 +91,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "vodafoneziggo"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2019-01-01
     to: 2020-03-31
     # description: "De mijn-ziggo omgeving biedt selfservice functionaliteiten aan voor klanten van VodafoneZiggo, om zelf eenvoudige zaken in te zien en te regelen . Denk hierbij aan het downloaden van factuurspecificaties , het aan-uit zetten van WifiSpots en het wisselen van gratis zenderpakket. In het Bright project wordt de SAFe methodiek gehanteerd . Max heeft als Java ontwikkelaar in het portal team van digital gewerkt. Hij heeft koppelingen gerealiseerd met betrokken partijen , hiervoor waren een detailed-design en goede communicatie essentieel."
@@ -108,7 +108,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "vodafoneziggo"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2018-11-01
     to: 2018-12-31
     # description: "Binnen Vodafone wordt veel data verwerkt, waaronder data in XML-vorm  volgens de 3GPP standaard (Third Generation Partnership Project). Max heeft voor het Data Transfer Hub team onderzocht op welke wijze XML -bestanden performant gelezen en verwerkt kunnen worden in C#. Bij dit onderzoek was het belangrijk dat de techniek niet alleen geschikt was voor de relatief kleine 3GPP-bestanden . Max heeft een plugin gerealiseerd die het mogelijk maakt om op basis van stream reading XML te verwerken. Op deze manier heeft hij het mogelijk gemaakt dat ook netwerk  bestanden ter groot orde van 40GB door DTH werkt kunnen worden."
@@ -124,7 +124,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "vodafoneziggo"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2018-09-01
     to: 2018-10-31
     # description: "Radioplanners binnen Vodafone gebruiken clutterdata om de mogelijke afzwakking van mobiele signalen in kaart te brengen. Max heeft als software  ontwikkelaar binnen een team een nieuwe applicatie gerealiseerd om clutterdata  te genereren. Hierbij heeft hij gebruik gemaakt van het Actueel Hoogtebestand Nederland en data verrijkt  met data uit Open Street Map."
@@ -139,7 +139,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "vodafoneziggo"
-    role: "Intern"
+    role: "Software Engineer"
     type: "Project"
     from: 2018-09-01
     to: 2018-10-31
@@ -156,7 +156,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "clifford"
-    role: "Intern"
+    role: "Software Engineer"
     type: "Project"
     from: 2017-03-01
     to: 2017-08-01
@@ -173,7 +173,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "hollandsnieuwe"
-    role: "Intern"
+    role: "Software Engineer"
     type: "Project"
     from: 2018-06-01
     to: 2018-07-01
@@ -188,7 +188,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "hollandsnieuwe"
-    role: "Intern"
+    role: "Software Engineer"
     type: "Project"
     from: 2018-05-09
     to: 2018-07-01
@@ -206,7 +206,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "hollandsnieuwe"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-10-05
     to: 2018-02-25
     # description: "Porting on Demand was een initiatief binnen de stichting COIN om het porteringsproces klantvriendelijker en efficiënter te laten verlopen. Max heeft als Java ontwikkelaar gewerkt om de wijzigingen in het porteringsproces te verwerken in het OinB platform. Zo heeft Max het dealerportal geschikt gemaakt voor het proces aan APIs ontsloten voor de mijn hollandsnieuwe en shop omgeving. In de loop van het project heeft Max steeds meer taken en verantwoordelijkheden gekregen. Zo heeft Max nauw geschakeld met de project managers en de testers van hollandsnieuwe én heeft Max de release succesvol naar productie gebracht."
@@ -224,7 +224,7 @@
     type: "Project"
     duration: "Fulltime"
     company: "hollandsnieuwe"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-08-01
     to: 2018-07-01
     # description: "OinB is een systeem gebouwd boven op het ATG Web Commerce platform van Oracle. Dit platform wordt onderhouden en uitgebreid door QNH in opdracht van hollandsnieuwe. OinB draait op Oracle Weblogic 9 en maakt gebruik van Java 1.6 Max heeft als Java ontwikkelaar gewerkt aan diverse kleine functionaliteiten op het platform. Daarnaast was Max ook verantwoordelijk voor 2e lijn support op het platform."
@@ -242,7 +242,7 @@
     type: "Project"
     duration: "Parttime"
     company: "energyessentials"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-03-01
     to: 2017-08-01
     # description: "Max had in zijn rol als (web)ontwikkelaar de verantwoordelijkheid om een dynamisch front-end te ontwikkelen. Daarnaast was Max verantwoordelijk om de ontwikkelaars van Energy Essentials mee te nemen in het ontwikkelen van Angular applicaties."
@@ -256,7 +256,7 @@
     type: "Project"    
     duration: "Parttime"
     company: "zaanstad"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-03-01
     to: 2017-08-01
     # description: "QNH heeft voor gemeente Zaanstad de applicatie RAP (Regionaal Administratieplatform) ontwikkeld ten behoeve van de jeugdzorg en WMO. Max heeft als ontwikkelaar in sprints van twee weken functionaliteiten ontwikkeld binnen dit zorgplatform. Deze werkzaamheden betrof een AngularJS frontend en een Betty Blocks backend. Max heeft onder andere gewerkt aan het importeren van excel-bestanden met 40000 regels om deze te verwerken in de applicatie."
@@ -271,7 +271,7 @@
     type: "Project"
     duration: "Parttime"
     company: "daftrucks"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-01-01
     to: 2017-02-01
     # description: "Als .NET-ontwikkelaar in het turbine ontwikkelteam heeft Max gewerkt aan het specsheets project. Max had de verantwoordelijkheid om een bestaande WinForm applicatie van DAF uit te breiden. Deze tool wordt gebruikt voor het beheren van de data die nodig is om SpecSheets te kunnen genereren."
@@ -285,7 +285,7 @@
     type: "Project"
     duration: "Parttime"
     company: "daftrucks"
-    role: "Intern"
+    role: "Software Engineer"
     from: 2017-01-01
     to: 2017-02-01
     # description: "Als .NET-ontwikkelaar in het turbine ontwikkelteam heeft Max onderzoek gedaan naar het gebruik van een Azure Service Bus. Hij heeft onderzocht of DAF gebruik kon maken van een service bus voor de data verrijking in de 3D Visualization tool waarmee klanten online een vrachtwagen kunnen zien en configureren."
@@ -331,11 +331,11 @@
     #     - "Entity Framework"
 
 -
-    name: "Graduate Internship - Applicant follow-up system"
+    name: "Applicant follow-up system"
     type: "Project"
     duration: "Fulltime"
     company: "qnh"
-    role: "Intern"
+    role: "Graduate Intern"
     from: 2016-02-01
     to: 2016-07-01
     # description: "Max had als verantwoordelijkheid om te onderzoeken, analyseren en adviseren ten behoeve van technieken voor het te realiseren Sollicitatie Opvolgsysteem en het ontwerpen en realiseren van een oplossing die het mogelijk maakt om het sollicitatie proces van de AD-unit in kaart te brengen."
@@ -367,7 +367,7 @@
     #     - "Grails"
 
 -
-    name: "Internship - Workflow4People Liferay Integration"
+    name: "Workflow4People Liferay Integration"
     type: "Project"
     duration: "Fulltime"
     company: "nlcom"
