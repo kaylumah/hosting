@@ -33,7 +33,7 @@ function createCommentEl( response ) {
     commentMetadata.appendChild(commentTime);
 
     let commentContents = document.createElement('p');
-    commentContents.classList.add('text-sm', 'text-gray-500');
+    commentContents.classList.add('prose', 'md:prose-lg', 'lg:prose-xl');
     commentContents.innerHTML = response.body;
     // Progressive enhancement.
 	if ( window.showdown ) {
