@@ -47,7 +47,7 @@ function createCommentEl( response ) {
     commentWrapper.appendChild(commentContents);
 
     let userAvatar = document.createElement( 'img' );
-    userAvatar.classList.add('h-6', 'w-6', 'rounded-full');
+    userAvatar.classList.add('h-8', 'w-8');
 	userAvatar.setAttribute( 'src', response.user.avatar_url );
 
     let commentLink = document.createElement('a');
