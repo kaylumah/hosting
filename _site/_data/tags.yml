@@ -1,3 +1,6 @@
+code-quality:
+  name: "Code Quality"
+  description: "Code Quality"
 configuration:
   name: "Configuration"
   description: "Application configuration"
@@ -51,3 +54,7 @@ xunit:
   name: "2021"
   description: "posts from 2021"
   icon: "/assets/icons/custom/2021.svg"
+2022:
+  name: "2022"
+  description: "posts from 2022"
+  icon: "/assets/icons/custom/2022.svg"
