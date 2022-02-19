@@ -45,7 +45,7 @@ Site - -> Author
 @enduml
  -->
 
-![Architecture](/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png)
+![Architecture Diagram for Blog Platform Scenario](/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png){width=323 height=226}
 
 Since I am writing this blog post, what better example than a use case for a blogging platform. Imagine a platform where users can create and share their content. But you can only successfully start posts after you verified your account. In a sequence diagram, it might look something like this.
 
@@ -63,7 +63,7 @@ ArticleAccess - -> SiteManager: CreateArticleResponse
 @enduml
  -->
 
-![Sequence](/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png)
+![Sequence Diagram for Blog Platform Scenario](/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png){width=487 height=297}
 
 I am going to use the dotnet CLI to create my project structure.
 

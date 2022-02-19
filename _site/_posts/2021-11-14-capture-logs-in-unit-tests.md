@@ -98,7 +98,7 @@ public async Task Test_DependencyInjection_EmptyLoggingBuilder()
 }
 ```
 
-![no logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png)
+![VS Code - Dotnet Debugger - No ILogger Registered](/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png){width=1564 height=814}
 
 ```cs
 [Fact]
@@ -118,7 +118,7 @@ public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
 }
 ```
 
-![console logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png)
+![VS Code - Dotnet Debugger - console ILogger registered](/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png){width=1564 height=814}
 
 If, however, you cannot rely on dependency injection in your tests, you have the alternative of manual creating your SUT and relevant dependencies. The only dependency of our EchoService is an instance of ILogger. For testing purposes, you can use the NullLoggerFactory, which creates a logger that logs into the void.
 
@@ -133,7 +133,7 @@ public async Task Test_Manuel_NullLoggingFactory()
 }
 ```
 
-![null logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png)
+![VS Code - Dotnet Debugger - null ILogger registered](/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png){width=1564 height=814}
 
 > As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.
 
@@ -226,7 +226,7 @@ public async Task Test_Moq_LogLevelDisabledMockedLogger()
 }
 ```
 
-![mock logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png)
+![VS Code - Dotnet Debugger - mock ILogger registered](/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png){width=1564 height=814}
 
 ## Options 3
 Thus far, we have discussed options that would work outside `Xunit`. The third technique is not limited to `Xunit`, but its implementation is restricted to use in a `Xunit` project because we will now rely on Xunit's `ITestOutputHelper` mechanism. In most cases, we would use `ITestOutputHelper` to log lines inside the test case itself; it is, however, possible to create an `ILogger` that writes to `ITestOutputHelper` so we can also capture logs our SUT produces.
@@ -358,7 +358,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
 }
 ```
 
-![xunit logger](/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png)
+![VS Code - Dotnet Debugger - Xunit ILogger registered](/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png){width=1564 height=814 }
 
 The first time I ran this test, I was baffled. I could only see the console output from ConsoleLogger test we did previously. A quick google search brought me to the [solution](https://github.com/xunit/xunit/issues/1141#issuecomment-555717377). We need to tell the dotnet test runner to display it with `dotnet test --logger:"console;verbosity=detailed"`. Telling an entire team they can no longer simply run `dotnet test` was not a real solution; luckily, we can simplify things with `dotnet test --settings runsettings.xml`.
 
