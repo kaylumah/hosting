@@ -7,11 +7,18 @@ layout: 'default.html'
             <span class="text-gray-900 font-semibold tracking-wide uppercase">{{ page.type }}</span>
             <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{{ page.title }}</span>
         </h1>
-        <img alt="cover for {{ page.title }}" class="mx-auto mt-1" height="640" width="1280" src="{{ page.cover_image }}" />
+        <picture>
+            {% if page.cover_image.DEFAULT %}
+            <source type="image/webp" srcset="{{ page.cover_image.WEB | relative_url }}">
+            <img class="mx-auto mt-1" src="{{ page.cover_image.DEFAULT | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
+            {% else %}
+            <img class="mx-auto mt-1" src="{{ page.cover_image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
+            {% endif %}
+        </picture>
         <div class="mx-auto mt-1">
             <dl class="rounded-lg sm:grid sm:grid-cols-4">
                 <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Authored by
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
@@ -19,7 +26,7 @@ layout: 'default.html'
                     </dd>
                 </div>
                 <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Posted on
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
@@ -27,7 +34,7 @@ layout: 'default.html'
                     </dd>
                 </div>
                 <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Reading time
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
@@ -35,12 +42,12 @@ layout: 'default.html'
                     </dd>
                 </div>
                 <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Published in
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
                     {% for tag in page.tags %}
-                    <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-500">
+                    <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-800">
                         <!-- <span class="text-gray-600">#</span> -->
                         {{ site.data.tags[tag].name }}
                     </a>

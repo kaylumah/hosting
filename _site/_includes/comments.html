@@ -24,7 +24,7 @@ function createCommentEl( response ) {
     userName.innerHTML = `@${response.user.login}`;
 
     let commentTime = document.createElement('p');
-    commentTime.classList.add('text-sm', 'text-gray-500');
+    commentTime.classList.add('text-sm', 'text-gray-700');
     commentTime.textContent = response.created_at;
 
     let commentMetadata = document.createElement('div');
@@ -49,6 +49,9 @@ function createCommentEl( response ) {
     let userAvatar = document.createElement( 'img' );
     userAvatar.classList.add('h-8', 'w-8');
 	userAvatar.setAttribute( 'src', response.user.avatar_url );
+    userAvatar.setAttribute( 'alt', `${response.user.login} GitHub Avatar` );
+    userAvatar.setAttribute( 'width', 32 );
+    userAvatar.setAttribute( 'height', 32 );
 
     let commentLink = document.createElement('a');
     commentLink.classList.add('flex', 'space-x-3');
