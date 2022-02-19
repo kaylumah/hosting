@@ -49,6 +49,9 @@ function createCommentEl( response ) {
     let userAvatar = document.createElement( 'img' );
     userAvatar.classList.add('h-8', 'w-8');
 	userAvatar.setAttribute( 'src', response.user.avatar_url );
+    userAvatar.setAttribute( 'alt', `${response.user.login} GitHub Avatar` );
+    userAvatar.setAttribute( 'width', 32 );
+    userAvatar.setAttribute( 'height', 32 );
 
     let commentLink = document.createElement('a');
     commentLink.classList.add('flex', 'space-x-3');
