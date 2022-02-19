@@ -2,6 +2,9 @@
 title: "Validated Strongly Typed IOptions"
 description: "Find configuration errors early with data annotations validation for IOptions in .NET"
 cover_image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
+cover_image:
+    DEFAULT: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
+    WEB: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.webp'
 image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
 tags:
   - "csharp"

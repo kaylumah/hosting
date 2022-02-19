@@ -1,7 +1,9 @@
 ---
 title: 'Generate C# client for OpenAPI'
 description: 'A look at using OpenAPI clients in C#'
-cover_image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
+cover_image:
+    DEFAULT: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
+    WEB: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.webp'
 image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
 tags:
   - "csharp"
