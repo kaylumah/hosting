@@ -24,7 +24,7 @@ function createCommentEl( response ) {
     userName.innerHTML = `@${response.user.login}`;
 
     let commentTime = document.createElement('p');
-    commentTime.classList.add('text-sm', 'text-gray-500');
+    commentTime.classList.add('text-sm', 'text-gray-700');
     commentTime.textContent = response.created_at;
 
     let commentMetadata = document.createElement('div');
