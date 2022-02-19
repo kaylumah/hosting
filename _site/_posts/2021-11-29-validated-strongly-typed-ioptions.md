@@ -16,7 +16,7 @@ Almost every project will have some settings that are configured differently per
 
 As I understand it, the `configuration` concept in `.NET` is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the `options` concept provides access to `configuration` from our application code. I've attempted to illustrate it with the image below. 
 
-![Microsoft Extensions - IConfiguration - Different configuration sources](/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg)
+![Microsoft Extensions - IConfiguration - Different configuration sources](/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg){width=1040 height=920}
 
 ## Configuration in .NET
 
@@ -52,7 +52,7 @@ That would result in the following two settings being present in our IConfigurat
 
 With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.
 
-![Microsoft Extensions - IConfiguration - configuration builder resolve order](/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg)
+![Microsoft Extensions - IConfiguration - configuration builder resolve order](/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg){width=551 height=490}
 
 >  As pointed out by the "The Twelve-Factor App" article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.
 
@@ -173,7 +173,7 @@ The second variant is the most likely to occur. That is, settings are present bu
 
 When consuming an IOptions, there are three hooks we can use. We have `IConfigureOptions`, `IPostConfigureOptions` and `IValidateOptions`. If you head back up to where I printed the dependency injection container, you see that every time you use `Configure<>`, you get an `IConfigureOptions`. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered "option services".
 
-![Microsoft Extensions - IConfiguration - options factory](/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg)
+![Microsoft Extensions - IConfiguration - options factory](/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg){width=837 height=1674}
 
 You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an `IPostConfigureOptions` or `IValidateOptions` before the normal `IConfigureOptions`, it won't run before it. The factory runs through 0 or more `IConfigureOptions`, 0 or more `IPostConfigureOptions` and finally 0 or more `IValidateOptions` and always in that order.
 
