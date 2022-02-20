@@ -2,9 +2,9 @@
 title: "Working with Azure SDK for .NET"
 description: "Learn how a simple Roslyn Analyzer can improve code consistency"
 cover_image:
-    DEFAULT: '/assets/images/posts/20220220/working-with-azure-sdk-for-dotnet/cover_image.png'
-    WEB: '/assets/images/posts/20220220/working-with-azure-sdk-for-dotnet/cover_image.webp'
-image: '/assets/images/posts/20220220/working-with-azure-sdk-for-dotnet/cover_image.png'
+    DEFAULT: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
+    WEB: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp'
+image: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
 tags:
   - "csharp"
   - "azure"

@@ -10,7 +10,7 @@ const posts = [
   "../../_site/assets/images/posts/20211114/capture-logs-in-unit-tests",
   "../../_site/assets/images/posts/20211129/validated-strongly-typed-ioptions",
   "../../_site/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers",
-  "../../_site/assets/images/posts/20220220/working-with-azure-sdk-for-dotnet"
+  "../../_site/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet"
 ];
 
 posts.forEach(path => {
