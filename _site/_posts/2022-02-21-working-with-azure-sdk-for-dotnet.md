@@ -1,6 +1,6 @@
 ---
 title: "Working with Azure SDK for .NET"
-description: "Learn how a simple Roslyn Analyzer can improve code consistency"
+description: "The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios"
 cover_image:
     DEFAULT: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
     WEB: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp'
