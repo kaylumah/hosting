@@ -339,5 +339,11 @@ See you next time, stay healthy and happy coding to all 🧸!
 
 ## Additional Resources
 
-- [https://github.com/dotnet/roslyn-analyzers](Roslyn Analyzers)
-- [https://docs.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview](Visual Studio Code Quality)
+- [Azure SDK for Dotnet on Microsoft Docs](https://docs.microsoft.com/en-us/dotnet/azure/sdk/azure-sdk-for-dotnet)
+- [Azure.Messaging.ServiceBus on GitHub](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md)
+- [Azure.Core on GitHub](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md)
+- [Azure.Identity on GitHub](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md)
+- [Microsoft.Extensions.Azure on GitHub](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/Microsoft.Extensions.Azure/README.md)
+- [Service bus on Microsoft Docs](https://docs.microsoft.com/en-us/azure/service-bus-messaging)
+- [Best practices Azure SDK](https://devblogs.microsoft.com/azure-sdk/best-practices-for-using-azure-sdk-with-asp-net-core)
+- [Best practices Azure CLI](https://docs.microsoft.com/en-gb/cli/azure/use-cli-effectively)
