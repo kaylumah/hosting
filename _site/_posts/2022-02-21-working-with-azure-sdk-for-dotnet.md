@@ -124,6 +124,12 @@ public class UnitTest1
 Working with secrets like our connection string provides extra overhead. Luckily this incarnation of the Azure SDK embraces token authentication via TokenCredential. For this, we need to install the package `Azure.Identity`. Using this method is the preferred method of authenticating the Azure SDK.
 The easiest way to use this SDK is by creating a `DefaultAzureCredential`, which attempts to authenticate with a couple of common authentication mechanisms in order.
 
+1. Environment
+2. Managed Identity
+3. Visual Studio
+4. Azure CLI
+5. Azure Powershell
+
 ```csharp
 public class UnitTest1
 {
@@ -161,6 +167,8 @@ az role assignment create --assignee $UserIdentity --role "Azure Service Bus Dat
 ```
 
 Now you know why the previous script captured the AzureServiceBusId ;-)
+
+One thing to note is that DefaultAzureCredential's intended use is to simplify getting started with development. In a real-world application, you would probably need a custom ChainedTokenCredential that uses ManagedIdentityCredential for production and AzureCliCredential for development.
 
 ## How can I use the Azure SDK with Dependency Injection?
 One thing that always bothered me with the code I have shown so far is creating clients on the fly. I prefer to receive my service bus client from the dependency injection container. Discovering that this was a viable solution caused me to submit that PR to the Azure SDK repo. The team had already provided the normal ServiceBusClient, so I recreated the extension method to make ServiceBusAdministrationClient available via DI. It's time to install our third NuGet package, `Microsoft.Extensions.Azure` which provides the necessary bits.
@@ -290,13 +298,42 @@ In my [previous article on validating IOptions](https://kaylumah.nl/2021/11/29/v
 
 That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.
 
+```csharp
+public class UnitTest1
+{
+    private const string FullyQualifiedNamespace = "<your-namespace>.servicebus.windows.net";
+    private const string QueueName = "demoqueue";
+
+    [Fact]
+    public async Task Test_Scenario08_StronglyTypedOptions()
+    {
+        var services = new ServiceCollection();
+        services.Configure<DemoOptions>(options =>
+        {
+            options.ServiceBusNamespace = FullyQualifiedNamespace;
+        });
+        services.AddAzureClients(builder =>
+        {
+            builder.AddClient<ServiceBusClient, ServiceBusClientOptions>((options, credential, provider) =>
+            {
+                var demoOptions = provider.GetRequiredService<IOptions<DemoOptions>>();
+                return new ServiceBusClient(demoOptions.Value.ServiceBusNamespace, credential, options);
+            });
+        });
+        var serviceProvider = services.BuildServiceProvider();
+        var client = serviceProvider.GetRequiredService<ServiceBusClient>();
+        var scenario = async () => await client.RunScenario(QueueName, nameof(Test_Scenario08_StronglyTypedOptions));
+        await scenario();
+    }
+}
+```
 
 ## Closing Thoughts
-
+A single blog is too short for providing an overview of everything the Azure SDK offers. I like that authentication and interoperability with the dependency injection container are baked into the SDK. I have not even touched on diagnostics and testability, which are both great topics built into the entire SDK. Who knows, perhaps that is a topic for another time.
 
 As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
-The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/ImproveCodeQualityWithBannedSymbolAnalyzers).
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/WorkingWithAzureSdkForDotnet).
 
 See you next time, stay healthy and happy coding to all 🧸!
 
