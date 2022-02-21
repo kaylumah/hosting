@@ -1,3 +1,7 @@
+azure:
+  name: "Azure"
+  description: "Microsoft Azure Platform"
+  icon: "/assets/icons/simpleicons/microsoftazure.svg"
 code-quality:
   name: "Code Quality"
   description: "Code Quality"
