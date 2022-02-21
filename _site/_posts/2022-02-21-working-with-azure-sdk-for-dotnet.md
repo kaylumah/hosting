@@ -245,3 +245,40 @@ public class UnitTest1
 ```
 
 The first sample will not work since I have not set up ManagedIdentity in my environment. The second one also sets ManagedIdentityCredential as the default credential. However, since I set up AzureCliCredential on the client registration, it trumps the global one.
+
+## Can we have different client config when using the Azure SDK?
+Here is where things get cool. When you register a client with the SDK, a client named `Default` gets registered. If, for example, you retrieve `ServiceBusClient` from the dependency injection, what happens is that the AzureClientFactoy creates this client for you.
+
+In the case of servicebus, you might have multiple different namespaces registered. Every registration provides access to a method `WithName`. To use named clients in your code, replace `ServiceBusClient` with `IAzureClientFactory<ServiceBusClient`.
+
+```csharp
+public class UnitTest1
+{
+    private const string FullyQualifiedNamespace = "<your-namespace>.servicebus.windows.net";
+    private const string ConnectionString = "<your-connectionstring>";
+    private const string QueueName = "demoqueue";
+
+    [Fact]
+    public async Task Test_Scenario07_MultipleClients()
+    {
+        var services = new ServiceCollection();
+        services.AddAzureClients(builder =>
+        {
+            builder.AddServiceBusClient(ConnectionString);
+
+            builder.AddServiceBusClientWithNamespace(FullyQualifiedNamespace)
+                .WithName("OtherClient");
+        });
+        var serviceProvider = services.BuildServiceProvider();
+        var clientFactory = serviceProvider.GetRequiredService<IAzureClientFactory<ServiceBusClient>>();
+        
+        var clientDefault = clientFactory.CreateClient("Default");
+        var scenarioDefaultClient = async () => await clientDefault.RunScenario(QueueName, nameof(Test_Scenario07_MultipleClients) + "A");
+        await scenarioDefaultClient();
+        
+        var otherClient = clientFactory.CreateClient("OtherClient");
+        var scenarioOtherClient = async () => await otherClient.RunScenario(QueueName, nameof(Test_Scenario07_MultipleClients) + "B");
+        await scenarioOtherClient();
+    }
+}
+```
