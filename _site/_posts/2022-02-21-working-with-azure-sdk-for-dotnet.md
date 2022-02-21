@@ -282,3 +282,25 @@ public class UnitTest1
     }
 }
 ```
+
+## Can I use configuration to create Azure SDK clients?
+If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.
+
+In my [previous article on validating IOptions](https://kaylumah.nl/2021/11/29/validated-strongly-typed-ioptions.html), I wrote about a way to make sure all configuration for my app is valid. 
+
+That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.
+
+
+## Closing Thoughts
+
+
+As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
+
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/ImproveCodeQualityWithBannedSymbolAnalyzers).
+
+See you next time, stay healthy and happy coding to all 🧸!
+
+## Additional Resources
+
+- [https://github.com/dotnet/roslyn-analyzers](Roslyn Analyzers)
+- [https://docs.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview](Visual Studio Code Quality)
