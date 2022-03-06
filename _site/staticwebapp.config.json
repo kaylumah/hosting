@@ -29,6 +29,10 @@
         {
             "route": "/feed",
             "redirect": "/feed.xml"
+        },
+        {
+            "route": "/sitemap",
+            "redirect": "/sitemap.xml"
         }
     ]
 }
