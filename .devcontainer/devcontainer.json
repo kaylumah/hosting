@@ -37,10 +37,15 @@
 		"ryanluker.vscode-coverage-gutters",
 		"streetsidesoftware.code-spell-checker",
         "bradlc.vscode-tailwindcss"
+
+		// Azure Function and Static WebApps
+		, "ms-azuretools.vscode-azurefunctions"
+		, "ms-azuretools.vscode-azurestaticwebapps"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [5000, 5001],
+	// "forwardPorts": [ 7071 ]
 
 	// [Optional] To reuse of your local HTTPS dev cert:
 	//
@@ -68,6 +73,10 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "dotnet restore",
 
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"features": {
+		"azure-cli": "latest",
+		"powershell": "latest"
+	}
 }
