@@ -24,6 +24,9 @@
         
         {% include 'analytics.html' %}
 
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
@@ -42,5 +45,33 @@
         </div>
         <!-- <script src="/assets/prism.js?v={{ build.short_git_hash }}"></script> -->
         
+        <script>
+            
+            // do this for 30 seconds
+            var duration = 30 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+            // launch a few confetti from the left edge
+            confetti({
+                particleCount: 7,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            // and launch a few from the right edge
+            confetti({
+                particleCount: 7,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+
+            // keep going until we are out of time
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+            }());
+        </script>
     </body>
 </html>
