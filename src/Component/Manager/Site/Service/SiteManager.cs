@@ -48,7 +48,7 @@ public class SiteManager : ISiteManager
         _transformationEngine = transformationEngine;
     }
 
-    private void EnrichSiteWithData(SiteData site, string dataDirectory)
+    private void EnrichSiteWithData(SiteMetaData site, string dataDirectory)
     {
         var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
         var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -66,7 +66,7 @@ public class SiteManager : ISiteManager
         site.Data = data;
     }
 
-    private void EnrichSiteWithTags(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithTags(SiteMetaData site, List<PageData> pages)
     {
         var tags = pages
             .Where(x => x.Tags != null)
@@ -80,7 +80,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithYears(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithYears(SiteMetaData site, List<PageData> pages)
     {
         var years = pages
             .Where(x => x.ContainsKey("date"))
@@ -94,7 +94,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithSeries(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithSeries(SiteMetaData site, List<PageData> pages)
     {
         var series = pages
             .Where(x => x.Series != null)
@@ -108,7 +108,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithTypes(SiteMetaData site, List<PageData> pages)
     {
         var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
         var types = pages
@@ -122,7 +122,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<PageData> files)
+    private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageData> files)
     {
         var collections = files
             .Where(x => x.Collection != null)
@@ -185,7 +185,7 @@ public class SiteManager : ISiteManager
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         _logger.LogInformation(info.Metadata["RepositoryUrl"]);
         var buildInfo = new BuildData(info);
-        var siteInfo = new SiteData(_siteInfo, pages)
+        var siteInfo = new SiteMetaData(_siteInfo, pages)
         {
             Id = siteGuid.ToString(),
             Data = new Dictionary<string, object>(),
