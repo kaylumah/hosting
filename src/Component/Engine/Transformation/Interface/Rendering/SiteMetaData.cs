@@ -8,7 +8,7 @@ using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 
-public class SiteMetaData : ISiteMetadata
+public class SiteMetaData
 {
     private readonly SiteInfo _siteInfo;
     private readonly PageData[] _pages;
