@@ -66,7 +66,7 @@ public class SiteManager : ISiteManager
         site.Data = data;
     }
 
-    private void EnrichSiteWithTags(SiteMetaData site, List<PageData> pages)
+    private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
     {
         var tags = pages
             .Where(x => x.Tags != null)
@@ -80,7 +80,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithYears(SiteMetaData site, List<PageData> pages)
+    private void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
     {
         var years = pages
             .Where(x => x.ContainsKey("date"))
@@ -94,7 +94,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithSeries(SiteMetaData site, List<PageData> pages)
+    private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
     {
         var series = pages
             .Where(x => x.Series != null)
@@ -108,7 +108,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithTypes(SiteMetaData site, List<PageData> pages)
+    private void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
     {
         var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
         var types = pages
@@ -122,7 +122,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageData> files)
+    private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
     {
         var collections = files
             .Where(x => x.Collection != null)
@@ -189,11 +189,11 @@ public class SiteManager : ISiteManager
         {
             Id = siteGuid.ToString(),
             Data = new Dictionary<string, object>(),
-            Tags = new SortedDictionary<string, PageData[]>(),
-            Collections = new SortedDictionary<string, PageData[]>(),
-            Types = new SortedDictionary<string, PageData[]>(),
-            Series = new SortedDictionary<string, PageData[]>(),
-            Years = new SortedDictionary<int, PageData[]>()
+            Tags = new SortedDictionary<string, PageMetaData[]>(),
+            Collections = new SortedDictionary<string, PageMetaData[]>(),
+            Types = new SortedDictionary<string, PageMetaData[]>(),
+            Series = new SortedDictionary<string, PageMetaData[]>(),
+            Years = new SortedDictionary<int, PageMetaData[]>()
         };
 
         EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);

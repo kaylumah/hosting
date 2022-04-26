@@ -11,7 +11,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 public class SiteMetaData
 {
     private readonly SiteInfo _siteInfo;
-    private readonly PageData[] _pages;
+    private readonly PageMetaData[] _pages;
     public string Id { get; set; }
     public string Content => null;
     public string Title => GetTitle();
@@ -21,7 +21,7 @@ public class SiteMetaData
 
     public string Url => GetUrl();
 
-    public SiteMetaData(SiteInfo siteInfo, PageData[] pages)
+    public SiteMetaData(SiteInfo siteInfo, PageMetaData[] pages)
     {
         _siteInfo = siteInfo;
         _pages = pages;
@@ -54,15 +54,15 @@ public class SiteMetaData
 
     public Dictionary<string, object> Data { get; set; }
 
-    public SortedDictionary<string, PageData[]> Collections { get; set; }
+    public SortedDictionary<string, PageMetaData[]> Collections { get; set; }
 
-    public SortedDictionary<string, PageData[]> Tags { get; set; }
+    public SortedDictionary<string, PageMetaData[]> Tags { get; set; }
 
-    public SortedDictionary<string, PageData[]> Series { get; set; }
+    public SortedDictionary<string, PageMetaData[]> Series { get; set; }
 
-    public SortedDictionary<int, PageData[]> Years { get; set; }
+    public SortedDictionary<int, PageMetaData[]> Years { get; set; }
 
-    public SortedDictionary<string, PageData[]> Types { get; set; }
+    public SortedDictionary<string, PageMetaData[]> Types { get; set; }
 
     public object Pages => GetPages();
 

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 
-public class PageData : Dictionary<string, object>, IPageMetadata
+public class PageMetaData : Dictionary<string, object>, IPageMetadata
 {
     public string Id
     {
@@ -111,7 +111,7 @@ public class PageData : Dictionary<string, object>, IPageMetadata
         }
     }
 
-    public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
+    public PageMetaData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
     {
         Name = name;
         Content = content;
