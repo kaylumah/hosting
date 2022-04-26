@@ -89,7 +89,6 @@ class Program
         services.AddTransient<IPlugin, FeedPlugin>();
 
         services.AddSingleton<ITransformationEngine, TransformationEngine>();
-        services.AddSingleton<IMetadataRenderer, TransformationEngine>();
 
         services.AddSingleton<ISiteManager, SiteManager>();
         var serviceProvider = services.BuildServiceProvider();

@@ -27,7 +27,7 @@ public class SiteManager : ISiteManager
     private readonly IFileProcessor _fileProcessor;
     private readonly IYamlParser _yamlParser;
     private readonly SiteInfo _siteInfo;
-    private readonly IMetadataRenderer _metadataRenderer;
+    private readonly ITransformationEngine _transformationEngine;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -36,7 +36,7 @@ public class SiteManager : ISiteManager
         IYamlParser yamlParser,
         ILogger<SiteManager> logger,
         IOptions<SiteInfo> options,
-        IMetadataRenderer metadataRenderer
+        ITransformationEngine transformationEngine
         )
     {
         _fileProcessor = fileProcessor;
@@ -45,7 +45,7 @@ public class SiteManager : ISiteManager
         _yamlParser = yamlParser;
         _logger = logger;
         _siteInfo = options.Value;
-        _metadataRenderer = metadataRenderer;
+        _transformationEngine = transformationEngine;
     }
 
     private void EnrichSiteWithData(SiteData site, string dataDirectory)
@@ -219,7 +219,7 @@ public class SiteManager : ISiteManager
             };
         })
         .ToArray();
-        var renderResults = await _metadataRenderer.Render(requests);
+        var renderResults = await _transformationEngine.Render(requests);
 
         var artifacts = processed.Select((t, i) =>
         {

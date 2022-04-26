@@ -30,7 +30,7 @@ public class SiteManagerTests
         {
             Url = "https://example.com"
         });
-        var transformEngineMock = new Mock<IMetadataRenderer>();
+        var transformEngineMock = new Mock<ITransformationEngine>();
         var siteManager = new SiteManager(fileProcessorMock.Object, artifactAccessMock.Object, fileSystemMock.Object, yamlParserMock.Object, loggerMock.Object, siteInfo, transformEngineMock.Object);
         await siteManager.GenerateSite(new GenerateSiteRequest
         {

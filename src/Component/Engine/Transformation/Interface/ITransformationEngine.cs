@@ -3,6 +3,7 @@
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-public interface ITransformationEngine : IMetadataRenderer
+public interface ITransformationEngine
 {
+    Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests);
 }
