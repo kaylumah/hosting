@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 
-public class PageMetaData : Dictionary<string, object>, IPageMetadata
+public class PageMetaData : Dictionary<string, object>
 {
     public string Id
     {

@@ -8,7 +8,7 @@ public class RenderData : IMetadata
 {
     public BuildData Build { get; set; }
     public SiteMetaData Site { get; set; }
-    public IPageMetadata Page { get; set; }
+    public PageMetaData Page { get; set; }
     public string Content => Page?.Content ?? string.Empty;
     public string Title => Page?.Title ?? Site?.Title ?? null;
     public string Description => Page?.Description ?? Site?.Description ?? null;
