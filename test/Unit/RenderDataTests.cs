@@ -36,7 +36,7 @@ public class RenderDataTests
             Content = "-"
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Content.Should().Be(file.Content);
@@ -54,7 +54,7 @@ public class RenderDataTests
             Content = null
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Content.Should().Be(string.Empty);
@@ -72,7 +72,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Title.Should().Be("1");
@@ -81,10 +81,6 @@ public class RenderDataTests
     [Fact]
     public void Test_RenderData_TitleEqualsSiteTitleIfExists()
     {
-        var siteInfo = new SiteInfo()
-        {
-            Title = "2"
-        };
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
             MetaData = new FileMetaData
@@ -93,7 +89,10 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData })
+        { 
+            Title = "2"
+        };
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Title.Should().Be("2");
@@ -113,7 +112,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Title.Should().BeNull();
@@ -131,7 +130,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Description.Should().Be("1");
@@ -140,10 +139,6 @@ public class RenderDataTests
     [Fact]
     public void Test_RenderData_DescriptionEqualsSiteTitleIfExists()
     {
-        var siteInfo = new SiteInfo()
-        {
-            Description = "2"
-        };
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
             MetaData = new FileMetaData
@@ -152,7 +147,10 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData })
+        {
+            Description = "2"
+        };
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Description.Should().Be("2");
@@ -172,7 +170,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Description.Should().BeNull();
@@ -190,7 +188,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Language.Should().Be("1");
@@ -199,10 +197,6 @@ public class RenderDataTests
     [Fact]
     public void Test_RenderData_LanguageEqualsSiteTitleIfExists()
     {
-        var siteInfo = new SiteInfo()
-        {
-            Lang = "2"
-        };
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
             MetaData = new FileMetaData
@@ -211,7 +205,10 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData })
+        {
+            Language = "2"
+        };
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Language.Should().Be("2");
@@ -231,7 +228,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Language.Should().BeNull();
@@ -249,7 +246,7 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
         sut.Author.Should().Be("1");
@@ -258,9 +255,6 @@ public class RenderDataTests
     [Fact]
     public void Test_RenderData_AuthorEqualsSiteTitleIfExists()
     {
-        var siteInfo = new SiteInfo()
-        {
-        };
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
             MetaData = new FileMetaData
@@ -269,18 +263,15 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
-        sut.Author.Should().Be(string.Empty);
+        sut.Author.Should().BeNull();
     }
 
     [Fact]
     public void Test_RenderData_AuthorEqualsNullIfPageAndSiteAreNull()
     {
-        var siteInfo = new SiteInfo()
-        {
-        };
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
             MetaData = new FileMetaData
@@ -289,11 +280,9 @@ public class RenderDataTests
 
         };
         var PageMetaData = file.ToPage();
-        var SiteMetaData = new SiteMetaData(siteInfo, new PageMetaData[] { PageMetaData });
+        var SiteMetaData = new SiteMetaData(new PageMetaData[] { PageMetaData });
         var sut = new RenderData { Site = SiteMetaData, Page = PageMetaData };
         sut.Should().NotBeNull();
-        // sut.Author.Should().BeNull();
-        sut.Author.Should().Be(string.Empty);
-
+        sut.Author.Should().BeNull();
     }
 }
