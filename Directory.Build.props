@@ -14,6 +14,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <!--
         <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
+        -->
     </PropertyGroup>
 </Project>

@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -52,9 +48,14 @@ class Program
     {
         ShowKaylumahLogo();
 
+        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+
         // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddJsonFile("appsettings.json");
+
+        configurationBuilder
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
 
         // todo UserSecrets?
 
@@ -89,7 +90,6 @@ class Program
         services.AddTransient<IPlugin, FeedPlugin>();
 
         services.AddSingleton<ITransformationEngine, TransformationEngine>();
-        services.AddSingleton<IMetadataRenderer, TransformationEngine>();
 
         services.AddSingleton<ISiteManager, SiteManager>();
         var serviceProvider = services.BuildServiceProvider();

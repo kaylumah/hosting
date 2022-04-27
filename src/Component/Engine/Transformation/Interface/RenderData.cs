@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Utilities;
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-public class RenderData : IMetadata
+public class RenderData
 {
     public BuildData Build { get; set; }
-    public ISiteMetadata Site { get; set; }
-    public IPageMetadata Page { get; set; }
+    public SiteMetaData Site { get; set; }
+    public PageMetaData Page { get; set; }
     public string Content => Page?.Content ?? string.Empty;
     public string Title => Page?.Title ?? Site?.Title ?? null;
     public string Description => Page?.Description ?? Site?.Description ?? null;

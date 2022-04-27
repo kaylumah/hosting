@@ -1,19 +1,11 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.FileProviders;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Test.Utilities;
 using Xunit;
-using YamlDotNet.Serialization;
 
 namespace Test.Unit;
 

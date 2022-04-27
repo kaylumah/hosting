@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;

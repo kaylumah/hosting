@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
-using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Moq;
 using Test.Unit.Mocks;
 using Xunit;
@@ -32,7 +32,7 @@ public class TransformationEngineTests
                 pluginUnderTest
             });
 
-        var model = new Mock<IMetadata>();
+        var model = new Mock<RenderData>();
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
                 new MetadataRenderRequest {
                     Metadata = model.Object
@@ -55,7 +55,7 @@ public class TransformationEngineTests
                 pluginUnderTest
             });
 
-        var model = new Mock<IMetadata>();
+        var model = new Mock<RenderData>();
         model.Setup(x => x.Content).Returns($"{{{{ {pluginUnderTest.Name} }}}}");
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
                 new MetadataRenderRequest {
@@ -83,7 +83,7 @@ public class TransformationEngineTests
                 pluginUnderTest
             });
 
-        var model = new Mock<IMetadata>();
+        var model = new Mock<RenderData>();
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
                 new MetadataRenderRequest {
                     Metadata = model.Object
@@ -106,11 +106,23 @@ public class TransformationEngineTests
                 pluginUnderTest
             });
 
-        var model = new Mock<IMetadata>();
-        model.Setup(x => x.Content).Returns($"{{{{ {pluginUnderTest.Name} }}}}");
+        var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
+        {
+            MetaData = new FileMetaData
+            {
+            }
+
+        };
+        var PageMetaData = file.ToPage();
+        PageMetaData.Content = $"{{{{ {pluginUnderTest.Name} }}}}";
+
+        var model = new RenderData()
+        {
+            Page = PageMetaData
+        };
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
                 new MetadataRenderRequest {
-                    Metadata = model.Object
+                    Metadata = model
                 }
             });
         renderResult.Should().NotBeNull();

@@ -1,15 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
@@ -27,7 +21,7 @@ public class SiteManager : ISiteManager
     private readonly IFileProcessor _fileProcessor;
     private readonly IYamlParser _yamlParser;
     private readonly SiteInfo _siteInfo;
-    private readonly IMetadataRenderer _metadataRenderer;
+    private readonly ITransformationEngine _transformationEngine;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -36,7 +30,7 @@ public class SiteManager : ISiteManager
         IYamlParser yamlParser,
         ILogger<SiteManager> logger,
         IOptions<SiteInfo> options,
-        IMetadataRenderer metadataRenderer
+        ITransformationEngine transformationEngine
         )
     {
         _fileProcessor = fileProcessor;
@@ -45,10 +39,10 @@ public class SiteManager : ISiteManager
         _yamlParser = yamlParser;
         _logger = logger;
         _siteInfo = options.Value;
-        _metadataRenderer = metadataRenderer;
+        _transformationEngine = transformationEngine;
     }
 
-    private void EnrichSiteWithData(SiteData site, string dataDirectory)
+    private void EnrichSiteWithData(SiteMetaData site, string dataDirectory)
     {
         var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
         var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -66,7 +60,7 @@ public class SiteManager : ISiteManager
         site.Data = data;
     }
 
-    private void EnrichSiteWithTags(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
     {
         var tags = pages
             .Where(x => x.Tags != null)
@@ -80,7 +74,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithYears(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
     {
         var years = pages
             .Where(x => x.ContainsKey("date"))
@@ -94,7 +88,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithSeries(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
     {
         var series = pages
             .Where(x => x.Series != null)
@@ -108,7 +102,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithTypes(SiteData site, List<PageData> pages)
+    private void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
     {
         var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
         var types = pages
@@ -122,7 +116,7 @@ public class SiteManager : ISiteManager
         }
     }
 
-    private void EnrichSiteWithCollections(SiteData site, Guid siteGuid, List<PageData> files)
+    private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
     {
         var collections = files
             .Where(x => x.Collection != null)
@@ -185,15 +179,20 @@ public class SiteManager : ISiteManager
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         _logger.LogInformation(info.Metadata["RepositoryUrl"]);
         var buildInfo = new BuildData(info);
-        var siteInfo = new SiteData(_siteInfo, pages)
+        var siteInfo = new SiteMetaData(pages)
         {
             Id = siteGuid.ToString(),
+            Title = _siteInfo.Title,
+            Description = _siteInfo.Description,
+            Language = _siteInfo.Lang,
+            Url = _siteInfo.Url,
+            Author = null,
             Data = new Dictionary<string, object>(),
-            Tags = new SortedDictionary<string, PageData[]>(),
-            Collections = new SortedDictionary<string, PageData[]>(),
-            Types = new SortedDictionary<string, PageData[]>(),
-            Series = new SortedDictionary<string, PageData[]>(),
-            Years = new SortedDictionary<int, PageData[]>()
+            Tags = new SortedDictionary<string, PageMetaData[]>(),
+            Collections = new SortedDictionary<string, PageMetaData[]>(),
+            Types = new SortedDictionary<string, PageMetaData[]>(),
+            Series = new SortedDictionary<string, PageMetaData[]>(),
+            Years = new SortedDictionary<int, PageMetaData[]>()
         };
 
         EnrichSiteWithData(siteInfo, request.Configuration.DataDirectory);
@@ -219,7 +218,7 @@ public class SiteManager : ISiteManager
             };
         })
         .ToArray();
-        var renderResults = await _metadataRenderer.Render(requests);
+        var renderResults = await _transformationEngine.Render(requests);
 
         var artifacts = processed.Select((t, i) =>
         {

@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-public class PageData : Dictionary<string, object>, IPageMetadata
+public class PageMetaData : Dictionary<string, object>
 {
     public string Id
     {
@@ -111,7 +108,7 @@ public class PageData : Dictionary<string, object>, IPageMetadata
         }
     }
 
-    public PageData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
+    public PageMetaData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
     {
         Name = name;
         Content = content;

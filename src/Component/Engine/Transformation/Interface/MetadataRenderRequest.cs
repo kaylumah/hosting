@@ -4,6 +4,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class MetadataRenderRequest
 {
-    public IMetadata Metadata { get; set; }
+    public RenderData Metadata { get; set; }
     public string Template { get; set; }
 }
