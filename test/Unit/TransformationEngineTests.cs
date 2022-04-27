@@ -1,14 +1,12 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Moq;
 using Test.Unit.Mocks;

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 using FluentAssertions;
-using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

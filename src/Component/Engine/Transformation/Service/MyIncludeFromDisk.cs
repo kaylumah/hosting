@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.IO;
-using System.Threading.Tasks;
 using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Parsing;

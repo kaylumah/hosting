@@ -3,8 +3,6 @@
 using System.Text.RegularExpressions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Ssg.Extensions.Metadata.YamlFrontMatter;
 
