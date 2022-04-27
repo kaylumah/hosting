@@ -55,8 +55,7 @@ then
 else
       PR_BASE_URl="https://green-field-0353fee03-$PR_BUILD_ID.westeurope.1.azurestaticapps.net"
       echo "PR Build for '$PR_BUILD_ID' has url '$PR_BASE_URl'"
-      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
-fi
+      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$PR_BASE_URl
 
 cd dist
 npm i
