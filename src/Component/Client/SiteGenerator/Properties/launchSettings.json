@@ -3,7 +3,9 @@
     "Kaylumah.Ssg.Client.SiteGenerator": {
       "commandName": "Project",
       "commandLineArgs": "",
-      "environmentVariables": {},
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
       "workingDirectory": "../../../../"
     }
   }

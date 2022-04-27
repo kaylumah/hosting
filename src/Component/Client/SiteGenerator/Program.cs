@@ -48,9 +48,14 @@ class Program
     {
         ShowKaylumahLogo();
 
+        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+
         // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddJsonFile("appsettings.json");
+
+        configurationBuilder
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
 
         // todo UserSecrets?
 
