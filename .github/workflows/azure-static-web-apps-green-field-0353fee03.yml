@@ -29,6 +29,7 @@ jobs:
           submodules: true
       - name: 'Generate Website'
         run: sh build.sh BUILD_ID=$GITHUB_RUN_ID BUILD_NUMBER=$GITHUB_RUN_NUMBER
+        if: github.event_name == 'pull_request'
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
