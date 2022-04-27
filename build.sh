@@ -34,6 +34,8 @@ echo "BUILD_NUMBER = '$BUILD_NUMBER'"
 
 echo "PR_BUILD_ID = '$PR_BUILD_ID'"
 
+printenv
+
 _cwd="$PWD"
 CONFIGURATION=Release
 
