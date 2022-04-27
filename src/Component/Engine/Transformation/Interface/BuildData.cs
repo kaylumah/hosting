@@ -3,7 +3,7 @@
 using System;
 using Kaylumah.Ssg.Utilities;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class BuildData
 {

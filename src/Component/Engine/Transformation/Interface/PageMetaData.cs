@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class PageMetaData : Dictionary<string, object>
 {

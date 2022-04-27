@@ -2,8 +2,10 @@
 // See LICENSE file in the project root for full license information.
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-public class MetadataRenderRequest
+public enum ContentType
 {
-    public RenderData Metadata { get; set; }
-    public string Template { get; set; }
+    Unknown,
+    Announcement,
+    Article,
+    Page
 }

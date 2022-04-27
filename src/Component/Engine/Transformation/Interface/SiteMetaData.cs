@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using Kaylumah.Ssg.Utilities;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface.Rendering;
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class SiteMetaData
 {
