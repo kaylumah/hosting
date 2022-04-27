@@ -185,9 +185,14 @@ public class SiteManager : ISiteManager
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         _logger.LogInformation(info.Metadata["RepositoryUrl"]);
         var buildInfo = new BuildData(info);
-        var siteInfo = new SiteMetaData(_siteInfo, pages)
+        var siteInfo = new SiteMetaData(pages)
         {
             Id = siteGuid.ToString(),
+            Title = _siteInfo.Title,
+            Description = _siteInfo.Description,
+            Language = _siteInfo.Lang,
+            Url = _siteInfo.Url,
+            Author = null,
             Data = new Dictionary<string, object>(),
             Tags = new SortedDictionary<string, PageMetaData[]>(),
             Collections = new SortedDictionary<string, PageMetaData[]>(),

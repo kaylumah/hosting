@@ -1,55 +1,21 @@
 ﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Kaylumah.Ssg.Utilities;
-
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class SiteMetaData
 {
-    private readonly SiteInfo _siteInfo;
     private readonly PageMetaData[] _pages;
     public string Id { get; set; }
-    public string Content => null;
-    public string Title => GetTitle();
-    public string Description => GetDescription();
-    public string Language => GetLanguage();
-    public string Author => GetAuthor();
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Language { get; set; }
+    public string Author { get; set; }
+    public string Url { get; set; }
 
-    public string Url => GetUrl();
-
-    public SiteMetaData(SiteInfo siteInfo, PageMetaData[] pages)
+    public SiteMetaData(PageMetaData[] pages)
     {
-        _siteInfo = siteInfo;
         _pages = pages;
-    }
-
-    private string GetTitle()
-    {
-        return _siteInfo.Title;
-    }
-
-    private string GetDescription()
-    {
-        return _siteInfo.Description;
-    }
-
-    private string GetLanguage()
-    {
-        return _siteInfo.Lang;
-    }
-
-    private string GetAuthor()
-    {
-        return string.Empty;
-    }
-
-    private string GetUrl()
-    {
-        return _siteInfo.Url;
     }
 
     public Dictionary<string, object> Data { get; set; }
