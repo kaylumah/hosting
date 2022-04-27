@@ -31,7 +31,6 @@ fi
 
 echo "BUILD_ID = '$BUILD_ID'"
 echo "BUILD_NUMBER = '$BUILD_NUMBER'"
-
 echo "PR_BUILD_ID = '$PR_BUILD_ID'"
 
 _cwd="$PWD"
@@ -48,7 +47,14 @@ dotnet build --configuration $CONFIGURATION --no-restore /p:BuildId=$BUILD_ID /p
 # test with coverage
 dotnet test --configuration $CONFIGURATION --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 # Publish coverage report
-dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+
+if [ -z "$PR_BUILD_ID" ]
+then
+      echo "Production Build"
+      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+else
+      echo "PR Build for $PR_BUILD_ID"
+fi
 
 cd dist
 npm i
