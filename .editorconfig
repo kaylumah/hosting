@@ -132,7 +132,7 @@ csharp_preserve_single_line_blocks = true
 csharp_style_namespace_declarations = file_scoped:warning
 
 # License header
-file_header_template=Copyright (c) Kaylumah, 2021. All rights reserved.\nSee LICENSE file in the project root for full license information.
+file_header_template=Copyright (c) Kaylumah, 2022. All rights reserved.\nSee LICENSE file in the project root for full license information.
 # IDE0073: The file header does not match the required text
 dotnet_diagnostic.IDE0073.severity = error
 
