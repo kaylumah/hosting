@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;

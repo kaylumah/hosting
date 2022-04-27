@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 using System.Collections.Generic;
 
-namespace Kaylumah.Ssg.Utilities;
+namespace Kaylumah.Ssg.Manager.Site.Service;
 
 public class SiteInfo
 {
