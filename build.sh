@@ -32,6 +32,8 @@ fi
 echo "BUILD_ID = '$BUILD_ID'"
 echo "BUILD_NUMBER = '$BUILD_NUMBER'"
 
+echo "PR_BUILD_ID = '$PR_BUILD_ID'"
+
 _cwd="$PWD"
 CONFIGURATION=Release
 
