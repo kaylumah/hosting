@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj" />
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Files\Kaylumah.Ssg.Utilities.Files.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />

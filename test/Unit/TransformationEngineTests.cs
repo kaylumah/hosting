@@ -11,6 +11,8 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Moq;
 using Test.Unit.Mocks;
 using Xunit;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Ssg.Extensions.Data.Yaml;
 
 namespace Test.Unit;
 
@@ -20,7 +22,8 @@ public class TransformationEngineTests
     public void Test1()
     {
         var fileSystemMock = new FileSystemMock();
-        ITransformationEngine transformEngine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] { });
+        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        ITransformationEngine transformEngine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] { });
     }
 
     [Fact]
@@ -28,7 +31,8 @@ public class TransformationEngineTests
     {
         var pluginUnderTest = new SeoPlugin();
         var fileSystemMock = new FileSystemMock();
-        var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
                 pluginUnderTest
             });
 
@@ -51,7 +55,8 @@ public class TransformationEngineTests
     {
         var pluginUnderTest = new SeoPlugin();
         var fileSystemMock = new FileSystemMock();
-        var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
                 pluginUnderTest
             });
 
@@ -79,7 +84,8 @@ public class TransformationEngineTests
     {
         var pluginUnderTest = new FeedPlugin();
         var fileSystemMock = new FileSystemMock();
-        var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
                 pluginUnderTest
             });
 
@@ -102,7 +108,8 @@ public class TransformationEngineTests
     {
         var pluginUnderTest = new FeedPlugin();
         var fileSystemMock = new FileSystemMock();
-        var engine = new TransformationEngine(fileSystemMock.Object, new IPlugin[] {
+        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
                 pluginUnderTest
             });
 

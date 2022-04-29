@@ -40,7 +40,7 @@ public class FileProcessorTests
                         })
                 });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
             Options.Create(new MetadataParserOptions()
             {
@@ -76,7 +76,7 @@ public class FileProcessorTests
                         })
                 });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -128,7 +128,7 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -162,7 +162,7 @@ public class FileProcessorTests
                 new List<FakeDirectory>() { }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -189,7 +189,7 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -217,7 +217,7 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object, metadataProviderMock);
+        var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
