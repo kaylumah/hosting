@@ -9,6 +9,12 @@
     <!-- Configurations for data collectors -->
     <DataCollectionRunSettings>
       <DataCollectors>
+          <DataCollector friendlyName="XPlat code coverage">
+            <Configuration>
+              <Format>json,cobertura,lcov,teamcity,opencover</Format>
+              <Exclude>[Test.Utilities]*</Exclude>
+            </Configuration>
+          </DataCollector>
       </DataCollectors>
     </DataCollectionRunSettings>
 
