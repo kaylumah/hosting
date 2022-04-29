@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 namespace Kaylumah.Ssg.Manager.Site.Hosting;
-public class Class1
+public static partial class ServiceCollectionExtensions
 {
 
 }
