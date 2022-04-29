@@ -10,9 +10,5 @@
     <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="YamlDotNet" Version="9.1.4" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj" />
-  </ItemGroup>
 
 </Project>

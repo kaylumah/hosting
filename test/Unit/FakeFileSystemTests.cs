@@ -15,14 +15,14 @@ public class FakeFileSystemTests
     private readonly string _rootDirectory;
     public FakeFileSystemTests()
     {
-        _rootDirectory = "/a/b/c/";
+        _rootDirectory = Path.Combine("a", "b", "c");
         var directories = new List<FakeDirectory>() {
                 new FakeDirectory(string.Empty, new FakeFile[] {
                     new FakeFile("index.html")
                 }),
                 new FakeDirectory("assets", new FakeFile[] {}),
-                new FakeDirectory("assets/css", new FakeFile[] {
-                    new FakeFile("assets/css/styles.css")
+                new FakeDirectory(Path.Combine("assets", "css"), new FakeFile[] {
+                    new FakeFile(Path.Combine("assets", "css", "styles.css"))
                 })
             };
         var providerMock = new Mock<IFileProvider>()
@@ -30,7 +30,7 @@ public class FakeFileSystemTests
         _fileProvider = providerMock.Object;
     }
 
-    [Fact]
+    [Fact(Skip = "Empty Test")]
     public void TestNonExistentDirectory()
     {
         // var nonExistentsAsDirectoryContents = fileProvider.GetDirectoryContents("other");
@@ -38,7 +38,7 @@ public class FakeFileSystemTests
         // length 0
     }
 
-    [Fact]
+    [Fact(Skip = "Empty Test")]
     public void TestNonExistentFile()
     {
         // var nonExistentsAsFileInfo = fileProvider.GetFileInfo("other.txt");

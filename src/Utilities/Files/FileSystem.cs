@@ -2,19 +2,17 @@
 // See LICENSE file in the project root for full license information.
 
 using Microsoft.Extensions.FileProviders;
-using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Utilities;
 
 public class FileSystem : IFileSystem
 {
     private readonly IFileProvider _fileProvider;
-    private readonly IMetadataProvider _metadataProvider;
+    
 
-    public FileSystem(IFileProvider fileProvider, IMetadataProvider metadataProvider)
+    public FileSystem(IFileProvider fileProvider)
     {
         _fileProvider = fileProvider;
-        _metadataProvider = metadataProvider;
     }
 
     public void CreateDirectory(string path)
@@ -30,24 +28,6 @@ public class FileSystem : IFileSystem
     public IFileInfo GetFile(string path)
     {
         return _fileProvider.GetFileInfo(path);
-    }
-
-    public async Task<File<TData>> GetFile<TData>(string path)
-    {
-        var fileInfo = GetFile(path);
-        var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
-        var fileName = fileInfo.Name;
-        using var streamReader = new StreamReader(fileInfo.CreateReadStream());
-        var text = await streamReader.ReadToEndAsync();
-        var metadata = _metadataProvider.Retrieve<TData>(text);
-        return new File<TData>
-        {
-            Encoding = encoding.WebName,
-            Name = fileName,
-            Path = path,
-            Content = metadata.Content,
-            Data = metadata.Data
-        };
     }
 
     public byte[] GetFileBytes(string path)

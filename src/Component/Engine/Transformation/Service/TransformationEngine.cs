@@ -6,6 +6,7 @@ using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Runtime;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Service;
 
@@ -14,17 +15,19 @@ public class TransformationEngine : ITransformationEngine
     private readonly string _layoutDirectory = "_layouts";
     private readonly string _templateDirectory = "_includes";
     private readonly IFileSystem _fileSystem;
+    private readonly IMetadataProvider _metadataProvider;
     private readonly IEnumerable<IPlugin> _plugins;
-    public TransformationEngine(IFileSystem fileSystem, IEnumerable<IPlugin> plugins)
+    public TransformationEngine(IFileSystem fileSystem, IMetadataProvider metadataProvider, IEnumerable<IPlugin> plugins)
     {
         _fileSystem = fileSystem;
+        _metadataProvider = metadataProvider;
         _plugins = plugins;
     }
 
     public async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
     {
         var renderedResults = new List<MetadataRenderResult>();
-        var templates = await new LayoutLoader(_fileSystem).Load(_layoutDirectory);
+        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(_layoutDirectory);
         var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
 
         foreach (var request in requests)
