@@ -30,7 +30,7 @@ public class FakeFileSystemTests
         _fileProvider = providerMock.Object;
     }
 
-    [Fact]
+    [Fact(Skip = "Empty Test")]
     public void TestNonExistentDirectory()
     {
         // var nonExistentsAsDirectoryContents = fileProvider.GetDirectoryContents("other");
@@ -38,7 +38,7 @@ public class FakeFileSystemTests
         // length 0
     }
 
-    [Fact]
+    [Fact(Skip = "Empty Test")]
     public void TestNonExistentFile()
     {
         // var nonExistentsAsFileInfo = fileProvider.GetFileInfo("other.txt");
