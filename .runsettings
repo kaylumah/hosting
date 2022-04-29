@@ -13,7 +13,7 @@
       <DataCollectors>
           <DataCollector friendlyName="XPlat code coverage">
             <Configuration>
-              <Format>json,cobertura,lcov,teamcity,opencover</Format>
+              <Format>cobertura</Format>
               <Exclude>[Test.Utilities]*</Exclude>
             </Configuration>
           </DataCollector>
