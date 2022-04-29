@@ -1,3 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
+    <!-- Configurations that affect the Test Framework -->
+    <RunConfiguration>
+        <EnvironmentVariables>
+        </EnvironmentVariables>
+    </RunConfiguration>
+
+    <!-- Configurations for data collectors -->
+    <DataCollectionRunSettings>
+      <DataCollectors>
+      </DataCollectors>
+    </DataCollectionRunSettings>
+
+    <!-- Configurations for data collectors -->
+    <LoggerRunSettings>
+      <Loggers>
+      </Loggers>
+    </LoggerRunSettings>
 </RunSettings>
