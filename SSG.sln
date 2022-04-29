@@ -66,6 +66,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F5B96CC-4F71-433C-A022-1EEA2CC3D6AE}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.runsettings = .runsettings
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		global.json = global.json
