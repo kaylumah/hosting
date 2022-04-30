@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
     <ProjectReference Include="..\..\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
     <ProjectReference Include="..\..\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj" />
     <ProjectReference Include="..\..\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(DotNetPackageVersion)" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="$(DotNetPackageVersion)" />
