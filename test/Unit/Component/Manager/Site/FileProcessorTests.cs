@@ -26,9 +26,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_ChangedFileExtension()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo()
-        {
-        });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -42,12 +40,12 @@ public class FileProcessorTests
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
-            Options.Create(new MetadataParserOptions()
+            new MetadataParserOptions()
             {
                 ExtensionMapping = new Dictionary<string, string> {
                         { ".md", ".html" }
                 }
-            })
+            }
         );
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -64,7 +62,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_Subdirectories()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo() { });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -77,7 +75,7 @@ public class FileProcessorTests
                 });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
+        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
@@ -94,7 +92,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_FrontMatter()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo() { });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -129,7 +127,7 @@ public class FileProcessorTests
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
+        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
@@ -154,7 +152,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_WithoutFiles_Should_ReturnEmptyList()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo() { });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -163,7 +161,7 @@ public class FileProcessorTests
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
+        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
@@ -177,7 +175,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo() { });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -190,7 +188,7 @@ public class FileProcessorTests
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
+        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
@@ -204,7 +202,7 @@ public class FileProcessorTests
     public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
     {
         var root = "/a/b/c";
-        var optionsMock = Options.Create(new SiteInfo() { });
+        var optionsMock = new SiteInfo();
         var loggerMock = new Mock<ILogger<FileProcessor>>();
         var fileProviderMock = new Mock<IFileProvider>()
             .SetupFileProviderMock(
@@ -218,7 +216,7 @@ public class FileProcessorTests
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var fileSystem = new FileSystem(fileProviderMock.Object);
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, Options.Create(new MetadataParserOptions()));
+        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {

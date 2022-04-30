@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
@@ -24,6 +25,10 @@ public static partial class ServiceCollectionExtensions
 
         services.Configure<SiteInfo>(configuration.GetSection("Site"));
         services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
+
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<SiteInfo>>().Value);
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<MetadataParserOptions>>().Value);
+
         services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
         services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
         services.AddSingleton<IFileProcessor, FileProcessor>();

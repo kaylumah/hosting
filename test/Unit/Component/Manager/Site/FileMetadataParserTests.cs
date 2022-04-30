@@ -18,7 +18,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithoutConfigOnlyGetsDefaultValues()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions { });
+        var optionsMock = new MetadataParserOptions();
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
@@ -26,7 +26,7 @@ public class FileMetadataParserTests
             .Returns(new Metadata<FileMetaData> { });
 
         var loggerMock = new LoggerMock<FileMetadataParser>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
@@ -48,7 +48,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigThatIsEmptyOnlyGetsDefaultValues()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions
+        var options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -56,7 +56,7 @@ public class FileMetadataParserTests
                         Values = new FileMetaData {}
                     }
                 }
-        });
+        };
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
@@ -86,7 +86,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigTGetsDefaultValuesAndConfiguration()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions
+        var options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -96,7 +96,7 @@ public class FileMetadataParserTests
                         }
                     }
                 }
-        });
+        };
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
@@ -128,7 +128,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigTGetsDefaultValuesAndMultipleConfigurations()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions
+        var options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -144,7 +144,7 @@ public class FileMetadataParserTests
                         }
                     }
                 }
-        });
+        };
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
@@ -179,7 +179,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileIfMultipleConfigurationsApplyLastOneWins()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions
+        var options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -196,7 +196,7 @@ public class FileMetadataParserTests
                         }
                     }
                 }
-        });
+        };
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
@@ -231,7 +231,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_MultipleLayers()
     {
         // Arange
-        var options = Options.Create(new MetadataParserOptions
+        var options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -247,7 +247,7 @@ public class FileMetadataParserTests
                         }
                     }
                 }
-        });
+        };
         var metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock

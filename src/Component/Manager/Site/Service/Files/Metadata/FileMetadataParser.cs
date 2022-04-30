@@ -13,11 +13,11 @@ public class FileMetadataParser : IFileMetadataParser
     private readonly ILogger _logger;
     private readonly IMetadataProvider _metadataProvider;
     private readonly MetadataParserOptions _options;
-    public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, IOptions<MetadataParserOptions> options)
+    public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
     {
         _logger = logger;
         _metadataProvider = metadataProvider;
-        _options = options.Value;
+        _options = options;
     }
 
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)

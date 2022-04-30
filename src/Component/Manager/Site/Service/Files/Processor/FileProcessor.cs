@@ -22,10 +22,10 @@ public class FileProcessor : IFileProcessor
         IFileSystem fileSystem,
         ILogger<FileProcessor> logger,
         IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
-        IOptions<SiteInfo> options,
+        SiteInfo options,
         IFileMetadataParser fileMetadataParser)
     {
-        _siteInfo = options.Value;
+        _siteInfo = options;
         _preprocessorStrategies = preprocessorStrategies;
         _fileSystem = fileSystem;
         _logger = logger;

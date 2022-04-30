@@ -28,7 +28,7 @@ public class SiteManager : ISiteManager
         IArtifactAccess artifactAccess,
         IFileSystem fileSystem,
         ILogger<SiteManager> logger,
-        IOptions<SiteInfo> options,
+        SiteInfo siteInfo,
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory
         )
@@ -38,7 +38,7 @@ public class SiteManager : ISiteManager
         _artifactAccess = artifactAccess;
         _fileSystem = fileSystem;
         _logger = logger;
-        _siteInfo = options.Value;
+        _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
     }
 

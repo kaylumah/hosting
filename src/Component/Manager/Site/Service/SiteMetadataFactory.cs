@@ -15,9 +15,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IYamlParser _yamlParser;
         private readonly IFileSystem _fileSystem;
 
-        public SiteMetadataFactory(IOptions<SiteInfo> siteInfo, IYamlParser yamlParser, IFileSystem fileSystem)
+        public SiteMetadataFactory(SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem)
         {
-            _siteInfo = siteInfo.Value;
+            _siteInfo = siteInfo;
             _yamlParser = yamlParser;
             _fileSystem = fileSystem;
         }
