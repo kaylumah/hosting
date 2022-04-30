@@ -13,6 +13,10 @@ using Test.Unit.Mocks;
 using Xunit;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Ssg.Extensions.Data.Yaml;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Kaylumah.Ssg.Engine.Transformation.Hosting;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Test.Unit;
 
@@ -23,18 +27,30 @@ public class TransformationEngineTests
     {
         var fileSystemMock = new FileSystemMock();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        ITransformationEngine transformEngine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] { });
+
+        var configuration = new ConfigurationBuilder().Build();
+        var serviceProvider = new ServiceCollection()
+            .AddTransformationEngine(configuration)
+            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IMetadataProvider>(metadataProviderMock)
+            .BuildServiceProvider();
+        var transformationEngine = serviceProvider.GetRequiredService<ITransformationEngine>();
     }
 
     [Fact]
     public async Task Test_SeoPlugin_WithoutUsingResultsInEmptyString()
     {
-        var pluginUnderTest = new SeoPlugin();
         var fileSystemMock = new FileSystemMock();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
-                pluginUnderTest
-            });
+
+        var configuration = new ConfigurationBuilder().Build();
+        var serviceProvider = new ServiceCollection()
+            .AddTransient<IPlugin, SeoPlugin>()
+            .AddTransformationEngine(configuration)
+            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IMetadataProvider>(metadataProviderMock)
+            .BuildServiceProvider();
+        var engine = serviceProvider.GetRequiredService<ITransformationEngine>();
 
         var model = new Mock<RenderData>();
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
@@ -53,12 +69,17 @@ public class TransformationEngineTests
     [Fact(Skip = "Revisit amount of tags")]
     public async Task Test_SeoPlugin_ResultsInEmptyTags()
     {
-        var pluginUnderTest = new SeoPlugin();
         var fileSystemMock = new FileSystemMock();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
-                pluginUnderTest
-            });
+        var pluginUnderTest = new SeoPlugin();
+        var configuration = new ConfigurationBuilder().Build();
+        var serviceProvider = new ServiceCollection()
+            .AddTransient<IPlugin>(_ => pluginUnderTest)
+            .AddTransformationEngine(configuration)
+            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IMetadataProvider>(metadataProviderMock)
+            .BuildServiceProvider();
+        var engine = serviceProvider.GetRequiredService<ITransformationEngine>();
 
         var model = new Mock<RenderData>();
         model.Setup(x => x.Content).Returns($"{{{{ {pluginUnderTest.Name} }}}}");
@@ -82,12 +103,17 @@ public class TransformationEngineTests
     [Fact]
     public async Task Test_FeedPlugin_WithoutUsingResultsInEmptyString()
     {
-        var pluginUnderTest = new FeedPlugin();
         var fileSystemMock = new FileSystemMock();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
-                pluginUnderTest
-            });
+
+        var configuration = new ConfigurationBuilder().Build();
+        var serviceProvider = new ServiceCollection()
+            .AddTransient<IPlugin, SeoPlugin>()
+            .AddTransformationEngine(configuration)
+            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IMetadataProvider>(metadataProviderMock)
+            .BuildServiceProvider();
+        var engine = serviceProvider.GetRequiredService<ITransformationEngine>();
 
         var model = new Mock<RenderData>();
         var renderResult = await engine.Render(new MetadataRenderRequest[] {
@@ -106,12 +132,17 @@ public class TransformationEngineTests
     [Fact]
     public async Task Test_FeedPlugin_ResultsInEmptyTags()
     {
-        var pluginUnderTest = new FeedPlugin();
         var fileSystemMock = new FileSystemMock();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var engine = new TransformationEngine(fileSystemMock.Object, metadataProviderMock, new IPlugin[] {
-                pluginUnderTest
-            });
+        var pluginUnderTest = new SeoPlugin();
+        var configuration = new ConfigurationBuilder().Build();
+        var serviceProvider = new ServiceCollection()
+            .AddTransient<IPlugin>(_ => pluginUnderTest)
+            .AddTransformationEngine(configuration)
+            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IMetadataProvider>(metadataProviderMock)
+            .BuildServiceProvider();
+        var engine = serviceProvider.GetRequiredService<ITransformationEngine>();
 
         var file = new Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File()
         {
