@@ -34,61 +34,69 @@ public class FileProcessor : IFileProcessor
 
     public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
     {
+        _logger.LogInformation("FileFilter DirectoriesToSkip '{DirectoriesToSkip}'", String.Join(",", criteria.DirectoriesToSkip));
+        _logger.LogInformation("FileFilter FileExtensionsToTarget '{FileExtensionsToTarget}'", String.Join(",", criteria.FileExtensionsToTarget));
+
         var result = new List<File>();
 
         var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
-        if (directoryContents.Count() > 0)
+
+        if (directoryContents.Count() == 0)
         {
-            var directoriesToProcessAsCollection = directoryContents
-                .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
-            var filesWithoutCollections = directoryContents.Where(info =>
-                !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+            _logger.LogWarning("No files");
+            return result;
+        }
+
+        var directoriesToProcessAsCollection = directoryContents
+            .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
+        var filesWithoutCollections = directoryContents.Where(info =>
+            !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+        );
+
+        var files =
+            await ProcessFiles(
+                filesWithoutCollections
+                .Select(x => x.Name)
+                .ToArray()
             );
 
-            var files =
-                await ProcessFiles(
-                    filesWithoutCollections
-                    .Select(x => x.Name)
-                    .ToArray()
-                );
+        result.AddRange(files);
 
-            result.AddRange(files);
-
-            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
-            foreach (var collection in collections)
+        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+        foreach (var collection in collections)
+        {
+            var targetFiles = collection
+                .Files
+                .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
+                .ToList();
+            _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+            var exists = _siteInfo.Collections.Contains(collection.Name);
+            if (!exists)
             {
-                var targetFiles = collection
-                    .Files
-                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
-                    .ToList();
-                _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
-                var exists = _siteInfo.Collections.Contains(collection.Name);
-                if (!exists)
+                _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                result.AddRange(targetFiles);
+            }
+            else
+            {
+                if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
-                    _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                    _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
+                    targetFiles = targetFiles
+                        .Select(x =>
+                        {
+                            x.MetaData.Collection = collection.Name;
+                            return x;
+                        })
+                        .ToList();
                     result.AddRange(targetFiles);
                 }
                 else
                 {
-                    if (exists && _siteInfo.Collections[collection.Name].Output)
-                    {
-                        _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
-                        targetFiles = targetFiles
-                            .Select(x =>
-                            {
-                                x.MetaData.Collection = collection.Name;
-                                return x;
-                            })
-                            .ToList();
-                        result.AddRange(targetFiles);
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"{collection.Name} is a collection, but output == false");
-                    }
+                    _logger.LogInformation($"{collection.Name} is a collection, but output == false");
                 }
             }
         }
+
         return result;
     }
 
