@@ -23,7 +23,7 @@ public class FileMetadataParser : IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-        _logger.LogInformation("Metadata count before '{MetadataCount}'", result.Data.Count);
+        _logger.LogInformation("Metadata count before '{MetadataCount}'", result.Data?.Count);
         var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
         var paths = DetermineFilters(outputLocation);
 
