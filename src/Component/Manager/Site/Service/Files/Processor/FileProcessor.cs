@@ -49,6 +49,7 @@ public class FileProcessor : IFileProcessor
 
         var directoriesToProcessAsCollection = directoryContents
             .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
+
         var filesWithoutCollections = directoryContents.Where(info =>
             !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
         );
