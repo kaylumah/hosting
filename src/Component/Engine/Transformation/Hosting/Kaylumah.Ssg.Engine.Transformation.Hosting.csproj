@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj" />
+    <ProjectReference Include="..\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
+  </ItemGroup>
+
 </Project>
