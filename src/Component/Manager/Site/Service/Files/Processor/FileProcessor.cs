@@ -54,6 +54,9 @@ public class FileProcessor : IFileProcessor
             !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
         );
 
+        _logger.LogInformation("There are {Count} files without a collection", filesWithoutCollections.Count());
+
+        /*
         var files =
             await ProcessFiles(
                 filesWithoutCollections
@@ -62,10 +65,12 @@ public class FileProcessor : IFileProcessor
             );
 
         result.AddRange(files);
+        */
 
         var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
         foreach (var collection in collections)
         {
+            _logger.LogInformation("Begin processing {CollectionName}", collection.Name);
             var targetFiles = collection
                 .Files
                 .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
@@ -106,6 +111,7 @@ public class FileProcessor : IFileProcessor
         var result = new List<FileCollection>();
         foreach (var collection in collections)
         {
+            using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
             var targetFiles = _fileSystem.GetFiles(collection);
             var files = await ProcessFiles(targetFiles.ToArray(), keyName);
@@ -134,6 +140,7 @@ public class FileProcessor : IFileProcessor
         var result = new List<File>();
         foreach (var fileInfo in files)
         {
+            using var logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
             var fileStream = fileInfo.CreateReadStream();
             using var streamReader = new StreamReader(fileStream);
 

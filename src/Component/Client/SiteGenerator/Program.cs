@@ -11,6 +11,7 @@ using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator;
 
@@ -74,7 +75,13 @@ class Program
         var rootDirectory = Path.Combine(Environment.CurrentDirectory, "_site");
 
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging(builder => builder.AddConsole());
+        services.AddLogging(builder =>
+        {
+            builder.AddSimpleConsole(opt =>
+            {
+                opt.IncludeScopes = true;
+            });
+        });
         services.AddFileSystem(rootDirectory);
         services.AddArtifactAccess(configuration);
         services.AddTransient<IPlugin, SeoPlugin>();
