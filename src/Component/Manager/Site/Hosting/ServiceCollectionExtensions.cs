@@ -1,8 +1,35 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Kaylumah.Ssg.Manager.Site.Interface;
+using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Ssg.Extensions.Data.Yaml;
+using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
+
 namespace Kaylumah.Ssg.Manager.Site.Hosting;
 public static partial class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddSiteManager(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 
+        services.Configure<SiteInfo>(configuration.GetSection("Site"));
+        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
+        services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
+        services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
+        services.AddSingleton<IFileProcessor, FileProcessor>();
+        services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
+        services.AddSingleton<IYamlParser, YamlParser>();
+        services.AddSingleton<ISiteManager, SiteManager>();
+        return services;
+    }
 }

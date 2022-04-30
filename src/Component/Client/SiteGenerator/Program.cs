@@ -82,15 +82,8 @@ class Program
 
         IServiceCollection services = new ServiceCollection();
         services.AddLogging(builder => builder.AddConsole());
-        services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory, "_site"));
-        services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
-        services.AddSingleton<IYamlParser, YamlParser>();
-        services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
-        services.AddSingleton<IArtifactAccess, ArtifactAccess>();
-        services.AddTransient<IPlugin, SeoPlugin>();
-        services.AddTransient<IPlugin, FeedPlugin>();
-
-        services.AddSingleton<ITransformationEngine, TransformationEngine>();
+        
+        
 
         services.AddSingleton<ISiteManager, SiteManager>();
         var serviceProvider = services.BuildServiceProvider();
@@ -107,21 +100,5 @@ class Program
         });
         watch.Stop();
         Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
-    }
-}
-
-static class FileSystemServiceCollectionExtensions
-{
-    public static IServiceCollection AddFileSystem(this IServiceCollection services, IConfiguration configuration, string rootDirectory)
-    {
-        services.Configure<SiteInfo>(configuration.GetSection("Site"));
-        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
-
-        services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
-        services.AddSingleton<IFileSystem, FileSystem>();
-        services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
-        services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
-        services.AddSingleton<IFileProcessor, FileProcessor>();
-        return services;
     }
 }
