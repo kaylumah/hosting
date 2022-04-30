@@ -23,12 +23,14 @@ public class FileMetadataParser : IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-
+        _logger.LogInformation("Metadata count before '{MetadataCount}'", result.Data.Count);
         var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
         var paths = DetermineFilters(outputLocation);
 
         var fileMetaData = ApplyDefaults(paths);
+        _logger.LogInformation("Metadata ApplyDefaults '{MetadataCount}'", fileMetaData.Count);
         OverwriteMetaData(fileMetaData, result.Data, "file");
+        _logger.LogInformation("Metadata Merged '{MetadataCount}'", fileMetaData.Count);
 
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
