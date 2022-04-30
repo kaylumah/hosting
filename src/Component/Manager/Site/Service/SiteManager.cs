@@ -61,27 +61,20 @@ public class SiteManager : ISiteManager
         var pages = processed.ToArray().ToPages(siteGuid);
 
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
-        _logger.LogInformation(info.Metadata["RepositoryUrl"]);
-        var buildInfo = new BuildData(info);
-        
-        var siteInfo = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pages.ToList());
+        var buildMetadata = new BuildData(info);
+        var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pages.ToList());
 
-        var requests = processed.Select(file =>
-        {
-            var page = file.ToPage();
-            page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
-            return new MetadataRenderRequest
-            {
-                Metadata = new RenderData()
+        var requests = pages
+            .Select(pageMetadata => new MetadataRenderRequest {
+                Metadata = new RenderData
                 {
-                    Build = buildInfo,
-                    Site = siteInfo,
-                    Page = page
+                    Build = buildMetadata,
+                    Site =  siteMetadata,
+                    Page = pageMetadata
                 },
-                Template = file.MetaData.Layout
-            };
-        })
-        .ToArray();
+                Template = pageMetadata.GetValue<string>("layout")
+            })
+            .ToArray();
         var renderResults = await _transformationEngine.Render(requests);
 
         var artifacts = processed.Select((t, i) =>
