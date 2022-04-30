@@ -30,6 +30,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
         services.AddSingleton<IYamlParser, YamlParser>();
         services.AddSingleton<ISiteManager, SiteManager>();
+        services.AddSingleton<SiteMetadataFactory>();
         return services;
     }
 }
