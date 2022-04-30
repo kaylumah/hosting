@@ -5,7 +5,6 @@ using System.Text;
 using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Access.Artifact.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Test.Unit.Mocks;

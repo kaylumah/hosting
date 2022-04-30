@@ -3,7 +3,6 @@
 
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
