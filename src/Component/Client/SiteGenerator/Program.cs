@@ -2,17 +2,21 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Diagnostics;
+using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
+using Kaylumah.Ssg.Engine.Transformation.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
+using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -80,12 +84,16 @@ class Program
         var debugView = root.GetDebugView();
         Console.WriteLine(debugView);
 
+        var rootDirectory = Path.Combine(Environment.CurrentDirectory, "_site");
+
         IServiceCollection services = new ServiceCollection();
         services.AddLogging(builder => builder.AddConsole());
-        
+        services.AddFileSystem(rootDirectory);
+        services.AddArtifactAccess(configuration);
+        services.AddTransformationEngine(configuration);
+        services.AddSiteManager(configuration);
         
 
-        services.AddSingleton<ISiteManager, SiteManager>();
         var serviceProvider = services.BuildServiceProvider();
         var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
 
