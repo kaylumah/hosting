@@ -56,7 +56,6 @@ public class FileProcessor : IFileProcessor
 
         _logger.LogInformation("There are {Count} files without a collection", filesWithoutCollections.Count());
 
-        /*
         var files =
             await ProcessFiles(
                 filesWithoutCollections
@@ -65,7 +64,6 @@ public class FileProcessor : IFileProcessor
             );
 
         result.AddRange(files);
-        */
 
         var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
         foreach (var collection in collections)
