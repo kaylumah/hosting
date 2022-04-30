@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Hosting;
+using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities.Files;
@@ -76,6 +77,8 @@ class Program
         services.AddLogging(builder => builder.AddConsole());
         services.AddFileSystem(rootDirectory);
         services.AddArtifactAccess(configuration);
+        services.AddTransient<IPlugin, SeoPlugin>();
+        services.AddTransient<IPlugin, FeedPlugin>();
         services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);
         

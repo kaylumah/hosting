@@ -16,10 +16,6 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection AddTransformationEngine(this IServiceCollection services, IConfiguration configuration)
     {
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
-
-        services.AddTransient<IPlugin, SeoPlugin>();
-        services.AddTransient<IPlugin, FeedPlugin>();
-
         services.AddSingleton<ITransformationEngine, TransformationEngine>();
         return services;
     }
