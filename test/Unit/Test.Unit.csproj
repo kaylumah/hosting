@@ -39,4 +39,8 @@
     <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
