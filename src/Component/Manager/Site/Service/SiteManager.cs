@@ -58,13 +58,13 @@ public class SiteManager : ISiteManager
                 },
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
         });
-        var pages = processed.ToArray().ToPages(siteGuid);
 
+        var pageMetadatas = processed.ToArray().ToPages(siteGuid);
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         var buildMetadata = new BuildData(info);
-        var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pages.ToList());
+        var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageMetadatas.ToList());
 
-        var requests = pages
+        var requests = pageMetadatas
             .Select(pageMetadata => new MetadataRenderRequest {
                 Metadata = new RenderData
                 {
