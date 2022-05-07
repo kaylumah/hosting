@@ -12,6 +12,17 @@
     <!-- Configurations for data collectors -->
     <DataCollectionRunSettings>
       <DataCollectors>
+          <DataCollector friendlyName="Code Coverage">
+            <Configuration>
+              <CodeCoverage>
+                <ModulePaths>
+                  <Exclude>
+                    <ModulePath>Test.Utilities</ModulePath>
+                  </Exclude>
+                </ModulePaths>
+              </CodeCoverage>
+            </Configuration>
+          </DataCollector>
           <DataCollector friendlyName="XPlat code coverage">
             <Configuration>
               <Format>cobertura</Format>
