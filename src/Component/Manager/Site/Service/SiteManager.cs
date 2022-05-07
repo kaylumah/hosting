@@ -88,7 +88,7 @@ public class SiteManager : ISiteManager
         }).ToList();
 
         // TODO can we do this better?
-        var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
+        var directoryContents = _fileSystem.GetFiles(string.Empty);
         var rootFile = directoryContents.FirstOrDefault();
         if (rootFile != null)
         {

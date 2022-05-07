@@ -19,7 +19,7 @@ public class LayoutLoader
     public async Task<List<File<LayoutMetadata>>> Load(string layoutFolder)
     {
         var result = new List<File<LayoutMetadata>>();
-        var templateDirectoryContents = _fileSystem.GetDirectoryContents(layoutFolder);
+        var templateDirectoryContents = _fileSystem.GetFiles(layoutFolder);
         foreach (var file in templateDirectoryContents)
         {
             var path = Path.Combine(layoutFolder, file.Name);

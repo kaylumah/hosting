@@ -39,7 +39,7 @@ public class FileProcessor : IFileProcessor
 
         var result = new List<File>();
 
-        var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
+        var directoryContents = _fileSystem.GetFiles(string.Empty);
 
         if (directoryContents.Count() == 0)
         {
