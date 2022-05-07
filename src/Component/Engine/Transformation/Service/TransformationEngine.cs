@@ -31,7 +31,7 @@ public class TransformationEngine : ITransformationEngine
     {
         var renderedResults = new List<MetadataRenderResult>();
         var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine("_site",_layoutDirectory));
-        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine("_site", _templateDirectory), _logger);
+        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine("_site", _templateDirectory));
 
         foreach (var request in requests)
         {
