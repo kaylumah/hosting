@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions.TestingHelpers;
 using System.Text;
 using System.Xml;
 using FluentAssertions;
@@ -37,8 +38,9 @@ public class FileProcessorTests
                             new FakeFile("test.md")
                         })
                 });
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
             new MetadataParserOptions()
             {
@@ -74,7 +76,8 @@ public class FileProcessorTests
                         })
                 });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -126,7 +129,8 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -160,7 +164,8 @@ public class FileProcessorTests
                 new List<FakeDirectory>() { }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -187,7 +192,8 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
@@ -215,7 +221,8 @@ public class FileProcessorTests
                 }
             );
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(fileProviderMock.Object);
+        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData> { });
+        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
         var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
