@@ -8,7 +8,7 @@ namespace Kaylumah.Ssg.Utilities;
 public interface IFileSystem
 {
     IEnumerable<IFileSystemInfo> GetFiles(string path, bool recursive = false);
-    System.IO.Abstractions.IFileInfo GetFile(string path);
+    IFileInfo GetFile(string path);
     byte[] GetFileBytes(string path);
     void CreateDirectory(string path);
     Task WriteAllBytesAsync(string path, byte[] bytes);

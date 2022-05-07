@@ -7,7 +7,7 @@ namespace Kaylumah.Ssg.Utilities;
 
 public static class FileSystemExtensions
 {
-    public static Stream CreateReadStream(this System.IO.Abstractions.IFileSystemInfo fileInfo)
+    public static Stream CreateReadStream(this IFileSystemInfo fileInfo)
     {
         var fileSystem = fileInfo.FileSystem;
         return fileSystem.FileStream.Create(fileInfo.FullName, FileMode.Open);
@@ -33,7 +33,7 @@ public class FileSystem : IFileSystem
         Directory.CreateDirectory(path);
     }
 
-    public System.IO.Abstractions.IFileInfo GetFile(string path)
+    public IFileInfo GetFile(string path)
     {
         return _fileSystem.FileInfo.FromFileName(path);
     }

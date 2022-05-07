@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
@@ -12,14 +13,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 public class FileProcessor : IFileProcessor
 {
-    private readonly IFileSystem _fileSystem;
+    private readonly Utilities.IFileSystem _fileSystem;
     private readonly ILogger _logger;
     private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
     private readonly IFileMetadataParser _fileMetaDataProcessor;
     private readonly SiteInfo _siteInfo;
 
     public FileProcessor(
-        IFileSystem fileSystem,
+        Utilities.IFileSystem fileSystem,
         ILogger<FileProcessor> logger,
         IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
         SiteInfo options,
@@ -133,7 +134,7 @@ public class FileProcessor : IFileProcessor
         return await ProcessFiles(fileInfos.ToArray(), scope: null);
     }
 
-    private async Task<List<File>> ProcessFiles(System.IO.Abstractions.IFileSystemInfo[] files, string scope)
+    private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
     {
         var result = new List<File>();
         foreach (var fileInfo in files)
