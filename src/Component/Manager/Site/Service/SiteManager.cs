@@ -77,6 +77,7 @@ public class SiteManager : ISiteManager
             .ToArray();
         var renderResults = await _transformationEngine.Render(requests);
 
+
         var artifacts = processed.Select((t, i) =>
         {
             var renderResult = renderResults[i];
@@ -87,6 +88,34 @@ public class SiteManager : ISiteManager
             };
         }).ToList();
 
+
+        var assets = _fileSystem
+            .GetFiles(Path.Combine("_site", request.Configuration.AssetDirectory), true)
+            .Where(x => !x.IsDirectory());
+
+        var env = Path.Combine(Environment.CurrentDirectory, "_site") + Path.DirectorySeparatorChar;
+
+        artifacts.AddRange(assets.Select(asset =>
+        {
+            return new Artifact
+            {
+                Path = asset.FullName.Replace(env, ""),
+                Contents = _fileSystem.GetFileBytes(asset.FullName)
+            };
+        }));
+
+        await _artifactAccess.Store(new StoreArtifactsRequest
+        {
+            Artifacts = artifacts.ToArray(),
+            OutputLocation = new FileSystemOutputLocation()
+            {
+                Clean = false,
+                Path = request.Configuration.Destination
+            }
+        });
+
+
+        /*
         // TODO can we do this better?
         var directoryContents = _fileSystem.GetFiles(string.Empty);
         var rootFile = directoryContents.FirstOrDefault();
@@ -106,15 +135,8 @@ public class SiteManager : ISiteManager
                     Contents = _fileSystem.GetFileBytes(asset)
                 };
             }));
-            await _artifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Clean = false,
-                    Path = request.Configuration.Destination
-                }
-            });
+            
         }
+        */
     }
 }

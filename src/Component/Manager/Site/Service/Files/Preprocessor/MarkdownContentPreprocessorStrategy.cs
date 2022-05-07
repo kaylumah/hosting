@@ -16,7 +16,7 @@ public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
         return _markdownUtil.Transform(raw);
     }
 
-    public bool ShouldExecute(IFileInfo fileInfo)
+    public bool ShouldExecute(System.IO.Abstractions.IFileSystemInfo fileInfo)
     {
         return _targetExtensions.Contains(Path.GetExtension(fileInfo.Name));
     }

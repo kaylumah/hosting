@@ -27,8 +27,8 @@ public class TransformationEngine : ITransformationEngine
     public async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
     {
         var renderedResults = new List<MetadataRenderResult>();
-        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(_layoutDirectory);
-        var templateLoader = new MyIncludeFromDisk(_fileSystem, _templateDirectory);
+        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine("_site",_layoutDirectory));
+        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine("_site", _templateDirectory));
 
         foreach (var request in requests)
         {

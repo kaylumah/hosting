@@ -20,7 +20,7 @@ internal class MyIncludeFromDisk : ITemplateLoader
 
     public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
     {
-        return Path.Combine(_fileSystem.GetFile(_templateFolder).Name, templateName);
+        return Path.Combine(_fileSystem.GetFile(_templateFolder).FullName, templateName);
         // return Path.Combine(Environment.CurrentDirectory, templateName);
     }
 

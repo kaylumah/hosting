@@ -7,6 +7,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 
 public interface IContentPreprocessorStrategy
 {
-    bool ShouldExecute(IFileInfo fileInfo);
+    bool ShouldExecute(System.IO.Abstractions.IFileSystemInfo fileInfo);
     string Execute(string raw);
 }

@@ -10,8 +10,13 @@ namespace Kaylumah.Ssg.Utilities.Files
     {
         public static IServiceCollection AddFileSystem(this IServiceCollection services, string rootDirectory)
         {
+            var fileSystem = new System.IO.Abstractions.FileSystem();
+            // fileSystem.Directory.SetCurrentDirectory(rootDirectory);
+
+
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
             services.AddSingleton<IFileSystem, FileSystem>();
+            services.AddSingleton<System.IO.Abstractions.IFileSystem>(fileSystem);
             return services;
         }
     }
