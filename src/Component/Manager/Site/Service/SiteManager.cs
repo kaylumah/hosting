@@ -96,6 +96,7 @@ public class SiteManager : ISiteManager
             // var root2 = Directory.GetCurrentDirectory();
 
             var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
+                .Where(file => !file.IsDirectory)
                 .Select(x => x.PhysicalPath.Replace(root, string.Empty));
             artifacts.AddRange(assets.Select(asset =>
             {
