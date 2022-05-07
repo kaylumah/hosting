@@ -45,6 +45,7 @@ dotnet restore
 # build with MSBuild vars
 dotnet build --configuration $CONFIGURATION --no-restore /p:BuildId=$BUILD_ID /p:BuildNumber=$BUILD_NUMBER
 # test with coverage
+# dotnet test --configuration $CONFIGURATION --no-build --verbosity normal --collect:"XPlat Code Coverage"
 dotnet test --configuration $CONFIGURATION --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 # Publish coverage report
 
