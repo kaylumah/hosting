@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Parsing;
 using Scriban.Runtime;
@@ -10,17 +11,21 @@ namespace Kaylumah.Ssg.Engine.Transformation.Service;
 
 internal class MyIncludeFromDisk : ITemplateLoader
 {
+    private readonly ILogger _logger;
     private readonly IFileSystem _fileSystem;
     private readonly string _templateFolder;
-    public MyIncludeFromDisk(IFileSystem fileSystem, string templateFolder)
+    public MyIncludeFromDisk(IFileSystem fileSystem, string templateFolder, ILogger logger)
     {
         _fileSystem = fileSystem;
         _templateFolder = templateFolder;
+        _logger = logger;
     }
 
     public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
     {
-        return Path.Combine(_fileSystem.GetFile(_templateFolder).Name, templateName);
+        var templateLocation = Path.Combine(_fileSystem.GetFile(_templateFolder).FullName, templateName);
+        _logger.LogInformation("Searching for template '{TemplateName}' at '{TemplateLocation}'", templateName, templateLocation);
+        return templateLocation;
         // return Path.Combine(Environment.CurrentDirectory, templateName);
     }
 

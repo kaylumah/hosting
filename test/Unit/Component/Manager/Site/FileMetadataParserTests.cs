@@ -156,8 +156,8 @@ public class FileMetadataParserTests
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
-            FileName = Path.Combine("test", "file.html"),
-            Permalink = Path.Combine("test", ":name:ext")
+            FileName = "test/file.html",
+            Permalink = "test/:name:ext"
         };
 
         // Act
@@ -168,7 +168,7 @@ public class FileMetadataParserTests
         result.Data.Should().NotBeNull();
         result.Data.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
         result.Data.Uri.Should().NotBeNull();
-        result.Data.Uri.Should().Be(Path.Combine("test", "file.html"));
+        result.Data.Uri.Should().Be("test/file.html");
         result.Data.Layout.Should().NotBeNull();
         result.Data.Layout.Should().Be("default.html");
         result.Data.Collection.Should().NotBeNull();
@@ -208,8 +208,8 @@ public class FileMetadataParserTests
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
-            FileName = Path.Combine("test", "file.html"),
-            Permalink = Path.Combine("test", ":name:ext")
+            FileName = "test/file.html",
+            Permalink = "test/:name:ext"
         };
 
         // Act
@@ -220,7 +220,7 @@ public class FileMetadataParserTests
         result.Data.Should().NotBeNull();
         result.Data.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
         result.Data.Uri.Should().NotBeNull();
-        result.Data.Uri.Should().Be(Path.Combine("test", "file.html"));
+        result.Data.Uri.Should().Be("test/file.html");
         result.Data.Layout.Should().NotBeNull();
         result.Data.Layout.Should().Be("other.html");
         result.Data.Collection.Should().NotBeNull();

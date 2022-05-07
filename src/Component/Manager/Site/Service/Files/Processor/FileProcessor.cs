@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
@@ -12,14 +13,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 public class FileProcessor : IFileProcessor
 {
-    private readonly IFileSystem _fileSystem;
+    private readonly Utilities.IFileSystem _fileSystem;
     private readonly ILogger _logger;
     private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
     private readonly IFileMetadataParser _fileMetaDataProcessor;
     private readonly SiteInfo _siteInfo;
 
     public FileProcessor(
-        IFileSystem fileSystem,
+        Utilities.IFileSystem fileSystem,
         ILogger<FileProcessor> logger,
         IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
         SiteInfo options,
@@ -39,7 +40,7 @@ public class FileProcessor : IFileProcessor
 
         var result = new List<File>();
 
-        var directoryContents = _fileSystem.GetFiles(string.Empty);
+        var directoryContents = _fileSystem.GetFiles("_site");
 
         if (directoryContents.Count() == 0)
         {
@@ -48,10 +49,10 @@ public class FileProcessor : IFileProcessor
         }
 
         var directoriesToProcessAsCollection = directoryContents
-            .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
+            .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name));
 
         var filesWithoutCollections = directoryContents.Where(info =>
-            !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+            !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
         );
 
         _logger.LogInformation("There are {Count} files without a collection", filesWithoutCollections.Count());
@@ -59,7 +60,7 @@ public class FileProcessor : IFileProcessor
         var files =
             await ProcessFiles(
                 filesWithoutCollections
-                .Select(x => x.Name)
+                .Select(x => x.FullName)
                 .ToArray()
             );
 
@@ -111,7 +112,7 @@ public class FileProcessor : IFileProcessor
         {
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(collection);
+            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection));
             var files = await ProcessFiles(targetFiles.ToArray(), keyName);
 
             result.Add(new FileCollection
@@ -125,7 +126,7 @@ public class FileProcessor : IFileProcessor
 
     private async Task<List<File>> ProcessFiles(string[] files)
     {
-        var fileInfos = new List<IFileInfo>();
+        var fileInfos = new List<System.IO.Abstractions.IFileInfo>();
         foreach (var file in files)
         {
             fileInfos.Add(_fileSystem.GetFile(file));
@@ -133,7 +134,7 @@ public class FileProcessor : IFileProcessor
         return await ProcessFiles(fileInfos.ToArray(), scope: null);
     }
 
-    private async Task<List<File>> ProcessFiles(IFileInfo[] files, string scope)
+    private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
     {
         var result = new List<File>();
         foreach (var fileInfo in files)
@@ -166,7 +167,7 @@ public class FileProcessor : IFileProcessor
 
             result.Add(new File
             {
-                LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastModified,
+                // LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastModified,
                 MetaData = fileMeta,
                 Content = fileContents,
                 Name = Path.GetFileName(fileMeta.Uri)

@@ -8,8 +8,7 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(DotNetPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(DotNetPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="$(DotNetPackageVersion)" />
+    <PackageReference Include="System.IO.Abstractions" Version="17.0.3" />
     <PackageReference Include="YamlDotNet" Version="9.1.4" />
   </ItemGroup>
 

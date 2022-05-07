@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Microsoft.Extensions.FileProviders;
+using System.IO.Abstractions;
 
 namespace Kaylumah.Ssg.Utilities;
 
 public interface IFileSystem
 {
-    IEnumerable<IFileInfo> GetFiles(string path, bool recursive = false);
+    IEnumerable<IFileSystemInfo> GetFiles(string path, bool recursive = false);
     IFileInfo GetFile(string path);
     byte[] GetFileBytes(string path);
     void CreateDirectory(string path);
