@@ -167,7 +167,7 @@ public class FileProcessor : IFileProcessor
 
             result.Add(new File
             {
-                // LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastModified,
+                LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc,
                 MetaData = fileMeta,
                 Content = fileContents,
                 Name = Path.GetFileName(fileMeta.Uri)
