@@ -22,7 +22,7 @@ public class FileSystem : IFileSystem
 
     public IEnumerable<IFileInfo> GetDirectoryContents(string path)
     {
-        return _fileProvider.GetDirectoryContents(path);
+        return GetFiles(path);
     }
 
     public IFileInfo GetFile(string path)
@@ -41,7 +41,7 @@ public class FileSystem : IFileSystem
     {
         var result = new List<IFileInfo>();
         var directoryContents = _fileProvider.GetDirectoryContents(path);
-        result.AddRange(directoryContents.Where(x => !x.IsDirectory));
+        result.AddRange(directoryContents);
 
         if (recursive)
         {
