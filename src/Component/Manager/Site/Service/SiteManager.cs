@@ -113,30 +113,5 @@ public class SiteManager : ISiteManager
                 Path = request.Configuration.Destination
             }
         });
-
-
-        /*
-        // TODO can we do this better?
-        var directoryContents = _fileSystem.GetFiles(string.Empty);
-        var rootFile = directoryContents.FirstOrDefault();
-        if (rootFile != null)
-        {
-            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-            // var root2 = Directory.GetCurrentDirectory();
-
-            var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
-                .Where(file => !file.IsDirectory)
-                .Select(x => x.PhysicalPath.Replace(root, string.Empty));
-            artifacts.AddRange(assets.Select(asset =>
-            {
-                return new Artifact
-                {
-                    Path = $"{asset}",
-                    Contents = _fileSystem.GetFileBytes(asset)
-                };
-            }));
-            
-        }
-        */
     }
 }
