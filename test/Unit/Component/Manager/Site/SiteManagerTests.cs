@@ -31,7 +31,7 @@ public class SiteManagerTests
         var rootDirectory = Path.Combine(Environment.CurrentDirectory);
         var configuration = new ConfigurationBuilder().Build();
         var serviceProvider = new ServiceCollection()
-            .AddFileSystem(rootDirectory)
+            .AddFileSystem()
             .AddArtifactAccess(configuration)
             .AddTransformationEngine(configuration)
             .AddSiteManager(configuration)
@@ -49,7 +49,8 @@ public class SiteManagerTests
         {
             Configuration = new SiteConfiguration
             {
-
+                DataDirectory = "_data",
+                AssetDirectory = "assets"
             }
         });
     }

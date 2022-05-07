@@ -40,7 +40,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
 
-            EnrichSiteWithData(siteInfo, siteConfiguration.DataDirectory);
+            EnrichSiteWithData(siteInfo, Path.Combine("_site", siteConfiguration.DataDirectory));
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
@@ -54,6 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
             var data = new Dictionary<string, object>();

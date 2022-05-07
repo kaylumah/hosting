@@ -18,10 +18,11 @@ public class FileSystemMock : Mock<IFileSystem>
         // Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(new NotFoundDirectoryContents());
 
 
-        var directoryContentsMock = new Mock<IDirectoryContents>();
+        //var directoryContentsMock = new Mock<IDirectoryContents>();
+        var directoryContentsMock = new Mock<IEnumerable<IFileInfo>>();
         directoryContentsMock.Setup(dc => dc.GetEnumerator()).Returns(new List<IFileInfo>().GetEnumerator());
-        directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
-        Setup(x => x.GetDirectoryContents(It.IsAny<string>())).Returns(directoryContentsMock.Object);
+        //directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
+        //Setup(x => x.GetFiles(It.IsAny<string>())).Returns(directoryContentsMock.Object);
 
         Setup(x => x.CreateDirectory(It.IsAny<string>()))
             .Callback<string>(path =>

@@ -77,6 +77,7 @@ public class SiteManager : ISiteManager
             .ToArray();
         var renderResults = await _transformationEngine.Render(requests);
 
+
         var artifacts = processed.Select((t, i) =>
         {
             var renderResult = renderResults[i];
@@ -87,34 +88,30 @@ public class SiteManager : ISiteManager
             };
         }).ToList();
 
-        // TODO can we do this better?
-        var directoryContents =
-                        _fileSystem.GetDirectoryContents("");
-        var rootFile = directoryContents.FirstOrDefault();
-        if (rootFile != null)
-        {
-            var root = rootFile.PhysicalPath.Replace(rootFile.Name, "");
-            // var root2 = Directory.GetCurrentDirectory();
 
-            var assets = _fileSystem.GetFiles(request.Configuration.AssetDirectory, true)
-                .Select(x => x.PhysicalPath.Replace(root, string.Empty));
-            artifacts.AddRange(assets.Select(asset =>
+        var assets = _fileSystem
+            .GetFiles(Path.Combine("_site", request.Configuration.AssetDirectory), true)
+            .Where(x => !x.IsDirectory());
+
+        var env = Path.Combine(Environment.CurrentDirectory, "_site") + Path.DirectorySeparatorChar;
+
+        artifacts.AddRange(assets.Select(asset =>
+        {
+            return new Artifact
             {
-                return new Artifact
-                {
-                    Path = $"{asset}",
-                    Contents = _fileSystem.GetFileBytes(asset)
-                };
-            }));
-            await _artifactAccess.Store(new StoreArtifactsRequest
+                Path = asset.FullName.Replace(env, ""),
+                Contents = _fileSystem.GetFileBytes(asset.FullName)
+            };
+        }));
+
+        await _artifactAccess.Store(new StoreArtifactsRequest
+        {
+            Artifacts = artifacts.ToArray(),
+            OutputLocation = new FileSystemOutputLocation()
             {
-                Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Clean = false,
-                    Path = request.Configuration.Destination
-                }
-            });
-        }
+                Clean = false,
+                Path = request.Configuration.Destination
+            }
+        });
     }
 }

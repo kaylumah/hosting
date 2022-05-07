@@ -72,8 +72,6 @@ class Program
         var debugView = root.GetDebugView();
         Console.WriteLine(debugView);
 
-        var rootDirectory = Path.Combine(Environment.CurrentDirectory, "_site");
-
         IServiceCollection services = new ServiceCollection();
         services.AddLogging(builder =>
         {
@@ -82,7 +80,7 @@ class Program
                 opt.IncludeScopes = true;
             });
         });
-        services.AddFileSystem(rootDirectory);
+        services.AddFileSystem();
         services.AddArtifactAccess(configuration);
         services.AddTransient<IPlugin, SeoPlugin>();
         services.AddTransient<IPlugin, FeedPlugin>();
