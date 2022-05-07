@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions;
-using Microsoft.Extensions.FileProviders;
 
 namespace Kaylumah.Ssg.Utilities;
 
@@ -22,13 +21,10 @@ public static class FileSystemExtensions
 
 public class FileSystem : IFileSystem
 {
-    private readonly IFileProvider _fileProvider;
     private readonly System.IO.Abstractions.IFileSystem _fileSystem;
-    
 
-    public FileSystem(IFileProvider fileProvider, System.IO.Abstractions.IFileSystem fileSystem)
+    public FileSystem(System.IO.Abstractions.IFileSystem fileSystem)
     {
-        _fileProvider = fileProvider;
         _fileSystem = fileSystem;
     }
 
