@@ -20,7 +20,7 @@ public class FileSystem : IFileSystem
         Directory.CreateDirectory(path);
     }
 
-    public IDirectoryContents GetDirectoryContents(string path)
+    public IEnumerable<IFileInfo> GetDirectoryContents(string path)
     {
         return _fileProvider.GetDirectoryContents(path);
     }

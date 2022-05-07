@@ -10,7 +10,7 @@ public interface IFileSystem
     IEnumerable<IFileInfo> GetFiles(string path, bool recursive = false);
     IFileInfo GetFile(string path);
     byte[] GetFileBytes(string path);
-    IDirectoryContents GetDirectoryContents(string path);
+    IEnumerable<IFileInfo> GetDirectoryContents(string path);
     void CreateDirectory(string path);
     Task WriteAllBytesAsync(string path, byte[] bytes);
 }
