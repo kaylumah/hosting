@@ -97,21 +97,23 @@ public class FileMetadataParser : IFileMetadataParser
     private List<string> DetermineFilters(string outputLocation)
     {
         var paths = new List<string>() { string.Empty };
-        var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+        //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+        var urlSeperator = "/";
+        var index = outputLocation.LastIndexOf(urlSeperator);
         if (index >= 0)
         {
             var input = outputLocation.Substring(0, index);
-            paths.AddRange(DetermineFilterDirectories(input));
+            paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
             paths = paths.OrderBy(x => x.Length).ToList();
         }
         return paths;
     }
 
-    private List<string> DetermineFilterDirectories(string input)
+    private List<string> DetermineFilterDirectories(string input, string urlSeperator)
     {
         var result = new List<string>();
         int index;
-        while ((index = input.LastIndexOf(Path.DirectorySeparatorChar)) >= 0)
+        while ((index = input.LastIndexOf(urlSeperator)) >= 0)
         {
             result.Add(input);
             input = input.Substring(0, index);
