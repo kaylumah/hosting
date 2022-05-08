@@ -69,16 +69,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.runsettings = .runsettings
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
 		global.json = global.json
 		nuget.config = nuget.config
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Access.Artifact.Hosting", "src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj", "{1ED002AF-0A9F-4CEE-B968-2C88A4629557}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Access.Artifact.Hosting", "src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj", "{1ED002AF-0A9F-4CEE-B968-2C88A4629557}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Engine.Transformation.Hosting", "src\Component\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj", "{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Engine.Transformation.Hosting", "src\Component\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj", "{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Manager.Site.Hosting", "src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj", "{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Manager.Site.Hosting", "src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj", "{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
