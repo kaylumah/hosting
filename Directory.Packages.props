@@ -6,23 +6,19 @@
   <!-- https://docs.microsoft.com/en-us/dotnet/core/compatibility/sdk/5.0/directory-packages-props-imported-by-default -->
   <!-- https://github.com/NuGet/Home/wiki/Centrally-managing-NuGet-package-versions -->
 
-  <ItemGroup>
-    <!-- 6.0.1 -->
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+  <ItemGroup Label="Microsoft Extensions">
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-    <!-- 6.0.1 -->
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <!-- 6.0.1 -->
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    
   </ItemGroup>
 
   <ItemGroup>
