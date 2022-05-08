@@ -14,6 +14,10 @@
     </PropertyGroup>
 
     <PropertyGroup>
+      <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+  
+    <PropertyGroup>
         <!--
         <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
         -->
