@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
+
+  <!-- https://devblogs.microsoft.com/nuget/introducing-central-package-management/ -->
+  <!-- https://www.mytechramblings.com/posts/centrally-manage-nuget-versions/ -->
+  <!-- https://docs.microsoft.com/en-us/dotnet/core/compatibility/sdk/5.0/directory-packages-props-imported-by-default -->
+  <!-- https://github.com/NuGet/Home/wiki/Centrally-managing-NuGet-package-versions -->
+
   <ItemGroup>
     <!-- 6.0.1 -->
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
