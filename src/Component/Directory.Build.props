@@ -3,7 +3,7 @@
   <Import Project="../Directory.Build.props" />
 
   <PropertyGroup>
-    <ManagePackageVersionsCentrally Condition="$(MSBuildProjectName.EndsWith('Hosting'))">true</ManagePackageVersionsCentrally>
+    <ManagePackageVersionsCentrally Condition="$(MSBuildProjectName.EndsWith('Hosting')) Or $(MSBuildProjectName.EndsWith('Interface')) Or $(MSBuildProjectName.EndsWith('Service'))">true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
 </Project>

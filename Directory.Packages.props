@@ -5,5 +5,13 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <!-- 6.0.1 -->
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(DotNetPackageVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(DotNetPackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="Scriban" Version="3.4.2" />
   </ItemGroup>
 </Project>
