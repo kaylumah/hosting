@@ -7,11 +7,17 @@
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <!-- 6.0.1 -->
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="$(DotNetPackageVersion)" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(DotNetPackageVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <!-- 6.0.1 -->
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageVersion Include="Scriban" Version="3.4.2" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.29" />
   </ItemGroup>
 </Project>
