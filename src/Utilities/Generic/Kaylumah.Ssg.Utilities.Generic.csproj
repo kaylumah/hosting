@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="5.0.1" />
-    <PackageReference Include="Markdig" Version="0.23.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(DotNetPackageVersion)" />
-    <PackageReference Include="Scriban" Version="3.4.2" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.29" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Scriban" />
+    <PackageReference Include="HtmlAgilityPack" />
   </ItemGroup>
 
   <ItemGroup>
