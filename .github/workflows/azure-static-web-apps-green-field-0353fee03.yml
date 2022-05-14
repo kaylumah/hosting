@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
       # - name: Use Node.js v16
       #   uses: actions/setup-node@v1
       #   with:
@@ -24,9 +27,6 @@ jobs:
         with:
          dotnet-version: |
            6.0.x
-      - uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
