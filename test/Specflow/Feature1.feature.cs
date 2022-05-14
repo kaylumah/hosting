@@ -118,8 +118,14 @@ this.ScenarioInitialize(scenarioInfo);
 #line 12
     testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "key",
+                            "value"});
+                table2.AddRow(new string[] {
+                            "uri",
+                            "2"});
 #line 13
-    testRunner.Then("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("something", ((string)(null)), table2, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

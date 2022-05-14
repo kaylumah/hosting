@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -44,8 +45,14 @@ internal class FeatureSteps
     }
 
     [Then("something")]
-    public void Then()
+    public void Then(Table table)
     {
-
+        var dict = table.ToDictionary();
+        _state.Data
+            .Should().Equal(dict);
     }
+}
+
+public class Custom : Dictionary<string, object>
+{
 }

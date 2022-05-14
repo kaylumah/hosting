@@ -11,3 +11,5 @@ Scenario: MyFirstScenario
         | expr   | true  |
     When something
     Then something
+        | key | value |
+        | uri | 2     |
