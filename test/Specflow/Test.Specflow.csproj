@@ -35,5 +35,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="SpecFlow.xUnit" />
+  </ItemGroup>
 
 </Project>
