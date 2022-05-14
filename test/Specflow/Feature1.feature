@@ -10,3 +10,11 @@ Scenario: MyFirstScenario
         | text   | abc   |
         | expr   | true  |
     When something
+
+Scenario: MyFirstScenario2
+	Given scope '[string]' has the following metadata:
+        | key    | value |
+        | number | 1     |
+        | text   | abc   |
+        | expr   | true  |
+    When something

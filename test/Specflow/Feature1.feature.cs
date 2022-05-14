@@ -122,6 +122,46 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="MyFirstScenario2")]
+        [Xunit.TraitAttribute("FeatureTitle", "Feature1")]
+        [Xunit.TraitAttribute("Description", "MyFirstScenario2")]
+        public void MyFirstScenario2()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("MyFirstScenario2", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 14
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                            "key",
+                            "value"});
+                table2.AddRow(new string[] {
+                            "number",
+                            "1"});
+                table2.AddRow(new string[] {
+                            "text",
+                            "abc"});
+                table2.AddRow(new string[] {
+                            "expr",
+                            "true"});
+#line 15
+ testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table2, "Given ");
+#line hidden
+#line 20
+    testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
