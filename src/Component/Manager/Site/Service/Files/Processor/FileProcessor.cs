@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
+// TODO test this one
 public class FileProcessor : IFileProcessor
 {
     private readonly Utilities.IFileSystem _fileSystem;

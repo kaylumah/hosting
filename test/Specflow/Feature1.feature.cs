@@ -122,6 +122,9 @@ this.ScenarioInitialize(scenarioInfo);
                             "key",
                             "value"});
                 table2.AddRow(new string[] {
+                            "a",
+                            "<value>"});
+                table2.AddRow(new string[] {
                             "uri",
                             "2"});
 #line 13
