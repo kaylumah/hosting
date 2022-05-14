@@ -12,5 +12,6 @@ Scenario: MyFirstScenario
     When something
     Then something
         | key | value   |
+        | d   | '' |
         | a   | <value> |
         | uri | 2       |
