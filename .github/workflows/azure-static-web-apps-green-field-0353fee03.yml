@@ -32,6 +32,7 @@ jobs:
         run: |
           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
       - name: 'Generate Website'
+        shell: pwsh
         run: build.ps1
         # run: sh build.sh BUILD_ID=$GITHUB_RUN_ID BUILD_NUMBER=$GITHUB_RUN_NUMBER
       # - name: Build And Deploy
