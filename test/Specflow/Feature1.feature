@@ -9,3 +9,4 @@ Scenario: MyFirstScenario
         | number | 1     |
         | text   | abc   |
         | expr   | true  |
+    When something
