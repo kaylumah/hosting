@@ -6,3 +6,7 @@ param(
 )
 
 Write-Host "BuildId '$BuildId' BuildNumber '$BuildNumber'"
+
+$PrBuildId = $env:PR_BUILD_ID
+
+Write-Host "PRBuild is '$PrBuildId'"
