@@ -42,4 +42,10 @@ internal class FeatureSteps
         );
         _state = response;
     }
+
+    [Then("something")]
+    public void Then()
+    {
+
+    }
 }
