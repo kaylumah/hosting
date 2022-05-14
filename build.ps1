@@ -36,3 +36,22 @@ else
     [string] $BaseUrl="https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net"
     dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 }
+
+# https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
+
+try
+{
+    Set-Location $DistFolder
+    npm i
+    npm run build:prod
+    Write-Host "Cleaning Up Leftovers"
+    Remove-Item styles.css
+    Remove-Item package.json
+    Remove-Item package-lock.json
+    Remove-Item tailwind.config.js
+    Remove-Item node_modules -Recurse -Force
+}
+finally
+{
+    Set-Location $RepoRoot
+}
