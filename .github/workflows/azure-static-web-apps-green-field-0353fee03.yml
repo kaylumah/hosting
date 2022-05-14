@@ -31,7 +31,7 @@ jobs:
       - name: 'Generate Website'
         shell: pwsh
         run: |
-          ./build.ps1 -BuildId $GITHUB_RUN_ID -BuildNumber $GITHUB_RUN_NUMBER
+          ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
