@@ -10,3 +10,4 @@ Scenario: MyFirstScenario
         | text   | abc   |
         | expr   | true  |
     When something
+    Then something

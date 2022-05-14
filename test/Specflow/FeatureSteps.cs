@@ -13,6 +13,8 @@ namespace Test.Specflow;
 [Binding]
 internal class FeatureSteps
 {
+    private Metadata<FileMetaData> _state;
+
     [Given("scope '(.*)' has the following metadata:")]
     public void GivenTheFollowingData(string scope, Table table)
     {
@@ -38,5 +40,12 @@ internal class FeatureSteps
                     Permalink = "2"
                 }
         );
+        _state = response;
+    }
+
+    [Then("something")]
+    public void Then()
+    {
+
     }
 }

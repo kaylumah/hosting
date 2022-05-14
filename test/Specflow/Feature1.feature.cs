@@ -118,6 +118,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 12
     testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+#line 13
+    testRunner.Then("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
