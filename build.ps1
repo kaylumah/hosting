@@ -21,3 +21,5 @@ if (Test-Path $DistFolder)
     Write-Host "dist folder from previous run exists, removing now."
     Remove-Item $DistFolder -Recurse -Force
 }
+
+dotnet restore
