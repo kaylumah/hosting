@@ -122,14 +122,17 @@ this.ScenarioInitialize(scenarioInfo);
                             "key",
                             "value"});
                 table2.AddRow(new string[] {
-                            "x",
+                            "A",
                             ""});
                 table2.AddRow(new string[] {
-                            "d",
+                            "B",
                             "\'\'"});
                 table2.AddRow(new string[] {
-                            "a",
+                            "C",
                             "<value>"});
+                table2.AddRow(new string[] {
+                            "D",
+                            "<null>"});
                 table2.AddRow(new string[] {
                             "uri",
                             "2"});
