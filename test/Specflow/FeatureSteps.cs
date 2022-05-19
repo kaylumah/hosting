@@ -1,11 +1,18 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
+using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -14,6 +21,30 @@ namespace Test.Specflow;
 [Binding]
 internal class FeatureSteps
 {
+
+    private IFileMetadataParser BuildFileMetadataParser()
+    {
+        var logger = NullLogger<FileMetadataParser>.Instance;
+        var options = new MetadataParserOptions();
+        IYamlParser yamlParser = new YamlParser();
+        IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
+        var fileMetaDataParser = new FileMetadataParser(
+            logger, metadataProvider, options);
+        return fileMetaDataParser;
+    }
+
+    private IFileProcessor BuildFileProcessor()
+    {
+        Kaylumah.Ssg.Utilities.IFileSystem fileSystem = new Kaylumah.Ssg.Utilities.FileSystem(new MockFileSystem());
+        var logger = NullLogger<FileProcessor>.Instance;
+        var strategies = Array.Empty<IContentPreprocessorStrategy>();
+        var siteInfo = new SiteInfo();
+        var metaDataParser = BuildFileMetadataParser();
+        return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
+    }
+
+
+
     private Metadata<FileMetaData> _state;
 
     [Given("scope '(.*)' has the following metadata:")]
