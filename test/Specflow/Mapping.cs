@@ -19,22 +19,29 @@ namespace Test.Specflow
         public void Given(Table table)
         {
             var set = table.CreateSet<MetaItem>();
+            var defaults = set.ToDefaultMetadatas();
+        }
+    }
 
+    public static partial class Extensions
+    {
+        public static DefaultMetadatas ToDefaultMetadatas(this IEnumerable<MetaItem> metaItems)
+        {
             var defaultMetaDatas = new DefaultMetadatas();
 
-            var groupedByScope = set.GroupBy(x => x.scope);
+            var groupedByScope = metaItems.GroupBy(x => x.scope);
 
-            foreach(var scopeGroup in groupedByScope)
+            foreach (var scopeGroup in groupedByScope)
             {
                 var scope = scopeGroup.Key;
                 var groupedByPath = scopeGroup.GroupBy(x => x.path);
 
-                foreach(var pathGroup in groupedByPath)
+                foreach (var pathGroup in groupedByPath)
                 {
                     var path = pathGroup.Key;
 
                     var fileMetaData = new FileMetaData();
-                    foreach(var item in pathGroup)
+                    foreach (var item in pathGroup)
                     {
                         fileMetaData.Add(item.key, item.value);
                     }
@@ -47,7 +54,7 @@ namespace Test.Specflow
                     });
                 }
             }
-
+            return defaultMetaDatas;
         }
     }
 
