@@ -100,7 +100,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 11
+#line 7
+    testRunner.Given("the extensions \'.md,.txt\' are targeted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 12
      testRunner.Given("file \'_site/file2.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -115,13 +118,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "expr",
                             "true"});
-#line 18
+#line 19
  testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table1, "Given ");
 #line hidden
-#line 23
+#line 24
     testRunner.When("something else", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 24
+#line 25
     testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -142,7 +145,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "uri",
                             "2"});
-#line 25
+#line 26
     testRunner.Then("something", ((string)(null)), table2, "Then ");
 #line hidden
             }

@@ -21,6 +21,7 @@ namespace Test.Specflow;
 [Binding]
 internal class FeatureSteps
 {
+    private readonly List<string> _supportedFileExtensions = new();
     private readonly Dictionary<string, MockFileData> _fileSystemData = new();
     private Metadata<FileMetaData> _state;
 
@@ -59,6 +60,18 @@ internal class FeatureSteps
         var siteInfo = new SiteInfo();
         var metaDataParser = BuildFileMetadataParser();
         return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
+    }
+
+    [StepArgumentTransformation]
+    public List<string> TransformToListOfString(string commaSeparatedList)
+    {
+        return commaSeparatedList.Split(",").ToList();
+    }
+
+    [Given("the extensions '(.*)' are targeted")]
+    public void GivenTheFollowingExtensions(List<string> values)
+    {
+        _supportedFileExtensions.AddRange(values);
     }
 
     [Given("scope '(.*)' has the following metadata:")]
@@ -106,10 +119,7 @@ internal class FeatureSteps
 
         var result = await fileProcessor.Process(new FileFilterCriteria
         {
-            FileExtensionsToTarget = new string[]
-            {
-                ".md"
-            }
+            FileExtensionsToTarget = _supportedFileExtensions.ToArray(),
         });
     }
 
