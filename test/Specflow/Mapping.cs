@@ -22,11 +22,23 @@ namespace Test.Specflow
             _metadataParserOptions = metadataParserOptions;
         }
 
-        [Given("the following metadata:")]
-        public void Given(Table table)
+        [Given("the following default metadata:")]
+        public void GivenTheFollowingDefaultMetadata(Table table)
         {
             var set = table.CreateSet<MetaItem>();
             _metadataParserOptions.Defaults = set.ToDefaultMetadatas();
+        }
+
+        [Given("the following extension mapping:")]
+        public void GivenTheFollowingExtensionMapping(Table table)
+        {
+            var set = table.CreateSet<(string key, string value)>();
+            var dictionary = new Dictionary<string, string>();
+            foreach(var item in set)
+            {
+                dictionary.Add(item.key, item.value);
+            }
+            _metadataParserOptions.ExtensionMapping = dictionary;
         }
     }
 
