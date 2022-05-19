@@ -81,6 +81,7 @@ internal class MockFileDataFactory
 [Binding]
 internal class FeatureSteps
 {
+    private readonly Dictionary<string, MockFileData> _fileSystemData = new();
 
     private IFileMetadataParser BuildFileMetadataParser()
     {
@@ -95,19 +96,22 @@ internal class FeatureSteps
 
     private IFileProcessor BuildFileProcessor()
     {
+        /*
         var data = MockFileDataFactory.DefaultFile("# This is Markdown", new Dictionary<string, object>
         {
             ["title"] = "Demo Post"
         });
         var text = Encoding.UTF8.GetString(data.Contents);
 
+        
         var fileSystemData = new Dictionary<string, MockFileData>()
         {
             [Path.Combine("_site", "_posts", "example.md")] = data
         };
+        */
 
         Kaylumah.Ssg.Utilities.IFileSystem fileSystem = new Kaylumah.Ssg.Utilities.FileSystem(
-                new MockFileSystem(fileSystemData)
+                new MockFileSystem(_fileSystemData)
         );
         var logger = NullLogger<FileProcessor>.Instance;
         var strategies = Array.Empty<IContentPreprocessorStrategy>();
@@ -129,7 +133,7 @@ internal class FeatureSteps
     [Given("file '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
     {
-
+        _fileSystemData.Add(fileName, MockFileDataFactory.DefaultFile(contents));
     }
 
     [When("something")]

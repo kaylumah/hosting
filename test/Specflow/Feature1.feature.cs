@@ -101,7 +101,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
-    testRunner.Given("file \'[string]\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("file \'_site/file1.md\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "key",
