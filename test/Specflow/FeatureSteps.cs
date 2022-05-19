@@ -58,7 +58,12 @@ internal class FeatureSteps
                 new MockFileSystem(_fileSystemData)
         );
         var logger = NullLogger<FileProcessor>.Instance;
-        var strategies = Array.Empty<IContentPreprocessorStrategy>();
+        var strategies = new IContentPreprocessorStrategy[]
+        {
+            new MarkdownContentPreprocessorStrategy()
+        };
+            
+            //Array.Empty<IContentPreprocessorStrategy>();
         var siteInfo = new SiteInfo()
         {
             Collections = new Collections()
