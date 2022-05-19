@@ -26,10 +26,20 @@ namespace Test.Specflow
         }
 
         [StepArgumentTransformation]
-        public List<string> TransformToListOfString(string commaSeparatedList)
+        public static List<string> TransformToListOfString(string commaSeparatedList)
         {
             return commaSeparatedList.Split(",").ToList();
         }
+
+        [StepArgumentTransformation]
+        public static List<Page> TransformPages(Table table)
+        {
+            var pages = table.CreateSet<Page>();
+            return pages.ToList();
+        }
+
+
+
     }
 
     public class Page
