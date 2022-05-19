@@ -104,6 +104,7 @@ internal class FeatureSteps
         _fileSystemData.Add(fileName, MockFileDataFactory.DefaultFile(contents));
     }
 
+
     [When("something")]
     public void When()
     {
