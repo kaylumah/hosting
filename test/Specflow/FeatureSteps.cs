@@ -73,6 +73,13 @@ internal class FeatureSteps
         return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
     }
 
+    [Then("the following pages:")]
+    public void ThenTheFollowingPages(List<Page> pages)
+    {
+
+    }
+
+
     [Given("the extensions '(.*)' are targeted")]
     public void GivenTheFollowingExtensions(List<string> values)
     {

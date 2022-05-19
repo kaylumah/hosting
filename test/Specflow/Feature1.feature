@@ -33,3 +33,6 @@ Scenario: MyFirstScenario
         | C   | <value> |
         | D   | <null> |
         | uri | 2       |
+    Then the following pages:
+        | uri |
+        |     |

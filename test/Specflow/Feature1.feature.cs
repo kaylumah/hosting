@@ -151,6 +151,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 29
     testRunner.Then("something", ((string)(null)), table2, "Then ");
 #line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "uri"});
+                table3.AddRow(new string[] {
+                            ""});
+#line 36
+    testRunner.Then("the following pages:", ((string)(null)), table3, "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }

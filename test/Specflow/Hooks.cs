@@ -37,9 +37,6 @@ namespace Test.Specflow
             var pages = table.CreateSet<Page>();
             return pages.ToList();
         }
-
-
-
     }
 
     public class Page
