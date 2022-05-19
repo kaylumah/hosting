@@ -126,6 +126,12 @@ internal class FeatureSteps
         var metaData = table.ToDictionary();
     }
 
+    [Given("file '(.*)' has the following contents:")]
+    public void GivenFileHasTheFollowingContents(string fileName, string contents)
+    {
+
+    }
+
     [When("something")]
     public void When()
     {
