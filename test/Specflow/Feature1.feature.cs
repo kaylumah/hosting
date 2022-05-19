@@ -116,6 +116,9 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table1, "Given ");
 #line hidden
 #line 12
+    testRunner.When("something else", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 13
     testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -136,7 +139,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "uri",
                             "2"});
-#line 13
+#line 14
     testRunner.Then("something", ((string)(null)), table2, "Then ");
 #line hidden
             }

@@ -79,6 +79,14 @@ internal class FeatureSteps
         _state = response;
     }
 
+    [When("something else")]
+    public async Task WhenElse()
+    {
+        var fileProcessor = BuildFileProcessor();
+
+        var result = await fileProcessor.Process(new FileFilterCriteria { });
+    }
+
     [Then("something")]
     public void Then(Table table)
     {

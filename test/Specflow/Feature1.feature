@@ -9,6 +9,7 @@ Scenario: MyFirstScenario
         | number | 1     |
         | text   | abc   |
         | expr   | true  |
+    When something else
     When something
     Then something
         | key | value   |
