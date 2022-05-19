@@ -21,6 +21,7 @@ namespace Test.Specflow;
 [Binding]
 internal class FeatureSteps
 {
+    private readonly Dictionary<string, string> _extensionMapping = new();
     private readonly List<Page> _pages = new();
     private readonly List<string> _collections = new();
     private readonly List<string> _supportedFileExtensions = new();
@@ -30,12 +31,26 @@ internal class FeatureSteps
     private IFileMetadataParser BuildFileMetadataParser()
     {
         var logger = NullLogger<FileMetadataParser>.Instance;
-        var options = new MetadataParserOptions();
+        var options = new MetadataParserOptions()
+        { 
+            ExtensionMapping = _extensionMapping
+        };
         IYamlParser yamlParser = new YamlParser();
         IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
         var fileMetaDataParser = new FileMetadataParser(
             logger, metadataProvider, options);
         return fileMetaDataParser;
+    }
+
+    [Given("the following extensions:")]
+    public void GivenTheFollowingExtensions(Table table)
+    {
+        // var test = table.CreateSet<(string key, string value)>();
+        var test2 = table.ToDictionary();
+        foreach(var item in test2)
+        {
+            _extensionMapping[item.Key] = (string)item.Value;
+        }
     }
 
     private IFileProcessor BuildFileProcessor()

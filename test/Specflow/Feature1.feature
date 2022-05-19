@@ -4,6 +4,9 @@ A short summary of the feature
 
 @tag1
 Scenario: MyFirstScenario
+    Given the following extensions:
+        | key | value |
+        | .md | .html |
     Given the extensions '.md,.txt' are targeted
     And file '_site/file1.md' has the following contents:
         """
@@ -34,6 +37,6 @@ Scenario: MyFirstScenario
         | D   | <null> |
         | uri | 2       |
     Then the following pages:
-        | uri                 |
-        | file1.md            |
-        | 2019/09/07/file1.md |
+        | uri                   |
+        | file1.html            |
+        | 2019/09/07/file1.html |
