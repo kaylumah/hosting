@@ -102,15 +102,23 @@ this.ScenarioInitialize(scenarioInfo);
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "scope",
-                            "path"});
+                            "path",
+                            "key",
+                            "value"});
                 table1.AddRow(new string[] {
                             "<null>",
+                            "",
+                            "",
                             ""});
                 table1.AddRow(new string[] {
                             "<null>",
-                            "2022"});
+                            "2022",
+                            "",
+                            ""});
                 table1.AddRow(new string[] {
                             "posts",
+                            "",
+                            "",
                             ""});
 #line 7
     testRunner.Given("the following metadata:", ((string)(null)), table1, "Given ");

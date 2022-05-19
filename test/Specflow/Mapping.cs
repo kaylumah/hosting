@@ -33,11 +33,17 @@ namespace Test.Specflow
                 {
                     var path = pathGroup.Key;
 
+                    var fileMetaData = new FileMetaData();
+                    foreach(var item in pathGroup)
+                    {
+                        fileMetaData.Add(item.key, item.value);
+                    }
+
                     defaultMetaDatas.Add(new DefaultMetadata
                     {
                         Path = path,
                         Scope = scope,
-                        Values = new FileMetaData()
+                        Values = fileMetaData
                     });
                 }
             }
@@ -45,5 +51,5 @@ namespace Test.Specflow
         }
     }
 
-    public readonly record struct MetaItem(string scope, string path);
+    public readonly record struct MetaItem(string scope, string path, string key, string value);
 }
