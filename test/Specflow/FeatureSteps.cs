@@ -58,7 +58,17 @@ internal class FeatureSteps
         );
         var logger = NullLogger<FileProcessor>.Instance;
         var strategies = Array.Empty<IContentPreprocessorStrategy>();
-        var siteInfo = new SiteInfo();
+        var siteInfo = new SiteInfo()
+        {
+            Collections = new Collections()
+            {
+                new Collection()
+                {
+                    Name = "posts",
+                    Output = true
+                }
+            }
+        };
         var metaDataParser = BuildFileMetadataParser();
         return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
     }
