@@ -4,15 +4,15 @@ A short summary of the feature
 
 @tag1
 Scenario: MyFirstScenario
-    Given file '_site/file1.md' has the following contents:
+    #Given file '_site/file1.md' has the following contents:
+    #    """
+    #    # Hello World
+    #    """
+     Given file '_site/file2.md' has the following contents:
         """
-        # Hello World
-        """
-     And file '_site/file2.md' has the following contents:
-        """
-        ---
-        title: my title
-        ---
+---
+title: my title
+---
         # Hello World
         """
 	Given scope '[string]' has the following metadata:

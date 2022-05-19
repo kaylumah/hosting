@@ -28,7 +28,7 @@ internal class MockFileDataFactory
     public static MockFileData DefaultFile(string content, Dictionary<string, object> data = null)
     {
         return new MockFileDataFactory()
-            .WithYamlFrontMatter(data)
+            //.WithYamlFrontMatter(data)
             .WithContent(content)
             .Create();
     }
