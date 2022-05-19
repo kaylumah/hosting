@@ -34,5 +34,6 @@ Scenario: MyFirstScenario
         | D   | <null> |
         | uri | 2       |
     Then the following pages:
-        | uri |
-        |     |
+        | uri                 |
+        | file1.md            |
+        | 2019/09/07/file1.md |
