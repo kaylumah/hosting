@@ -25,6 +25,14 @@ internal class MockFileDataFactory
     private string _frontMatter;
     private string _content;
 
+    public static MockFileData DefaultFile(string content, Dictionary<string, object> data = null)
+    {
+        return new MockFileDataFactory()
+            .WithYamlFrontMatter(data)
+            .WithContent(content)
+            .Create();
+    }
+
     public static MockFileData DefaultFile(Dictionary<string, object> data = null)
     {
         return new MockFileDataFactory()
@@ -87,7 +95,7 @@ internal class FeatureSteps
 
     private IFileProcessor BuildFileProcessor()
     {
-        var data = MockFileDataFactory.DefaultFile(new Dictionary<string, object>
+        var data = MockFileDataFactory.DefaultFile("# This is Markdown", new Dictionary<string, object>
         {
             ["title"] = "Demo Post"
         });
