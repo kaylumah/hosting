@@ -157,7 +157,13 @@ internal class FeatureSteps
     {
         var fileProcessor = BuildFileProcessor();
 
-        var result = await fileProcessor.Process(new FileFilterCriteria { });
+        var result = await fileProcessor.Process(new FileFilterCriteria
+        {
+            FileExtensionsToTarget = new string[]
+            {
+                ".md"
+            }
+        });
     }
 
     [Then("something")]
