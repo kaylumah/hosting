@@ -100,7 +100,15 @@ internal class FeatureSteps
             ["title"] = "Demo Post"
         });
         var text = Encoding.UTF8.GetString(data.Contents);
-        Kaylumah.Ssg.Utilities.IFileSystem fileSystem = new Kaylumah.Ssg.Utilities.FileSystem(new MockFileSystem());
+
+        var fileSystemData = new Dictionary<string, MockFileData>()
+        {
+            [Path.Combine("_site", "_posts", "example.md")] = data
+        };
+
+        Kaylumah.Ssg.Utilities.IFileSystem fileSystem = new Kaylumah.Ssg.Utilities.FileSystem(
+                new MockFileSystem(fileSystemData)
+        );
         var logger = NullLogger<FileProcessor>.Instance;
         var strategies = Array.Empty<IContentPreprocessorStrategy>();
         var siteInfo = new SiteInfo();
