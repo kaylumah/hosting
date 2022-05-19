@@ -24,5 +24,16 @@ namespace Test.Specflow
                 .ValueRetrievers
                 .Register(new NullValueRetriever("<null>"));
         }
+
+        [StepArgumentTransformation]
+        public List<string> TransformToListOfString(string commaSeparatedList)
+        {
+            return commaSeparatedList.Split(",").ToList();
+        }
+    }
+
+    public class Page
+    {
+        public string Uri { get; set; }
     }
 }

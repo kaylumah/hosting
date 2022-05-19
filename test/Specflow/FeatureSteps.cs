@@ -73,12 +73,6 @@ internal class FeatureSteps
         return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
     }
 
-    [StepArgumentTransformation]
-    public List<string> TransformToListOfString(string commaSeparatedList)
-    {
-        return commaSeparatedList.Split(",").ToList();
-    }
-
     [Given("the extensions '(.*)' are targeted")]
     public void GivenTheFollowingExtensions(List<string> values)
     {
