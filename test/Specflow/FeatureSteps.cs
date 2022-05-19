@@ -21,6 +21,7 @@ namespace Test.Specflow;
 [Binding]
 internal class FeatureSteps
 {
+    private readonly List<string> _collections = new();
     private readonly List<string> _supportedFileExtensions = new();
     private readonly Dictionary<string, MockFileData> _fileSystemData = new();
     private Metadata<FileMetaData> _state;
@@ -74,6 +75,12 @@ internal class FeatureSteps
         _supportedFileExtensions.AddRange(values);
     }
 
+    [Given("the collections '(.*)' are targeted")]
+    public void GivenTheFollowingCollections(List<string> values)
+    {
+        _collections.AddRange(values);
+    }
+
     [Given("scope '(.*)' has the following metadata:")]
     public void GivenTheFollowingData(string scope, Table table)
     {
@@ -120,6 +127,7 @@ internal class FeatureSteps
         var result = await fileProcessor.Process(new FileFilterCriteria
         {
             FileExtensionsToTarget = _supportedFileExtensions.ToArray(),
+            // DirectoriesToSkip
         });
     }
 
