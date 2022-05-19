@@ -8,6 +8,13 @@ Scenario: MyFirstScenario
         """
         # Hello World
         """
+     And file '_site/file2.md' has the following contents:
+        """
+        ---
+        title: my title
+        ---
+        # Hello World
+        """
 	Given scope '[string]' has the following metadata:
         | key    | value |
         | number | 1     |

@@ -103,6 +103,9 @@ this.ScenarioInitialize(scenarioInfo);
 #line 7
     testRunner.Given("file \'_site/file1.md\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 11
+     testRunner.And("file \'_site/file2.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "key",
                             "value"});
@@ -115,13 +118,13 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "expr",
                             "true"});
-#line 11
+#line 18
  testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table1, "Given ");
 #line hidden
-#line 16
+#line 23
     testRunner.When("something else", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 17
+#line 24
     testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -142,7 +145,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "uri",
                             "2"});
-#line 18
+#line 25
     testRunner.Then("something", ((string)(null)), table2, "Then ");
 #line hidden
             }
