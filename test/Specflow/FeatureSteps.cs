@@ -28,6 +28,13 @@ internal class FeatureSteps
     private readonly Dictionary<string, MockFileData> _fileSystemData = new();
     private Metadata<FileMetaData> _state;
 
+    private readonly MetadataParserOptions _metadataParserOptions;
+
+    public FeatureSteps(MetadataParserOptions metadataParserOptions)
+    {
+        _metadataParserOptions = metadataParserOptions;
+    }
+
     private IFileMetadataParser BuildFileMetadataParser()
     {
         var logger = NullLogger<FileMetadataParser>.Instance;

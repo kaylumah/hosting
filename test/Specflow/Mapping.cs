@@ -15,11 +15,18 @@ namespace Test.Specflow
     [Binding]
     public class Mapping
     {
+        private readonly MetadataParserOptions _metadataParserOptions;
+
+        public Mapping(MetadataParserOptions metadataParserOptions)
+        {
+            _metadataParserOptions = metadataParserOptions;
+        }
+
         [Given("the following metadata:")]
         public void Given(Table table)
         {
             var set = table.CreateSet<MetaItem>();
-            var defaults = set.ToDefaultMetadatas();
+            _metadataParserOptions.Defaults = set.ToDefaultMetadatas();
         }
     }
 
