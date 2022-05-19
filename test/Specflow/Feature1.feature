@@ -4,6 +4,12 @@ A short summary of the feature
 
 @tag1
 Scenario: MyFirstScenario
+    Given the following metadata:
+        | scope  | path |
+        | <null> |      |
+        | <null> | 2022 |
+        | posts  |      |
+
     Given the following extensions:
         | key | value |
         | .md | .html |

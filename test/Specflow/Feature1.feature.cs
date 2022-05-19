@@ -101,73 +101,88 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "key",
-                            "value"});
+                            "scope",
+                            "path"});
                 table1.AddRow(new string[] {
-                            ".md",
-                            ".html"});
+                            "<null>",
+                            ""});
+                table1.AddRow(new string[] {
+                            "<null>",
+                            "2022"});
+                table1.AddRow(new string[] {
+                            "posts",
+                            ""});
 #line 7
-    testRunner.Given("the following extensions:", ((string)(null)), table1, "Given ");
-#line hidden
-#line 10
-    testRunner.Given("the extensions \'.md,.txt\' are targeted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 11
-    testRunner.And("file \'_site/file1.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 18
-    testRunner.And("file \'_site/_posts/2019-09-07-file1.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Given("the following metadata:", ((string)(null)), table1, "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "key",
                             "value"});
                 table2.AddRow(new string[] {
-                            "number",
-                            "1"});
-                table2.AddRow(new string[] {
-                            "text",
-                            "abc"});
-                table2.AddRow(new string[] {
-                            "expr",
-                            "true"});
-#line 25
- testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table2, "Given ");
+                            ".md",
+                            ".html"});
+#line 13
+    testRunner.Given("the following extensions:", ((string)(null)), table2, "Given ");
 #line hidden
-#line 30
-    testRunner.When("something else", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 16
+    testRunner.Given("the extensions \'.md,.txt\' are targeted", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 31
-    testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+    testRunner.And("file \'_site/file1.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 24
+    testRunner.And("file \'_site/_posts/2019-09-07-file1.md\' has the following contents:", "---\r\ntitle: my title\r\n---\r\n# Hello World", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                             "key",
                             "value"});
                 table3.AddRow(new string[] {
-                            "A",
-                            ""});
+                            "number",
+                            "1"});
                 table3.AddRow(new string[] {
-                            "B",
-                            "\'\'"});
+                            "text",
+                            "abc"});
                 table3.AddRow(new string[] {
-                            "C",
-                            "<value>"});
-                table3.AddRow(new string[] {
-                            "D",
-                            "<null>"});
-                table3.AddRow(new string[] {
-                            "uri",
-                            "2"});
-#line 32
-    testRunner.Then("something", ((string)(null)), table3, "Then ");
+                            "expr",
+                            "true"});
+#line 31
+ testRunner.Given("scope \'[string]\' has the following metadata:", ((string)(null)), table3, "Given ");
+#line hidden
+#line 36
+    testRunner.When("something else", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 37
+    testRunner.When("something", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "key",
+                            "value"});
+                table4.AddRow(new string[] {
+                            "A",
+                            ""});
+                table4.AddRow(new string[] {
+                            "B",
+                            "\'\'"});
+                table4.AddRow(new string[] {
+                            "C",
+                            "<value>"});
+                table4.AddRow(new string[] {
+                            "D",
+                            "<null>"});
+                table4.AddRow(new string[] {
+                            "uri",
+                            "2"});
+#line 38
+    testRunner.Then("something", ((string)(null)), table4, "Then ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "uri"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "file1.html"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "2019/09/07/file1.html"});
-#line 39
-    testRunner.Then("the following pages:", ((string)(null)), table4, "Then ");
+#line 45
+    testRunner.Then("the following pages:", ((string)(null)), table5, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
