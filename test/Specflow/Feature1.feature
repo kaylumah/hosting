@@ -5,11 +5,7 @@ A short summary of the feature
 @tag1
 Scenario: MyFirstScenario
     Given the extensions '.md,.txt' are targeted
-    #Given file '_site/file1.md' has the following contents:
-    #    """
-    #    # Hello World
-    #    """
-     Given file '_site/file2.md' has the following contents:
+    And file '_site/file2.md' has the following contents:
         """
         ---
         title: my title
