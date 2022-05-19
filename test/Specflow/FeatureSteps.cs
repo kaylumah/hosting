@@ -56,6 +56,7 @@ internal class FeatureSteps
     [When("something")]
     public void When()
     {
+        /*
         var logger = NullLogger<FileMetadataParser>.Instance;
         var options = new MetadataParserOptions();
         var fileProvider = new Mock<IMetadataProvider>();
@@ -63,13 +64,16 @@ internal class FeatureSteps
             .Returns(new Metadata<FileMetaData> { });
         var fileMetaDataParser = new FileMetadataParser(
             logger, fileProvider.Object, options);
+        */
+        var fileMetaDataParser = BuildFileMetadataParser();
 
         var response = 
             fileMetaDataParser.Parse(
                 new MetadataCriteria
                 {
                     FileName = "1.txt",
-                    Permalink = "2"
+                    Permalink = "2",
+                    Content = String.Empty
                 }
         );
         _state = response;
