@@ -13,11 +13,11 @@ using TechTalk.SpecFlow.Assist;
 namespace Test.Specflow
 {
     [Binding]
-    public class Mapping
+    public class MetadataParserOptionsSteps
     {
         private readonly MetadataParserOptions _metadataParserOptions;
 
-        public Mapping(MetadataParserOptions metadataParserOptions)
+        public MetadataParserOptionsSteps(MetadataParserOptions metadataParserOptions)
         {
             _metadataParserOptions = metadataParserOptions;
         }
