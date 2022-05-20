@@ -34,9 +34,9 @@ namespace Test.Specflow
         {
             var set = table.CreateSet<(string key, string value)>();
             var dictionary = new Dictionary<string, string>();
-            foreach(var item in set)
+            foreach(var (key, value) in set)
             {
-                dictionary.Add(item.key, item.value);
+                dictionary.Add(key, value);
             }
             _metadataParserOptions.ExtensionMapping = dictionary;
         }
