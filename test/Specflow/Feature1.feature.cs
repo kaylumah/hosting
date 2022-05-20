@@ -186,9 +186,9 @@ this.ScenarioInitialize(scenarioInfo);
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "uri"});
                 table5.AddRow(new string[] {
-                            "file1.html"});
+                            "file1.md"});
                 table5.AddRow(new string[] {
-                            "2019/09/07/file1.html"});
+                            "2019/09/07/file1.md"});
 #line 44
     testRunner.Then("the following pages:", ((string)(null)), table5, "Then ");
 #line hidden

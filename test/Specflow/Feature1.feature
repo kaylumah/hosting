@@ -43,5 +43,5 @@ Scenario: MyFirstScenario
         | uri | 2       |
     Then the following pages:
         | uri                   |
-        | file1.html            |
-        | 2019/09/07/file1.html |
+        | file1.md            |
+        | 2019/09/07/file1.md |
