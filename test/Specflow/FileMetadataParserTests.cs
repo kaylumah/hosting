@@ -17,7 +17,6 @@ namespace Test.Specflow;
 public class FileMetadataParserTests
 {
     private readonly IFileMetadataParser _fileMetadataParser;
-    private readonly MetadataCriteria _metadataCriteria = new();
     private readonly Test.Specflow.Entities.FileCollection _files = new();
 
     public FileMetadataParserTests(IFileMetadataParser fileMetadataParser)
@@ -40,9 +39,14 @@ public class FileMetadataParserTests
     }
 
 
-    [When("the following is parsed:")]
-    public void When()
+    [When("the file '([^']*)' is parsed:")]
+    public void When(string fileName)
     {
-        var result = _fileMetadataParser.Parse(_metadataCriteria);
+        var file = _files[fileName];
+        var result = _fileMetadataParser.Parse(new MetadataCriteria
+        {
+            Content = file.Content,
+            FileName = fileName
+        });
     }
 }

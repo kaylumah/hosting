@@ -11,4 +11,4 @@ Scenario: A
         """
         # Hello World
         """
-    When the following is parsed:
+    When the file 'template.txt' is parsed:
