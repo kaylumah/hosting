@@ -12,18 +12,27 @@ using TechTalk.SpecFlow;
 namespace Test.Specflow;
 
 [Binding]
-public class MetadataParserTests
+public class FileMetadataParserTests
 {
     private readonly IFileMetadataParser _fileMetadataParser;
+    private readonly MetadataCriteria _metadataCriteria = new();
 
-    public MetadataParserTests(IFileMetadataParser fileMetadataParser)
+    public FileMetadataParserTests(IFileMetadataParser fileMetadataParser)
     {
         _fileMetadataParser = fileMetadataParser;
     }
 
+    [Given(@"a file named '([^']*)' has the following contents:")]
+    public void GivenAFileNamedHasTheFollowingContents(string p0, string multilineText)
+    {
+        _metadataCriteria.FileName = p0;
+        _metadataCriteria.Content = multilineText;
+    }
+
+
     [When("the following is parsed:")]
     public void When()
     {
-        _fileMetadataParser.Parse(new MetadataCriteria { });
+        var result = _fileMetadataParser.Parse(_metadataCriteria);
     }
 }

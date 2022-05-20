@@ -4,4 +4,8 @@ A short summary of the feature
 
 @tag1
 Scenario: A
+    Given a file named 'template.txt' has the following contents:
+        """
+        # Hello World
+        """
     When the following is parsed:

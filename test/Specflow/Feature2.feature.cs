@@ -101,6 +101,9 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 7
+    testRunner.Given("a file named \'template.txt\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 11
     testRunner.When("the following is parsed:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             }
