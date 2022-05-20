@@ -12,7 +12,7 @@ using TechTalk.SpecFlow.Assist.ValueRetrievers;
 
 namespace Test.Specflow
 {
-    
+
     [Binding]
     internal class Hooks
     {
@@ -40,10 +40,5 @@ namespace Test.Specflow
             var pages = table.CreateSet<Page>();
             return pages.ToList();
         }
-    }
-
-    public class Page
-    {
-        public string Uri { get; set; }
     }
 }
