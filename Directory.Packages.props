@@ -43,6 +43,7 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Specflow'))">
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
+    <PackageVersion Include="SolidToken.SpecFlow.DependencyInjection" Version="3.9.2" />
   </ItemGroup>
   
 </Project>

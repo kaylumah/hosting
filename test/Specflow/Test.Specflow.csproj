@@ -41,6 +41,8 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="SpecFlow.xUnit" />
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
+    <PackageReference Include="SolidToken.SpecFlow.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
   
   <ItemGroup>

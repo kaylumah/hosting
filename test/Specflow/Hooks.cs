@@ -12,6 +12,7 @@ using TechTalk.SpecFlow.Assist.ValueRetrievers;
 
 namespace Test.Specflow
 {
+    /*
     [Binding]
     internal static class Hooks
     {
@@ -43,4 +44,5 @@ namespace Test.Specflow
     {
         public string Uri { get; set; }
     }
+    */
 }
