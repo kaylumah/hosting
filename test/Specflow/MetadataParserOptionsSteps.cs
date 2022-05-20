@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using Test.Specflow.Entities;
+using Test.Specflow.Entities.Extensions;
 
 namespace Test.Specflow
 {
