@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using TechTalk.SpecFlow;
@@ -18,6 +19,7 @@ public class FileMetadataParserTests
 {
     private readonly IFileMetadataParser _fileMetadataParser;
     private readonly Test.Specflow.Entities.FileCollection _files = new();
+    private readonly Test.Specflow.Entities.PageCollection _pages = new();
 
     public FileMetadataParserTests(IFileMetadataParser fileMetadataParser)
     {
@@ -47,6 +49,21 @@ public class FileMetadataParserTests
         {
             Content = file.Content,
             FileName = fileName
+        });
+        _pages.Add(new Entities.Page
+        {
+            Uri = result.Data.Uri
+        });
+    }
+
+    [Then("the following pages2:")]
+    public void ThenTheFollowingPages(Table table)
+    {
+        var pages = table
+            .CreateSet<Test.Specflow.Entities.Page>();
+        pages.Should().BeEquivalentTo(_pages, options => {
+            //options.Excluding().
+            return options;
         });
     }
 }

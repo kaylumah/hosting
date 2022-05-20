@@ -12,3 +12,6 @@ Scenario: A
         # Hello World
         """
     When the file 'template.txt' is parsed:
+    Then the following pages2:
+        | Uri          |
+        | template.txt |

@@ -113,6 +113,13 @@ this.ScenarioInitialize(scenarioInfo);
 #line 14
     testRunner.When("the file \'template.txt\' is parsed:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
+                TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Uri"});
+                table7.AddRow(new string[] {
+                            "template.txt"});
+#line 15
+    testRunner.Then("the following pages2:", ((string)(null)), table7, "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
