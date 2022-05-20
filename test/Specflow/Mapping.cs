@@ -41,41 +41,4 @@ namespace Test.Specflow
             _metadataParserOptions.ExtensionMapping = dictionary;
         }
     }
-
-    public static partial class Extensions
-    {
-        public static DefaultMetadatas ToDefaultMetadatas(this IEnumerable<MetaItem> metaItems)
-        {
-            var defaultMetaDatas = new DefaultMetadatas();
-
-            var groupedByScope = metaItems.GroupBy(x => x.scope);
-
-            foreach (var scopeGroup in groupedByScope)
-            {
-                var scope = scopeGroup.Key;
-                var groupedByPath = scopeGroup.GroupBy(x => x.path);
-
-                foreach (var pathGroup in groupedByPath)
-                {
-                    var path = pathGroup.Key;
-
-                    var fileMetaData = new FileMetaData();
-                    foreach (var item in pathGroup)
-                    {
-                        fileMetaData.Add(item.key, item.value);
-                    }
-
-                    defaultMetaDatas.Add(new DefaultMetadata
-                    {
-                        Path = path,
-                        Scope = scope,
-                        Values = fileMetaData
-                    });
-                }
-            }
-            return defaultMetaDatas;
-        }
-    }
-
-    public readonly record struct MetaItem(string scope, string path, string key, string value);
 }
