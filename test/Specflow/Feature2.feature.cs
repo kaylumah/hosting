@@ -100,10 +100,17 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Name"});
+                table6.AddRow(new string[] {
+                            "template.txt"});
 #line 7
-    testRunner.Given("a file named \'template.txt\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+    testRunner.Given("the following files:", ((string)(null)), table6, "Given ");
 #line hidden
-#line 11
+#line 10
+    testRunner.Given("a file named \'template2.txt\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 14
     testRunner.When("the following is parsed:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             }
