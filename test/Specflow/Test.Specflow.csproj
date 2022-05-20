@@ -43,6 +43,7 @@
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
     <PackageReference Include="SolidToken.SpecFlow.DependencyInjection" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
   
   <ItemGroup>
