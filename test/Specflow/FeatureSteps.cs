@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
+using BoDi;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
@@ -18,6 +19,7 @@ using TechTalk.SpecFlow.Assist;
 
 namespace Test.Specflow;
 
+
 [Binding]
 internal class FeatureSteps
 {
@@ -30,7 +32,7 @@ internal class FeatureSteps
 
     private readonly MetadataParserOptions _metadataParserOptions;
 
-    public FeatureSteps(MetadataParserOptions metadataParserOptions)
+    public FeatureSteps(MetadataParserOptions metadataParserOptions, IObjectContainer objectContainer)
     {
         _metadataParserOptions = metadataParserOptions;
     }
