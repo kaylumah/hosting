@@ -21,11 +21,11 @@ namespace Test.Specflow
         internal static void BeforeTestRun()
         {
             // https://docs.specflow.org/projects/specflow/en/latest/Bindings/SpecFlow-Assist-Helpers.html
-           /* Service
+           Service
                 .Instance
                 .ValueRetrievers
                 .Register(new NullValueRetriever("<null>"));
-           */
+           
         }
 
         [StepArgumentTransformation]
