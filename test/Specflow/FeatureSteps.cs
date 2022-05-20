@@ -25,7 +25,7 @@ namespace Test.Specflow;
 internal class FeatureSteps
 {
     private readonly Dictionary<string, string> _extensionMapping = new();
-    // private readonly List<Page> _pages = new();
+    private readonly List<Page> _pages = new();
     private readonly List<string> _collections = new();
     private readonly List<string> _supportedFileExtensions = new();
     private readonly Dictionary<string, MockFileData> _fileSystemData = new();
@@ -104,13 +104,12 @@ internal class FeatureSteps
         return new FileProcessor(fileSystem, logger, strategies, siteInfo, BuildFileMetadataParser());
     }
 
-    /*
+
     [Then("the following pages:")]
     public void ThenTheFollowingPages(List<Page> pages)
     {
         _pages.Should().BeEquivalentTo(pages);
     }
-    */
 
 
     [Given("the extensions '(.*)' are targeted")]
@@ -175,12 +174,10 @@ internal class FeatureSteps
             // DirectoriesToSkip
         });
 
-        /*
         var pages = result.Select(x => new Page { 
             Uri = x.MetaData.Uri
         });
         _pages.AddRange(pages);
-        */
     }
 
     [Then("something")]

@@ -12,10 +12,11 @@ using TechTalk.SpecFlow.Assist.ValueRetrievers;
 
 namespace Test.Specflow
 {
-    /*
+    
     [Binding]
-    internal static class Hooks
+    internal class Hooks
     {
+        /*
         [BeforeTestRun]
         internal static void BeforeTestRun()
         {
@@ -25,6 +26,7 @@ namespace Test.Specflow
                 .ValueRetrievers
                 .Register(new NullValueRetriever("<null>"));
         }
+        */
 
         [StepArgumentTransformation]
         public static List<string> TransformToListOfString(string commaSeparatedList)
@@ -44,5 +46,4 @@ namespace Test.Specflow
     {
         public string Uri { get; set; }
     }
-    */
 }
