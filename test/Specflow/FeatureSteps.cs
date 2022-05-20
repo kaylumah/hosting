@@ -124,11 +124,7 @@ internal class FeatureSteps
         _collections.AddRange(values);
     }
 
-    [Given("scope '(.*)' has the following metadata:")]
-    public void GivenTheFollowingData(string scope, Table table)
-    {
-        var metaData = table.ToDictionary();
-    }
+    
 
     [Given("file '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
@@ -137,56 +133,5 @@ internal class FeatureSteps
     }
 
 
-    [When("something")]
-    public void When()
-    {
-        /*
-        var logger = NullLogger<FileMetadataParser>.Instance;
-        var options = new MetadataParserOptions();
-        var fileProvider = new Mock<IMetadataProvider>();
-        fileProvider.Setup(mock => mock.Retrieve<FileMetaData>(It.IsAny<string>()))
-            .Returns(new Metadata<FileMetaData> { });
-        var fileMetaDataParser = new FileMetadataParser(
-            logger, fileProvider.Object, options);
-        */
-        var fileMetaDataParser = BuildFileMetadataParser();
-
-        var response = 
-            fileMetaDataParser.Parse(
-                new MetadataCriteria
-                {
-                    FileName = "1.txt",
-                    Permalink = "2",
-                    Content = String.Empty
-                }
-        );
-        _state = response;
-    }
-
-    [When("something else")]
-    public async Task WhenElse()
-    {
-        var fileProcessor = BuildFileProcessor();
-
-        var result = await fileProcessor.Process(new FileFilterCriteria
-        {
-            FileExtensionsToTarget = _supportedFileExtensions.ToArray(),
-            // DirectoriesToSkip
-        });
-
-        var pages = result.Select(x => new Page { 
-            Uri = x.MetaData.Uri
-        });
-        _pages.AddRange(pages);
-    }
-
-    [Then("something")]
-    public void Then(Table table)
-    {
-        var dict = table.ToDictionary();
-        /*
-        _state.Data
-            .Should().Equal(dict);
-        */
-    }
+    
 }

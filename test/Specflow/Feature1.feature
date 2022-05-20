@@ -4,14 +4,6 @@ A short summary of the feature
 
 @tag1
 Scenario: MyFirstScenario
-    Given the following default metadata:
-        | scope  | path | key | value |
-        | <null> |      |     |       |
-        | <null> | 2022 |     |       |
-        | posts  |      |     |       |
-    * the following extension mapping:
-            | key | value |
-            | .md | .html |
     Given the extensions '.md,.txt' are targeted
     And file '_site/file1.md' has the following contents:
         """

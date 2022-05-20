@@ -100,24 +100,51 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                            "scope",
+                            "path",
+                            "key",
+                            "value"});
+                table4.AddRow(new string[] {
+                            "<null>",
+                            "",
+                            "",
+                            ""});
+                table4.AddRow(new string[] {
+                            "<null>",
+                            "2022",
+                            "",
+                            ""});
+#line 7
+    testRunner.Given("the following default metadata:", ((string)(null)), table4, "Given ");
+#line hidden
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                            "key",
+                            "value"});
+                table5.AddRow(new string[] {
+                            ".md",
+                            ".html"});
+#line 11
+    testRunner.And("the following extension mapping:", ((string)(null)), table5, "* ");
+#line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Name"});
                 table6.AddRow(new string[] {
                             "template.txt"});
-#line 7
+#line 14
     testRunner.Given("the following files:", ((string)(null)), table6, "Given ");
 #line hidden
-#line 10
+#line 17
     testRunner.Given("a file named \'template.txt\' has the following contents:", "# Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 14
+#line 21
     testRunner.When("the file \'template.txt\' is parsed:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                             "Uri"});
                 table7.AddRow(new string[] {
                             "template.txt"});
-#line 15
+#line 22
     testRunner.Then("the following pages2:", ((string)(null)), table7, "Then ");
 #line hidden
             }
