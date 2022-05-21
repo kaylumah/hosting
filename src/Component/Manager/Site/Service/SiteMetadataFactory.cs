@@ -125,13 +125,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {
             var tags = pages
-                .Where(x => x.Tags != null)
+                .WhereIsTagged()
                 .WhereIsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
-                var tagFiles = pages.Where(x => x.Tags != null && x.Tags.Contains(tag)).ToArray();
+                var tagFiles = pages
+                    .WhereIsTaggedWith(tag)
+                    .ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
         }
