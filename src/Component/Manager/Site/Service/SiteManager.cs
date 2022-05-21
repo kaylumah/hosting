@@ -61,7 +61,8 @@ public class SiteManager : ISiteManager
 
         var pageMetadatas = processed
             .ToPages(siteGuid);
-        var assemblyInfo = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+        var assemblyInfo = new AssemblyUtil()
+            .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         var buildMetadata = new BuildData(assemblyInfo);
         var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageMetadatas.ToList());
 
