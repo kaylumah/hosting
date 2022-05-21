@@ -24,7 +24,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
-            var siteInfo = new SiteMetaData(pages.ToArray())
+            var siteInfo = new SiteMetaData()
             {
                 Id = siteGuid.ToString(),
                 Title = _siteInfo.Title,
@@ -39,6 +39,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Series = new SortedDictionary<string, PageMetaData[]>(),
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
+
+            siteInfo.Pages = pages
+            .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
+            .Where(file => !"404.html".Equals(file.Name))
+            .Select(x => new
+            {
+                Url = x["url"],
+                x.LastModified,
+                Sitemap = x["sitemap"]
+            });
 
             EnrichSiteWithData(siteInfo, Path.Combine("_site", siteConfiguration.DataDirectory));
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
