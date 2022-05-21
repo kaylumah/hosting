@@ -155,13 +155,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
         {
             var series = pages
-                .Where(x => x.Series != null)
+                .WhereIsSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
             foreach (var serie in series)
             {
-                var seriesFiles = pages.Where(x => x.Series != null && serie.Equals(x.Series)).OrderBy(x => x.Url).ToArray();
+                var seriesFiles = pages
+                    .WhereSeriesIs(serie)
+                    .OrderBy(x => x.Url)
+                    .ToArray();
                 site.Series.Add(serie, seriesFiles);
             }
         }

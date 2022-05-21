@@ -7,6 +7,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public static class PageMetadataExtensions
     {
+
+        public static IEnumerable<PageMetaData> WhereIsSeries(this IEnumerable<PageMetaData> source)
+        {
+            return source
+                .Where(x => !string.IsNullOrEmpty(x.Series));
+        }
+
+        public static IEnumerable<PageMetaData> WhereSeriesIs(this IEnumerable<PageMetaData> source, string series)
+        {
+            return source
+                .WhereIsSeries()
+                .Where(page => page.Equals(series));
+        }
+
         public static IEnumerable<PageMetaData> WhereIsTagged(this IEnumerable<PageMetaData> source)
         {
             return source
