@@ -59,7 +59,8 @@ public class SiteManager : ISiteManager
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
         });
 
-        var pageMetadatas = processed.ToArray().ToPages(siteGuid);
+        var pageMetadatas = processed
+            .ToPages(siteGuid);
         var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
         var buildMetadata = new BuildData(info);
         var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageMetadatas.ToList());
