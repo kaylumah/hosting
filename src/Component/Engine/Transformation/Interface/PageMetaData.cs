@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Diagnostics;
+
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
+[DebuggerDisplay("PageMetaData '{Url}'")]
 public class PageMetaData : Dictionary<string, object>
 {
     public string Id
