@@ -126,7 +126,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var tags = pages
                 .Where(x => x.Tags != null)
-                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
+                .WhereIsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
@@ -140,7 +140,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var years = pages
                 .Where(x => x.ContainsKey("date"))
-                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
+                .WhereIsArticle()
                 .Select(x => ((DateTimeOffset)x["date"]).Year)
                 .Distinct();
             foreach (var year in years)
