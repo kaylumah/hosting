@@ -5,6 +5,7 @@ param(
     [string] $BuildNumber = (Get-Date).ToString("yyyyMMdd.hhmmss")
 )
 
+$ErrorActionPreference = "Stop"
 Write-Host "[args] BuildId '$BuildId' BuildNumber '$BuildNumber'"
 
 [string] $RepoRoot = $PSScriptRoot
