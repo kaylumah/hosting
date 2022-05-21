@@ -7,12 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tailwindcss -i styles.css -o compiled.css",
     "build:prod": "npx tailwindcss -i styles.css -o compiled.css --minify",
-    "serve": "npx http-server"
+    "serve": "npx http-server",
+    "swa-serve": "swa start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@azure/static-web-apps-cli": "^1.0.1",
     "@tailwindcss/line-clamp": "^0.3.0",
     "@tailwindcss/typography": "^0.5.0",
     "tailwindcss": "^3.0.0"
