@@ -13,12 +13,6 @@
     <PackageReference Include="Scriban" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Plugins/feed_template.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
