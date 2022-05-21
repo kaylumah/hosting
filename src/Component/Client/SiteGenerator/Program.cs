@@ -82,7 +82,6 @@ class Program
         });
         services.AddFileSystem();
         services.AddArtifactAccess(configuration);
-        services.AddTransient<IPlugin, SeoPlugin>();
         services.AddTransient<IPlugin, FeedPlugin>();
         services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);

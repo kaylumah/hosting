@@ -14,7 +14,7 @@
         <link href="/compiled.css?v={{ build.short_git_hash }}" rel="stylesheet" />
         <!-- <link href="/assets/prism.css?v={{ build.short_git_hash }}" rel="stylesheet" /> -->
         
-        {{ seo }}
+        {% include 'seo.html' %}
         {{ feed_meta }}
 
         {% include 'banner.html' %}
