@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
@@ -40,6 +41,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
 
+            var assemblyInfo = new AssemblyUtil()
+                .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            var buildMetadata = new BuildData(assemblyInfo);
+            siteInfo.Build = buildMetadata;
             siteInfo.Pages = pages
             .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
             .Where(file => !"404.html".Equals(file.Name))
