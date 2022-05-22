@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-sitegenerator",
-            "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/Debug/netcoreapp3.1/Kaylumah.Ssg.Client.SiteGenerator.dll",
+            "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/Debug/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll",
             "args": [
                 "Site:Url=http://localhost:8080"
             ],
@@ -22,7 +22,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-sitevalidator",
-            "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteValidator/Debug/netcoreapp3.1/Kaylumah.Ssg.Client.SiteValidator.dll",
+            "program": "${workspaceFolder}/artifacts/bin/Kaylumah.Ssg.Client.SiteValidator/Debug/net6.0/Kaylumah.Ssg.Client.SiteValidator.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",

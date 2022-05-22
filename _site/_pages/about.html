@@ -1,134 +1,28 @@
 ---
 layout: 'default.html'
-title: 'Kaylumah | More about me'
-description: "Kaylumah's Curriculum vitae and certifications"
+title: 'All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah'
+description: "Here you can find everything about me, Max Hamulyák, the founder of Kaylumah. You can read about my personal life and work experience as a software engineer."
 tags:
     - "Personal"
     - "CV"
     - "Curriculum vitae"
     - "Certifications"
-modified: '2021-04-24'
+modifieddate: '2021-12-19'
 ---
-<div class="text-center">
-  <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
-    More about me
-  </h2>
-  <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
-    I will talk a bit about myself, my relevant working history, and which certifications I have achieved on this page. Of course, most of my working history is also available over at LinkedIn.
-  </p>
-  <div class="mt-1 flex justify-center space-x-6">
-    <a target="_blank" rel=”noopener” href="https://www.linkedin.com/in/{{ site.data.authors[page.author].linkedin }}" class="text-gray-900 hover:text-gray-400">
-        <span class="sr-only">Linkedin</span>
-        <em class="fab fa-linkedin fa-lg"></em>
-    </a>
-  </div>
-  <hr class="mt-4 border-t-2 w-20 mx-auto" />
+
+<div class="">
+    <div class="mx-auto p-3 max-w-7xl">
+        <div class="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
+            <h2 class="text-3xl font-extrabold text-black tracking-tight sm:text-4xl">Personal</h2>
+            <p class="text-xl text-black">
+                People describe me as passionate and eager in my working life; they say I can pick up new stuff quickly. You might not expect it since I also blog in my spare time; I am not always working on my technical skills.
+
+                Among other things, I love to read (or listen) to an epic fantasy novel. I listen to film music and occasionally join discussions online. In my downtime, I also enjoy movies or tv series. If any time left, I also enjoy casual gaming.
+            </p>
+        </div>
+    </div>
 </div>
-<section id="personal" class="px-4">
-    <div class="pb-5 border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Personal
-        </h3>
-    </div>
-    <div class="mt-2 text-sm text-gray-500">
-        <p>
-            People describe me as passionate and eager in my working life; they say I can pick up new stuff quickly. You might not expect it since I also blog in my spare time; I am not always working on my technical skills.
-        </p>
-        <p>
-            Among other things, I love to read (or listen) to an epic fantasy novel. I listen to film music and occasionally join discussions online. In my downtime, I also enjoy movies or tv series. If any time left, I also enjoy casual gaming.
-        </p>
-    </div>
-</section>
-<hr class="mt-4 border-t-2 w-20 mx-auto" />
-<section id="cv" class="px-4">
-    <div class="pb-5 border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Curriculum vitae
-        </h3>
-        <p class="mt-2 max-w-4xl text-sm text-gray-500">Below is a list of the projects I have done over the year. So far, I worked with two different companies. After finishing my internship with NLCom in 2016, I worked there for a year part-time. For my graduate internship, I chose the consultancy company QNH and ended up working there. I continued working there after the merger with ilionx. Some of the projects were in-house, and some were on a consultancy basis.</p>
-    </div>
-    <div class="grid grid-cols-1 gap-4 mt-2">
-      <!-- BEGIN CARD-->
-      {% for experience in site.data.curriculumVitae | array.reverse %}
-        <div class="bg-white overflow-hidden sm:rounded-lg sm:shadow">
-            <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 flex items-center space-x-3">
-                <img
-                            class="h-12 w-12 flex-shrink-0"
-                            src="{{ experience.image }}"
-                            alt=""
-                        />
-                <h3 class="text-lg leading-6 font-medium text-gray-900 flex-1 min-w-0">{{ experience.company }}</h3>
-            </div>
-            <ul class="divide-y divide-gray-200 opacity-25">
-                {% for project in experience.projects | array.reverse %}
-                <li>
-                    <a href="#" class="block hover:bg-gray-50">
-                        <div class="px-4 py-4 sm:px-6">
-                            <div>
-                                <div class="text-sm font-medium text-indigo-600 truncate">{{ project.title }}</div>
-                                <div class="text-xs">{{ project.job_title }}
-                                <span>
-                                {% if project.from %}
-                                    {% assign project_from = project.from | to_date %}
-                                    {% assign project_form_formatted = project_from | date_to_pattern "MMM yyyy" %}
-                                    {{ project_form_formatted }}
-                                    {% if project.to %}
-                                        {% assign project_to = project.to | to_date %}
-                                        {% assign project_to_formatted = project_to | date_to_pattern "MMM yyyy" %}
-                                        {% if project_form_formatted != project_to_formatted %}
-                                            - {{ project_to_formatted }}
-                                        {% endif %}
-                                    {% else %}
-                                        - present
-                                    {% endif %}
-                                {% endif %}
-                                </span>
-                                </div>
-                            </div>
-                            <div class="mt-2 flex justify-between">
-                                <div class="sm:flex">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    {{ project.description }}
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-      {% endfor %}
-      <!-- END CARD -->
-    </div>
-</section>
-<hr class="mt-4 border-t-2 w-20 mx-auto" />
-<section id="certifications" class="px-4">
-    <div class="pb-5 border-b border-gray-200">
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-            Certifications
-        </h3>
-        <p class="mt-2 max-w-4xl text-sm text-gray-500">I do not believe that certifications add a lot. They don't prove that I know something, just that I knew something at the moment of the test. I would instead look at someone's CV and see the years of experience with a particular skill. However, since this is my portfolio website, I decided to include them.</p>
-    </div>
-    <div class="grid grid-cols-1 gap-4 mt-2">
-        <!-- BEGIN CARD-->
-        {% for certificate in site.data.certifications %}
-        <div class="bg-white overflow-hidden sm:rounded-lg sm:shadow">
-            <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6 flex items-center space-x-3">
-                <img
-                            class="h-12 w-12 flex-shrink-0"
-                            src="{{ certificate.logo }}"
-                            alt=""
-                        />
-                <div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 flex-1 min-w-0">{{ certificate.name }}</h3>
-                    <time datetime="{{ certificate.earned | to_date | date_to_xmlschema }}" class="text-sm text-gray-500">
-                            {{ certificate.earned | to_date | date_to_pattern "MMM yy" }}
-                    </time>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-        <!-- END CARD -->
-    </div>
-</section>
+
+{% include 'cv.html' %}
+
+{% include 'certifications.html' %}

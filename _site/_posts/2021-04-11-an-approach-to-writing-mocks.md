@@ -2,12 +2,17 @@
 title: "Experiment with Moq, an approach to writing mocks"
 description: "An experiment to create reusable mocks in my testing code."
 cover_image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
+cover_image:
+    DEFAULT: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
+    WEB: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.webp'
 image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 tags:
-  - "CSharp"
-  - "Moq"
-  - "Testing"
+  - "csharp"
+  - "moq"
+  - "testing"
+  - "xunit"
 comment_id: '14'
+featured: true
 ---
 Recently I was looking into a new way to use mocks in my unit tests. My framework of choice to write unit tests is XUnit, whereas I use Moq to create Mocks. The theory behind Moq will still apply if you use a different testing framework, and perhaps some of the things I will demonstrate will be possible in other mocking frameworks.
 
@@ -40,7 +45,7 @@ Site - -> Author
 @enduml
  -->
 
-![Architecture](/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png)
+![Architecture Diagram for Blog Platform Scenario](/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png){width=323 height=226}
 
 Since I am writing this blog post, what better example than a use case for a blogging platform. Imagine a platform where users can create and share their content. But you can only successfully start posts after you verified your account. In a sequence diagram, it might look something like this.
 
@@ -58,7 +63,7 @@ ArticleAccess - -> SiteManager: CreateArticleResponse
 @enduml
  -->
 
-![Sequence](/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png)
+![Sequence Diagram for Blog Platform Scenario](/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png){width=487 height=297}
 
 I am going to use the dotnet CLI to create my project structure.
 
@@ -144,7 +149,7 @@ namespace Kaylumah.AdventuresWithMock.Access.Author.Service
             throw new NotImplementedException();
         }
     }
-
+}
 ```
 
 And finally, our Site Manager, which should match our sequence diagram, looks like this.
@@ -872,7 +877,7 @@ public async Task Test_ArticleAccess_Returns200OK()
 
 ## Summary
 
-That concludes my experiment for the day. I have shown three instances where you can apply your custom subclasses of Mock<T>. The way I see it, it offers three distinct advantages:
+That concludes my experiment for the day. I have shown three instances where you can apply your custom subclasses of `Mock<T>`. The way I see it, it offers three distinct advantages:
 
 1. Test code and mock code is separated.
 2. Mock code is reusable across tests.

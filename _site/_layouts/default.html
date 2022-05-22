@@ -9,13 +9,13 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' | relative_url }}" />
         <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon-16x16.png' | relative_url }}" />
         <link rel="manifest" href="{{ '/assets/images/site.webmanifest' | relative_url }}" />
-        <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' | relative_url }}" color="hotpink" />
+        <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' | relative_url }}" color="DarkGreen" />
         
         <link href="/compiled.css?v={{ build.short_git_hash }}" rel="stylesheet" />
-        <link href="/assets/prism.css?v={{ build.short_git_hash }}" rel="stylesheet" />
+        <!-- <link href="/assets/prism.css?v={{ build.short_git_hash }}" rel="stylesheet" /> -->
         
-        {{ seo }}
-        {{ feed_meta }}
+        {% include 'seo.html' %}
+        {% include 'feed.html' %}
 
         {% include 'banner.html' %}
         
@@ -30,17 +30,17 @@
         <noscript>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
         </noscript>
-
-
     </head>
     <body class="line-numbers bg-gray-100 fa-colors">
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
             <main class="flex-1 py-4 text-gray-900">
                 {{ content }}
+                {% include 'backToTop.html' %}
             </main>
             {% include 'footer.html' %}
         </div>
-        <script src="/assets/prism.js?v={{ build.short_git_hash }}"></script>
+        <!-- <script src="/assets/prism.js?v={{ build.short_git_hash }}"></script> -->
+        
     </body>
 </html>

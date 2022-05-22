@@ -1,10 +1,10 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-namespace Ssg.Extensions.Metadata.Abstractions
+
+namespace Ssg.Extensions.Metadata.Abstractions;
+
+public class Metadata<T>
 {
-    public class Metadata<T>
-    {
-        public T Data { get; set; }
-        public string Content { get; set; }
-    }
+    public T Data { get; set; }
+    public string Content { get; set; }
 }

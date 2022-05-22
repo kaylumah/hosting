@@ -1,0 +1,40 @@
+<div class="mt-9">
+    {% for group in article_group %}
+    <div class="relative">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+            <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center">
+            <span class="px-3 py-2 bg-white text-lg font-medium text-gray-900" id="{{ group.key }}">
+                <a href="#{{ group.key }}" title="{{ site.data.tags[group.key].description | default: group.key }}">
+                {% if site.data.tags[group.key].icon %}
+                    <img class="h-10 w-10 text-gray-900" width="40" height="40" src="{{ site.data.tags[group.key].icon | relative_url }}" alt="{{ group.key }}" />
+                {% else %}
+                    {{ site.data.tags[group.key].name | default: group.key }}
+                {% endif %}
+                </a>
+            </span>
+        </div>
+    </div>
+    <ul class="divide-y divide-gray-200 mt-1">
+        {% for article in group.value %}
+        <li class="relative py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+            <div class="flex justify-between space-x-3">
+                <div class="min-w-0 flex-1">
+                    <a href="{{ article.url }}" class="block focus:outline-none">
+                    <span class="absolute inset-0" aria-hidden="true"></span>
+                    <p class="text-sm font-medium text-gray-900 truncate">{{ article.title }}</p>
+                    </a>
+                </div>
+                <time datetime="{{ article.date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{{ article.date | date_to_ago }}</time>
+            </div>
+            <div class="mt-1">
+                <p class="line-clamp-2 text-sm text-gray-600">
+                    {{ article.description }}
+                </p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>

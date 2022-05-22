@@ -3,7 +3,7 @@
 {%- for page in site.pages %}
 {%- if page.sitemap != 'False' %}
     <url>
-        <loc>{{ page.url | absolute_url | string.replace '/index.html' '/' }}</loc>
+        <loc>{{ page.url | absolute_url }}</loc>
         <lastmod>{{ page.last_modified | date_to_xmlschema }}</lastmod>
     </url>
 {%- endif %}

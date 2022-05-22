@@ -1,39 +1,37 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
+
 using System.Text.RegularExpressions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
-namespace Ssg.Extensions.Metadata.YamlFrontMatter
+namespace Ssg.Extensions.Metadata.YamlFrontMatter;
+
+public class YamlFrontMatterMetadataProvider : IMetadataProvider
 {
-    public class YamlFrontMatterMetadataProvider : IMetadataProvider
+    private const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
+
+    private readonly IYamlParser _yamlParser;
+    public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
     {
-        private const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
+        _yamlParser = yamlParser;
+    }
 
-        private readonly IYamlParser _yamlParser;
-        public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
+    public Metadata<T> Retrieve<T>(string contents)
+    {
+        var frontMatterData = string.Empty;
+        var match = Regex.Match(contents, _pattern);
+        if (match.Success)
         {
-            _yamlParser = yamlParser;
+            frontMatterData = match.Groups["yaml"].Value.TrimEnd();
+            var frontMatter = match.Value;
+            contents = contents.Replace(frontMatter, string.Empty).TrimStart();
         }
 
-        public Metadata<T> Retrieve<T>(string contents)
+        return new Metadata<T>
         {
-            var frontMatterData = string.Empty;
-            var match = Regex.Match(contents, _pattern);
-            if (match.Success)
-            {
-                frontMatterData = match.Groups["yaml"].Value.TrimEnd();
-                var frontMatter = match.Value;
-                contents = contents.Replace(frontMatter, string.Empty).TrimStart();
-            }
-
-            return new Metadata<T>
-            {
-                Content = contents,
-                Data = _yamlParser.Parse<T>(frontMatterData)
-            };
-        }
+            Content = contents,
+            Data = _yamlParser.Parse<T>(frontMatterData)
+        };
     }
 }

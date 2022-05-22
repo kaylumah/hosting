@@ -1,9 +1,7 @@
 module.exports = {
-  mode: "jit",
-  purge: [
+  content: [
     "**/*.html"
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
@@ -22,24 +20,13 @@ module.exports = {
           css: {
             a: {
               textDecoration: 'none'
-            },
-            // 'code::before': {
-            //   content: '""',
-            // },
-            // 'code::after': {
-            //   content: '""',
-            // }
+            }
           },
         },
       }
     },
   },
-  variants: {
-    extend: {},
-  },
   plugins: [
-    // https://github.com/tailwindlabs/tailwindcss-typography#responsive-variants
-    // https://github.com/tailwindlabs/tailwindcss-typography/blob/master/src/styles.js
     require('@tailwindcss/typography'),
     require('@tailwindcss/line-clamp')
   ]

@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj" />
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
@@ -11,13 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="$(DotNetPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(DotNetPackageVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="$(DotNetPackageVersion)" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options" />
   </ItemGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
 </Project>

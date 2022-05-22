@@ -1,11 +1,9 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
 
-namespace Ssg.Extensions.Data.Abstractions
+namespace Ssg.Extensions.Data.Abstractions;
+
+public interface IParser
 {
-    public interface IParser
-    {
-        T Parse<T>(string raw);
-    }
+    T Parse<T>(string raw);
 }

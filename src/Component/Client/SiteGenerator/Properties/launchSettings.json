@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Kaylumah.Ssg.Client.SiteGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "workingDirectory": "../../../../"
+    }
+  }
+}

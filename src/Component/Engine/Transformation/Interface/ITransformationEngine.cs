@@ -1,17 +1,9 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface
+namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+
+public interface ITransformationEngine
 {
-    public interface ITransformationEngine : IMetadataRenderer
-    {
-    }
-
-
-
-
-
-
-    
-
+    Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests);
 }

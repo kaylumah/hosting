@@ -1,18 +1,18 @@
-// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
+
 using System.Collections.ObjectModel;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+
+public class DefaultMetadatas : KeyedCollection<string, DefaultMetadata>
 {
-    public class DefaultMetadatas : KeyedCollection<string, DefaultMetadata>
+    protected override string GetKeyForItem(DefaultMetadata item)
     {
-        protected override string GetKeyForItem(DefaultMetadata item)
+        if (item.Scope != null)
         {
-            if (item.Scope != null)
-            {
-                return $"{item.Path}.{item.Scope}";
-            }
-            return item.Path;
+            return $"{item.Path}.{item.Scope}";
         }
+        return item.Path;
     }
 }

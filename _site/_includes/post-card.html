@@ -1,11 +1,18 @@
 <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
   <div class="flex-shrink-0">
-    <img class="h-48 w-full object-cover" src="{{ post.image | relative_url }}" alt="" />
+    <picture>
+      {% if post.cover_image.DEFAULT %}
+      <source type="image/webp" srcset="{{ post.cover_image.WEB | relative_url }}">
+      <img src="{{ post.cover_image.DEFAULT | relative_url }}" alt="cover for {{ post.title }}" height="640" width="1280" />
+      {% else %}
+      <img src="{{ post.cover_image | relative_url }}" alt="cover for {{ post.title }}" height="640" width="1280" />
+      {% endif %}
+    </picture>
   </div>
   <div class="flex-1 bg-white p-6 flex flex-col justify-between">
     <div class="flex-1">
       <p class="text-sm font-medium text-indigo-600">
-        <a href="/types.html#{{ post.type | html.url_encode }}" class="hover:underline">
+        <a href="/archive.html#{{ post.type }}" class="hover:underline" title="Posts in the {{ post.type }} category">
           {{ post.type }}
         </a>
       </p>
@@ -20,8 +27,9 @@
     </div>
     <div class="mt-2">
       {% for tag in post.tags %}
-        <a href="/tags.html#{{ tag | html.url_encode }}" class="text-gray-500">
-          <span class="text-gray-600">#</span>{{tag}}
+        <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-500">
+                        <!-- <span class="text-gray-600">#</span> -->
+                        {{ site.data.tags[tag].name }}
         </a>
       {% endfor %}
     </div>
@@ -29,7 +37,7 @@
       <div class="flex-shrink-0">
         <a href="#">
           <span class="sr-only">{{ site.data.authors[page.author].full_name }}</span>
-          <img class="h-10 w-10 rounded-full" src="{{ site.data.authors[page.author].picture }}" alt="" />
+          <img class="h-10 w-10 rounded-full" width="40" height="40" src="{{ site.data.authors[page.author].picture }}" alt="profile picture {{ site.data.authors[page.author].full_name }}" />
         </a>
       </div>
       <div class="ml-3">
