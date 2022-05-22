@@ -10,7 +10,10 @@ namespace System.ServiceModel.Syndication
     {
         public static byte[] SaveAsAtom10(this SyndicationFeed syndicationFeed)
         {
-            var settings = new XmlWriterSettings();
+            var settings = new XmlWriterSettings()
+            {
+                Indent = true
+            };
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream, settings);
             syndicationFeed.SaveAsAtom10(writer);
