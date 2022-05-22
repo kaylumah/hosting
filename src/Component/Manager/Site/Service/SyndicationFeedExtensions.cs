@@ -64,31 +64,32 @@ namespace System.ServiceModel.Syndication
                 }
             }
 
-                /*
-                SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
-                feed.Links.Add(link);
-                */
+            /*
+            SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
+            feed.Links.Add(link);
+            */
 
-                /*
-                var feed = new SyndicationFeed();
-                feed.Language = siteMetaData.Language;
-                feed.Id = siteMetaData.Id;
-                feed.Title = new TextSyndicationContent(siteMetaData.Title);
-                */
+            /*
+            var feed = new SyndicationFeed();
+            feed.Language = siteMetaData.Language;
+            feed.Id = siteMetaData.Id;
+            feed.Title = new TextSyndicationContent(siteMetaData.Title);
+            */
 
-                /*
-                if (siteMetaData.Collections.TryGetValue("posts", out var posts))
-                {
-                    var feedPosts = posts
-                        .OrderByDescending(x => x["date"])
-                        .Where(x => bool.Parse((string)x["feed"]))
-                        .ToList();
-                    feed.Items = posts.ToSyndicationItems();
-                }
 
-                feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
+            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            {
+                /*
+                var feedPosts = posts
+                    .OrderByDescending(x => x["date"])
+                    .Where(x => bool.Parse((string)x["feed"]))
+                    .ToList();
+                feed.Items = posts.ToSyndicationItems();
                 */
-                return feed;
+            }
+
+            feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
+            return feed;
         }
     }
 
