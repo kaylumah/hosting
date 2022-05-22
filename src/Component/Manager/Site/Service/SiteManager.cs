@@ -49,7 +49,7 @@ public class SiteManager : ISiteManager
         result.Add(new Artifact
         { 
             Contents = bytes,
-            Path = "feed.xml"
+            Path = "feed-v2.xml"
         });
         return result.ToArray();
     }

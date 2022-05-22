@@ -86,6 +86,25 @@ namespace System.ServiceModel.Syndication
                     .ToList();
                 feed.Items = posts.ToSyndicationItems();
                 */
+
+                var items = new List<SyndicationItem>();
+                foreach( var pageMetaData in posts)
+                {
+                    var author = persons[pageMetaData.Author];
+                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                    var item = new SyndicationItem
+                    { 
+                        Id = pageUrl,
+                        Title = new TextSyndicationContent(pageMetaData.Title),
+                        Summary = new TextSyndicationContent(pageMetaData.Description),
+                        Content = new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html),
+                        PublishDate = (DateTimeOffset)pageMetaData["date"],
+                        LastUpdatedTime = pageMetaData.LastModified
+                    };
+                    item.Authors.Add(author);
+                    items.Add(item);
+                }
+                feed.Items = items;
             }
 
             feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
@@ -101,12 +120,7 @@ namespace System.ServiceModel.Syndication
 
             var item = new SyndicationItem
             {
-                Id = pageUrl,
-                Title = new TextSyndicationContent(pageMetaData.Title),
-                Summary = new TextSyndicationContent(pageMetaData.Description),
-                Content = new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html),
-                PublishDate = (DateTimeOffset)pageMetaData["date"],
-                LastUpdatedTime = pageMetaData.LastModified
+                Id = pageUrl
             };
 
             item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
