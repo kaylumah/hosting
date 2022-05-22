@@ -28,7 +28,7 @@
         <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
-            {{ post.content | string.strip | html.escape }}
+            {{ post.content | to_cdata }}
         </content>
         {% if post.description %}
         <summary>{{ post.description | string.strip | html.escape }}</summary>
