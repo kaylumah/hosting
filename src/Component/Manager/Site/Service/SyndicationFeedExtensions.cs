@@ -42,6 +42,8 @@ namespace System.ServiceModel.Syndication
                 feed.Items = posts.ToSyndicationItems();
             }
 
+            feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
+
             return feed;
         }
     }
