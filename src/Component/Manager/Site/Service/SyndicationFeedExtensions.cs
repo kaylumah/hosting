@@ -28,6 +28,8 @@ namespace System.ServiceModel.Syndication
         {
             // See:
             // https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.syndication.syndicationfeed?view=dotnet-plat-ext-6.0
+            // https://github.com/kestrelblackmore/BlogMatrix/blob/master/App_Code/RssSyndicator.cs
+            // https://github.com/kestrelblackmore/BlogMatrix/blob/master/feed.cshtml
 
             var feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
 
