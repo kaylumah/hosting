@@ -32,6 +32,11 @@ namespace System.ServiceModel.Syndication
             // https://github.com/kestrelblackmore/BlogMatrix/blob/master/App_Code/RssSyndicator.cs
             // https://github.com/kestrelblackmore/BlogMatrix/blob/master/feed.cshtml
 
+            var build = siteMetaData.Build;
+            var generatorVersion = build.ShortGitHash;
+            var copyrightClaim = build.Copyright;
+            var generatedAtBuildTime = build.Time;
+
             SyndicationFeed feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
 
             SyndicationPerson sp = new SyndicationPerson("jesper@contoso.com", "Jesper Aaberg", "http://Jesper/Aaberg");
