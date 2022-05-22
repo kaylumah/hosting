@@ -32,10 +32,10 @@
         {% for tag in post.tags %}
         <category term="{{ site.data.tags[tag].name }}" />
         {% endfor %}
-        <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
             {{ post.content | to_cdata }}
         </content>
+        <link href="{{ post.uri | absolute_url }}" />
         {% assign post_image = post.image %}
         {% if post_image %}
             {% unless post_image contains "://" %}
@@ -44,7 +44,6 @@
 
             <media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image | html.escape }}" />
             <media:content medium="image" url="{{ post_image | html.escape }}" xmlns:media="http://search.yahoo.com/mrss/" />
-
         {% endif %}
     </entry>
     {% endif %}
