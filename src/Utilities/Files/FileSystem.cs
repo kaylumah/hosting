@@ -66,15 +66,18 @@ public class FileSystem : IFileSystem
         var workingDirectory = string.IsNullOrEmpty(path) ? _fileSystem.Directory.GetCurrentDirectory() : path;
         var result = new List<IFileSystemInfo>();
         var scanDirectory = _fileSystem.DirectoryInfo.FromDirectoryName(workingDirectory);
-        var scanResult = scanDirectory.GetFileSystemInfos();
-        result.AddRange(scanResult);
-
-        if (recursive)
+        if (scanDirectory.Exists)
         {
-            var directories = scanResult.Where(x => x.IsDirectory());
-            foreach (var directory in directories)
+            var scanResult = scanDirectory.GetFileSystemInfos();
+            result.AddRange(scanResult);
+
+            if (recursive)
             {
-                result.AddRange(GetFiles(directory.FullName, recursive));
+                var directories = scanResult.Where(x => x.IsDirectory());
+                foreach (var directory in directories)
+                {
+                    result.AddRange(GetFiles(directory.FullName, recursive));
+                }
             }
         }
 

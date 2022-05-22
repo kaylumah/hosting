@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
+// TODO test this one
 public class FileProcessor : IFileProcessor
 {
     private readonly Utilities.IFileSystem _fileSystem;
@@ -86,13 +87,15 @@ public class FileProcessor : IFileProcessor
                 if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
                     _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
-                    targetFiles = targetFiles
+                    /*targetFiles = targetFiles
                         .Select(x =>
                         {
                             x.MetaData.Collection = collection.Name;
                             return x;
                         })
                         .ToList();
+                    */
+                    targetFiles.SetCollection(collection.Name);
                     result.AddRange(targetFiles);
                 }
                 else
@@ -174,5 +177,13 @@ public class FileProcessor : IFileProcessor
             });
         }
         return result;
+    }
+}
+
+public static class FileCollectionExtensions
+{
+    public static void SetCollection(this IEnumerable<File> files, string collectionName)
+    {
+        files.ToList().ForEach(file => file.MetaData.Collection = collectionName);
     }
 }

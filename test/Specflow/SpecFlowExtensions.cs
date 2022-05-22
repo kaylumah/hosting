@@ -12,7 +12,7 @@ namespace Test.Specflow;
 
 public static class SpecFlowExtensions
 {
-    public static Dictionary<string, string> ToDictionary(this Table table)
+    public static Dictionary<string, object> ToDictionary(this Table table)
     {
         // https://stackoverflow.com/questions/47503580/convert-specflow-table-todictionary
         if (table == null)
@@ -24,6 +24,6 @@ public static class SpecFlowExtensions
         if (table.Rows.First().Count != 2)
             throw new InvalidOperationException($@"Gherkin data table must have exactly 2 columns. Columns found: ""{string.Join(@""", """, table.Rows.First().Keys)}""");
 
-        return table.Rows.ToDictionary(row => row[0], row => row[1]);
+        return table.Rows.ToDictionary(row => row[0], row => (object)row[1]);
     }
 }

@@ -17,6 +17,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
   </ItemGroup>
@@ -43,6 +44,7 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Specflow'))">
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
+    <PackageVersion Include="SolidToken.SpecFlow.DependencyInjection" Version="3.9.2" />
   </ItemGroup>
   
 </Project>

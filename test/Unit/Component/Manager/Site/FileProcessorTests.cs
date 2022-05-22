@@ -200,6 +200,7 @@ public class FileProcessorTests
 
     private static string CreateFrontMatter(Dictionary<string, object> data = null)
     {
+        // TODO move
         var stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("---");
         if (data != null)
@@ -213,6 +214,7 @@ public class FileProcessorTests
 
     private string CreateEmptyXml()
     {
+        // TODO move
         var settings = new XmlWriterSettings
         {
             OmitXmlDeclaration = false,
