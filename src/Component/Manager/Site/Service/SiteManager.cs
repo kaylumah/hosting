@@ -47,25 +47,13 @@ public class SiteManager : ISiteManager
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
     {
         var result = new List<Artifact>();
-
-        // See:
-        // https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.syndication.syndicationfeed?view=dotnet-plat-ext-6.0
-
-        var feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
-        
-        if (siteMetaData.Collections.TryGetValue("posts", out var posts))
-        {
-            feed.Items = posts.ToSyndicationItems();
-        }
-
+        var feed = siteMetaData.ToSyndicationFeed();
         var bytes = feed.SaveAsAtom10();    
         result.Add(new Artifact
         { 
             Contents = bytes,
             Path = "feed.xml"
         });
-
-
         return result.ToArray();
     }
 

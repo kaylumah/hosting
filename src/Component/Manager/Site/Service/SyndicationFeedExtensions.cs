@@ -19,6 +19,24 @@ namespace System.ServiceModel.Syndication
         }
     }
 
+    public static partial class SiteMetaDataExtensions
+    {
+        public static SyndicationFeed ToSyndicationFeed(this SiteMetaData siteMetaData)
+        {
+            // See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.syndication.syndicationfeed?view=dotnet-plat-ext-6.0
+
+            var feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
+
+            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            {
+                feed.Items = posts.ToSyndicationItems();
+            }
+
+            return feed;
+        }
+    }
+
     public static partial class PageMetaDataExtensions
     {
         public static SyndicationItem ToSyndicationItem(this PageMetaData pageMetaData)
