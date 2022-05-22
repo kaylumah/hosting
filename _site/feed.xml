@@ -11,7 +11,6 @@
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
     <link href="{{ 'blog.html' | absolute_url }}" rel="alternate" type="text/html" />
     <link href="{{ 'archive.html' | absolute_url }}" rel="related" type="text/html" />
-    <icon>{{ "assets/logo_alt.svg" | absolute_url }}</icon>
     <generator uri="/feed.xml" version="{{ build.short_git_hash }}">Kaylumah Site Generator</generator>
     {%- assign posts = site.collections['posts'] | array.sort "date" | array.reverse -%}
     {%- for post in posts -%}
