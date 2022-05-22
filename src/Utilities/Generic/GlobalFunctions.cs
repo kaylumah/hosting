@@ -142,19 +142,21 @@ public class GlobalFunctions
 
     public static string AbsoluteUrl(string source)
     {
-        var relativeSource = RelativeUrl(source);
-        if (!string.IsNullOrWhiteSpace(relativeSource))
+        var resolvedSource = RelativeUrl(source);
+        if (!string.IsNullOrWhiteSpace(resolvedSource))
         {
-            if (relativeSource.StartsWith(Path.DirectorySeparatorChar))
+            if (resolvedSource.StartsWith(Path.DirectorySeparatorChar))
             {
-                relativeSource = relativeSource[1..];
+                resolvedSource = resolvedSource[1..];
             }
             if (!string.IsNullOrWhiteSpace(Instance.Url))
             {
-                return Path.Combine(Instance.Url, relativeSource);
+
+                resolvedSource = Path.Combine(Instance.Url, resolvedSource);
             }
         }
-        return relativeSource;
+        return resolvedSource
+            .Replace(Path.DirectorySeparatorChar, '/');
     }
 
     public static string ToJson(object o)
