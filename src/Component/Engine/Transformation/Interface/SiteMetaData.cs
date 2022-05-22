@@ -5,6 +5,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class SiteMetaData
 {
+    public BuildData Build { get; set; }
     public string Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
