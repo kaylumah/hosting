@@ -39,7 +39,6 @@
         }
     ],
     "mimeTypes": {
-        ".json": "text/json",
-        ".xml": "text/xml"
+        ".json": "text/json"
     }
 }
