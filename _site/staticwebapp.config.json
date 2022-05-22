@@ -28,7 +28,10 @@
         },
         {
             "route": "/feed",
-            "redirect": "/feed.xml"
+            "redirect": "/feed.xml",
+            "headers": {
+                "content-type": "application/atom+xml"
+            }
         },
         {
             "route": "/sitemap",
