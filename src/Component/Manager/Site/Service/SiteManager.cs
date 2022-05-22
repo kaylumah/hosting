@@ -2,7 +2,9 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Reflection;
+using System.ServiceModel.Syndication;
 using System.Text;
+using System.Xml;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
@@ -40,6 +42,26 @@ public class SiteManager : ISiteManager
         _logger = logger;
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
+    }
+
+    private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
+    {
+        var result = new List<Artifact>();
+
+        // See:
+        // https://docs.microsoft.com/en-us/dotnet/api/system.servicemodel.syndication.syndicationfeed?view=dotnet-plat-ext-6.0
+
+        var feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
+        
+        var bytes = feed.SaveAsAtom10();    
+        result.Add(new Artifact
+        { 
+            Contents = bytes,
+            Path = "feed.xml"
+        });
+
+
+        return result.ToArray();
     }
 
     public async Task GenerateSite(GenerateSiteRequest request)
@@ -94,6 +116,9 @@ public class SiteManager : ISiteManager
                 Contents = Encoding.UTF8.GetBytes(renderResult.Content)
             };
         }).ToList();
+
+        var feedArtifacts = CreateFeedArtifacts(siteMetadata);
+        artifacts.AddRange(feedArtifacts);
 
 
         var assets = _fileSystem
