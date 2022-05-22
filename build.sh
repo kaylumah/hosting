@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "This script is deprecated"
+exit 1
+
 # https://unix.stackexchange.com/questions/129391/passing-named-arguments-to-shell-scripts
 for ARGUMENT in "$@"
 do

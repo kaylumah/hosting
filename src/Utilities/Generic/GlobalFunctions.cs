@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Text.Json;
+using System.Xml;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Utilities;
@@ -126,6 +127,20 @@ public class GlobalFunctions
         return date.ToString(pattern);
     }
 
+    public static string ToCdata(string source)
+    {
+        var settings = new XmlWriterSettings()
+        {
+            ConformanceLevel = ConformanceLevel.Fragment
+        };
+        using var stream = new MemoryStream();
+        using var writer = XmlWriter.Create(stream, settings);
+        writer.WriteCData(source);
+        writer.Close();
+        var text = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        return text;
+    }
+
     public static string DateToXmlschema(DateTimeOffset date)
     {
         return DateToPattern(date, "o");
@@ -142,19 +157,21 @@ public class GlobalFunctions
 
     public static string AbsoluteUrl(string source)
     {
-        var relativeSource = RelativeUrl(source);
-        if (!string.IsNullOrWhiteSpace(relativeSource))
+        var resolvedSource = RelativeUrl(source);
+        if (!string.IsNullOrWhiteSpace(resolvedSource))
         {
-            if (relativeSource.StartsWith(Path.DirectorySeparatorChar))
+            if (resolvedSource.StartsWith(Path.DirectorySeparatorChar))
             {
-                relativeSource = relativeSource[1..];
+                resolvedSource = resolvedSource[1..];
             }
             if (!string.IsNullOrWhiteSpace(Instance.Url))
             {
-                return Path.Combine(Instance.Url, relativeSource);
+
+                resolvedSource = Path.Combine(Instance.Url, resolvedSource);
             }
         }
-        return relativeSource;
+        return resolvedSource
+            .Replace(Path.DirectorySeparatorChar, '/');
     }
 
     public static string ToJson(object o)

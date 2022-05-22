@@ -34,5 +34,9 @@
             "route": "/sitemap",
             "redirect": "/sitemap.xml"
         }
-    ]
+    ],
+    "mimeTypes": {
+        ".json": "text/json",
+        ".xml": "text/xml"
+    }
 }

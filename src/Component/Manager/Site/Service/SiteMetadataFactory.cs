@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
@@ -24,7 +25,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
-            var siteInfo = new SiteMetaData(pages.ToArray())
+            var siteInfo = new SiteMetaData()
             {
                 Id = siteGuid.ToString(),
                 Title = _siteInfo.Title,
@@ -39,6 +40,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Series = new SortedDictionary<string, PageMetaData[]>(),
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
+
+            var assemblyInfo = new AssemblyUtil()
+                .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            var buildMetadata = new BuildData(assemblyInfo);
+            siteInfo.Build = buildMetadata;
+            siteInfo.Pages = pages
+            .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
+            .Where(file => !"404.html".Equals(file.Name))
+            .Select(x => new
+            {
+                Url = x["url"],
+                x.LastModified,
+                Sitemap = x["sitemap"]
+            });
 
             EnrichSiteWithData(siteInfo, Path.Combine("_site", siteConfiguration.DataDirectory));
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
@@ -115,13 +130,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {
             var tags = pages
-                .Where(x => x.Tags != null)
-                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
+                .WhereIsTagged()
+                .WhereIsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
-                var tagFiles = pages.Where(x => x.Tags != null && x.Tags.Contains(tag)).ToArray();
+                var tagFiles = pages
+                    .WhereIsTaggedWith(tag)
+                    .ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
         }
@@ -130,7 +147,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             var years = pages
                 .Where(x => x.ContainsKey("date"))
-                .Where(x => ContentType.Article.Equals(x.Type)) // filter out anything that is not an article
+                .WhereIsArticle()
                 .Select(x => ((DateTimeOffset)x["date"]).Year)
                 .Distinct();
             foreach (var year in years)
@@ -143,13 +160,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
         {
             var series = pages
-                .Where(x => x.Series != null)
+                .WhereIsSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
             foreach (var serie in series)
             {
-                var seriesFiles = pages.Where(x => x.Series != null && serie.Equals(x.Series)).OrderBy(x => x.Url).ToArray();
+                var seriesFiles = pages
+                    .WhereSeriesIs(serie)
+                    .OrderBy(x => x.Url)
+                    .ToArray();
                 site.Series.Add(serie, seriesFiles);
             }
         }

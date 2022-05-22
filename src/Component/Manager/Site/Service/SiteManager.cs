@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Reflection;
 using System.Text;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -9,7 +8,6 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service;
 
@@ -59,16 +57,19 @@ public class SiteManager : ISiteManager
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
         });
 
-        var pageMetadatas = processed.ToArray().ToPages(siteGuid);
-        var info = new AssemblyUtil().RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
-        var buildMetadata = new BuildData(info);
-        var siteMetadata = _siteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageMetadatas.ToList());
+        var pageMetadatas = processed
+            .ToPages(siteGuid);
+        var siteMetadata = _siteMetadataFactory
+            .EnrichSite(
+                request.Configuration,
+                siteGuid,
+                pageMetadatas.ToList()
+        );
 
         var requests = pageMetadatas
             .Select(pageMetadata => new MetadataRenderRequest {
                 Metadata = new RenderData
                 {
-                    Build = buildMetadata,
                     Site =  siteMetadata,
                     Page = pageMetadata
                 },

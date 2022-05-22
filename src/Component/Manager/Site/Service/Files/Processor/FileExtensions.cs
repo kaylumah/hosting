@@ -19,7 +19,7 @@ public static class FileExtensions
         return page;
     }
 
-    public static PageMetaData[] ToPages(this File[] files, Guid siteGuid)
+    public static PageMetaData[] ToPages(this IEnumerable<File> files, Guid siteGuid)
     {
         return files.Select(x => ToPage(x, siteGuid)).ToArray();
     }
