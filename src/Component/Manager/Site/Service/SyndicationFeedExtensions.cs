@@ -37,34 +37,20 @@ namespace System.ServiceModel.Syndication
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
 
-            SyndicationFeed feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
+            var feed = new SyndicationFeed();
+            feed.Language = siteMetaData.Language;
+            feed.Title = new TextSyndicationContent(siteMetaData.Title);
+            feed.Description = new TextSyndicationContent(siteMetaData.Description);
+            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
+            feed.Copyright = new TextSyndicationContent(copyrightClaim);
+            feed.LastUpdatedTime = generatedAtBuildTime;
+            feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
+            feed.Generator = "Kaylumah Site Generator";
 
-            SyndicationPerson sp = new SyndicationPerson("jesper@contoso.com", "Jesper Aaberg", "http://Jesper/Aaberg");
-            feed.Authors.Add(sp);
-
-            SyndicationCategory category = new SyndicationCategory("FeedCategory", "CategoryScheme", "CategoryLabel");
-            feed.Categories.Add(category);
-
-            feed.Contributors.Add(new SyndicationPerson("lene@contoso.com", "Lene Aaling", "http://lene/aaling"));
-            feed.Copyright = new TextSyndicationContent("Copyright 2007");
-            feed.Description = new TextSyndicationContent("This is a sample feed");
-
-            feed.Generator = "Sample Code";
-            feed.Id = "FeedID";
-            feed.ImageUrl = new Uri("http://server/image.jpg");
-
-            TextSyndicationContent textContent = new TextSyndicationContent("Some text content");
-            SyndicationItem item = new SyndicationItem("Item Title", textContent, new Uri("http://server/items"), "ItemID", DateTime.Now);
-
-            List<SyndicationItem> items = new List<SyndicationItem>();
-            items.Add(item);
-            feed.Items = items;
-
-            feed.Language = "en-us";
-            feed.LastUpdatedTime = DateTime.Now;
-
+            /*
             SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
             feed.Links.Add(link);
+            */
 
             /*
             var feed = new SyndicationFeed();
