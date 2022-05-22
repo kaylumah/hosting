@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Text.Json;
+using System.Xml;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Utilities;
@@ -124,6 +125,20 @@ public class GlobalFunctions
     {
         // date.ToUniversalTime()
         return date.ToString(pattern);
+    }
+
+    public static string ToCdata(string source)
+    {
+        var settings = new XmlWriterSettings()
+        {
+            ConformanceLevel = ConformanceLevel.Fragment
+        };
+        using var stream = new MemoryStream();
+        using var writer = XmlWriter.Create(stream, settings);
+        writer.WriteCData(source);
+        writer.Close();
+        var text = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        return text;
     }
 
     public static string DateToXmlschema(DateTimeOffset date)
