@@ -33,6 +33,10 @@ namespace System.ServiceModel.Syndication
 
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
+                var feedPosts = posts
+                    .OrderByDescending(x => x["date"])
+                    .Where(x => bool.Parse((string)x["feed"]))
+                    .ToList();
                 feed.Items = posts.ToSyndicationItems();
             }
 
