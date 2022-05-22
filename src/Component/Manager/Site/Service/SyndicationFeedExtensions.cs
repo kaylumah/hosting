@@ -47,31 +47,48 @@ namespace System.ServiceModel.Syndication
             feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
             feed.Generator = "Kaylumah Site Generator";
 
-            /*
-            SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
-            feed.Links.Add(link);
-            */
-
-            /*
-            var feed = new SyndicationFeed();
-            feed.Language = siteMetaData.Language;
-            feed.Id = siteMetaData.Id;
-            feed.Title = new TextSyndicationContent(siteMetaData.Title);
-            */
-
-            /*
-            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            var persons = new Dictionary<string, SyndicationPerson>();
+            if (siteMetaData.Data.TryGetValue("authors", out var authorData))
             {
-                var feedPosts = posts
-                    .OrderByDescending(x => x["date"])
-                    .Where(x => bool.Parse((string)x["feed"]))
-                    .ToList();
-                feed.Items = posts.ToSyndicationItems();
+                if (authorData is Dictionary<object, object> authors)
+                {
+                    foreach(var author in authors)
+                    {
+                        var singleDictionary = (Dictionary<object, object>)author.Value;
+                        var syndicationPerson = new SyndicationPerson();
+                        syndicationPerson.Name = (string)singleDictionary["full_name"];
+                        syndicationPerson.Email = (string)singleDictionary["email"];
+                        syndicationPerson.Uri = (string)singleDictionary["uri"];
+                        persons.Add((string)author.Key, syndicationPerson);
+                    }
+                }
             }
 
-            feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
-            */
-            return feed;
+                /*
+                SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
+                feed.Links.Add(link);
+                */
+
+                /*
+                var feed = new SyndicationFeed();
+                feed.Language = siteMetaData.Language;
+                feed.Id = siteMetaData.Id;
+                feed.Title = new TextSyndicationContent(siteMetaData.Title);
+                */
+
+                /*
+                if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+                {
+                    var feedPosts = posts
+                        .OrderByDescending(x => x["date"])
+                        .Where(x => bool.Parse((string)x["feed"]))
+                        .ToList();
+                    feed.Items = posts.ToSyndicationItems();
+                }
+
+                feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
+                */
+                return feed;
         }
     }
 
