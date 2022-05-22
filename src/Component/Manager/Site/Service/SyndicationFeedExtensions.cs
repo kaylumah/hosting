@@ -32,6 +32,8 @@ namespace System.ServiceModel.Syndication
             // https://github.com/kestrelblackmore/BlogMatrix/blob/master/App_Code/RssSyndicator.cs
             // https://github.com/kestrelblackmore/BlogMatrix/blob/master/feed.cshtml
             // https://validator.w3.org/feed/check.cgi
+            // https://dzone.com/articles/systemservicemodelsyndication
+            // https://khalidabuhakmeh.com/reading-rss-feeds-with-dotnet-core
 
             var build = siteMetaData.Build;
             var generatorVersion = build.ShortGitHash;
