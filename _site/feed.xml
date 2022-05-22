@@ -1,18 +1,21 @@
 ---
 ---
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" {% if site.language %}xml:lang="{{ site.language }}"{% endif %}>
+<feed {% if site.language %}xml:lang="{{ site.language }}"{% endif %} xmlns="http://www.w3.org/2005/Atom">
+    <title>{{ site.title | html.escape }}</title>
+    <subtitle>{{ site.description }}</subtitle>
     <id>{{ page.uri | absolute_url }}</id>
+    <rights>{{ build.copyright }}</rights>
     <updated>{{ build.time | date_to_xmlschema }}</updated>
+    <!-- category -->
+    <logo>{{ "assets/logo_alt.svg" | absolute_url }}</logo>
+    <!-- author -->
+    <!-- contributor -->
+    <generator uri="/feed.xml" version="{{ build.short_git_hash }}">Kaylumah Site Generator</generator>
     <link href="{{ page.uri | absolute_url }}" rel="self" type="application/atom+xml" />
     <link href="{{ 'blog.html' | absolute_url }}" rel="alternate" type="text/html" />
     <link href="{{ 'archive.html' | absolute_url }}" rel="related" type="text/html" />
-    <title>{{ site.title | html.escape }}</title>
-    <subtitle>{{ site.description }}</subtitle>
     <icon>{{ "assets/logo_alt.svg" | absolute_url }}</icon>
-    <logo>{{ "assets/logo_alt.svg" | absolute_url }}</logo>
-    <rights>{{ build.copyright }}</rights>
-    <generator uri="/feed.xml" version="{{ build.short_git_hash }}">Kaylumah Site Generator</generator>
     {%- assign posts = site.collections['posts'] | array.sort "date" | array.reverse -%}
     {%- for post in posts -%}
     {% if post.feed != 'False' %}
