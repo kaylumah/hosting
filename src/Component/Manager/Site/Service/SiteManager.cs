@@ -53,6 +53,11 @@ public class SiteManager : ISiteManager
 
         var feed = new SyndicationFeed("Feed Title", "Feed Description", new Uri("http://Feed/Alternate/Link"), "FeedID", DateTime.Now);
         
+        if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+        {
+            feed.Items = posts.ToSyndicationItems();
+        }
+
         var bytes = feed.SaveAsAtom10();    
         result.Add(new Artifact
         { 
