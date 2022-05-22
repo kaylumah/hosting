@@ -101,6 +101,15 @@ namespace System.ServiceModel.Syndication
                         PublishDate = (DateTimeOffset)pageMetaData["date"],
                         LastUpdatedTime = pageMetaData.LastModified
                     };
+
+                    if (pageMetaData.Tags != null)
+                    {
+                        foreach (var tag in pageMetaData.Tags)
+                        {
+                            item.Categories.Add(new SyndicationCategory(tag));
+                        }
+                    }
+                    
                     item.Authors.Add(author);
                     items.Add(item);
                 }

@@ -23,23 +23,23 @@
     <entry>
         <id>{{ post.uri | absolute_url }}</id>
         <title>{{ post.title }}</title>
-        <author>
-            <name>{{ post_author.full_name }}</name>
-            {% if post_author.email %}<email>{{ post_author.email }}</email>{% endif %}
-            {% if post_author.uri %}<uri>{{ post_author.uri }}</uri>{% endif %}
-        </author>
         {% if post.description %}
         <summary>{{ post.description | string.strip | html.escape }}</summary>
         {% endif %}
         <published>{{ post.date | date_to_xmlschema }}</published>
         <updated>{{ post.lastmodified | date_to_xmlschema }}</updated>
+        <author>
+            <name>{{ post_author.full_name }}</name>
+            {% if post_author.email %}<email>{{ post_author.email }}</email>{% endif %}
+            {% if post_author.uri %}<uri>{{ post_author.uri }}</uri>{% endif %}
+        </author>
+        {% for tag in post.tags %}
+        <category term="{{ site.data.tags[tag].name }}" />
+        {% endfor %}
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
             {{ post.content | string.strip | html.escape }}
         </content>
-        {% for tag in post.tags %}
-        <category term="{{ site.data.tags[tag].name }}" />
-        {% endfor %}
         {% assign post_image = post.image %}
         {% if post_image %}
             {% unless post_image contains "://" %}
