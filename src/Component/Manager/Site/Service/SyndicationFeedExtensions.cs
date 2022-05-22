@@ -52,7 +52,15 @@ namespace System.ServiceModel.Syndication
     {
         public static SyndicationItem ToSyndicationItem(this PageMetaData pageMetaData)
         {
-            return new SyndicationItem { };
+            return new SyndicationItem
+            {
+                Id = pageMetaData.Url,
+                Title = new TextSyndicationContent(pageMetaData.Title),
+                Summary = new TextSyndicationContent(pageMetaData.Description),
+                Content = new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html),
+                PublishDate = (DateTimeOffset)pageMetaData["date"],
+                LastUpdatedTime = pageMetaData.LastModified
+            };
         }
 
         public static IEnumerable<SyndicationItem> ToSyndicationItems(this IEnumerable<PageMetaData> pageMetaDatas)
