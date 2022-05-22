@@ -141,4 +141,16 @@ namespace System.ServiceModel.Syndication
             return pageMetaDatas.Select(ToSyndicationItem);
         }
     }
+
+    public class CDataSyndicationContent : TextSyndicationContent
+    {
+        public CDataSyndicationContent(TextSyndicationContent content)
+            : base(content)
+        {}
+
+        protected override void  WriteContentsTo(System.Xml.XmlWriter writer)
+        {
+            writer.WriteCData(Text);
+        }
+    }
 }
