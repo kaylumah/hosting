@@ -19,6 +19,9 @@
     <entry>
         <id>{{ post.uri | absolute_url }}</id>
         <title>{{ post.title }}</title>
+        {% if post.description %}
+        <summary>{{ post.description | string.strip | html.escape }}</summary>
+        {% endif %}
         <author>
             <name>{{ post_author.full_name }}</name>
             {% if post_author.email %}<email>{{ post_author.email }}</email>{% endif %}
@@ -30,9 +33,6 @@
         <content type="html">
             {{ post.content | to_cdata }}
         </content>
-        {% if post.description %}
-        <summary>{{ post.description | string.strip | html.escape }}</summary>
-        {% endif %}
         {% for tag in post.tags %}
         <category term="{{ site.data.tags[tag].name }}" />
         {% endfor %}
