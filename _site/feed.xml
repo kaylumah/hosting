@@ -29,13 +29,13 @@
             {% if post_author.email %}<email>{{ post_author.email }}</email>{% endif %}
             {% if post_author.uri %}<uri>{{ post_author.uri }}</uri>{% endif %}
         </author>
+        {% for tag in post.tags %}
+        <category term="{{ site.data.tags[tag].name }}" />
+        {% endfor %}
         <link href="{{ post.uri | absolute_url }}" />
         <content type="html">
             {{ post.content | to_cdata }}
         </content>
-        {% for tag in post.tags %}
-        <category term="{{ site.data.tags[tag].name }}" />
-        {% endfor %}
         {% assign post_image = post.image %}
         {% if post_image %}
             {% unless post_image contains "://" %}
