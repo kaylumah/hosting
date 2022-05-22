@@ -1,11 +1,7 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Kaylumah.Ssg.Manager.Site.Interface;
+
+using System.IO.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
@@ -17,20 +13,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 public class FileProcessor : IFileProcessor
 {
-    private readonly IFileSystem _fileSystem;
+    private readonly Utilities.IFileSystem _fileSystem;
     private readonly ILogger _logger;
     private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
     private readonly IFileMetadataParser _fileMetaDataProcessor;
     private readonly SiteInfo _siteInfo;
 
     public FileProcessor(
-        IFileSystem fileSystem,
+        Utilities.IFileSystem fileSystem,
         ILogger<FileProcessor> logger,
         IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
-        IOptions<SiteInfo> options,
+        SiteInfo options,
         IFileMetadataParser fileMetadataParser)
     {
-        _siteInfo = options.Value;
+        _siteInfo = options;
         _preprocessorStrategies = preprocessorStrategies;
         _fileSystem = fileSystem;
         _logger = logger;
@@ -39,61 +35,73 @@ public class FileProcessor : IFileProcessor
 
     public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
     {
+        _logger.LogInformation("FileFilter DirectoriesToSkip '{DirectoriesToSkip}'", String.Join(",", criteria.DirectoriesToSkip));
+        _logger.LogInformation("FileFilter FileExtensionsToTarget '{FileExtensionsToTarget}'", String.Join(",", criteria.FileExtensionsToTarget));
+
         var result = new List<File>();
 
-        var directoryContents = _fileSystem.GetDirectoryContents(string.Empty);
-        if (directoryContents.Count() > 0)
+        var directoryContents = _fileSystem.GetFiles("_site");
+
+        if (directoryContents.Count() == 0)
         {
-            var directoriesToProcessAsCollection = directoryContents
-                .Where(info => info.IsDirectory && !criteria.DirectoriesToSkip.Contains(info.Name));
-            var filesWithoutCollections = directoryContents.Where(info =>
-                !info.IsDirectory && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+            _logger.LogWarning("No files");
+            return result;
+        }
+
+        var directoriesToProcessAsCollection = directoryContents
+            .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name));
+
+        var filesWithoutCollections = directoryContents.Where(info =>
+            !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+        );
+
+        _logger.LogInformation("There are {Count} files without a collection", filesWithoutCollections.Count());
+
+        var files =
+            await ProcessFiles(
+                filesWithoutCollections
+                .Select(x => x.FullName)
+                .ToArray()
             );
 
-            var files =
-                await ProcessFiles(
-                    filesWithoutCollections
-                    .Select(x => x.Name)
-                    .ToArray()
-                );
+        result.AddRange(files);
 
-            result.AddRange(files);
-
-            var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
-            foreach (var collection in collections)
+        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+        foreach (var collection in collections)
+        {
+            _logger.LogInformation("Begin processing {CollectionName}", collection.Name);
+            var targetFiles = collection
+                .Files
+                .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
+                .ToList();
+            _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+            var exists = _siteInfo.Collections.Contains(collection.Name);
+            if (!exists)
             {
-                var targetFiles = collection
-                    .Files
-                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
-                    .ToList();
-                _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
-                var exists = _siteInfo.Collections.Contains(collection.Name);
-                if (!exists)
+                _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                result.AddRange(targetFiles);
+            }
+            else
+            {
+                if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
-                    _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                    _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
+                    targetFiles = targetFiles
+                        .Select(x =>
+                        {
+                            x.MetaData.Collection = collection.Name;
+                            return x;
+                        })
+                        .ToList();
                     result.AddRange(targetFiles);
                 }
                 else
                 {
-                    if (exists && _siteInfo.Collections[collection.Name].Output)
-                    {
-                        _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
-                        targetFiles = targetFiles
-                            .Select(x =>
-                            {
-                                x.MetaData.Collection = collection.Name;
-                                return x;
-                            })
-                            .ToList();
-                        result.AddRange(targetFiles);
-                    }
-                    else
-                    {
-                        _logger.LogInformation($"{collection.Name} is a collection, but output == false");
-                    }
+                    _logger.LogInformation($"{collection.Name} is a collection, but output == false");
                 }
             }
         }
+
         return result;
     }
 
@@ -102,8 +110,9 @@ public class FileProcessor : IFileProcessor
         var result = new List<FileCollection>();
         foreach (var collection in collections)
         {
+            using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(collection);
+            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection));
             var files = await ProcessFiles(targetFiles.ToArray(), keyName);
 
             result.Add(new FileCollection
@@ -117,7 +126,7 @@ public class FileProcessor : IFileProcessor
 
     private async Task<List<File>> ProcessFiles(string[] files)
     {
-        var fileInfos = new List<IFileInfo>();
+        var fileInfos = new List<System.IO.Abstractions.IFileInfo>();
         foreach (var file in files)
         {
             fileInfos.Add(_fileSystem.GetFile(file));
@@ -125,11 +134,12 @@ public class FileProcessor : IFileProcessor
         return await ProcessFiles(fileInfos.ToArray(), scope: null);
     }
 
-    private async Task<List<File>> ProcessFiles(IFileInfo[] files, string scope)
+    private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
     {
         var result = new List<File>();
         foreach (var fileInfo in files)
         {
+            using var logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
             var fileStream = fileInfo.CreateReadStream();
             using var streamReader = new StreamReader(fileStream);
 
@@ -147,12 +157,17 @@ public class FileProcessor : IFileProcessor
             var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
             if (preprocessor != null)
             {
+                _logger.LogInformation("Using {Preprocessor}", preprocessor.GetType());
                 fileContents = preprocessor.Execute(fileContents);
+            }
+            else
+            {
+                _logger.LogInformation("Failed to find preprocessor");
             }
 
             result.Add(new File
             {
-                LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastModified,
+                LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc,
                 MetaData = fileMeta,
                 Content = fileContents,
                 Name = Path.GetFileName(fileMeta.Uri)

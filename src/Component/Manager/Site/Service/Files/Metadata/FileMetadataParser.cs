@@ -1,8 +1,6 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,22 +13,24 @@ public class FileMetadataParser : IFileMetadataParser
     private readonly ILogger _logger;
     private readonly IMetadataProvider _metadataProvider;
     private readonly MetadataParserOptions _options;
-    public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, IOptions<MetadataParserOptions> options)
+    public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
     {
         _logger = logger;
         _metadataProvider = metadataProvider;
-        _options = options.Value;
+        _options = options;
     }
 
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-
+        _logger.LogInformation("Metadata count before '{MetadataCount}'", result.Data?.Count);
         var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
         var paths = DetermineFilters(outputLocation);
 
         var fileMetaData = ApplyDefaults(paths);
+        _logger.LogInformation("Metadata ApplyDefaults '{MetadataCount}'", fileMetaData.Count);
         OverwriteMetaData(fileMetaData, result.Data, "file");
+        _logger.LogInformation("Metadata Merged '{MetadataCount}'", fileMetaData.Count);
 
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
@@ -97,21 +97,23 @@ public class FileMetadataParser : IFileMetadataParser
     private List<string> DetermineFilters(string outputLocation)
     {
         var paths = new List<string>() { string.Empty };
-        var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+        //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+        var urlSeperator = "/";
+        var index = outputLocation.LastIndexOf(urlSeperator);
         if (index >= 0)
         {
             var input = outputLocation.Substring(0, index);
-            paths.AddRange(DetermineFilterDirectories(input));
+            paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
             paths = paths.OrderBy(x => x.Length).ToList();
         }
         return paths;
     }
 
-    private List<string> DetermineFilterDirectories(string input)
+    private List<string> DetermineFilterDirectories(string input, string urlSeperator)
     {
         var result = new List<string>();
         int index;
-        while ((index = input.LastIndexOf(Path.DirectorySeparatorChar)) >= 0)
+        while ((index = input.LastIndexOf(urlSeperator)) >= 0)
         {
             result.Add(input);
             input = input.Substring(0, index);

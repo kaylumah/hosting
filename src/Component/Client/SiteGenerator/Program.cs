@@ -1,28 +1,16 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System;
-using System.Collections.Generic;
+
 using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Access.Artifact.Service;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Engine.Transformation.Service;
-using Kaylumah.Ssg.Engine.Transformation.Service.Plugins;
+using Kaylumah.Ssg.Access.Artifact.Hosting;
+using Kaylumah.Ssg.Engine.Transformation.Hosting;
+using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
-using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Microsoft.Extensions.Logging.Console;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator;
 
@@ -52,9 +40,14 @@ class Program
     {
         ShowKaylumahLogo();
 
+        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+
         // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
         var configurationBuilder = new ConfigurationBuilder();
-        configurationBuilder.AddJsonFile("appsettings.json");
+
+        configurationBuilder
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
 
         // todo UserSecrets?
 
@@ -79,19 +72,19 @@ class Program
         Console.WriteLine(debugView);
 
         IServiceCollection services = new ServiceCollection();
-        services.AddLogging(builder => builder.AddConsole());
-        services.AddFileSystem(configuration, Path.Combine(Environment.CurrentDirectory, "_site"));
-        services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
-        services.AddSingleton<IYamlParser, YamlParser>();
-        services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
-        services.AddSingleton<IArtifactAccess, ArtifactAccess>();
-        services.AddTransient<IPlugin, SeoPlugin>();
-        services.AddTransient<IPlugin, FeedPlugin>();
+        services.AddLogging(builder =>
+        {
+            builder.AddSimpleConsole(opt =>
+            {
+                opt.IncludeScopes = true;
+            });
+        });
+        services.AddFileSystem();
+        services.AddArtifactAccess(configuration);
+        services.AddTransformationEngine(configuration);
+        services.AddSiteManager(configuration);
+        
 
-        services.AddSingleton<ITransformationEngine, TransformationEngine>();
-        services.AddSingleton<IMetadataRenderer, TransformationEngine>();
-
-        services.AddSingleton<ISiteManager, SiteManager>();
         var serviceProvider = services.BuildServiceProvider();
         var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
 
@@ -106,21 +99,5 @@ class Program
         });
         watch.Stop();
         Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
-    }
-}
-
-static class FileSystemServiceCollectionExtensions
-{
-    public static IServiceCollection AddFileSystem(this IServiceCollection services, IConfiguration configuration, string rootDirectory)
-    {
-        services.Configure<SiteInfo>(configuration.GetSection("Site"));
-        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
-
-        services.AddSingleton<IFileProvider>(new PhysicalFileProvider(rootDirectory));
-        services.AddSingleton<IFileSystem, FileSystem>();
-        services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
-        services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
-        services.AddSingleton<IFileProcessor, FileProcessor>();
-        return services;
     }
 }

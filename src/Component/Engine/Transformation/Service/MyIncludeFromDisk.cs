@@ -1,7 +1,6 @@
-﻿// Copyright (c) Kaylumah, 2021. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
-using System.IO;
-using System.Threading.Tasks;
+
 using Kaylumah.Ssg.Utilities;
 using Scriban;
 using Scriban.Parsing;
@@ -21,7 +20,8 @@ internal class MyIncludeFromDisk : ITemplateLoader
 
     public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
     {
-        return Path.Combine(_fileSystem.GetFile(_templateFolder).Name, templateName);
+        var templateLocation = Path.Combine(_fileSystem.GetFile(_templateFolder).FullName, templateName);
+        return templateLocation;
         // return Path.Combine(Environment.CurrentDirectory, templateName);
     }
 

@@ -1,67 +1,85 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7176D671-2E97-4EE4-8156-14EC1C941F76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Unit", "test\Unit\Test.Unit.csproj", "{46619FF5-B274-4AA3-9EB0-250F9AD7DC3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Unit", "test\Unit\Test.Unit.csproj", "{46619FF5-B274-4AA3-9EB0-250F9AD7DC3D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8A28A494-7F31-42CA-9378-A1E60BF71CEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Generic", "src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj", "{F7EAE2E7-5820-472D-88C9-C674CCD08F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Utilities.Generic", "src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj", "{F7EAE2E7-5820-472D-88C9-C674CCD08F50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Component", "Component", "{0871BC28-F729-45B1-B7FA-C2FE00709BB2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{8D0E938C-0AFC-4CC2-A651-6B24F99A7485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Client.SiteGenerator", "src\Component\Client\SiteGenerator\Kaylumah.Ssg.Client.SiteGenerator.csproj", "{707D8F85-7192-4043-A55C-8C6DF716FBDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Client.SiteGenerator", "src\Component\Client\SiteGenerator\Kaylumah.Ssg.Client.SiteGenerator.csproj", "{707D8F85-7192-4043-A55C-8C6DF716FBDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manager", "Manager", "{97EFC4F1-D73F-4BA0-867E-58B984D70156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Site", "Site", "{C7E0179E-B451-40FB-9FB5-DE03744F90BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Manager.Site.Interface", "src\Component\Manager\Site\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj", "{16D3AF6F-0490-4681-874F-F52492584D0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Manager.Site.Interface", "src\Component\Manager\Site\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj", "{16D3AF6F-0490-4681-874F-F52492584D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Manager.Site.Service", "src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj", "{35F52A22-3956-43D1-B730-F47E357149EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Manager.Site.Service", "src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj", "{35F52A22-3956-43D1-B730-F47E357149EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Access", "Access", "{FE82E43E-B744-43A5-9F5B-BB405FEE61F3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifact", "Artifact", "{C357F8A1-27F1-4BF4-8B60-803ECDE54A72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Access.Artifact.Interface", "src\Component\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj", "{4098D43C-A2B9-470D-AB66-D5FE4789BD4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Access.Artifact.Interface", "src\Component\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj", "{4098D43C-A2B9-470D-AB66-D5FE4789BD4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Access.Artifact.Service", "src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj", "{4502DF06-E92E-4791-86AC-2AB991B8C7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Access.Artifact.Service", "src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj", "{4502DF06-E92E-4791-86AC-2AB991B8C7B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Utilities", "test\Utilities\Test.Utilities.csproj", "{1D4A4604-5154-47B6-B6D7-CDC564204F28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Utilities", "test\Utilities\Test.Utilities.csproj", "{1D4A4604-5154-47B6-B6D7-CDC564204F28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Client.SiteValidator", "src\Component\Client\SiteValidator\Kaylumah.Ssg.Client.SiteValidator.csproj", "{4BA06276-A8DF-41BD-88E0-71D75CD9769C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Client.SiteValidator", "src\Component\Client\SiteValidator\Kaylumah.Ssg.Client.SiteValidator.csproj", "{4BA06276-A8DF-41BD-88E0-71D75CD9769C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{66C2BAEE-316B-4C0E-AAB5-2C665B01AA00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.AssemblyData", "src\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj", "{C2C95457-6A30-469B-9A22-CB4652825CA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Utilities.AssemblyData", "src\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj", "{C2C95457-6A30-469B-9A22-CB4652825CA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Files", "src\Utilities\Files\Kaylumah.Ssg.Utilities.Files.csproj", "{59EFBB70-601A-4B41-AFB9-CADD569170B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Utilities.Files", "src\Utilities\Files\Kaylumah.Ssg.Utilities.Files.csproj", "{59EFBB70-601A-4B41-AFB9-CADD569170B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Identifiers", "src\Utilities\Identifiers\Kaylumah.Ssg.Utilities.Identifiers.csproj", "{B577E00F-CD85-40B9-B745-EB05133863A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Utilities.Identifiers", "src\Utilities\Identifiers\Kaylumah.Ssg.Utilities.Identifiers.csproj", "{B577E00F-CD85-40B9-B745-EB05133863A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Web", "src\Utilities\Web\Kaylumah.Ssg.Utilities.Web.csproj", "{E23B2FFB-72F7-4CB8-9C96-B2D70EC7AA7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Utilities.Web", "src\Utilities\Web\Kaylumah.Ssg.Utilities.Web.csproj", "{E23B2FFB-72F7-4CB8-9C96-B2D70EC7AA7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssg.Extensions.Metadata.Abstractions", "src\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj", "{C3C8D96C-5AC0-4E56-BAD3-84A589B44F50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Metadata.Abstractions", "src\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj", "{C3C8D96C-5AC0-4E56-BAD3-84A589B44F50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssg.Extensions.Metadata.YamlFrontMatter", "src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj", "{5FA34136-9A39-45BB-99FC-D2F25249DE37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Metadata.YamlFrontMatter", "src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj", "{5FA34136-9A39-45BB-99FC-D2F25249DE37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssg.Extensions.Data.Abstractions", "src\Utilities\Ssg.Extensions.Data.Abstractions\Ssg.Extensions.Data.Abstractions.csproj", "{53DF5EAF-CA64-4FD0-8E6C-517267E85C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Data.Abstractions", "src\Utilities\Ssg.Extensions.Data.Abstractions\Ssg.Extensions.Data.Abstractions.csproj", "{53DF5EAF-CA64-4FD0-8E6C-517267E85C6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ssg.Extensions.Data.Yaml", "src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj", "{CB36D921-2B5C-40C6-AB7F-CC83D7C92F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Data.Yaml", "src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj", "{CB36D921-2B5C-40C6-AB7F-CC83D7C92F8F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{8287B184-F680-4276-A795-CD7FC19EACF9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transformation", "Transformation", "{72E9D0EB-6D6F-44B2-B177-0C8F1CF344C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Engine.Transformation.Interface", "src\Component\Engine\Transformation\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj", "{8ED739E9-BECB-4574-96BE-57ACCCBCB4FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Engine.Transformation.Interface", "src\Component\Engine\Transformation\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj", "{8ED739E9-BECB-4574-96BE-57ACCCBCB4FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Engine.Transformation.Service", "src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj", "{5D14E30E-A831-4D7C-8A27-48337EECB163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Engine.Transformation.Service", "src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj", "{5D14E30E-A831-4D7C-8A27-48337EECB163}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F5B96CC-4F71-433C-A022-1EEA2CC3D6AE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.runsettings = .runsettings
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Access.Artifact.Hosting", "src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj", "{1ED002AF-0A9F-4CEE-B968-2C88A4629557}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Engine.Transformation.Hosting", "src\Component\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj", "{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kaylumah.Ssg.Manager.Site.Hosting", "src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj", "{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,9 +89,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{46619FF5-B274-4AA3-9EB0-250F9AD7DC3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -304,6 +319,45 @@ Global
 		{5D14E30E-A831-4D7C-8A27-48337EECB163}.Release|x64.Build.0 = Release|Any CPU
 		{5D14E30E-A831-4D7C-8A27-48337EECB163}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D14E30E-A831-4D7C-8A27-48337EECB163}.Release|x86.Build.0 = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|x64.Build.0 = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Debug|x86.Build.0 = Debug|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|x64.ActiveCfg = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|x64.Build.0 = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|x86.ActiveCfg = Release|Any CPU
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557}.Release|x86.Build.0 = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|x64.Build.0 = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Debug|x86.Build.0 = Debug|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|x64.ActiveCfg = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|x64.Build.0 = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5}.Release|x86.Build.0 = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|x64.ActiveCfg = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|x64.Build.0 = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|x86.ActiveCfg = Release|Any CPU
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{46619FF5-B274-4AA3-9EB0-250F9AD7DC3D} = {7176D671-2E97-4EE4-8156-14EC1C941F76}
@@ -334,5 +388,11 @@ Global
 		{72E9D0EB-6D6F-44B2-B177-0C8F1CF344C8} = {8287B184-F680-4276-A795-CD7FC19EACF9}
 		{8ED739E9-BECB-4574-96BE-57ACCCBCB4FB} = {72E9D0EB-6D6F-44B2-B177-0C8F1CF344C8}
 		{5D14E30E-A831-4D7C-8A27-48337EECB163} = {72E9D0EB-6D6F-44B2-B177-0C8F1CF344C8}
+		{1ED002AF-0A9F-4CEE-B968-2C88A4629557} = {C357F8A1-27F1-4BF4-8B60-803ECDE54A72}
+		{CD4482A5-809B-4DDA-BB60-AD6DA2BD75C5} = {72E9D0EB-6D6F-44B2-B177-0C8F1CF344C8}
+		{A6DEEFD1-80D5-4559-8B59-5ADE482596A8} = {C7E0179E-B451-40FB-9FB5-DE03744F90BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81162A9C-B870-4562-B529-B01111CC7EB9}
 	EndGlobalSection
 EndGlobal
