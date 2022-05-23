@@ -1,64 +1,72 @@
-azure:
-  name: "Azure"
-  description: "Microsoft Azure Platform"
-  icon: "/assets/icons/simpleicons/microsoftazure.svg"
-code-quality:
-  name: "Code Quality"
-  description: "Code Quality"
-configuration:
-  name: "Configuration"
-  description: "Application configuration"
-csharp:
-  name: "C#"
-  description: "for the C# programming language"
-  icon: "/assets/icons/simpleicons/csharp.svg"
-git:
-  name: "Git"
-  description: "for the Git version control system"
-  icon: "/assets/icons/simpleicons/git.svg"
-moq:
-  name: "Moq"
-  description: "for the Moq mocking library in .NET"
-msbuild:
-  name: "MSBuild"
-  description: "for the Microsoft Build Engine"
-nswag:
-  name: "NSwag"
-  description: "for the NSwag swagger tooling in .NET"
-nuget:
-  name: "NuGet"
-  description: "for the .NET package manager"
-  icon: "/assets/icons/simpleicons/nuget.svg"
-openapi:
-  name: "OpenAPI"
-  description: "for the OpenAPI Specification (formerly Swagger Specification)"
-  icon: "/assets/icons/simpleicons/openapiinitiative.svg"
-swashbuckle:
-  name: "Swashbuckle"
-  description: "for the Swashbuckle swagger tooling in .NET"
-testing:
-  name: "Testing"
-  description: "for test related matters"
-visualstudio2019:
-  name: "Visual Studio 2019"
-  description: "for the 2019 version of the Microsoft IDE"
-  icon: "/assets/icons/simpleicons/visualstudio.svg"
-xunit:
-  name: "Xunit"
-  description: "for the Xunit test framework"
-2019:
-  name: "2019"
-  description: "posts from 2019"
-  icon: "/assets/icons/custom/2019.svg"
-2020:
-  name: "2020"
-  description: "posts from 2020"
-  icon: "/assets/icons/custom/2020.svg"
-2021:
-  name: "2021"
-  description: "posts from 2021"
-  icon: "/assets/icons/custom/2021.svg"
-2022:
-  name: "2022"
-  description: "posts from 2022"
-  icon: "/assets/icons/custom/2022.svg"
+- id: azure
+  name: Azure
+  description: Microsoft Azure Platform
+  icon: /assets/icons/simpleicons/microsoftazure.svg
+- id: code-quality
+  name: Code Quality
+  description: Code Quality
+  icon: 
+- id: configuration
+  name: Configuration
+  description: Application configuration
+  icon: 
+- id: csharp
+  name: C#
+  description: for the C# programming language
+  icon: /assets/icons/simpleicons/csharp.svg
+- id: git
+  name: Git
+  description: for the Git version control system
+  icon: /assets/icons/simpleicons/git.svg
+- id: moq
+  name: Moq
+  description: for the Moq mocking library in .NET
+  icon: 
+- id: msbuild
+  name: MSBuild
+  description: for the Microsoft Build Engine
+  icon: 
+- id: nswag
+  name: NSwag
+  description: for the NSwag swagger tooling in .NET
+  icon: 
+- id: nuget
+  name: NuGet
+  description: for the .NET package manager
+  icon: /assets/icons/simpleicons/nuget.svg
+- id: openapi
+  name: OpenAPI
+  description: for the OpenAPI Specification (formerly Swagger Specification)
+  icon: /assets/icons/simpleicons/openapiinitiative.svg
+- id: swashbuckle
+  name: Swashbuckle
+  description: for the Swashbuckle swagger tooling in .NET
+  icon: 
+- id: testing
+  name: Testing
+  description: for test related matters
+  icon: 
+- id: visualstudio2019
+  name: Visual Studio 2019
+  description: for the 2019 version of the Microsoft IDE
+  icon: /assets/icons/simpleicons/visualstudio.svg
+- id: xunit
+  name: Xunit
+  description: for the Xunit test framework
+  icon: 
+- id: 2019
+  name: 2019
+  description: posts from 2019
+  icon: /assets/icons/custom/2019.svg
+- id: 2020
+  name: 2020
+  description: posts from 2020
+  icon: /assets/icons/custom/2020.svg
+- id: 2021
+  name: 2021
+  description: posts from 2021
+  icon: /assets/icons/custom/2021.svg
+- id: 2022
+  name: 2022
+  description: posts from 2022
+  icon: /assets/icons/custom/2022.svg
