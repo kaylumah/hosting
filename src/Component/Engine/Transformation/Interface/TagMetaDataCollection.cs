@@ -12,14 +12,6 @@ public class TagMetaDataCollection : KeyedCollection<string, TagMetaData>
         return item.Id;
     }
 
-    public IDictionary<string, TagMetaData> ToDictionary()
-    {
-        var data = this.Dictionary;
-        if (data == null)
-        {
-            return null;
-        }
-        return data;
-    }
+    public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary;
 
 }

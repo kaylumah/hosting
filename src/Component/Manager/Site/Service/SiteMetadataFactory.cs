@@ -82,7 +82,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(raw);
-                data["tags"] = tagData.ToDictionary();
+                data["tags"] = tagData.Dictionary;
             }
 
             foreach (var file in dataFiles)
