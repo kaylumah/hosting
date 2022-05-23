@@ -81,8 +81,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var stream = tagFile.CreateReadStream();
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
-                var tagData = _yamlParser.Parse<Dictionary<string, TagMetaData>>(raw);
-                data["tags"] = tagData;
+                var tagData = _yamlParser.Parse<TagMetaDataCollection>(raw);
+                data["tags"] = tagData.ToDictionary();
             }
 
             foreach (var file in dataFiles)
