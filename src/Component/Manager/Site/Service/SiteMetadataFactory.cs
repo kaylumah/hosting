@@ -73,6 +73,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
             var data = new Dictionary<string, object>();
+
+            var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
+            if(tagFile != null)
+            {
+                dataFiles.Remove(tagFile);
+                var stream = tagFile.CreateReadStream();
+                using var reader = new StreamReader(stream);
+                var raw = reader.ReadToEnd();
+                var tagData = _yamlParser.Parse<TagMetaDataCollection>(raw);
+                data["tags"] = tagData.Dictionary;
+            }
+
             foreach (var file in dataFiles)
             {
                 var stream = file.CreateReadStream();
