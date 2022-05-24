@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageVersion Include="Scriban" Version="5.4.5" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.42" />
-    <PackageVersion Include="System.IO.Abstractions" Version="17.0.3" />
+    <PackageVersion Include="System.IO.Abstractions" Version="17.0.15" />
     <PackageVersion Include="YamlDotNet" Version="9.1.4" />
     <PackageVersion Include="System.Text.Json" Version="5.0.1" />
     <PackageVersion Include="Markdig" Version="0.23.0" />
