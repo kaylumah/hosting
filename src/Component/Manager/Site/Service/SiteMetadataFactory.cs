@@ -41,9 +41,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
 
+            var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
+            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
+            var dataFiles = _fileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
+                .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
+                .ToList();
+
+            var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
             EnrichSiteWithAssemblyData(siteInfo);
             EnrichSiteWithSiteMap(siteInfo, pages);
-            EnrichSiteWithData(siteInfo, Path.Combine("_site", siteConfiguration.DataDirectory));
+            EnrichSiteWithData(siteInfo, dataFiles);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
@@ -74,13 +82,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 });
         }
 
-         private void EnrichSiteWithData(SiteMetaData site, string dataDirectory)
-        {
-            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
-            var dataFiles = _fileSystem.GetFiles(dataDirectory)
-                .Where(file => !file.IsDirectory())
-                .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
-                .ToList();
+         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
+        {   
             var data = new Dictionary<string, object>();
 
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
