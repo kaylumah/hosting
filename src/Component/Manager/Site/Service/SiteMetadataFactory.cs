@@ -42,16 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             };
 
             EnrichSiteWithAssemblyData(siteInfo);
-            siteInfo.Pages = pages
-            .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
-            .Where(file => !"404.html".Equals(file.Name))
-            .Select(x => new
-            {
-                Url = x["url"],
-                x.LastModified,
-                Sitemap = x["sitemap"]
-            });
-
+            EnrichSiteWithSiteMap(siteInfo, pages);
             EnrichSiteWithData(siteInfo, Path.Combine("_site", siteConfiguration.DataDirectory));
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
@@ -67,7 +58,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var assemblyInfo = new AssemblyUtil()
                 .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
             var buildMetadata = new BuildData(assemblyInfo);
-            siteInfo.Build = buildMetadata;
+            site.Build = buildMetadata;
+        }
+
+        private void EnrichSiteWithSiteMap(SiteMetaData site, List<PageMetaData> pages)
+        {
+            site.Pages = pages
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
+                .Where(file => !"404.html".Equals(file.Name))
+                .Select(x => new
+                {
+                    Url = x["url"],
+                    x.LastModified,
+                    Sitemap = x["sitemap"]
+                });
         }
 
          private void EnrichSiteWithData(SiteMetaData site, string dataDirectory)
