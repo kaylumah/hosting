@@ -89,12 +89,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (tagFile != null)
             {
                 _logger.LogInformation("TagFile exists");
-                var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
                 dataFiles.Remove(tagFile);
                 var stream = tagFile.CreateReadStream();
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(raw);
+                var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
+                _logger.LogInformation("TagFile has '{TagCount}' tags", tagData.Count);
+                var unmatchedTags = tags.Where(tag => !tagData.Contains(tag)).ToArray();
+                _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
             }
 
