@@ -93,7 +93,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(tagFile);
                 var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
                 _logger.LogInformation("TagFile has '{TagCount}' tags", tagData.Count);
-                var unmatchedTags = tags.Where(tag => !tagData.Contains(tag)).ToArray();
+                var unmatchedTags = tags
+                    .Except(tagData.Keys)
+                    .Concat(tagData.Keys.Except(tags));
                 _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
             }
