@@ -5,6 +5,7 @@ using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 
@@ -15,12 +16,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly SiteInfo _siteInfo;
         private readonly IYamlParser _yamlParser;
         private readonly IFileSystem _fileSystem;
+        private readonly ILogger _logger;
 
-        public SiteMetadataFactory(SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem)
+        public SiteMetadataFactory(SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
         {
             _siteInfo = siteInfo;
             _yamlParser = yamlParser;
             _fileSystem = fileSystem;
+            _logger = logger;
         }
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
@@ -85,6 +88,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
             if (tagFile != null)
             {
+                _logger.LogInformation("TagFile exists");
                 var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
                 dataFiles.Remove(tagFile);
                 var stream = tagFile.CreateReadStream();
