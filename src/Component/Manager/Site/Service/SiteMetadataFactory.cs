@@ -105,10 +105,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {   
             foreach (var file in dataFiles)
             {
-                var stream = file.CreateReadStream();
-                using var reader = new StreamReader(stream);
-                var raw = reader.ReadToEnd();
-                var result = _yamlParser.Parse<object>(raw);
+                var result = _yamlParser.Parse<object>(file);
                 site.Data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
         }
