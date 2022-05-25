@@ -40,10 +40,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Series = new SortedDictionary<string, PageMetaData[]>(),
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
-            var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
             EnrichSiteWithAssemblyData(siteInfo);
             EnrichSiteWithSiteMap(siteInfo, pages);
-            EnrichSiteWithData(siteInfo, siteConfiguration);
+            EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
@@ -74,7 +73,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 });
         }
 
-        private void EnrichSiteWithData(SiteMetaData site, SiteConfiguration siteConfiguration)
+        private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
             var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
             var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
@@ -86,6 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
             if (tagFile != null)
             {
+                var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
                 dataFiles.Remove(tagFile);
                 var stream = tagFile.CreateReadStream();
                 using var reader = new StreamReader(stream);
