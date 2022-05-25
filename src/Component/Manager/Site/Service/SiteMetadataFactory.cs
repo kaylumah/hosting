@@ -40,18 +40,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Series = new SortedDictionary<string, PageMetaData[]>(),
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
-
-            var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
-            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
-            var dataFiles = _fileSystem.GetFiles(dataDirectory)
-                .Where(file => !file.IsDirectory())
-                .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
-                .ToList();
-
             var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
             EnrichSiteWithAssemblyData(siteInfo);
             EnrichSiteWithSiteMap(siteInfo, pages);
-            EnrichSiteWithData(siteInfo, dataFiles);
+            EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
@@ -82,30 +74,39 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 });
         }
 
-         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
-        {   
-            var data = new Dictionary<string, object>();
+        private void EnrichSiteWithData(SiteMetaData site, SiteConfiguration siteConfiguration)
+        {
+            var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
+            var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
+            var dataFiles = _fileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
+                .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
+                .ToList();
 
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
-            if(tagFile != null)
+            if (tagFile != null)
             {
                 dataFiles.Remove(tagFile);
                 var stream = tagFile.CreateReadStream();
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(raw);
-                data["tags"] = tagData.Dictionary;
+                site.Data["tags"] = tagData.Dictionary;
             }
 
+            EnrichSiteWithData(site, dataFiles);
+        }
+
+        private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
+        {   
             foreach (var file in dataFiles)
             {
                 var stream = file.CreateReadStream();
                 using var reader = new StreamReader(stream);
                 var raw = reader.ReadToEnd();
                 var result = _yamlParser.Parse<object>(raw);
-                data[Path.GetFileNameWithoutExtension(file.Name)] = result;
+                site.Data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
-            site.Data = data;
         }
 
         private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
