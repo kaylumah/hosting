@@ -28,6 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
+            using var logScope = _logger.BeginScope("[EnrichSite]");
             var siteInfo = new SiteMetaData()
             {
                 Id = siteGuid.ToString(),
