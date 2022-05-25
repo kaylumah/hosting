@@ -89,7 +89,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            var tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            return tags ?? new List<string>();
         }
         set
         {
