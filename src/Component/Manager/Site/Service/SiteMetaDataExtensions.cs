@@ -39,10 +39,12 @@ namespace System.ServiceModel.Syndication
                 MediaType = "application/atom+xml",
             });
 
+            /*
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.Instance.Url))
             {
                 MediaType = "text/html",
             });
+            */
 
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
             {
@@ -64,10 +66,12 @@ namespace System.ServiceModel.Syndication
                     foreach(var author in authors)
                     {
                         var singleDictionary = (Dictionary<object, object>)author.Value;
-                        var syndicationPerson = new SyndicationPerson();
-                        syndicationPerson.Name = "max"; //(string)singleDictionary["full_name"];
-                        // syndicationPerson.Email = (string)singleDictionary["email"];
-                        // syndicationPerson.Uri = (string)singleDictionary["uri"];
+                        var syndicationPerson = new SyndicationPerson
+                        {
+                            Name = (string)singleDictionary["full_name"],
+                            Email = (string)singleDictionary["email"],
+                            Uri = (string)singleDictionary["uri"]
+                        };
                         persons.Add((string)author.Key, syndicationPerson);
                     }
                 }
@@ -108,7 +112,7 @@ namespace System.ServiceModel.Syndication
                             .Select(tag => tags[tag])
                             .ToList();
                         itemCategories.ForEach(category => item.Categories.Add(category));
-
+                        item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
                         item.Authors.Add(author);
                         items.Add(item);
                     }
