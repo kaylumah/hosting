@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Kaylumah.Ssg.Engine.Transformation.Interface;
+using System.ServiceModel.Syndication;
 using Kaylumah.Ssg.Utilities;
 
-namespace System.ServiceModel.Syndication
+namespace Kaylumah.Ssg.Engine.Transformation.Interface
 {
     public static partial class SiteMetaDataExtensions
     {
