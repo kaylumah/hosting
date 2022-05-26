@@ -5,8 +5,16 @@ namespace System.ServiceModel.Syndication
 {
     public class CDataSyndicationContent : TextSyndicationContent
     {
-        public CDataSyndicationContent(TextSyndicationContent content)
-            : base(content)
+        public CDataSyndicationContent(string text)
+            : base(text)
+        { }
+
+        public CDataSyndicationContent(string text, TextSyndicationContentKind textKind)
+            : base(text, textKind)
+        { }
+
+        public CDataSyndicationContent(TextSyndicationContent source)
+            : base(source)
         {}
 
         protected override void  WriteContentsTo(System.Xml.XmlWriter writer)
