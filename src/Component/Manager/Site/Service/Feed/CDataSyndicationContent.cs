@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace System.ServiceModel.Syndication
+using System.ServiceModel.Syndication;
+
+namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
     public class CDataSyndicationContent : TextSyndicationContent
     {
@@ -15,9 +17,9 @@ namespace System.ServiceModel.Syndication
 
         public CDataSyndicationContent(TextSyndicationContent source)
             : base(source)
-        {}
+        { }
 
-        protected override void  WriteContentsTo(System.Xml.XmlWriter writer)
+        protected override void WriteContentsTo(System.Xml.XmlWriter writer)
         {
             writer.WriteCData(Text);
         }

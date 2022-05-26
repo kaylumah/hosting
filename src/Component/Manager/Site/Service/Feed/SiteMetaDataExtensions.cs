@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.ServiceModel.Syndication;
+using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface
