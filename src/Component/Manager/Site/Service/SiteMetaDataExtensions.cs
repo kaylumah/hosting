@@ -85,7 +85,7 @@ namespace System.ServiceModel.Syndication
                         Id = pageUrl,
                         Title = new TextSyndicationContent(pageMetaData.Title),
                         Summary = new TextSyndicationContent(pageMetaData.Description),
-                        // Content = new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html),
+                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
                         PublishDate = (DateTimeOffset)pageMetaData["date"],
                         LastUpdatedTime = pageMetaData.LastModified
                     };
