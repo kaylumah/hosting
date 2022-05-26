@@ -90,11 +90,12 @@ namespace System.ServiceModel.Syndication
                         LastUpdatedTime = pageMetaData.LastModified
                     };
 
-                    foreach (var tag in pageMetaData.Tags)
-                    {
-                        item.Categories.Add(new SyndicationCategory(tag));
-                    }
-                    
+                    var itemCategories = pageMetaData
+                        .Tags
+                        .Where(tag => tags.ContainsKey(tag))
+                        .Select(tag => tags[tag])
+                        .ToList();
+                    itemCategories.ForEach(category => item.Categories.Add(category));
                     
                     item.Authors.Add(author);
                     items.Add(item);
