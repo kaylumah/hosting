@@ -44,8 +44,10 @@ public class SiteManager : ISiteManager
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
     {
         var result = new List<Artifact>();
-        var feed = siteMetaData.ToSyndicationFeed();
-        var bytes = feed.SaveAsAtom10();    
+        var feed = siteMetaData
+            .ToSyndicationFeed();
+        var bytes = feed
+            .SaveAsAtom10();    
         result.Add(new Artifact
         { 
             Contents = bytes,
