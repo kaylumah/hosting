@@ -17,6 +17,44 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             _logger = logger;
         }
 
+        private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
+        {
+            var posts = RetrievePostPageMetaDatas(siteMetaData);
+            var result = new List<SyndicationItem>();
+            if (posts.Any())
+            {
+                var persons = siteMetaData.ToPersons();
+                var tags = siteMetaData.ToCategories();
+                foreach (var pageMetaData in posts)
+                {
+                    var author = persons[pageMetaData.Author];
+                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                    var item = new SyndicationItem
+                    {
+                        Id = pageUrl,
+                        Title = new TextSyndicationContent(pageMetaData.Title),
+                        Summary = new TextSyndicationContent(pageMetaData.Description),
+                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
+                        PublishDate = (DateTimeOffset)pageMetaData["date"],
+                        LastUpdatedTime = pageMetaData.LastModified
+                    };
+
+                    var itemCategories = pageMetaData
+                        .Tags
+                        .Where(tag => tags.ContainsKey(tag))
+                        .Select(tag => tags[tag])
+                        .ToList();
+                    itemCategories.ForEach(category => item.Categories.Add(category));
+                    item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
+                    item.Authors.Add(author);
+                    result.Add(item);
+                }
+            }
+            return result
+                .OrderByDescending(x => x.PublishDate)
+                .ToList();
+        }
+
         private IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
@@ -62,41 +100,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 MediaType = "text/html",
             });
 
-            var persons = siteMetaData.ToPersons();
-            var tags = siteMetaData.ToCategories();
-            var posts = RetrievePostPageMetaDatas(siteMetaData);
-            if (posts.Any())
-            {
-                var items = new List<SyndicationItem>();
-                foreach (var pageMetaData in posts)
-                {
-                    var author = persons[pageMetaData.Author];
-                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
-                    var item = new SyndicationItem
-                    {
-                        Id = pageUrl,
-                        Title = new TextSyndicationContent(pageMetaData.Title),
-                        Summary = new TextSyndicationContent(pageMetaData.Description),
-                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = (DateTimeOffset)pageMetaData["date"],
-                        LastUpdatedTime = pageMetaData.LastModified
-                    };
 
-                    var itemCategories = pageMetaData
-                        .Tags
-                        .Where(tag => tags.ContainsKey(tag))
-                        .Select(tag => tags[tag])
-                        .ToList();
-                    itemCategories.ForEach(category => item.Categories.Add(category));
-                    item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
-                    item.Authors.Add(author);
-                    items.Add(item);
-
-                }
-                feed.Items = items;
-            }
-
-            feed.Items = feed.Items.OrderByDescending(x => x.PublishDate);
+            var posts = GetPosts(siteMetaData);
+            feed.Items = posts;
             return feed;
         }
     }
