@@ -21,6 +21,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         {
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
+                /*
+                var feedPosts = posts
+                    .OrderByDescending(x => x["date"])
+                    .Where(x => bool.Parse((string)x["feed"]))
+                    .ToList();
+                feed.Items = posts.ToSyndicationItems();
+                */
                 return posts;
             }
             return Enumerable.Empty<PageMetaData>();
@@ -92,41 +99,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             {
                 var tags = siteMetaData.TagMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
-                /*
-                var feedPosts = posts
-                    .OrderByDescending(x => x["date"])
-                    .Where(x => bool.Parse((string)x["feed"]))
-                    .ToList();
-                feed.Items = posts.ToSyndicationItems();
-                */
-
                 var items = new List<SyndicationItem>();
                 foreach (var pageMetaData in posts)
                 {
-                    //if (!string.Equals("2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html", pageMetaData.Url))
-                    //{
-                        var author = persons[pageMetaData.Author];
-                        var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
-                        var item = new SyndicationItem
-                        {
-                            Id = pageUrl,
-                            Title = new TextSyndicationContent(pageMetaData.Title),
-                            Summary = new TextSyndicationContent(pageMetaData.Description),
-                            Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                            PublishDate = (DateTimeOffset)pageMetaData["date"],
-                            LastUpdatedTime = pageMetaData.LastModified
-                        };
+                    var author = persons[pageMetaData.Author];
+                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                    var item = new SyndicationItem
+                    {
+                        Id = pageUrl,
+                        Title = new TextSyndicationContent(pageMetaData.Title),
+                        Summary = new TextSyndicationContent(pageMetaData.Description),
+                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
+                        PublishDate = (DateTimeOffset)pageMetaData["date"],
+                        LastUpdatedTime = pageMetaData.LastModified
+                    };
 
-                        var itemCategories = pageMetaData
-                            .Tags
-                            .Where(tag => tags.ContainsKey(tag))
-                            .Select(tag => tags[tag])
-                            .ToList();
-                        itemCategories.ForEach(category => item.Categories.Add(category));
-                        item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
-                        item.Authors.Add(author);
-                        items.Add(item);
-                    //}
+                    var itemCategories = pageMetaData
+                        .Tags
+                        .Where(tag => tags.ContainsKey(tag))
+                        .Select(tag => tags[tag])
+                        .ToList();
+                    itemCategories.ForEach(category => item.Categories.Add(category));
+                    item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
+                    item.Authors.Add(author);
+                    items.Add(item);
+
                 }
                 feed.Items = items;
             }
