@@ -17,6 +17,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             _logger = logger;
         }
 
+        private IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
+        {
+            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            {
+                return posts;
+            }
+            return Enumerable.Empty<PageMetaData>();
+        }
+
         public SyndicationFeed Create(SiteMetaData siteMetaData)
         {
             var build = siteMetaData.Build;
@@ -78,7 +87,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 }
             }
 
-            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            var posts = RetrievePostPageMetaDatas(siteMetaData);
+            if (posts.Any())
             {
                 var tags = siteMetaData.TagMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
