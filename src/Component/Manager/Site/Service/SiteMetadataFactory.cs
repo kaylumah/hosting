@@ -102,6 +102,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .Concat(tagData.Keys.Except(tags));
                 _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
+                site.TagMetaData = tagData;
             }
 
             EnrichSiteWithData(site, dataFiles);
