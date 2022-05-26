@@ -5,7 +5,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public static partial class PageMetadataExtensions
+    public static class PageMetadataExtensions
     {
 
         public static IEnumerable<PageMetaData> WhereIsSeries(this IEnumerable<PageMetaData> source)
