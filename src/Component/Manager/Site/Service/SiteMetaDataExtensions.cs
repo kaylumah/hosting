@@ -55,26 +55,13 @@ namespace System.ServiceModel.Syndication
                     {
                         var singleDictionary = (Dictionary<object, object>)author.Value;
                         var syndicationPerson = new SyndicationPerson();
-                        syndicationPerson.Name = (string)singleDictionary["full_name"];
-                        syndicationPerson.Email = (string)singleDictionary["email"];
-                        syndicationPerson.Uri = (string)singleDictionary["uri"];
+                        syndicationPerson.Name = "max"; //(string)singleDictionary["full_name"];
+                        // syndicationPerson.Email = (string)singleDictionary["email"];
+                        // syndicationPerson.Uri = (string)singleDictionary["uri"];
                         persons.Add((string)author.Key, syndicationPerson);
                     }
                 }
             }
-
-            /*
-            SyndicationLink link = new SyndicationLink(new Uri("http://server/link"), "alternate", "Link Title", "text/html", 1000);
-            feed.Links.Add(link);
-            */
-
-            /*
-            var feed = new SyndicationFeed();
-            feed.Language = siteMetaData.Language;
-            feed.Id = siteMetaData.Id;
-            feed.Title = new TextSyndicationContent(siteMetaData.Title);
-            */
-
 
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
@@ -91,27 +78,30 @@ namespace System.ServiceModel.Syndication
                 var items = new List<SyndicationItem>();
                 foreach( var pageMetaData in posts)
                 {
-                    var author = persons[pageMetaData.Author];
-                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
-                    var item = new SyndicationItem
-                    { 
-                        Id = pageUrl,
-                        Title = new TextSyndicationContent(pageMetaData.Title),
-                        Summary = new TextSyndicationContent(pageMetaData.Description),
-                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = (DateTimeOffset)pageMetaData["date"],
-                        LastUpdatedTime = pageMetaData.LastModified
-                    };
+                    if (!string.Equals("2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html", pageMetaData.Url))
+                    {
+                        var author = persons[pageMetaData.Author];
+                        var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                        var item = new SyndicationItem
+                        {
+                            Id = pageUrl,
+                            Title = new TextSyndicationContent(pageMetaData.Title),
+                            Summary = new TextSyndicationContent(pageMetaData.Description),
+                            Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
+                            PublishDate = (DateTimeOffset)pageMetaData["date"],
+                            LastUpdatedTime = pageMetaData.LastModified
+                        };
 
-                    var itemCategories = pageMetaData
-                        .Tags
-                        .Where(tag => tags.ContainsKey(tag))
-                        .Select(tag => tags[tag])
-                        .ToList();
-                    itemCategories.ForEach(category => item.Categories.Add(category));
-                    
-                    item.Authors.Add(author);
-                    items.Add(item);
+                        var itemCategories = pageMetaData
+                            .Tags
+                            .Where(tag => tags.ContainsKey(tag))
+                            .Select(tag => tags[tag])
+                            .ToList();
+                        itemCategories.ForEach(category => item.Categories.Add(category));
+
+                        item.Authors.Add(author);
+                        items.Add(item);
+                    }
                 }
                 feed.Items = items;
             }
