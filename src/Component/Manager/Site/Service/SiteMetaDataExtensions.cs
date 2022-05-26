@@ -37,13 +37,23 @@ namespace System.ServiceModel.Syndication
             {
                 RelationshipType = "self",
                 MediaType = "application/atom+xml",
-                // Title = "Kestrel Blackmore Feed"
             });
 
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.Instance.Url))
             {
                 MediaType = "text/html",
-                // Title = "Kestrel Blackmore Blog"
+            });
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
+            {
+                RelationshipType = "alternate",
+                MediaType = "text/html",
+            }) ;
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("archive.html")))
+            {
+                RelationshipType = "related",
+                MediaType = "text/html",
             });
 
             var persons = new Dictionary<string, SyndicationPerson>();
