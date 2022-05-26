@@ -66,7 +66,7 @@ namespace System.ServiceModel.Syndication
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
                 var tags = siteMetaData.TagMetaData
-                    .Select(tag => new SyndicationCategory(tag.Name));
+                    .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
                 /*
                 var feedPosts = posts
                     .OrderByDescending(x => x["date"])
