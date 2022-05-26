@@ -17,12 +17,58 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             _logger = logger;
         }
 
+        public SyndicationFeed Create(SiteMetaData siteMetaData)
+        {
+            var feed = GetBlogInformation(siteMetaData);
+            var posts = GetPosts(siteMetaData);
+            feed.Items = posts;
+            return feed;
+        }
+
+        private SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
+        {
+            var build = siteMetaData.Build;
+            var generatorVersion = build.ShortGitHash;
+            var copyrightClaim = build.Copyright;
+            var generatedAtBuildTime = build.Time;
+
+            var feed = new SyndicationFeed();
+            feed.Language = siteMetaData.Language;
+            feed.Title = new TextSyndicationContent(siteMetaData.Title);
+            feed.Description = new TextSyndicationContent(siteMetaData.Description);
+            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
+            feed.Copyright = new TextSyndicationContent(copyrightClaim);
+            feed.LastUpdatedTime = generatedAtBuildTime;
+            feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
+            feed.Generator = "Kaylumah Site Generator";
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("feed.xml")))
+            {
+                RelationshipType = "self",
+                MediaType = "application/atom+xml",
+            });
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
+            {
+                RelationshipType = "alternate",
+                MediaType = "text/html",
+            });
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("archive.html")))
+            {
+                RelationshipType = "related",
+                MediaType = "text/html",
+            });
+            return feed;
+        }
+
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             var posts = RetrievePostPageMetaDatas(siteMetaData);
             var result = new List<SyndicationItem>();
             if (posts.Any())
             {
+                _logger.LogInformation("Feed will have {PostCount} posts", posts.Count());
                 var persons = siteMetaData.ToPersons();
                 var tags = siteMetaData.ToCategories();
                 foreach (var pageMetaData in posts)
@@ -63,47 +109,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     .Where(x => bool.Parse((string)x["feed"]));
             }
             return Enumerable.Empty<PageMetaData>();
-        }
-
-        public SyndicationFeed Create(SiteMetaData siteMetaData)
-        {
-            var build = siteMetaData.Build;
-            var generatorVersion = build.ShortGitHash;
-            var copyrightClaim = build.Copyright;
-            var generatedAtBuildTime = build.Time;
-
-            var feed = new SyndicationFeed();
-            feed.Language = siteMetaData.Language;
-            feed.Title = new TextSyndicationContent(siteMetaData.Title);
-            feed.Description = new TextSyndicationContent(siteMetaData.Description);
-            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
-            feed.Copyright = new TextSyndicationContent(copyrightClaim);
-            feed.LastUpdatedTime = generatedAtBuildTime;
-            feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
-            feed.Generator = "Kaylumah Site Generator";
-
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("feed.xml")))
-            {
-                RelationshipType = "self",
-                MediaType = "application/atom+xml",
-            });
-
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
-            {
-                RelationshipType = "alternate",
-                MediaType = "text/html",
-            });
-
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("archive.html")))
-            {
-                RelationshipType = "related",
-                MediaType = "text/html",
-            });
-
-
-            var posts = GetPosts(siteMetaData);
-            feed.Items = posts;
-            return feed;
         }
     }
 }
