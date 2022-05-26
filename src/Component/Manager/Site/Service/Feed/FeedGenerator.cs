@@ -93,8 +93,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 var items = new List<SyndicationItem>();
                 foreach (var pageMetaData in posts)
                 {
-                    if (!string.Equals("2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html", pageMetaData.Url))
-                    {
+                    //if (!string.Equals("2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html", pageMetaData.Url))
+                    //{
                         var author = persons[pageMetaData.Author];
                         var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
                         var item = new SyndicationItem
@@ -116,7 +116,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
                         item.Authors.Add(author);
                         items.Add(item);
-                    }
+                    //}
                 }
                 feed.Items = items;
             }
