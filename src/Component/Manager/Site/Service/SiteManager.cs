@@ -21,6 +21,7 @@ public class SiteManager : ISiteManager
     private readonly SiteInfo _siteInfo;
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
+    private readonly FeedGenerator _feedGenerator;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -29,7 +30,8 @@ public class SiteManager : ISiteManager
         ILogger<SiteManager> logger,
         SiteInfo siteInfo,
         ITransformationEngine transformationEngine,
-        SiteMetadataFactory siteMetadataFactory
+        SiteMetadataFactory siteMetadataFactory,
+        FeedGenerator feedGenerator
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -39,13 +41,13 @@ public class SiteManager : ISiteManager
         _logger = logger;
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
+        _feedGenerator = feedGenerator;
     }
 
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
     {
         var result = new List<Artifact>();
-        var feed = siteMetaData
-            .ToSyndicationFeed();
+        var feed = _feedGenerator.Create(siteMetaData);
         var bytes = feed
             .SaveAsAtom10();    
         result.Add(new Artifact

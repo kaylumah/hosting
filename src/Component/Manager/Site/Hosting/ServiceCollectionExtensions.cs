@@ -3,6 +3,7 @@
 
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
@@ -36,6 +37,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<IYamlParser, YamlParser>();
         services.AddSingleton<ISiteManager, SiteManager>();
         services.AddSingleton<SiteMetadataFactory>();
+        services.AddSingleton<FeedGenerator>();
         return services;
     }
 }

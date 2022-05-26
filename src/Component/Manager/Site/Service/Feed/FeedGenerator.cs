@@ -2,14 +2,22 @@
 // See LICENSE file in the project root for full license information.
 
 using System.ServiceModel.Syndication;
-using Kaylumah.Ssg.Manager.Site.Service.Feed;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface
+namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
-    public static partial class SiteMetaDataExtensions
+    public class FeedGenerator
     {
-        public static SyndicationFeed ToSyndicationFeed(this SiteMetaData siteMetaData)
+        private readonly ILogger _logger;
+
+        public FeedGenerator(ILogger<FeedGenerator> logger)
+        {
+            _logger = logger;
+        }
+
+        public SyndicationFeed Create(SiteMetaData siteMetaData)
         {
             var build = siteMetaData.Build;
             var generatorVersion = build.ShortGitHash;
@@ -43,7 +51,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface
             {
                 RelationshipType = "alternate",
                 MediaType = "text/html",
-            }) ;
+            });
 
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("archive.html")))
             {
@@ -56,7 +64,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface
             {
                 if (authorData is Dictionary<object, object> authors)
                 {
-                    foreach(var author in authors)
+                    foreach (var author in authors)
                     {
                         var singleDictionary = (Dictionary<object, object>)author.Value;
                         var syndicationPerson = new SyndicationPerson
@@ -83,7 +91,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface
                 */
 
                 var items = new List<SyndicationItem>();
-                foreach( var pageMetaData in posts)
+                foreach (var pageMetaData in posts)
                 {
                     if (!string.Equals("2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html", pageMetaData.Url))
                     {
