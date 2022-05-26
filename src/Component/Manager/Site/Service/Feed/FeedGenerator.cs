@@ -50,13 +50,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 MediaType = "application/atom+xml",
             });
 
-            /*
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.Instance.Url))
-            {
-                MediaType = "text/html",
-            });
-            */
-
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
             {
                 RelationshipType = "alternate",
