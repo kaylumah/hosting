@@ -89,8 +89,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var posts = RetrievePostPageMetaDatas(siteMetaData);
             if (posts.Any())
             {
-                var tags = siteMetaData.TagMetaData
-                    .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
+                var tags = siteMetaData.ToCategories();
                 var items = new List<SyndicationItem>();
                 foreach (var pageMetaData in posts)
                 {
