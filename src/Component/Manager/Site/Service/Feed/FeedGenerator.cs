@@ -27,6 +27,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return Enumerable.Empty<PageMetaData>();
         }
 
+        private Dictionary<string, SyndicationPerson> RetrieveAuthors(SiteMetaData siteMetaData)
+        {
+            Dictionary<string, SyndicationPerson> result = new();
+            if (siteMetaData.Data.TryGetValue("authors", out var authorData))
+            {
+                if (authorData is Dictionary<object, object> authors)
+                {
+                    foreach (var author in authors)
+                    {
+                        var singleDictionary = (Dictionary<object, object>)author.Value;
+                        var syndicationPerson = new SyndicationPerson
+                        {
+                            Name = (string)singleDictionary["full_name"],
+                            Email = (string)singleDictionary["email"],
+                            Uri = (string)singleDictionary["uri"]
+                        };
+                        result.Add((string)author.Key, syndicationPerson);
+                    }
+                }
+            }
+            return result;
+        }
+
         public SyndicationFeed Create(SiteMetaData siteMetaData)
         {
             var build = siteMetaData.Build;
@@ -62,25 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 MediaType = "text/html",
             });
 
-            var persons = new Dictionary<string, SyndicationPerson>();
-            if (siteMetaData.Data.TryGetValue("authors", out var authorData))
-            {
-                if (authorData is Dictionary<object, object> authors)
-                {
-                    foreach (var author in authors)
-                    {
-                        var singleDictionary = (Dictionary<object, object>)author.Value;
-                        var syndicationPerson = new SyndicationPerson
-                        {
-                            Name = (string)singleDictionary["full_name"],
-                            Email = (string)singleDictionary["email"],
-                            Uri = (string)singleDictionary["uri"]
-                        };
-                        persons.Add((string)author.Key, syndicationPerson);
-                    }
-                }
-            }
-
+            var persons = RetrieveAuthors(siteMetaData);
             var posts = RetrievePostPageMetaDatas(siteMetaData);
             if (posts.Any())
             {
