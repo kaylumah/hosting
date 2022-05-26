@@ -5,6 +5,7 @@ using System.Text;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,7 @@ public class SiteManager : ISiteManager
     private readonly SiteInfo _siteInfo;
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
+    private readonly FeedGenerator _feedGenerator;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -28,7 +30,8 @@ public class SiteManager : ISiteManager
         ILogger<SiteManager> logger,
         SiteInfo siteInfo,
         ITransformationEngine transformationEngine,
-        SiteMetadataFactory siteMetadataFactory
+        SiteMetadataFactory siteMetadataFactory,
+        FeedGenerator feedGenerator
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -38,6 +41,21 @@ public class SiteManager : ISiteManager
         _logger = logger;
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
+        _feedGenerator = feedGenerator;
+    }
+
+    private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
+    {
+        var result = new List<Artifact>();
+        var feed = _feedGenerator.Create(siteMetaData);
+        var bytes = feed
+            .SaveAsAtom10();    
+        result.Add(new Artifact
+        { 
+            Contents = bytes,
+            Path = "feed.xml"
+        });
+        return result.ToArray();
     }
 
     public async Task GenerateSite(GenerateSiteRequest request)
@@ -88,6 +106,9 @@ public class SiteManager : ISiteManager
                 Contents = Encoding.UTF8.GetBytes(renderResult.Content)
             };
         }).ToList();
+
+        var feedArtifacts = CreateFeedArtifacts(siteMetadata);
+        artifacts.AddRange(feedArtifacts);
 
 
         var assets = _fileSystem

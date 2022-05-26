@@ -2,9 +2,12 @@ param(
     [Parameter()]
     [string] $BuildId = 1,
     [Parameter()]
-    [string] $BuildNumber = (Get-Date).ToString("yyyyMMdd.hhmmss")
+    [string] $BuildNumber = (Get-Date).ToString("yyyyMMdd.hhmmss"),
+    [Parameter()]
+    [switch] $CleanDevDependencies
 )
 
+$ErrorActionPreference = "Stop"
 Write-Host "[args] BuildId '$BuildId' BuildNumber '$BuildNumber'"
 
 [string] $RepoRoot = $PSScriptRoot
@@ -44,12 +47,15 @@ try
     Set-Location $DistFolder
     npm i
     npm run build:prod
-    Write-Host "Cleaning Up Leftovers"
-    Remove-Item styles.css
-    Remove-Item package.json
-    Remove-Item package-lock.json
-    Remove-Item tailwind.config.js
-    Remove-Item node_modules -Recurse -Force
+    if ($CleanDevDependencies)
+    {
+        Write-Host "Cleaning Up DevDependencies"
+        Remove-Item styles.css
+        Remove-Item package.json
+        Remove-Item package-lock.json
+        Remove-Item tailwind.config.js
+        Remove-Item node_modules -Recurse -Force
+    }
 }
 finally
 {
