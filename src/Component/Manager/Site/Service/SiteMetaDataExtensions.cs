@@ -33,6 +33,19 @@ namespace System.ServiceModel.Syndication
             feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
             feed.Generator = "Kaylumah Site Generator";
 
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("feed.xml")))
+            {
+                RelationshipType = "self",
+                MediaType = "application/atom+xml",
+                // Title = "Kestrel Blackmore Feed"
+            });
+
+            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.Instance.Url))
+            {
+                MediaType = "text/html",
+                // Title = "Kestrel Blackmore Blog"
+            });
+
             var persons = new Dictionary<string, SyndicationPerson>();
             if (siteMetaData.Data.TryGetValue("authors", out var authorData))
             {
