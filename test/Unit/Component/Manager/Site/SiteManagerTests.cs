@@ -40,7 +40,8 @@ public class SiteManagerTests
             .AddSingleton(fileSystemMock.Object)
             .AddSingleton(yamlParserMock.Object)
             .AddSingleton(transformEngineMock.Object)
-            .Configure<SiteInfo>(_ => {
+            .Configure<SiteInfo>(_ =>
+            {
                 _.Url = "https://example.com";
             })
             .BuildServiceProvider();

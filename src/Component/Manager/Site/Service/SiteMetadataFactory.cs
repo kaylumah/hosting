@@ -108,7 +108,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
 
         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
-        {   
+        {
             foreach (var file in dataFiles)
             {
                 var result = _yamlParser.Parse<object>(file);

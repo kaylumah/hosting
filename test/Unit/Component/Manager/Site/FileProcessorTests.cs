@@ -27,7 +27,7 @@ public class FileProcessorTests
 
     private static MockFileData EmptyFile()
     {
-       return ContentFile(string.Empty);
+        return ContentFile(string.Empty);
     }
 
     private static MockFileData WithFrontMatter(Dictionary<string, object> data = null)

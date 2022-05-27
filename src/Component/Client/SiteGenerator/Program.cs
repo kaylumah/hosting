@@ -83,7 +83,7 @@ class Program
         services.AddArtifactAccess(configuration);
         services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);
-        
+
 
         var serviceProvider = services.BuildServiceProvider();
         var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
