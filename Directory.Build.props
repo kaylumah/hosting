@@ -12,11 +12,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <!-- <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors> -->
-        <!-- <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> -->
-    </PropertyGroup>
-
-    <PropertyGroup>
         <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
         <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
         <Copyright>$(CopyrightKaylumah)</Copyright>
