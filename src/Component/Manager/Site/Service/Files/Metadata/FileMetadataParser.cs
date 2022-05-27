@@ -94,7 +94,7 @@ public class FileMetadataParser : IFileMetadataParser
         return fileMetaData;
     }
 
-    private List<string> DetermineFilters(string outputLocation)
+    private static List<string> DetermineFilters(string outputLocation)
     {
         var paths = new List<string>() { string.Empty };
         //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
@@ -109,7 +109,7 @@ public class FileMetadataParser : IFileMetadataParser
         return paths;
     }
 
-    private List<string> DetermineFilterDirectories(string input, string urlSeperator)
+    private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
     {
         var result = new List<string>();
         int index;

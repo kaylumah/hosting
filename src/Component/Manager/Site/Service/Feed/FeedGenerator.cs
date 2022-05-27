@@ -102,7 +102,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 .ToList();
         }
 
-        private IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
+        private static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
