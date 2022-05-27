@@ -59,8 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
             _logger.LogInformation("add AssemblyData");
-            var assemblyInfo = new AssemblyUtil()
-                .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
         }
