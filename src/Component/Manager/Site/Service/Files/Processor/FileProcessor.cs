@@ -42,7 +42,7 @@ public class FileProcessor : IFileProcessor
 
         var directoryContents = _fileSystem.GetFiles("_site");
 
-        if (directoryContents.Count() == 0)
+        if (!directoryContents.Any())
         {
             _logger.LogWarning("No files");
             return result;
