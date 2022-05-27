@@ -14,7 +14,7 @@
     <!--<Using Include="Microsoft.Extensions.Logging" />-->
   </ItemGroup>
 
-  <PropertyGroup Label="CodeAnalysis properties">
+  <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == 'true'">
     <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
     <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
     <AnalysisLevel>Latest-Recommended</AnalysisLevel>
