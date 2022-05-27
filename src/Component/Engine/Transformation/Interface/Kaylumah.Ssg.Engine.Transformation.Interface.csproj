@@ -1,14 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
   </ItemGroup>
-
 </Project>
