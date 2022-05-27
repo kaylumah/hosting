@@ -2,9 +2,18 @@
 <Project>
     <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
 
+    <PropertyGroup Label="CodeAnalysis properties">
+      <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
+      <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
+      <AnalysisLevel>Latest-Minimum</AnalysisLevel>
+      <!-- <AnalysisMode>Recommended</AnalysisMode> -->
+      <!-- <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors> -->
+      <!-- <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> -->
+    </PropertyGroup>
+
     <PropertyGroup>
         <!-- <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors> -->
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <!-- <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild> -->
     </PropertyGroup>
 
     <PropertyGroup>
