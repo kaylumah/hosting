@@ -8,6 +8,12 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(Language)' == 'C#' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+    <!--<Using Include="Microsoft.Extensions.Configuration" />-->
+    <!--<Using Include="Microsoft.Extensions.DependencyInjection" />-->
+    <!--<Using Include="Microsoft.Extensions.Logging" />-->
+  </ItemGroup>
+
   <PropertyGroup Label="CodeAnalysis properties">
     <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
     <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
