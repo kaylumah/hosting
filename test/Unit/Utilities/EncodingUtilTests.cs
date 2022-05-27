@@ -15,8 +15,7 @@ public class EncodingUtilTests
     [MemberData(nameof(EncodingTestData))]
     public void Test_EncodingUtil_DetermineEncoding_ShouldReturnCorrectEncoding(Stream stream, string expectedEncoding)
     {
-        var sut = new EncodingUtil();
-        var result = sut.DetermineEncoding(stream);
+        var result = stream.DetermineEncoding();
         result.Should().NotBeNull();
         var encoding = result.EncodingName;
         encoding.Should().Be(expectedEncoding);

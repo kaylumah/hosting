@@ -25,7 +25,7 @@ public class LayoutLoader
             var path = Path.Combine(layoutFolder, file.Name);
             var fileInfo = _fileSystem.GetFile(path);
 
-            var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
+            var encoding = fileInfo.CreateReadStream().DetermineEncoding();
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
 
