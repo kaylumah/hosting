@@ -9,9 +9,9 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities;
 
-public class MarkdownUtil
+public static class MarkdownUtil
 {
-    public string Transform(string source)
+    public static string Transform(string source)
     {
         // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
         // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/BootstrapSpecs.md
