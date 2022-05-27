@@ -27,6 +27,14 @@
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
+  <Target Name="EmitCustomMessage" AfterTargets="Build">
+    <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
+    <Message Importance="High" Text="The Property Language = '$(Language)'" />
+    <Message Importance="High" Text="The Property LangVersion = '$(LangVersion)'" />
+    <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
+    <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
+  </Target>
+
   <PropertyGroup>
     <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
     <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
