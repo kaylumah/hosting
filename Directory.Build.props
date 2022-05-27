@@ -19,7 +19,7 @@
     <!-- false true   0   0   38  -->
     <!-- false false  0   0   21  -->
     <!-- true  false  0   0   38  -->
-    <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
     <AnalysisLevel>Latest-Recommended</AnalysisLevel>
     <!-- <AnalysisMode>Recommended</AnalysisMode> -->
