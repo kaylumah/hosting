@@ -31,6 +31,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var generatorVersion = build.ShortGitHash;
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
+            _logger.LogInformation("Begin BlogInformation {Version}", generatorVersion);
 
             var feed = new SyndicationFeed();
             feed.Language = siteMetaData.Language;
