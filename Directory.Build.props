@@ -29,8 +29,7 @@
 
   <Target Name="EmitCustomMessage" AfterTargets="Build">
     <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
-    <Message Importance="High" Text="The Property Language = '$(Language)'" />
-    <Message Importance="High" Text="The Property LangVersion = '$(LangVersion)'" />
+    <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
     <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
     <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
   </Target>
