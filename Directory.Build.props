@@ -15,11 +15,15 @@
   </ItemGroup>
 
   <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == 'true'">
+    <!-- true  true   0   18  38  -->
+    <!-- false true   0   0   38  -->
+    <!-- false false  0   0   21  -->
+    <!-- true  false  0   0   38  -->
     <!-- <TreatWarningsAsErrors>true</TreatWarningsAsErrors> -->
     <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
     <AnalysisLevel>Latest-Recommended</AnalysisLevel>
     <!-- <AnalysisMode>Recommended</AnalysisMode> -->
-    <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
