@@ -74,18 +74,18 @@ public class FileProcessor : IFileProcessor
                 .Files
                 .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                 .ToList();
-            _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+            _logger.LogInformation("{CollectionName} has {CollectionSize} files with {Count} matching the filter.", collection.Name, collection.Files.Length, targetFiles.Count);
             var exists = _siteInfo.Collections.Contains(collection.Name);
             if (!exists)
             {
-                _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                _logger.LogInformation("{CollectionName} is not a collection, treated as directory", collection.Name);
                 result.AddRange(targetFiles);
             }
             else
             {
                 if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
-                    _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
+                    _logger.LogInformation("{CollectionName} is a collection, processing as collection", collection.Name);
                     targetFiles = targetFiles
                         .Select(x =>
                         {
@@ -97,7 +97,7 @@ public class FileProcessor : IFileProcessor
                 }
                 else
                 {
-                    _logger.LogInformation($"{collection.Name} is a collection, but output == false");
+                    _logger.LogInformation("{CollectionName} is a collection, but output == false", collection.Name);
                 }
             }
         }

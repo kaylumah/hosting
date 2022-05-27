@@ -165,7 +165,7 @@ public class FileMetadataParser : IFileMetadataParser
             {
                 if (target.ContainsKey(entry.Key))
                 {
-                    _logger.LogInformation($"Overwritting '{entry.Key}' with '{entry.Value}' instead of {target[entry.Key]} because '{reason}'");
+                    _logger.LogInformation("Overwritting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'", entry.Key, entry.Value, target[entry.Key], reason);
 
                 }
                 target[entry.Key] = entry.Value;
