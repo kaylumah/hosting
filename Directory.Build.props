@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <BannedApiAnalyzersSymbolsFullPath>$(MSBuildThisFileDirectory)Assets\DotNetPackageIcon.png</BannedApiAnalyzersSymbolsFullPath>
+    <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
   <!--
