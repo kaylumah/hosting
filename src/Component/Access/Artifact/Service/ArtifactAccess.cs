@@ -20,7 +20,7 @@ public class ArtifactAccess : IArtifactAccess
 
     public async Task Store(StoreArtifactsRequest request)
     {
-        _logger.LogInformation($"{request.OutputLocation}");
+        _logger.LogInformation("Store Artifacts at {OutputLocation}", request.OutputLocation); ;
         var storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
         await storeArtifactsStrategy.Execute(request);
     }
