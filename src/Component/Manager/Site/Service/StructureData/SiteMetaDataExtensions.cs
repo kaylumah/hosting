@@ -21,8 +21,7 @@ public static class SiteMetaDataExtensions
                     var syndicationPerson = new Person
                     {
                         Name = (string)singleDictionary["full_name"],
-                        // Email = (string)singleDictionary["email"],
-                        // Uri = new Uri((string)singleDictionary["uri"])
+                        Url = new Uri((string)singleDictionary["uri"])
                     };
                     result.Add((string)author.Key, syndicationPerson);
                 }
