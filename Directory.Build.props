@@ -23,7 +23,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
-  <Target Name="EmitCustomMessage" AfterTargets="Build">
+  <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="false">
     <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
     <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
     <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
