@@ -1,29 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
     <ProjectReference Include="..\..\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj" />
     <ProjectReference Include="..\..\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" />
   </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
   </PropertyGroup>
-
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

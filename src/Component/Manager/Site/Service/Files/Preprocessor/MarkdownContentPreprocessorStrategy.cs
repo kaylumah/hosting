@@ -3,18 +3,16 @@
 
 using System.IO.Abstractions;
 using Kaylumah.Ssg.Utilities;
-using Microsoft.Extensions.FileProviders;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 
 public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
 {
     private readonly string[] _targetExtensions = new string[] { ".md" };
-    private readonly MarkdownUtil _markdownUtil = new MarkdownUtil();
 
     public string Execute(string raw)
     {
-        return _markdownUtil.Transform(raw);
+        return MarkdownUtil.Transform(raw);
     }
 
     public bool ShouldExecute(IFileSystemInfo fileInfo)

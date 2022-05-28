@@ -10,7 +10,6 @@ using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator;
 
@@ -83,7 +82,7 @@ class Program
         services.AddArtifactAccess(configuration);
         services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);
-        
+
 
         var serviceProvider = services.BuildServiceProvider();
         var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
@@ -96,7 +95,7 @@ class Program
         await siteManager.GenerateSite(new GenerateSiteRequest
         {
             Configuration = siteConfiguration
-        });
+        }).ConfigureAwait(false);
         watch.Stop();
         Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
     }

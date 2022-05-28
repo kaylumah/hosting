@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Client.SiteValidator;
@@ -48,14 +49,14 @@ class Program
             var bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
 
             var assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => Path.GetDirectoryName(s).ToUpper().Contains("ASSETS"))
+                .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS"))
                 .ToList();
 
             var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper().Contains(d)))
+                .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
                 .ToList();
 
-            var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file)))/*.Take(1)*/.ToList();
+            var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
 
             var pageResults = new List<PageLinkResult>();
 
@@ -128,9 +129,9 @@ internal class PageLinkResult
         foreach (var tag in anchorTags)
         {
             var attrValue = tag.GetAttributeValue("href", string.Empty);
-            if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue) && !"/".Equals(attrValue))
+            if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue, StringComparison.Ordinal) && !"/".Equals(attrValue, StringComparison.Ordinal))
             {
-                if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+                if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
                 {
                     ExternalAnchors.Add(attrValue);
                 }
@@ -145,7 +146,7 @@ internal class PageLinkResult
         foreach (var tag in imageTags)
         {
             var attrValue = tag.GetAttributeValue("src", string.Empty);
-            if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+            if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
             {
                 ExternalImages.Add(attrValue);
             }

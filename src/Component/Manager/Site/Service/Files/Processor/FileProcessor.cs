@@ -5,9 +5,7 @@ using System.IO.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
@@ -42,7 +40,7 @@ public class FileProcessor : IFileProcessor
 
         var directoryContents = _fileSystem.GetFiles("_site");
 
-        if (directoryContents.Count() == 0)
+        if (!directoryContents.Any())
         {
             _logger.LogWarning("No files");
             return result;
@@ -62,11 +60,11 @@ public class FileProcessor : IFileProcessor
                 filesWithoutCollections
                 .Select(x => x.FullName)
                 .ToArray()
-            );
+            ).ConfigureAwait(false);
 
         result.AddRange(files);
 
-        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
         foreach (var collection in collections)
         {
             _logger.LogInformation("Begin processing {CollectionName}", collection.Name);
@@ -74,18 +72,18 @@ public class FileProcessor : IFileProcessor
                 .Files
                 .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                 .ToList();
-            _logger.LogInformation($"{collection.Name} has {collection.Files.Length} files with {targetFiles.Count} matching the filter.");
+            _logger.LogInformation("{CollectionName} has {CollectionSize} files with {Count} matching the filter.", collection.Name, collection.Files.Length, targetFiles.Count);
             var exists = _siteInfo.Collections.Contains(collection.Name);
             if (!exists)
             {
-                _logger.LogInformation($"{collection.Name} is not a collection, treated as directory");
+                _logger.LogInformation("{CollectionName} is not a collection, treated as directory", collection.Name);
                 result.AddRange(targetFiles);
             }
             else
             {
                 if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
-                    _logger.LogInformation($"{collection.Name} is a collection, processing as collection");
+                    _logger.LogInformation("{CollectionName} is a collection, processing as collection", collection.Name);
                     targetFiles = targetFiles
                         .Select(x =>
                         {
@@ -97,7 +95,7 @@ public class FileProcessor : IFileProcessor
                 }
                 else
                 {
-                    _logger.LogInformation($"{collection.Name} is a collection, but output == false");
+                    _logger.LogInformation("{CollectionName} is a collection, but output == false", collection.Name);
                 }
             }
         }
@@ -113,7 +111,7 @@ public class FileProcessor : IFileProcessor
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
             var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection));
-            var files = await ProcessFiles(targetFiles.ToArray(), keyName);
+            var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection
             {
@@ -131,7 +129,7 @@ public class FileProcessor : IFileProcessor
         {
             fileInfos.Add(_fileSystem.GetFile(file));
         }
-        return await ProcessFiles(fileInfos.ToArray(), scope: null);
+        return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
     }
 
     private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
@@ -143,7 +141,7 @@ public class FileProcessor : IFileProcessor
             var fileStream = fileInfo.CreateReadStream();
             using var streamReader = new StreamReader(fileStream);
 
-            var rawContent = await streamReader.ReadToEndAsync();
+            var rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
             {
                 Content = rawContent,

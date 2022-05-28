@@ -31,8 +31,12 @@ public static class GuidUtility
         // compute the hash of the namespace ID concatenated with the name (step 4)
         var data = namespaceBytes.Concat(nameBytes).ToArray();
         byte[] hash;
+#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
+#pragma warning disable CA5350 // Do Not Use Weak Cryptographic Algorithms
         using (var algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : SHA1.Create())
             hash = algorithm.ComputeHash(data);
+#pragma warning restore CA5350 // Do Not Use Weak Cryptographic Algorithms
+#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
 
         // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
         var newGuid = new byte[16];
@@ -52,17 +56,17 @@ public static class GuidUtility
     /// <summary>
     /// The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
     /// </summary>
-    public static readonly Guid DnsNamespace = new Guid("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+    public static readonly Guid DnsNamespace = new("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
 
     /// <summary>
     /// The namespace for URLs (from RFC 4122, Appendix C).
     /// </summary>
-    public static readonly Guid UrlNamespace = new Guid("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
+    public static readonly Guid UrlNamespace = new("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
 
     /// <summary>
     /// The namespace for ISO OIDs (from RFC 4122, Appendix C).
     /// </summary>
-    public static readonly Guid IsoOidNamespace = new Guid("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+    public static readonly Guid IsoOidNamespace = new("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
 
     internal static void SwapByteOrder(byte[] guid)
     {

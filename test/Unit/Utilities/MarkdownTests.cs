@@ -16,7 +16,7 @@ public class MarkdownTests
     {
         var markdown = "# Header 1 \r\n## Header 2\r\n### Header 3\r\n#### Header 4\r\n##### Header 5\r\n###### Header 6";
         var expected = "<h1 id=\"header-1\"><a href=\"#header-1\">Header 1</a></h1>\n<h2 id=\"header-2\"><a href=\"#header-2\">Header 2</a></h2>\n<h3 id=\"header-3\"><a href=\"#header-3\">Header 3</a></h3>\n<h4 id=\"header-4\"><a href=\"#header-4\">Header 4</a></h4>\n<h5 id=\"header-5\"><a href=\"#header-5\">Header 5</a></h5>\n<h6 id=\"header-6\"><a href=\"#header-6\">Header 6</a></h6>";
-        var result = new MarkdownUtil().Transform(markdown);
+        var result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -27,7 +27,7 @@ public class MarkdownTests
     {
         var markdown = "| Column | Column |\r\n| - | - |\r\n| A | B |";
         var expected = "<table>\n<thead>\n<tr>\n<th>Column</th>\n<th>Column</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>A</td>\n<td>B</td>\n</tr>\n</tbody>\n</table>";
-        var result = new MarkdownUtil().Transform(markdown);
+        var result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -43,7 +43,7 @@ public class MarkdownTests
 | Normal Key | Value2 |
 ".Trim();
         var expected = "<table>\n<thead>\n<tr>\n<th></th>\n<th></th>\n<th></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Bold Key</strong></td>\n<td>Value1</td>\n<td></td>\n</tr>\n<tr>\n<td>Normal Key</td>\n<td>Value2</td>\n<td></td>\n</tr>\n</tbody>\n</table>";
-        var result = new MarkdownUtil().Transform(markdown);
+        var result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -61,7 +61,7 @@ public class Program
 ```
 ".Trim();
         var expected = "<pre><code class=\"language-cs\">public class Program\n{\n\tpublic static void Main(string[] args) {}\n}\n</code></pre>";
-        var result = new MarkdownUtil().Transform(markdown);
+        var result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -72,7 +72,7 @@ public class Program
     {
         var markdown = ":smiley:".Trim();
         var expected = "<p>:smiley:</p>";
-        var result = new MarkdownUtil().Transform(markdown);
+        var result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -81,7 +81,7 @@ public class Program
     [Fact]
     public void Test6()
     {
-        var result = new MarkdownUtil().Transform(
+        var result = MarkdownUtil.Transform(
 @"# heading one
 ## heading two
 ### heading three

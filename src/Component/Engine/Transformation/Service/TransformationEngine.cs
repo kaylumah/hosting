@@ -28,14 +28,14 @@ public class TransformationEngine : ITransformationEngine
     {
         var renderedResults = new List<MetadataRenderResult>();
         // TODO apply better solution for access to directories.
-        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine("_site",_layoutDirectory));
+        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine("_site", _layoutDirectory)).ConfigureAwait(false);
         var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine("_site", _templateDirectory));
 
         foreach (var request in requests)
         {
             try
             {
-                var template = templates.FirstOrDefault(t => t.Name.Equals(request.Template));
+                var template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
                 var content = template?.Content ?? "{{ content }}";
                 content = content.Replace("{{ content }}", request.Metadata.Content);
                 var liquidTemplate = Template.ParseLiquid(content);
@@ -54,7 +54,7 @@ public class TransformationEngine : ITransformationEngine
                 //     return "<strong>{{ build.git_hash }}</strong>";
                 // }));
 
-                var renderedContent = await liquidTemplate.RenderAsync(context);
+                var renderedContent = await liquidTemplate.RenderAsync(context).ConfigureAwait(false);
                 renderedResults.Add(new MetadataRenderResult { Content = renderedContent });
             }
             catch (Exception)

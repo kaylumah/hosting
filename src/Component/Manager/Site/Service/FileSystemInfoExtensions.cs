@@ -7,7 +7,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public static partial class FileSystemInfoExtensions
     {
-        public static string ReadFile (this System.IO.Abstractions.IFileSystemInfo file)
+        public static string ReadFile(this System.IO.Abstractions.IFileSystemInfo file)
         {
             var stream = file.CreateReadStream();
             using var reader = new StreamReader(stream);

@@ -24,15 +24,15 @@ public class BuildData
         {
             version = info.Version;
         }
-        var appVersion = version.Substring(0, version.IndexOf('+'));
+        var appVersion = version[..version.IndexOf('+')];
         var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
-        var shortGitHash = gitHash.Substring(0, 7);
+        var shortGitHash = gitHash[..7];
         var repositoryType = info.Metadata["RepositoryType"];
         var repositoryUrl = info.Metadata["RepositoryUrl"];
 
-        if (repositoryUrl.EndsWith($".{repositoryType}"))
+        if (repositoryUrl.EndsWith($".{repositoryType}", StringComparison.Ordinal))
         {
-            var index = repositoryUrl.LastIndexOf($".{repositoryType}");
+            var index = repositoryUrl.LastIndexOf($".{repositoryType}", StringComparison.Ordinal);
             SourceBaseUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
             SourceBuildUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/actions/runs");
         }

@@ -49,9 +49,9 @@ public class SiteManager : ISiteManager
         var result = new List<Artifact>();
         var feed = _feedGenerator.Create(siteMetaData);
         var bytes = feed
-            .SaveAsAtom10();    
+            .SaveAsAtom10();
         result.Add(new Artifact
-        { 
+        {
             Contents = bytes,
             Path = "feed.xml"
         });
@@ -73,7 +73,7 @@ public class SiteManager : ISiteManager
                     request.Configuration.AssetDirectory
                 },
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
-        });
+        }).ConfigureAwait(false);
 
         var pageMetadatas = processed
             .ToPages(siteGuid);
@@ -85,16 +85,17 @@ public class SiteManager : ISiteManager
         );
 
         var requests = pageMetadatas
-            .Select(pageMetadata => new MetadataRenderRequest {
+            .Select(pageMetadata => new MetadataRenderRequest
+            {
                 Metadata = new RenderData
                 {
-                    Site =  siteMetadata,
+                    Site = siteMetadata,
                     Page = pageMetadata
                 },
                 Template = pageMetadata.GetValue<string>("layout")
             })
             .ToArray();
-        var renderResults = await _transformationEngine.Render(requests);
+        var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 
         var artifacts = processed.Select((t, i) =>
@@ -134,6 +135,6 @@ public class SiteManager : ISiteManager
                 Clean = false,
                 Path = request.Configuration.Destination
             }
-        });
+        }).ConfigureAwait(false);
     }
 }

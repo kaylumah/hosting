@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Utilities;
 
 public class GlobalFunctions
 {
-    public static readonly GlobalFunctions Instance = new GlobalFunctions();
+    public static readonly GlobalFunctions Instance = new();
     public string Url { get; set; }
     public string BaseUrl { get; set; }
 
@@ -124,7 +124,7 @@ public class GlobalFunctions
     public static string DateToPattern(DateTimeOffset date, string pattern)
     {
         // date.ToUniversalTime()
-        return date.ToString(pattern);
+        return date.ToString(pattern, CultureInfo.InvariantCulture);
     }
 
     public static string ToCdata(string source)

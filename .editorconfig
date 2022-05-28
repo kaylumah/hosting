@@ -137,6 +137,15 @@ file_header_template=Copyright (c) Kaylumah, 2022. All rights reserved.\nSee LIC
 # IDE0073: The file header does not match the required text
 dotnet_diagnostic.IDE0073.severity = error
 
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+
+# CA1716: Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity = none
+
+# CA1848: Use the LoggerMessage delegates
+dotnet_diagnostic.CA1848.severity = none
+
 ###############################
 # VB Coding Conventions       #
 ###############################

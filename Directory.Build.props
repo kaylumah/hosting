@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-    <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
+  <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
 
-    <PropertyGroup>
-        <!-- <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors> -->
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    </PropertyGroup>
+  <PropertyGroup Label="Runtime Info">
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
-        <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
-        <Copyright>$(CopyrightKaylumah)</Copyright>
-    </PropertyGroup>
+  <ItemGroup Condition="'$(Language)' == 'C#' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+    <!--<Using Include="Microsoft.Extensions.Configuration" />-->
+    <!--<Using Include="Microsoft.Extensions.DependencyInjection" />-->
+    <!--<Using Include="Microsoft.Extensions.Logging" />-->
+  </ItemGroup>
 
-    <PropertyGroup>
-      <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    </PropertyGroup>
-  
-    <PropertyGroup>
-        <!--
+  <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == ''">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>Latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
+  </PropertyGroup>
+
+  <Target Name="EmitCustomMessage" AfterTargets="Build">
+    <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
+    <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
+    <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
+    <Message Importance="High" Text="The Property AnalysisLevel = '$(AnalysisLevel)'" />
+    <Message Importance="High" Text="The Property AnalysisMode = '$(AnalysisMode)'" />
+    <Message Importance="High" Text="The Property TreatWarningsAsErrors = '$(TreatWarningsAsErrors)'" />
+    <Message Importance="High" Text="The Property CodeAnalysisTreatWarningsAsErrors = '$(CodeAnalysisTreatWarningsAsErrors)'" />
+    <Message Importance="High" Text="The Property EnforceCodeStyleInBuild = '$(EnforceCodeStyleInBuild)'" />
+    <Message Importance="High" Text="The Property BannedSymbolsFullPath = '$(BannedSymbolsFullPath)'" />
+    <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
+  </Target>
+
+  <PropertyGroup>
+    <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
+    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+    <Copyright>$(CopyrightKaylumah)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
         <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
         -->
-      <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>
-    </PropertyGroup>
+    <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>
+  </PropertyGroup>
 </Project>
