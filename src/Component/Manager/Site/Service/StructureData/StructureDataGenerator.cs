@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
-using System.Globalization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
