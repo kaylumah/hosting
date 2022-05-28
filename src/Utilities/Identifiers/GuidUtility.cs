@@ -38,7 +38,7 @@ public static class GuidUtility
 #pragma warning restore CA5350 // Do Not Use Weak Cryptographic Algorithms
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
 
-            // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
+        // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
         var newGuid = new byte[16];
         Array.Copy(hash, 0, newGuid, 0, 16);
 
