@@ -14,11 +14,11 @@
     <!--<Using Include="Microsoft.Extensions.Logging" />-->
   </ItemGroup>
 
-  <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == 'true'">
+  <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == ''">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <!-- <EnableNETAnalyzers>true</EnableNETAnalyzers> -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>Latest</AnalysisLevel>
-    <AnalysisMode>All</AnalysisMode> 
+    <AnalysisMode>Minimum</AnalysisMode> 
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
