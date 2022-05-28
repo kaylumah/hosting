@@ -5,10 +5,19 @@ using System.Diagnostics;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
+public static class PageMetaDataExtensions
+{
+    public static readonly Func<PageMetaData, bool> Html = (page) => page.IsHtml();
+
+    public static bool IsHtml(this PageMetaData pageMetaData)
+    {
+        return ".html".Equals(Path.GetExtension(pageMetaData.Url), StringComparison.Ordinal);
+    }
+}
+
 [DebuggerDisplay("PageMetaData '{Url}'")]
 public class PageMetaData : Dictionary<string, object>
 {
-    public static readonly Func<PageMetaData, bool> IsHtml = page => ".html".Equals(Path.GetExtension(page.Url), StringComparison.Ordinal);
     public string Id
     {
         get
