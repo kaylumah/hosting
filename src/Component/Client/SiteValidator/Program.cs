@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Client.SiteValidator;
@@ -48,11 +49,11 @@ class Program
             var bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
 
             var assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => Path.GetDirectoryName(s).ToUpper().Contains("ASSETS"))
+                .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS"))
                 .ToList();
 
             var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper().Contains(d)))
+                .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
                 .ToList();
 
             var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file)))/*.Take(1)*/.ToList();

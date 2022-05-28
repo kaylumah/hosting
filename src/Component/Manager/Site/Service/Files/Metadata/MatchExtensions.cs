@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
+
 namespace System.Text.RegularExpressions;
 
 public static class MatchExtensions
@@ -30,7 +32,7 @@ public static class MatchExtensions
 
             if (year != null && year.Success && month != null && month.Success && day != null && day.Success)
             {
-                return DateTime.Parse($"{year.Value}-{month.Value}-{day.Value}");
+                return DateTime.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
             }
         }
         return null;

@@ -124,7 +124,7 @@ public class GlobalFunctions
     public static string DateToPattern(DateTimeOffset date, string pattern)
     {
         // date.ToUniversalTime()
-        return date.ToString(pattern);
+        return date.ToString(pattern, CultureInfo.InvariantCulture);
     }
 
     public static string ToCdata(string source)

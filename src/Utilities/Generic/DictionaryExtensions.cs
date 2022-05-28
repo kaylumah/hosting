@@ -7,7 +7,7 @@ public static class DictionaryExtensions
 {
     public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
     {
-        dictionary.TryGetValue(key.ToLower(), out object o);
+        dictionary.TryGetValue(key.ToLower(CultureInfo.InvariantCulture), out object o);
         if (o is T t)
         {
             return t;
@@ -18,6 +18,6 @@ public static class DictionaryExtensions
 
     public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
     {
-        dictionary[key.ToLower()] = value;
+        dictionary[key.ToLower(CultureInfo.InvariantCulture)] = value;
     }
 }
