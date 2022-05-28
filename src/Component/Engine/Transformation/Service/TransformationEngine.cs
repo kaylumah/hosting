@@ -47,7 +47,7 @@ public class TransformationEngine : ITransformationEngine
                 Headline = renderData.Page.Title,
                 DatePublished = DateTime.Parse((string)renderData.Page["publisheddate"], CultureInfo.InvariantCulture),
                 DateModified = DateTime.Parse((string)renderData.Page["modifieddate"], CultureInfo.InvariantCulture),
-                // Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page["image"]))),
+                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page["image"]))),
                 Author = new Values<IOrganization, IPerson>(new Person {
                     Name = new OneOrMany<string>("Max Hamulyák"),
                     Url = new OneOrMany<Uri>(new Uri(GlobalFunctions.Instance.Url))

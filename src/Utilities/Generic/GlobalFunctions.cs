@@ -158,16 +158,17 @@ public class GlobalFunctions
     public static string AbsoluteUrl(string source)
     {
         var resolvedSource = RelativeUrl(source);
+        var webSeperator = '/';
         if (!string.IsNullOrWhiteSpace(resolvedSource))
         {
-            if (resolvedSource.StartsWith(Path.DirectorySeparatorChar))
+            if (resolvedSource.StartsWith(Path.DirectorySeparatorChar) || resolvedSource.StartsWith(webSeperator))
             {
                 resolvedSource = resolvedSource[1..];
             }
             if (!string.IsNullOrWhiteSpace(Instance.Url))
             {
 
-                resolvedSource = Path.Combine(Instance.Url, resolvedSource);
+                resolvedSource = $"{Instance.Url}{webSeperator}{resolvedSource}";
             }
         }
         return resolvedSource
