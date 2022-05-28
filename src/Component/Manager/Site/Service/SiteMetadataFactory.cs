@@ -71,7 +71,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                 .Select(x => new
                 {
-                    Url = x[Constants.Page.Url],
+                    Url = x.Url,
                     x.LastModified,
                     Sitemap = x.Sitemap
                 });
