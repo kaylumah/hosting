@@ -8,7 +8,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 [DebuggerDisplay("PageMetaData '{Url}'")]
 public class PageMetaData : Dictionary<string, object>
 {
-    public static readonly Func<PageMetaData, bool> IsHtml = _ => false;
+    public static readonly Func<PageMetaData, bool> IsHtml = page => ".html".Equals(Path.GetExtension(page.Url), StringComparison.Ordinal);
     public string Id
     {
         get
