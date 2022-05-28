@@ -28,6 +28,8 @@ public class PageMetaData : Dictionary<string, object>
     public string Feed => this.GetValue<string>(nameof(Feed));
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
+    public string LdJson => this.GetValue<string>(nameof(LdJson));
+
 
 
     public string Name
