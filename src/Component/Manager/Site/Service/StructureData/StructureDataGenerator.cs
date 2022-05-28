@@ -39,9 +39,9 @@ public class StructureDataGenerator
                 // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Url)),
                 MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Url))),
                 Headline = renderData.Page.Title,
-                DatePublished = DateTime.Parse((string)renderData.Page["publisheddate"], CultureInfo.InvariantCulture),
-                DateModified = DateTime.Parse((string)renderData.Page["modifieddate"], CultureInfo.InvariantCulture),
-                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page["image"]))),
+                DatePublished = DateTime.Parse((string)renderData.Page[Engine.Transformation.Interface.Constants.Page.PublishedDate], CultureInfo.InvariantCulture),
+                DateModified = DateTime.Parse((string)renderData.Page[Engine.Transformation.Interface.Constants.Page.ModifiedDate], CultureInfo.InvariantCulture),
+                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page[Engine.Transformation.Interface.Constants.Page.Image]))),
                 // Publisher = new Values<IOrganization, IPerson>(new Organization { })
             };
 

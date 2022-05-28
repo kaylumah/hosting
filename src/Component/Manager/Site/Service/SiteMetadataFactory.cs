@@ -71,9 +71,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                 .Select(x => new
                 {
-                    Url = x["url"],
+                    Url = x[Constants.Page.Url],
                     x.LastModified,
-                    Sitemap = x["sitemap"]
+                    Sitemap = x[Constants.Page.Sitemap]
                 });
         }
 
@@ -180,13 +180,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add years");
             var years = pages
-                .Where(x => x.ContainsKey("date"))
+                .Where(x => x.ContainsKey(Constants.Page.Date))
                 .WhereIsArticle()
-                .Select(x => ((DateTimeOffset)x["date"]).Year)
+                .Select(x => ((DateTimeOffset)x[Constants.Page.Date]).Year)
                 .Distinct();
             foreach (var year in years)
             {
-                var yearFiles = pages.Where(x => x.ContainsKey("date") && ((DateTimeOffset)x["date"]).Year.Equals(year)).ToArray();
+                var yearFiles = pages.Where(x => x.ContainsKey(Constants.Page.Date) && ((DateTimeOffset)x[Constants.Page.Date]).Year.Equals(year)).ToArray();
                 site.Years.Add(year, yearFiles);
             }
         }
