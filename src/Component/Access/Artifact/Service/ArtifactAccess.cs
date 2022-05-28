@@ -22,6 +22,6 @@ public class ArtifactAccess : IArtifactAccess
     {
         _logger.LogInformation("Store Artifacts at {OutputLocation}", request.OutputLocation); ;
         var storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
-        await storeArtifactsStrategy.Execute(request);
+        await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
     }
 }

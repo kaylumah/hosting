@@ -73,7 +73,7 @@ public class SiteManager : ISiteManager
                     request.Configuration.AssetDirectory
                 },
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
-        });
+        }).ConfigureAwait(false);
 
         var pageMetadatas = processed
             .ToPages(siteGuid);
@@ -95,7 +95,7 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.GetValue<string>("layout")
             })
             .ToArray();
-        var renderResults = await _transformationEngine.Render(requests);
+        var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 
         var artifacts = processed.Select((t, i) =>
@@ -135,6 +135,6 @@ public class SiteManager : ISiteManager
                 Clean = false,
                 Path = request.Configuration.Destination
             }
-        });
+        }).ConfigureAwait(false);
     }
 }

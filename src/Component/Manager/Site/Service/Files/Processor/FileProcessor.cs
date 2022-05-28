@@ -60,11 +60,11 @@ public class FileProcessor : IFileProcessor
                 filesWithoutCollections
                 .Select(x => x.FullName)
                 .ToArray()
-            );
+            ).ConfigureAwait(false);
 
         result.AddRange(files);
 
-        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray());
+        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
         foreach (var collection in collections)
         {
             _logger.LogInformation("Begin processing {CollectionName}", collection.Name);
@@ -111,7 +111,7 @@ public class FileProcessor : IFileProcessor
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
             var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection));
-            var files = await ProcessFiles(targetFiles.ToArray(), keyName);
+            var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection
             {
@@ -129,7 +129,7 @@ public class FileProcessor : IFileProcessor
         {
             fileInfos.Add(_fileSystem.GetFile(file));
         }
-        return await ProcessFiles(fileInfos.ToArray(), scope: null);
+        return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
     }
 
     private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
@@ -141,7 +141,7 @@ public class FileProcessor : IFileProcessor
             var fileStream = fileInfo.CreateReadStream();
             using var streamReader = new StreamReader(fileStream);
 
-            var rawContent = await streamReader.ReadToEndAsync();
+            var rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
             {
                 Content = rawContent,

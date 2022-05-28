@@ -95,7 +95,7 @@ class Program
         await siteManager.GenerateSite(new GenerateSiteRequest
         {
             Configuration = siteConfiguration
-        });
+        }).ConfigureAwait(false);
         watch.Stop();
         Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
     }

@@ -29,7 +29,7 @@ public class LayoutLoader
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
 
-            var text = await streamReader.ReadToEndAsync();
+            var text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
 
             var fileWithMeta = new File<LayoutMetadata>
