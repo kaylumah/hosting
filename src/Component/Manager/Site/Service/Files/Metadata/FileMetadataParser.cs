@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
@@ -34,7 +34,7 @@ public class FileMetadataParser : IFileMetadataParser
 
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
-            fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd");
+            fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
         if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && !string.IsNullOrEmpty(fileMetaData.PublishedTime))
@@ -85,7 +85,7 @@ public class FileMetadataParser : IFileMetadataParser
         var fileMetaData = new FileMetaData();
         foreach (var filter in filters)
         {
-            var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter));
+            var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter, StringComparison.Ordinal));
             if (meta != null)
             {
                 OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");
@@ -94,29 +94,29 @@ public class FileMetadataParser : IFileMetadataParser
         return fileMetaData;
     }
 
-    private List<string> DetermineFilters(string outputLocation)
+    private static List<string> DetermineFilters(string outputLocation)
     {
         var paths = new List<string>() { string.Empty };
         //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
         var urlSeperator = "/";
-        var index = outputLocation.LastIndexOf(urlSeperator);
+        var index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
         if (index >= 0)
         {
-            var input = outputLocation.Substring(0, index);
+            var input = outputLocation[..index];
             paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
             paths = paths.OrderBy(x => x.Length).ToList();
         }
         return paths;
     }
 
-    private List<string> DetermineFilterDirectories(string input, string urlSeperator)
+    private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
     {
         var result = new List<string>();
         int index;
-        while ((index = input.LastIndexOf(urlSeperator)) >= 0)
+        while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
         {
             result.Add(input);
-            input = input.Substring(0, index);
+            input = input[..index];
         }
 
         if (!string.IsNullOrEmpty(input))
@@ -141,20 +141,20 @@ public class FileMetadataParser : IFileMetadataParser
         var outputExtension = RetrieveExtension(outputFileName);
 
         var result = permalink
-            .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy")}")
-            .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM")}")
-            .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd")}");
+            .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy", CultureInfo.InvariantCulture)}")
+            .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM", CultureInfo.InvariantCulture)}")
+            .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd", CultureInfo.InvariantCulture)}");
 
         result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
             .Replace(":ext", outputExtension);
 
-        if (result.StartsWith("/"))
+        if (result.StartsWith("/", StringComparison.Ordinal))
         {
             result = result[1..];
         }
         return result;
         //metaData.Uri = result;
-        //metaData.Remove(nameof(metaData.Permalink).ToLower());
+        //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
     }
 
     private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
@@ -165,7 +165,7 @@ public class FileMetadataParser : IFileMetadataParser
             {
                 if (target.ContainsKey(entry.Key))
                 {
-                    _logger.LogInformation($"Overwritting '{entry.Key}' with '{entry.Value}' instead of {target[entry.Key]} because '{reason}'");
+                    _logger.LogInformation("Overwritting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'", entry.Key, entry.Value, target[entry.Key], reason);
 
                 }
                 target[entry.Key] = entry.Value;

@@ -1,14 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

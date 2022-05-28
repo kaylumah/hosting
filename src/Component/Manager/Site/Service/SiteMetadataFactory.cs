@@ -6,7 +6,6 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -59,8 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
             _logger.LogInformation("add AssemblyData");
-            var assemblyInfo = new AssemblyUtil()
-                .RetrieveAssemblyInfo(Assembly.GetExecutingAssembly());
+            var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
         }
@@ -69,8 +67,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add SiteMap");
             site.Pages = pages
-                .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
-                .Where(file => !"404.html".Equals(file.Name))
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
+                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                 .Select(x => new
                 {
                     Url = x["url"],
@@ -89,7 +87,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
 
-            var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
+            var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
             if (tagFile != null)
             {
                 _logger.LogInformation("TagFile exists");
@@ -109,7 +107,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
 
         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
-        {   
+        {
             foreach (var file in dataFiles)
             {
                 var result = _yamlParser.Parse<object>(file);
@@ -138,7 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         {
                             // todo log
                             var collectionFiles = files
-                                .Where(x => x.Collection != null && x.Collection.Equals(collection));
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
                             foreach (var file in collectionFiles)
                             {
                                 file.Collection = collectionSettings.TreatAs;
@@ -154,7 +152,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Collections.Add(collection,
                     files
                     .Where(x => x.Collection != null
-                        && x.Collection.Equals(collection))
+                        && x.Collection.Equals(collection, StringComparison.Ordinal))
                     .ToArray()
                 );
             }

@@ -31,16 +31,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var generatorVersion = build.ShortGitHash;
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
+            _logger.LogInformation("Begin BlogInformation {Version}", generatorVersion);
 
-            var feed = new SyndicationFeed();
-            feed.Language = siteMetaData.Language;
-            feed.Title = new TextSyndicationContent(siteMetaData.Title);
-            feed.Description = new TextSyndicationContent(siteMetaData.Description);
-            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
-            feed.Copyright = new TextSyndicationContent(copyrightClaim);
-            feed.LastUpdatedTime = generatedAtBuildTime;
-            feed.ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg"));
-            feed.Generator = "Kaylumah Site Generator";
+            var feed = new SyndicationFeed
+            {
+                Language = siteMetaData.Language,
+                Title = new TextSyndicationContent(siteMetaData.Title),
+                Description = new TextSyndicationContent(siteMetaData.Description),
+                Id = GlobalFunctions.AbsoluteUrl("feed.xml"),
+                Copyright = new TextSyndicationContent(copyrightClaim),
+                LastUpdatedTime = generatedAtBuildTime,
+                ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg")),
+                Generator = "Kaylumah Site Generator"
+            };
 
             feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("feed.xml")))
             {
@@ -101,7 +104,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 .ToList();
         }
 
-        private IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
+        private static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {

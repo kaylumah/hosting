@@ -4,7 +4,6 @@
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using Ssg.Extensions.Metadata.Abstractions;
 using Test.Unit.Mocks;

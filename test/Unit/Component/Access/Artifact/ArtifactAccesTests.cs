@@ -25,7 +25,7 @@ public class ArtifactAccessTests
             .AddSingleton(fileSystemMock.Object)
             .BuildServiceProvider();
 
-        var sut = serviceProvider.GetRequiredService<IArtifactAccess>(); 
+        var sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
         await sut.Store(new StoreArtifactsRequest
         {

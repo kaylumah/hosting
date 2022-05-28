@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using BoDi;
 using FluentAssertions;
@@ -10,12 +9,10 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -29,7 +26,9 @@ internal class FeatureSteps
     private readonly List<string> _collections = new();
     private readonly List<string> _supportedFileExtensions = new();
     private readonly Dictionary<string, MockFileData> _fileSystemData = new();
+#pragma warning disable CS0169 // Add readonly modifier
     private Metadata<FileMetaData> _state;
+#pragma warning restore CS0169 // Add readonly modifier
 
     private readonly MetadataParserOptions _metadataParserOptions;
 

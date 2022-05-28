@@ -17,4 +17,20 @@ public static class AssemblyExtensions
         return assembly.GetCustomAttributes(typeof(T))
             .Cast<T>();
     }
+
+    public static AssemblyInfo RetrieveAssemblyInfo(this Assembly assembly)
+    {
+        var copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
+        var informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
+        var metadataAttributes = assembly
+            .GetAttribtutes<AssemblyMetadataAttribute>()
+            .ToDictionary(a => a.Key, a => a.Value);
+
+        return new AssemblyInfo()
+        {
+            Copyright = copyrightAttribute.Copyright,
+            Version = informationalVersionAttribute.InformationalVersion,
+            Metadata = metadataAttributes
+        };
+    }
 }

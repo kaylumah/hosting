@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Kaylumah.Ssg.Utilities;
 
-public class EncodingUtil
+public static partial class EncodingExtensions
 {
-    public Encoding DetermineEncoding(Stream stream)
+    public static Encoding DetermineEncoding(this Stream stream)
     {
         using var reader = new StreamReader(stream, Encoding.Default, detectEncodingFromByteOrderMarks: true);
         if (reader.Peek() >= 0) // you need this!

@@ -25,11 +25,11 @@ public class LayoutLoader
             var path = Path.Combine(layoutFolder, file.Name);
             var fileInfo = _fileSystem.GetFile(path);
 
-            var encoding = new EncodingUtil().DetermineEncoding(fileInfo.CreateReadStream());
+            var encoding = fileInfo.CreateReadStream().DetermineEncoding();
             var fileName = fileInfo.Name;
             using var streamReader = new StreamReader(fileInfo.CreateReadStream());
 
-            var text = await streamReader.ReadToEndAsync();
+            var text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
 
             var fileWithMeta = new File<LayoutMetadata>
@@ -60,7 +60,7 @@ public class LayoutLoader
 
     private void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
     {
-        var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout));
+        var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout, StringComparison.Ordinal));
         foreach (var dependency in dependencies)
         {
             var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);

@@ -10,6 +10,6 @@ public interface IFileProcessor
 
 public class FileFilterCriteria
 {
-    public string[] DirectoriesToSkip { get; set; } = Array.Empty<string>();
-    public string[] FileExtensionsToTarget { get; set; } = Array.Empty<string>();
+    public string[] DirectoriesToSkip { get; set; }
+    public string[] FileExtensionsToTarget { get; set; }
 }

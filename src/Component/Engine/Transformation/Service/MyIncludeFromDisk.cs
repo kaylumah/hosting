@@ -35,7 +35,7 @@ internal class MyIncludeFromDisk : ITemplateLoader
     public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
     {
         using var reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
-        return await reader.ReadToEndAsync();
+        return await reader.ReadToEndAsync().ConfigureAwait(false);
         // return await File.ReadAllTextAsync(templatePath);
     }
 }

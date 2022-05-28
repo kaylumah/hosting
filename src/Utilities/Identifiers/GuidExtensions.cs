@@ -12,8 +12,8 @@ public static class GuidUtilityExtensions
         return GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
     }
 
-    public static Guid CreatePageGuid(this Guid guid, string url)
+    public static Guid CreatePageGuid(this Guid siteGuid, string url)
     {
-        return GuidUtility.Create(guid, url, 5);
+        return GuidUtility.Create(siteGuid, url, 5);
     }
 }

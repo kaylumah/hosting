@@ -31,6 +31,7 @@ public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
 
                 if (!Directory.Exists(directory))
                 {
+                    _logger.LogInformation("Create directory {Directory}", directory);
                     // Directory.CreateDirectory(directory);
                     _fileSystem.CreateDirectory(directory);
                 }
@@ -39,6 +40,7 @@ public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
                 //_logger.LogDebug($"{file.Contents}");
 
                 // await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                _logger.LogInformation("Create file {File}", filePath);
                 await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
             }
 
