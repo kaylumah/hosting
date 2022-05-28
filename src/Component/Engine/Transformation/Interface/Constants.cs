@@ -8,7 +8,7 @@ public static class Constants
     public static class Page
     {
         // public const string LdJson = "ldjson";
-        public const string Layout = "layout";
+        // public const string Layout = "layout";
         public const string Uri = "uri";
         public const string Url = "url";
         // public const string Sitemap = "sitemap";

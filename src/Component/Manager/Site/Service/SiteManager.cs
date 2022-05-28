@@ -96,7 +96,7 @@ public class SiteManager : ISiteManager
                     Site = siteMetadata,
                     Page = pageMetadata
                 },
-                Template = pageMetadata.GetValue<string>(Constants.Page.Layout)
+                Template = pageMetadata.Layout
             })
             .ToArray();
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
