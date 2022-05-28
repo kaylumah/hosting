@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Utilities;
 
 public class GlobalFunctions
 {
-    public static readonly GlobalFunctions Instance = new GlobalFunctions();
+    public static readonly GlobalFunctions Instance = new();
     public string Url { get; set; }
     public string BaseUrl { get; set; }
 

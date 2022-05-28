@@ -102,7 +102,7 @@ public class FileMetadataParser : IFileMetadataParser
         var index = outputLocation.LastIndexOf(urlSeperator);
         if (index >= 0)
         {
-            var input = outputLocation.Substring(0, index);
+            var input = outputLocation[..index];
             paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
             paths = paths.OrderBy(x => x.Length).ToList();
         }
@@ -116,7 +116,7 @@ public class FileMetadataParser : IFileMetadataParser
         while ((index = input.LastIndexOf(urlSeperator)) >= 0)
         {
             result.Add(input);
-            input = input.Substring(0, index);
+            input = input[..index];
         }
 
         if (!string.IsNullOrEmpty(input))

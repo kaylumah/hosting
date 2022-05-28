@@ -24,9 +24,9 @@ public class BuildData
         {
             version = info.Version;
         }
-        var appVersion = version.Substring(0, version.IndexOf('+'));
+        var appVersion = version[..version.IndexOf('+')];
         var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
-        var shortGitHash = gitHash.Substring(0, 7);
+        var shortGitHash = gitHash[..7];
         var repositoryType = info.Metadata["RepositoryType"];
         var repositoryUrl = info.Metadata["RepositoryUrl"];
 
