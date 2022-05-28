@@ -23,6 +23,7 @@ public class SiteManager : ISiteManager
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
+    private readonly StructureDataGenerator _structureDataGenerator;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -32,7 +33,8 @@ public class SiteManager : ISiteManager
         SiteInfo siteInfo,
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
-        FeedGenerator feedGenerator
+        FeedGenerator feedGenerator,
+        StructureDataGenerator structureDataGenerator
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -43,6 +45,7 @@ public class SiteManager : ISiteManager
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
+        _structureDataGenerator = structureDataGenerator;
     }
 
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
@@ -98,7 +101,7 @@ public class SiteManager : ISiteManager
             .ToArray();
         requests.ToList().ForEach(item =>
         {
-            item.Metadata.Page["ldjson"] = StructureDataGenerator.ToLdJson(item.Metadata);
+            item.Metadata.Page["ldjson"] = _structureDataGenerator.ToLdJson(item.Metadata);
         });
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 

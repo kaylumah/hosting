@@ -1,18 +1,26 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
+using Schema.NET;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Utilities;
-using Schema.NET;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
-public static class StructureDataGenerator
+public class StructureDataGenerator
 {
-    public static string ToLdJson(RenderData renderData)
+    private readonly ILogger _logger;
+
+    public StructureDataGenerator(ILogger<StructureDataGenerator> logger)
+    {
+        _logger = logger;
+    }
+
+    public string ToLdJson(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
         var settings = new JsonSerializerOptions()
@@ -23,6 +31,7 @@ public static class StructureDataGenerator
             WriteIndented = true
         };
         var authors = renderData.Site.ToPersons();
+        _logger.LogInformation("Attempting LdJson '{Path}' and '{Type:g}'", renderData.Page.Url, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
             var blogPost = new BlogPosting
