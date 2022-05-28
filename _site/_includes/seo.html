@@ -35,23 +35,27 @@
 <meta name="twitter:description" content="{{ description }}">
 <meta name="twitter:image" content="{{ page_image }}">
 
-{%- if ldjson -%}
+{% if ldjson %}
 <script type="application/ld+json">
 {{ ldjson }}
 </script>
-{%- endif -%}
+{% endif %}
 {% if page.type == "Article" %}
 <script type="application/ld+json">
 {
   "@context": "http://schema.org/",
   "@type": "BlogPosting",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ page_url }}"
-  },
+  "image": "{{ page_image }}",
   "author": {
     "@type": "Person",
     "name": "{{ page_author }}"
+  },
+  "dateModified": "{{ page.lastmodified | date_to_pattern "yyyy-MM-dd" }}",
+  "datePublished": "{{ page.date | date_to_pattern "yyyy-MM-dd"  }}",
+  "headline": "{{ page.title }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ page_url }}"
   },
   "publisher": {
     "@type": "Organization",
@@ -60,11 +64,7 @@
       "@type": "ImageObject",
       "url": "{{ 'assets/logo.svg' | absolute_url }}"
     }
-  },
-  "headline": "{{ page.title }}",
-  "image": "{{ page_image }}",
-  "datePublished": "{{ page.date | date_to_pattern "yyyy-MM-dd"  }}",
-  "dateModified": "{{ page.lastmodified | date_to_pattern "yyyy-MM-dd" }}"
+  }
 }
 </script>
 {% endif %}
