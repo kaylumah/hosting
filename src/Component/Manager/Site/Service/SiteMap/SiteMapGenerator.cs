@@ -4,6 +4,7 @@
 using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap;
@@ -52,6 +53,16 @@ public class SiteMapGenerator
         var ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
         writer.WriteStartDocument();
         writer.WriteStartElement("urlset", ns);
+
+        foreach(var page in pages)
+        {
+            writer.WriteStartElement("url");
+            writer.WriteElementString("loc", GlobalFunctions.AbsoluteUrl(page.Url));
+            // writer.WriteElementString("changefreq", "weekly");
+            // writer.WriteElementString("priority", "1.0");
+            writer.WriteEndElement();
+        }
+
         writer.Close();
         return Encoding.UTF8.GetString(stream.ToArray());
     }
