@@ -25,7 +25,7 @@ public class PageMetaData : Dictionary<string, object>
     public string Author => this.GetValue<string>(nameof(Author));
     public string Url => this.GetValue<string>(nameof(Url));
     public string Sitemap => this.GetValue<string>(nameof(Sitemap));
-    public bool Feed => bool.Parse(this.GetValue<string>(nameof(Feed)));
+    public bool Feed => this.GetBoolValue(nameof(Feed));
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public string LdJson
