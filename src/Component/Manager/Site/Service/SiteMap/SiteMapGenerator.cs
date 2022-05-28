@@ -17,22 +17,26 @@ public class SiteMapGenerator
         _logger = logger;
     }
 
-    private static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
-    {
-        if (siteMetaData.Collections.TryGetValue("posts", out var posts))
-        {
-            return posts
-                .Where(x => x.Sitemap)
-                .ToList();
-        }
-        return Enumerable.Empty<PageMetaData>();
-    }
-
     public string Create(SiteMetaData siteMetaData)
     {
         _logger.LogInformation("Generate SiteMap");
 
-        var pages = RetrievePostPageMetaDatas(siteMetaData);
+        var pages = siteMetaData.Pages
+                        .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
+                        .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
+                        .ToList();
+
+
+            /*
+         site.Pages = pages
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
+                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
+                .Select(x => new
+                {
+                    Url = x.Url,
+                    x.LastModified,
+                    Sitemap = x.Sitemap
+                });*/
 
         var settings = new XmlWriterSettings()
         {
