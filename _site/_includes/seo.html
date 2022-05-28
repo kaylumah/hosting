@@ -34,6 +34,12 @@
 <meta name="twitter:creator" content="@{{ site.data.authors[page.author].twitter | remove:'@' }}" />
 <meta name="twitter:description" content="{{ description }}">
 <meta name="twitter:image" content="{{ page_image }}">
+
+{%- if ldjson -%}
+<script type="application/ld+json">
+{{ ldjson }}
+</script>
+{%- endif -%}
 {% if page.type == "Article" %}
 <script type="application/ld+json">
 {

@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Schema.NET;
 using Scriban;
 using Scriban.Runtime;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -22,6 +25,24 @@ public class TransformationEngine : ITransformationEngine
         _logger = logger;
         _fileSystem = fileSystem;
         _metadataProvider = metadataProvider;
+    }
+
+    private static string ToLdJson(RenderData renderData)
+    {
+        ArgumentNullException.ThrowIfNull(renderData);
+        var settings = new JsonSerializerOptions()
+        {
+            AllowTrailingCommas = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            WriteIndented = true
+        };
+        if (renderData.Page.Type == ContentType.Article)
+        {
+            var blogPost = new BlogPosting();
+            return blogPost.ToString(settings);
+        }
+        return null;
     }
 
     public async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
@@ -45,6 +66,7 @@ public class TransformationEngine : ITransformationEngine
                 };
                 var scriptObject = new ScriptObject();
                 scriptObject.Import(request.Metadata);
+                scriptObject.Import("ldjson", () => ToLdJson(request.Metadata));
                 // note: work-around for Build becoming part of Site
                 scriptObject.Import("build", () => request.Metadata.Site.Build);
                 context.PushGlobal(scriptObject);
