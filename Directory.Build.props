@@ -18,10 +18,18 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>Latest</AnalysisLevel>
-    <AnalysisMode>Minimum</AnalysisMode> 
+    <AnalysisMode>Minimum</AnalysisMode>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
+
+  <!--
+  <PropertyGroup Condition="'$(EnableBannedApiAnalyzers)' == ''">
+    <BannedSymbolsFileName>$(MSBuildThisFileDirectory)/BannedSymbols.txt</BannedSymbolsFileName>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <EnableBannedApiAnalyzers Condition="Exists($(BannedSymbolsFileName))">true</EnableBannedApiAnalyzers>
+  </PropertyGroup>
+  -->
 
   <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="false">
     <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
