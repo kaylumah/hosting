@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -39,7 +40,17 @@ public class TransformationEngine : ITransformationEngine
         };
         if (renderData.Page.Type == ContentType.Article)
         {
-            var blogPost = new BlogPosting();
+            var blogPost = new BlogPosting
+            {
+                Headline = renderData.Page.Title,
+                DatePublished = DateTime.Parse((string)renderData.Page["publisheddate"], CultureInfo.InvariantCulture),
+                DateModified = DateTime.Parse((string)renderData.Page["modifieddate"], CultureInfo.InvariantCulture),
+                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page["image"]))),
+                Author = new Values<IOrganization, IPerson>(new Person {
+                    Name = new OneOrMany<string>("Max Hamulyák"),
+                    Url = new OneOrMany<Uri>(new Uri(GlobalFunctions.Instance.Url))
+                }),
+            };
             return blogPost.ToString(settings);
         }
         return null;
