@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
+
 namespace System.Collections.Generic;
 
 public static class DictionaryExtensions

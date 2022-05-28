@@ -31,10 +31,14 @@ public static class GuidUtility
         // compute the hash of the namespace ID concatenated with the name (step 4)
         var data = namespaceBytes.Concat(nameBytes).ToArray();
         byte[] hash;
+#pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
+#pragma warning disable CA5350 // Do Not Use Weak Cryptographic Algorithms
         using (var algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : SHA1.Create())
             hash = algorithm.ComputeHash(data);
+#pragma warning restore CA5350 // Do Not Use Weak Cryptographic Algorithms
+#pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
 
-        // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
+            // most bytes from the hash are copied straight to the bytes of the new GUID (steps 5-7, 9, 11-12)
         var newGuid = new byte[16];
         Array.Copy(hash, 0, newGuid, 0, 16);
 
