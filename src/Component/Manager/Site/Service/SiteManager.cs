@@ -99,7 +99,7 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.GetValue<string>("layout")
             })
             .ToArray();
-        requests.Where(MetadataRenderRequest.IsHtml).ToList().ForEach(item =>
+        requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
             item.Metadata.Page["ldjson"] = _structureDataGenerator.ToLdJson(item.Metadata);
         });
