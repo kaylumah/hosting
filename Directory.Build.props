@@ -23,6 +23,10 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <BannedApiAnalyzersSymbolsFullPath>$(MSBuildThisFileDirectory)Assets\DotNetPackageIcon.png</BannedApiAnalyzersSymbolsFullPath>
+  </PropertyGroup>
+
   <!--
   <PropertyGroup Condition="'$(EnableBannedApiAnalyzers)' == ''">
     <BannedSymbolsFileName>$(MSBuildThisFileDirectory)/BannedSymbols.txt</BannedSymbolsFileName>
@@ -31,7 +35,7 @@
   </PropertyGroup>
   -->
 
-  <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="false">
+  <Target Name="EmitCustomMessage" AfterTargets="Build">
     <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
     <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
     <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
@@ -40,6 +44,7 @@
     <Message Importance="High" Text="The Property TreatWarningsAsErrors = '$(TreatWarningsAsErrors)'" />
     <Message Importance="High" Text="The Property CodeAnalysisTreatWarningsAsErrors = '$(CodeAnalysisTreatWarningsAsErrors)'" />
     <Message Importance="High" Text="The Property EnforceCodeStyleInBuild = '$(EnforceCodeStyleInBuild)'" />
+    <Message Importance="High" Text="The Property BannedApiAnalyzersSymbolsFullPath = '$(BannedApiAnalyzersSymbolsFullPath)'" />
     <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
   </Target>
 
