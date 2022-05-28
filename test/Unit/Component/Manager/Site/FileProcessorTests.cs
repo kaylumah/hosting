@@ -10,13 +10,10 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
-using Test.Utilities;
 using Xunit;
 
 namespace Test.Unit;

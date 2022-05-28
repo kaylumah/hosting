@@ -6,7 +6,6 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
