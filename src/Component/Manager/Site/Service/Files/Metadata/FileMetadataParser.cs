@@ -85,7 +85,7 @@ public class FileMetadataParser : IFileMetadataParser
         var fileMetaData = new FileMetaData();
         foreach (var filter in filters)
         {
-            var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter));
+            var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter, StringComparison.Ordinal));
             if (meta != null)
             {
                 OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");

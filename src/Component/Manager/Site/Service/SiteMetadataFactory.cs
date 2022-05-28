@@ -67,8 +67,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add SiteMap");
             site.Pages = pages
-                .Where(file => ".html".Equals(Path.GetExtension(file.Name)))
-                .Where(file => !"404.html".Equals(file.Name))
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
+                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                 .Select(x => new
                 {
                     Url = x["url"],
@@ -87,7 +87,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
 
-            var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml"));
+            var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
             if (tagFile != null)
             {
                 _logger.LogInformation("TagFile exists");
@@ -136,7 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         {
                             // todo log
                             var collectionFiles = files
-                                .Where(x => x.Collection != null && x.Collection.Equals(collection));
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
                             foreach (var file in collectionFiles)
                             {
                                 file.Collection = collectionSettings.TreatAs;
@@ -152,7 +152,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Collections.Add(collection,
                     files
                     .Where(x => x.Collection != null
-                        && x.Collection.Equals(collection))
+                        && x.Collection.Equals(collection, StringComparison.Ordinal))
                     .ToArray()
                 );
             }

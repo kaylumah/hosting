@@ -60,7 +60,7 @@ public class LayoutLoader
 
     private void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
     {
-        var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout));
+        var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout, StringComparison.Ordinal));
         foreach (var dependency in dependencies)
         {
             var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);

@@ -56,7 +56,7 @@ class Program
                 .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
                 .ToList();
 
-            var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file)))/*.Take(1)*/.ToList();
+            var htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
 
             var pageResults = new List<PageLinkResult>();
 
@@ -129,7 +129,7 @@ internal class PageLinkResult
         foreach (var tag in anchorTags)
         {
             var attrValue = tag.GetAttributeValue("href", string.Empty);
-            if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue) && !"/".Equals(attrValue))
+            if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue, StringComparison.Ordinal) && !"/".Equals(attrValue, StringComparison.Ordinal))
             {
                 if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
                 {

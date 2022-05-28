@@ -35,7 +35,7 @@ public class TransformationEngine : ITransformationEngine
         {
             try
             {
-                var template = templates.FirstOrDefault(t => t.Name.Equals(request.Template));
+                var template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
                 var content = template?.Content ?? "{{ content }}";
                 content = content.Replace("{{ content }}", request.Metadata.Content);
                 var liquidTemplate = Template.ParseLiquid(content);
