@@ -25,6 +25,7 @@ public class PageMetaData : Dictionary<string, object>
     public string Author => this.GetValue<string>(nameof(Author));
     public string Url => this.GetValue<string>(nameof(Url));
     public string Sitemap => this.GetValue<string>(nameof(Sitemap));
+    public string Feed => this.GetValue<string>(nameof(Feed));
 
 
     public string Name

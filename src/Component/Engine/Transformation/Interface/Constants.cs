@@ -16,7 +16,7 @@ public static class Constants
         public const string PublishedDate = "publisheddate";
         public const string ModifiedDate = "modifieddate";
         public const string Image = "image";
-        public const string Feed = "feed";
+        // public const string Feed = "feed";
 
     }
 
