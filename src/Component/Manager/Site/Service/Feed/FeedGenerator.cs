@@ -109,7 +109,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
                 return posts
-                    .Where(x => bool.Parse(x.Feed))
+                    .Where(x => x.Feed)
                     .ToList();
             }
             return Enumerable.Empty<PageMetaData>();
