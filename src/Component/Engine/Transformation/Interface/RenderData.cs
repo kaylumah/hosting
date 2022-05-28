@@ -5,7 +5,7 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class RenderData
 {
-    public static readonly Func<RenderData, bool> IsHtml = renderData => PageMetaData.IsHtml(renderData.Page);
+    public static readonly Func<RenderData, bool> IsHtml = renderData => PageMetaDataExtensions.IsHtml(renderData.Page);
     public SiteMetaData Site { get; set; }
     public PageMetaData Page { get; set; }
     public string Content => Page?.Content ?? string.Empty;
