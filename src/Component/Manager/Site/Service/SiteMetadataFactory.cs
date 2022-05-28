@@ -73,7 +73,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 {
                     Url = x[Constants.Page.Url],
                     x.LastModified,
-                    Sitemap = x[Constants.Page.Sitemap]
+                    Sitemap = x.Sitemap
                 });
         }
 
