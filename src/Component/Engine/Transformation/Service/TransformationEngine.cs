@@ -45,6 +45,7 @@ public class TransformationEngine : ITransformationEngine
                 };
                 var scriptObject = new ScriptObject();
                 scriptObject.Import(request.Metadata);
+                scriptObject.Import("ldjson", () => request.Metadata.Page["ldjson"]);
                 // note: work-around for Build becoming part of Site
                 scriptObject.Import("build", () => request.Metadata.Site.Build);
                 context.PushGlobal(scriptObject);

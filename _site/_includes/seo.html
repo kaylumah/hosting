@@ -34,32 +34,9 @@
 <meta name="twitter:creator" content="@{{ site.data.authors[page.author].twitter | remove:'@' }}" />
 <meta name="twitter:description" content="{{ description }}">
 <meta name="twitter:image" content="{{ page_image }}">
-{% if page.type == "Article" %}
+{% if ldjson %}
 <script type="application/ld+json">
-{
-  "@context": "http://schema.org/",
-  "@type": "BlogPosting",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ page_url }}"
-  },
-  "author": {
-    "@type": "Person",
-    "name": "{{ page_author }}"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Kaylumah",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ 'assets/logo.svg' | absolute_url }}"
-    }
-  },
-  "headline": "{{ page.title }}",
-  "image": "{{ page_image }}",
-  "datePublished": "{{ page.date | date_to_pattern "yyyy-MM-dd"  }}",
-  "dateModified": "{{ page.lastmodified | date_to_pattern "yyyy-MM-dd" }}"
-}
+{{ ldjson }}
 </script>
 {% endif %}
 <!-- End Kaylumah SEO tag -->
