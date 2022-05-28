@@ -26,6 +26,8 @@ public class PageMetaData : Dictionary<string, object>
     public string Url => this.GetValue<string>(nameof(Url));
     public string Sitemap => this.GetValue<string>(nameof(Sitemap));
     public string Feed => this.GetValue<string>(nameof(Feed));
+    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
+    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
 
 
     public string Name
