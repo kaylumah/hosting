@@ -30,9 +30,9 @@ public class BuildData
         var repositoryType = info.Metadata["RepositoryType"];
         var repositoryUrl = info.Metadata["RepositoryUrl"];
 
-        if (repositoryUrl.EndsWith($".{repositoryType}"))
+        if (repositoryUrl.EndsWith($".{repositoryType}", StringComparison.Ordinal))
         {
-            var index = repositoryUrl.LastIndexOf($".{repositoryType}");
+            var index = repositoryUrl.LastIndexOf($".{repositoryType}", StringComparison.Ordinal);
             SourceBaseUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
             SourceBuildUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/actions/runs");
         }

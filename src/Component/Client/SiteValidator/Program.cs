@@ -131,7 +131,7 @@ internal class PageLinkResult
             var attrValue = tag.GetAttributeValue("href", string.Empty);
             if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue, StringComparison.Ordinal) && !"/".Equals(attrValue, StringComparison.Ordinal))
             {
-                if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+                if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
                 {
                     ExternalAnchors.Add(attrValue);
                 }
@@ -146,7 +146,7 @@ internal class PageLinkResult
         foreach (var tag in imageTags)
         {
             var attrValue = tag.GetAttributeValue("src", string.Empty);
-            if (attrValue.StartsWith("http://") || attrValue.StartsWith("https://"))
+            if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
             {
                 ExternalImages.Add(attrValue);
             }

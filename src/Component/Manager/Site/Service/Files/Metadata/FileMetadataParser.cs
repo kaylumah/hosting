@@ -99,7 +99,7 @@ public class FileMetadataParser : IFileMetadataParser
         var paths = new List<string>() { string.Empty };
         //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
         var urlSeperator = "/";
-        var index = outputLocation.LastIndexOf(urlSeperator);
+        var index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
         if (index >= 0)
         {
             var input = outputLocation[..index];
@@ -113,7 +113,7 @@ public class FileMetadataParser : IFileMetadataParser
     {
         var result = new List<string>();
         int index;
-        while ((index = input.LastIndexOf(urlSeperator)) >= 0)
+        while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
         {
             result.Add(input);
             input = input[..index];
@@ -148,7 +148,7 @@ public class FileMetadataParser : IFileMetadataParser
         result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
             .Replace(":ext", outputExtension);
 
-        if (result.StartsWith("/"))
+        if (result.StartsWith("/", StringComparison.Ordinal))
         {
             result = result[1..];
         }

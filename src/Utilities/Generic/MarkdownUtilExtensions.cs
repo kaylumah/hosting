@@ -44,7 +44,7 @@ public class LinkExtension : IMarkdownExtension
                 if (node is LinkInline linkInlineNode)
                 {
                     var uri = linkInlineNode.Url;
-                    if (!uri.StartsWith("https://kaylumah.nl"))
+                    if (!uri.StartsWith("https://kaylumah.nl", StringComparison.Ordinal))
                     {
                         linkInlineNode.GetAttributes().AddClass("img-fluid");
                     }

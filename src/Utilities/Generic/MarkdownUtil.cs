@@ -72,7 +72,7 @@ public static class MarkdownUtil
         {
             if (anchor is LinkInline link && !link.IsImage)
             {
-                if (!anchor.Url.StartsWith(GlobalFunctions.Instance.Url))
+                if (!anchor.Url.StartsWith(GlobalFunctions.Instance.Url, StringComparison.Ordinal))
                 {
                     link.GetAttributes().AddClass("external");
                 }
