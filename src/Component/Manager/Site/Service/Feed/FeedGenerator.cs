@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         Title = new TextSyndicationContent(pageMetaData.Title),
                         Summary = new TextSyndicationContent(pageMetaData.Description),
                         Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = (DateTimeOffset)pageMetaData[Constants.Page.Date],
+                        PublishDate = pageMetaData.Date,
                         LastUpdatedTime = pageMetaData.LastModified
                     };
 

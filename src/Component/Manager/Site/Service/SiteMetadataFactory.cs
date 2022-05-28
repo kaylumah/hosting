@@ -180,13 +180,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add years");
             var years = pages
-                .Where(x => x.ContainsKey(Constants.Page.Date))
                 .WhereIsArticle()
-                .Select(x => ((DateTimeOffset)x[Constants.Page.Date]).Year)
+                .Select(x => x.Date.Year)
                 .Distinct();
             foreach (var year in years)
             {
-                var yearFiles = pages.Where(x => x.ContainsKey(Constants.Page.Date) && ((DateTimeOffset)x[Constants.Page.Date]).Year.Equals(year)).ToArray();
+                var yearFiles = pages.Where(x => x.Date.Year.Equals(year)).ToArray();
                 site.Years.Add(year, yearFiles);
             }
         }

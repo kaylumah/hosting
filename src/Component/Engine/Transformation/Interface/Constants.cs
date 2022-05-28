@@ -12,7 +12,7 @@ public static class Constants
         // public const string Uri = "uri";
         // public const string Url = "url";
         // public const string Sitemap = "sitemap";
-        public const string Date = "date";
+        // public const string Date = "date";
         // public const string PublishedDate = "publisheddate";
         // public const string ModifiedDate = "modifieddate";
         // public const string Image = "image";
