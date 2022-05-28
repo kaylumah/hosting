@@ -12,7 +12,11 @@ namespace Kaylumah.Ssg.Utilities;
 
 public static class MarkdownPipelineBuilderExtensions
 {
+#pragma warning disable CS3002 // Return type is not CLS-compliant
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
     public static MarkdownPipelineBuilder UseLinkExtension(this MarkdownPipelineBuilder pipeline)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
+#pragma warning restore CS3002 // Return type is not CLS-compliant
     {
         OrderedList<IMarkdownExtension> extensions;
         extensions = pipeline.Extensions;
@@ -30,7 +34,9 @@ public static class MarkdownPipelineBuilderExtensions
 
 public class LinkExtension : IMarkdownExtension
 {
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
     public void Setup(MarkdownPipelineBuilder pipeline)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
     {
         pipeline.DocumentProcessed += Pipeline_DocumentProcessed;
     }
@@ -53,7 +59,9 @@ public class LinkExtension : IMarkdownExtension
         }
     }
 
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
     public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
     {
         // throw new System.NotImplementedException();
     }
