@@ -40,32 +40,4 @@
 {{ ldjson }}
 </script>
 {% endif %}
-{% if page.type == "Article" %}
-<script type="application/ld+json">
-{
-  "@context": "http://schema.org/",
-  "@type": "BlogPosting",
-  "image": "{{ page_image }}",
-  "author": {
-    "@type": "Person",
-    "name": "{{ page_author }}"
-  },
-  "dateModified": "{{ page.lastmodified | date_to_pattern "yyyy-MM-dd" }}",
-  "datePublished": "{{ page.date | date_to_pattern "yyyy-MM-dd"  }}",
-  "headline": "{{ page.title }}",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ page_url }}"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Kaylumah",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ 'assets/logo.svg' | absolute_url }}"
-    }
-  }
-}
-</script>
-{% endif %}
 <!-- End Kaylumah SEO tag -->
