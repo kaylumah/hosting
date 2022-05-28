@@ -10,9 +10,9 @@ using System.Text.Json.Serialization;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
-internal class StructureDataGenerator
+public static class StructureDataGenerator
 {
-    private static string ToLdJson(RenderData renderData)
+    public static string ToLdJson(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
         var settings = new JsonSerializerOptions()

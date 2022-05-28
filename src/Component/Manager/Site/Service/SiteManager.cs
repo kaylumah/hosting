@@ -7,6 +7,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
@@ -95,6 +96,10 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.GetValue<string>("layout")
             })
             .ToArray();
+        requests.ToList().ForEach(item =>
+        {
+            item.Metadata.Page["ldjson"] = StructureDataGenerator.ToLdJson(item.Metadata);
+        });
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 
