@@ -137,6 +137,9 @@ file_header_template=Copyright (c) Kaylumah, 2022. All rights reserved.\nSee LIC
 # IDE0073: The file header does not match the required text
 dotnet_diagnostic.IDE0073.severity = error
 
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = warning
+
 ###############################
 # VB Coding Conventions       #
 ###############################
