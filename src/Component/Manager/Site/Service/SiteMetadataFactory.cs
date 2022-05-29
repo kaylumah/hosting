@@ -63,20 +63,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             site.Build = buildMetadata;
         }
 
-        private void EnrichSiteWithSiteMap(SiteMetaData site, List<PageMetaData> pages)
-        {
-            _logger.LogInformation("Add SiteMap");
-            site.Pages = pages
-                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
-                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
-                .Select(x => new
-                {
-                    Url = x.Url,
-                    x.LastModified,
-                    Sitemap = x.Sitemap
-                });
-        }
-
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
             _logger.LogInformation("Add Data");
