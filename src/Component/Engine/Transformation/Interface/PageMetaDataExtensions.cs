@@ -26,7 +26,7 @@ public static class PageMetaDataExtensions
         return pageMetaData.IsExtension(".html");
     }
 
-    public static IEnumerable<PageMetaData> PartOfSeries(this IEnumerable<PageMetaData> source)
+    public static IEnumerable<PageMetaData> HasSeries(this IEnumerable<PageMetaData> source)
     {
         return source.Where(Series);
     }
@@ -34,7 +34,7 @@ public static class PageMetaDataExtensions
     public static IEnumerable<PageMetaData> FromSeries(this IEnumerable<PageMetaData> source, string series)
     {
         return source
-                .PartOfSeries()
+                .HasSeries()
                 .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
     }
 }

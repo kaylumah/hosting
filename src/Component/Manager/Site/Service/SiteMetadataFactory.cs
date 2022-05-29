@@ -194,7 +194,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add series");
             var series = pages
-                .PartOfSeries()
+                .HasSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
