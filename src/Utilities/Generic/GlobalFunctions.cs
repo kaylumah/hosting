@@ -131,7 +131,8 @@ public class GlobalFunctions
     {
         var settings = new XmlWriterSettings()
         {
-            ConformanceLevel = ConformanceLevel.Fragment
+            ConformanceLevel = ConformanceLevel.Fragment,
+            Encoding = System.Text.UTF8Encoding(false)
         };
         using var stream = new MemoryStream();
         using var writer = XmlWriter.Create(stream, settings);
