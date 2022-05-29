@@ -2,7 +2,8 @@
 
 param (
     [string]$Url = "http://localhost:4280"
-    # [string]$Url = "http://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
+    #[string]$Url = "http://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
+    #[string]$Url = "https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
 )
 
 # https://stackoverflow.com/questions/45574479/powershell-determine-new-url-of-a-permanently-moved-redirected-resource
@@ -18,7 +19,7 @@ Function GetResolvedUrl()
     $Location = $resp.Headers.Location
     if ($Location.StartsWith("/"))
     {
-      Write-Host "Location is ($Location) relative for '$RequestUrl'"
+      Write-Host "Location is ('$Location') relative for '$RequestUrl'"
       $TempUri = [System.Uri]$RequestUrl
       $Location = $TempUri.AbsoluteUri -Replace $TempUri.AbsolutePath, $Location
     }
