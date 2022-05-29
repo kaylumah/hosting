@@ -1,7 +1,8 @@
 #Requires -Version 7.2
 
 param (
-    [string]$Url = "http://localhost:4280"
+    # [string]$Url = "http://localhost:4280"
+    [string]$Url = "https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
 )
 
 # https://stackoverflow.com/questions/45574479/powershell-determine-new-url-of-a-permanently-moved-redirected-resource
@@ -45,15 +46,15 @@ Function TestRedirects()
 
   if ($ResolvedUrls.Count -gt 0)
   {
-    Write-Host "$StartUrl was redirected:"
+    Write-Host "'$StartUrl' was redirected:"
     foreach($item in $ResolvedUrls)
     {
-      Write-Host "$item"
+      Write-Host "'$item'"
     } 
   }
   else
   {
-    Write-Host "No redirects for $StartUrl"
+    Write-Host "No redirects for '$StartUrl'"
   }
 }
 
@@ -63,10 +64,12 @@ $TestUrls = @(
   "$Url/sitemap",
   "$Url"
 )
+Write-Host ""
 foreach($TestUrl in $TestUrls)
 {
-  Write-Host "Begin Testing $TestUrl"
+  Write-Host "Begin Testing '$TestUrl'"
   TestRedirects -StartUrl $TestUrl
+  Write-Host ""
 }
 
 
