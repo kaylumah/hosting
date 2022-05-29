@@ -28,6 +28,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
+          echo "PR_BASE_URL=https://green-field-0353fee03-${{ github.event.number }}.westeurope.1.azurestaticapps.net" >> $GITHUB_ENV
       - name: 'Generate Website'
         shell: pwsh
         run: |
@@ -45,6 +46,11 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+      - name: Lighthouse
+        if: github.event_name == 'pull_request'
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          urls: '$PR_BASE_URL'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
