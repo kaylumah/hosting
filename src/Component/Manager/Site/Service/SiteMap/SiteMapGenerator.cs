@@ -27,11 +27,17 @@ public class SiteMapGenerator
         var siteMapNodes = new List<SiteMapNode>();
         foreach (var page in pages)
         {
-            siteMapNodes.Add(new SiteMapNode
+            var node = new SiteMapNode
             {
                 Url = GlobalFunctions.AbsoluteUrl(page.Url),
                 LastModified = page.LastModified
-            });
+            };
+
+
+            if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
+            {
+                node.Url = GlobalFunctions.Instance.Url;
+            }
         }
 
         var siteMap = new SiteMap
