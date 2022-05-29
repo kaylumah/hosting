@@ -2,7 +2,4 @@
 
 https://azure.github.io/static-web-apps-cli/docs/cli/swa
 
-```pwsh
-$RepoRoot = Split-Path $PSScriptRoot -Parent
-$DistDirectory = "$RepoRoot/dist"
-```
+https://docs.microsoft.com/en-gb/azure/static-web-apps/configuration
