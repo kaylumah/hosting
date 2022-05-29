@@ -51,8 +51,9 @@ jobs:
       - name: 'Process SiteMap'
         shell: pwsh
         run: |
-          $SiteMapUrl = ${{ steps.builddeploy.outputs.static_web_app_url }}
-          Write-Host "$SiteMapUrl"
+          [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}"
+          [string] $Output = $Urls -join ","
+          echo ::set-output name=SiteMapUrls::$($Output)
       # - name: Lighthouse
       #   if: github.event_name == 'pull_request'
       #   uses: foo-software/lighthouse-check-action@master
