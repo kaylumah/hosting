@@ -54,7 +54,7 @@ jobs:
         run: |
           [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
           [string] $Output = $Urls -join ","
-          echo ::set-output name=SiteMapUrls::$($Output)
+          echo ::set-output name=SiteMapUrls::'$($Output)'
       - name: Lighthouse
         if: github.event_name == 'pull_request'
         uses: foo-software/lighthouse-check-action@master
