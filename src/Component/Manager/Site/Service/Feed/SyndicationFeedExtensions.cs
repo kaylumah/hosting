@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Feed
@@ -12,7 +13,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         {
             var settings = new XmlWriterSettings()
             {
-                Indent = true
+                Indent = true,
+                Encoding = new System.Text.UTF8Encoding(false)
             };
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream, settings);
