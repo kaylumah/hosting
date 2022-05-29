@@ -7,6 +7,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,7 @@ public class SiteManager : ISiteManager
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
     private readonly StructureDataGenerator _structureDataGenerator;
+    private readonly SiteMapGenerator _siteMapGenerator;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -34,7 +36,8 @@ public class SiteManager : ISiteManager
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
-        StructureDataGenerator structureDataGenerator
+        StructureDataGenerator structureDataGenerator,
+        SiteMapGenerator siteMapGenerator
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -46,6 +49,21 @@ public class SiteManager : ISiteManager
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
         _structureDataGenerator = structureDataGenerator;
+        _siteMapGenerator = siteMapGenerator;
+    }
+
+    private Artifact[] CreateSiteMapArtifacts(SiteMetaData siteMetaData)
+    {
+        var result = new List<Artifact>();
+        var sitemap = _siteMapGenerator.Create(siteMetaData);
+        var bytes = sitemap
+                .SaveAsXml();
+        result.Add(new Artifact
+        {
+            Contents = bytes,
+            Path = "sitemap.xml"
+        });
+        return result.ToArray();
     }
 
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
@@ -119,6 +137,8 @@ public class SiteManager : ISiteManager
         var feedArtifacts = CreateFeedArtifacts(siteMetadata);
         artifacts.AddRange(feedArtifacts);
 
+        var siteMapArtifacts = CreateSiteMapArtifacts(siteMetadata);
+        artifacts.AddRange(siteMapArtifacts);
 
         var assets = _fileSystem
             .GetFiles(Path.Combine("_site", request.Configuration.AssetDirectory), true)

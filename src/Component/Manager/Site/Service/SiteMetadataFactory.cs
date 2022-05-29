@@ -44,7 +44,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
             EnrichSiteWithAssemblyData(siteInfo);
-            EnrichSiteWithSiteMap(siteInfo, pages);
+            siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
@@ -61,20 +61,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
-        }
-
-        private void EnrichSiteWithSiteMap(SiteMetaData site, List<PageMetaData> pages)
-        {
-            _logger.LogInformation("Add SiteMap");
-            site.Pages = pages
-                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
-                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
-                .Select(x => new
-                {
-                    Url = x.Url,
-                    x.LastModified,
-                    Sitemap = x.Sitemap
-                });
         }
 
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)

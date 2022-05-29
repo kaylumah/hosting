@@ -26,5 +26,5 @@ public class SiteMetaData
 
     public SortedDictionary<string, PageMetaData[]> Types { get; set; }
 
-    public object Pages { get; set; }
+    public List<PageMetaData> Pages { get; set; }
 }

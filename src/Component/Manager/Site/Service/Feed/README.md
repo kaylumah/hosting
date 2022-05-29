@@ -7,3 +7,9 @@
             // https://validator.w3.org/feed/check.cgi
             // https://dzone.com/articles/systemservicemodelsyndication
             // https://khalidabuhakmeh.com/reading-rss-feeds-with-dotnet-core
+
+            https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap
+
+            https://developers.google.com/search/docs/advanced/sitemaps/large-sitemaps
+            https://developers.google.com/search/docs/advanced/sitemaps/overview
+            https://www.google.com/ping?sitemap=https://example.com/sitemap.xml
