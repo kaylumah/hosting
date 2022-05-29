@@ -1,8 +1,8 @@
 #Requires -Version 7.2
 
 param (
-    # [string]$Url = "http://localhost:4280"
-    [string]$Url = "http://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
+    [string]$Url = "http://localhost:4280"
+    # [string]$Url = "http://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
 )
 
 # https://stackoverflow.com/questions/45574479/powershell-determine-new-url-of-a-permanently-moved-redirected-resource
