@@ -33,7 +33,6 @@ public class SiteMapGenerator
                 LastModified = page.LastModified
             };
 
-
             if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
             {
                 node.Url = GlobalFunctions.Instance.Url;
