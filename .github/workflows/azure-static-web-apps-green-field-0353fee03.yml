@@ -60,7 +60,8 @@ jobs:
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v9
         with:
-          urls: ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
+          urls: |
+            ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
       # - run: npm install -g @lhci/cli@0.8.x
       # - run: lhci collect --config=./dist/lighthouserc.json
       # - run: lhci autorun ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
