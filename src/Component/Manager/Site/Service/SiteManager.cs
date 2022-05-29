@@ -96,12 +96,12 @@ public class SiteManager : ISiteManager
                     Site = siteMetadata,
                     Page = pageMetadata
                 },
-                Template = pageMetadata.GetValue<string>("layout")
+                Template = pageMetadata.Layout
             })
             .ToArray();
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
-            item.Metadata.Page["ldjson"] = _structureDataGenerator.ToLdJson(item.Metadata);
+            item.Metadata.Page.LdJson = _structureDataGenerator.ToLdJson(item.Metadata);
         });
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
