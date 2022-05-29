@@ -2,7 +2,7 @@
 
 param (
     # [string]$Url = "http://localhost:4280"
-    [string]$Url = "https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
+    [string]$Url = "http://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
 )
 
 # https://stackoverflow.com/questions/45574479/powershell-determine-new-url-of-a-permanently-moved-redirected-resource
@@ -12,12 +12,13 @@ Function GetResolvedUrl()
   param (
     [string]$RequestUrl
   )
-  
+  Write-Host "Verifying '$RequestUrl'"
   $resp = Invoke-WebRequest -Method HEAD $RequestUrl -MaximumRedirection 0 -ErrorAction Ignore -SkipHttpErrorCheck
   $code = $resp.StatusCode
   if($code -eq 301 -or $code -eq 302) {
-    $Location = $resp.Headers.Location
-    Write-Output $Location
+    Write-Host $resp
+    # $Location = $resp.Headers.Location
+    # Write-Output $Location
   }
 }
 
