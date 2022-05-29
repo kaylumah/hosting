@@ -56,8 +56,8 @@ jobs:
           $Urls = $Urls | Foreach-Object { "--url=$_" }
           [string] $Output = $Urls -Join " "
           echo ::set-output name=SiteMapUrls::$($Output)
-      - run: npm install && npm install -g @lhci/cli@0.8.x
-      - run: lhci autorun
+      - run: npm install -g @lhci/cli@0.8.x
+      - run: lhci autorun ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
          # [string] $Output = $Urls -join ","
          # echo ::set-output name=SiteMapUrls::'$($Output)'
       # - name: Lighthouse
