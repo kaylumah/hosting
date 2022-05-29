@@ -7,20 +7,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public static class PageMetadataExtensions
     {
-        public static IEnumerable<PageMetaData> WhereIsTagged(this IEnumerable<PageMetaData> source)
-        {
-            return source
-                .Where(x => x.Tags != null)
-                .Where(x => x.Tags.Any());
-        }
-
-        public static IEnumerable<PageMetaData> WhereIsTaggedWith(this IEnumerable<PageMetaData> source, string tag)
-        {
-            return source
-                .WhereIsTagged()
-                .Where(page => page.Tags.Contains(tag));
-        }
-
         public static IEnumerable<PageMetaData> WhereIsArticle(this IEnumerable<PageMetaData> source)
         {
             return source.Where(x => ContentType.Article.Equals(x.Type));

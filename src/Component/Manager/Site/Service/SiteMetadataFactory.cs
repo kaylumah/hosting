@@ -163,14 +163,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add tags");
             var tags = pages
-                .WhereIsTagged()
+                .HasTag()
                 .WhereIsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
                 var tagFiles = pages
-                    .WhereIsTaggedWith(tag)
+                    .FromTag(tag)
                     .ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
