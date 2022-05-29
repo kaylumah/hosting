@@ -20,8 +20,8 @@ public static class SiteMetaDataExtensions
                     var singleDictionary = (Dictionary<object, object>)author.Value;
                     var syndicationPerson = new Person
                     {
-                        Name = (string)singleDictionary[Engine.Transformation.Interface.Constants.Author.FullName],
-                        Url = new Uri((string)singleDictionary[Engine.Transformation.Interface.Constants.Author.Url])
+                        Name = (string)singleDictionary["full_name"],
+                        Url = new Uri((string)singleDictionary["uri"])
                     };
                     result.Add((string)author.Key, syndicationPerson);
                 }
