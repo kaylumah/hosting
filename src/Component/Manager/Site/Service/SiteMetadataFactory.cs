@@ -63,6 +63,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             site.Build = buildMetadata;
         }
 
+        private void EnrichSiteWithSiteMap(SiteMetaData site, List<PageMetaData> pages)
+        {
+            _logger.LogInformation("Add SiteMap");
+            site.Pages = pages
+                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
+                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
+                .Select(x => new
+                {
+                    Url = x.Url,
+                    x.LastModified,
+                    Sitemap = x.Sitemap
+                });
+        }
+
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
             _logger.LogInformation("Add Data");
@@ -149,14 +163,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add tags");
             var tags = pages
-                .WhereIsTagged()
-                .WhereIsArticle()
+                .HasTag()
+                .IsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
                 var tagFiles = pages
-                    .WhereIsTaggedWith(tag)
+                    .FromTag(tag)
                     .ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
@@ -166,7 +180,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add years");
             var years = pages
-                .WhereIsArticle()
+                .IsArticle()
                 .Select(x => x.Date.Year)
                 .Distinct();
             foreach (var year in years)
@@ -180,14 +194,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add series");
             var series = pages
-                .WhereIsSeries()
+                .HasSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
             foreach (var serie in series)
             {
                 var seriesFiles = pages
-                    .WhereSeriesIs(serie)
+                    .FromSeries(serie)
                     .OrderBy(x => x.Url)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);
