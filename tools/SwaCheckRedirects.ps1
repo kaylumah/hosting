@@ -18,7 +18,7 @@ Function GetResolvedUrl()
     $Location = $resp.Headers.Location
     if ($Location.StartsWith("/"))
     {
-      Write-Host "Location is relative for '$RequestUrl'"
+      Write-Host "Location is ($Location) relative for '$RequestUrl'"
       $TempUri = [System.Uri]$RequestUrl
       $Location = $TempUri.AbsoluteUri -Replace $TempUri.AbsolutePath, $Location
     }
