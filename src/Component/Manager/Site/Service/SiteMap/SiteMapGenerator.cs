@@ -25,10 +25,10 @@ public class SiteMapGenerator
                         .ToList();
 
         var siteMapNodes = new List<SiteMapNode>();
-        foreach(var page in pages)
+        foreach (var page in pages)
         {
             siteMapNodes.Add(new SiteMapNode
-            { 
+            {
                 Url = GlobalFunctions.AbsoluteUrl(page.Url),
                 LastModified = page.LastModified
             });
