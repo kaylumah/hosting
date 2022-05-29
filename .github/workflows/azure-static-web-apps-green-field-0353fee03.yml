@@ -48,17 +48,19 @@ jobs:
           ###### End of Repository/Build Configurations ######
       # - name: Print Deployment URL
       #   run: echo ${{ steps.builddeploy.outputs.static_web_app_url }}
-      - name: 'Process SiteMap'
+      - name: 'Download SiteMap'
+        id: "downloadsitemap"
         shell: pwsh
         run: |
           [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
           [string] $Output = $Urls -join ","
           echo ::set-output name=SiteMapUrls::$($Output)
-      # - name: Lighthouse
-      #   if: github.event_name == 'pull_request'
-      #   uses: foo-software/lighthouse-check-action@master
-      #   with:
-      #     urls: '${{ env.PR_BASE_URL }}'
+      - name: Lighthouse
+        if: github.event_name == 'pull_request'
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          urls: '${{ steps.downloadsitemap.outputs.SiteMapUrls }}'
+          # urls: '${{ env.PR_BASE_URL }}'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
