@@ -164,7 +164,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _logger.LogInformation("Add tags");
             var tags = pages
                 .HasTag()
-                .WhereIsArticle()
+                .IsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
@@ -180,7 +180,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add years");
             var years = pages
-                .WhereIsArticle()
+                .IsArticle()
                 .Select(x => x.Date.Year)
                 .Distinct();
             foreach (var year in years)
