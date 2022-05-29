@@ -194,14 +194,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add series");
             var series = pages
-                .WhereIsSeries()
+                .PartOfSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
             foreach (var serie in series)
             {
                 var seriesFiles = pages
-                    .WhereSeriesIs(serie)
+                    .FromSeries(serie)
                     .OrderBy(x => x.Url)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);

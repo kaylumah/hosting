@@ -5,6 +5,8 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public static class PageMetaDataExtensions
 {
+    public static readonly Func<PageMetaData, bool> Series = (page) => !string.IsNullOrEmpty(page.Series);
+
     public static readonly Func<PageMetaData, bool> Html = (page) => page.IsHtml();
 
     public static string GetExtension(this PageMetaData pageMetaData)
@@ -22,5 +24,17 @@ public static class PageMetaDataExtensions
     public static bool IsHtml(this PageMetaData pageMetaData)
     {
         return pageMetaData.IsExtension(".html");
+    }
+
+    public static IEnumerable<PageMetaData> PartOfSeries(this IEnumerable<PageMetaData> source)
+    {
+        return source.Where(Series);
+    }
+
+    public static IEnumerable<PageMetaData> FromSeries(this IEnumerable<PageMetaData> source, string series)
+    {
+        return source
+                .PartOfSeries()
+                .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
     }
 }
