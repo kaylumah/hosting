@@ -14,13 +14,43 @@ Function GetResolvedUrl()
   
   $resp = Invoke-WebRequest -Method HEAD $RequestUrl -MaximumRedirection 0 -ErrorAction Ignore -SkipHttpErrorCheck
   $code = $resp.StatusCode
-  if($code -eq 302) {
+  if($code -eq 301 || $code -eq 302) {
     $Location = $resp.Headers.Location
     Write-Output $Location
   }
 }
 
+Function TestRedirects()
+{
+  param (
+    [string]$StartUrl
+  )
 
-GetResolvedUrl -RequestUrl "$Url/feed"
+  $CurrentUrl = $StartUrl
+  $ContinueLoop = $true
+  [System.Collections.ArrayList] $ResolvedUrls = @()
+  while($ContinueLoop)
+  {
+    $Result = GetResolvedUrl -RequestUrl $CurrentUrl
+    if ([string]::IsNullOrEmpty($Result))
+    {
+      $ContinueLoop = $false
+    }
+    else
+    {
+      $ResolvedUrls.Add($Result)
+      $CurrentUrl = $Result
+    }
+  }
+
+  Write-Host "$StartUrl"
+  foreach($item in $ResolvedUrls)
+  {
+    Write-Host "$item"
+  }
+}
+
+
+TestRedirects -StartUrl "http://microsoft.com/about" #"$Url/feed"
 
 
