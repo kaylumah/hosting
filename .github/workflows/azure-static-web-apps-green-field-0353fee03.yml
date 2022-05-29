@@ -57,7 +57,7 @@ jobs:
           [string] $Output = $Urls -Join " "
           echo ::set-output name=SiteMapUrls::$($Output)
       - run: npm install -g @lhci/cli@0.8.x
-      - run: lhci autorun --config=./dist/lighthouserc.json
+      - run: lhci collect --config=./dist/lighthouserc.json
       # - run: lhci autorun ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
          # [string] $Output = $Urls -join ","
          # echo ::set-output name=SiteMapUrls::'$($Output)'
