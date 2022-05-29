@@ -14,5 +14,5 @@ $Nodes = $UrlSet.ChildNodes
 ForEach($Node in $Nodes)
 {
     $Location = $Node.loc
-    Write-Host "$Location"
+    Write-Output "$Location"
 }
