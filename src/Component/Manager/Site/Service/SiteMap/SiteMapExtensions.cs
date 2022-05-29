@@ -11,7 +11,8 @@ public static class SiteMapExtensions
     {
         var settings = new XmlWriterSettings()
         {
-            Indent = true
+            Indent = true,
+            Encoding = System.Text.UTF8Encoding(false)
         };
         using var stream = new MemoryStream();
         using var writer = XmlWriter.Create(stream, settings);
