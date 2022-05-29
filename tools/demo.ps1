@@ -1,7 +1,7 @@
 #Requires -Version 7.2
 
 param (
-    [string]$Url
+    [string]$Url = "http://localhost:4280"
 )
 
 # $RepoRoot = Split-Path $PSScriptRoot -Parent
@@ -24,15 +24,10 @@ Function Get-UrlRedirection {
   [CmdletBinding()]
   Param (
     [Parameter(Mandatory, ValueFromPipeline)] [Uri] $Url,
-    [switch] $Enumerate,
     [int] $MaxRedirections = 50 # Use same default as [System.Net.HttpWebRequest]
   )
 
-  process {
-    try {
-
-      if ($Enumerate) {
-        $nextUrl = $Url
+$nextUrl = $Url
         $urls = @( $nextUrl.AbsoluteUri ) # Start with the input Uri
         $ultimateFound = $false
         foreach($i in 1..$($MaxRedirections+1)) {
@@ -61,14 +56,6 @@ Function Get-UrlRedirection {
         }
         Write-Output -NoEnumerate $urls
         if (-not $ultimateFound) { Write-Warning "Enumeration of $Url redirections ended before reaching the ultimate target." }
-
-      }
-
-      } catch {
-        Write-Error $_ # Report the exception as a non-terminating error.
-    }
-  } # process
-
 }
 
-Get-UrlRedirection -Enumerate $Url -Verbose
+Get-UrlRedirection $Url -Verbose
