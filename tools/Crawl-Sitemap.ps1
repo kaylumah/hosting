@@ -10,3 +10,6 @@ ForEach($Url in $Urls)
 {
     Write-Host "Url = $Url"
 }
+
+$Output = $Urls -join ","
+Write-Host $Output
