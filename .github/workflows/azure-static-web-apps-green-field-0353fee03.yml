@@ -59,7 +59,7 @@ jobs:
         if: github.event_name == 'pull_request'
         uses: foo-software/lighthouse-check-action@master
         with:
-          urls: '${{ steps.downloadsitemap.outputs.SiteMapUrls }}'
+          urls: ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
           # urls: '${{ env.PR_BASE_URL }}'
 
   close_pull_request_job:
