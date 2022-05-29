@@ -55,15 +55,17 @@ jobs:
           [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
           [string] $Output = $Urls | ConvertTo-Json
           echo ::set-output name=SiteMapUrls::$($Output)
+      - run: npm install && npm install -g @lhci/cli@0.8.x
+      - run: lhci autorun
          # [string] $Output = $Urls -join ","
          # echo ::set-output name=SiteMapUrls::'$($Output)'
-      - name: Lighthouse
-        if: github.event_name == 'pull_request'
-        uses: foo-software/lighthouse-check-action@master
-        with:
-          urlsJson: '${{ steps.downloadsitemap.outputs.SiteMapUrls }}'
-          #urls: ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
-          # urls: '${{ env.PR_BASE_URL }}'
+      # - name: Lighthouse
+      #   if: github.event_name == 'pull_request'
+      #   uses: foo-software/lighthouse-check-action@master
+      #   with:
+      #     urlsJson: '${{ steps.downloadsitemap.outputs.SiteMapUrls }}'
+      #     #urls: ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
+      #     # urls: '${{ env.PR_BASE_URL }}'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
