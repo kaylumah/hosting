@@ -7,6 +7,12 @@ namespace System.Collections.Generic;
 
 public static class DictionaryExtensions
 {
+    public static bool GetBoolValue(this Dictionary<string, object> dictionary, string key)
+    {
+        var stringValue = dictionary.GetValue<string>(key);
+        return bool.Parse(stringValue);
+    }
+
     public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
     {
         dictionary.TryGetValue(key.ToLower(CultureInfo.InvariantCulture), out object o);

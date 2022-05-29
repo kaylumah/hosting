@@ -24,6 +24,25 @@ public class PageMetaData : Dictionary<string, object>
     public string Language => this.GetValue<string>(nameof(Language));
     public string Author => this.GetValue<string>(nameof(Author));
     public string Url => this.GetValue<string>(nameof(Url));
+    public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
+    public bool Feed => this.GetBoolValue(nameof(Feed));
+    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
+    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
+    public string LdJson
+    {
+        get
+        {
+            return this.GetValue<string>(nameof(LdJson));
+        }
+        set
+        {
+            this.SetValue(nameof(LdJson), value);
+        }
+    }
+    public string Layout => this.GetValue<string>(nameof(Layout));
+    public string Uri => this.GetValue<string>(nameof(Uri));
+    public string Image => this.GetValue<string>(nameof(Image));
+    public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 
     public string Name
     {

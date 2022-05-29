@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Schema.NET" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options" />

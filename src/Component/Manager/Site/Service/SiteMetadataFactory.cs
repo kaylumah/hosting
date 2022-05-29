@@ -44,7 +44,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Years = new SortedDictionary<int, PageMetaData[]>()
             };
             EnrichSiteWithAssemblyData(siteInfo);
-            EnrichSiteWithSiteMap(siteInfo, pages);
+            siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, siteGuid, pages);
             EnrichSiteWithTags(siteInfo, pages);
@@ -61,20 +61,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
-        }
-
-        private void EnrichSiteWithSiteMap(SiteMetaData site, List<PageMetaData> pages)
-        {
-            _logger.LogInformation("Add SiteMap");
-            site.Pages = pages
-                .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
-                .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
-                .Select(x => new
-                {
-                    Url = x["url"],
-                    x.LastModified,
-                    Sitemap = x["sitemap"]
-                });
         }
 
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
@@ -163,14 +149,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add tags");
             var tags = pages
-                .WhereIsTagged()
-                .WhereIsArticle()
+                .HasTag()
+                .IsArticle()
                 .SelectMany(x => x.Tags)
                 .Distinct();
             foreach (var tag in tags)
             {
                 var tagFiles = pages
-                    .WhereIsTaggedWith(tag)
+                    .FromTag(tag)
                     .ToArray();
                 site.Tags.Add(tag, tagFiles);
             }
@@ -180,13 +166,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add years");
             var years = pages
-                .Where(x => x.ContainsKey("date"))
-                .WhereIsArticle()
-                .Select(x => ((DateTimeOffset)x["date"]).Year)
+                .IsArticle()
+                .Select(x => x.Date.Year)
                 .Distinct();
             foreach (var year in years)
             {
-                var yearFiles = pages.Where(x => x.ContainsKey("date") && ((DateTimeOffset)x["date"]).Year.Equals(year)).ToArray();
+                var yearFiles = pages.Where(x => x.Date.Year.Equals(year)).ToArray();
                 site.Years.Add(year, yearFiles);
             }
         }
@@ -195,14 +180,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _logger.LogInformation("Add series");
             var series = pages
-                .WhereIsSeries()
+                .HasSeries()
                 .Select(x => x.Series)
                 .Distinct();
 
             foreach (var serie in series)
             {
                 var seriesFiles = pages
-                    .WhereSeriesIs(serie)
+                    .FromSeries(serie)
                     .OrderBy(x => x.Url)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);

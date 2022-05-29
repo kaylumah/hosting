@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         Title = new TextSyndicationContent(pageMetaData.Title),
                         Summary = new TextSyndicationContent(pageMetaData.Description),
                         Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = (DateTimeOffset)pageMetaData["date"],
+                        PublishDate = pageMetaData.Date,
                         LastUpdatedTime = pageMetaData.LastModified
                     };
 
@@ -109,7 +109,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             if (siteMetaData.Collections.TryGetValue("posts", out var posts))
             {
                 return posts
-                    .Where(x => bool.Parse((string)x["feed"]));
+                    .Where(x => x.Feed)
+                    .ToList();
             }
             return Enumerable.Empty<PageMetaData>();
         }
