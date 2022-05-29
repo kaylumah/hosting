@@ -52,15 +52,18 @@ public class SiteManager : ISiteManager
         _siteMapGenerator = siteMapGenerator;
     }
 
-    private Artifact CreateSiteMapArtifact(SiteMetaData siteMetaData)
+    private Artifact[] CreateSiteMapArtifacts(SiteMetaData siteMetaData)
     {
+        var result = new List<Artifact>();
         var sitemap = _siteMapGenerator.Create(siteMetaData);
-        var bytes = Encoding.UTF8.GetBytes(sitemap);
-        return new Artifact
+        var bytes = sitemap
+                .SaveAsXml();
+        result.Add(new Artifact
         {
             Contents = bytes,
             Path = "sitemap.xml"
-        };
+        });
+        return result.ToArray();
     }
 
     private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
@@ -134,8 +137,8 @@ public class SiteManager : ISiteManager
         var feedArtifacts = CreateFeedArtifacts(siteMetadata);
         artifacts.AddRange(feedArtifacts);
 
-        var siteMap = CreateSiteMapArtifact(siteMetadata);
-        artifacts.Add(siteMap);
+        var siteMapArtifacts = CreateSiteMapArtifacts(siteMetadata);
+        artifacts.AddRange(siteMapArtifacts);
 
         var assets = _fileSystem
             .GetFiles(Path.Combine("_site", request.Configuration.AssetDirectory), true)
