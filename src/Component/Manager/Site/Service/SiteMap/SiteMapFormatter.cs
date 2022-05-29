@@ -35,7 +35,7 @@ public class SiteMapFormatter
         writer.WriteElementString(SiteMapConstants.LocationTag, item.Url);
         if (item.LastModified.HasValue)
         {
-            writer.WriteElementString(SiteMapConstants.LastModifiedTag, item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture));
+            writer.WriteElementString(SiteMapConstants.LastModifiedTag, item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
         }
     }
 
