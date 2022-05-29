@@ -1,7 +1,8 @@
 #Requires -Version 7.2
 
 param(
-    [string]$Url = "https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net/sitemap.xml"
+    [parameter(Mandatory = $true, HelpMessage = "The URL for a XML Sitemap file")]
+    [string]$Url
 )
 
 # https://gist.github.com/eNeRGy164/a644417b737eb5d3af3c80d4ceb527e1
