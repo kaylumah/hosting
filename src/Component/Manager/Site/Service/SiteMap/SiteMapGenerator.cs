@@ -39,32 +39,5 @@ public class SiteMapGenerator
             Items = siteMapNodes
         };
         return siteMap;
-
-        /*
-        var settings = new XmlWriterSettings()
-        {
-            Indent = true,
-            NamespaceHandling = NamespaceHandling.Default
-        };
-        using var stream = new MemoryStream();
-        using var writer = XmlWriter.Create(stream, settings);
-
-        var ns = "http://www.sitemaps.org/schemas/sitemap/0.9";
-        writer.WriteStartDocument();
-        writer.WriteStartElement("urlset", ns);
-        */
-        /*
-        foreach (var page in pages)
-        {
-            writer.WriteStartElement("url");
-            writer.WriteElementString("loc", GlobalFunctions.AbsoluteUrl(page.Url));
-            // writer.WriteElementString("changefreq", "weekly");
-            // writer.WriteElementString("priority", "1.0");
-            writer.WriteEndElement();
-        }
-        */
-
-        // writer.Close();
-        // return Encoding.UTF8.GetString(stream.ToArray());
     }
 }
