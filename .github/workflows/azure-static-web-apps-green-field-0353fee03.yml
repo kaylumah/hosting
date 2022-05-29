@@ -53,7 +53,8 @@ jobs:
         shell: pwsh
         run: |
           [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
-          [string] $Output = $Urls | ConvertTo-Json
+          $Urls = $Urls | Foreach-Object { "--url=$_" }
+          [string] $Output = $Urls -Join " "
           echo ::set-output name=SiteMapUrls::$($Output)
       - run: npm install && npm install -g @lhci/cli@0.8.x
       - run: lhci autorun
