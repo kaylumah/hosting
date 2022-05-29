@@ -37,6 +37,8 @@ public class SiteMapGenerator
             {
                 node.Url = GlobalFunctions.Instance.Url;
             }
+
+            siteMapNodes.Add(node);
         }
 
         var siteMap = new SiteMap
