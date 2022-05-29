@@ -43,17 +43,25 @@ Function TestRedirects()
     }
   }
 
-  Write-Host "$StartUrl"
-  foreach($item in $ResolvedUrls)
+  if ($ResolvedUrls.Count -gt 0)
   {
-    Write-Host "$item"
+    Write-Host "$StartUrl was redirected:"
+    foreach($item in $ResolvedUrls)
+    {
+      Write-Host "$item"
+    } 
+  }
+  else
+  {
+    Write-Host "No redirects for $StartUrl"
   }
 }
 
 # "http://microsoft.com/about"
 $TestUrls = @(
   "$Url/feed",
-  "$Url/sitemap"
+  "$Url/sitemap",
+  "$Url"
 )
 foreach($TestUrl in $TestUrls)
 {
