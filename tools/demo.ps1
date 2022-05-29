@@ -62,16 +62,7 @@ Function Get-UrlRedirection {
         Write-Output -NoEnumerate $urls
         if (-not $ultimateFound) { Write-Warning "Enumeration of $Url redirections ended before reaching the ultimate target." }
 
-      } else {
-        $request = [System.Net.HttpWebRequest]::Create($Url)
-        if ($PSBoundParameters.ContainsKey('MaxRedirections')) {
-          $request.MaximumAutomaticRedirections = $MaxRedirections
-        }
-        $response = $request.GetResponse()
-        $response.ResponseUri.AbsoluteUri
-        $response.Close()
-
-       }
+      }
 
       } catch {
         Write-Error $_ # Report the exception as a non-terminating error.
