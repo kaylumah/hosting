@@ -53,11 +53,16 @@ jobs:
         shell: pwsh
         run: |
           [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
-          $Urls = $Urls | Foreach-Object { "--url=$_" }
-          [string] $Output = $Urls -Join " "
+          # $Urls = $Urls | Foreach-Object { "--url=$_" }
+          # [string] $Output = $Urls -Join " "
+          [string] $Output = $Urls | Out-String
           echo ::set-output name=SiteMapUrls::$($Output)
-      - run: npm install -g @lhci/cli@0.8.x
-      - run: lhci collect --config=./dist/lighthouserc.json
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
+      # - run: npm install -g @lhci/cli@0.8.x
+      # - run: lhci collect --config=./dist/lighthouserc.json
       # - run: lhci autorun ${{ steps.downloadsitemap.outputs.SiteMapUrls }}
          # [string] $Output = $Urls -join ","
          # echo ::set-output name=SiteMapUrls::'$($Output)'
