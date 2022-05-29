@@ -51,7 +51,10 @@ Function TestRedirects()
 }
 
 # "http://microsoft.com/about"
-$TestUrls = @("$Url/feed")
+$TestUrls = @(
+  "$Url/feed",
+  "$Url/sitemap"
+)
 foreach($TestUrl in $TestUrls)
 {
   Write-Host "Begin Testing $TestUrl"
