@@ -1,7 +1,7 @@
 #Requires -Version 7.2
 
 # https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net/feed.xml
-$BaseUrl = "https://green-field-0353fee03-101.westeurope.1.azurestaticapps.net"
+$BaseUrl = "http://localhost:4280"
 
 function CheckUrl()
 {

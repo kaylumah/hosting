@@ -27,10 +27,10 @@
       "statusCode": 301
     },
     {
-        "route": "/feed.xml",
-        "headers": {
-            "Content-Type": "application/xml"
-        }
+      "route": "/feed.xml",
+      "headers": {
+        "Content-Type": "application/xml"
+      }
     },
     {
       "route": "/feed",
