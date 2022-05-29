@@ -51,7 +51,7 @@ jobs:
       - name: 'Process SiteMap'
         shell: pwsh
         run: |
-          [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}"
+          [array] $Urls = ./tools/Download-Sitemap.ps1 -Url "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
           [string] $Output = $Urls -join ","
           echo ::set-output name=SiteMapUrls::$($Output)
       # - name: Lighthouse
