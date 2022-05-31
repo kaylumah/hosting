@@ -36,7 +36,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var feed = new SyndicationFeed
             {
                 Language = siteMetaData.Language,
-                Title = new TextSyndicationContent(siteMetaData.Title),
+                Title = new CDataSyndicationContent(siteMetaData.Title),
                 Description = new TextSyndicationContent(siteMetaData.Description),
                 Id = GlobalFunctions.AbsoluteUrl("feed.xml"),
                 Copyright = new TextSyndicationContent(copyrightClaim),
