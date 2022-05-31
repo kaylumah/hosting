@@ -42,6 +42,6 @@
   ],
   "mimeTypes": {
     ".json": "text/json",
-    ".xml": "application/atom+xml"
+    ".xml": "application/xml"
   }
 }
