@@ -39,7 +39,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 Title = new CDataSyndicationContent(siteMetaData.Title),
                 Description = new CDataSyndicationContent(siteMetaData.Description),
                 Id = GlobalFunctions.AbsoluteUrl("feed.xml"),
-                Copyright = new TextSyndicationContent(copyrightClaim),
+                Copyright = new CDataSyndicationContent(copyrightClaim),
                 LastUpdatedTime = generatedAtBuildTime,
                 ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg")),
                 Generator = "Kaylumah Site Generator"
