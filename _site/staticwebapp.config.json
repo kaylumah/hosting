@@ -1,42 +1,47 @@
 {
-    "routes": [
-        {
-            "route": "/assets/*.{svg,png,jpg,gif}",
-            "headers": {
-                "Cache-Control": "public, max-age=15552000"
-            }
-        },
-        {
-            "route": "/index.html",
-            "redirect": "/",
-            "statusCode": 301
-        },
-        {
-            "route": "/about",
-            "redirect": "/about.html",
-            "statusCode": 301
-        },
-        {
-            "route": "/archive",
-            "redirect": "/archive.html",
-            "statusCode": 301
-        },
-        {
-            "route": "/blog",
-            "redirect": "/blog.html",
-            "statusCode": 301
-        },
-        {
-            "route": "/feed",
-            "redirect": "/feed.xml"
-        },
-        {
-            "route": "/sitemap",
-            "redirect": "/sitemap.xml"
-        }
-    ],
-    "mimeTypes": {
-        ".json": "text/json",
-        ".xml": "application/xml"
+  "routes": [
+    {
+      "route": "/assets/*.{svg,png,jpg,gif}",
+      "headers": {
+        "Cache-Control": "public, max-age=15552000"
+      }
+    },
+    {
+      "route": "/index.html",
+      "redirect": "/",
+      "statusCode": 301
+    },
+    {
+      "route": "/about",
+      "redirect": "/about.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/archive",
+      "redirect": "/archive.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/blog",
+      "redirect": "/blog.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/feed",
+      "redirect": "/feed.xml"
+    },
+    {
+      "route": "/sitemap",
+      "redirect": "/sitemap.xml"
     }
+  ],
+  "mimeTypes": {
+    ".json": "text/json",
+    ".xml": "application/xml"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html"
+    }
+  }
 }
