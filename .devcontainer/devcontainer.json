@@ -41,6 +41,9 @@
 		// Azure Function and Static WebApps
 		, "ms-azuretools.vscode-azurefunctions"
 		, "ms-azuretools.vscode-azurestaticwebapps"
+
+        // Powershell
+		, "ms-vscode.PowerShell"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
