@@ -81,8 +81,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     var item = new SyndicationItem
                     {
                         Id = pageUrl,
-                        Title = new TextSyndicationContent(pageMetaData.Title),
-                        Summary = new TextSyndicationContent(pageMetaData.Description),
+                        Title = new CDataSyndicationContent(pageMetaData.Title),
+                        Summary = new CDataSyndicationContent(pageMetaData.Description),
                         Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
                         PublishDate = pageMetaData.Date,
                         LastUpdatedTime = pageMetaData.LastModified
