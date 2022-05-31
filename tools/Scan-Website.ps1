@@ -1,10 +1,10 @@
 #requires -Version 7.2
 
 param (
-    # [Parameter(Mandatory=$true, HelpMessage = "The base URL for website")]
-    # [string] $BaseUrl
+    [Parameter(Mandatory=$true, HelpMessage = "The base URL for website")]
+    [string] $BaseUrl
 )
-$BaseUrl = "https://kaylumah.nl"
+
 $ErrorActionPreference  = "Stop"
 $ScriptRoot = $PSScriptRoot
 
