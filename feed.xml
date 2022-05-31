@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom">
-  <title type="text">Max Hamulyák · Kaylumah</title>
-  <subtitle type="text">A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák</subtitle>
+  <title type="text"><![CDATA[Max Hamulyák · Kaylumah]]></title>
+  <subtitle type="text"><![CDATA[A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák]]></subtitle>
   <id>https://kaylumah.nl/feed.xml</id>
   <rights type="text">© Kaylumah. All rights reserved.</rights>
-  <updated>2022-05-31T17:15:15Z</updated>
+  <updated>2022-05-31T17:22:18Z</updated>
   <logo>https://kaylumah.nl/assets/logo_alt.svg</logo>
   <generator>Kaylumah Site Generator</generator>
   <link rel="self" type="application/atom+xml" href="https://kaylumah.nl/feed.xml" />
