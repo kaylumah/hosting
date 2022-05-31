@@ -1,9 +1,4 @@
 {
-  "responseOverrides": {
-    "404": {
-      "rewrite": "/404.html"
-    }
-  },
   "routes": [
     {
       "route": "/assets/*.{svg,png,jpg,gif}",
@@ -43,5 +38,10 @@
   "mimeTypes": {
     ".json": "text/json",
     ".xml": "application/xml"
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html"
+    }
   }
 }
