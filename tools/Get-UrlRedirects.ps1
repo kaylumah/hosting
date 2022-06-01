@@ -1,7 +1,8 @@
 #requires -Version 7.2
 
 param (
-    [string] $Url = "http://kaylumah.nl/blog"
+    [Parameter(Mandatory=$true, HelpMessage = "The URL to follow")]
+    [string] $Url
 )
 
 $ErrorActionPreference  = "Stop"
