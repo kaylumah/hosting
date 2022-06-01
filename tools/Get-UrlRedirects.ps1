@@ -1,7 +1,7 @@
 #requires -Version 7.2
 
 param (
-    [Parameter(Mandatory=$true, HelpMessage = "The URL to follow")]
+    [Parameter(Mandatory=$true, HelpMessage = "The URL to check")]
     [string] $Url
 )
 
