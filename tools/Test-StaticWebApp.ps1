@@ -7,9 +7,13 @@ $ErrorActionPreference  = "Stop"
 
 $ScriptRoot = $PSScriptRoot
 $GetUrlRedirectsScript = "$ScriptRoot/Get-UrlRedirects.ps1"
-$Urls = & $GetUrlRedirectsScript -Url "http://kaylumah.nl/blog"
+$GetUrlContentTypeScript = "$ScriptRoot/Get-UrlContentType.ps1"
 
-foreach($Url in $Urls)
-{
-    Write-Host "$Url"
-}
+
+$TestUrl = "http://kaylumah.nl/blog"
+$Urls = & $GetUrlRedirectsScript -Url $TestUrl
+
+$FinalRedirectUrl = $($Urls[$Urls.Count -1]).Trim()
+$ContentType = $(& $GetUrlContentTypeScript -Url $FinalRedirectUrl).Trim()
+
+Write-Host "For '$TestUrl' the resolved url is '$FinalRedirectUrl' with content-type '$ContentType'"
