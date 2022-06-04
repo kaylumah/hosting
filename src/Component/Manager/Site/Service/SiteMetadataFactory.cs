@@ -74,6 +74,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
             LogEnrichSiteWith("AssemblyData");
+            var now = _systemClock.UtcNow;
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
