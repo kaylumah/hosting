@@ -1,4 +1,4 @@
-# & "./build.ps1" -CleanDevDependencies
+& "./build.ps1" -CleanDevDependencies
 $SourceDirectory = "/workspaces/kaylumah.github.io/dist"
 $DistDirectory = "/workspaces/kaylumah.github.io/compare"
 
