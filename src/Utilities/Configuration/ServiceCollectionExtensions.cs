@@ -20,6 +20,12 @@ public static partial class ServiceCollectionExtensions
     {
         var section = configuration.GetRequiredSection(key);
         var configureDelegate = (TOptions options) => section.Bind(options);
+        return services
+            .SetupOptions(configureDelegate);
+    }
+
+    public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
+    {
         services.Configure(configureDelegate);
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;
