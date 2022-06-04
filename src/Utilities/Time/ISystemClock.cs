@@ -12,6 +12,7 @@ public interface ISystemClock
 
 public class SystemClock : ISystemClock
 {
+    // https://github.com/dotnet/aspnetcore/issues/16844
     // https://github.com/dotnet/runtime/issues/36617
     public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
 }

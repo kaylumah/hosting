@@ -76,6 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             LogEnrichSiteWith("AssemblyData");
             var localZone = TimeZoneInfo.Local;
             var now = _systemClock.UtcNow;
+            var converted = TimeZoneInfo.ConvertTime(now, localZone);
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;

@@ -14,7 +14,8 @@
 	},
 
 	"containerEnv": {
-		"DOTNET_CLI_TELEMETRY_OPTOUT": "true"
+		"DOTNET_CLI_TELEMETRY_OPTOUT": "true",
+        "TZ": "Europe/Amsterdam"
 	},
 
 	// Set *default* container specific settings.json values on container create.
