@@ -9,6 +9,7 @@ public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSystemClock(this IServiceCollection services)
     {
+        services.AddTransient<ISystemClock, SystemClock>();
         return services;
     }
 }
