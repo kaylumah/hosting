@@ -6,5 +6,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Engine.Transformation.Interface.csproj" />
     <ProjectReference Include="..\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Configuration\Kaylumah.Ssg.Utilities.Configuration.csproj" />
   </ItemGroup>
 </Project>
