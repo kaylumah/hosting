@@ -9,6 +9,17 @@ namespace Kaylumah.Ssg.Access.Artifact.Service;
 
 public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
 {
+    [LoggerMessage(
+    EventId = 0,
+    Level = LogLevel.Information,
+    Message = "Creating directory `{DirectoryName}`")]
+    public partial void CreatingDirectory(string directoryName);
+
+    [LoggerMessage(
+        EventId = 1,
+        Level = LogLevel.Information,
+        Message = "Creating file `{FileName}`")]
+    public partial void CreatingFile(string fileName);
     private readonly IFileSystem _fileSystem;
     private readonly ILogger _logger;
 
@@ -17,18 +28,6 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
         _logger = logger;
         _fileSystem = fileSystem;
     }
-
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Information,
-        Message = "Creating directory `{DirectoryName}`")]
-    public partial void CreatingDirectory(string directoryName);
-
-    [LoggerMessage(
-        EventId = 1,
-        Level = LogLevel.Information,
-        Message = "Creating file `{FileName}`")]
-    public partial void CreatingFile(string fileName);
 
     public async Task Execute(StoreArtifactsRequest request)
     {

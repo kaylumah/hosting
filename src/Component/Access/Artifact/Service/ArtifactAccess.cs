@@ -8,6 +8,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Service;
 
 public partial class ArtifactAccess : IArtifactAccess
 {
+    [LoggerMessage(
+        EventId = 0,
+        Level = LogLevel.Information,
+        Message = "Storing artifacts")]
+    public partial void StoreArtifacts();
 
     private readonly ILogger _logger;
     private readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
@@ -17,12 +22,6 @@ public partial class ArtifactAccess : IArtifactAccess
         _logger = logger;
         _storeArtifactsStrategies = storeArtifactsStrategies;
     }
-
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Information,
-        Message = "Storing artifacts")]
-    public partial void StoreArtifacts();
 
     public async Task Store(StoreArtifactsRequest request)
     {
