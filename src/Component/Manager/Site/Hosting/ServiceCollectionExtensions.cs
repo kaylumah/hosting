@@ -27,9 +27,9 @@ public static partial class ServiceCollectionExtensions
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 
         services.Configure<SiteInfo>(configuration.GetSection("Site"));
-        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
-
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<SiteInfo>>().Value);
+
+        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<MetadataParserOptions>>().Value);
 
         services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
