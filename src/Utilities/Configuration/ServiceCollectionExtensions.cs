@@ -6,15 +6,6 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public class CustomOptions<TOptions> : IValidateOptions<TOptions> where TOptions : class
-{
-    public ValidateOptionsResult Validate(string name, TOptions options)
-    {
-        // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options.DataAnnotations/src/DataAnnotationValidateOptions.cs
-        return ValidateOptionsResult.Skip;
-    }
-}
-
 public static partial class ServiceCollectionExtensions
 {
     // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0
@@ -24,6 +15,7 @@ public static partial class ServiceCollectionExtensions
     // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/OptionsFactory.cs
     // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/OptionsBuilder.cs
     // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/ValidateOptions.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options.DataAnnotations/src/DataAnnotationValidateOptions.cs
 
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
@@ -44,7 +36,6 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
     {
         services.Configure(configureDelegate);
-        services.AddSingleton<IValidateOptions<TOptions>>(new CustomOptions<TOptions>());
         services.AddSingleton<IValidateOptions<TOptions>>(new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName));
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;
