@@ -2,12 +2,17 @@
 // See LICENSE file in the project root for full license information.
 
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Kaylumah.Ssg.Utilities.Configuration;
+namespace Microsoft.Extensions.DependencyInjection;
 
 public static partial class ServiceCollectionExtensions
 {
+
+    public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services) where TOptions : class
+    {
+        return services;
+    }
+
     /*
     public static IServiceCollection AddExample(this IServiceCollection services, IConfiguration config)
     {
