@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         public partial void LogCreateBlog(string version);
 
         [LoggerMessage(
-            EventId = 1,
+            EventId = 2,
             Level = LogLevel.Information,
             Message = "Feed will have {PostCount} posts")]
         public partial void FeedCount(int postCount);
