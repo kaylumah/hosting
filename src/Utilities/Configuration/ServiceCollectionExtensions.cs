@@ -45,6 +45,7 @@ public static partial class ServiceCollectionExtensions
     {
         services.Configure(configureDelegate);
         services.AddSingleton<IValidateOptions<TOptions>>(new CustomOptions<TOptions>());
+        services.AddSingleton<IValidateOptions<TOptions>>(new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName));
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;
     }
