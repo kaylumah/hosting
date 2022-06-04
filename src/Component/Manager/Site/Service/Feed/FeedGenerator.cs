@@ -13,13 +13,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         [LoggerMessage(
             EventId = 0,
             Level = LogLevel.Information,
-            Message = "Begin BlogInformation {Version}")]
+            Message = "Begin BlogInformation `{Version}`")]
         public partial void LogCreateBlog(string version);
 
         [LoggerMessage(
             EventId = 1,
             Level = LogLevel.Information,
-            Message = "Feed will have {PostCount} posts")]
+            Message = "Feed will have `{PostCount}` posts")]
         public partial void FeedCount(int postCount);
 
         private readonly ILogger _logger;
