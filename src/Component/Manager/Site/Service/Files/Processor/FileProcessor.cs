@@ -31,18 +31,21 @@ public partial class FileProcessor : IFileProcessor
         _fileMetaDataProcessor = fileMetadataParser;
     }
 
+    [LoggerMessage(
+           EventId = 1,
+           Level = LogLevel.Warning,
+           Message = "No files present")]
+    public partial void LogNoFiles();
+
     public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
     {
-        // _logger.LogInformation("FileFilter DirectoriesToSkip '{DirectoriesToSkip}'", String.Join(",", criteria.DirectoriesToSkip));
-        // _logger.LogInformation("FileFilter FileExtensionsToTarget '{FileExtensionsToTarget}'", String.Join(",", criteria.FileExtensionsToTarget));
-
         var result = new List<File>();
 
         var directoryContents = _fileSystem.GetFiles("_site");
 
         if (!directoryContents.Any())
         {
-            // _logger.LogWarning("No files");
+            LogNoFiles();
             return result;
         }
 
@@ -52,8 +55,6 @@ public partial class FileProcessor : IFileProcessor
         var filesWithoutCollections = directoryContents.Where(info =>
             !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
         );
-
-        // _logger.LogInformation("There are {Count} files without a collection", filesWithoutCollections.Count());
 
         var files =
             await ProcessFiles(
@@ -67,23 +68,19 @@ public partial class FileProcessor : IFileProcessor
         var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
         foreach (var collection in collections)
         {
-            // _logger.LogInformation("Begin processing {CollectionName}", collection.Name);
             var targetFiles = collection
                 .Files
                 .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                 .ToList();
-            // _logger.LogInformation("{CollectionName} has {CollectionSize} files with {Count} matching the filter.", collection.Name, collection.Files.Length, targetFiles.Count);
             var exists = _siteInfo.Collections.Contains(collection.Name);
             if (!exists)
             {
-                // _logger.LogInformation("{CollectionName} is not a collection, treated as directory", collection.Name);
                 result.AddRange(targetFiles);
             }
             else
             {
                 if (exists && _siteInfo.Collections[collection.Name].Output)
                 {
-                    // _logger.LogInformation("{CollectionName} is a collection, processing as collection", collection.Name);
                     targetFiles = targetFiles
                         .Select(x =>
                         {
@@ -92,10 +89,6 @@ public partial class FileProcessor : IFileProcessor
                         })
                         .ToList();
                     result.AddRange(targetFiles);
-                }
-                else
-                {
-                    // _logger.LogInformation("{CollectionName} is a collection, but output == false", collection.Name);
                 }
             }
         }
