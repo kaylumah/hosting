@@ -155,12 +155,7 @@ public partial class FileProcessor : IFileProcessor
             var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
             if (preprocessor != null)
             {
-                // _logger.LogInformation("Using {Preprocessor}", preprocessor.GetType());
                 fileContents = preprocessor.Execute(fileContents);
-            }
-            else
-            {
-                // _logger.LogInformation("Failed to find preprocessor");
             }
 
             result.Add(new File
