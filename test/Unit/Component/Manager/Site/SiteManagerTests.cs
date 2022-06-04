@@ -31,6 +31,14 @@ public class SiteManagerTests
         var rootDirectory = Path.Combine(Environment.CurrentDirectory);
 
         var configurationBuilder = new ConfigurationBuilder();
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            ["Site:Lang"] = null
+        });
+        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+        {
+            ["Metadata:ExtensionMapping"] = null
+        });
         configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
                     { $"{nameof(SiteConfiguration)}:Source", "_site" },
                     { $"{nameof(SiteConfiguration)}:Destination", "dist" },
