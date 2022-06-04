@@ -12,6 +12,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public partial class SiteMetadataFactory
     {
+        [LoggerMessage(
+            EventId = 2,
+            Level = LogLevel.Warning,
+            Message = "TagFile is missing `{Tags}`")]
+        private partial void LogMissingTags(string tags);
+
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Trace,
+            Message = "Enrich Site with `{EnrichmentCategory}`")]
+        private partial void LogEnrichSiteWith(string enrichmentCategory);
+
         private readonly SiteInfo _siteInfo;
         private readonly IYamlParser _yamlParser;
         private readonly IFileSystem _fileSystem;
@@ -54,13 +66,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return siteInfo;
         }
-
-        [LoggerMessage(
-            EventId = 1,
-            Level = LogLevel.Information,
-            Message = "Enrich Site with `{EnrichmentCategory}`")]
-        public partial void LogEnrichSiteWith(string enrichmentCategory);
-
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
             LogEnrichSiteWith("AssemblyData");
@@ -96,12 +101,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             EnrichSiteWithData(site, dataFiles);
         }
-
-        [LoggerMessage(
-        EventId = 2,
-        Level = LogLevel.Information,
-        Message = "TagFile is missing '{Tags}'")]
-        public partial void LogMissingTags(string tags);
 
         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
         {

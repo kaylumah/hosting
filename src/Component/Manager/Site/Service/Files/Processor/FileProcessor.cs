@@ -11,6 +11,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 public partial class FileProcessor : IFileProcessor
 {
+    [LoggerMessage(
+       EventId = 1,
+       Level = LogLevel.Warning,
+       Message = "No files present")]
+    private partial void LogNoFiles();
+
     private readonly Utilities.IFileSystem _fileSystem;
     private readonly ILogger _logger;
     private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
@@ -31,11 +37,7 @@ public partial class FileProcessor : IFileProcessor
         _fileMetaDataProcessor = fileMetadataParser;
     }
 
-    [LoggerMessage(
-           EventId = 1,
-           Level = LogLevel.Warning,
-           Message = "No files present")]
-    public partial void LogNoFiles();
+
 
     public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
     {

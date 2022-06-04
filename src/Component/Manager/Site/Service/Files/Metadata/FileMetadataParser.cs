@@ -10,6 +10,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
 public partial class FileMetadataParser : IFileMetadataParser
 {
+    [LoggerMessage(
+           EventId = 2,
+           Level = LogLevel.Information,
+           Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
+    private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
     private readonly ILogger _logger;
     private readonly IMetadataProvider _metadataProvider;
     private readonly MetadataParserOptions _options;
@@ -167,11 +172,4 @@ public partial class FileMetadataParser : IFileMetadataParser
             }
         }
     }
-
-    [LoggerMessage(
-           EventId = 2,
-           Level = LogLevel.Information,
-           Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
-    public partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
-
 }
