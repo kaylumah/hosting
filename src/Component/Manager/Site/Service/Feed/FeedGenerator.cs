@@ -10,6 +10,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
     public partial class FeedGenerator
     {
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Information,
+            Message = "Begin BlogInformation {Version}")]
+        public partial void LogCreateBlog(string version);
+
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Information,
+            Message = "Feed will have {PostCount} posts")]
+        public partial void FeedCount(int postCount);
+
         private readonly ILogger _logger;
 
         public FeedGenerator(ILogger<FeedGenerator> logger)
@@ -24,18 +36,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             feed.Items = posts;
             return feed;
         }
-
-        [LoggerMessage(
-            EventId = 1,
-            Level = LogLevel.Information,
-            Message = "Begin BlogInformation {Version}")]
-        public partial void LogCreateBlog(string version);
-
-        [LoggerMessage(
-            EventId = 2,
-            Level = LogLevel.Information,
-            Message = "Feed will have {PostCount} posts")]
-        public partial void FeedCount(int postCount);
 
         private SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
         {
