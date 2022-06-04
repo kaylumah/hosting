@@ -10,7 +10,7 @@ using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class SiteMetadataFactory
+    public partial class SiteMetadataFactory
     {
         private readonly SiteInfo _siteInfo;
         private readonly IYamlParser _yamlParser;
@@ -55,9 +55,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteInfo;
         }
 
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Information,
+            Message = "Enrich Site with `{EnrichmentCategory}`")]
+        public partial void LogEnrichSiteWith(string enrichmentCategory);
+
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
-            _logger.LogInformation("add AssemblyData");
+            LogEnrichSiteWith("AssemblyData");
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             var buildMetadata = new BuildData(assemblyInfo);
             site.Build = buildMetadata;
@@ -65,7 +71,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
-            _logger.LogInformation("Add Data");
+            LogEnrichSiteWith("Data");
+
             var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
             var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -76,15 +83,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
             if (tagFile != null)
             {
-                _logger.LogInformation("TagFile exists");
                 dataFiles.Remove(tagFile);
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(tagFile);
                 var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
-                _logger.LogInformation("TagFile has '{TagCount}' tags", tagData.Count);
                 var unmatchedTags = tags
                     .Except(tagData.Keys)
                     .Concat(tagData.Keys.Except(tags));
-                _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
+                // _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
                 site.TagMetaData = tagData;
             }
@@ -103,7 +108,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
         {
-            _logger.LogInformation("Add collections");
+            LogEnrichSiteWith("Collections");
+
             var collections = files
                 .Where(x => x.Collection != null)
                 .Select(x => x.Collection)
@@ -147,7 +153,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add tags");
+            LogEnrichSiteWith("Tags");
+
             var tags = pages
                 .HasTag()
                 .IsArticle()
@@ -164,7 +171,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add years");
+            LogEnrichSiteWith("Years");
             var years = pages
                 .IsArticle()
                 .Select(x => x.Date.Year)
@@ -178,7 +185,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add series");
+            LogEnrichSiteWith("Series");
+
             var series = pages
                 .HasSeries()
                 .Select(x => x.Series)
@@ -196,7 +204,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add types");
+            LogEnrichSiteWith("Types");
+
             var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
             var types = pages
                 .Where(x => !blockedTypes.Contains(x.Type))

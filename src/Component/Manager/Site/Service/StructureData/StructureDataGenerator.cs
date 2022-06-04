@@ -11,7 +11,7 @@ using Schema.NET;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
-public class StructureDataGenerator
+public partial class StructureDataGenerator
 {
     private readonly ILogger _logger;
 
@@ -19,6 +19,12 @@ public class StructureDataGenerator
     {
         _logger = logger;
     }
+
+    [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Information,
+            Message = "Attempting LdJson '{Path}' and '{Type:g}'")]
+        public partial void LogLdJson(string path, ContentType type);
 
     public string ToLdJson(RenderData renderData)
     {
@@ -31,7 +37,7 @@ public class StructureDataGenerator
             WriteIndented = true
         };
         var authors = renderData.Site.ToPersons();
-        _logger.LogInformation("Attempting LdJson '{Path}' and '{Type:g}'", renderData.Page.Url, renderData.Page.Type);
+        LogLdJson(renderData.Page.Url, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
             var blogPost = new BlogPosting
