@@ -6,6 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+public class CustomOptions<TOptions> : IValidateOptions<TOptions> where TOptions : class
+{
+    
+}
+
 public static partial class ServiceCollectionExtensions
 {
     // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0
