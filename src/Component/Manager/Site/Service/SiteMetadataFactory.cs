@@ -89,13 +89,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 var unmatchedTags = tags
                     .Except(tagData.Keys)
                     .Concat(tagData.Keys.Except(tags));
-                // _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
+                LogMissingTags(string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
                 site.TagMetaData = tagData;
             }
 
             EnrichSiteWithData(site, dataFiles);
         }
+
+            [LoggerMessage(
+            EventId = 2,
+            Level = LogLevel.Information,
+            Message = "TagFile is missing '{Tags}'")]
+        public partial void LogMissingTags(string tags);
 
         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
         {
