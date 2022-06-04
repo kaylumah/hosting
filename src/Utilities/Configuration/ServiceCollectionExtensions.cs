@@ -19,7 +19,8 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration, string key) where TOptions : class
     {
         var section = configuration.GetRequiredSection(key);
-        Debug.Assert(section != null);
+        Action<TOptions> configureDelegate = options => section.Bind(options);
+        services.Configure(configureDelegate);
         return services;
     }
 
