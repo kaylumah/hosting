@@ -8,6 +8,13 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static partial class ServiceCollectionExtensions
 {
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options.ConfigurationExtensions/src/OptionsConfigurationServiceCollectionExtensions.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/OptionsServiceCollectionExtensions.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options.DataAnnotations/src/OptionsBuilderDataAnnotationsExtensions.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/OptionsFactory.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/OptionsBuilder.cs
+    // https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options/src/ValidateOptions.cs
+
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
     {
