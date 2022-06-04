@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 public partial class FileProcessor : IFileProcessor
 {
     [LoggerMessage(
-       EventId = 1,
+       EventId = 0,
        Level = LogLevel.Warning,
        Message = "No files present")]
     private partial void LogNoFiles();

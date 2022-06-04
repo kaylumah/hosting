@@ -13,13 +13,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public partial class SiteMetadataFactory
     {
         [LoggerMessage(
-            EventId = 2,
+            EventId = 1,
             Level = LogLevel.Warning,
             Message = "TagFile is missing `{Tags}`")]
         private partial void LogMissingTags(string tags);
 
         [LoggerMessage(
-            EventId = 1,
+            EventId = 0,
             Level = LogLevel.Trace,
             Message = "Enrich Site with `{EnrichmentCategory}`")]
         private partial void LogEnrichSiteWith(string enrichmentCategory);

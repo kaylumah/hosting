@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 public partial class SiteMapGenerator
 {
     [LoggerMessage(
-        EventId = 1,
+        EventId = 0,
         Level = LogLevel.Information,
         Message = "Generate SiteMap")]
     private partial void LogGenerateSiteMap();
