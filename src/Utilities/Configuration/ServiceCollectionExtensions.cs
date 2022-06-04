@@ -2,16 +2,27 @@
 // See LICENSE file in the project root for full license information.
 
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static partial class ServiceCollectionExtensions
 {
 
-    public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services) where TOptions : class
+    public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
     {
+        var key = typeof(TOptions).Name;
+        return services
+            .SetupOptions<TOptions>(configuration, key);
+    }
+
+    public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration, string key) where TOptions : class
+    {
+        var section = configuration.GetRequiredSection(key);
+        Debug.Assert(section != null);
         return services;
     }
+
 
     /*
     public static IServiceCollection AddExample(this IServiceCollection services, IConfiguration config)

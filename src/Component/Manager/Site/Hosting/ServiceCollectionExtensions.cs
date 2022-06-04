@@ -26,7 +26,7 @@ public static partial class ServiceCollectionExtensions
     {
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 
-        services.SetupOptions<SiteInfo>();
+        services.SetupOptions<SiteInfo>(configuration);
         services.Configure<SiteInfo>(configuration.GetSection("Site"));
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<SiteInfo>>().Value);
 
