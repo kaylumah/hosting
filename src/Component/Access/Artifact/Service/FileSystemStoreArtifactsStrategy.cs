@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Access.Artifact.Service;
 
-public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
+public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
 {
     private readonly IFileSystem _fileSystem;
     private readonly ILogger _logger;
@@ -18,12 +18,22 @@ public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
         _fileSystem = fileSystem;
     }
 
+    [LoggerMessage(
+        EventId = 0,
+        Level = LogLevel.Information,
+        Message = "Creating directory `{DirectoryName}`")]
+    public partial void CreatingDirectory(string directoryName);
+
+    [LoggerMessage(
+        EventId = 1,
+        Level = LogLevel.Information,
+        Message = "Creating file `{FileName}`")]
+    public partial void CreatingFile(string fileName);
+
     public async Task Execute(StoreArtifactsRequest request)
     {
         if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
         {
-            // TODO look at clean
-
             foreach (var artifact in request.Artifacts)
             {
                 var filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
@@ -31,33 +41,14 @@ public class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
 
                 if (!Directory.Exists(directory))
                 {
-                    _logger.LogInformation("Create directory {Directory}", directory);
-                    // Directory.CreateDirectory(directory);
+                    CreatingDirectory(directory);
                     _fileSystem.CreateDirectory(directory);
                 }
 
-                //_logger.LogDebug($"Writing file: {filePath}");
-                //_logger.LogDebug($"{file.Contents}");
-
-                // await File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
-                _logger.LogInformation("Create file {File}", filePath);
+                CreatingFile(filePath);
                 await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
             }
-
-
-            return;
         }
-        throw new InvalidOperationException();
-        // foreach (var artifact in request.Artifacts)
-        // {
-        //     var index = artifact.Path.LastIndexOf(Path.DirectorySeparatorChar);
-        //     var artifactDirectory = artifact.Path.Substring(0, index);
-        //     if (!Directory.Exists(artifactDirectory))
-        //     {
-        //         Directory.CreateDirectory(artifactDirectory);
-        //     }
-        //     await File.WriteAllBytesAsync(artifact.Path, artifact.Contents);
-        // }
     }
 
     public bool ShouldExecute(StoreArtifactsRequest request) => request.OutputLocation is FileSystemOutputLocation;

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Access.Artifact.Service;
 
-public class ArtifactAccess : IArtifactAccess
+public partial class ArtifactAccess : IArtifactAccess
 {
 
     private readonly ILogger _logger;
@@ -18,9 +18,15 @@ public class ArtifactAccess : IArtifactAccess
         _storeArtifactsStrategies = storeArtifactsStrategies;
     }
 
+    [LoggerMessage(
+        EventId = 0,
+        Level = LogLevel.Information,
+        Message = "Storing artifacts")]
+    public partial void StoreArtifacts();
+
     public async Task Store(StoreArtifactsRequest request)
     {
-        _logger.LogInformation("Store Artifacts at {OutputLocation}", request.OutputLocation); ;
+        StoreArtifacts();
         var storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
         await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
     }
