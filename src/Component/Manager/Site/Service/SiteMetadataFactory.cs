@@ -97,10 +97,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithData(site, dataFiles);
         }
 
-            [LoggerMessage(
-            EventId = 2,
-            Level = LogLevel.Information,
-            Message = "TagFile is missing '{Tags}'")]
+        [LoggerMessage(
+        EventId = 2,
+        Level = LogLevel.Information,
+        Message = "TagFile is missing '{Tags}'")]
         public partial void LogMissingTags(string tags);
 
         private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)

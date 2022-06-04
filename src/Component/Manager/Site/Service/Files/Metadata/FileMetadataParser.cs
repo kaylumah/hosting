@@ -153,7 +153,7 @@ public partial class FileMetadataParser : IFileMetadataParser
         //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
     }
 
-    private static void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
+    private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
     {
         if (source != null)
         {
@@ -161,11 +161,17 @@ public partial class FileMetadataParser : IFileMetadataParser
             {
                 if (target.ContainsKey(entry.Key))
                 {
-                    // _logger.LogInformation("Overwritting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'", entry.Key, entry.Value, target[entry.Key], reason);
+                    LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
                 }
                 target[entry.Key] = entry.Value;
             }
         }
     }
+
+    [LoggerMessage(
+           EventId = 2,
+           Level = LogLevel.Information,
+           Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
+    public partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
 
 }

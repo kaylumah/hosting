@@ -19,7 +19,7 @@ public partial class SiteMapGenerator
             EventId = 1,
             Level = LogLevel.Information,
             Message = "Generate SiteMap")]
-        public partial void LogGenerateSiteMap();
+    public partial void LogGenerateSiteMap();
 
     public SiteMap Create(SiteMetaData siteMetaData)
     {

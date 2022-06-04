@@ -24,7 +24,7 @@ public partial class StructureDataGenerator
             EventId = 1,
             Level = LogLevel.Information,
             Message = "Attempting LdJson '{Path}' and '{Type:g}'")]
-        public partial void LogLdJson(string path, ContentType type);
+    public partial void LogLdJson(string path, ContentType type);
 
     public string ToLdJson(RenderData renderData)
     {

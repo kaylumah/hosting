@@ -43,7 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var generatorVersion = build.ShortGitHash;
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
-           LogCreateBlog(generatorVersion);
+            LogCreateBlog(generatorVersion);
 
             var feed = new SyndicationFeed
             {
@@ -77,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return feed;
         }
 
-        
+
 
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
