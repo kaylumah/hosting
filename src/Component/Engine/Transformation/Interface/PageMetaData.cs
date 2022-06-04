@@ -130,10 +130,7 @@ public class PageMetaData : Dictionary<string, object>
         }
     }
 
-    public PageMetaData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
+    public PageMetaData(Dictionary<string, object> internalData) : base(internalData)
     {
-        Name = name;
-        Content = content;
-        LastModified = lastModified;
     }
 }
