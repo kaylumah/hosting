@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +21,7 @@ public static partial class ServiceCollectionExtensions
         var section = configuration.GetRequiredSection(key);
         var configureDelegate = (TOptions options) => section.Bind(options);
         services.Configure(configureDelegate);
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;
     }
 
