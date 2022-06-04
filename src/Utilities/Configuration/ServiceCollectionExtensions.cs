@@ -22,39 +22,40 @@ public static partial class ServiceCollectionExtensions
     }
     */
 
-    public static IServiceCollection AddOptionsV2<TOptions>(this IServiceCollection services, IConfiguration configuration)
-    {
-        var configuration2 = configuration.GetRequiredSection(string.Empty);
-        // services.Configure<DemoOptions>(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
-        return services;
-    }
 
-    public static IServiceCollection AddOptions<TOptions>(this IServiceCollection services, IConfiguration configuration)
-    {
-        // services.Configure<DemoOptions>(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
-        return services;
-    }
+    // public static IServiceCollection AddOptionsV2<TOptions>(this IServiceCollection services, IConfiguration configuration)
+    // {
+    //     var configuration2 = configuration.GetRequiredSection(string.Empty);
+    //     // services.Configure<DemoOptions>(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
+    //     return services;
+    // }
 
-    public static IServiceCollection AddOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
-    {
-        services.Configure(configureDelegate);
-        return services;
-    }
+    // public static IServiceCollection AddOptions<TOptions>(this IServiceCollection services, IConfiguration configuration)
+    // {
+    //     // services.Configure<DemoOptions>(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
+    //     return services;
+    // }
 
-    public static IConfigurationSection GetExistingSectionOrThrow(this IConfiguration configuration, string key)
-    {
-        var configurationSection = configuration.GetSection(key);
+    // public static IServiceCollection AddOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
+    // {
+    //     services.Configure(configureDelegate);
+    //     return services;
+    // }
 
-        if (!configurationSection.Exists())
-        {
-            throw configuration switch
-            {
-                IConfigurationRoot configurationIsRoot => new ArgumentException($"Section with key '{key}' does not exist. Existing values are: {configurationIsRoot.GetDebugView()}", nameof(key)),
-                IConfigurationSection configurationIsSection => new ArgumentException($"Section with key '{key}' does not exist at '{configurationIsSection.Path}'. Expected configuration path is '{configurationSection.Path}'", nameof(key)),
-                _ => new ArgumentException($"Failed to find configuration at '{configurationSection.Path}'", nameof(key))
-            };
-        }
+    // public static IConfigurationSection GetExistingSectionOrThrow(this IConfiguration configuration, string key)
+    // {
+    //     var configurationSection = configuration.GetSection(key);
 
-        return configurationSection;
-    }
+    //     if (!configurationSection.Exists())
+    //     {
+    //         throw configuration switch
+    //         {
+    //             IConfigurationRoot configurationIsRoot => new ArgumentException($"Section with key '{key}' does not exist. Existing values are: {configurationIsRoot.GetDebugView()}", nameof(key)),
+    //             IConfigurationSection configurationIsSection => new ArgumentException($"Section with key '{key}' does not exist at '{configurationIsSection.Path}'. Expected configuration path is '{configurationSection.Path}'", nameof(key)),
+    //             _ => new ArgumentException($"Failed to find configuration at '{configurationSection.Path}'", nameof(key))
+    //         };
+    //     }
+
+    //     return configurationSection;
+    // }
 }
