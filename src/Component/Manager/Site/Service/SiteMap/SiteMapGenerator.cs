@@ -7,8 +7,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 
-public class SiteMapGenerator
+public partial class SiteMapGenerator
 {
+    [LoggerMessage(
+        EventId = 0,
+        Level = LogLevel.Information,
+        Message = "Generate SiteMap")]
+    private partial void LogGenerateSiteMap();
+
     private readonly ILogger _logger;
     public SiteMapGenerator(ILogger<SiteMapGenerator> logger)
     {
@@ -17,7 +23,7 @@ public class SiteMapGenerator
 
     public SiteMap Create(SiteMetaData siteMetaData)
     {
-        _logger.LogInformation("Generate SiteMap");
+        LogGenerateSiteMap();
 
         var pages = siteMetaData.Pages
                         .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))

@@ -8,8 +8,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
-    public class FeedGenerator
+    public partial class FeedGenerator
     {
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Information,
+            Message = "Begin BlogInformation `{Version}`")]
+        public partial void LogCreateBlog(string version);
+
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Information,
+            Message = "Feed will have `{PostCount}` posts")]
+        public partial void FeedCount(int postCount);
+
         private readonly ILogger _logger;
 
         public FeedGenerator(ILogger<FeedGenerator> logger)
@@ -31,7 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var generatorVersion = build.ShortGitHash;
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
-            _logger.LogInformation("Begin BlogInformation {Version}", generatorVersion);
+            LogCreateBlog(generatorVersion);
 
             var feed = new SyndicationFeed
             {
@@ -65,13 +77,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return feed;
         }
 
+
+
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             var posts = RetrievePostPageMetaDatas(siteMetaData);
             var result = new List<SyndicationItem>();
             if (posts.Any())
             {
-                _logger.LogInformation("Feed will have {PostCount} posts", posts.Count());
+                FeedCount(posts.Count());
                 var persons = siteMetaData.ToPersons();
                 var tags = siteMetaData.ToCategories();
                 foreach (var pageMetaData in posts)

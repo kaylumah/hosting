@@ -8,8 +8,13 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
-public class FileMetadataParser : IFileMetadataParser
+public partial class FileMetadataParser : IFileMetadataParser
 {
+    [LoggerMessage(
+           EventId = 0,
+           Level = LogLevel.Information,
+           Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
+    private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
     private readonly ILogger _logger;
     private readonly IMetadataProvider _metadataProvider;
     private readonly MetadataParserOptions _options;
@@ -23,15 +28,11 @@ public class FileMetadataParser : IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-        _logger.LogInformation("Metadata count before '{MetadataCount}'", result.Data?.Count);
         var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
         var paths = DetermineFilters(outputLocation);
 
         var fileMetaData = ApplyDefaults(paths);
-        _logger.LogInformation("Metadata ApplyDefaults '{MetadataCount}'", fileMetaData.Count);
         OverwriteMetaData(fileMetaData, result.Data, "file");
-        _logger.LogInformation("Metadata Merged '{MetadataCount}'", fileMetaData.Count);
-
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
             fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -165,12 +166,10 @@ public class FileMetadataParser : IFileMetadataParser
             {
                 if (target.ContainsKey(entry.Key))
                 {
-                    _logger.LogInformation("Overwritting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'", entry.Key, entry.Value, target[entry.Key], reason);
-
+                    LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
                 }
                 target[entry.Key] = entry.Value;
             }
         }
     }
-
 }
