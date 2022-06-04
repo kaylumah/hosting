@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.ServiceModel.Syndication;
-using System.Text;
 using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Feed
