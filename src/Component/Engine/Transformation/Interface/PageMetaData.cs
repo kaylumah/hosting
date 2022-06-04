@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-[DebuggerDisplay("PageMetaData '{Url}'")]
+[DebuggerDisplay("PageMetaData '{Uri}'")]
 public class PageMetaData : Dictionary<string, object>
 {
     public string Id
@@ -23,7 +23,6 @@ public class PageMetaData : Dictionary<string, object>
     public string Description => this.GetValue<string>(nameof(Description));
     public string Language => this.GetValue<string>(nameof(Language));
     public string Author => this.GetValue<string>(nameof(Author));
-    public string Url => this.GetValue<string>(nameof(Url));
     public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
     public bool Feed => this.GetBoolValue(nameof(Feed));
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
@@ -136,7 +135,5 @@ public class PageMetaData : Dictionary<string, object>
         Name = name;
         Content = content;
         LastModified = lastModified;
-        // TODO sync this...
-        this.SetValue("url", this.GetValue<string>("uri"));
     }
 }

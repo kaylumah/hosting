@@ -12,6 +12,6 @@ public class RenderData
     public string Description => Page?.Description ?? Site?.Description ?? null;
     public string Language => Page?.Language ?? Site?.Language ?? null;
     public string Author => Page?.Author ?? Site?.Author ?? null;
-    public string Url => Page?.Url ?? Site?.Url ?? null;
+    public string Url => Page?.Uri ?? Site?.Url ?? null;
 
 }

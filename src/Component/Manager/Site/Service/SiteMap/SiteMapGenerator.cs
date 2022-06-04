@@ -35,7 +35,7 @@ public partial class SiteMapGenerator
         {
             var node = new SiteMapNode
             {
-                Url = GlobalFunctions.AbsoluteUrl(page.Url),
+                Url = GlobalFunctions.AbsoluteUrl(page.Uri),
                 LastModified = page.LastModified
             };
 

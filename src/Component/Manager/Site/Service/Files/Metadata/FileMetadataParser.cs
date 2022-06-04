@@ -65,7 +65,6 @@ public partial class FileMetadataParser : IFileMetadataParser
         // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
         result.Data = fileMetaData;
 
-        // TODO: is this the right moment to store it back in the metadata?
         result.Data.Uri = outputLocation;
 
         return result;
