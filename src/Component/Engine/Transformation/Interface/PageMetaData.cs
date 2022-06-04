@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-[DebuggerDisplay("PageMetaData '{Url}'")]
+[DebuggerDisplay("PageMetaData '{Uri}'")]
 public class PageMetaData : Dictionary<string, object>
 {
     public string Id
@@ -23,11 +23,8 @@ public class PageMetaData : Dictionary<string, object>
     public string Description => this.GetValue<string>(nameof(Description));
     public string Language => this.GetValue<string>(nameof(Language));
     public string Author => this.GetValue<string>(nameof(Author));
-    public string Url => this.GetValue<string>(nameof(Url));
     public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
     public bool Feed => this.GetBoolValue(nameof(Feed));
-    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
-    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public string LdJson
     {
         get
@@ -42,8 +39,23 @@ public class PageMetaData : Dictionary<string, object>
     public string Layout => this.GetValue<string>(nameof(Layout));
     public string Uri => this.GetValue<string>(nameof(Uri));
     public string Image => this.GetValue<string>(nameof(Image));
+
+    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
+    
+    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 
+    public DateTimeOffset LastModified
+    {
+        get
+        {
+            return this.GetValue<DateTimeOffset>(nameof(LastModified));
+        }
+        set
+        {
+            this.SetValue(nameof(LastModified), value);
+        }
+    }
     public string Name
     {
         get
@@ -65,18 +77,6 @@ public class PageMetaData : Dictionary<string, object>
         set
         {
             this.SetValue(nameof(Content), value);
-        }
-    }
-
-    public DateTimeOffset LastModified
-    {
-        get
-        {
-            return this.GetValue<DateTimeOffset>(nameof(LastModified));
-        }
-        set
-        {
-            this.SetValue(nameof(LastModified), value);
         }
     }
 
@@ -131,12 +131,7 @@ public class PageMetaData : Dictionary<string, object>
         }
     }
 
-    public PageMetaData(Dictionary<string, object> metadata, string name, string content, DateTimeOffset lastModified) : base(metadata)
+    public PageMetaData(Dictionary<string, object> internalData) : base(internalData)
     {
-        Name = name;
-        Content = content;
-        LastModified = lastModified;
-        // TODO sync this...
-        this.SetValue("url", this.GetValue<string>("uri"));
     }
 }

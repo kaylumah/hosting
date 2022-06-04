@@ -7,9 +7,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 
 public static class FileExtensions
 {
+    public static Dictionary<string, object> ToDictionary(this File file)
+    {
+        var result = new Dictionary<string, object>(file.MetaData);
+        result.SetValue(nameof(file.LastModified), file.LastModified);
+        result.SetValue(nameof(file.Content), file.Content);
+        result.SetValue(nameof(file.Name), file.Name);
+        return result;
+    }
+
     public static PageMetaData ToPage(this File file)
     {
-        return new PageMetaData(file.MetaData, file.Name, file.Content, file.LastModified);
+        var data = file.ToDictionary();
+        return new PageMetaData(data);
     }
 
     public static PageMetaData ToPage(this File file, Guid siteGuid)

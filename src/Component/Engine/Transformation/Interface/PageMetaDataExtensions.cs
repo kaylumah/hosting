@@ -13,7 +13,7 @@ public static class PageMetaDataExtensions
 
     public static string GetExtension(this PageMetaData pageMetaData)
     {
-        return Path.GetExtension(pageMetaData.Url);
+        return Path.GetExtension(pageMetaData.Uri);
     }
 
     public static bool IsExtension(this PageMetaData pageMetaData, string target)

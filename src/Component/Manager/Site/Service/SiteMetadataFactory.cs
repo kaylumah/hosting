@@ -201,7 +201,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 var seriesFiles = pages
                     .FromSeries(serie)
-                    .OrderBy(x => x.Url)
+                    .OrderBy(x => x.Uri)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);
             }

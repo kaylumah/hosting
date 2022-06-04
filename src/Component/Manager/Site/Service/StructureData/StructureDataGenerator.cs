@@ -37,13 +37,13 @@ public partial class StructureDataGenerator
             WriteIndented = true
         };
         var authors = renderData.Site.ToPersons();
-        LogLdJson(renderData.Page.Url, renderData.Page.Type);
+        LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
             var blogPost = new BlogPosting
             {
-                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Url)),
-                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Url))),
+                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
+                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Uri))),
                 Headline = renderData.Page.Title,
                 DatePublished = DateTime.Parse((string)renderData.Page.PublishedDate, CultureInfo.InvariantCulture),
                 DateModified = DateTime.Parse((string)renderData.Page.ModifiedDate, CultureInfo.InvariantCulture),

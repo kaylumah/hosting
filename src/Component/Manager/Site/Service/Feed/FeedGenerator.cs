@@ -91,7 +91,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 foreach (var pageMetaData in posts)
                 {
                     var author = persons[pageMetaData.Author];
-                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
                     var item = new SyndicationItem
                     {
                         Id = pageUrl,

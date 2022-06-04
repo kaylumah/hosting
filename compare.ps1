@@ -1,6 +1,6 @@
 & "./build.ps1" -CleanDevDependencies
-$SourceDirectory = "C:\projects\kaylumah.github.io\dist"
-$DistDirectory = "C:\projects\dist"
+$SourceDirectory = "/workspaces/kaylumah.github.io/dist"
+$DistDirectory = "/workspaces/kaylumah.github.io/compare"
 
 Get-ChildItem -Path  $DistDirectory -Recurse 
     | Select-Object -ExpandProperty FullName 
