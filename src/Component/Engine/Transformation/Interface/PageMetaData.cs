@@ -42,7 +42,6 @@ public class PageMetaData : Dictionary<string, object>
     public string Image => this.GetValue<string>(nameof(Image));
 
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
-    
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 
