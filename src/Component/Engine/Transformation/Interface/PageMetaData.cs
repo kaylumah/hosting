@@ -23,8 +23,10 @@ public class PageMetaData : Dictionary<string, object>
     public string Description => this.GetValue<string>(nameof(Description));
     public string Language => this.GetValue<string>(nameof(Language));
     public string Author => this.GetValue<string>(nameof(Author));
+    public bool SocialShare => this.GetBoolValue(nameof(SocialShare));
     public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
     public bool Feed => this.GetBoolValue(nameof(Feed));
+    public bool Featured => this.GetBoolValue(nameof(Featured));
     public string LdJson
     {
         get
@@ -38,10 +40,11 @@ public class PageMetaData : Dictionary<string, object>
     }
     public string Layout => this.GetValue<string>(nameof(Layout));
     public string Uri => this.GetValue<string>(nameof(Uri));
+    public string CoverImage => this.GetValue<string>(nameof(CoverImage));
     public string Image => this.GetValue<string>(nameof(Image));
+    public string CommentId => this.GetValue<string>(nameof(CommentId));
 
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
-    
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 

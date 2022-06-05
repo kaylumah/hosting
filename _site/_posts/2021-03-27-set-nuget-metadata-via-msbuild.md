@@ -1,14 +1,14 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
 description: "Discover how to use MSBuild to set your NuGet package's metadata."
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
     WEB: '/assets/images/posts/20210327/nuget-metadata/cover_image.webp'
 image: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
 tags:
     - msbuild
     - nuget
-comment_id: '13'
+commentid: '13'
 ---
 For .NET, the standard mechanism for sharing packages is NuGet. A `.nupkg` file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata ([source](https://docs.microsoft.com/en-us/nuget/what-is-nuget)). This blog post will show you how data in this manifest can be controlled by using MSBuild.
 

@@ -1,14 +1,14 @@
 ---
 title: "Working with Azure SDK for .NET"
 description: "The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios"
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
     WEB: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp'
 image: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
 tags:
   - "csharp"
   - "azure"
-comment_id: '70'
+commentid: '70'
 publishedtime: '21:30'
 ---
 February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a [small contribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08) to the `Azure SDK for .NET`. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.

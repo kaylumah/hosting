@@ -1,14 +1,14 @@
 ---
 title: "Improve Code Quality with BannedSymbolAnalyzers"
 description: "Learn how a simple Roslyn Analyzer can improve code consistency"
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png'
     WEB: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.webp'
 image: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png'
 tags:
   - "csharp"
   - "code-quality"
-comment_id: '67'
+commentid: '67'
 publishedtime: '21:45'
 ---
 There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.

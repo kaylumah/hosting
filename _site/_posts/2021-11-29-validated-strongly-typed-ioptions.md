@@ -1,15 +1,14 @@
 ---
 title: "Validated Strongly Typed IOptions"
 description: "Find configuration errors early with data annotations validation for IOptions in .NET"
-cover_image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
     WEB: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.webp'
 image: '/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png'
 tags:
   - "csharp"
   - "configuration"
-comment_id: '56'
+commentid: '56'
 publishedtime: '19:00'
 ---
 Almost every project will have some settings that are configured differently per environment. Chapter three of "The Twelve-Factor App" [explains](https://12factor.net/config) why separating configuration from code is a good idea. In `.NET`, we use the `IConfigurationBuilder` to manage our configuration. An `IOptions<>` is used to make a configuration available as a strongly typed type in our applications.

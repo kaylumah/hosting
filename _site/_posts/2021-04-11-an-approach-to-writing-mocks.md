@@ -1,8 +1,7 @@
 ---
 title: "Experiment with Moq, an approach to writing mocks"
 description: "An experiment to create reusable mocks in my testing code."
-cover_image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
     WEB: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.webp'
 image: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
@@ -11,7 +10,7 @@ tags:
   - "moq"
   - "testing"
   - "xunit"
-comment_id: '14'
+commentid: '14'
 featured: true
 ---
 Recently I was looking into a new way to use mocks in my unit tests. My framework of choice to write unit tests is XUnit, whereas I use Moq to create Mocks. The theory behind Moq will still apply if you use a different testing framework, and perhaps some of the things I will demonstrate will be possible in other mocking frameworks.

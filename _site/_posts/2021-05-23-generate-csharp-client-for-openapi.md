@@ -1,7 +1,7 @@
 ---
 title: 'Generate C# client for OpenAPI'
 description: 'A look at using OpenAPI clients in C#'
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
     WEB: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.webp'
 image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
@@ -10,7 +10,7 @@ tags:
   - "nswag"
   - "openapi"
   - "swashbuckle"
-comment_id: '15'
+commentid: '15'
 ---
 I've recently worked on a project where I was the consumer of a third party API. Luckily for me, we decided on an Open API specification which made integrating services a breeze. If you have been following my content, you know I often use C# in my projects. So I needed a type-safe client for use in my C# code base.
 
