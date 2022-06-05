@@ -1,7 +1,7 @@
 ---
 title: 'Decreasing Solution Build time with Filters'
 description: 'How to use solution filters to increase focus and decrease build time'
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'
     WEB: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.webp'
 image: '/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png'

@@ -1,7 +1,7 @@
 ---
 type: 'Announcement'
 title: Guiding my thoughts home
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20200801/welcome/cover_image.png'
     WEB: '/assets/images/posts/20200801/welcome/cover_image.webp'
 image: /assets/images/posts/20200801/welcome/cover_image.png

@@ -1,7 +1,7 @@
 ---
 title: 'Set NuGet metadata via MSBuild'
 description: "Discover how to use MSBuild to set your NuGet package's metadata."
-cover_image:
+coverimage:
     DEFAULT: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
     WEB: '/assets/images/posts/20210327/nuget-metadata/cover_image.webp'
 image: '/assets/images/posts/20210327/nuget-metadata/cover_image.png'
