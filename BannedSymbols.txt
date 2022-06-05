@@ -1,2 +1,2 @@
-#T:System.DateTime;Always use System.DateTimeOffset over System.DateTime
+T:System.DateTime;Always use System.DateTimeOffset over System.DateTime
 P:System.DateTimeOffset.Now;Use ISystemClock.Now instead

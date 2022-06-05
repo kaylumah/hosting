@@ -32,7 +32,7 @@ public static class MatchExtensions
 
             if (year != null && year.Success && month != null && month.Success && day != null && day.Success)
             {
-                return DateTime.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
+                return DateTimeOffset.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
             }
         }
         return null;
