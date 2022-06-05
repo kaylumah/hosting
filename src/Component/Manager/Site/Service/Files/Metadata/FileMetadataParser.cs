@@ -8,7 +8,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
-public partial class FileMetadataParser : IFileMetadataParser
+public partial class FileMetadataParser: IFileMetadataParser
 {
     [LoggerMessage(
            EventId = 0,
@@ -85,7 +85,7 @@ public partial class FileMetadataParser : IFileMetadataParser
         var fileMetaData = new FileMetaData();
         foreach (var filter in filters)
         {
-            var meta = _options.Defaults.SingleOrDefault(x => x.Path.Equals(filter, StringComparison.Ordinal));
+            var meta = _options.Defaults.DefaultFilter(filter);
             if (meta != null)
             {
                 OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");
