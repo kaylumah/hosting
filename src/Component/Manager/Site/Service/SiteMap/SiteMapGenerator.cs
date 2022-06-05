@@ -41,7 +41,7 @@ public partial class SiteMapGenerator
 
             if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
             {
-                node.Url = GlobalFunctions.Instance.Url;
+                node.Url = GlobalFunctions.Url.Value;
             }
 
             siteMapNodes.Add(node);
