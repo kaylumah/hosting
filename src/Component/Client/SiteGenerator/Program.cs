@@ -48,12 +48,12 @@ class Program
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
             .AddInMemoryCollection(new Dictionary<string, string> {
-                    { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
+                    // { $"{nameof(SiteConfiguration)}:Source", "_site" },
+                    // { $"{nameof(SiteConfiguration)}:Destination", "dist" },
+                    // { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
+                    // { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
+                    // { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
+                    // { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
             })
             .AddEnvironmentVariables("Kaylumah_");
         
