@@ -45,8 +45,11 @@ public partial class StructureDataGenerator
                 // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
                 MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Uri))),
                 Headline = renderData.Page.Title,
+            
+#pragma warning disable RS0030 // datetime is expected here
                 DatePublished = DateTime.Parse((string)renderData.Page.PublishedDate, CultureInfo.InvariantCulture),
                 DateModified = DateTime.Parse((string)renderData.Page.ModifiedDate, CultureInfo.InvariantCulture),
+#pragma warning restore RS0030 // datetime is expected here
                 Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page.Image))),
                 // Publisher = new Values<IOrganization, IPerson>(new Organization { })
             };

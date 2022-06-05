@@ -9,6 +9,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Manager.Site.Service.StructureData;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -38,6 +39,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<FeedGenerator>();
         services.AddSingleton<StructureDataGenerator>();
         services.AddSingleton<SiteMapGenerator>();
+        services.AddSystemClock();
         return services;
     }
 }

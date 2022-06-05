@@ -5,6 +5,7 @@ using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
 
@@ -29,8 +30,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
 
-        public SiteMetadataFactory(SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
+        private readonly ISystemClock _systemClock;
+
+
+        public SiteMetadataFactory(ISystemClock systemClock, SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
         {
+            _systemClock = systemClock;
             _siteInfo = siteInfo;
             _yamlParser = yamlParser;
             _fileSystem = fileSystem;
@@ -70,7 +75,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("AssemblyData");
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-            var buildMetadata = new BuildData(assemblyInfo);
+            var buildMetadata = new BuildData(assemblyInfo, _systemClock.LocalNow);
             site.Build = buildMetadata;
         }
 
