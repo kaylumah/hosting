@@ -31,7 +31,7 @@ public partial class FileMetadataParser: IFileMetadataParser
         var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
         var paths = DetermineFilters(outputLocation);
 
-        var fileMetaData = ApplyDefaults(paths);
+        var fileMetaData = ApplyDefaults(paths, criteria.Scope);
         OverwriteMetaData(fileMetaData, result.Data, "file");
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
@@ -80,15 +80,24 @@ public partial class FileMetadataParser: IFileMetadataParser
         return ext;
     }
 
-    private FileMetaData ApplyDefaults(List<string> filters)
+    private FileMetaData ApplyDefaults(List<string> filters, string scope)
     {
         var fileMetaData = new FileMetaData();
         foreach (var filter in filters)
         {
-            var meta = _options.Defaults.DefaultFilter(filter);
-            if (meta != null)
+            var defaultMeta = _options.Defaults.DefaultFilter(filter);
+            if (defaultMeta != null)
             {
-                OverwriteMetaData(fileMetaData, meta.Values, $"default:{filter}");
+                OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
+            }
+
+            if (!string.IsNullOrEmpty(scope))
+            {
+                var scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
+                if (scopedMeta != null)
+                {
+                    OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");
+                }
             }
         }
         return fileMetaData;
