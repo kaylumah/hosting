@@ -95,7 +95,7 @@ layout: 'default.html'
     </div>
 
     <footer class="flex flex-col mt-8">
-        {% if page.social_share != 'False' %}
+        {% if page.socialshare %}
         {% include 'social_share.html' %}
         {% endif %}
         {% if page.comment_id %}
