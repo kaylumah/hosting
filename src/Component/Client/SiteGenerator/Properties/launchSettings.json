@@ -1,11 +1,11 @@
 {
   "profiles": {
-    "Kaylumah.Ssg.Client.SiteGenerator": {
+    "Kaylumah.Ssg.Client.SiteGenerator.Local": {
       "commandName": "Project",
-      "commandLineArgs": "",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       },
+      "commandLineArgs": "Site:Url=http://localhost:4280",
       "workingDirectory": "../../../../"
     }
   }
