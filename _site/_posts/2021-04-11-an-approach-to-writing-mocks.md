@@ -1,7 +1,6 @@
 ---
 title: "Experiment with Moq, an approach to writing mocks"
 description: "An experiment to create reusable mocks in my testing code."
-coverimage: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
 coverimage:
     DEFAULT: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png'
     WEB: '/assets/images/posts/20210411/approach-to-writing-mocks/cover_image.webp'
