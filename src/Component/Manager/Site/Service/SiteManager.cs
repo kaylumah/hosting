@@ -82,8 +82,8 @@ public class SiteManager : ISiteManager
 
     public async Task GenerateSite(GenerateSiteRequest request)
     {
-        GlobalFunctions.Instance.Url = _siteInfo.Url;
-        GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+        GlobalFunctions.Url.Value = _siteInfo.Url;
+        GlobalFunctions.BaseUrl.Value = _siteInfo.BaseUrl;
         var siteGuid = _siteInfo.Url.CreateSiteGuid();
 
         var processed = await _fileProcessor.Process(new FileFilterCriteria

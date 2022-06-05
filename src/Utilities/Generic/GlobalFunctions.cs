@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 using System.Xml;
 using HtmlAgilityPack;
 
@@ -10,9 +11,8 @@ namespace Kaylumah.Ssg.Utilities;
 
 public class GlobalFunctions
 {
-    public static readonly GlobalFunctions Instance = new();
-    public string Url { get; set; }
-    public string BaseUrl { get; set; }
+    public static AsyncLocal<string> Url { get; } = new();
+    public static AsyncLocal<string> BaseUrl { get; } = new();
 
     public static DateTimeOffset ToDate(string input)
     {
@@ -149,9 +149,9 @@ public class GlobalFunctions
 
     public static string RelativeUrl(string source)
     {
-        if (!string.IsNullOrWhiteSpace(Instance.BaseUrl))
+        if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
         {
-            return Path.Combine($"{Path.DirectorySeparatorChar}", Instance.BaseUrl, source);
+            return Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
         }
         return source;
     }
@@ -166,10 +166,10 @@ public class GlobalFunctions
             {
                 resolvedSource = resolvedSource[1..];
             }
-            if (!string.IsNullOrWhiteSpace(Instance.Url))
+            if (!string.IsNullOrWhiteSpace(Url.Value))
             {
 
-                resolvedSource = $"{Instance.Url}{webSeperator}{resolvedSource}";
+                resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
             }
         }
         return resolvedSource
