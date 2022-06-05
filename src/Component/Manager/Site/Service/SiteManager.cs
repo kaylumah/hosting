@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service;
@@ -26,6 +27,7 @@ public class SiteManager : ISiteManager
     private readonly FeedGenerator _feedGenerator;
     private readonly StructureDataGenerator _structureDataGenerator;
     private readonly SiteMapGenerator _siteMapGenerator;
+    private readonly ISystemClock _systemClock;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -37,7 +39,8 @@ public class SiteManager : ISiteManager
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
         StructureDataGenerator structureDataGenerator,
-        SiteMapGenerator siteMapGenerator
+        SiteMapGenerator siteMapGenerator,
+        ISystemClock systemClock
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -50,6 +53,7 @@ public class SiteManager : ISiteManager
         _feedGenerator = feedGenerator;
         _structureDataGenerator = structureDataGenerator;
         _siteMapGenerator = siteMapGenerator;
+        _systemClock = systemClock;
     }
 
     private Artifact[] CreateSiteMapArtifacts(SiteMetaData siteMetaData)
@@ -82,6 +86,7 @@ public class SiteManager : ISiteManager
 
     public async Task GenerateSite(GenerateSiteRequest request)
     {
+        GlobalFunctions.Date.Value = _systemClock.LocalNow;
         GlobalFunctions.Url.Value = _siteInfo.Url;
         GlobalFunctions.BaseUrl.Value = _siteInfo.BaseUrl;
         var siteGuid = _siteInfo.Url.CreateSiteGuid();

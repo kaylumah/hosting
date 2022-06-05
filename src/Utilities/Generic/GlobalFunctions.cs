@@ -11,9 +11,9 @@ namespace Kaylumah.Ssg.Utilities;
 
 public class GlobalFunctions
 {
+    public static AsyncLocal<DateTimeOffset> Date { get; } = new();
     public static AsyncLocal<string> Url { get; } = new();
     public static AsyncLocal<string> BaseUrl { get; } = new();
-
     public static DateTimeOffset ToDate(string input)
     {
         IFormatProvider culture = new CultureInfo("en-US", true);
@@ -91,7 +91,7 @@ public class GlobalFunctions
         const int DAY = 24 * HOUR;
         const int MONTH = 30 * DAY;
 
-        var ts = new TimeSpan(DateTime.UtcNow.Ticks - date.Ticks);
+        var ts = new TimeSpan(Date.Value.Ticks - date.Ticks);
         double delta = Math.Abs(ts.TotalSeconds);
 
         if (delta < 1 * MINUTE)
