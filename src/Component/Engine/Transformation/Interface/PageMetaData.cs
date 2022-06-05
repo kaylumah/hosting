@@ -41,6 +41,7 @@ public class PageMetaData : Dictionary<string, object>
     public string Layout => this.GetValue<string>(nameof(Layout));
     public string Uri => this.GetValue<string>(nameof(Uri));
     public string Image => this.GetValue<string>(nameof(Image));
+    public string CommentId => this.GetValue<string>(nameof(CommentId));
 
     public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));

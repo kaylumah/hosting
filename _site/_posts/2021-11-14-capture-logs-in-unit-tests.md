@@ -10,7 +10,7 @@ tags:
   - "csharp"
   - "testing"
   - "xunit"
-comment_id: '50'
+commentid: '50'
 publishedtime: '20:30'
 ---
 In application code, we are used to writing log statements primarily for diagnostic purposes. For instance, we use logs to capture unexpected error flows. Therefore it is not uncommon to want to capture the log output in our unit tests. You have three distinctive options to handle log output in unit tests, as far as I can tell.

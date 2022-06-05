@@ -11,7 +11,7 @@ tags:
   - "moq"
   - "testing"
   - "xunit"
-comment_id: '14'
+commentid: '14'
 featured: true
 ---
 Recently I was looking into a new way to use mocks in my unit tests. My framework of choice to write unit tests is XUnit, whereas I use Moq to create Mocks. The theory behind Moq will still apply if you use a different testing framework, and perhaps some of the things I will demonstrate will be possible in other mocking frameworks.
