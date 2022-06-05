@@ -20,6 +20,11 @@ public class SystemClockTests
         var namedZone2 = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
 
         var now = clock.UtcNow;
-        var converted = TimeZoneInfo.ConvertTime(now, localZone);
+
+        var converted1 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2);
+        var converted2 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2).ToUniversalTime();
+        var converted3 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime);
+        var converted4 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime, namedZone2);
+        var converted = TimeZoneInfo.ConvertTime(now, namedZone2);
     }
 }
