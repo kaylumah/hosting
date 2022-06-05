@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "SiteGenerator.Local",
+            "name": "SiteGenerator.Development",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-sitegenerator",
@@ -14,7 +14,7 @@
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "stopAtEntry": false,
-            "launchSettingsProfile": "Kaylumah.Ssg.Client.SiteGenerator.Local",
+            "launchSettingsProfile": "Kaylumah.Ssg.Client.SiteGenerator.Development",
             "launchSettingsFilePath": "${workspaceFolder}/src/Component/Client/SiteGenerator/Properties/launchSettings.json",
              "logging": {
                  "moduleLoad": false
