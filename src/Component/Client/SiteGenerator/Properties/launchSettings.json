@@ -5,7 +5,7 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       },
-      "commandLineArgs": "Site:Url=http://localhost:4280",
+      "commandLineArgs": "",
       "workingDirectory": "../../../../"
     }
   }
