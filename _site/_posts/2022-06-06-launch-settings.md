@@ -31,13 +31,23 @@ A few important notes:
 dotnet run
 
 # Sets env var for current session
-$env:KAYLUMAH_COMMANDLINE="Hello World"
-# prints USER=Max, COMMANDLINE=Hello World
+$env:KAYLUMAH_COMMANDLINE="Session ENV var"
+# prints USER=Max, COMMANDLINE=Session ENV var
 dotnet run
 ```
+
+```pwsh
+dotnet run --no-launch-profile
+```
+
+```pwsh
+dotnet run --launch-profile "DemoConsole.V2"
+```
+
 
 ## Sources Used
 
 - https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
 - https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson
+- https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson
 
