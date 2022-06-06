@@ -55,6 +55,8 @@ dotnet run --launch-profile "DemoConsole.V2"
 ## Sources Used
 
 - https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
+- https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html
+- https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support
 - https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson
 - https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson
 
