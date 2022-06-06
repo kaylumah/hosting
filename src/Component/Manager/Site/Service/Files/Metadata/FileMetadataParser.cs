@@ -152,12 +152,13 @@ public partial class FileMetadataParser: IFileMetadataParser
             fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && !string.IsNullOrEmpty(fileMetaData.PublishedTime))
+        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
-            var publishedDateTimeString = $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}";
-            var publishedDate = System.DateTimeOffset.ParseExact(publishedDateTimeString, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            fileMetaData.Date = publishedDate;
-            fileMetaData.Published = publishedDate;
+            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
+            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+            var publishedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
+            fileMetaData.Date = publishedDateTime;
+            fileMetaData.Published = publishedDateTime;
         }
     }
 
