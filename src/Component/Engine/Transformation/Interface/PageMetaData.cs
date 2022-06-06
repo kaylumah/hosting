@@ -129,8 +129,6 @@ public class PageMetaData : Dictionary<string, object>
     public DateTimeOffset Modified => this.GetValue<DateTimeOffset>(nameof(Modified));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 
-    public DateTimeOffset LastModified => this.GetValue<DateTimeOffset>(nameof(LastModified));
-
     public PageMetaData(Dictionary<string, object> internalData) : base(internalData)
     {
     }

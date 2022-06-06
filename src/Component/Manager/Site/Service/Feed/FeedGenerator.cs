@@ -99,7 +99,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         Summary = new CDataSyndicationContent(pageMetaData.Description),
                         Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
                         PublishDate = pageMetaData.Date,
-                        LastUpdatedTime = pageMetaData.LastModified
+                        LastUpdatedTime = pageMetaData.Modified
                     };
 
                     var itemCategories = pageMetaData
