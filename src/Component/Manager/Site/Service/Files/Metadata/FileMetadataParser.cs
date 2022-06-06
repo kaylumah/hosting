@@ -144,6 +144,11 @@ public partial class FileMetadataParser: IFileMetadataParser
         var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
         ApplyPublishedDates(fileMetaData, tz);
         ApplyModifiedDates(fileMetaData, tz);
+        fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
     }
 
     private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
