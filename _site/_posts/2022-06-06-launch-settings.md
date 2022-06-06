@@ -105,6 +105,11 @@ Done...
 
 I recommend explicitly specifying `launchSettingsProfile` to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.
 
+The support for this feature comes with a few [restrictions](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support):
+1. Only profiles with "commandName": "Project" are supported.
+2. Only environmentVariables, applicationUrl and commandLineArgs properties are supported
+3. Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.
+
 
 
 ## Rider
