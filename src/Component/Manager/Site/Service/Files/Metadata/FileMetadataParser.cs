@@ -157,6 +157,7 @@ public partial class FileMetadataParser: IFileMetadataParser
             var publishedDateTimeString = $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}";
             var publishedDate = System.DateTimeOffset.ParseExact(publishedDateTimeString, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             fileMetaData.Date = publishedDate;
+            fileMetaData.Published = publishedDate;
         }
     }
 
