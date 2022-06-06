@@ -135,7 +135,6 @@ With the following configuration in `launch.json`:
     "request": "launch",
     "preLaunchTask": "build",
     "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
-    "args": [],
     "cwd": "${workspaceFolder}",
     "console": "internalConsole",
     "stopAtEntry": false,
@@ -161,7 +160,39 @@ mysetting=myvalue (CommandLineConfigurationProvider)
 Done...
 ```
 
+Note sure why you ever should do this, but you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`.
 
+Without updating profile `DemoConsole.V1` make the following changes to `launch.json`.
+
+```json
+{
+    "name": ".NET Core Launch (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "build",
+    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
+    "cwd": "${workspaceFolder}",
+    "console": "internalConsole",
+    "stopAtEntry": false,
+    "launchSettingsProfile": "DemoConsole.V1",
+    "args": [
+        "--othersetting",
+        "vscode"
+    ],
+    "env": {
+        "KAYLUMAH_ENVIRONMENT": "Development",
+        "KAYLUMAH_OTHER": "From target"
+    }
+}
+```
+
+```output
+ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+OTHER=From target (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+othersetting=vscode (CommandLineConfigurationProvider)
+
+Done...
+```
 
 ## Rider
 
