@@ -24,7 +24,7 @@ A few important notes:
 - The launchSettings.json file is only used on the local development machine.
 - The launchSettings.json file shouldn't store secrets
 
-## CommandLine
+## How to use Launch Settings from Dotnet CLI
 
 ```pwsh
 # prints USER=Max
