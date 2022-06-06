@@ -205,7 +205,7 @@ Done...
 There are a few things that happen:
 1. Since `launch.json` specified args the commandLineArgs from `launchSettings.json` are ignored.
 2. Since `launch.json` specified env and `launchSettings.json` specified `environmentVariables` both sets get merged.
-3. Since `launch.json` will win the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
+3. Since `launch.json` will win, the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
 
 
 ## Rider
