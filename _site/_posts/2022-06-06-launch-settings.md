@@ -91,9 +91,17 @@ Done...
 
 ## How to use Launch Settings from VS Code?
 
-When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
+Since I initially started writing this article to use launch settings with `VS Code`, let's open with `VS Code`. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
 
-The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command? Should it display anything? Yep, it should. Don't believe me? Run the project; the evidence will speak for itself. That is because you have been using `launchSettings.json` the whole time. In May 2018,  release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped`launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? Now you know why.
+The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command? Should it display anything? Yep, it should. Don't believe me? Run the project; the evidence will speak for itself.
+
+```output
+ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+
+Done...
+```
+
+ That is because you have secretly been using `launchSettings.json` the whole time. In May 2018,  release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped`launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? Now you know why.
 
 ## Rider
 
