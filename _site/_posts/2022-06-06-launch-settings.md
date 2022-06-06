@@ -218,6 +218,8 @@ Rider [launched support](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-
 
 Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
 
+As it turns out the CLI also defaults to the first project in `Properties\launchSettings.json` so in our case `DemoConsole.V0`.
+
 ```pwsh
 # prints USER=Max
 dotnet run
