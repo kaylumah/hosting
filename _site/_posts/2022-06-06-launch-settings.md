@@ -19,7 +19,13 @@ A launch profile has a couple of properties depending on the project type. I wil
 - `commandLineArgs`: a string containing arguments to supply to the application.
 - `environmentVariables`: A collection of name/value pairs, each specifying an environment variable and value to set.
 
+A few important notes:
+- Environment values set in launchSettings.json override values set in the system environment.
+- The launchSettings.json file is only used on the local development machine.
+- The launchSettings.json file shouldn't store secrets
+
 ## Sources Used
 
 - https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
+- https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson
 
