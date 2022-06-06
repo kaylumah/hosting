@@ -44,21 +44,6 @@ public class PageMetaData : Dictionary<string, object>
     public string Image => this.GetValue<string>(nameof(Image));
     public string CommentId => this.GetValue<string>(nameof(CommentId));
 
-    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
-    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
-    public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
-
-    public DateTimeOffset LastModified
-    {
-        get
-        {
-            return this.GetValue<DateTimeOffset>(nameof(LastModified));
-        }
-        set
-        {
-            this.SetValue(nameof(LastModified), value);
-        }
-    }
     public string Name
     {
         get
@@ -131,6 +116,22 @@ public class PageMetaData : Dictionary<string, object>
         set
         {
             this.SetValue(nameof(Type), value);
+        }
+    }
+
+    public string PublishedDate => this.GetValue<string>(nameof(PublishedDate));
+    public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
+    public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
+
+    public DateTimeOffset LastModified
+    {
+        get
+        {
+            return this.GetValue<DateTimeOffset>(nameof(LastModified));
+        }
+        set
+        {
+            this.SetValue(nameof(LastModified), value);
         }
     }
 
