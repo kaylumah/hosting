@@ -153,6 +153,11 @@ public partial class FileMetadataParser: IFileMetadataParser
             fileMetaData.Date = publishedDate;
         }
 
+        ApplyModifiedDates(fileMetaData);
+    }
+
+    private static void ApplyModifiedDates(FileMetaData fileMetaData)
+    {
         if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
         {
             fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
