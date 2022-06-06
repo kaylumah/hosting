@@ -26,7 +26,7 @@
                     <p class="text-sm font-medium text-gray-900 truncate">{{ article.title }}</p>
                     </a>
                 </div>
-                <time datetime="{{ article.date | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{{ article.date | date_to_ago }}</time>
+                <time datetime="{{ article.published | date_to_xmlschema }}" class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{{ article.published | date_to_ago }}</time>
             </div>
             <div class="mt-1">
                 <p class="line-clamp-2 text-sm text-gray-600">
