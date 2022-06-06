@@ -59,6 +59,28 @@ Since we are demoing features of `launchSettings.json`, it will not be a nice de
 }
 ```
 
+The console app will build an `IConfiguration` and print it to the console. Since I don't feel like adding all my environment variables, I add only the ones prefixed with `KAYLUMAH_` kinda like how .NET automatically includes variables prefixed with `DOTNET_`.
+
+```csharp
+using Microsoft.Extensions.Configuration;
+
+IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+configurationBuilder.AddEnvironmentVariables("KAYLUMAH_");
+if (args is { Length: > 0 })
+{
+    configurationBuilder.AddCommandLine(args);
+}
+var configuration = configurationBuilder.Build();
+
+if (configuration is IConfigurationRoot configurationRoot)
+{
+    Console.WriteLine(configurationRoot.GetDebugView());
+}
+
+Console.WriteLine("Done...");
+Console.ReadLine();
+```
+
 ## VSCode
 
 When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
