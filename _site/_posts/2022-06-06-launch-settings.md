@@ -29,13 +29,13 @@ A few important notes:
 
 ## Project Setup
 
-For our sample application, we will create a new project using the "Console Template" with `dotnet new console`. Since it is a console, we must create a `Properties\launchSettings.json` by hand.
+For our sample application, we will create a new project using the "Console Template" with `dotnet new console`. Since it is a console, we must create a `Properties\launchSettings.json` by hand. At a minimum, the file would look like this.
 
 ```json
 {
     "$schema": "https://json.schemastore.org/launchsettings.json",
     "profiles": {
-        "DemoConsole.Default": {
+        "DemoConsole.V0": {
             "commandName": "Project"
         }
     }
