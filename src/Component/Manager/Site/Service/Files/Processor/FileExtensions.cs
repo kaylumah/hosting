@@ -10,7 +10,7 @@ public static class FileExtensions
     public static Dictionary<string, object> ToDictionary(this File file)
     {
         var result = new Dictionary<string, object>(file.MetaData);
-        result.SetValue(nameof(file.LastModified), file.LastModified);
+        // result.SetValue(nameof(file.LastModified), file.LastModified);
         result.SetValue(nameof(file.Content), file.Content);
         result.SetValue(nameof(file.Name), file.Name);
         return result;
