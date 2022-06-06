@@ -143,20 +143,6 @@ public class FileMetaData : Dictionary<string, object>
         get
         {
             return this.GetValue<DateTimeOffset?>(nameof(Modified));
-            /*
-            var txt = this.GetValue<string>(nameof(Modified));
-            DateTimeOffset result;
-            if (txt != null)
-            {
-                result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd HH:mm", null);
-                this.SetValue(nameof(Modified), result);
-                return result;
-            } 
-            else
-            {
-                return this.GetValue<DateTime?>(nameof(Modified));
-            }
-            */
         }
         set
         {
