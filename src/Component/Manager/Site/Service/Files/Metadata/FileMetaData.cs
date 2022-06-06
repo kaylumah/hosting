@@ -114,6 +114,18 @@ public class FileMetaData : Dictionary<string, object>
         }
     }
 
+    public DateTimeOffset? Published
+    {
+        get
+        {
+            return this.GetValue<DateTimeOffset?>(nameof(Published));
+        }
+        set
+        {
+            this.SetValue(nameof(Published), value);
+        }
+    }
+
     public string ModifiedDate
     {
         get
