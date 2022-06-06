@@ -230,14 +230,9 @@ $env:KAYLUMAH_COMMANDLINE="Session ENV var"
 dotnet run
 ```
 
-```pwsh
-dotnet run --no-launch-profile
-```
+If we don't want any launch profile just run `dotnet run --no-launch-profile` and to specify a profile run `dotnet run --launch-profile "DemoConsole.V2"`
 
-```pwsh
-dotnet run --launch-profile "DemoConsole.V2"
-```
-
+## Closing Thoughts
 
 ## Sources Used
 
