@@ -157,9 +157,9 @@ public partial class FileMetadataParser: IFileMetadataParser
         {
             var dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
             var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var publishedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).UtcDateTime;
+            var publishedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
             fileMetaData.Date = null;
-            fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(publishedDateTime, timeZone);
+            fileMetaData.Published = TimeZoneInfo.ConvertTimeToUtc(publishedDateTime, timeZone);
         }
     }
 
