@@ -157,9 +157,9 @@ public partial class FileMetadataParser: IFileMetadataParser
         {
             var dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
             var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var publishedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
+            var publishedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).UtcDateTime;
             fileMetaData.Date = null;
-            fileMetaData.Published = TimeZoneInfo.ConvertTimeToUtc(publishedDateTime.DateTime, timeZone);
+            fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(publishedDateTime, timeZone);
         }
     }
 
@@ -178,8 +178,8 @@ public partial class FileMetadataParser: IFileMetadataParser
         {
             var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
             var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var modifiedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
-            fileMetaData.Modified = modifiedDateTime;
+            var modifiedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).UtcDateTime;
+            fileMetaData.Modified = TimeZoneInfo.ConvertTimeFromUtc(modifiedDateTime, timeZone);;
         }
     }
 
