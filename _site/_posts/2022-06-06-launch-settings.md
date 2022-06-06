@@ -31,6 +31,17 @@ A few important notes:
 
 For our sample application, we will create a new project using the "Console Template" with `dotnet new console`. Since it is a console, we must create a `Properties\launchSettings.json` by hand.
 
+```json
+{
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "DemoConsole.Default": {
+            "commandName": "Project"
+        }
+    }
+}
+```
+
 ## VSCode
 
 When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
