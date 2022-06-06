@@ -24,6 +24,18 @@ A few important notes:
 - The launchSettings.json file is only used on the local development machine.
 - The launchSettings.json file shouldn't store secrets
 
+## CommandLine
+
+```pwsh
+# prints USER=Max
+dotnet run
+
+# Sets env var for current session
+$env:KAYLUMAH_COMMANDLINE="Hello World"
+# prints USER=Max, COMMANDLINE=Hello World
+dotnet run
+```
+
 ## Sources Used
 
 - https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
