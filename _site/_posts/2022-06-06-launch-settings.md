@@ -44,6 +44,21 @@ For our sample application, we will create a new project using the "Console Temp
 
 Since we are demoing features of `launchSettings.json`, it will not be a nice demo if we don't populate it.
 
+```json
+{
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "DemoConsole.V0": {
+            "commandName": "Project",
+            "commandLineArgs": "",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Development"
+            }
+        }
+    }
+}
+```
+
 ## VSCode
 
 When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
