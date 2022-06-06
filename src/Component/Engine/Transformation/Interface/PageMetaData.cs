@@ -119,12 +119,6 @@ public class PageMetaData : Dictionary<string, object>
         }
     }
 
-    /*
-      "modified",
-  "modifiedtime",
-  "publishedtime"
-    */
-
     public DateTimeOffset Published => this.GetValue<DateTimeOffset>(nameof(Published));
     public DateTimeOffset Modified => this.GetValue<DateTimeOffset>(nameof(Modified));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
