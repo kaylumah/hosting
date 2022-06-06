@@ -14,4 +14,7 @@ If you were wondering, "Max launchSettings.json has been around for years; why a
 
 Let me begin with a quick recap about `launchSettings.json`. A launch settings file contains [Launch Profiles](https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md). A `Launch Profile` is a kind of configuration that specifies how to run your project. Having these launch profiles allows you to switch between configurations easily.
 
+## Sources Used
+
+- https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
 
