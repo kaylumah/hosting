@@ -89,7 +89,7 @@ ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYL
 Done...
 ```
 
-## VSCode
+## How to use Launch Settings from VS Code?
 
 When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
 
