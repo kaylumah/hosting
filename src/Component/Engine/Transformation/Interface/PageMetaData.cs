@@ -129,17 +129,7 @@ public class PageMetaData : Dictionary<string, object>
     public string ModifiedDate => this.GetValue<string>(nameof(ModifiedDate));
     public DateTimeOffset Date => this.GetValue<DateTimeOffset>(nameof(Date));
 
-    public DateTimeOffset LastModified
-    {
-        get
-        {
-            return this.GetValue<DateTimeOffset>(nameof(LastModified));
-        }
-        set
-        {
-            this.SetValue(nameof(LastModified), value);
-        }
-    }
+    public DateTimeOffset LastModified => this.GetValue<DateTimeOffset>(nameof(LastModified));
 
     public PageMetaData(Dictionary<string, object> internalData) : base(internalData)
     {
