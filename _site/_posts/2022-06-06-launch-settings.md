@@ -146,7 +146,6 @@ And the following profile:
 ```json
 "DemoConsole.V1": {
     "commandName": "Project",
-    "commandLineArgs": "--mysetting myvalue",
     "environmentVariables": {
         "KAYLUMAH_ENVIRONMENT": "Production"
     }
@@ -162,7 +161,16 @@ Done...
 
 Note sure why you ever should do this, but you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`.
 
-Without updating profile `DemoConsole.V1` make the following changes to `launch.json`.
+If we introduce the following profile:
+```json
+"DemoConsole.V2": {
+    "commandName": "Project",
+    "commandLineArgs": "--mysetting myvalue",
+    "environmentVariables": {
+        "KAYLUMAH_ENVIRONMENT": "Production"
+    }
+},
+```
 
 ```json
 {
@@ -174,7 +182,7 @@ Without updating profile `DemoConsole.V1` make the following changes to `launch.
     "cwd": "${workspaceFolder}",
     "console": "internalConsole",
     "stopAtEntry": false,
-    "launchSettingsProfile": "DemoConsole.V1",
+    "launchSettingsProfile": "DemoConsole.V2",
     "args": [
         "--othersetting",
         "vscode"
@@ -193,6 +201,12 @@ othersetting=vscode (CommandLineConfigurationProvider)
 
 Done...
 ```
+
+There are a few things that happen:
+1. Since `launch.json` specified args the commandLineArgs from `launchSettings.json` are ignored.
+2. Since `launch.json` specified env and `launchSettings.json` specified `environmentVariables` both sets get merged.
+3. Since `launch.json` will win the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
+
 
 ## Rider
 
