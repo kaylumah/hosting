@@ -36,7 +36,7 @@ public partial class SiteMapGenerator
             var node = new SiteMapNode
             {
                 Url = GlobalFunctions.AbsoluteUrl(page.Uri),
-                LastModified = page.LastModified
+                LastModified = page.Modified
             };
 
             if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))

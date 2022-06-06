@@ -33,34 +33,7 @@ public partial class FileMetadataParser: IFileMetadataParser
 
         var fileMetaData = ApplyDefaults(paths, criteria.Scope);
         OverwriteMetaData(fileMetaData, result.Data, "file");
-        if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
-        {
-            fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-        }
-
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && !string.IsNullOrEmpty(fileMetaData.PublishedTime))
-        {
-            var publishedDateTimeString = $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}";
-            var publishedDate = System.DateTimeOffset.ParseExact(publishedDateTimeString, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-            fileMetaData.Date = publishedDate;
-        }
-
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
-        {
-            fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
-        }
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
-        {
-            fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
-        }
-
-        if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
-        {
-            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
-            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var modifiedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
-            fileMetaData.Modified = modifiedDateTime;
-        }
+        ApplyDates(fileMetaData);
 
         // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
         result.Data = fileMetaData;
@@ -164,6 +137,56 @@ public partial class FileMetadataParser: IFileMetadataParser
         return result;
         //metaData.Uri = result;
         //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
+    }
+
+    private static void ApplyDates(FileMetaData fileMetaData)
+    {
+        var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+        ApplyPublishedDates(fileMetaData, tz);
+        ApplyModifiedDates(fileMetaData, tz);
+        fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
+        fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
+    }
+
+    private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+    {
+        if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
+        {
+            fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        }
+
+        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate))
+        {
+            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
+            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+            var zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+            var utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+            fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
+        }
+    }
+
+    private static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+    {
+        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+        {
+            fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
+        }
+        if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
+        {
+            fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
+        }
+
+        if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+        {
+            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
+            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+            var zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+            var utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+            fileMetaData.Modified = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
+        }
     }
 
     private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
