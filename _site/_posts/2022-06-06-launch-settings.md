@@ -26,6 +26,8 @@ A few important notes:
 
 ## How to use Launch Settings from Dotnet CLI
 
+Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
+
 ```pwsh
 # prints USER=Max
 dotnet run
