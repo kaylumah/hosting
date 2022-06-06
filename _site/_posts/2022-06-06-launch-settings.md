@@ -95,6 +95,22 @@ Since I initially started writing this article to use launch settings with `VS C
 
 The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command? Should it display anything? Yep, it should. Don't believe me? Run the project; the evidence will speak for itself.
 
+With the following configuration in `launch.json`
+
+```json
+{
+    "name": ".NET Core Launch (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "build",
+    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
+    "args": [],
+    "cwd": "${workspaceFolder}",
+    "console": "internalConsole",
+    "stopAtEntry": false
+}
+```
+
 ```output
 ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
 
@@ -109,6 +125,41 @@ The support for this feature comes with a few [restrictions](https://github.com/
 1. Only profiles with "commandName": "Project" are supported.
 2. Only environmentVariables, applicationUrl and commandLineArgs properties are supported
 3. Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.
+
+With the following configuration in `launch.json`:
+
+```json
+{
+    "name": ".NET Core Launch (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "build",
+    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
+    "args": [],
+    "cwd": "${workspaceFolder}",
+    "console": "internalConsole",
+    "stopAtEntry": false,
+    "launchSettingsProfile": "DemoConsole.V1"
+}
+```
+
+And the following profile:
+```json
+"DemoConsole.V1": {
+    "commandName": "Project",
+    "commandLineArgs": "--mysetting myvalue",
+    "environmentVariables": {
+        "KAYLUMAH_ENVIRONMENT": "Production"
+    }
+}
+```
+
+```output
+ENVIRONMENT=Production (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+mysetting=myvalue (CommandLineConfigurationProvider)
+
+Done...
+```
 
 
 
