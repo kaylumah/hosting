@@ -81,6 +81,14 @@ Console.WriteLine("Done...");
 Console.ReadLine();
 ```
 
+If we run the project now the output should be:
+
+```output
+ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+
+Done...
+```
+
 ## VSCode
 
 When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
