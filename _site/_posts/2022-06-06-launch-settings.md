@@ -54,6 +54,28 @@ Since we are demoing features of `launchSettings.json`, it will not be a nice de
             "environmentVariables": {
                 "KAYLUMAH_ENVIRONMENT": "Development"
             }
+        },
+        "DemoConsole.V1": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production"
+            }
+        },
+        "DemoConsole.V2": {
+            "commandName": "Project",
+            "commandLineArgs": "--mysetting myvalue",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production"
+            }
+        },
+        "DemoConsole.V3": {
+            "commandName": "Project",
+            "commandLineArgs": "--mysetting myvalue",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production",
+                "KAYLUMAH_FROMVARIABLE1": "$(TargetFramework)",
+                "KAYLUMAH_FROMVARIABLE2": "$(MyCustomProp)"
+            }
         }
     }
 }
@@ -142,35 +164,13 @@ With the following configuration in `launch.json`:
 }
 ```
 
-And the following profile:
-```json
-"DemoConsole.V1": {
-    "commandName": "Project",
-    "environmentVariables": {
-        "KAYLUMAH_ENVIRONMENT": "Production"
-    }
-}
-```
-
 ```output
 ENVIRONMENT=Production (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
-mysetting=myvalue (CommandLineConfigurationProvider)
 
 Done...
 ```
 
 Note sure why you ever should do this, but you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`.
-
-If we introduce the following profile:
-```json
-"DemoConsole.V2": {
-    "commandName": "Project",
-    "commandLineArgs": "--mysetting myvalue",
-    "environmentVariables": {
-        "KAYLUMAH_ENVIRONMENT": "Production"
-    }
-},
-```
 
 ```json
 {
