@@ -60,6 +60,13 @@ public partial class StructureDataGenerator
 
             return blogPost.ToString(settings);
         }
+        else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
+        {
+            var blog = new Blog()
+            {
+            };
+            return blog.ToString(settings);
+        }
         return null;
     }
 }
