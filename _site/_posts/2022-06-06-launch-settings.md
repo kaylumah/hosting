@@ -24,6 +24,8 @@ A few important notes:
 - The launchSettings.json file is only used on the local development machine.
 - The launchSettings.json file shouldn't store secrets
 
+## Project Setup
+
 ## How to use Launch Settings from Dotnet CLI
 
 Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
