@@ -141,11 +141,12 @@ public partial class FileMetadataParser: IFileMetadataParser
 
     private static void ApplyDates(FileMetaData fileMetaData)
     {
-        ApplyPublishedDates(fileMetaData);
-        ApplyModifiedDates(fileMetaData);
+        var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+        ApplyPublishedDates(fileMetaData, tz);
+        ApplyModifiedDates(fileMetaData, tz);
     }
 
-    private static void ApplyPublishedDates(FileMetaData fileMetaData)
+    private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
     {
         if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
@@ -158,11 +159,11 @@ public partial class FileMetadataParser: IFileMetadataParser
             var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
             var publishedDateTime = System.DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, System.Globalization.CultureInfo.InvariantCulture);
             fileMetaData.Date = null;
-            fileMetaData.Published = publishedDateTime;
+            fileMetaData.Published = TimeZoneInfo.ConvertTimeToUtc(publishedDateTime.DateTime, timeZone);
         }
     }
 
-    private static void ApplyModifiedDates(FileMetaData fileMetaData)
+    private static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
     {
         if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
         {
