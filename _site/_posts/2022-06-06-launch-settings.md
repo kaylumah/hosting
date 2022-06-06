@@ -214,6 +214,10 @@ How to use LaunchSettings in JetBrains Rider?
 
 Rider [launched support](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/) for LaunchSettings.json way back in November 2018. 
 
+
+https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html
+
+
 ## How to use Launch Settings from Dotnet CLI
 
 Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
