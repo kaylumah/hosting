@@ -184,11 +184,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             LogEnrichSiteWith("Years");
             var years = pages
                 .IsArticle()
-                .Select(x => x.Date.Year)
+                .Select(x => x.Published.Year)
                 .Distinct();
             foreach (var year in years)
             {
-                var yearFiles = pages.Where(x => x.Date.Year.Equals(year)).ToArray();
+                var yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
                 site.Years.Add(year, yearFiles);
             }
         }
