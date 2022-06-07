@@ -157,17 +157,21 @@ We also generate a project from the `webapi template`. We slightly modify it so 
 }
 ```
 
+Depending on the profile you choose you see a `Swagger UI` dashboard.
+
 ## Share debug config from Microsoft Visual Studio
 
 I could not verify it online, but I think Visual Studio introduced launch settings as part of the first `ASP NET Core` release. Since launch profiles is a `Visual Studio` feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from `Visual Studio` `launchSettings` can reference `MSBuild` variables. That is a pretty handy way to provide something dynamic.
 
+For our console we see the following selection in Visual Studio:
 
-![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
+![Microsoft Visual Studio - Console Launch Profile](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=2640 height=796}
 
+For our API we see the following selection in Visual Studio:
 
-![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=551 height=490}
+![Microsoft Visual Studio - API Launch Profile](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=2604 height=1080}
 
-
+As you see the WebAPI variant shows more than just our launch profiles.
 
 Another aspect of development configuration is the ability to run more projects simultaneously. In `Visual Studio`, we can achieve this by selecting multiple startup projects. As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called [SwitchStartUpProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022).
 
@@ -194,7 +198,7 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 }
 ```
 
-![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=551 height=490}
+![Microsoft  Visual Studio - Compound Settings](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
 
 ## How to use LaunchSettings in JetBrains Rider?
 
