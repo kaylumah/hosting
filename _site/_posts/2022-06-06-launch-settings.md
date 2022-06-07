@@ -295,8 +295,8 @@ There are a few things that happen:
 2. Since `launch.json` specified env and `launchSettings.json` specified `environmentVariables` both sets get merged.
 3. Since `launch.json` will win, the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
 
-The default configuration for our web api looks slightly different. Because it adds support to open the browser after the project launched.
-Our base URL comes from the `launchSettings.json`, but the `launchUrl` gets ignored. This can be mitigated by updating the generated `serverReadyAction` with an `uriFormat`.
+The default configuration for our web api looks slightly different because it adds support to open the browser after the project starts.
+Our base URL comes from the `launchSettings.json`, but the `launchUrl` gets ignored. You can achieve the same behaviour by updating the generated `serverReadyAction` with an `uriFormat`.
 
 ```json
 {
