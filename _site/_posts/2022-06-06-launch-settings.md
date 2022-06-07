@@ -6,8 +6,9 @@ coverimage:
     DEFAULT: '/assets/images/posts/20220606/launch-settings/cover_image.png'
     WEB: '/assets/images/posts/20220606/launch-settings/cover_image.webp'
 tags:
-    - csharp
-    - git
+    - rider
+    - visualstudio
+    - vscode
 commentid: '12'
 publishedtime: '21:30'
 ---
