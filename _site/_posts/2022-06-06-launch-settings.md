@@ -243,44 +243,22 @@ Given the following configuration in `launch.json`
 }
 ```
 
+The output will be:
+
 ```output
 ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
 
 Done...
 ```
 
- That is because you have secretly been using `launchSettings.json` the whole time. In May 2018, release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped `launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? Now you know why.
+ That is because you have secretly been using `launchSettings.json` the whole time. In May 2018, release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped `launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? It is likely this is the reason why. Remember our default profile set an environment variable, and variables from `launchSettings.json` win from system environment variables. I recommend explicitly specifying `launchSettingsProfile` to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.
 
-I recommend explicitly specifying `launchSettingsProfile` to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.
-
-The support for this feature comes with a few [restrictions](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support):
+Like `Rider` the support for this feature comes with a few [restrictions](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support):
 1. Only profiles with "commandName": "Project" are supported.
 2. Only environmentVariables, applicationUrl and commandLineArgs properties are supported
 3. Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.
 
-With the following configuration in `launch.json`:
-
-```json
-{
-    "name": ".NET Core Launch (console)",
-    "type": "coreclr",
-    "request": "launch",
-    "preLaunchTask": "build",
-    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
-    "cwd": "${workspaceFolder}",
-    "console": "internalConsole",
-    "stopAtEntry": false,
-    "launchSettingsProfile": "DemoConsole.V1"
-}
-```
-
-```output
-ENVIRONMENT=Production (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
-
-Done...
-```
-
-Note sure why you ever should do this, but you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`.
+Since you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`, lets look at an example.
 
 ```json
 {
