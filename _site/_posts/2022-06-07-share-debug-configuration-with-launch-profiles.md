@@ -10,7 +10,7 @@ tags:
     - visualstudio
     - vscode
 commentid: '116'
-publishedtime: '21:30'
+publishedtime: '23:30'
 ---
 Anno 2022, as `.NET` developers, we are spoilt with multiple options for our development environment. Of course, having a choice sparks the debate that my IDE is better than your IDE. I feel that after `bring your own device`, we are moving to a `bring your own IDE` workspace. Given the rise of tooling like `VS Code DevContainer` and `GitHub Codespaces`, I think more developers will likely opt for such tooling. 
 
@@ -375,9 +375,10 @@ If we don't want any launch profile just run `dotnet run --no-launch-profile` an
 
 ## Closing Thoughts
 
-As we discovered, it's more than likely that you were using launch profiles outside Visual Studio without realising it. I am not sure that not if unspecified, it is a sensible default to take the first one, particularly since someone can change the order of projects. I like that in at least three popular IDEs; we have an easy mechanism for sharing settings. In the future, I am also hoping for a shared tool for compound configurations. At the very least, managing compound configurations using existing launch profiles is much easier than duplicating arguments and environment variables for each IDE.
+As we discovered, it's more than likely that you were using launch profiles outside Visual Studio without realising it. I am not sure that not if unspecified, it is a sensible default to take the first one, particularly since someone can change the order of projects. I like that in at least three popular IDEs; we have an easy mechanism for sharing settings. 
 
-As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
+
+In the future, I am also hoping for a shared tool for compound configurations. At the very least, managing compound configurations using existing launch profiles is much easier than duplicating arguments and environment variables for each IDE. One last note is that I discovered that MSBuild variable replacement does not appear to be working from `VS Code` or the `CLI`. Not sure if that's a bug or by design, but it's important that not every IDE supports all features of the `launchSettings.json`. As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
 The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/WorkingWithLaunchSettings).
 
