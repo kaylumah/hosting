@@ -1,5 +1,5 @@
 ---
-title: 'LaunchSettings Title'
+title: 'Pick your own .NET IDE by sharing dev configuration'
 description: 'LaunchSettings Description'
 coverimage:
     DEFAULT: '/assets/images/posts/20220606/launch-settings/cover_image.png'
