@@ -295,6 +295,7 @@ There are a few things that happen:
 2. Since `launch.json` specified env and `launchSettings.json` specified `environmentVariables` both sets get merged.
 3. Since `launch.json` will win, the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
 
+![Microsoft VS Code - launch profiles](/assets/images/posts/20220606/launch-settings/vscode_launchprofiles.png){width=680 height=620}
 
 ## How to use Launch Settings from Dotnet CLI
 
