@@ -190,15 +190,30 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 }
 ```
 
+![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=551 height=490}
+
 ## How to use LaunchSettings in JetBrains Rider?
 
 As it turns out, `launchSettings` has been supported in `Rider` for a long time. They first introduced it in [November 2018](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/). As a matter of fact, to use `launchSettings` inside `Rider` you don't need to do a thing. `Rider` [automatically detects](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles) if your projects are using `launchSettings`. Not all features are supported, but using profiles of `commandName project` are. If you did provide MSBuild variable in `launchSettings` `Rider` will correctly pass them along.
 
+![WIP](/assets/images/posts/20220606/launch-settings/rider_launchprofiles.png){width=551 height=490}
+
 As for multiple start-up projects `Rider` offers the concept of compound configurations. 
+If you want to share it with your team don;t forget: ".."
 
+![WIP](/assets/images/posts/20220606/launch-settings/rider_compound_configuration.png){width=551 height=490}
 
+On disk it will look like:
 
-
+```xml
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Console and API" type="CompoundRunConfigurationType">
+    <toRun name="DemoApi: DemoApi.Production" type="LaunchSettings" />
+    <toRun name="DemoConsole: DemoConsole.V3" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
+```
 
 ## How to use Launch Settings from Microsoft VS Code?
 
