@@ -111,6 +111,42 @@ ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYL
 Done...
 ```
 
+We also generate a project from the `webapi template`. We leave it as-is, so it looks like this.
+
+```json
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:33652",
+      "sslPort": 44325
+    }
+  },
+  "profiles": {
+    "DemoApi": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7238;http://localhost:5200",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+```
 
 ## How to Visual Studio
 
