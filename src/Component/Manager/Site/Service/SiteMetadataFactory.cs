@@ -169,7 +169,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .HasTag()
                 .IsArticle()
                 .SelectMany(x => x.Tags)
-                .Distinct();
+                .Distinct()
+                .ToList();
             foreach (var tag in tags)
             {
                 var tagFiles = pages

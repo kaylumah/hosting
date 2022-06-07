@@ -55,7 +55,6 @@ public static class PageMetaDataExtensions
     public static IEnumerable<PageMetaData> FromContentType(this IEnumerable<PageMetaData> source, ContentType contentType)
     {
         return source
-                .HasSeries()
                 .Where(page => contentType.Equals(page.Type));
     }
 
