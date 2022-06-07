@@ -148,11 +148,11 @@ We also generate a project from the `webapi template`. We leave it as-is, so it 
 
 ```
 
-## How to Visual Studio
+## Share debug config from Microsoft Visual Studio
 
-I could not verify it online, but I think Visual Studio introduced launch settings as part of the first `ASPNET Core` release. Since launch profiles is a Visual Studio feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from Visual Studio `launchSettings` can reference MSBuild variables. That is a pretty handy way to provide something dynamic.
+I could not verify it online, but I think Visual Studio introduced launch settings as part of the first `ASP NET Core` release. Since launch profiles is a `Visual Studio` feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from `Visual Studio` `launchSettings` can reference `MSBuild` variables. That is a pretty handy way to provide something dynamic.
 
-Another aspect of development configuration is the ability to run more projects simultaneously. In Visual Studio, we can achieve this by selecting multiple startup projects. As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called [SwitchStartUpProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022).
+Another aspect of development configuration is the ability to run more projects simultaneously. In `Visual Studio`, we can achieve this by selecting multiple startup projects. As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called [SwitchStartUpProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022).
 
 We can quickly provide multiple configurations. We can provide a `ProfileName` for each project that matches one in our launch settings. It is that simple.
 
@@ -177,7 +177,17 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 }
 ```
 
-## How to use Launch Settings from VS Code?
+## How to use LaunchSettings in JetBrains Rider?
+
+As it turns out, `launchSettings` has been supported in `Rider` for a long time. They first introduced it in [November 2018](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/). As a matter of fact, to use `launchSettings` inside `Rider` you don't need to do a thing. `Rider` [automatically detects](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles) if your projects are using `launchSettings`. Not all features are supported, but using profiles of `commandName project` are. If you did provide MSBuild variable in `launchSettings` `Rider` will correctly pass them along.
+
+As for multiple start-up projects `Rider` offers the concept of compound configurations. 
+
+
+
+
+
+## How to use Launch Settings from Microsoft VS Code?
 
 Since I initially started writing this article to use launch settings with `VS Code`, let's open with `VS Code`. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
 
@@ -273,15 +283,6 @@ There are a few things that happen:
 2. Since `launch.json` specified env and `launchSettings.json` specified `environmentVariables` both sets get merged.
 3. Since `launch.json` will win, the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
 
-
-## Rider
-
-How to use LaunchSettings in JetBrains Rider?
-
-Rider [launched support](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/) for LaunchSettings.json way back in November 2018. 
-
-
-https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html
 
 
 ## How to use Launch Settings from Dotnet CLI
