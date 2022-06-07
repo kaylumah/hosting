@@ -1,9 +1,15 @@
 ---
 title: 'Pick your own .NET IDE by sharing dev configuration'
 description: 'Pick your own .NET IDE and benefit from shared developer configuration with launch profiles.'
+image: '/assets/images/posts/20220606/launch-settings/cover_image.png'
 coverimage:
     DEFAULT: '/assets/images/posts/20220606/launch-settings/cover_image.png'
     WEB: '/assets/images/posts/20220606/launch-settings/cover_image.webp'
+tags:
+    - csharp
+    - git
+commentid: '12'
+publishedtime: '21:30'
 ---
 Anno 2022, as `.NET` developers, we are spoilt with multiple options for our development environment. Of course, having a choice sparks the debate that my IDE is better than your IDE. I feel that after `bring your own device`, we are moving to a `bring your own IDE` workspace. Given the rise of tooling like `VS Code DevContainer` and `GitHub Codespaces`, I think more developers will likely opt for such tooling. 
 
