@@ -200,7 +200,7 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 
 ![Microsoft Visual Studio - Compound Settings](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
 
-## Share debug configuration JetBrains Rider
+## Share debug configuration from JetBrains Rider
 
 As it turns out, `launchSettings` has been supported in `Rider` for a long time. They first introduced it in [November 2018](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/). As a matter of fact, to use `launchSettings` inside `Rider` you don't need to do a thing. `Rider` [automatically detects](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles) if your projects are using `launchSettings`. Not all features are supported, but using profiles of `commandName project` are. If you did provide MSBuild variable in `launchSettings` `Rider` will correctly pass them along.
 
@@ -222,13 +222,12 @@ It's important to check `Store as project file` otherwise you wont share it with
 </component>
 ```
 
-## How to use Launch Settings from Microsoft VS Code?
+## Share debug configuration from Microsoft VS Code?
 
-Since I initially started writing this article to use launch settings with `VS Code`, let's open with `VS Code`. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. If you missed the prompt, you could run the command `.NET: Generate Assets for Build and Debug`. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables.
+Last but not least is `VS Code`, the actual reason I started this article. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command?
+The answer might surprise you.
 
-The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command? Should it display anything? Yep, it should. Don't believe me? Run the project; the evidence will speak for itself.
-
-With the following configuration in `launch.json`
+Given the following configuration in `launch.json`
 
 ```json
 {
