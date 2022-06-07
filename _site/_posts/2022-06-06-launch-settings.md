@@ -81,6 +81,8 @@ Since we are demoing features of `launchSettings.json`, it will not be a nice de
 }
 ```
 
+![Microsoft Extensions - IConfiguration - configuration builder resolve order](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
+
 The console app will build an `IConfiguration` and print it to the console. Since I don't feel like adding all my environment variables, I add only the ones prefixed with `KAYLUMAH_` kinda like how .NET automatically includes variables prefixed with `DOTNET_`.
 
 ```csharp
