@@ -159,7 +159,7 @@ We also generate a project from the `webapi template`. We slightly modify it so 
 
 Depending on the profile you choose you see a `Swagger UI` dashboard.
 
-## Share debug config from Microsoft Visual Studio
+## Share debug configuration from Microsoft Visual Studio
 
 I could not verify it online, but I think Visual Studio introduced launch settings as part of the first `ASP NET Core` release. Since launch profiles is a `Visual Studio` feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from `Visual Studio` `launchSettings` can reference `MSBuild` variables. That is a pretty handy way to provide something dynamic.
 
@@ -198,20 +198,19 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 }
 ```
 
-![Microsoft  Visual Studio - Compound Settings](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
+![Microsoft Visual Studio - Compound Settings](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
 
-## How to use LaunchSettings in JetBrains Rider?
+## Share debug configuration JetBrains Rider
 
 As it turns out, `launchSettings` has been supported in `Rider` for a long time. They first introduced it in [November 2018](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/). As a matter of fact, to use `launchSettings` inside `Rider` you don't need to do a thing. `Rider` [automatically detects](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles) if your projects are using `launchSettings`. Not all features are supported, but using profiles of `commandName project` are. If you did provide MSBuild variable in `launchSettings` `Rider` will correctly pass them along.
 
-![WIP](/assets/images/posts/20220606/launch-settings/rider_launchprofiles.png){width=551 height=490}
+![JetBrains Rider - launch profiles](/assets/images/posts/20220606/launch-settings/rider_launchprofiles.png){width=964 height=904}
 
-As for multiple start-up projects `Rider` offers the concept of compound configurations. 
-If you want to share it with your team don;t forget: ".."
+A thing I really like about `Rider` is that I don't need an additional plugin to support multiple start up projects.
 
-![WIP](/assets/images/posts/20220606/launch-settings/rider_compound_configuration.png){width=551 height=490}
+![JetBrains Rider - Compound Settings](/assets/images/posts/20220606/launch-settings/rider_compound_configuration.png){width=3456 height=2144}
 
-On disk it will look like:
+It's important to check `Store as project file` otherwise you wont share it with your team. In this particular example it will look like this:
 
 ```xml
 <component name="ProjectRunConfigurationManager">
