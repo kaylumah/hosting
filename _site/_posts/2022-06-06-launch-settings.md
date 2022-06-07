@@ -224,7 +224,7 @@ It's important to check `Store as project file`; otherwise, you won't share it w
 
 ## Share debug configuration from Microsoft VS Code
 
-Last but not least is `VS Code`, the actual reason I started this article. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command?
+Last but not least is `VS Code`, the reason I started this article. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command?
 The answer might surprise you.
 
 Given the following configuration in `launch.json`
@@ -251,14 +251,14 @@ ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYL
 Done...
 ```
 
- That is because you have secretly been using `launchSettings.json` the whole time. In May 2018, release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped `launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? It is likely this is the reason why. Remember our default profile set an environment variable, and variables from `launchSettings.json` win from system environment variables. I recommend explicitly specifying `launchSettingsProfile` to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.
+ That is because you have secretly been using `launchSettings.json` the whole time. In May 2018, release [1.15.0](https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018) of the extension shipped `launchSettings.json` support. If you don't add `launchSettingsProfile` to your `launch.json`, it will use the first profile for a project that is of type `"commandName": "Project"`. Ever had unexplained variables in your project? This is likely the reason why. Remember our default profile set an environment variable, and variables from `launchSettings.json` win from system environment variables. I recommend explicitly specifying `launchSettingsProfile` to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.
 
 Like `Rider` the support for this feature comes with a few [restrictions](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support):
 1. Only profiles with "commandName": "Project" are supported.
 2. Only environmentVariables, applicationUrl and commandLineArgs properties are supported
 3. Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.
 
-Since you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`, lets look at an example.
+Since you can provide arguments and environment variables in both `launch.json` and `launchSettings.json`, let's look at an example.
 
 ```json
 {
