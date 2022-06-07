@@ -61,7 +61,7 @@
 - id: vscode
   name: VS Code
   description: for the Microsoft VS Code IDE
-  icon: /assets/icons/simpleicons/vscode.svg
+  icon: /assets/icons/simpleicons/visualstudiocode.svg
 - id: xunit
   name: Xunit
   description: for the Xunit test framework
