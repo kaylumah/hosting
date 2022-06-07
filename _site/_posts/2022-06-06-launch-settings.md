@@ -81,7 +81,7 @@ Since we are demoing features of `launchSettings.json`, it will not be a nice de
 }
 ```
 
-![Microsoft Extensions - IConfiguration - configuration builder resolve order](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
+![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
 
 The console app will build an `IConfiguration` and print it to the console. Since I don't feel like adding all my environment variables, I add only the ones prefixed with `KAYLUMAH_` kinda like how .NET automatically includes variables prefixed with `DOTNET_`.
 
@@ -113,7 +113,7 @@ ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYL
 Done...
 ```
 
-We also generate a project from the `webapi template`. We leave it as-is, so it looks like this.
+We also generate a project from the `webapi template`. We slightly modify it so it contains a second profile, so it looks like this.
 
 ```json
 {
@@ -137,6 +137,16 @@ We also generate a project from the `webapi template`. We leave it as-is, so it 
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "DemoApi.Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7238;http://localhost:5200",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
@@ -147,8 +157,9 @@ We also generate a project from the `webapi template`. We leave it as-is, so it 
     }
   }
 }
-
 ```
+
+![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=551 height=490}
 
 ## Share debug config from Microsoft Visual Studio
 
