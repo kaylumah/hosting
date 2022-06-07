@@ -348,19 +348,19 @@ From the three IDEs `VS Code` has the easiest way to share compound configuratio
 
 ![Microsoft VS Code - launch profiles](/assets/images/posts/20220606/launch-settings/vscode_launchprofiles.png){width=680 height=620}
 
-## How to use Launch Settings from Dotnet CLI
+## Bonus use Launch Settings from Dotnet CLI
 
 Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
 
-As it turns out the CLI also defaults to the first project in `Properties\launchSettings.json` so in our case `DemoConsole.V0`.
+As it turns out the CLI also defaults to the first project in `Properties\launchSettings.json` so in our case `DemoConsole.V0`. Just like VS Code did. The following example uses a bit of `PowerShell` to run the CLI.
 
 ```pwsh
-# prints USER=Max
+# prints the default
 dotnet run
 
 # Sets env var for current session
 $env:KAYLUMAH_COMMANDLINE="Session ENV var"
-# prints USER=Max, COMMANDLINE=Session ENV var
+# prints COMMANDLINE + the default
 dotnet run
 ```
 
