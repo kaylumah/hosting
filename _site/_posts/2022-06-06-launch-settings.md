@@ -81,8 +81,6 @@ Since we are demoing features of `launchSettings.json`, it will not be a nice de
 }
 ```
 
-![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
-
 The console app will build an `IConfiguration` and print it to the console. Since I don't feel like adding all my environment variables, I add only the ones prefixed with `KAYLUMAH_` kinda like how .NET automatically includes variables prefixed with `DOTNET_`.
 
 ```csharp
@@ -159,11 +157,17 @@ We also generate a project from the `webapi template`. We slightly modify it so 
 }
 ```
 
-![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=551 height=490}
-
 ## Share debug config from Microsoft Visual Studio
 
 I could not verify it online, but I think Visual Studio introduced launch settings as part of the first `ASP NET Core` release. Since launch profiles is a `Visual Studio` feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from `Visual Studio` `launchSettings` can reference `MSBuild` variables. That is a pretty handy way to provide something dynamic.
+
+
+![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=551 height=490}
+
+
+![WIP](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=551 height=490}
+
+
 
 Another aspect of development configuration is the ability to run more projects simultaneously. In `Visual Studio`, we can achieve this by selecting multiple startup projects. As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called [SwitchStartUpProject](https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022).
 
