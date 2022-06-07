@@ -332,7 +332,7 @@ Our base URL comes from the `launchSettings.json`, but the `launchUrl` gets igno
 }
 ```
 
-From the three IDEs `VS Code` has the easiest way to share compound configurations. Just add the following to your `launch.json`
+Of the three IDEs, `VS Code` has the easiest way to share compound configurations. Just add the following to your `launch.json`:
 
 ```json
 "compounds": [
