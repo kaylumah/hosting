@@ -1,6 +1,6 @@
 ---
-title: 'Pick your own .NET IDE by sharing dev configuration'
-description: 'Pick your own .NET IDE and benefit from shared developer configuration with launch profiles.'
+title: 'Shared debug configuration between .NET IDEs with launch profiles'
+description: 'Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json'
 image: '/assets/images/posts/20220606/launch-settings/cover_image.png'
 coverimage:
     DEFAULT: '/assets/images/posts/20220606/launch-settings/cover_image.png'
