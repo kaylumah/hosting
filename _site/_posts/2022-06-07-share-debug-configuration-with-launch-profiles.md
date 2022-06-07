@@ -1,10 +1,10 @@
 ---
 title: 'Share debug configuration between .NET IDEs with launch profiles'
 description: 'Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json'
-image: '/assets/images/posts/20220606/launch-settings/cover_image.png'
+image: '/assets/images/posts/20220607/launch-settings/cover_image.png'
 coverimage:
-    DEFAULT: '/assets/images/posts/20220606/launch-settings/cover_image.png'
-    WEB: '/assets/images/posts/20220606/launch-settings/cover_image.webp'
+    DEFAULT: '/assets/images/posts/20220607/launch-settings/cover_image.png'
+    WEB: '/assets/images/posts/20220607/launch-settings/cover_image.webp'
 tags:
     - rider
     - visualstudio
@@ -172,11 +172,11 @@ I could not verify it online, but I think Visual Studio introduced launch settin
 
 For our console, we see the following selection in Visual Studio:
 
-![Microsoft Visual Studio - Console Launch Profile](/assets/images/posts/20220606/launch-settings/visualstudio_console_launchprofile.png){width=2640 height=796}
+![Microsoft Visual Studio - Console Launch Profile](/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png){width=2640 height=796}
 
 For our API, we see the following selection in Visual Studio:
 
-![Microsoft Visual Studio - API Launch Profile](/assets/images/posts/20220606/launch-settings/visualstudio_api_launchprofile.png){width=2604 height=1080}
+![Microsoft Visual Studio - API Launch Profile](/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png){width=2604 height=1080}
 
 As you see, the WebAPI variant shows more than just our launch profiles.
 
@@ -205,17 +205,17 @@ We can quickly provide multiple configurations. We can provide a `ProfileName` f
 }
 ```
 
-![Microsoft Visual Studio - Compound Settings](/assets/images/posts/20220606/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
+![Microsoft Visual Studio - Compound Settings](/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png){width=3848 height=348}
 
 ## Share debug configuration from JetBrains Rider
 
 As it turns out, `launchSettings` has been supported in `Rider` for a long time. They first introduced it in [November 2018](https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/). As a matter of fact, to use `launchSettings` inside `Rider` you don't need to do a thing. `Rider` [automatically detects](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles) if your projects are using `launchSettings`. Not all features are supported, but using profiles of `commandName project` are. If you did provide MSBuild variable in `launchSettings` `Rider` would correctly pass them along.
 
-![JetBrains Rider - launch profiles](/assets/images/posts/20220606/launch-settings/rider_launchprofiles.png){width=964 height=904}
+![JetBrains Rider - launch profiles](/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png){width=964 height=904}
 
 A thing I like about `Rider` is that I don't need an additional plugin to support multiple start up projects.
 
-![JetBrains Rider - Compound Settings](/assets/images/posts/20220606/launch-settings/rider_compound_configuration.png){width=3456 height=2144}
+![JetBrains Rider - Compound Settings](/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png){width=3456 height=2144}
 
 It's important to check `Store as project file`; otherwise, you won't share it with your team. In this particular example, it will look like this:
 
@@ -353,7 +353,7 @@ Of the three IDEs, `VS Code` has the easiest way to share compound configuration
 ]
 ```
 
-![Microsoft VS Code - launch profiles](/assets/images/posts/20220606/launch-settings/vscode_launchprofiles.png){width=680 height=620}
+![Microsoft VS Code - launch profiles](/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png){width=680 height=620}
 
 ## Bonus use Launch Settings from Dotnet CLI
 
