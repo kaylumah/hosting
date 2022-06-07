@@ -1,5 +1,5 @@
 ---
-title: 'Shared debug configuration between .NET IDEs with launch profiles'
+title: 'Share debug configuration between .NET IDEs with launch profiles'
 description: 'Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json'
 image: '/assets/images/posts/20220606/launch-settings/cover_image.png'
 coverimage:
