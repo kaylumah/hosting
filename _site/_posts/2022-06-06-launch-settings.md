@@ -222,7 +222,7 @@ It's important to check `Store as project file` otherwise you wont share it with
 </component>
 ```
 
-## Share debug configuration from Microsoft VS Code?
+## Share debug configuration from Microsoft VS Code
 
 Last but not least is `VS Code`, the actual reason I started this article. When you open a .NET project in `VS Code`, you get prompted to create a `launch.json` file. A `launch.json` file is very similar to a `launchSettings.json`. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default `launch.json` does not pass any additional configuration to the project. So what would be the logical output of our command?
 The answer might surprise you.
@@ -332,8 +332,19 @@ Our base URL comes from the `launchSettings.json`, but the `launchUrl` gets igno
 }
 ```
 
+From the three IDEs `VS Code` has the easiest way to share compound configurations. Just add the following to your `launch.json`
 
-
+```json
+"compounds": [
+    {
+        "name": "Console + API",
+        "configurations": [
+            "Launch WebAPI",
+            "Launch Console"
+        ]
+    }
+]
+```
 
 ![Microsoft VS Code - launch profiles](/assets/images/posts/20220606/launch-settings/vscode_launchprofiles.png){width=680 height=620}
 
