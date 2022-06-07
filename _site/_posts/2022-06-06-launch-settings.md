@@ -296,7 +296,6 @@ There are a few things that happen:
 3. Since `launch.json` will win, the value for `KAYLUMAH_ENVIRONMENT` is `Development`.
 
 
-
 ## How to use Launch Settings from Dotnet CLI
 
 Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.
