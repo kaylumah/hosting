@@ -55,11 +55,16 @@ jobs:
         run: |
           $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
           $SiteMapOutputAsString = $SiteMapOutput -join ","
-          echo ::set-output name=siteMapUrls::$SiteMapOutputAsString
+          echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
+          echo "SITE_URLS=$SiteMapOutputAsString" >> $GITHUB_ENV
       - name: Lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
           urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
+      - name: Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          urls: '${{env.SITE_URLS}}'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
