@@ -24,6 +24,10 @@ jobs:
           node-version: 16
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
+      - name: Set TimeZone
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Europe/Amsterdam"
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
