@@ -54,9 +54,7 @@ jobs:
         shell: pwsh
         run: |
           $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
-          Write-Host $SiteMapOutput
           $SiteMapOutputAsString = $SiteMapOutput -join ","
-          Write-Host $SiteMapOutputAsString
           echo ::set-output name=siteMapUrls::$($SiteMapOutputAsString)
       - name: Lighthouse
         uses: foo-software/lighthouse-check-action@master
