@@ -53,6 +53,10 @@ jobs:
         shell: pwsh
         run: |
           ./tools/Scan-Website.ps1 -BaseUrl "${{ steps.builddeploy.outputs.static_web_app_url }}"
+      - name: Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          urls: 'https://www.foo.software,https://www.google.com'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
