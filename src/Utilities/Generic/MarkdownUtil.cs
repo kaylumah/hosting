@@ -79,13 +79,13 @@ public static class MarkdownUtil
             }
 
             // TODO disable pending Medium response...
-            // if (anchor is LinkInline imageLink && imageLink.IsImage)
-            // {
-            //     if (imageLink.Url.StartsWith("/assets"))
-            //     {
-            //         imageLink.Url = GlobalFunctions.Instance.Url + imageLink.Url;
-            //     }
-            // }
+            if (anchor is LinkInline imageLink && imageLink.IsImage)
+            {
+                if (imageLink.Url.StartsWith("/assets",  StringComparison.Ordinal))
+                {
+                    imageLink.Url = GlobalFunctions.Url.Value + imageLink.Url;
+                }
+            }
         }
 
         // Render the doc
