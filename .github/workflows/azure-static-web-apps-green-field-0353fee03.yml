@@ -53,9 +53,9 @@ jobs:
         id: verifywebsite
         shell: pwsh
         run: |
-          [array] $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
+          $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml"
           Write-Host $SiteMapOutput
-          $SiteMapOutputAsString = $SiteMapOutputAsString -join ","
+          $SiteMapOutputAsString = $SiteMapOutput -join ","
           Write-Host $SiteMapOutputAsString
           echo ::set-output name=siteMapUrls::$($SiteMapOutputAsString)
       - name: Lighthouse
