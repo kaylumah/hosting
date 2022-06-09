@@ -30,7 +30,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ page.title }}">
-<meta name="twitter:site" content="@{{ site.data.organization.twitter | remove '@' }}">
+<meta name="twitter:site" content="@{{ site.data.organizations[page.organization].twitter | remove:'@' }}" />
 <meta name="twitter:creator" content="@{{ site.data.authors[page.author].twitter | remove:'@' }}" />
 <meta name="twitter:description" content="{{ description }}">
 <meta name="twitter:image" content="{{ page_image }}">

@@ -23,6 +23,7 @@ public class PageMetaData : Dictionary<string, object>
     public string Description => this.GetValue<string>(nameof(Description));
     public string Language => this.GetValue<string>(nameof(Language));
     public string Author => this.GetValue<string>(nameof(Author));
+    public string Organization => this.GetValue<string>(nameof(Organization));
     public bool SocialShare => this.GetBoolValue(nameof(SocialShare));
     public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
     public bool Feed => this.GetBoolValue(nameof(Feed));

@@ -104,6 +104,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.TagMetaData = tagData;
             }
 
+            var authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
+            if (authorFile != null)
+            {
+                dataFiles.Remove(authorFile);
+                var authorData = _yamlParser.Parse<AuthorMetaDataCollection>(authorFile);
+                site.Data["authors"] = authorData.Dictionary;
+                site.AuthorMetaData = authorData;
+            }
+
+            var organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
+            if (organizationFile != null)
+            {
+                dataFiles.Remove(organizationFile);
+                var organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
+                site.Data["organizations"] = organizationData.Dictionary;
+                site.OrganizationMetaData = organizationData;
+            }
+
             EnrichSiteWithData(site, dataFiles);
         }
 
@@ -169,7 +187,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .HasTag()
                 .IsArticle()
                 .SelectMany(x => x.Tags)
-                .Distinct();
+                .Distinct()
+                .ToList();
             foreach (var tag in tags)
             {
                 var tagFiles = pages

@@ -10,23 +10,20 @@ public static class SiteMetaDataExtensions
 {
     public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
     {
-        Dictionary<string, Person> result = new();
-        if (source.Data.TryGetValue("authors", out var authorData))
-        {
-            if (authorData is Dictionary<object, object> authors)
-            {
-                foreach (var author in authors)
-                {
-                    var singleDictionary = (Dictionary<object, object>)author.Value;
-                    var syndicationPerson = new Person
-                    {
-                        Name = (string)singleDictionary["full_name"],
-                        Url = new Uri((string)singleDictionary["uri"])
-                    };
-                    result.Add((string)author.Key, syndicationPerson);
-                }
-            }
-        }
-        return result;
+        var authors = source.AuthorMetaData
+            .ToDictionary(x => x.Id, x => new Person() {
+                Name = x.FullName,
+                Url = new Uri(x.Uri)
+            });
+        return authors;
+    }
+
+    public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
+    {
+        var organizations = source.OrganizationMetaData
+            .ToDictionary(x => x.Id, x => new Organization() {
+                Name = x.FullName
+            });
+        return organizations;
     }
 }

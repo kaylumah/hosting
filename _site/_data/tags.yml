@@ -38,6 +38,10 @@
   name: OpenAPI
   description: for the OpenAPI Specification (formerly Swagger Specification)
   icon: /assets/icons/simpleicons/openapiinitiative.svg
+- id: rider
+  name: Rider
+  description: for the JetBrains Rider IDE
+  icon: /assets/icons/simpleicons/rider.svg
 - id: swashbuckle
   name: Swashbuckle
   description: for the Swashbuckle swagger tooling in .NET
@@ -45,11 +49,19 @@
 - id: testing
   name: Testing
   description: for test related matters
-  icon: 
+  icon:
+- id: visualstudio
+  name: Visual Studio
+  description: for the Microsoft Visual Studio IDE
+  icon: /assets/icons/simpleicons/visualstudio.svg
 - id: visualstudio2019
   name: Visual Studio 2019
-  description: for the 2019 version of the Microsoft IDE
+  description: for the Microsoft Visual Studio IDE
   icon: /assets/icons/simpleicons/visualstudio.svg
+- id: vscode
+  name: VS Code
+  description: for the Microsoft VS Code IDE
+  icon: /assets/icons/simpleicons/visualstudiocode.svg
 - id: xunit
   name: Xunit
   description: for the Xunit test framework
