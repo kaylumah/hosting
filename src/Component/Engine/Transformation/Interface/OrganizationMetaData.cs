@@ -11,6 +11,7 @@ public class OrganizationMetaData
 {
     public string Id { get;set; }
     public string FullName { get;set; }
+    public string Twitter { get;set; }
 }
 
 public class OrganizationMetaDataCollection : KeyedCollection<string, OrganizationMetaData>
