@@ -17,4 +17,13 @@ public static class SiteMetaDataExtensions
             });
         return authors;
     }
+
+    public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
+    {
+        var organizations = source.OrganizationMetaData
+            .ToDictionary(x => x.Id, x => new Organization() {
+                Name = x.FullName
+            });
+        return organizations;
+    }
 }
