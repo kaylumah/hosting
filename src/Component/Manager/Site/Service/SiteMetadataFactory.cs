@@ -113,6 +113,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.AuthorMetaData = authorData;
             }
 
+            var organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
+            if (organizationFile != null)
+            {
+                dataFiles.Remove(organizationFile);
+                var organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
+                site.Data["organizations"] = organizationData.Dictionary;
+                site.OrganizationMetaData = organizationData;
+            }
+
             EnrichSiteWithData(site, dataFiles);
         }
 

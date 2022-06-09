@@ -7,6 +7,7 @@ public class SiteMetaData
 {
     public TagMetaDataCollection TagMetaData { get; set; }
     public AuthorMetaDataCollection AuthorMetaData { get; set; }
+    public OrganizationMetaDataCollection OrganizationMetaData { get; set; }
     public BuildData Build { get; set; }
     public string Id { get; set; }
     public string Title { get; set; }
