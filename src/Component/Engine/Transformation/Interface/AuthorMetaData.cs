@@ -15,7 +15,6 @@ public class AuthorMetaData
     public string Uri { get;set; }
     public string Picture { get;set; }
     public Links Links { get;set; } = new();
-    public string Github { get;set; }
 }
 
 public class AuthorMetaDataCollection : KeyedCollection<string, AuthorMetaData>

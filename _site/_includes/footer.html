@@ -8,10 +8,12 @@
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
             {% endif %}
-            <a target="_blank" rel=”noopener” href="https://github.com/{{ page_author.github }}" class="text-gray-100 hover:text-gray-400">
+            {% if page_author.links.github %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.github_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
             </a>
+            {% endif %}
             {% if page_author.links.twitter %}
             <a target="_blank" rel=”noopener” href="{{ page_author.links.twitter_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Twitter</span>
