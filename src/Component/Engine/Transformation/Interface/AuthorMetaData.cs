@@ -16,9 +16,6 @@ public class AuthorMetaData
     public string Picture { get;set; }
     public Links Links { get;set; } = new();
     public string Github { get;set; }
-    public string Medium { get;set; }
-    public string Devto { get;set; }
-    public string Stackoverflow { get;set; }
 }
 
 public class AuthorMetaDataCollection : KeyedCollection<string, AuthorMetaData>

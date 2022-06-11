@@ -9,5 +9,8 @@ public class Links
     public string TwitterProfileUrl => string.IsNullOrEmpty(Twitter) ? null : $"https://twitter.com/{Twitter}";
     public string Linkedin { get;set; }
     public string LinkedinProfileUrl => string.IsNullOrEmpty(Linkedin) ? null : $"https://www.linkedin.com/in/{Linkedin}";
-
+    public string Medium { get;set; }
+    public string MediumProfileUrl => string.IsNullOrEmpty(Medium) ? null : $"https://www.linkedin.com/in/{Medium}";
+    public string Devto { get;set; }
+    public string DevtoProfileUrl => string.IsNullOrEmpty(Devto) ? null : $"https://dev.to/{Devto}";
 }
