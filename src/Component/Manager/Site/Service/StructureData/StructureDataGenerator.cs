@@ -29,6 +29,11 @@ public static class PageMetaDataExtensions
             };
             return blogPost;
     }
+
+    public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages)
+    {
+        return pages.Select(ToBlogPosting);
+    }
 }
 
 public partial class StructureDataGenerator
@@ -76,7 +81,7 @@ public partial class StructureDataGenerator
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
         {
-            var posts = renderData.Site.Pages.IsArticle().ToList();
+            var posts = renderData.Site.Pages.IsArticle().ToBlogPostings().ToList();
             var blog = new Blog()
             {
 
