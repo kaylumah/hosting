@@ -84,7 +84,7 @@ public partial class StructureDataGenerator
             var posts = renderData.Site.Pages.IsArticle().ToBlogPostings().ToList();
             var blog = new Blog()
             {
-
+                BlogPost = new OneOrMany<IBlogPosting>(posts)
             };
             return blog.ToString(settings);
         }
