@@ -11,6 +11,26 @@ using Schema.NET;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
+public static class PageMetaDataExtensions
+{
+    public static BlogPosting ToBlogPosting(this PageMetaData page)
+    {
+            var blogPost = new BlogPosting
+            {
+                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
+                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(page.Uri))),
+                Headline = page.Title,
+#pragma warning disable RS0030 // datetime is expected here
+                DatePublished = page.Published.DateTime,
+                DateModified = page.Modified.DateTime,
+#pragma warning restore RS0030 // datetime is expected here
+                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image))),
+                // Publisher = new Values<IOrganization, IPerson>(new Organization { })
+            };
+            return blogPost;
+    }
+}
+
 public partial class StructureDataGenerator
 {
     [LoggerMessage(
@@ -41,19 +61,7 @@ public partial class StructureDataGenerator
         LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
-            var blogPost = new BlogPosting
-            {
-                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
-                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Uri))),
-                Headline = renderData.Page.Title,
-#pragma warning disable RS0030 // datetime is expected here
-                DatePublished = renderData.Page.Published.DateTime,
-                DateModified = renderData.Page.Modified.DateTime,
-#pragma warning restore RS0030 // datetime is expected here
-                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page.Image))),
-                // Publisher = new Values<IOrganization, IPerson>(new Organization { })
-            };
-
+            var blogPost = renderData.Page.ToBlogPosting();
             if (authors.ContainsKey(renderData.Page.Author))
             {
                 blogPost.Author = authors[renderData.Page.Author];
@@ -68,8 +76,10 @@ public partial class StructureDataGenerator
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
         {
+            var posts = renderData.Site.Pages.IsArticle().ToList();
             var blog = new Blog()
             {
+
             };
             return blog.ToString(settings);
         }
