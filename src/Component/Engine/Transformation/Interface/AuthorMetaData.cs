@@ -15,7 +15,6 @@ public class AuthorMetaData
     public string Uri { get;set; }
     public string Picture { get;set; }
     public Links Links { get;set; } = new();
-    public string Linkedin { get;set; }
     public string Github { get;set; }
     public string Medium { get;set; }
     public string Devto { get;set; }

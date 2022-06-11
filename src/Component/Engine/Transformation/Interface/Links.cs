@@ -7,4 +7,7 @@ public class Links
 {
     public string Twitter { get;set; }
     public string TwitterProfileUrl => string.IsNullOrEmpty(Twitter) ? null : $"https://twitter.com/{Twitter}";
+    public string Linkedin { get;set; }
+    public string LinkedinProfileUrl => string.IsNullOrEmpty(Linkedin) ? null : $"https://www.linkedin.com/in/{Linkedin}";
+
 }

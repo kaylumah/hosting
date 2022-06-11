@@ -2,10 +2,12 @@
     <div class="py-4 px-4">
         <div class="flex justify-center space-x-6">
             {% assign page_author = site.data.authors[page.author] %}
-            <a target="_blank" rel=”noopener” href="https://www.linkedin.com/in/{{ page_author.linkedin }}" class="text-gray-100 hover:text-gray-400">
+            {% if page_author.links.linkedin %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.linkedin_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">LinkedIn</span>
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
+            {% endif %}
             <a target="_blank" rel=”noopener” href="https://github.com/{{ page_author.github }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
