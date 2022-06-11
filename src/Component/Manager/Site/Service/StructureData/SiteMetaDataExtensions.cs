@@ -20,13 +20,16 @@ public static class SiteMetaDataExtensions
 
     public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
     {
+        # pragma warning disable RS0030
         var organizations = source.OrganizationMetaData
             .ToDictionary(x => x.Id, x => {
                 var org = new Organization() {
-                    Name = x.FullName
+                    Name = x.FullName,
+                    FoundingDate = new DateTime(2020, 1, 1),
                 };
                 return org; 
             });
         return organizations;
+        # pragma warning restore RS0030
     }
 }
