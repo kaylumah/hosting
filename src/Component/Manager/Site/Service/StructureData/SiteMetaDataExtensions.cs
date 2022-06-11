@@ -21,8 +21,11 @@ public static class SiteMetaDataExtensions
     public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
     {
         var organizations = source.OrganizationMetaData
-            .ToDictionary(x => x.Id, x => new Organization() {
-                Name = x.FullName
+            .ToDictionary(x => x.Id, x => {
+                var org = new Organization() {
+                    Name = x.FullName
+                };
+                return org; 
             });
         return organizations;
     }
