@@ -10,10 +10,12 @@
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://twitter.com/{{ page_author.twitter }}" class="text-gray-100 hover:text-gray-400">
+            {% if page_author.links.twitter %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.twitter_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Twitter</span>
                 <em class="fab fa-twitter-square fa-lg"></em>
             </a>
+            {% endif %}
         </div>
         <div class="pt-2 flex flex-col text-center text-gray-100">
             <span>{{ build.copyright }}</span>

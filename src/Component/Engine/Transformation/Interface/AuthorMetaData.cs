@@ -14,7 +14,7 @@ public class AuthorMetaData
     public string Email { get;set; }
     public string Uri { get;set; }
     public string Picture { get;set; }
-    public string Twitter { get;set; }
+    public Links Links { get;set; } = new();
     public string Linkedin { get;set; }
     public string Github { get;set; }
     public string Medium { get;set; }
