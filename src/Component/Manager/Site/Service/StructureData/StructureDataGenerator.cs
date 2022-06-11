@@ -37,6 +37,7 @@ public partial class StructureDataGenerator
             WriteIndented = true
         };
         var authors = renderData.Site.ToPersons();
+        var organizations = renderData.Site.ToOrganizations();
         LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
@@ -56,6 +57,11 @@ public partial class StructureDataGenerator
             if (authors.ContainsKey(renderData.Page.Author))
             {
                 blogPost.Author = authors[renderData.Page.Author];
+            }
+
+            if (organizations.ContainsKey(renderData.Page.Organization))
+            {
+                blogPost.Publisher = organizations[renderData.Page.Organization];
             }
 
             return blogPost.ToString(settings);
