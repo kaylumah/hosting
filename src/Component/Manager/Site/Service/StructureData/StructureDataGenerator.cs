@@ -13,7 +13,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
 
 public static class PageMetaDataExtensions
 {
-    public static BlogPosting ToBlogPosting(this PageMetaData page)
+    public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<string, Person> persons, Dictionary<string, Organization> organizations)
     {
             var blogPost = new BlogPosting
             {
@@ -30,9 +30,9 @@ public static class PageMetaDataExtensions
             return blogPost;
     }
 
-    public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages)
+    public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages, Dictionary<string, Person> persons, Dictionary<string, Organization> organizations)
     {
-        return pages.Select(ToBlogPosting);
+        return pages.Select(page => page.ToBlogPosting(persons, organizations));
     }
 }
 
@@ -66,7 +66,7 @@ public partial class StructureDataGenerator
         LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
-            var blogPost = renderData.Page.ToBlogPosting();
+            var blogPost = renderData.Page.ToBlogPosting(authors, organizations);
             if (authors.ContainsKey(renderData.Page.Author))
             {
                 blogPost.Author = authors[renderData.Page.Author];
@@ -81,7 +81,7 @@ public partial class StructureDataGenerator
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
         {
-            var posts = renderData.Site.Pages.IsArticle().ToBlogPostings().ToList();
+            var posts = renderData.Site.Pages.IsArticle().ToBlogPostings(authors, organizations).ToList();
             var blog = new Blog()
             {
                 BlogPost = new OneOrMany<IBlogPosting>(posts)
