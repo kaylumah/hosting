@@ -23,7 +23,17 @@ public static class SiteMetaDataExtensions
         # pragma warning disable RS0030
         var organizations = source.OrganizationMetaData
             .ToDictionary(x => x.Id, x => {
-                var org = new Organization() {
+
+                var uris = new List<Uri>
+                {
+                    new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
+                };
+
+                var corporation = new Corporation() {
+                    SameAs = new OneOrMany<Uri>(uris)
+                };
+                return corporation;
+                /*var org = new Organization() {
                     Name = x.FullName,
                     
                     
@@ -33,6 +43,7 @@ public static class SiteMetaDataExtensions
                     // })
                 };
                 return org; 
+                */
             });
         return organizations;
         # pragma warning restore RS0030
