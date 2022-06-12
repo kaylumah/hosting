@@ -1,3 +1,6 @@
+{%- assign page_url = page.uri | absolute_url | string.replace '/index.html' '/' -%}
+{%- assign page_author = site.data.authors[page.author] -%}
+{%- assign page_image = page.image | absolute_url -%}
 <!DOCTYPE html>
 <html lang="{{ language }}">
     <head>

@@ -1,11 +1,11 @@
 - id: max
   fullName: Max Hamulyák
   email: max@kaylumah.nl
-  uri: https://kaylumah.nl
+  uri: https://kaylumah.nl/about
   picture: /assets/avatar_background.svg
-  twitter: kaylumah
-  linkedin: maxhamulyak
-  github: kaylumah
-  medium: kaylumah
-  devto: kaylumah
-  stackoverflow: 1936600
+  links:
+    twitter: kaylumah
+    linkedin: maxhamulyak
+    medium: kaylumah
+    devto: kaylumah
+    github: kaylumah
