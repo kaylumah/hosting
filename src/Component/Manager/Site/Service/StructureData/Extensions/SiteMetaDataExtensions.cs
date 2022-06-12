@@ -31,6 +31,7 @@ public static class SiteMetaDataExtensions
                 };
 
                 var organization = new Organization() {
+                    Name = x.FullName,
                     Logo = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Logo))),
                     FoundingDate = x.Founded.Date,
                     SameAs = new OneOrMany<Uri>(uris)
