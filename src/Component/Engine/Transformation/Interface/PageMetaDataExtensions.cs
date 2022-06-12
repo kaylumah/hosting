@@ -63,8 +63,8 @@ public static class PageMetaDataExtensions
         return source.FromContentType(ContentType.Article);
     }
 
-    public static IEnumerable<PageMetaData> ByPublished(this IEnumerable<PageMetaData> source)
+    public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
     {
-        return source.OrderBy(x => x.Published);
+        return source.OrderByDescending(x => x.Published);
     }
 }
