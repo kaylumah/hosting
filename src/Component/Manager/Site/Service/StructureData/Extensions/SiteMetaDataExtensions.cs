@@ -32,20 +32,10 @@ public static class SiteMetaDataExtensions
 
                 var organization = new Organization() {
                     Logo = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Logo))),
+                    FoundingDate = x.Founded.Date,
                     SameAs = new OneOrMany<Uri>(uris)
                 };
                 return organization;
-                /*var org = new Organization() {
-                    Name = x.FullName,
-                    
-                    
-                    FoundingDate = new DateTime(2020, 1, 1),
-                    // Founder = new OneOrMany<IPerson>(new Person {
-                    //      // Name = x.FullName,
-                    // })
-                };
-                return org; 
-                */
             });
         return organizations;
         # pragma warning restore RS0030

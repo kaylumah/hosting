@@ -13,6 +13,7 @@ public class OrganizationMetaData
     public string FullName { get;set; }
     public string Linkedin { get;set; }
     public string Logo { get;set; }
+    public DateTimeOffset Founded { get;set; }
 }
 
 public class OrganizationMetaDataCollection : KeyedCollection<string, OrganizationMetaData>
