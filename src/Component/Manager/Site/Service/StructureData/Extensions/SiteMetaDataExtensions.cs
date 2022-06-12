@@ -11,11 +11,23 @@ public static class SiteMetaDataExtensions
 {
     public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
     {
-        var uris = new List<Uri>();
         var authors = source.AuthorMetaData
             .ToDictionary(x => x.Id, x => {
+                var uris = new List<Uri>();
+
+                if (!string.IsNullOrEmpty(x.Links.Linkedin))
+                {
+                    uris.Add(new Uri(x.Links.LinkedinProfileUrl));
+                }
+
+                if (!string.IsNullOrEmpty(x.Links.Twitter))
+                {
+                    uris.Add(new Uri(x.Links.TwitterProfileUrl));
+                }
+
                 var person = new Person() {
                     Name = x.FullName,
+                    Email = x.Email,
                     Url = new Uri(x.Uri),
                     SameAs = new OneOrMany<Uri>(uris)
                 };
