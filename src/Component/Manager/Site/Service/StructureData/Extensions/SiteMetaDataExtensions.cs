@@ -29,6 +29,7 @@ public static class SiteMetaDataExtensions
                     Name = x.FullName,
                     Email = x.Email,
                     Url = new Uri(x.Uri),
+                    Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Picture))),
                     SameAs = new OneOrMany<Uri>(uris)
                 };
                 return person;
