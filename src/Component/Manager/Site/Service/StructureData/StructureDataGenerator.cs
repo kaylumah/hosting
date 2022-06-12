@@ -46,8 +46,8 @@ public partial class StructureDataGenerator
         {
             var posts = renderData.Site.Pages
                 .IsArticle()
+                .IsFeatured()
                 .ByRecentlyPublished()
-                
                 .ToBlogPostings(authors, organizations)
                 .ToList();
             var blog = new Blog()
