@@ -44,7 +44,11 @@ public partial class StructureDataGenerator
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
         {
-            var posts = renderData.Site.Pages.IsArticle().ToBlogPostings(authors, organizations).ToList();
+            var posts = renderData.Site.Pages
+                .IsArticle()
+                .ByPublished()
+                .ToBlogPostings(authors, organizations)
+                .ToList();
             var blog = new Blog()
             {
                 BlogPost = new OneOrMany<IBlogPosting>(posts)
