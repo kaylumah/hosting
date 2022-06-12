@@ -40,16 +40,6 @@ public partial class StructureDataGenerator
         if (renderData.Page.Type == ContentType.Article)
         {
             var blogPost = renderData.Page.ToBlogPosting(authors, organizations);
-            if (authors.ContainsKey(renderData.Page.Author))
-            {
-                blogPost.Author = authors[renderData.Page.Author];
-            }
-
-            if (organizations.ContainsKey(renderData.Page.Organization))
-            {
-                blogPost.Publisher = organizations[renderData.Page.Organization];
-            }
-
             return blogPost.ToString(settings);
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))

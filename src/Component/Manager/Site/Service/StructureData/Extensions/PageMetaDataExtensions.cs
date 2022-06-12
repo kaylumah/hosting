@@ -23,6 +23,17 @@ public static class PageMetaDataExtensions
                 Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image))),
                 // Publisher = new Values<IOrganization, IPerson>(new Organization { })
             };
+
+            if (persons.ContainsKey(page.Author))
+            {
+                blogPost.Author = persons[page.Author];
+            }
+
+            if (organizations.ContainsKey(page.Organization))
+            {
+                blogPost.Publisher = organizations[page.Organization];
+            }
+
             return blogPost;
     }
 
