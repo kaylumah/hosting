@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Utilities;
 using Schema.NET;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
@@ -30,6 +31,7 @@ public static class SiteMetaDataExtensions
                 };
 
                 var organization = new Organization() {
+                    Logo = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Logo))),
                     SameAs = new OneOrMany<Uri>(uris)
                 };
                 return organization;
