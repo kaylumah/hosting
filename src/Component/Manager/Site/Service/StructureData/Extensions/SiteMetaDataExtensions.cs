@@ -25,6 +25,8 @@ public static class SiteMetaDataExtensions
             .ToDictionary(x => x.Id, x => {
                 var org = new Organization() {
                     Name = x.FullName,
+                    
+                    
                     FoundingDate = new DateTime(2020, 1, 1),
                     // Founder = new OneOrMany<IPerson>(new Person {
                     //      // Name = x.FullName,
