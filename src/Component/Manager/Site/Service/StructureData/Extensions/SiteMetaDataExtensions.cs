@@ -12,9 +12,12 @@ public static class SiteMetaDataExtensions
     public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
     {
         var authors = source.AuthorMetaData
-            .ToDictionary(x => x.Id, x => new Person() {
-                Name = x.FullName,
-                Url = new Uri(x.Uri)
+            .ToDictionary(x => x.Id, x => {
+                var person = new Person() {
+                    Name = x.FullName,
+                    Url = new Uri(x.Uri)
+                };
+                return person;
             });
         return authors;
     }
