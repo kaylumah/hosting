@@ -11,6 +11,8 @@ public static class PageMetaDataExtensions
 
     public static readonly Func<PageMetaData, bool> Html = (page) => page.IsHtml();
 
+    public static readonly Func<PageMetaData, bool> Featured = (page) => page.Featured;
+
     public static string GetExtension(this PageMetaData pageMetaData)
     {
         return Path.GetExtension(pageMetaData.Uri);
@@ -61,6 +63,11 @@ public static class PageMetaDataExtensions
     public static IEnumerable<PageMetaData> IsArticle(this IEnumerable<PageMetaData> source)
     {
         return source.FromContentType(ContentType.Article);
+    }
+
+    public static IEnumerable<PageMetaData> IsFeatured(this IEnumerable<PageMetaData> source)
+    {
+        return source.Where(Featured);
     }
 
     public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
