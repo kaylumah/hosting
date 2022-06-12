@@ -29,10 +29,10 @@ public static class SiteMetaDataExtensions
                     new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
                 };
 
-                var corporation = new Corporation() {
+                var organization = new Organization() {
                     SameAs = new OneOrMany<Uri>(uris)
                 };
-                return corporation;
+                return organization;
                 /*var org = new Organization() {
                     Name = x.FullName,
                     
