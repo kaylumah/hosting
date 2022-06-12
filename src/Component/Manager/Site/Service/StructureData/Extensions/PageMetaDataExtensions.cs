@@ -20,8 +20,7 @@ public static class PageMetaDataExtensions
                 DatePublished = page.Published.DateTime,
                 DateModified = page.Modified.DateTime,
 #pragma warning restore RS0030 // datetime is expected here
-                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image))),
-                // Publisher = new Values<IOrganization, IPerson>(new Organization { })
+                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)))
             };
 
             if (persons.ContainsKey(page.Author))
