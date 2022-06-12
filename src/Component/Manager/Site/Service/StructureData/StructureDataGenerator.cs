@@ -1,11 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 
@@ -37,28 +35,26 @@ public partial class StructureDataGenerator
             WriteIndented = true
         };
         var authors = renderData.Site.ToPersons();
+        var organizations = renderData.Site.ToOrganizations();
         LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
-            var blogPost = new BlogPosting
-            {
-                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
-                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(renderData.Page.Uri))),
-                Headline = renderData.Page.Title,
-#pragma warning disable RS0030 // datetime is expected here
-                DatePublished = renderData.Page.Published.DateTime,
-                DateModified = renderData.Page.Modified.DateTime,
-#pragma warning restore RS0030 // datetime is expected here
-                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)renderData.Page.Image))),
-                // Publisher = new Values<IOrganization, IPerson>(new Organization { })
-            };
-
-            if (authors.ContainsKey(renderData.Page.Author))
-            {
-                blogPost.Author = authors[renderData.Page.Author];
-            }
-
+            var blogPost = renderData.Page.ToBlogPosting(authors, organizations);
             return blogPost.ToString(settings);
+        }
+        else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
+        {
+            var posts = renderData.Site.Pages
+                .IsArticle()
+                .IsFeatured()
+                .ByRecentlyPublished()
+                .ToBlogPostings(authors, organizations)
+                .ToList();
+            var blog = new Blog()
+            {
+                BlogPost = new OneOrMany<IBlogPosting>(posts)
+            };
+            return blog.ToString(settings);
         }
         return null;
     }
