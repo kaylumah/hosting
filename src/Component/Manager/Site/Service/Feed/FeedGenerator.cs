@@ -81,7 +81,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
-            var posts = RetrievePostPageMetaDatas(siteMetaData);
+            var posts = RetrievePostPageMetaDatas(siteMetaData)
+                .ByRecentlyPublished();
             var result = new List<SyndicationItem>();
             if (posts.Any())
             {
@@ -114,7 +115,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 }
             }
             return result
-                .OrderByDescending(x => x.PublishDate)
                 .ToList();
         }
 
