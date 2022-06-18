@@ -63,10 +63,10 @@ public partial class MetaTagGenerator
         var linkElement = finalDocument.CreateElement("link");
         var hrefAttribute = finalDocument.CreateAttribute("href");
         hrefAttribute.Value = renderData.Page.Uri;
-        createdElement.Attributes.Append(hrefAttribute);
+        linkElement.Attributes.Append(hrefAttribute);
         var relAttribute = finalDocument.CreateAttribute("rel");
         relAttribute.Value = "canonical";
-        createdElement.Attributes.Append(nameAttribute);
+        linkElement.Attributes.Append(relAttribute);
         var sb = new StringBuilder();
         var result = new List<string>()
         {

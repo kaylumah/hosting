@@ -5,7 +5,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Utilities;
 using Schema.NET;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
+namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
 public static class PageMetaDataExtensions
 {

@@ -9,7 +9,6 @@ using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;

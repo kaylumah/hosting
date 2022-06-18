@@ -8,7 +8,6 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Configuration;
