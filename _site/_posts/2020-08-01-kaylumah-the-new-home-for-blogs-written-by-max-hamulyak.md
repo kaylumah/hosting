@@ -3,9 +3,6 @@ type: 'Announcement'
 title: Guiding my thoughts home
 description: Moving all content to my own platform
 image: /assets/images/posts/20200801/welcome/cover_image.png
-coverimage:
-    DEFAULT: '/assets/images/posts/20200801/welcome/cover_image.png'
-    WEB: '/assets/images/posts/20200801/welcome/cover_image.webp'
 socialshare: False
 feed: False
 ---
