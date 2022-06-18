@@ -1,6 +1,6 @@
 ---
-title: 'Using C# code in your git hooks'
-description: 'Getting started with C# script in your client-side git hooks'
+title: Using C# code in your git hooks
+description: Getting started with C# script in your client-side git hooks
 image: /assets/images/posts/20190907/githooks/cover_image.png
 coverimage:
     DEFAULT: '/assets/images/posts/20190907/githooks/cover_image.png'

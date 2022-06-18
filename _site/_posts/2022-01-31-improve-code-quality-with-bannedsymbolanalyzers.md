@@ -1,10 +1,10 @@
 ---
-title: "Improve Code Quality with BannedSymbolAnalyzers"
-description: "Learn how a simple Roslyn Analyzer can improve code consistency"
+title: Improve Code Quality with BannedSymbolAnalyzers
+description: Learn how a simple Roslyn Analyzer can improve code consistency
+image: /assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png
 coverimage:
     DEFAULT: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png'
     WEB: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.webp'
-image: '/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png'
 tags:
   - "csharp"
   - "code-quality"

@@ -1,10 +1,10 @@
 ---
-title: "Working with Azure SDK for .NET"
-description: "The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios"
+title: Working with Azure SDK for .NET
+description: The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios
+image: /assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png
 coverimage:
     DEFAULT: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
     WEB: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp'
-image: '/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png'
 tags:
   - "csharp"
   - "azure"

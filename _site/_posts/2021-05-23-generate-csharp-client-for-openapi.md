@@ -1,10 +1,10 @@
 ---
-title: 'Generate C# client for OpenAPI'
-description: 'A look at using OpenAPI clients in C#'
+title: Generate C# client for OpenAPI
+description: A look at using OpenAPI clients in C#
+image: /assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png
 coverimage:
     DEFAULT: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
     WEB: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.webp'
-image: '/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png'
 tags:
   - "csharp"
   - "nswag"
