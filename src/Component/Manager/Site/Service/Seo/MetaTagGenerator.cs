@@ -70,9 +70,9 @@ public partial class MetaTagGenerator
         var sb = new StringBuilder();
         var result = new List<string>()
         {
-            titleElement.OuterXml.Replace(" />", ">"),
+            titleElement.OuterXml,
             CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
-            linkElement.OuterXml.Replace(" />", ">"),
+            linkElement.OuterXml,
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("author", author.FullName),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
@@ -169,7 +169,7 @@ public partial class MetaTagGenerator
         var contentAttribute = finalDocument.CreateAttribute("content");
         contentAttribute.Value = content;
         createdElement.Attributes.Append(contentAttribute);
-        return createdElement.OuterXml.Replace(" />", ">");
+        return createdElement.OuterXml;
      }
 
     private static string CreateOpenGraphMetaTag(string name, string content)
