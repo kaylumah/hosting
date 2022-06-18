@@ -8,6 +8,7 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
+using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.StructureData;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
@@ -26,6 +27,7 @@ public class SiteManager : ISiteManager
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
     private readonly StructureDataGenerator _structureDataGenerator;
+    private readonly MetaTagGenerator _metaTagGenerator;
     private readonly SiteMapGenerator _siteMapGenerator;
     private readonly ISystemClock _systemClock;
 
@@ -39,6 +41,7 @@ public class SiteManager : ISiteManager
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
         StructureDataGenerator structureDataGenerator,
+        MetaTagGenerator metaTagGenerator,
         SiteMapGenerator siteMapGenerator,
         ISystemClock systemClock
         )
@@ -52,6 +55,7 @@ public class SiteManager : ISiteManager
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
         _structureDataGenerator = structureDataGenerator;
+        _metaTagGenerator = metaTagGenerator;
         _siteMapGenerator = siteMapGenerator;
         _systemClock = systemClock;
     }
@@ -122,10 +126,13 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.Layout
             })
             .ToArray();
+
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
             item.Metadata.Page.LdJson = _structureDataGenerator.ToLdJson(item.Metadata);
+            item.Metadata.Page.MetaTags = _metaTagGenerator.ToMetaTags(item.Metadata);
         });
+
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 
