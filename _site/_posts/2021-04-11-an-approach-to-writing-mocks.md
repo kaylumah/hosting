@@ -3,10 +3,10 @@ title: Experiment with Moq, an approach to writing mocks
 description: An experiment to create reusable mocks in my testing code
 image: /assets/images/posts/20210411/approach-to-writing-mocks/cover_image.png
 tags:
-  - "csharp"
-  - "moq"
-  - "testing"
-  - "xunit"
+  - csharp
+  - moq
+  - testing
+  - xunit
 commentid: '14'
 featured: true
 ---

@@ -3,9 +3,9 @@ title: Capture Logs in Unit Tests
 description: A guide to capturing logs in Xunit
 image: /assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png
 tags:
-  - "csharp"
-  - "testing"
-  - "xunit"
+  - csharp
+  - testing
+  - xunit
 commentid: '50'
 publishedtime: '20:30'
 ---
