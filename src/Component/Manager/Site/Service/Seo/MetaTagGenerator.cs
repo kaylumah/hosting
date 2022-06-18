@@ -61,18 +61,18 @@ public partial class MetaTagGenerator
         titleElement.InnerText = renderData.Title;
 
         var linkElement = finalDocument.CreateElement("link");
-        var hrefAttribute = finalDocument.CreateAttribute("href");
-        hrefAttribute.Value = renderData.Page.Uri;
-        linkElement.Attributes.Append(hrefAttribute);
         var relAttribute = finalDocument.CreateAttribute("rel");
         relAttribute.Value = "canonical";
         linkElement.Attributes.Append(relAttribute);
+        var hrefAttribute = finalDocument.CreateAttribute("href");
+        hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
+        linkElement.Attributes.Append(hrefAttribute);
         var sb = new StringBuilder();
         var result = new List<string>()
         {
-            titleElement.OuterXml,
-            linkElement.OuterXml,
+            titleElement.OuterXml.Replace(" />", ">"),
             CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
+            linkElement.OuterXml.Replace(" />", ">"),
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("author", author.FullName),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
@@ -102,7 +102,7 @@ public partial class MetaTagGenerator
             CreateMetaTag("twitter:site", $"@{organization.Twitter}"),
             CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"),
             CreateMetaTag("twitter:description", renderData.Description),
-            CreateMetaTag("twitter:image", renderData.Page.Image)
+            CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image))
         };
 
         if (result.Any())
@@ -127,8 +127,8 @@ public partial class MetaTagGenerator
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
             CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
-            CreateOpenGraphMetaTag("og:url", renderData.Page.Uri),
-            CreateOpenGraphMetaTag("og:image", renderData.Page.Image),
+            CreateOpenGraphMetaTag("og:url", GlobalFunctions.AbsoluteUrl(renderData.Page.Uri)),
+            CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
@@ -169,7 +169,7 @@ public partial class MetaTagGenerator
         var contentAttribute = finalDocument.CreateAttribute("content");
         contentAttribute.Value = content;
         createdElement.Attributes.Append(contentAttribute);
-        return createdElement.OuterXml;
+        return createdElement.OuterXml.Replace(" />", ">");
      }
 
     private static string CreateOpenGraphMetaTag(string name, string content)
