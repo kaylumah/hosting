@@ -2,26 +2,26 @@
 <feed xml:lang="en" xmlns="http://www.w3.org/2005/Atom">
   <title type="text"><![CDATA[Max Hamulyák · Kaylumah]]></title>
   <subtitle type="text"><![CDATA[A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák]]></subtitle>
-  <id>http://localhost:4280/feed.xml</id>
+  <id>https://kaylumah.nl/feed.xml</id>
   <rights type="text"><![CDATA[© Kaylumah. All rights reserved.]]></rights>
-  <updated>2022-06-12T09:42:44+02:00</updated>
-  <logo>http://localhost:4280/assets/logo_alt.svg</logo>
+  <updated>2022-06-18T11:30:24+02:00</updated>
+  <logo>https://kaylumah.nl/assets/logo_alt.svg</logo>
   <generator>Kaylumah Site Generator</generator>
-  <link rel="self" type="application/atom+xml" href="http://localhost:4280/feed.xml" />
-  <link rel="alternate" type="text/html" href="http://localhost:4280/blog.html" />
-  <link rel="related" type="text/html" href="http://localhost:4280/archive.html" />
+  <link rel="self" type="application/atom+xml" href="https://kaylumah.nl/feed.xml" />
+  <link rel="alternate" type="text/html" href="https://kaylumah.nl/blog.html" />
+  <link rel="related" type="text/html" href="https://kaylumah.nl/archive.html" />
   <entry>
-    <id>http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html</id>
+    <id>https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html</id>
     <title type="text"><![CDATA[Share debug configuration between .NET IDEs with launch profiles]]></title>
     <summary type="text"><![CDATA[Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json]]></summary>
     <published>2022-06-07T23:30:00+02:00</published>
     <updated>2022-06-07T23:30:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
+    <link href="https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
     <category term="Rider" />
     <category term="Visual Studio" />
     <category term="VS Code" />
@@ -163,9 +163,9 @@ Done...
 <h2 id="share-debug-configuration-from-microsoft-visual-studio"><a href="#share-debug-configuration-from-microsoft-visual-studio">Share debug configuration from Microsoft Visual Studio</a></h2>
 <p>I could not verify it online, but I think Visual Studio introduced launch settings as part of the first <code>ASP NET Core</code> release. Since launch profiles is a <code>Visual Studio</code> feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from <code>Visual Studio</code> <code>launchSettings</code> can reference <code>MSBuild</code> variables. That is a pretty handy way to provide something dynamic.</p>
 <p>For our console, we see the following selection in Visual Studio:</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
 <p>For our API, we see the following selection in Visual Studio:</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
 <p>As you see, the WebAPI variant shows more than just our launch profiles.</p>
 <p>Another aspect of development configuration is the ability to run more projects simultaneously. We can achieve this in <code>Visual Studio</code> by selecting multiple startup projects.  As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called <a href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022" class="external">SwitchStartUpProject</a>.</p>
 <p>We can quickly provide multiple configurations. We can provide a <code>ProfileName</code> for each project that matches one in our launch settings. It is that simple.</p>
@@ -188,12 +188,12 @@ Done...
     }
 }
 </code></pre>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
 <h2 id="share-debug-configuration-from-jetbrains-rider"><a href="#share-debug-configuration-from-jetbrains-rider">Share debug configuration from JetBrains Rider</a></h2>
 <p>As it turns out, <code>launchSettings</code> has been supported in <code>Rider</code> for a long time. They first introduced it in <a href="https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/" class="external">November 2018</a>. As a matter of fact, to use <code>launchSettings</code> inside <code>Rider</code> you don't need to do a thing. <code>Rider</code> <a href="https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles" class="external">automatically detects</a> if your projects are using <code>launchSettings</code>. Not all features are supported, but using profiles of <code>commandName project</code> are. If you did provide MSBuild variable in <code>launchSettings</code> <code>Rider</code> would correctly pass them along.</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
 <p>A thing I like about <code>Rider</code> is that I don't need an additional plugin to support multiple start up projects.</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
 <p>It's important to check <code>Store as project file</code>; otherwise, you won't share it with your team. In this particular example, it will look like this:</p>
 <pre><code class="language-xml">&lt;component name=&quot;ProjectRunConfigurationManager&quot;&gt;
   &lt;configuration default=&quot;false&quot; name=&quot;Console and API&quot; type=&quot;CompoundRunConfigurationType&quot;&gt;
@@ -309,7 +309,7 @@ Our base URL comes from the <code>launchSettings.json</code>, but the <code>laun
     }
 ]
 </code></pre>
-<p><img src="/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
 <h2 id="bonus-use-launch-settings-from-dotnet-cli"><a href="#bonus-use-launch-settings-from-dotnet-cli">Bonus use Launch Settings from Dotnet CLI</a></h2>
 <p>Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.</p>
 <p>As it turns out the CLI also defaults to the first project in <code>Properties\launchSettings.json</code>, so in our case <code>DemoConsole.V0</code>. Just like VS Code did. The following example uses a bit of <code>PowerShell</code> to run the CLI.</p>
@@ -338,17 +338,17 @@ dotnet run
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2022/02/21/working-with-azure-sdk-for-dotnet.html</id>
+    <id>https://kaylumah.nl/2022/02/21/working-with-azure-sdk-for-dotnet.html</id>
     <title type="text"><![CDATA[Working with Azure SDK for .NET]]></title>
     <summary type="text"><![CDATA[The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios]]></summary>
     <published>2022-02-21T21:30:00+01:00</published>
     <updated>2022-02-21T21:30:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
+    <link href="https://kaylumah.nl/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
     <category term="C#" />
     <category term="Azure" />
     <content type="html"><![CDATA[<p>February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08" class="external">small contribution</a> to the <code>Azure SDK for .NET</code>. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.</p>
@@ -603,7 +603,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </code></pre>
 <h2 id="can-i-use-configuration-to-create-azure-sdk-clients"><a href="#can-i-use-configuration-to-create-azure-sdk-clients">Can I use configuration to create Azure SDK clients?</a></h2>
 <p>If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.</p>
-<p>In my <a href="https://kaylumah.nl/2021/11/29/validated-strongly-typed-ioptions.html" class="external">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
+<p>In my <a href="https://kaylumah.nl/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
 <p>That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.</p>
 <pre><code class="language-csharp">public class UnitTest1
 {
@@ -651,17 +651,17 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
+    <id>https://kaylumah.nl/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
     <title type="text"><![CDATA[Improve Code Quality with BannedSymbolAnalyzers]]></title>
     <summary type="text"><![CDATA[Learn how a simple Roslyn Analyzer can improve code consistency]]></summary>
     <published>2022-01-31T21:45:00+01:00</published>
     <updated>2022-01-31T21:45:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
+    <link href="https://kaylumah.nl/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
     <category term="C#" />
     <category term="Code Quality" />
     <content type="html"><![CDATA[<p>There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.</p>
@@ -807,7 +807,7 @@ public class SystemClock : ISystemClock
     }
 }
 </code></pre>
-<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html" class="external">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
+<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
 <pre><code class="language-cs">public sealed class SystemClockMock : Mock&lt;ISystemClock&gt;
 {
     public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
@@ -874,22 +874,22 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/11/29/validated-strongly-typed-ioptions.html</id>
+    <id>https://kaylumah.nl/2021/11/29/validated-strongly-typed-ioptions.html</id>
     <title type="text"><![CDATA[Validated Strongly Typed IOptions]]></title>
     <summary type="text"><![CDATA[Find configuration errors early with data annotations validation for IOptions in .NET]]></summary>
     <published>2021-11-29T19:00:00+01:00</published>
     <updated>2021-11-29T19:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/11/29/validated-strongly-typed-ioptions.html" />
+    <link href="https://kaylumah.nl/2021/11/29/validated-strongly-typed-ioptions.html" />
     <category term="C#" />
     <category term="Configuration" />
     <content type="html"><![CDATA[<p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
 <p>As I understand it, the <code>configuration</code> concept in <code>.NET</code> is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the <code>options</code> concept provides access to <code>configuration</code> from our application code. I've attempted to illustrate it with the image below.</p>
-<p><img src="/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
 <h2 id="configuration-in.net"><a href="#configuration-in.net">Configuration in .NET</a></h2>
 <p>Technically the image above is an over-simplification. In reality, you use an <code>IConfigurationBuilder</code> where different providers are provided, and the configuration block in the middle is the merged build-result of the configuration builder. In fact, you get a preconfigured configuration builder every time you use the <code>ASP.NET</code> Web templates. You get a <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/Host.cs#L53" class="external">default HostBuilder</a> that setups an <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostBuilder.cs#L124" class="external">IHost</a>. This default builder also takes care of the <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostingHostBuilderExtensions.cs#L188" class="external">default configuration</a>.</p>
 <p>The default configuration adds in order</p>
@@ -919,7 +919,7 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
 <li><code>MySample:MyCollection:0:MyOtherText</code></li>
 </ul>
 <p>With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.</p>
-<p><img src="/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
 <blockquote>
 <p>As pointed out by the &quot;The Twelve-Factor App&quot; article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.</p>
 </blockquote>
@@ -984,7 +984,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 </code></pre>
 <h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
 <p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
-<p>In my article <a href="https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html" class="external">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>In my article <a href="https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
 <p>As I see it, there are two distinct ways configuration can fail.</p>
 <h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
 <p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>
@@ -1012,7 +1012,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 <h3 id="dataannotations-validation"><a href="#dataannotations-validation">DataAnnotations Validation</a></h3>
 <p>The second variant is the most likely to occur. That is, settings are present but not valid in the context of the application. I recently browsed the Microsoft Docs after (again) losing time chasing configuration issues when I came across <code>IValidateOptions</code>. I also rediscovered <code>ValidateDataAnnotations</code> on the <code>IOptionsBuilder</code>, which I previously dismissed since it was a different API (<code>AddOptions&lt;&gt;</code>) than the <code>Configure&lt;&gt;</code> APIs. With Resharper by my side, I checked the implementation and discovered that it uses <code>DataAnnotationValidateOptions</code> a class that is a <code>IValidateOptions</code>.</p>
 <p>When consuming an IOptions, there are three hooks we can use. We have <code>IConfigureOptions</code>, <code>IPostConfigureOptions</code> and <code>IValidateOptions</code>. If you head back up to where I printed the dependency injection container, you see that every time you use <code>Configure&lt;&gt;</code>, you get an <code>IConfigureOptions</code>. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered &quot;option services&quot;.</p>
-<p><img src="/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
 <p>You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an <code>IPostConfigureOptions</code> or <code>IValidateOptions</code> before the normal <code>IConfigureOptions</code>, it won't run before it. The factory runs through 0 or more <code>IConfigureOptions</code>, 0 or more <code>IPostConfigureOptions</code> and finally 0 or more <code>IValidateOptions</code> and always in that order.</p>
 <p>To demonstrate how this works, consider the following example:</p>
 <pre><code class="language-csharp">public class ConfigureLibraryExampleServiceOptions : IConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IPostConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IValidateOptions&lt;LibraryExampleServiceOptions&gt;
@@ -1383,17 +1383,17 @@ typedOptions.Name.Should().Be(options.Name);
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/11/14/capture-logs-in-unit-tests.html</id>
+    <id>https://kaylumah.nl/2021/11/14/capture-logs-in-unit-tests.html</id>
     <title type="text"><![CDATA[Capture Logs in Unit Tests]]></title>
     <summary type="text"><![CDATA[A guide to capturing logs in Xunit]]></summary>
     <published>2021-11-14T20:30:00+01:00</published>
     <updated>2021-11-14T20:30:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/11/14/capture-logs-in-unit-tests.html" />
+    <link href="https://kaylumah.nl/2021/11/14/capture-logs-in-unit-tests.html" />
     <category term="C#" />
     <category term="Testing" />
     <category term="Xunit" />
@@ -1466,7 +1466,7 @@ public async Task Test_DependencyInjection_EmptyLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - No ILogger Registered" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - No ILogger Registered" /></p>
 <pre><code class="language-cs">[Fact]
 public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
 {
@@ -1483,7 +1483,7 @@ public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - console ILogger registered" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - console ILogger registered" /></p>
 <p>If, however, you cannot rely on dependency injection in your tests, you have the alternative of manual creating your SUT and relevant dependencies. The only dependency of our EchoService is an instance of ILogger. For testing purposes, you can use the NullLoggerFactory, which creates a logger that logs into the void.</p>
 <pre><code class="language-cs">[Fact]
 public async Task Test_Manuel_NullLoggingFactory()
@@ -1494,12 +1494,12 @@ public async Task Test_Manuel_NullLoggingFactory()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - null ILogger registered" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - null ILogger registered" /></p>
 <blockquote>
 <p>As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.</p>
 </blockquote>
 <h2 id="option-2"><a href="#option-2">Option 2</a></h2>
-<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html" class="external">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
+<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
 <pre><code class="language-cs">public class LoggerMock&lt;TCategoryName&gt; : Mock&lt;ILogger&lt;TCategoryName&gt;&gt;
 {
     private readonly List&lt;LogMessage&gt; logMessages = new();
@@ -1581,7 +1581,7 @@ public async Task Test_Moq_LogLevelDisabledMockedLogger()
     loggerMock.LogMessages.Should().BeEmpty();
 }
 </code></pre>
-<p><img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - mock ILogger registered" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - mock ILogger registered" /></p>
 <h2 id="options-3"><a href="#options-3">Options 3</a></h2>
 <p>Thus far, we have discussed options that would work outside <code>Xunit</code>. The third technique is not limited to <code>Xunit</code>, but its implementation is restricted to use in a <code>Xunit</code> project because we will now rely on Xunit's <code>ITestOutputHelper</code> mechanism. In most cases, we would use <code>ITestOutputHelper</code> to log lines inside the test case itself; it is, however, possible to create an <code>ILogger</code> that writes to <code>ITestOutputHelper</code> so we can also capture logs our SUT produces.</p>
 <p>Microsoft has <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/custom-logging-provider" class="external">well-written documentation</a> on how to create a custom logger provider. We start with a configuration class for our <code>XunitLogger</code>. We will have no custom settings in this demo, but putting the configuration in place makes it easier to add settings later. The <code>ConsoleLogger</code>, for example, uses configuration to control LogScope inclusion and timestamp formats.</p>
@@ -1696,7 +1696,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - Xunit ILogger registered" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - Xunit ILogger registered" /></p>
 <p>The first time I ran this test, I was baffled. I could only see the console output from ConsoleLogger test we did previously. A quick google search brought me to the <a href="https://github.com/xunit/xunit/issues/1141#issuecomment-555717377" class="external">solution</a>. We need to tell the dotnet test runner to display it with <code>dotnet test --logger:&quot;console;verbosity=detailed&quot;</code>. Telling an entire team they can no longer simply run <code>dotnet test</code> was not a real solution; luckily, we can simplify things with <code>dotnet test --settings runsettings.xml</code>.</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;RunSettings&gt;
@@ -1725,21 +1725,21 @@ public async Task Test_Custom_XunitLoggingBuilder()
 <p>See you next time, stay healthy and happy coding to all 🧸!</p>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/07/17/decreasing-solution-build-time-with-filters.html</id>
+    <id>https://kaylumah.nl/2021/07/17/decreasing-solution-build-time-with-filters.html</id>
     <title type="text"><![CDATA[Decreasing Solution Build time with Filters]]></title>
     <summary type="text"><![CDATA[How to use solution filters to increase focus and decrease build time]]></summary>
     <published>2021-07-17T00:00:00+02:00</published>
     <updated>2021-07-17T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/07/17/decreasing-solution-build-time-with-filters.html" />
+    <link href="https://kaylumah.nl/2021/07/17/decreasing-solution-build-time-with-filters.html" />
     <category term="MSBuild" />
     <category term="Visual Studio 2019" />
     <content type="html"><![CDATA[<p>There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following <a href="https://imgs.xkcd.com/comics/compiling.png" class="external">xkcd joke</a> or some variant of it:</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/xkcd_joke_compiling.png" width="413" height="360" alt="xkcd_joke code is compiling" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/xkcd_joke_compiling.png" width="413" height="360" alt="xkcd_joke code is compiling" /></p>
 <p>The <a href="https://devblogs.microsoft.com/visualstudio/visual-studio-2022-preview-1-now-available" class="external">next version</a> of Visual Studio will come with a lot of promised performance improvements. VisualStudio 2022 is the first version that takes advantage of the 64-bit processor architecture. I have not yet tested it, but I am hopeful for a more performant experience developing when it ships.</p>
 <blockquote>
 <p>While I think the 1600+ projects in a solution demo are cool, I would not see myself using the single solution model at that scale.</p>
@@ -1779,20 +1779,20 @@ dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Ut
 </blockquote>
 <h2 id="setting-up-our-filters"><a href="#setting-up-our-filters">Setting up our filters</a></h2>
 <p>After following these steps, our project should look like the picture below in Visual Studio.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png" width="1428" height="1040" alt="Visual Studio 2019 - Solution all projects loaded" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png" width="1428" height="1040" alt="Visual Studio 2019 - Solution all projects loaded" /></p>
 <p>We can select one or more projects at a time and unload them from the solution.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/002_vs2019_sln_unload_projects.png" width="2360" height="1864" alt="Visual Studio 2019 - Unload project menu" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/002_vs2019_sln_unload_projects.png" width="2360" height="1864" alt="Visual Studio 2019 - Unload project menu" /></p>
 <p>Up until now, this is how I would have done things. Just unload projects I won't need and don't worry about them anymore. What I did not know is that we save the current state of the solution.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/003_vs2019_sln_save_filter_001.png" width="2464" height="224" alt="Visual Studio 2019 - Save as Solution Filter" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/003_vs2019_sln_save_filter_001.png" width="2464" height="224" alt="Visual Studio 2019 - Save as Solution Filter" /></p>
 <p>Unloading projects manually to create filters can be error-prone. Since a solution filter only builds the projects selected by the filter missing a project causes the build to fail.</p>
 <p>An alternative can be to unload all projects, select the project you want, and use the &quot;reload with dependencies&quot; option.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png" width="2316" height="1528" alt="Visual Studio 2019 - Reload Project with Dependencies" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png" width="2316" height="1528" alt="Visual Studio 2019 - Reload Project with Dependencies" /></p>
 <p>Like before, we can save the solution filter with the <code>Save As Solution Filter</code> option. The only difference is that we now get 4/7 projects as opposed to 5/7 projects. That's because we loaded the <code>ConcreteBravo.Tests</code> projects and it's dependencies. Even though that loads <code>Extensions.Concept</code> it does not load <code>Extensions.Concept.Tests</code> since it is not a dependency of <code>ConcreteBravo.Tests</code>.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png" width="2464" height="2212" alt="Visual Studio 2019 - Save as Solution Filter - Scenario A" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png" width="2464" height="2212" alt="Visual Studio 2019 - Save as Solution Filter - Scenario A" /></p>
 <p>While researching something unrelated to this post, I noticed that the <a href="https://github.com/dotnet/efcore" class="external">EF Core team</a> used this feature I did not know existed. The cool thing was that they also had a filter for all projects. So I had to try that out, and as it turns out, you can create a filter without unloading projects.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png" width="2464" height="2160" alt="Visual Studio 2019 - Save as Solution Filter - Scenario B" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png" width="2464" height="2160" alt="Visual Studio 2019 - Save as Solution Filter - Scenario B" /></p>
 <p>The image below shows the difference between the three filters we created. It looks exactly like a traditional Solution Explorer with the addition that the name of the filter applied is displayed.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png" width="4284" height="1040" alt="Visual Studio 2019 - Solution Filter Scenarios Compared" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png" width="4284" height="1040" alt="Visual Studio 2019 - Solution Filter Scenarios Compared" /></p>
 <p>For example, the <code>SlnFilter.Alpha.slnf</code> I created for <code>Concept.ConcreteAlpha</code> implementation looks like this:</p>
 <pre><code class="language-json">{
   &quot;solution&quot;: {
@@ -1814,10 +1814,10 @@ dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Ut
 <blockquote>
 <p>You cannot use <code>dotnet sln add</code> on slnf files, but you can use them with <code>dotnet build</code></p>
 </blockquote>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png" width="3088" height="1644" alt="Visual Studio 2019 - Add Existing Project" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png" width="3088" height="1644" alt="Visual Studio 2019 - Add Existing Project" /></p>
 <p>As soon as you did this, you get this pop-up stating a mismatch between the loaded projects and the project specified in the filter.</p>
 <p>If you followed the steps in a GIT environment, you would see that even before pressing <code>Update Solution Filter</code> the underlying solution is already updated.</p>
-<p><img src="/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png" width="1428" height="1040" alt="Visual Studio 2019 - Regenerate Solution Filter" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png" width="1428" height="1040" alt="Visual Studio 2019 - Regenerate Solution Filter" /></p>
 <h2 id="the-missing-bit"><a href="#the-missing-bit">The missing bit</a></h2>
 <p>I discussed this feature at work as a potential workaround for an issue we had in structuring our projects. One of my colleagues remembered looking at it about a year ago and finding it lacking. A few minutes later, he found a <a href="https://developercommunity.visualstudio.com/t/Solution-Filter-should-allow-for-Include/1090914?space=8&amp;q=solution+filter" class="external">post</a> on the developer community for Visual Studio. Funnily enough, it's a small world; the user-post links to a GitHub issue he created in this matter.</p>
 <p>The problem is the management of multiple solutions filters because the filters are inclusive with relative paths following the sln-filter location. A proposed improvement would be to use glob patterns to include/exclude projects. That would make it easier when following naming conventions to have always up-to-date filters.</p>
@@ -1873,17 +1873,17 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/05/23/generate-csharp-client-for-openapi.html</id>
+    <id>https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI]]></title>
     <summary type="text"><![CDATA[A look at using OpenAPI clients in C#]]></summary>
     <published>2021-05-23T00:00:00+02:00</published>
     <updated>2021-05-23T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/05/23/generate-csharp-client-for-openapi.html" />
+    <link href="https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html" />
     <category term="C#" />
     <category term="NSwag" />
     <category term="OpenAPI" />
@@ -2242,17 +2242,17 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/04/11/an-approach-to-writing-mocks.html</id>
+    <id>https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html</id>
     <title type="text"><![CDATA[Experiment with Moq, an approach to writing mocks]]></title>
     <summary type="text"><![CDATA[An experiment to create reusable mocks in my testing code.]]></summary>
     <published>2021-04-11T00:00:00+02:00</published>
     <updated>2021-04-11T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/04/11/an-approach-to-writing-mocks.html" />
+    <link href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html" />
     <category term="C#" />
     <category term="Moq" />
     <category term="Testing" />
@@ -2282,7 +2282,7 @@ Site - -> Article
 Site - -> Author
 @enduml
  -->
-<p><img src="/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png" width="323" height="226" alt="Architecture Diagram for Blog Platform Scenario" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210411/approach-to-writing-mocks/architecture.png" width="323" height="226" alt="Architecture Diagram for Blog Platform Scenario" /></p>
 <p>Since I am writing this blog post, what better example than a use case for a blogging platform. Imagine a platform where users can create and share their content. But you can only successfully start posts after you verified your account. In a sequence diagram, it might look something like this.</p>
 <!-- 
 @startuml
@@ -2297,7 +2297,7 @@ SiteManager -> ArticleAccess: CreateArticle
 ArticleAccess - -> SiteManager: CreateArticleResponse
 @enduml
  -->
-<p><img src="/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png" width="487" height="297" alt="Sequence Diagram for Blog Platform Scenario" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210411/approach-to-writing-mocks/sequence.png" width="487" height="297" alt="Sequence Diagram for Blog Platform Scenario" /></p>
 <p>I am going to use the dotnet CLI to create my project structure.</p>
 <pre><code class="language-shell">dotnet new sln
 dotnet new classlib --name Kaylumah.AdventuresWithMock.Access.Article.Interface --output src/Components/Access/Article/Interface --framework netstandard2.1
@@ -3052,17 +3052,17 @@ public async Task Test_ArticleAccess_Returns200OK()
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2021/03/27/set-nuget-metadata-via-msbuild.html</id>
+    <id>https://kaylumah.nl/2021/03/27/set-nuget-metadata-via-msbuild.html</id>
     <title type="text"><![CDATA[Set NuGet metadata via MSBuild]]></title>
     <summary type="text"><![CDATA[Discover how to use MSBuild to set your NuGet package's metadata.]]></summary>
     <published>2021-03-27T00:00:00+01:00</published>
     <updated>2021-03-27T00:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2021/03/27/set-nuget-metadata-via-msbuild.html" />
+    <link href="https://kaylumah.nl/2021/03/27/set-nuget-metadata-via-msbuild.html" />
     <category term="MSBuild" />
     <category term="NuGet" />
     <content type="html"><![CDATA[<p>For .NET, the standard mechanism for sharing packages is NuGet. A <code>.nupkg</code> file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata (<a href="https://docs.microsoft.com/en-us/nuget/what-is-nuget" class="external">source</a>). This blog post will show you how data in this manifest can be controlled by using MSBuild.</p>
@@ -3101,9 +3101,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 </code></pre>
 <p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></p>
 <p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></p>
 <p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains <code>Kaylumah.Logging.Extensions.Abstractions.nuspec</code>, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd&quot;&gt;
@@ -3138,9 +3138,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 &lt;/Project&gt;
 </code></pre>
 <p>If we run <code>dotnet pack</code> now, we can immediately see that our package no longer has empty metadata.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000" alt="With Author Metadata in NuGet Package Explorer" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000" alt="With Author Metadata in NuGet Package Explorer" /></p>
 <p>You can also verify this in Visual Studio by checking your projects properties and clicking on the <code>Package</code> tab.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000" alt="With Author Metadata in VS2019" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000" alt="With Author Metadata in VS2019" /></p>
 <p>In the introduction, I talked about what exactly is a NuGet package. We are now at the part regarding other files. Since we already took care of branding, let us also add an icon. Our code is under license; how do we include it in the package?</p>
 <p>Add files named <code>Logo.png</code> and <code>LICENSE</code> to the folder containing our project. We can then use the tags <code>PackageIcon</code> and <code>PackageLicenseFile</code> respectfully. We also need to tell MSBuild that these files should be part of the package. The updated project file looks like this:</p>
 <pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
@@ -3163,7 +3163,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
 &lt;/Project&gt;
 </code></pre>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000" alt="Including NuGet Package Explorer FileMetadata" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000" alt="Including NuGet Package Explorer FileMetadata" /></p>
 <p>Regarding these files, I like to say a couple of things before moving on to more advanced use cases.
 There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs <a href="https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target" class="external">describe</a>. Both used to have a <code>Url</code> variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of <code>PackageLicenseFile</code>, the alternative is  <code>PackageLicenseExpression</code>, which uses <code>SDPX</code> license identifiers.</p>
 <blockquote>
@@ -3197,7 +3197,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
     &lt;/PropertyGroup&gt;
 &lt;/Project&gt;
 </code></pre>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V1" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V1" /></p>
 <p>What happened? Something is wrong; why do I see the copyright year 2021, but not my company name? Before explaining it, let me prove it by adding a company tag to the <code>Directory.Build.props</code> with a different value. For example:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Project&gt;
@@ -3208,7 +3208,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 &lt;/Project&gt;
 </code></pre>
 <p>Unlike the <code>Copyright</code> tag do not remove the <code>Company</code> tag from the <code>.csproj</code> file. The result, this time, is a little different.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></p>
 <p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection.AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
 <blockquote>
 <p>Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, <code>Company</code> and <code>Copyright</code> are likely to be the same for every project. The <code>Authors</code> and <code>PackageTags</code> could be project-specific; heck, even <code>Description</code> could be reused if so desired. One thing for sure is that <code>Id</code> can not be recycled since every package requires a unique Id.</p>
@@ -3232,7 +3232,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 
 &lt;/Project&gt;
 </code></pre>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></p>
 <p>In case you are wondering where did <code>$(MSBuildThisFileDirectory)</code> come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019" class="external">Microsoft Docs</a> on the topic.</p>
 <h3 id="bonus-chapter"><a href="#bonus-chapter">Bonus Chapter</a></h3>
 <p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.</p>
@@ -3286,7 +3286,7 @@ REPO_COMMIT=$(git rev-parse HEAD)
 dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$REPO_BRANCH&quot; -p:RepositoryCommit=&quot;$REPO_COMMIT&quot; -p:RepositoryType=&quot;git&quot;
 </code></pre>
 <p>Remember, we now generate a package on build. Let us verify we see repo info by opening the created package in NuGet Package Explorer.</p>
-<p><img src="/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000" alt="Repo Info in NuGet Package Explorer" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000" alt="Repo Info in NuGet Package Explorer" /></p>
 <p>Even though it is OK to add repo metadata this way, there is a better alternative. This alternative does more than add metadata; it also enables source code debugging from NuGet packages. How cool is that? This technology is called <a href="https://github.com/dotnet/sourcelink" class="external">Source Link</a>.</p>
 <p>Like before with the properties, I have no wish to add source link to every package separately. For this, create <code>Directory.Build.targets</code>, which looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
@@ -3362,17 +3362,17 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
 </ul>]]></content>
   </entry>
   <entry>
-    <id>http://localhost:4280/2019/09/07/using-csharp-code-your-git-hooks.html</id>
+    <id>https://kaylumah.nl/2019/09/07/using-csharp-code-your-git-hooks.html</id>
     <title type="text"><![CDATA[Using C# code in your git hooks]]></title>
     <summary type="text"><![CDATA[Getting started with C# script in your client-side git hooks]]></summary>
     <published>2019-09-07T00:00:00+02:00</published>
     <updated>2021-03-21T00:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl</uri>
+      <uri>https://kaylumah.nl/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="http://localhost:4280/2019/09/07/using-csharp-code-your-git-hooks.html" />
+    <link href="https://kaylumah.nl/2019/09/07/using-csharp-code-your-git-hooks.html" />
     <category term="C#" />
     <category term="Git" />
     <content type="html"><![CDATA[<h2 id="why-use-hooks"><a href="#why-use-hooks">Why use hooks?</a></h2>

@@ -1,1 +1,1 @@
-Sitemap: http://localhost:4280/sitemap.xml
+Sitemap: https://kaylumah.nl/sitemap.xml

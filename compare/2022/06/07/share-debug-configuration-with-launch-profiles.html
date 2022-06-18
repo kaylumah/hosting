@@ -11,14 +11,14 @@
         <link rel="manifest" href="/assets/images/site.webmanifest" />
         <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
         
-        <link href="/compiled.css?v=a4dacda" rel="stylesheet" />
+        <link href="/compiled.css?v=921d908" rel="stylesheet" />
         
-        <!-- Begin Kaylumah SEO tag va4dacda -->
+        <!-- Begin Kaylumah SEO tag v921d908 -->
         
         <title>Share debug configuration between .NET IDEs with launch profiles</title>
-        <link rel="canonical" href="http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
+        <link rel="canonical" href="https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
         
-        <meta name="generator" content="Kaylumah va4dacda" />
+        <meta name="generator" content="Kaylumah v921d908" />
         <meta name="description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json">
         <!-- <meta name="keywords" content="rider,visualstudio,vscode"> -->
         <meta name="author" content="Max Hamulyák">
@@ -28,8 +28,8 @@
         <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content="Share debug configuration between .NET IDEs with launch profiles">
-        <meta property="og:url" content="http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html">
-        <meta property="og:image" content="http://localhost:4280/assets/images/posts/20220607/launch-settings/cover_image.png">
+        <meta property="og:url" content="https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html">
+        <meta property="og:image" content="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/cover_image.png">
         <meta property="og:description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json"><meta property="article:author" content="Max Hamulyák">
         <meta property="article:published_time" content="2022-06-07T23:30:00.0000000+02:00">
         <meta property="article:modified_time" content="2022-06-07T23:30:00.0000000+02:00">
@@ -43,22 +43,28 @@
         
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Share debug configuration between .NET IDEs with launch profiles">
-        <meta name="twitter:site" content="@kaylumah" />
+        <meta name="twitter:site" content="@" />
         <meta name="twitter:creator" content="@kaylumah" />
         <meta name="twitter:description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json">
-        <meta name="twitter:image" content="http://localhost:4280/assets/images/posts/20220607/launch-settings/cover_image.png">
+        <meta name="twitter:image" content="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/cover_image.png">
         
         <script type="application/ld+json">
         {
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "image": "http://localhost:4280/assets/images/posts/20220607/launch-settings/cover_image.png",
-          "mainEntityOfPage": "http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html",
+          "image": "https://kaylumah.nl/assets/images/posts/20220607/launch-settings/cover_image.png",
+          "mainEntityOfPage": "https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html",
           "author": {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "url": "https://kaylumah.nl"
+            "image": "https://kaylumah.nl/assets/avatar_background.svg",
+            "sameAs": [
+              "https://www.linkedin.com/in/maxhamulyak",
+              "https://twitter.com/kaylumah"
+            ],
+            "url": "https://kaylumah.nl/about",
+            "email": "max@kaylumah.nl"
           },
           "dateModified": "2022-06-07",
           "datePublished": "2022-06-07",
@@ -67,11 +73,9 @@
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "kaylumah",
-            "founder": {
-              "@context": "https://schema.org",
-              "@type": "Person"
-            },
-            "foundingDate": "2020-01-01"
+            "sameAs": "https://www.linkedin.com/company/kaylumah",
+            "foundingDate": "2020-01-01",
+            "logo": "https://kaylumah.nl/assets/logo.svg"
           }
         }
         </script>
@@ -81,7 +85,7 @@
         <link
           type="application/atom+xml"
           rel="alternate"
-          href="http://localhost:4280/feed.xml"
+          href="https://kaylumah.nl/feed.xml"
           title="Max Hamulyák · Kaylumah RSS Feed"
         />
         <!-- END Feed MetaData -->
@@ -96,11 +100,11 @@
                     |___/                                  
                                                            
          © Kaylumah. All rights reserved.                             
-         a4dacda26eb0383ed65f75f8236530e37b4e121e                              
+         921d9085ce53d1d788a322c5193dde392758001e                              
          2.1.3                               
-         06/12/2022 09:42:44 +02:00
-         site: 25bebd43-ce49-5870-8c1a-b769bc35aa50
-         page: 08c379d5-fe80-50ec-b735-d588d1c4c88d                                  
+         06/18/2022 11:30:24 +02:00
+         site: 5779c7fd-cd79-5890-b41c-18d7868b3777
+         page: 5dc0fb80-6c2b-592e-9445-91d7065c8ac3                                  
                                                            
          You found 🧸                                      
                                                            
@@ -385,9 +389,9 @@ Done...
 <h2 id="share-debug-configuration-from-microsoft-visual-studio"><a href="#share-debug-configuration-from-microsoft-visual-studio">Share debug configuration from Microsoft Visual Studio</a></h2>
 <p>I could not verify it online, but I think Visual Studio introduced launch settings as part of the first <code>ASP NET Core</code> release. Since launch profiles is a <code>Visual Studio</code> feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from <code>Visual Studio</code> <code>launchSettings</code> can reference <code>MSBuild</code> variables. That is a pretty handy way to provide something dynamic.</p>
 <p>For our console, we see the following selection in Visual Studio:</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
 <p>For our API, we see the following selection in Visual Studio:</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
 <p>As you see, the WebAPI variant shows more than just our launch profiles.</p>
 <p>Another aspect of development configuration is the ability to run more projects simultaneously. We can achieve this in <code>Visual Studio</code> by selecting multiple startup projects.  As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called <a href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022" class="external">SwitchStartUpProject</a>.</p>
 <p>We can quickly provide multiple configurations. We can provide a <code>ProfileName</code> for each project that matches one in our launch settings. It is that simple.</p>
@@ -410,12 +414,12 @@ Done...
     }
 }
 </code></pre>
-<p><img src="/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
 <h2 id="share-debug-configuration-from-jetbrains-rider"><a href="#share-debug-configuration-from-jetbrains-rider">Share debug configuration from JetBrains Rider</a></h2>
 <p>As it turns out, <code>launchSettings</code> has been supported in <code>Rider</code> for a long time. They first introduced it in <a href="https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/" class="external">November 2018</a>. As a matter of fact, to use <code>launchSettings</code> inside <code>Rider</code> you don't need to do a thing. <code>Rider</code> <a href="https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles" class="external">automatically detects</a> if your projects are using <code>launchSettings</code>. Not all features are supported, but using profiles of <code>commandName project</code> are. If you did provide MSBuild variable in <code>launchSettings</code> <code>Rider</code> would correctly pass them along.</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
 <p>A thing I like about <code>Rider</code> is that I don't need an additional plugin to support multiple start up projects.</p>
-<p><img src="/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
 <p>It's important to check <code>Store as project file</code>; otherwise, you won't share it with your team. In this particular example, it will look like this:</p>
 <pre><code class="language-xml">&lt;component name=&quot;ProjectRunConfigurationManager&quot;&gt;
   &lt;configuration default=&quot;false&quot; name=&quot;Console and API&quot; type=&quot;CompoundRunConfigurationType&quot;&gt;
@@ -531,7 +535,7 @@ Our base URL comes from the <code>launchSettings.json</code>, but the <code>laun
     }
 ]
 </code></pre>
-<p><img src="/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
 <h2 id="bonus-use-launch-settings-from-dotnet-cli"><a href="#bonus-use-launch-settings-from-dotnet-cli">Bonus use Launch Settings from Dotnet CLI</a></h2>
 <p>Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.</p>
 <p>As it turns out the CLI also defaults to the first project in <code>Properties\launchSettings.json</code>, so in our case <code>DemoConsole.V0</code>. Just like VS Code did. The following example uses a bit of <code>PowerShell</code> to run the CLI.</p>
@@ -565,19 +569,19 @@ dotnet run
                 <div class="social-share">
             <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
             <div class="flex justify-center space-x-6">
-                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
                         <span class="sr-only">LinkedIn Share</span>
                         <em class="fab fa-linkedin fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Share%20debug%20configuration%20between%20.NET%20IDEs%20with%20launch%20profiles&url=http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Share%20debug%20configuration%20between%20.NET%20IDEs%20with%20launch%20profiles&url=https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                         <span class="sr-only">Twitter Share</span>
                         <em class="fab fa-twitter-square fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
                         <span class="sr-only">Facebook Share</span>
                         <em class="fab fa-facebook fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Share debug configuration between .NET IDEs with launch profiles&amp;body=Thought you might like this article http://localhost:4280/2022/06/07/share-debug-configuration-with-launch-profiles.html">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Share debug configuration between .NET IDEs with launch profiles&amp;body=Thought you might like this article https://kaylumah.nl/2022/06/07/share-debug-configuration-with-launch-profiles.html">
                         <span class="sr-only">Email Share</span>
                         <em class="fas fa-envelope-open-text fa-lg"></em>
                     </a>
@@ -720,7 +724,7 @@ dotnet run
                     </div>
                     <div class="pt-2 flex flex-col text-center text-gray-100">
                         <span>© Kaylumah. All rights reserved.</span>
-                        <span class="text-xs">Deployed from commit <a class="hover:text-gray-400" href="https://github.com/kaylumah/kaylumah.github.io/commit/a4dacda26eb0383ed65f75f8236530e37b4e121e">a4dacda</a> via build <a class="hover:text-gray-400" href="https://github.com/kaylumah/kaylumah.github.io/actions/runs/1">20210320.1</a></span>
+                        <span class="text-xs">Deployed from commit <a class="hover:text-gray-400" href="https://github.com/kaylumah/kaylumah.github.io/commit/921d9085ce53d1d788a322c5193dde392758001e">921d908</a> via build <a class="hover:text-gray-400" href="https://github.com/kaylumah/kaylumah.github.io/actions/runs/1">20220618.112930</a></span>
                     </div>
                     <div class="pt-2 flex justify-center space-x-6">
                         <a href="/" class="text-gray-100 hover:text-gray-400">
