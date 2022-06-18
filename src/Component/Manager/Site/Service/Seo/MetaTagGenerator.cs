@@ -54,9 +54,29 @@ public partial class MetaTagGenerator
 
     private static string ToCommonTags(RenderData renderData)
     {
-         ArgumentNullException.ThrowIfNull(renderData);
+        ArgumentNullException.ThrowIfNull(renderData);
+        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+        var finalDocument = new XmlDocument();
+        var titleElement = finalDocument.CreateElement("title");
+        titleElement.InnerText = renderData.Title;
+
+        var linkElement = finalDocument.CreateElement("link");
+        var hrefAttribute = finalDocument.CreateAttribute("href");
+        hrefAttribute.Value = renderData.Page.Uri;
+        createdElement.Attributes.Append(hrefAttribute);
+        var relAttribute = finalDocument.CreateAttribute("rel");
+        relAttribute.Value = "canonical";
+        createdElement.Attributes.Append(nameAttribute);
         var sb = new StringBuilder();
-        var result = new List<string>();
+        var result = new List<string>()
+        {
+            titleElement.OuterXml,
+            linkElement.OuterXml,
+            CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
+            CreateMetaTag("description", renderData.Description),
+            CreateMetaTag("author", author.FullName),
+            CreateMetaTag("copyright", renderData.Site.Build.Copyright),
+        };
         if (result.Any())
         {
             sb.AppendLine("<!-- Common Meta Tags -->");
@@ -99,11 +119,16 @@ public partial class MetaTagGenerator
     {
         ArgumentNullException.ThrowIfNull(renderData);
         var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-        var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
         var sb = new StringBuilder();
         var result = new List<string>
         {
-            CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website")
+            CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website"),
+            CreateOpenGraphMetaTag("og:locale", renderData.Language),
+            CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
+            CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
+            CreateOpenGraphMetaTag("og:url", renderData.Page.Uri),
+            CreateOpenGraphMetaTag("og:image", renderData.Page.Image),
+            CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
         if (renderData.Page.Type == ContentType.Article)
@@ -111,6 +136,10 @@ public partial class MetaTagGenerator
             result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
             result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
             result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
+            foreach(var tag in renderData.Page.Tags)
+            {
+                result.Add(CreateOpenGraphMetaTag("article:tag", tag));
+            }
         }
 
         if (result.Any())
