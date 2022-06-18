@@ -30,7 +30,12 @@ public partial class MetaTagGenerator
 
         var sb = new StringBuilder();
 
-        sb.AppendLine("<!-- HTML Meta Tags -->");
+        var common = ToCommonTags(RenderData renderData);
+        if (!string.IsNullOrEmpty(common))
+        {
+            sb.Append(common);
+        }
+
         var openGraph = ToOpenGraphTags(renderData);
         if (!string.IsNullOrEmpty(openGraph))
         {
@@ -42,6 +47,22 @@ public partial class MetaTagGenerator
         {
             sb.AppendLine(string.Empty);
             sb.Append(twitter);
+        }
+        return sb.ToString();
+    }
+
+    private static string ToCommonTags(RenderData renderData)
+    {
+         ArgumentNullException.ThrowIfNull(renderData);
+        var sb = new StringBuilder();
+        var result = new List<string>();
+        if (result.Any())
+        {
+            sb.AppendLine("<!-- Common Meta Tags -->");
+            foreach(var item in result)
+            {
+                sb.AppendLine(item);
+            }
         }
         return sb.ToString();
     }
