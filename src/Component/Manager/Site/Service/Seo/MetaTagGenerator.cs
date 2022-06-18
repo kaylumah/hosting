@@ -4,6 +4,7 @@
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Logging;
 using System.Xml;
+using System.Text;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
@@ -26,7 +27,34 @@ public partial class MetaTagGenerator
     {
         ArgumentNullException.ThrowIfNull(renderData);
         LogMetaTags(renderData.Page.Uri);
-        return string.Empty;
+
+        var sb = new StringBuilder();
+        var openGraph = ToOpenGraphTags(renderData);
+        if (!string.IsNullOrEmpty(openGraph))
+        {
+            sb.Append(openGraph);
+        }
+        return sb.ToString();
+    }
+
+    private static string ToOpenGraphTags(RenderData renderData)
+    {
+        ArgumentNullException.ThrowIfNull(renderData);
+        var sb = new StringBuilder();
+        var result = new List<string>();
+        if (renderData.Page.Type == ContentType.Article)
+        {
+            result.Add(CreateOpenGraphMetaTag("og:type", "article"));
+        }
+        if (result.Any())
+        {
+            sb.AppendLine("<!-- OpenGraph Meta Tags -->");
+            foreach(var item in result)
+            {
+                sb.AppendLine(item);
+            }
+        }
+        return sb.ToString();
     }
 
     private static string CreateMetaTag(string name, string content)
