@@ -29,9 +29,12 @@ public partial class MetaTagGenerator
         LogMetaTags(renderData.Page.Uri);
 
         var sb = new StringBuilder();
+
+        sb.AppendLine("<!-- HTML Meta Tags -->");
         var openGraph = ToOpenGraphTags(renderData);
         if (!string.IsNullOrEmpty(openGraph))
         {
+            sb.AppendLine(string.Empty);
             sb.Append(openGraph);
         }
         return sb.ToString();
