@@ -5,6 +5,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Logging;
 using System.Xml;
 using System.Text;
+using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
@@ -97,12 +98,21 @@ public partial class MetaTagGenerator
     private static string ToOpenGraphTags(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
+        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+        var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
         var sb = new StringBuilder();
-        var result = new List<string>();
+        var result = new List<string>
+        {
+            CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website")
+        };
+
         if (renderData.Page.Type == ContentType.Article)
         {
-            result.Add(CreateOpenGraphMetaTag("og:type", "article"));
+            result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+            result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
+            result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
         }
+
         if (result.Any())
         {
             sb.AppendLine("<!-- OpenGraph Meta Tags -->");
