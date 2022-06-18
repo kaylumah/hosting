@@ -37,6 +37,28 @@ public partial class MetaTagGenerator
             sb.AppendLine(string.Empty);
             sb.Append(openGraph);
         }
+        var twitter = ToTwitterTags(renderData);
+        if (!string.IsNullOrEmpty(twitter))
+        {
+            sb.AppendLine(string.Empty);
+            sb.Append(twitter);
+        }
+        return sb.ToString();
+    }
+
+    private static string ToTwitterTags(RenderData renderData)
+    {
+        ArgumentNullException.ThrowIfNull(renderData);
+        var sb = new StringBuilder();
+        var result = new List<string>();
+        if (result.Any())
+        {
+            sb.AppendLine("<!-- Twitter Meta Tags -->");
+            foreach(var item in result)
+            {
+                sb.AppendLine(item);
+            }
+        }
         return sb.ToString();
     }
 
