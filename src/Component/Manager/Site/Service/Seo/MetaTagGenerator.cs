@@ -3,6 +3,7 @@
 
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Logging;
+using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
@@ -26,5 +27,28 @@ public partial class MetaTagGenerator
         ArgumentNullException.ThrowIfNull(renderData);
         LogMetaTags(renderData.Page.Uri);
         return string.Empty;
+    }
+
+    private static string CreateMetaTag(string name, string content)
+    {
+        return CreateMetaTag("name", name, content);
+    }
+
+     private static string CreateMetaTag(string idAttributeName, string name, string content)
+     {
+        var finalDocument = new XmlDocument();
+        var createdElement = finalDocument.CreateElement("meta");
+        var nameAttribute = finalDocument.CreateAttribute(idAttributeName);
+        nameAttribute.Value = name;
+        createdElement.Attributes.Append(nameAttribute);
+        var contentAttribute = finalDocument.CreateAttribute("content");
+        contentAttribute.Value = content;
+        createdElement.Attributes.Append(contentAttribute);
+        return createdElement.OuterXml;
+     }
+
+    private static string CreateOpenGraphMetaTag(string name, string content)
+    {
+        return CreateMetaTag("property", name, content);
     }
 }
