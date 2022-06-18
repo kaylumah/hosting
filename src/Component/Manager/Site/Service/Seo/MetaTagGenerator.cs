@@ -72,7 +72,6 @@ public partial class MetaTagGenerator
         {
             titleElement.OuterXml,
             linkElement.OuterXml,
-            string.Empty,
             CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("author", author.FullName),
