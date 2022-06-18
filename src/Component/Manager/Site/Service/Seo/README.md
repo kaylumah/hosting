@@ -55,3 +55,4 @@ https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
 
 https://github.com/BrighterCommand/Brighter/issues/509
 
+https://www.metatags.org/all-meta-tags-overview/the-important-meta-tags/social-media-metatags/
