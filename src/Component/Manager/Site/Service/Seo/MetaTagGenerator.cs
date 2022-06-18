@@ -76,7 +76,7 @@ public partial class MetaTagGenerator
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("author", author.FullName),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-            CreateMetaTag("keywords", string.Join(',', renderData.Page.Tags))
+            CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))
         };
         if (result.Any())
         {
