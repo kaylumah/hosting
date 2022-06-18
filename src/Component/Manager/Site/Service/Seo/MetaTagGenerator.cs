@@ -30,7 +30,7 @@ public partial class MetaTagGenerator
 
         var sb = new StringBuilder();
 
-        var common = ToCommonTags(RenderData renderData);
+        var common = ToCommonTags(renderData);
         if (!string.IsNullOrEmpty(common))
         {
             sb.Append(common);
@@ -70,8 +70,19 @@ public partial class MetaTagGenerator
     private static string ToTwitterTags(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
+        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+        var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
         var sb = new StringBuilder();
-        var result = new List<string>();
+        var result = new List<string>
+        {
+            CreateMetaTag("twitter:card", "summary_large_image"),
+            CreateMetaTag("twitter:title", renderData.Page.Title),
+            CreateMetaTag("twitter:site", $"@{organization.Twitter}"),
+            CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"),
+            CreateMetaTag("twitter:description", renderData.Description),
+            CreateMetaTag("twitter:image", renderData.Page.Image)
+        };
+
         if (result.Any())
         {
             sb.AppendLine("<!-- Twitter Meta Tags -->");
