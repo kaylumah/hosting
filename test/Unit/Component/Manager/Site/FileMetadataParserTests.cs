@@ -22,9 +22,7 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { 
-                Data = new FileMetaData()
-            });
+            .Returns(new Metadata<FileMetaData> { });
 
         var loggerMock = new LoggerMock<FileMetadataParser>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
@@ -62,9 +60,7 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { 
-                Data = new FileMetaData()
-            });
+            .Returns(new Metadata<FileMetaData> { });
 
         var loggerMock = new Mock<ILogger<FileMetadataParser>>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -104,9 +100,7 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { 
-                Data = new FileMetaData()
-            });
+            .Returns(new Metadata<FileMetaData> { });
 
         var loggerMock = new Mock<ILogger<FileMetadataParser>>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
