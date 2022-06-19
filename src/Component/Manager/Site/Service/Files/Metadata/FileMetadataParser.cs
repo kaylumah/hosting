@@ -32,7 +32,7 @@ public partial class FileMetadataParser: IFileMetadataParser
         {
             result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
         }
-        var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
+        var outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
         var paths = DetermineFilters(outputLocation);
 
         var fileMetaData = ApplyDefaults(paths, criteria.Scope);
@@ -112,8 +112,9 @@ public partial class FileMetadataParser: IFileMetadataParser
         return result;
     }
 
-    private string DetermineOutputLocation(string fileName, string permalink, FileMetaData metaData)
+    private string DetermineOutputLocation(string fileName, FileMetaData metaData)
     {
+        var permalink = metaData.OutputLocation;
         var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
         var match = Regex.Match(fileName, pattern);
 
