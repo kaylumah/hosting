@@ -22,3 +22,6 @@ $Headers = @{
     'Content-Type'='application/json; charset=utf-8';
 }
 Invoke-WebRequest -Method 'Post' -Uri "https://www.bing.com/indexnow" -Body ($Body | ConvertTo-Json) -Headers $Headers
+
+# https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap#addsitemap
+Invoke-WebRequest -Method 'GET' -Uri "https://www.google.com/ping?sitemap=$SiteMapUrl"
