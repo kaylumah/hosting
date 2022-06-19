@@ -27,16 +27,20 @@ public partial class SeoGenerator
     private string GenerateLdJson(RenderData renderData)
     {
         var json = _structureDataGenerator.ToLdJson(renderData);
-        var finalDocument = new XmlDocument();
-        var scriptElement = finalDocument.CreateElement("script");
-        var typeAttribute = finalDocument.CreateAttribute("type");
-        typeAttribute.Value = "application/ld+json";
-        scriptElement.Attributes.Append(typeAttribute);
-        scriptElement.InnerText = json;
+        if(!string.IsNullOrEmpty(json))
+        {
+            var finalDocument = new XmlDocument();
+            var scriptElement = finalDocument.CreateElement("script");
+            var typeAttribute = finalDocument.CreateAttribute("type");
+            typeAttribute.Value = "application/ld+json";
+            scriptElement.Attributes.Append(typeAttribute);
+            scriptElement.InnerText = json;
 
-        var sb = new StringBuilder();
-        sb.AppendLine("<!-- LdJson Meta Tags -->");
-        sb.Append(scriptElement.OuterXml);
-        return sb.ToString();
+            var sb = new StringBuilder();
+            sb.AppendLine("<!-- LdJson Meta Tags -->");
+            sb.Append(scriptElement.OuterXml);
+            return sb.ToString();
+        }
+        return string.Empty;
     }
 }
