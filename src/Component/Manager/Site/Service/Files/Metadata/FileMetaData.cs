@@ -30,15 +30,15 @@ public class FileMetaData : Dictionary<string, object>
         }
     }
 
-    public string Permalink
+    public string OutputLocation
     {
         get
         {
-            return this.GetValue<string>(nameof(Permalink));
+            return this.GetValue<string>(nameof(OutputLocation));
         }
         set
         {
-            this.SetValue(nameof(Permalink), value);
+            this.SetValue(nameof(OutputLocation), value);
         }
     }
 
