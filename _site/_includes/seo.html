@@ -1,8 +1,8 @@
 <!-- Begin Kaylumah SEO tag v{{ build.short_git_hash }} -->
 {{ page.metatags }}
-{%- if ldjson -%}
+{%- if page.ldjson -%}
 <script type="application/ld+json">
-{{ ldjson }}
+{{ page.djson }}
 </script>
 {%- endif -%}
 <!-- End Kaylumah SEO tag -->
