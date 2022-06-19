@@ -8,7 +8,7 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
+using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
@@ -25,7 +25,7 @@ public class SiteManager : ISiteManager
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
-    private readonly StructureDataGenerator _structureDataGenerator;
+    private readonly SeoGenerator _seoGenerator;
     private readonly SiteMapGenerator _siteMapGenerator;
     private readonly ISystemClock _systemClock;
 
@@ -38,7 +38,7 @@ public class SiteManager : ISiteManager
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
-        StructureDataGenerator structureDataGenerator,
+        SeoGenerator seoGenerator,
         SiteMapGenerator siteMapGenerator,
         ISystemClock systemClock
         )
@@ -51,7 +51,7 @@ public class SiteManager : ISiteManager
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
-        _structureDataGenerator = structureDataGenerator;
+        _seoGenerator = seoGenerator;
         _siteMapGenerator = siteMapGenerator;
         _systemClock = systemClock;
     }
@@ -122,10 +122,12 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.Layout
             })
             .ToArray();
+
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
-            item.Metadata.Page.LdJson = _structureDataGenerator.ToLdJson(item.Metadata);
+            _seoGenerator.ApplySeo(item.Metadata);
         });
+
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 

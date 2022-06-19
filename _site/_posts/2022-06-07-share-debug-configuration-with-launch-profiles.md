@@ -1,16 +1,13 @@
 ---
-title: 'Share debug configuration between .NET IDEs with launch profiles'
-description: 'Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json'
-image: '/assets/images/posts/20220607/launch-settings/cover_image.png'
-coverimage:
-    DEFAULT: '/assets/images/posts/20220607/launch-settings/cover_image.png'
-    WEB: '/assets/images/posts/20220607/launch-settings/cover_image.webp'
+title: Share debug configuration between .NET IDEs with launch profiles
+description: Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json
+image: /assets/images/posts/20220607/launch-settings/cover_image.png
 tags:
     - rider
     - visualstudio
     - vscode
-commentid: '116'
 publishedtime: '23:30'
+commentid: '116'
 ---
 Anno 2022, as `.NET` developers, we are spoilt with multiple options for our development environment. Of course, having a choice sparks the debate that my IDE is better than your IDE. I feel that after `bring your own device`, we are moving to a `bring your own IDE` workspace. Given the rise of tooling like `VS Code DevContainer` and `GitHub Codespaces`, I think more developers will likely opt for such tooling. 
 

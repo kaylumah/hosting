@@ -8,7 +8,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
+using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +38,8 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<SiteMetadataFactory>();
         services.AddSingleton<FeedGenerator>();
         services.AddSingleton<StructureDataGenerator>();
+        services.AddSingleton<MetaTagGenerator>();
+        services.AddSingleton<SeoGenerator>();
         services.AddSingleton<SiteMapGenerator>();
         services.AddSystemClock();
         return services;

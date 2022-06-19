@@ -39,9 +39,19 @@ public class PageMetaData : Dictionary<string, object>
             this.SetValue(nameof(LdJson), value);
         }
     }
+    public string MetaTags
+    {
+        get
+        {
+            return this.GetValue<string>(nameof(MetaTags));
+        }
+        set
+        {
+            this.SetValue(nameof(MetaTags), value);
+        }
+    }
     public string Layout => this.GetValue<string>(nameof(Layout));
     public string Uri => this.GetValue<string>(nameof(Uri));
-    public string CoverImage => this.GetValue<string>(nameof(CoverImage));
     public string Image => this.GetValue<string>(nameof(Image));
     public string CommentId => this.GetValue<string>(nameof(CommentId));
 

@@ -1,12 +1,8 @@
 ---
 type: 'Announcement'
 title: Guiding my thoughts home
-coverimage:
-    DEFAULT: '/assets/images/posts/20200801/welcome/cover_image.png'
-    WEB: '/assets/images/posts/20200801/welcome/cover_image.webp'
+description: Moving all content to my own platform
 image: /assets/images/posts/20200801/welcome/cover_image.png
-description: >
-    Moving all content to my own platform
 socialshare: False
 feed: False
 ---

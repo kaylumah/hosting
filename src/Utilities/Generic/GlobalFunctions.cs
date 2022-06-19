@@ -147,6 +147,12 @@ public class GlobalFunctions
         return DateToPattern(date, "o");
     }
 
+    public static string FileNameWithoutExtension(string source)
+    {
+        var extension = Path.GetExtension(source);
+        var filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
+        return filePathWithoutExt;
+    }
     public static string RelativeUrl(string source)
     {
         if (!string.IsNullOrWhiteSpace(BaseUrl.Value))

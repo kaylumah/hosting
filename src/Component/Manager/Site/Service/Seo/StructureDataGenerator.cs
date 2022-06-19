@@ -7,7 +7,7 @@ using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.StructureData;
+namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
 public partial class StructureDataGenerator
 {

@@ -5,7 +5,7 @@ $DistDirectory = "/workspaces/kaylumah.github.io/compare"
 Get-ChildItem -Path  $DistDirectory -Recurse 
     | Select-Object -ExpandProperty FullName 
     | Sort-Object length -Descending 
-    | Remove-Item -force 
+    | Remove-Item -Recurse -Force 
 
 Get-ChildItem –Path $SourceDirectory -Recurse 
     | Move-Item -Destination $DistDirectory
