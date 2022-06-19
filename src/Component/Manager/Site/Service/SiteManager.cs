@@ -25,8 +25,7 @@ public class SiteManager : ISiteManager
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
-    private readonly StructureDataGenerator _structureDataGenerator;
-    private readonly MetaTagGenerator _metaTagGenerator;
+    private readonly SeoGenerator _seoGenerator;
     private readonly SiteMapGenerator _siteMapGenerator;
     private readonly ISystemClock _systemClock;
 
@@ -39,8 +38,7 @@ public class SiteManager : ISiteManager
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
-        StructureDataGenerator structureDataGenerator,
-        MetaTagGenerator metaTagGenerator,
+        SeoGenerator seoGenerator,
         SiteMapGenerator siteMapGenerator,
         ISystemClock systemClock
         )
@@ -53,8 +51,7 @@ public class SiteManager : ISiteManager
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
-        _structureDataGenerator = structureDataGenerator;
-        _metaTagGenerator = metaTagGenerator;
+        _seoGenerator = seoGenerator;
         _siteMapGenerator = siteMapGenerator;
         _systemClock = systemClock;
     }
@@ -128,8 +125,7 @@ public class SiteManager : ISiteManager
 
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
-            item.Metadata.Page.LdJson = _structureDataGenerator.ToLdJson(item.Metadata);
-            item.Metadata.Page.MetaTags = _metaTagGenerator.ToMetaTags(item.Metadata);
+            _seoGenerator.ApplySeo(item.Metadata);
         });
 
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);

@@ -39,6 +39,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<FeedGenerator>();
         services.AddSingleton<StructureDataGenerator>();
         services.AddSingleton<MetaTagGenerator>();
+        services.AddSingleton<SeoGenerator>();
         services.AddSingleton<SiteMapGenerator>();
         services.AddSystemClock();
         return services;
