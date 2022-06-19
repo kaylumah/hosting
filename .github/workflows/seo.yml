@@ -1,0 +1,13 @@
+name: Upload SEO Data
+on:
+  workflow_dispatch:
+jobs:
+  update_seo:
+    name: Trigger SEO
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Submit SiteMap URLs'
+        shell: pwsh
+        run: |
+          ./tools/Seo.ps1 -BaseUrl "https://kaylumah.nl"
