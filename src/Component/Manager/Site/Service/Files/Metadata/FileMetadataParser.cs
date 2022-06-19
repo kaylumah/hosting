@@ -28,12 +28,21 @@ public partial class FileMetadataParser: IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-        var outputLocation = DetermineOutputLocation(criteria.FileName, criteria.Permalink, result.Data);
+        if(result.Data == null)
+        {
+            result.Data = new FileMetaData();
+        }
+        if (string.IsNullOrEmpty(result.Data.OutputLocation))
+        {
+            result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
+        }
+        var outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
         var paths = DetermineFilters(outputLocation);
 
         var fileMetaData = ApplyDefaults(paths, criteria.Scope);
         OverwriteMetaData(fileMetaData, result.Data, "file");
         ApplyDates(fileMetaData);
+        fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
 
         // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
         result.Data = fileMetaData;
@@ -108,8 +117,9 @@ public partial class FileMetadataParser: IFileMetadataParser
         return result;
     }
 
-    private string DetermineOutputLocation(string fileName, string permalink, FileMetaData metaData)
+    private string DetermineOutputLocation(string fileName, FileMetaData metaData)
     {
+        var permalink = metaData.OutputLocation;
         var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
         var match = Regex.Match(fileName, pattern);
 
