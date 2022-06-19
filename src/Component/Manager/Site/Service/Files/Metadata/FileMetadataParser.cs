@@ -28,6 +28,10 @@ public partial class FileMetadataParser: IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+        if(result.Data == null)
+        {
+            result.Data = new FileMetaData();
+        }
         if (string.IsNullOrEmpty(result.Data.OutputLocation))
         {
             result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
