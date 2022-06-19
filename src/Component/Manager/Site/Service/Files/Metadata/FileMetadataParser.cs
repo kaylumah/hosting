@@ -42,6 +42,7 @@ public partial class FileMetadataParser: IFileMetadataParser
         var fileMetaData = ApplyDefaults(paths, criteria.Scope);
         OverwriteMetaData(fileMetaData, result.Data, "file");
         ApplyDates(fileMetaData);
+        fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
 
         // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
         result.Data = fileMetaData;
