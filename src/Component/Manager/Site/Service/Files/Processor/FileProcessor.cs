@@ -43,7 +43,7 @@ public partial class FileProcessor : IFileProcessor
     {
         var result = new List<File>();
 
-        var directoryContents = _fileSystem.GetFiles("_site");
+        var directoryContents = _fileSystem.GetFiles("_site").ToList();
 
         if (!directoryContents.Any())
         {
@@ -52,11 +52,12 @@ public partial class FileProcessor : IFileProcessor
         }
 
         var directoriesToProcessAsCollection = directoryContents
-            .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name));
+            .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
+            .ToList();
 
         var filesWithoutCollections = directoryContents.Where(info =>
             !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
-        );
+        ).ToList();
 
         var files =
             await ProcessFiles(
@@ -105,7 +106,7 @@ public partial class FileProcessor : IFileProcessor
         {
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection)).Where(x => !x.IsDirectory());
+            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection)).Where(x => !x.IsDirectory()).ToList();
             var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection
