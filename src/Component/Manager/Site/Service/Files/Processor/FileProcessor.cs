@@ -105,7 +105,7 @@ public partial class FileProcessor : IFileProcessor
         {
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection));
+            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection)).Where(x => !x.IsDirectory());
             var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection
