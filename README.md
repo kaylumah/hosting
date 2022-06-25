@@ -4,7 +4,7 @@
   <img alt="Kaylumah Logo" width="460" height="300" src="meta/resources/logo.svg">
 </p>
 
-[![.NET (CI)](https://github.com/kaylumah/kaylumah.github.io/actions/workflows/dotnet-ci.yml/badge.svg)](https://github.com/kaylumah/kaylumah.github.io/actions/workflows/dotnet-ci.yml)
+[![CI/CD](https://github.com/kaylumah/kaylumah.github.io/actions/workflows/azure-static-web-apps-green-field-0353fee03.yml/badge.svg?branch=main)](https://github.com/kaylumah/kaylumah.github.io/actions/workflows/azure-static-web-apps-green-field-0353fee03.yml)
 
 ---
 

@@ -27,7 +27,7 @@
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
-  <Target Name="EmitCustomMessage" AfterTargets="Build">
+  <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="False">
     <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
     <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
     <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />

@@ -6,5 +6,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
     <ProjectReference Include="..\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Configuration\Kaylumah.Ssg.Utilities.Configuration.csproj" />
   </ItemGroup>
 </Project>

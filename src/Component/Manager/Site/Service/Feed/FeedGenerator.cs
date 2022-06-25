@@ -8,8 +8,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
-    public class FeedGenerator
+    public partial class FeedGenerator
     {
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Information,
+            Message = "Begin BlogInformation `{Version}`")]
+        public partial void LogCreateBlog(string version);
+
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Information,
+            Message = "Feed will have `{PostCount}` posts")]
+        public partial void FeedCount(int postCount);
+
         private readonly ILogger _logger;
 
         public FeedGenerator(ILogger<FeedGenerator> logger)
@@ -31,15 +43,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             var generatorVersion = build.ShortGitHash;
             var copyrightClaim = build.Copyright;
             var generatedAtBuildTime = build.Time;
-            _logger.LogInformation("Begin BlogInformation {Version}", generatorVersion);
+            LogCreateBlog(generatorVersion);
 
             var feed = new SyndicationFeed
             {
                 Language = siteMetaData.Language,
-                Title = new TextSyndicationContent(siteMetaData.Title),
-                Description = new TextSyndicationContent(siteMetaData.Description),
+                Title = new CDataSyndicationContent(siteMetaData.Title),
+                Description = new CDataSyndicationContent(siteMetaData.Description),
                 Id = GlobalFunctions.AbsoluteUrl("feed.xml"),
-                Copyright = new TextSyndicationContent(copyrightClaim),
+                Copyright = new CDataSyndicationContent(copyrightClaim),
                 LastUpdatedTime = generatedAtBuildTime,
                 ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg")),
                 Generator = "Kaylumah Site Generator"
@@ -65,27 +77,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return feed;
         }
 
+
+
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
-            var posts = RetrievePostPageMetaDatas(siteMetaData);
+            var posts = RetrievePostPageMetaDatas(siteMetaData)
+                .ByRecentlyPublished();
             var result = new List<SyndicationItem>();
             if (posts.Any())
             {
-                _logger.LogInformation("Feed will have {PostCount} posts", posts.Count());
+                FeedCount(posts.Count());
                 var persons = siteMetaData.ToPersons();
                 var tags = siteMetaData.ToCategories();
                 foreach (var pageMetaData in posts)
                 {
                     var author = persons[pageMetaData.Author];
-                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Url);
+                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
                     var item = new SyndicationItem
                     {
                         Id = pageUrl,
-                        Title = new TextSyndicationContent(pageMetaData.Title),
-                        Summary = new TextSyndicationContent(pageMetaData.Description),
+                        Title = new CDataSyndicationContent(pageMetaData.Title),
+                        Summary = new CDataSyndicationContent(pageMetaData.Description),
                         Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = pageMetaData.Date,
-                        LastUpdatedTime = pageMetaData.LastModified
+                        PublishDate = pageMetaData.Published,
+                        LastUpdatedTime = pageMetaData.Modified
                     };
 
                     var itemCategories = pageMetaData
@@ -100,7 +115,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 }
             }
             return result
-                .OrderByDescending(x => x.PublishDate)
                 .ToList();
         }
 

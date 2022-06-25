@@ -1,17 +1,13 @@
 ---
-title: "Capture Logs in Unit Tests"
-description: "A guide to capturing logs in Xunit"
-cover_image: '/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png'
-cover_image:
-    DEFAULT: '/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png'
-    WEB: '/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.webp'
-image: '/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png'
+title: Capture Logs in Unit Tests
+description: A guide to capturing logs in Xunit
+image: /assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png
 tags:
-  - "csharp"
-  - "testing"
-  - "xunit"
-comment_id: '50'
+  - csharp
+  - testing
+  - xunit
 publishedtime: '20:30'
+commentid: '50'
 ---
 In application code, we are used to writing log statements primarily for diagnostic purposes. For instance, we use logs to capture unexpected error flows. Therefore it is not uncommon to want to capture the log output in our unit tests. You have three distinctive options to handle log output in unit tests, as far as I can tell.
 

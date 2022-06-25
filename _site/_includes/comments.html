@@ -1,6 +1,6 @@
 <script src="  https://unpkg.com/showdown/dist/showdown.min.js"></script>
 <script>
-const GH_ISSUE_API = 'https://api.github.com/repos/kaylumah/kaylumah.github.io/issues/{{ page.comment_id }}/comments?per_page=100';
+const GH_ISSUE_API = 'https://api.github.com/repos/kaylumah/kaylumah.github.io/issues/{{ page.commentid }}/comments?per_page=100';
 let request = new XMLHttpRequest();
 request.open( 'GET', GH_ISSUE_API, true );
 
@@ -80,5 +80,5 @@ request.send();
             <span class="text-sm font-semibold">No comments found for this article.</span>
         </li>
     </ul>
-	<p id="leave-a-comment">Join the discussion for this article on <a class="font-semibold external" href="https://github.com/kaylumah/kaylumah.github.io/issues/{{ page.comment_id }}">this ticket</a>.</p>
+	<p id="leave-a-comment">Join the discussion for this article on <a class="font-semibold external" href="https://github.com/kaylumah/kaylumah.github.io/issues/{{ page.commentid }}">this ticket</a>.</p>
 </div>

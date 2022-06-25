@@ -46,25 +46,22 @@ class Program
 
         configurationBuilder
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
-
-        // todo UserSecrets?
-
-        configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
-                    { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
-            });
-
-        // configurationBuilder.AddEnvironmentVariables();
-
-        if (args != null)
+            .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
+            .AddInMemoryCollection(new Dictionary<string, string> {
+                    // { $"{nameof(SiteConfiguration)}:Source", "_site" },
+                    // { $"{nameof(SiteConfiguration)}:Destination", "dist" },
+                    // { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
+                    // { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
+                    // { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
+                    // { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
+            })
+            .AddEnvironmentVariables("Kaylumah_");
+        
+        if (args is { Length: > 0 })
         {
             configurationBuilder.AddCommandLine(args);
         }
+
         IConfiguration configuration = configurationBuilder.Build();
         var root = (IConfigurationRoot)configuration;
         var debugView = root.GetDebugView();
@@ -92,10 +89,7 @@ class Program
         Stopwatch watch = new Stopwatch();
         Console.WriteLine("Start Site Generation");
         watch.Start();
-        await siteManager.GenerateSite(new GenerateSiteRequest
-        {
-            Configuration = siteConfiguration
-        }).ConfigureAwait(false);
+        await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = siteConfiguration }).ConfigureAwait(false);
         watch.Stop();
         Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
     }

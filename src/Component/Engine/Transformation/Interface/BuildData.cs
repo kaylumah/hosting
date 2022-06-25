@@ -17,8 +17,9 @@ public class BuildData
     public string ShortGitHash { get; set; }
     public DateTimeOffset Time { get; set; }
 
-    public BuildData(AssemblyInfo info)
+    public BuildData(AssemblyInfo info, DateTimeOffset buildTime)
     {
+        Time = buildTime;
         var version = "1.0.0+LOCALBUILD";
         if (info.Version.Length > 6)
         {
@@ -42,8 +43,6 @@ public class BuildData
             SourceBuildUri = repositoryUrl + "/actions/runs";
         }
 
-
-        Time = DateTimeOffset.Now;
         Version = appVersion;
         Copyright = info.Copyright;
         GitHash = gitHash;

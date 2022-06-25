@@ -148,15 +148,18 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { });
+            .Returns(new Metadata<FileMetaData> { 
+                Data = new FileMetaData {
+                    OutputLocation = "test/:name:ext"
+                }
+            });
 
         var loggerMock = new Mock<ILogger<FileMetadataParser>>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
-            FileName = "test/file.html",
-            Permalink = "test/:name:ext"
+            FileName = "test/file.html"
         };
 
         // Act
@@ -200,15 +203,18 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { });
+            .Returns(new Metadata<FileMetaData> {
+                Data = new FileMetaData {
+                    OutputLocation = "test/:name:ext"
+                }
+             });
 
         var loggerMock = new LoggerMock<FileMetadataParser>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
-            FileName = "test/file.html",
-            Permalink = "test/:name:ext"
+            FileName = "test/file.html"
         };
 
         // Act
@@ -251,15 +257,18 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { });
+            .Returns(new Metadata<FileMetaData> { 
+                Data = new FileMetaData {
+                    OutputLocation = "posts/2021/:name:ext"
+                }
+            });
 
         var loggerMock = new Mock<ILogger<FileMetadataParser>>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
         var criteria = new MetadataCriteria
         {
             Content = string.Empty,
-            FileName = "posts/2021/file.html",
-            Permalink = "posts/2021/:name:ext"
+            FileName = "posts/2021/file.html"
         };
 
         // Act

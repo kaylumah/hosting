@@ -5,20 +5,37 @@ using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class SiteMetadataFactory
+    public partial class SiteMetadataFactory
     {
+        [LoggerMessage(
+            EventId = 1,
+            Level = LogLevel.Warning,
+            Message = "TagFile is missing `{Tags}`")]
+        private partial void LogMissingTags(string tags);
+
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Trace,
+            Message = "Enrich Site with `{EnrichmentCategory}`")]
+        private partial void LogEnrichSiteWith(string enrichmentCategory);
+
         private readonly SiteInfo _siteInfo;
         private readonly IYamlParser _yamlParser;
         private readonly IFileSystem _fileSystem;
         private readonly ILogger _logger;
 
-        public SiteMetadataFactory(SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
+        private readonly ISystemClock _systemClock;
+
+
+        public SiteMetadataFactory(ISystemClock systemClock, SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
         {
+            _systemClock = systemClock;
             _siteInfo = siteInfo;
             _yamlParser = yamlParser;
             _fileSystem = fileSystem;
@@ -54,18 +71,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return siteInfo;
         }
-
         private void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
-            _logger.LogInformation("add AssemblyData");
+            LogEnrichSiteWith("AssemblyData");
             var assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-            var buildMetadata = new BuildData(assemblyInfo);
+            var buildMetadata = new BuildData(assemblyInfo, _systemClock.LocalNow);
             site.Build = buildMetadata;
         }
 
         private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
-            _logger.LogInformation("Add Data");
+            LogEnrichSiteWith("Data");
+
             var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
             var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
@@ -76,17 +93,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             var tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
             if (tagFile != null)
             {
-                _logger.LogInformation("TagFile exists");
                 dataFiles.Remove(tagFile);
                 var tagData = _yamlParser.Parse<TagMetaDataCollection>(tagFile);
                 var tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
-                _logger.LogInformation("TagFile has '{TagCount}' tags", tagData.Count);
                 var unmatchedTags = tags
                     .Except(tagData.Keys)
                     .Concat(tagData.Keys.Except(tags));
-                _logger.LogWarning("TagFile is missing '{Tags}'", string.Join(",", unmatchedTags));
+                LogMissingTags(string.Join(",", unmatchedTags));
                 site.Data["tags"] = tagData.Dictionary;
                 site.TagMetaData = tagData;
+            }
+
+            var authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
+            if (authorFile != null)
+            {
+                dataFiles.Remove(authorFile);
+                var authorData = _yamlParser.Parse<AuthorMetaDataCollection>(authorFile);
+                site.Data["authors"] = authorData.Dictionary;
+                site.AuthorMetaData = authorData;
+            }
+
+            var organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
+            if (organizationFile != null)
+            {
+                dataFiles.Remove(organizationFile);
+                var organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
+                site.Data["organizations"] = organizationData.Dictionary;
+                site.OrganizationMetaData = organizationData;
             }
 
             EnrichSiteWithData(site, dataFiles);
@@ -103,7 +136,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
         {
-            _logger.LogInformation("Add collections");
+            LogEnrichSiteWith("Collections");
+
             var collections = files
                 .Where(x => x.Collection != null)
                 .Select(x => x.Collection)
@@ -147,12 +181,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add tags");
+            LogEnrichSiteWith("Tags");
+
             var tags = pages
                 .HasTag()
                 .IsArticle()
                 .SelectMany(x => x.Tags)
-                .Distinct();
+                .Distinct()
+                .ToList();
             foreach (var tag in tags)
             {
                 var tagFiles = pages
@@ -164,21 +200,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add years");
+            LogEnrichSiteWith("Years");
             var years = pages
                 .IsArticle()
-                .Select(x => x.Date.Year)
+                .Select(x => x.Published.Year)
                 .Distinct();
             foreach (var year in years)
             {
-                var yearFiles = pages.Where(x => x.Date.Year.Equals(year)).ToArray();
+                var yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
                 site.Years.Add(year, yearFiles);
             }
         }
 
         private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add series");
+            LogEnrichSiteWith("Series");
+
             var series = pages
                 .HasSeries()
                 .Select(x => x.Series)
@@ -188,7 +225,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 var seriesFiles = pages
                     .FromSeries(serie)
-                    .OrderBy(x => x.Url)
+                    .OrderBy(x => x.Uri)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);
             }
@@ -196,7 +233,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         private void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
         {
-            _logger.LogInformation("Add types");
+            LogEnrichSiteWith("Types");
+
             var blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
             var types = pages
                 .Where(x => !blockedTypes.Contains(x.Type))

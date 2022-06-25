@@ -12,7 +12,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         {
             var settings = new XmlWriterSettings()
             {
-                Indent = true
+                Indent = true,
+                Encoding = new System.Text.UTF8Encoding(false)
             };
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream, settings);

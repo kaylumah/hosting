@@ -30,15 +30,15 @@ public class FileMetaData : Dictionary<string, object>
         }
     }
 
-    public string Permalink
+    public string OutputLocation
     {
         get
         {
-            return this.GetValue<string>(nameof(Permalink));
+            return this.GetValue<string>(nameof(OutputLocation));
         }
         set
         {
-            this.SetValue(nameof(Permalink), value);
+            this.SetValue(nameof(OutputLocation), value);
         }
     }
 
@@ -114,6 +114,18 @@ public class FileMetaData : Dictionary<string, object>
         }
     }
 
+    public DateTimeOffset? Published
+    {
+        get
+        {
+            return this.GetValue<DateTimeOffset?>(nameof(Published));
+        }
+        set
+        {
+            this.SetValue(nameof(Published), value);
+        }
+    }
+
     public string ModifiedDate
     {
         get
@@ -143,20 +155,6 @@ public class FileMetaData : Dictionary<string, object>
         get
         {
             return this.GetValue<DateTimeOffset?>(nameof(Modified));
-            /*
-            var txt = this.GetValue<string>(nameof(Modified));
-            DateTimeOffset result;
-            if (txt != null)
-            {
-                result = DateTimeOffset.ParseExact(txt, "yyyy-MM-dd HH:mm", null);
-                this.SetValue(nameof(Modified), result);
-                return result;
-            } 
-            else
-            {
-                return this.GetValue<DateTime?>(nameof(Modified));
-            }
-            */
         }
         set
         {

@@ -40,3 +40,23 @@ https://rehansaeed.com/structured-data-using-schema-net/
         // https://schema.org/BlogPosting
         // https://schema.org/TechArticle
         // https://schema.org/Blog
+
+
+
+https://www.opengraph.xyz/url/https%3A%2F%2Fkaylumah.nl/
+
+https://megatags.co/#generate-tags
+
+https://webcode.tools/generators/meta-tags
+
+https://ogp.me/
+
+
+
+
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+
+https://github.com/BrighterCommand/Brighter/issues/509
+
+https://www.metatags.org/all-meta-tags-overview/the-important-meta-tags/social-media-metatags/

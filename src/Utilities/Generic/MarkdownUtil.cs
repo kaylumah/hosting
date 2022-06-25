@@ -72,21 +72,20 @@ public static class MarkdownUtil
         {
             if (anchor is LinkInline link && !link.IsImage)
             {
-                if (!anchor.Url.StartsWith(GlobalFunctions.Instance.Url, StringComparison.Ordinal))
+                if (!anchor.Url.StartsWith(GlobalFunctions.Url.Value, StringComparison.Ordinal))
                 {
                     link.GetAttributes().AddClass("external");
-                }
-
+                }     
             }
 
             // TODO disable pending Medium response...
-            // if (anchor is LinkInline imageLink && imageLink.IsImage)
-            // {
-            //     if (imageLink.Url.StartsWith("/assets"))
-            //     {
-            //         imageLink.Url = GlobalFunctions.Instance.Url + imageLink.Url;
-            //     }
-            // }
+            if (anchor is LinkInline imageLink && imageLink.IsImage)
+            {
+                if (imageLink.Url.StartsWith("/assets",  StringComparison.Ordinal))
+                {
+                    imageLink.Url = GlobalFunctions.Url.Value + imageLink.Url;
+                }
+            }
         }
 
         // Render the doc

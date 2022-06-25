@@ -8,8 +8,9 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
+using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Utilities;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service;
@@ -24,8 +25,9 @@ public class SiteManager : ISiteManager
     private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
-    private readonly StructureDataGenerator _structureDataGenerator;
+    private readonly SeoGenerator _seoGenerator;
     private readonly SiteMapGenerator _siteMapGenerator;
+    private readonly ISystemClock _systemClock;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -36,8 +38,9 @@ public class SiteManager : ISiteManager
         ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
-        StructureDataGenerator structureDataGenerator,
-        SiteMapGenerator siteMapGenerator
+        SeoGenerator seoGenerator,
+        SiteMapGenerator siteMapGenerator,
+        ISystemClock systemClock
         )
     {
         _siteMetadataFactory = siteMetadataFactory;
@@ -48,8 +51,9 @@ public class SiteManager : ISiteManager
         _siteInfo = siteInfo;
         _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
-        _structureDataGenerator = structureDataGenerator;
+        _seoGenerator = seoGenerator;
         _siteMapGenerator = siteMapGenerator;
+        _systemClock = systemClock;
     }
 
     private Artifact[] CreateSiteMapArtifacts(SiteMetaData siteMetaData)
@@ -82,8 +86,9 @@ public class SiteManager : ISiteManager
 
     public async Task GenerateSite(GenerateSiteRequest request)
     {
-        GlobalFunctions.Instance.Url = _siteInfo.Url;
-        GlobalFunctions.Instance.BaseUrl = _siteInfo.BaseUrl;
+        GlobalFunctions.Date.Value = _systemClock.LocalNow;
+        GlobalFunctions.Url.Value = _siteInfo.Url;
+        GlobalFunctions.BaseUrl.Value = _siteInfo.BaseUrl;
         var siteGuid = _siteInfo.Url.CreateSiteGuid();
 
         var processed = await _fileProcessor.Process(new FileFilterCriteria
@@ -117,10 +122,12 @@ public class SiteManager : ISiteManager
                 Template = pageMetadata.Layout
             })
             .ToArray();
+
         requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
         {
-            item.Metadata.Page.LdJson = _structureDataGenerator.ToLdJson(item.Metadata);
+            _seoGenerator.ApplySeo(item.Metadata);
         });
+
         var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
 
 

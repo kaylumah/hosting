@@ -1,19 +1,24 @@
 <footer class="bg-gray-900">
     <div class="py-4 px-4">
         <div class="flex justify-center space-x-6">
-            {% assign page_author = site.data.authors[page.author] %}
-            <a target="_blank" rel=”noopener” href="https://www.linkedin.com/in/{{ page_author.linkedin }}" class="text-gray-100 hover:text-gray-400">
+            {% if page_author.links.linkedin %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.linkedin_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">LinkedIn</span>
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://github.com/{{ page_author.github }}" class="text-gray-100 hover:text-gray-400">
+            {% endif %}
+            {% if page_author.links.github %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.github_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
             </a>
-            <a target="_blank" rel=”noopener” href="https://twitter.com/{{ page_author.twitter }}" class="text-gray-100 hover:text-gray-400">
+            {% endif %}
+            {% if page_author.links.twitter %}
+            <a target="_blank" rel=”noopener” href="{{ page_author.links.twitter_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Twitter</span>
                 <em class="fab fa-twitter-square fa-lg"></em>
             </a>
+            {% endif %}
         </div>
         <div class="pt-2 flex flex-col text-center text-gray-100">
             <span>{{ build.copyright }}</span>

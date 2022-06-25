@@ -8,13 +8,13 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Manager.Site.Service.StructureData;
+using Kaylumah.Ssg.Manager.Site.Service.Seo;
+using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
@@ -26,11 +26,8 @@ public static partial class ServiceCollectionExtensions
     {
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 
-        services.Configure<SiteInfo>(configuration.GetSection("Site"));
-        services.Configure<MetadataParserOptions>(configuration.GetSection(MetadataParserOptions.Options));
-
-        services.AddSingleton(sp => sp.GetRequiredService<IOptions<SiteInfo>>().Value);
-        services.AddSingleton(sp => sp.GetRequiredService<IOptions<MetadataParserOptions>>().Value);
+        services.SetupOptions<SiteInfo>(configuration, "Site");
+        services.SetupOptions<MetadataParserOptions>(configuration, MetadataParserOptions.Options);
 
         services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
         services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
@@ -41,7 +38,10 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<SiteMetadataFactory>();
         services.AddSingleton<FeedGenerator>();
         services.AddSingleton<StructureDataGenerator>();
+        services.AddSingleton<MetaTagGenerator>();
+        services.AddSingleton<SeoGenerator>();
         services.AddSingleton<SiteMapGenerator>();
+        services.AddSystemClock();
         return services;
     }
 }

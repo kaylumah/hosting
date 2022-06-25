@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.Text.Json;
+using System.Threading;
 using System.Xml;
 using HtmlAgilityPack;
 
@@ -10,10 +11,9 @@ namespace Kaylumah.Ssg.Utilities;
 
 public class GlobalFunctions
 {
-    public static readonly GlobalFunctions Instance = new();
-    public string Url { get; set; }
-    public string BaseUrl { get; set; }
-
+    public static AsyncLocal<DateTimeOffset> Date { get; } = new();
+    public static AsyncLocal<string> Url { get; } = new();
+    public static AsyncLocal<string> BaseUrl { get; } = new();
     public static DateTimeOffset ToDate(string input)
     {
         IFormatProvider culture = new CultureInfo("en-US", true);
@@ -91,7 +91,7 @@ public class GlobalFunctions
         const int DAY = 24 * HOUR;
         const int MONTH = 30 * DAY;
 
-        var ts = new TimeSpan(DateTime.UtcNow.Ticks - date.Ticks);
+        var ts = new TimeSpan(Date.Value.Ticks - date.Ticks);
         double delta = Math.Abs(ts.TotalSeconds);
 
         if (delta < 1 * MINUTE)
@@ -131,7 +131,8 @@ public class GlobalFunctions
     {
         var settings = new XmlWriterSettings()
         {
-            ConformanceLevel = ConformanceLevel.Fragment
+            ConformanceLevel = ConformanceLevel.Fragment,
+            Encoding = new System.Text.UTF8Encoding(false)
         };
         using var stream = new MemoryStream();
         using var writer = XmlWriter.Create(stream, settings);
@@ -146,11 +147,17 @@ public class GlobalFunctions
         return DateToPattern(date, "o");
     }
 
+    public static string FileNameWithoutExtension(string source)
+    {
+        var extension = Path.GetExtension(source);
+        var filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
+        return filePathWithoutExt;
+    }
     public static string RelativeUrl(string source)
     {
-        if (!string.IsNullOrWhiteSpace(Instance.BaseUrl))
+        if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
         {
-            return Path.Combine($"{Path.DirectorySeparatorChar}", Instance.BaseUrl, source);
+            return Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
         }
         return source;
     }
@@ -165,10 +172,10 @@ public class GlobalFunctions
             {
                 resolvedSource = resolvedSource[1..];
             }
-            if (!string.IsNullOrWhiteSpace(Instance.Url))
+            if (!string.IsNullOrWhiteSpace(Url.Value))
             {
 
-                resolvedSource = $"{Instance.Url}{webSeperator}{resolvedSource}";
+                resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
             }
         }
         return resolvedSource
