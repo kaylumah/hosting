@@ -104,13 +104,16 @@ namespace Test.Specflow
 #line 18
     testRunner.And("a test post named \'not-demo.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 19
+    testRunner.And("a test post v2 named \'with-frontmatter.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "directoriesToSkip",
                             "targetExtensions"});
                 table1.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 19
+#line 20
     testRunner.When("the files are retrieved:", ((string)(null)), table1, "When ");
 #line hidden
             }

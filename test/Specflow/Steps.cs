@@ -74,6 +74,16 @@ public class Steps
         var articleDirectory = Path.Combine(_postsDirectory, fileName);
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!"));
     }
+    
+    [Given("a test post v2 named '(.*)':")]
+    public void GivenATestPostV2(string fileName)
+    {
+        var articleDirectory = Path.Combine(_postsDirectory, fileName);
+        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!", new Dictionary<string, object>()
+        {
+            ["output"] = true
+        }));
+    }
 
     [When("the files are retrieved:")]
     public async Task When(Table table)

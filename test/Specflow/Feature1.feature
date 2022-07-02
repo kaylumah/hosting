@@ -16,6 +16,7 @@ Feature: Feature One
         Hello World
         """
     And a test post named 'not-demo.md':
+    And a test post v2 named 'with-frontmatter.md':
     When the files are retrieved:
         | directoriesToSkip | targetExtensions |
         |                   | .md, .txt        |
