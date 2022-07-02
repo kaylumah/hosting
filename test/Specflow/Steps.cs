@@ -51,6 +51,13 @@ public class Steps
             metadataParser);
     }
 
+    [Given("'(.*)' is an empty post:")]
+    public void GivenIsAnEmptyPost(string fileName)
+    {
+        var articleDirectory = Path.Combine(_postsDirectory, fileName);
+        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EmptyFile());
+    }
+
     [Given("the following defaults:")]
     public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
     {

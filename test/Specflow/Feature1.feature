@@ -1,4 +1,17 @@
 Feature: Feature One
+  
+  Scenario: Empty file gets default metadata
+      Given '2022-01-01-example.md' is an empty post:
+      When the files are retrieved:
+        | DirectoriesToSkip | FileExtensionsToTarget |
+        |                   | .md, .txt              |
+      Then the following:
+        | Path       | Key        | Value                 |
+        | example.md | uri        | 2022/01/01/example.md |
+        | example.md | collection | posts                 |
+        | example.md | published  | 2022-1-1              |
+        | example.md | modified   | 2022-1-1              |
+        
     
   Scenario: Test
       Given the following defaults:
