@@ -1,6 +1,11 @@
 Feature: Feature One
     
   Scenario: Test
+      Given the following defaults:
+          | scope  | path | key    | value |
+          | <null> |      | author | max   |
+          | posts  |      | feed   | true  |
+          |        |      | feed   | true  |
       Given post 'sample_001.md' has the following contents:
           """
           ---

@@ -53,7 +53,35 @@ public class Steps
             metadataParser);
     }
 
-    
+    [Given("the following defaults:")]
+    public void GivenTheFollowingDefaults(Table table)
+    {
+        var defaultMetaDatas = new DefaultMetadatas();
+        var items = table
+            .CreateSet<(string Scope, string Path, string Key, string Value)>()
+            .ToList();
+        var groupedByScope = items.GroupBy(x => x.Scope);
+        foreach (var scopeGroup in groupedByScope)
+        {
+            var scope = scopeGroup.Key;
+            var groupedByPath = scopeGroup.GroupBy(x => x.Path);
+            foreach (var pathGroup in groupedByPath)
+            {
+                var path = pathGroup.Key;
+                var fileMetaData = new FileMetaData();
+                foreach (var item in pathGroup)
+                {
+                    fileMetaData.Add(item.Key, item.Value);
+                }
+                defaultMetaDatas.Add(new DefaultMetadata
+                {
+                    Path = path,
+                    Scope = scope,
+                    Values = fileMetaData
+                });
+            }
+        }
+    }
     
     [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)

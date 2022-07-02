@@ -98,36 +98,59 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 4
-      testRunner.Given("post \'sample_001.md\' has the following contents:", "---\nauthor: max\n---", ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "DirectoriesToSkip",
-                            "FileExtensionsToTarget"});
+                            "scope",
+                            "path",
+                            "key",
+                            "value"});
+                table2.AddRow(new string[] {
+                            "<null>",
+                            "",
+                            "author",
+                            "max"});
+                table2.AddRow(new string[] {
+                            "posts",
+                            "",
+                            "feed",
+                            "true"});
                 table2.AddRow(new string[] {
                             "",
-                            ".md, .txt"});
-#line 10
-      testRunner.When("the files are retrieved:", ((string)(null)), table2, "When ");
+                            "",
+                            "feed",
+                            "true"});
+#line 4
+      testRunner.Given("the following defaults:", ((string)(null)), table2, "Given ");
+#line hidden
+#line 9
+      testRunner.Given("post \'sample_001.md\' has the following contents:", "---\nauthor: max\n---", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "DirectoriesToSkip",
+                            "FileExtensionsToTarget"});
+                table3.AddRow(new string[] {
+                            "",
+                            ".md, .txt"});
+#line 15
+      testRunner.When("the files are retrieved:", ((string)(null)), table3, "When ");
+#line hidden
+                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                             "Path",
                             "Key",
                             "Value"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "sample_001.md",
                             "uri",
                             "sample_001.md"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "sample_001.md",
                             "collection",
                             "posts"});
-                table3.AddRow(new string[] {
+                table4.AddRow(new string[] {
                             "sample_001.md",
                             "author",
                             "max"});
-#line 13
-      testRunner.Then("the following:", ((string)(null)), table3, "Then ");
+#line 18
+      testRunner.Then("the following:", ((string)(null)), table4, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -141,7 +164,7 @@ namespace Test.Specflow
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Different Givens", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 19
+#line 24
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -151,58 +174,58 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 20
+#line 25
     testRunner.Given("post \'demo.md\' has the following contents:", "Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 24
+#line 29
     testRunner.And("a test post named \'not-demo.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 25
+#line 30
     testRunner.And("a test post v2 named \'with-frontmatter.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                             "DirectoriesToSkip",
                             "FileExtensionsToTarget"});
-                table4.AddRow(new string[] {
+                table5.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 26
-    testRunner.When("the files are retrieved:", ((string)(null)), table4, "When ");
+#line 31
+    testRunner.When("the files are retrieved:", ((string)(null)), table5, "When ");
 #line hidden
-                TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                             "Path",
                             "Key",
                             "Value"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "demo.md",
                             "uri",
                             "demo.md"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "demo.md",
                             "collection",
                             "posts"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "not-demo.md",
                             "uri",
                             "not-demo.md"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "not-demo.md",
                             "collection",
                             "posts"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "with-frontmatter.md",
                             "uri",
                             "with-frontmatter.md"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "with-frontmatter.md",
                             "collection",
                             "posts"});
-                table5.AddRow(new string[] {
+                table6.AddRow(new string[] {
                             "with-frontmatter.md",
                             "output",
                             "true"});
-#line 29
-    testRunner.Then("the following:", ((string)(null)), table5, "Then ");
+#line 34
+    testRunner.Then("the following:", ((string)(null)), table6, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
