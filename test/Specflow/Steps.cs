@@ -101,7 +101,7 @@ public class Steps
         }
 
         var expected = table
-            .CreateSet<(string Path, string Key, object Value)>()
+            .CreateSet<(string Path, string Key, string Value)>()
             .ToList();
 
         actual.Should().BeEquivalentTo(expected);
