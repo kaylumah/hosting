@@ -55,16 +55,6 @@ public class Steps
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.PlainFile(contents));
     }
 
-    [Given("something:")]
-    public void Given()
-    {
-        _mockFileSystem.AddFile(Path.Combine("_site", "_posts", "demo.md"), new MockFileData(""));
-        // _mockFileSystem.AddFile("date.md", new MockFileData(string.Empty));
-        // _mockFileSystem.AddFile("other/one.md", new MockFileData(string.Empty));
-        // _mockFileSystem.AddFile("other/nested/two.md", new MockFileData(string.Empty));
-        // _mockFileSystem.AddFile("extra/nested/two.md", new MockFileData(string.Empty));
-    }
-
     [When("the files are retrieved:")]
     public async Task When(Table table)
     {

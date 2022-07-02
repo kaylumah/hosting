@@ -11,7 +11,6 @@ Feature: Feature One
     # * the following blog posts:
     #   | Title | Description | Tags |
     #   | A     | B           |      |
-    # Given something:
     Given file 'demo.md' has the following contents:
         """
         Hello World
