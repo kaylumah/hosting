@@ -26,7 +26,12 @@ public class MockFileDataFactory
 
     public MockFileData Create()
     {
-        var data = string.Empty;
+        var sb = new StringBuilder();
+        if (!string.IsNullOrEmpty(_contents))
+        {
+            sb.Append(_contents);
+        }
+        var data = sb.ToString();
         var bytes = _encoding.GetBytes(data);
         return new MockFileData(bytes);
     }

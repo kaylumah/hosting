@@ -98,7 +98,7 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 15
+#line 14
     testRunner.Given("file \'demo.md\' has the following contents:", "Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -107,7 +107,7 @@ namespace Test.Specflow
                 table1.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 19
+#line 18
     testRunner.When("the files are retrieved:", ((string)(null)), table1, "When ");
 #line hidden
             }
