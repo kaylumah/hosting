@@ -9,3 +9,11 @@ public class Article
     public DateTimeOffset? Created { get; set; }
     public DateTimeOffset? Modified { get; set; }
 }
+
+public class ArticleCollection : MockEntityCollection<string, Article>
+{
+    public override string BuildKey(Article item)
+    {
+        return item.Uri;
+    }
+}
