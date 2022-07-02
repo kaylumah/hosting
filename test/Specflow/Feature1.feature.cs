@@ -101,8 +101,14 @@ namespace Test.Specflow
 #line 14
     testRunner.Given("something:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "directoriesToSkip",
+                            "targetExtensions"});
+                table1.AddRow(new string[] {
+                            "",
+                            ".md, .txt"});
 #line 15
-    testRunner.When("the files are retrieved:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("the files are retrieved:", ((string)(null)), table1, "When ");
 #line hidden
             }
             this.ScenarioCleanup();

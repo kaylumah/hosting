@@ -13,4 +13,5 @@ Feature: Feature One
     #   | A     | B           |      |
     Given something:
     When the files are retrieved:
-    # Then 'a,b,c' are valid
+        | directoriesToSkip | targetExtensions |
+        |                   | .md, .txt        |

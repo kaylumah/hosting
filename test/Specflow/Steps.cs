@@ -56,9 +56,14 @@ public class Steps
     }
 
     [When("the files are retrieved:")]
-    public async Task When()
+    public async Task When(Table table)
     {
-        var result = await _fileProcessor.Process(new FileFilterCriteria() { });
+        var (directoriesToSkip, targetExtensions) = table.CreateInstance<(string[] DirectoriesToSkip, string[] TargetExtensions)>();
+        var criteria = new FileFilterCriteria()
+        {
+            DirectoriesToSkip = directoriesToSkip, FileExtensionsToTarget = targetExtensions
+        };
+        var result = await _fileProcessor.Process(criteria);
     }
 
     [Then("'(.*)' are valid")]
