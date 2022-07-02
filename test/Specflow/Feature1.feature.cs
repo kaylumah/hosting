@@ -108,8 +108,8 @@ namespace Test.Specflow
     testRunner.And("a test post v2 named \'with-frontmatter.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                            "directoriesToSkip",
-                            "targetExtensions"});
+                            "DirectoriesToSkip",
+                            "FileExtensionsToTarget"});
                 table2.AddRow(new string[] {
                             "",
                             ".md, .txt"});
