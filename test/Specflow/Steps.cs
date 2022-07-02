@@ -42,7 +42,14 @@ public class Steps
             Enumerable.Empty<IContentPreprocessorStrategy>(),
             new SiteInfo()
             {
-                
+                Collections = new Collections()
+                {
+                    new Collection()
+                    {
+                        Name = "posts",
+                        Output = true
+                    }
+                }
             },
             metadataParser);
     }
