@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.ObjectModel;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -26,6 +27,7 @@ public class Steps
     private readonly MockFileSystem _mockFileSystem = new();
     private readonly IFileProcessor _fileProcessor;
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
+    private readonly List<File> _files = new();
 
     public Steps()
     {
@@ -88,6 +90,7 @@ public class Steps
             DirectoriesToSkip = directoriesToSkip, FileExtensionsToTarget = targetExtensions
         };
         var result = await _fileProcessor.Process(criteria);
+        _files.AddRange(result);
     }
 }
 #pragma warning restore CS3001
