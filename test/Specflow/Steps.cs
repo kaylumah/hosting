@@ -57,17 +57,17 @@ public class Steps
     [When("the files are retrieved:")]
     public void When()
     {
-        var files = _mockFileSystem.AllFiles;
-        files.Count().Should().Be(4);
-
-        var directories = _mockFileSystem.AllDirectories;
-        directories.Count().Should().Be(6, string.Join(",", _mockFileSystem.AllDirectories));
+       
     }
 
     [Then("'(.*)' are valid")]
     public void Then(List<string> values)
     {
+        var files = _mockFileSystem.AllFiles;
+        files.Count().Should().Be(4);
 
+        var directories = _mockFileSystem.AllDirectories;
+        directories.Count().Should().Be(6, string.Join(",", _mockFileSystem.AllDirectories));
     }
 }
 #pragma warning restore CS3001
