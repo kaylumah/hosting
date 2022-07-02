@@ -122,8 +122,8 @@ public class Steps
         var actualTransformed = actual.Select(x => new Article()
         {
             Uri = x.Uri,
-            Created = x.Published,
-            Modified = x.Modified
+            Created = x.Published != DateTimeOffset.MinValue ? x.Published : null,
+            Modified = x.Modified != DateTimeOffset.MinValue ? x.Modified : null
         });
         actualTransformed.Should().BeEquivalentTo(articleCollection);
         // var expectedTransformed = expected.Select(x => new PageMetaData())
