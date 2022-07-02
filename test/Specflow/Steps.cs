@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Test.Specflow.Entities;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -56,12 +57,6 @@ public class Steps
                 }
             },
             metadataParser);
-    }
-
-    [Given("the article test:")]
-    public void ArticleTest(Table table)
-    {
-        var articles = table.CreateSet<Article>();
     }
 
     [Given("'(.*)' is an empty post:")]
@@ -130,7 +125,7 @@ public class Steps
     }
 
     [Then("the following V2:")]
-    public void ThenTheFollowingV2(Table table)
+    public void ThenTheFollowingV2(ArticleCollection articleCollection)
     {
         var actual = _files.ToPages(Guid.NewGuid());
         var actualTransformed = actual.Select(x => new Article()
@@ -139,8 +134,7 @@ public class Steps
             Created = x.Published,
             Modified = x.Modified
         });
-        var expected = table.CreateSet<Article>();
-        actualTransformed.Should().BeEquivalentTo(expected);
+        actualTransformed.Should().BeEquivalentTo(articleCollection);
         // var expectedTransformed = expected.Select(x => new PageMetaData())
     }
 

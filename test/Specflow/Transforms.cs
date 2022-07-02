@@ -4,6 +4,7 @@
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
+using Test.Specflow.Entities;
 
 namespace Test.Specflow;
 
@@ -11,6 +12,15 @@ namespace Test.Specflow;
 [Binding]
 public class Transforms
 {
+    [StepArgumentTransformation]
+    public static ArticleCollection ToArticles(Table table)
+    {
+        var articles = table.CreateSet<Article>();
+        var collection = new ArticleCollection();
+        collection.AddRange(articles);
+        return collection;
+    }
+    
     [StepArgumentTransformation]
     public static DefaultMetadatas ToDefaultMetadatas(Table table)
     {
