@@ -80,15 +80,16 @@ namespace Test.Specflow
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Empty file gets default metadata")]
+        [Xunit.SkippableFactAttribute(DisplayName="Empty file gets default metadata", Skip="Ignored")]
         [Xunit.TraitAttribute("FeatureTitle", "Feature One")]
         [Xunit.TraitAttribute("Description", "Empty file gets default metadata")]
         public void EmptyFileGetsDefaultMetadata()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "ignore"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Empty file gets default metadata", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 3
+#line 4
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -98,7 +99,7 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 4
+#line 5
       testRunner.Given("\'2022-01-01-example.md\' is an empty post:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -107,7 +108,7 @@ namespace Test.Specflow
                 table2.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 5
+#line 6
       testRunner.When("the files are retrieved:", ((string)(null)), table2, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -130,7 +131,7 @@ namespace Test.Specflow
                             "example.md",
                             "modified",
                             "2022-1-1"});
-#line 8
+#line 9
       testRunner.Then("the following:", ((string)(null)), table3, "Then ");
 #line hidden
             }
@@ -145,7 +146,7 @@ namespace Test.Specflow
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+#line 17
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -165,10 +166,10 @@ namespace Test.Specflow
                             "",
                             "feed",
                             "true"});
-#line 17
+#line 18
       testRunner.Given("the following defaults:", ((string)(null)), table4, "Given ");
 #line hidden
-#line 22
+#line 23
       testRunner.Given("post \'sample_001.md\' has the following contents:", "---\nauthor: max\n---", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -177,7 +178,7 @@ namespace Test.Specflow
                 table5.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 28
+#line 29
       testRunner.When("the files are retrieved:", ((string)(null)), table5, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -200,7 +201,7 @@ namespace Test.Specflow
                             "sample_001.md",
                             "feed",
                             "true"});
-#line 31
+#line 32
       testRunner.Then("the following:", ((string)(null)), table6, "Then ");
 #line hidden
             }
@@ -215,7 +216,7 @@ namespace Test.Specflow
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Different Givens", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 38
+#line 39
   this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -225,13 +226,13 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 39
+#line 40
     testRunner.Given("post \'demo.md\' has the following contents:", "Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 43
+#line 44
     testRunner.And("a test post named \'not-demo.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 44
+#line 45
     testRunner.And("a test post v2 named \'with-frontmatter.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -240,7 +241,7 @@ namespace Test.Specflow
                 table7.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 45
+#line 46
     testRunner.When("the files are retrieved:", ((string)(null)), table7, "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -275,7 +276,7 @@ namespace Test.Specflow
                             "with-frontmatter.md",
                             "output",
                             "true"});
-#line 48
+#line 49
     testRunner.Then("the following:", ((string)(null)), table8, "Then ");
 #line hidden
             }
