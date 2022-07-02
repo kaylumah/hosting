@@ -53,12 +53,7 @@ public class Steps
             metadataParser);
     }
 
-    [Given("the following blog posts:")]
-    [Given("the following blog articles:")]
-    public void Given(Table table)
-    {
-        var posts = table.CreateSet<BlogPost>();
-    }
+    
     
     [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
@@ -93,16 +88,6 @@ public class Steps
             DirectoriesToSkip = directoriesToSkip, FileExtensionsToTarget = targetExtensions
         };
         var result = await _fileProcessor.Process(criteria);
-    }
-
-    [Then("'(.*)' are valid")]
-    public void Then(List<string> values)
-    {
-        var files = _mockFileSystem.AllFiles;
-        files.Count().Should().Be(4);
-
-        var directories = _mockFileSystem.AllDirectories;
-        directories.Count().Should().Be(6, string.Join(",", _mockFileSystem.AllDirectories));
     }
 }
 #pragma warning restore CS3001

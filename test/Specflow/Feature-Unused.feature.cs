@@ -19,7 +19,7 @@ namespace Test.Specflow
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class FeatureOneFeature : object, Xunit.IClassFixture<FeatureOneFeature.FixtureData>, System.IDisposable
+    public partial class FeatureTwoFeature : object, Xunit.IClassFixture<FeatureTwoFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
@@ -28,10 +28,10 @@ namespace Test.Specflow
         
         private Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
-#line 1 "Feature1.feature"
+#line 1 "Feature-Unused.feature"
 #line hidden
         
-        public FeatureOneFeature(FeatureOneFeature.FixtureData fixtureData, Test_Specflow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
+        public FeatureTwoFeature(FeatureTwoFeature.FixtureData fixtureData, Test_Specflow_XUnitAssemblyFixture assemblyFixture, Xunit.Abstractions.ITestOutputHelper testOutputHelper)
         {
             this._testOutputHelper = testOutputHelper;
             this.TestInitialize();
@@ -40,7 +40,7 @@ namespace Test.Specflow
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Feature One", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "", "Feature Two", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,7 +81,7 @@ namespace Test.Specflow
         }
         
         [Xunit.SkippableFactAttribute(DisplayName="Different Givens")]
-        [Xunit.TraitAttribute("FeatureTitle", "Feature One")]
+        [Xunit.TraitAttribute("FeatureTitle", "Feature Two")]
         [Xunit.TraitAttribute("Description", "Different Givens")]
         public void DifferentGivens()
         {
@@ -98,23 +98,23 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 4
+#line 14
     testRunner.Given("post \'demo.md\' has the following contents:", "Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 18
     testRunner.And("a test post named \'not-demo.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 9
+#line 19
     testRunner.And("a test post v2 named \'with-frontmatter.md\':", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-                TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "directoriesToSkip",
                             "targetExtensions"});
-                table2.AddRow(new string[] {
+                table1.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 10
-    testRunner.When("the files are retrieved:", ((string)(null)), table2, "When ");
+#line 20
+    testRunner.When("the files are retrieved:", ((string)(null)), table1, "When ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -127,12 +127,12 @@ namespace Test.Specflow
             
             public FixtureData()
             {
-                FeatureOneFeature.FeatureSetup();
+                FeatureTwoFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                FeatureOneFeature.FeatureTearDown();
+                FeatureTwoFeature.FeatureTearDown();
             }
         }
     }

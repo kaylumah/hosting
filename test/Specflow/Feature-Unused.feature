@@ -1,6 +1,16 @@
-Feature: Feature One
+Feature: Feature Two
 
   Scenario: Different Givens
+    # Given the following blog articles:
+    #   | Title  | Tags   |
+    #   | <null> | <null> |
+    #   | <null> |        |
+    #   | a      | a      |
+    #   | a      | a, b   |
+    #   | a,b    | a, b   |
+    # * the following blog posts:
+    #   | Title | Description | Tags |
+    #   | A     | B           |      |
     Given post 'demo.md' has the following contents:
         """
         Hello World
