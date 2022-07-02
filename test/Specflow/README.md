@@ -11,3 +11,6 @@ https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerat
 dotnet livingdoc test-assembly Test/Unit/bin/Debug/net6.0/Test.Unit.dll 
 
 https://stackoverflow.com/questions/31062446/passing-arrays-of-variable-in-specflow
+
+SolidToken.SpecFlow.DependencyInjection"
+// https://docs.specflow.org/projects/specflow/en/latest/Bindings/Context-Injection.html
