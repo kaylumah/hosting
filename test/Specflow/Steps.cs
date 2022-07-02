@@ -88,6 +88,27 @@ public class Steps
         _files.AddRange(result);
     }
 
+    [Then("the following:")]
+    public void ThenTheFollowing()
+    {
+        var actual = new List<(string Path, string Key, object Value)>();
+        foreach (var file in _files)
+        {
+            foreach (var item in file.MetaData)
+            {
+                actual.Add(new(file.Name, item.Key, item.Value));
+            }
+        }
+        /*
+        var output = _files.SelectMany(x =>
+        {
+            return x
+                .MetaData
+                .Select(item => new { item.Key })
+        }).ToList();
+        */
+    }
+
     [StepArgumentTransformation]
     private static FileFilterCriteria ToFileFilterCriteria(Table table)
     {

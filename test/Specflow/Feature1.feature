@@ -10,3 +10,4 @@ Feature: Feature One
     When the files are retrieved:
         | DirectoriesToSkip | FileExtensionsToTarget |
         |                   | .md, .txt        |
+    Then the following:

@@ -116,6 +116,9 @@ namespace Test.Specflow
 #line 10
     testRunner.When("the files are retrieved:", ((string)(null)), table2, "When ");
 #line hidden
+#line 13
+    testRunner.Then("the following:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
             }
             this.ScenarioCleanup();
         }
