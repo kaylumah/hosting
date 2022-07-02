@@ -100,6 +100,7 @@ public class Steps
     {
         var result = await _fileProcessor.Process(criteria);
         _files.AddRange(result);
+        var pageMetadatas = _files.ToPages(Guid.NewGuid());
     }
 
     [Then("the following:")]
