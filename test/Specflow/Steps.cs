@@ -19,6 +19,13 @@ using Ssg.Extensions.Data.Yaml;
 using FluentAssertions;
 
 #pragma warning disable CS3001
+
+public class KeyValue
+{
+    public string Key { get; set; }
+    public object Value { get; set; }
+}
+
 [Binding]
 public class Steps
 {
@@ -111,6 +118,8 @@ public class Steps
             .CreateSet<(string Path, string Key, string Value)>()
             .ToList();
 
+        var expectedV2 = table.CreateSet<KeyValue>().ToList();
+        
         actual.Should().BeEquivalentTo(expected);
     }
 
