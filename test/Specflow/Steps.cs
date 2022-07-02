@@ -32,12 +32,18 @@ public class Steps
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
-            new MetadataParserOptions());
+            new MetadataParserOptions()
+            {
+                
+            });
         _fileSystem = new FileSystem(_mockFileSystem);
         _fileProcessor = new FileProcessor(_fileSystem,
             NullLogger<FileProcessor>.Instance,
             Enumerable.Empty<IContentPreprocessorStrategy>(),
-            new SiteInfo(),
+            new SiteInfo()
+            {
+                
+            },
             metadataParser);
     }
 
