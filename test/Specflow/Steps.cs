@@ -1,7 +1,6 @@
 // Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Collections.ObjectModel;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -16,7 +15,6 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Microsoft.Extensions.Logging.Abstractions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Test.Specflow.Entities;
 using Ssg.Extensions.Data.Yaml;
 using FluentAssertions;
 
