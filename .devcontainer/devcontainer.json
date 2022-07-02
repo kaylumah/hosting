@@ -45,6 +45,8 @@
 
         // Powershell
 		, "ms-vscode.PowerShell"
+
+        , "CucumberOpen.cucumber-official"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
