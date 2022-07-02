@@ -26,13 +26,6 @@ public class KeyValue
     public object Value { get; set; }
 }
 
-public class Article
-{
-    public string Uri { get; set; }
-    public DateTimeOffset? Created { get; set; }
-    public DateTimeOffset? Modified { get; set; }
-}
-
 [Binding]
 public class Steps
 {
