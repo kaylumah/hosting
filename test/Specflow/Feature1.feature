@@ -3,9 +3,9 @@ Feature: Feature One
   Scenario: Test
       Given the following defaults:
           | scope  | path | key    | value |
-          | <null> |      | author | max   |
+#          | <null> |      | author | max   |
           | posts  |      | feed   | true  |
-          |        |      | feed   | true  |
+#          |        |      | feed   | true  |
       Given post 'sample_001.md' has the following contents:
           """
           ---
@@ -19,7 +19,8 @@ Feature: Feature One
         | Path          | Key        | Value         |
         | sample_001.md | uri        | sample_001.md |
         | sample_001.md | collection | posts         |
-        | sample_001.md | author     | max         |
+        | sample_001.md | author     | max           |
+        | sample_001.md | feed     | true           |
 
   Scenario: Different Givens
     Given post 'demo.md' has the following contents:

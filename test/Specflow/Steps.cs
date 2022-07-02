@@ -22,6 +22,7 @@ using FluentAssertions;
 [Binding]
 public class Steps
 {
+    private readonly MetadataParserOptions _options = new();
     private readonly MockFileSystem _mockFileSystem = new();
     private readonly IFileProcessor _fileProcessor;
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
@@ -31,10 +32,7 @@ public class Steps
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
-            new MetadataParserOptions()
-            {
-                
-            });
+            _options);
         IFileSystem fileSystem = new FileSystem(_mockFileSystem);
         _fileProcessor = new FileProcessor(fileSystem,
             NullLogger<FileProcessor>.Instance,
@@ -56,7 +54,7 @@ public class Steps
     [Given("the following defaults:")]
     public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
     {
-        
+        _options.Defaults = metadatas;
     }
     
     [Given("post '(.*)' has the following contents:")]
