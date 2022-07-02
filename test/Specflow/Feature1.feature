@@ -11,3 +11,11 @@ Feature: Feature One
         | DirectoriesToSkip | FileExtensionsToTarget |
         |                   | .md, .txt        |
     Then the following:
+        | Path                | Key        | Value               |
+        | demo.md             | uri        | demo.md             |
+        | demo.md             | collection | posts               |
+        | not-demo.md         | uri        | not-demo.md         |
+        | not-demo.md         | collection | posts               |
+        | with-frontmatter.md | uri        | with-frontmatter.md |
+        | with-frontmatter.md | collection | posts               |
+        | with-frontmatter.md | output     | true                |

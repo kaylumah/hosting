@@ -89,7 +89,7 @@ public class Steps
     }
 
     [Then("the following:")]
-    public void ThenTheFollowing()
+    public void ThenTheFollowing(Table table)
     {
         var actual = new List<(string Path, string Key, object Value)>();
         foreach (var file in _files)
@@ -99,14 +99,12 @@ public class Steps
                 actual.Add(new(file.Name, item.Key, item.Value));
             }
         }
-        /*
-        var output = _files.SelectMany(x =>
-        {
-            return x
-                .MetaData
-                .Select(item => new { item.Key })
-        }).ToList();
-        */
+
+        var expected = table
+            .CreateSet<(string Path, string Key, object Value)>()
+            .ToList();
+
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [StepArgumentTransformation]

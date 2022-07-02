@@ -116,8 +116,40 @@ namespace Test.Specflow
 #line 10
     testRunner.When("the files are retrieved:", ((string)(null)), table2, "When ");
 #line hidden
+                TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                            "Path",
+                            "Key",
+                            "Value"});
+                table3.AddRow(new string[] {
+                            "demo.md",
+                            "uri",
+                            "demo.md"});
+                table3.AddRow(new string[] {
+                            "demo.md",
+                            "collection",
+                            "posts"});
+                table3.AddRow(new string[] {
+                            "not-demo.md",
+                            "uri",
+                            "not-demo.md"});
+                table3.AddRow(new string[] {
+                            "not-demo.md",
+                            "collection",
+                            "posts"});
+                table3.AddRow(new string[] {
+                            "with-frontmatter.md",
+                            "uri",
+                            "with-frontmatter.md"});
+                table3.AddRow(new string[] {
+                            "with-frontmatter.md",
+                            "collection",
+                            "posts"});
+                table3.AddRow(new string[] {
+                            "with-frontmatter.md",
+                            "output",
+                            "true"});
 #line 13
-    testRunner.Then("the following:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Then("the following:", ((string)(null)), table3, "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
