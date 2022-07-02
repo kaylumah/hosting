@@ -9,7 +9,7 @@ Feature: Feature One
     And a test post v2 named 'with-frontmatter.md':
     When the files are retrieved:
         | DirectoriesToSkip | FileExtensionsToTarget |
-        |                   | .md, .txt        |
+        |                   | .md, .txt              |
     Then the following:
         | Path                | Key        | Value               |
         | demo.md             | uri        | demo.md             |
