@@ -99,7 +99,10 @@ namespace Test.Specflow
             {
                 this.ScenarioStart();
 #line 14
-    testRunner.Then("\'a,b,c\' are valid", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.Given("something:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 15
+    testRunner.When("the files are retrieved:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             }
             this.ScenarioCleanup();

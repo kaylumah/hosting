@@ -11,4 +11,6 @@ Feature: Feature One
     # * the following blog posts:
     #   | Title | Description | Tags |
     #   | A     | B           |      |
-    Then 'a,b,c' are valid
+    Given something:
+    When the files are retrieved:
+    # Then 'a,b,c' are valid
