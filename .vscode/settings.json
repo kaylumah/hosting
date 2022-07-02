@@ -1,6 +1,6 @@
 {
     "cucumber.glue": [
-        "Test/Specflow/Steps.cs"
+        "test/Specflow/Steps.cs"
     ],
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
