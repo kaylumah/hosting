@@ -65,6 +65,18 @@ public class Steps
     {
         _options.Defaults = metadatas;
     }
+    
+    [Given("the following extension mapping:")]
+    public void GivenTheFollowingExtensionMapping(Table table)
+    {
+        var set = table.CreateSet<(string key, string value)>();
+        var dictionary = new Dictionary<string, string>();
+        foreach(var (key, value) in set)
+        {
+            dictionary.Add(key, value);
+        }
+        _options.ExtensionMapping = dictionary;
+    }
 
     [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
