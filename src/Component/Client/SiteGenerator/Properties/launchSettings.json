@@ -6,7 +6,7 @@
         "DOTNET_ENVIRONMENT": "Development"
       },
       "commandLineArgs": "",
-      "workingDirectory": "../../../../"
+      "workingDirectory": "../../../../../"
     }
   }
 }
