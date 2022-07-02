@@ -59,6 +59,9 @@ public class Steps
     {
         var files = _mockFileSystem.AllFiles;
         files.Count().Should().Be(4);
+
+        var directories = _mockFileSystem.AllDirectories;
+        directories.Count().Should().Be(6, string.Join(",", _mockFileSystem.AllDirectories));
     }
 
     [Then("'(.*)' are valid")]
