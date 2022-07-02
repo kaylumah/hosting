@@ -17,7 +17,7 @@ public class UnusedSteps
     {
         var posts = table.CreateSet<BlogPost>();
     }
-    
+
     [Then("'(.*)' are valid")]
     public void Then(List<string> values)
     {

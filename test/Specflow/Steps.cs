@@ -1,23 +1,22 @@
-// Copyright (c) Kaylumah, 2022. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
 
 using System.IO.Abstractions.TestingHelpers;
+using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
-using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Microsoft.Extensions.Logging.Abstractions;
+using Ssg.Extensions.Data.Yaml;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Ssg.Extensions.Data.Yaml;
-using FluentAssertions;
 
 #pragma warning disable CS3001
 
@@ -84,7 +83,7 @@ public class Steps
     {
         _options.Defaults = metadatas;
     }
-    
+
     [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
     {
@@ -98,7 +97,7 @@ public class Steps
         var articleDirectory = Path.Combine(_postsDirectory, fileName);
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!"));
     }
-    
+
     [Given("a test post v2 named '(.*)':")]
     public void GivenATestPostV2(string fileName)
     {
@@ -133,10 +132,10 @@ public class Steps
             .ToList();
 
         var expectedV2 = table.CreateSet<KeyValue>().ToList();
-        
+
         actual.Should().BeEquivalentTo(expected);
     }
-    
+
     [Then("the following V2:")]
     public void ThenTheFollowingV2(Table table)
     {

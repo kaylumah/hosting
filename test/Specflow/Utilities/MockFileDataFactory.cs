@@ -17,7 +17,7 @@ public class MockFileDataFactory
         _contents = contents;
         return this;
     }
-    
+
     public MockFileDataFactory WithYamlFrontMatter(Dictionary<string, object> data = null)
     {
         var stringBuilder = new StringBuilder();
@@ -31,7 +31,7 @@ public class MockFileDataFactory
         _frontMatter = stringBuilder.ToString();
         return this;
     }
-    
+
     public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new System.Text.UTF8Encoding(false));
     private MockFileDataFactory WithEncoding(Encoding encoding)
     {
@@ -71,7 +71,7 @@ public class MockFileDataFactory
             .WithYamlFrontMatter(data)
             .Create();
     }
-    
+
     public static MockFileData EmptyFile()
     {
         return new MockFileDataFactory()

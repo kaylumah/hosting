@@ -148,8 +148,10 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { 
-                Data = new FileMetaData {
+            .Returns(new Metadata<FileMetaData>
+            {
+                Data = new FileMetaData
+                {
                     OutputLocation = "test/:name:ext"
                 }
             });
@@ -203,11 +205,13 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> {
-                Data = new FileMetaData {
+            .Returns(new Metadata<FileMetaData>
+            {
+                Data = new FileMetaData
+                {
                     OutputLocation = "test/:name:ext"
                 }
-             });
+            });
 
         var loggerMock = new LoggerMock<FileMetadataParser>();
         var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -257,8 +261,10 @@ public class FileMetadataParserTests
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-            .Returns(new Metadata<FileMetaData> { 
-                Data = new FileMetaData {
+            .Returns(new Metadata<FileMetaData>
+            {
+                Data = new FileMetaData
+                {
                     OutputLocation = "posts/2021/:name:ext"
                 }
             });
