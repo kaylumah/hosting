@@ -24,7 +24,6 @@ using FluentAssertions;
 public class Steps
 {
     private readonly MockFileSystem _mockFileSystem = new();
-    private readonly IFileSystem _fileSystem;
     private readonly IFileProcessor _fileProcessor;
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
 
@@ -36,8 +35,8 @@ public class Steps
             {
                 
             });
-        _fileSystem = new FileSystem(_mockFileSystem);
-        _fileProcessor = new FileProcessor(_fileSystem,
+        IFileSystem fileSystem = new FileSystem(_mockFileSystem);
+        _fileProcessor = new FileProcessor(fileSystem,
             NullLogger<FileProcessor>.Instance,
             Enumerable.Empty<IContentPreprocessorStrategy>(),
             new SiteInfo()
