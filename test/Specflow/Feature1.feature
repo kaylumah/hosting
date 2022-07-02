@@ -11,10 +11,11 @@ Feature: Feature One
     # * the following blog posts:
     #   | Title | Description | Tags |
     #   | A     | B           |      |
-    Given file 'demo.md' has the following contents:
+    Given post 'demo.md' has the following contents:
         """
         Hello World
         """
+    And a test post named 'not-demo.md':
     When the files are retrieved:
         | directoriesToSkip | targetExtensions |
         |                   | .md, .txt        |

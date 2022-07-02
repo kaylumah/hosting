@@ -9,11 +9,26 @@ namespace Test.Specflow.Utilities;
 public class MockFileDataFactory
 {
     private Encoding _encoding;
+    private string _frontMatter;
     private string _contents;
 
     public MockFileDataFactory WithContents(string contents)
     {
         _contents = contents;
+        return this;
+    }
+    
+    public MockFileDataFactory WithYamlFrontMatter(Dictionary<string, object> data = null)
+    {
+        var stringBuilder = new StringBuilder();
+        stringBuilder.AppendLine("---");
+        if (data != null && data.Any())
+        {
+            var raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
+            stringBuilder.Append(raw);
+        }
+        stringBuilder.AppendLine("---");
+        _frontMatter = stringBuilder.ToString();
         return this;
     }
     
@@ -27,6 +42,10 @@ public class MockFileDataFactory
     public MockFileData Create()
     {
         var sb = new StringBuilder();
+        if (!string.IsNullOrEmpty(_frontMatter))
+        {
+            sb.Append(_frontMatter);
+        }
         if (!string.IsNullOrEmpty(_contents))
         {
             sb.Append(_contents);
@@ -41,6 +60,15 @@ public class MockFileDataFactory
         return new MockFileDataFactory()
             .WithUtf8Encoding()
             .WithContents(contents)
+            .Create();
+    }
+
+    public static MockFileData EnrichedFile(string contents, Dictionary<string, object> data = null)
+    {
+        return new MockFileDataFactory()
+            .WithUtf8Encoding()
+            .WithContents(contents)
+            .WithYamlFrontMatter(data)
             .Create();
     }
     

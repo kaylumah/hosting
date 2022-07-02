@@ -61,11 +61,18 @@ public class Steps
         var posts = table.CreateSet<BlogPost>();
     }
     
-    [Given("file '(.*)' has the following contents:")]
+    [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
     {
         var articleDirectory = Path.Combine(_postsDirectory, fileName);
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.PlainFile(contents));
+    }
+
+    [Given("a test post named '(.*)':")]
+    public void GivenATestPost(string fileName)
+    {
+        var articleDirectory = Path.Combine(_postsDirectory, fileName);
+        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!"));
     }
 
     [When("the files are retrieved:")]
