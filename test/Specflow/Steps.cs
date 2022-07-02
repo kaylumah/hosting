@@ -26,6 +26,12 @@ public class KeyValue
     public object Value { get; set; }
 }
 
+public class Article
+{
+    public DateTimeOffset? Created { get; set; }
+    public DateTimeOffset? Modified { get; set; }
+}
+
 [Binding]
 public class Steps
 {
@@ -56,6 +62,12 @@ public class Steps
                 }
             },
             metadataParser);
+    }
+
+    [Given("the article test:")]
+    public void ArticleTest(Table table)
+    {
+        var articles = table.CreateSet<Article>();
     }
 
     [Given("'(.*)' is an empty post:")]
