@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -140,7 +141,15 @@ public class Steps
     public void ThenTheFollowingV2(Table table)
     {
         var actual = _files.ToPages(Guid.NewGuid());
+        var actualTransformed = actual.Select(x => new Article()
+        {
+            Uri = x.Uri,
+            Created = x.Published,
+            Modified = x.Modified
+        });
         var expected = table.CreateSet<Article>();
+        actualTransformed.Should().BeEquivalentTo(expected);
+        // var expectedTransformed = expected.Select(x => new PageMetaData())
     }
 
     [StepArgumentTransformation]
