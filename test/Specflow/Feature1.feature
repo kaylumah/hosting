@@ -12,12 +12,14 @@ Feature: Feature One
       When the files are retrieved:
         | DirectoriesToSkip | FileExtensionsToTarget |
         |                   | .md, .txt              |
-      Then the following:
-        | Path       | Key        | Value                 |
-        | example.md | uri        | 2022/01/01/example.md |
-        | example.md | collection | posts                 |
-        | example.md | published  | 2022-1-1              |
-        | example.md | modified   | 2022-1-1              |
+      Then the following V2:
+        | Uri                   | Created | Modified |
+        | 2022/01/01/example.md | <null>  | <null>   |
+#        | Path       | Key        | Value                 |
+#        | example.md | uri        | 2022/01/01/example.md |
+#        | example.md | collection | posts                 |
+#        | example.md | published  | 2022-1-1              |
+#        | example.md | modified   | 2022-1-1              |
         
     
   Scenario: Test

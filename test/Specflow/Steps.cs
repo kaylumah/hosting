@@ -28,6 +28,7 @@ public class KeyValue
 
 public class Article
 {
+    public string Uri { get; set; }
     public DateTimeOffset? Created { get; set; }
     public DateTimeOffset? Modified { get; set; }
 }
@@ -112,7 +113,6 @@ public class Steps
     {
         var result = await _fileProcessor.Process(criteria);
         _files.AddRange(result);
-        var pageMetadatas = _files.ToPages(Guid.NewGuid());
     }
 
     [Then("the following:")]
@@ -134,6 +134,13 @@ public class Steps
         var expectedV2 = table.CreateSet<KeyValue>().ToList();
         
         actual.Should().BeEquivalentTo(expected);
+    }
+    
+    [Then("the following V2:")]
+    public void ThenTheFollowingV2(Table table)
+    {
+        var actual = _files.ToPages(Guid.NewGuid());
+        var expected = table.CreateSet<Article>();
     }
 
     [StepArgumentTransformation]
