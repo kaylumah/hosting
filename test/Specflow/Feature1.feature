@@ -1,4 +1,20 @@
 Feature: Feature One
+    
+  Scenario: Test
+      Given post 'sample_001.md' has the following contents:
+          """
+          ---
+          author: max
+          ---
+          """
+      When the files are retrieved:
+        | DirectoriesToSkip | FileExtensionsToTarget |
+        |                   | .md, .txt              |
+      Then the following:
+        | Path          | Key        | Value         |
+        | sample_001.md | uri        | sample_001.md |
+        | sample_001.md | collection | posts         |
+        | sample_001.md | author     | max         |
 
   Scenario: Different Givens
     Given post 'demo.md' has the following contents:
