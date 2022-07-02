@@ -21,6 +21,8 @@
     </PackageReference>
     <PackageReference Include="SpecFlow.xUnit" />
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Moq" />
   </ItemGroup>
 
   <ItemGroup>

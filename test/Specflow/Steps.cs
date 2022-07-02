@@ -15,6 +15,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 using Ssg.Extensions.Data.Yaml;
+using FluentAssertions;
 
 #pragma warning disable CS3001
 [Binding]
@@ -57,7 +58,7 @@ public class Steps
     public void When()
     {
         var files = _mockFileSystem.AllFiles;
-        var directories = _mockFileSystem.AllDirectories;
+        files.Count().Should().Be(4);
     }
 
     [Then("'(.*)' are valid")]
