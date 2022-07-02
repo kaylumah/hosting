@@ -9,6 +9,14 @@ namespace Test.Specflow.Utilities;
 public class MockFileDataFactory
 {
     private Encoding _encoding;
+    private string _contents;
+
+    public MockFileDataFactory WithContents(string contents)
+    {
+        _contents = contents;
+        return this;
+    }
+    
     public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new System.Text.UTF8Encoding(false));
     private MockFileDataFactory WithEncoding(Encoding encoding)
     {
@@ -21,6 +29,14 @@ public class MockFileDataFactory
         var data = string.Empty;
         var bytes = _encoding.GetBytes(data);
         return new MockFileData(bytes);
+    }
+
+    public static MockFileData PlainFile(string contents)
+    {
+        return new MockFileDataFactory()
+            .WithUtf8Encoding()
+            .WithContents(contents)
+            .Create();
     }
     
     public static MockFileData EmptyFile()

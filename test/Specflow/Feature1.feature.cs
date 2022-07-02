@@ -98,8 +98,8 @@ namespace Test.Specflow
             else
             {
                 this.ScenarioStart();
-#line 14
-    testRunner.Given("something:", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 15
+    testRunner.Given("file \'demo.md\' has the following contents:", "Hello World", ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "directoriesToSkip",
@@ -107,7 +107,7 @@ namespace Test.Specflow
                 table1.AddRow(new string[] {
                             "",
                             ".md, .txt"});
-#line 15
+#line 19
     testRunner.When("the files are retrieved:", ((string)(null)), table1, "When ");
 #line hidden
             }
