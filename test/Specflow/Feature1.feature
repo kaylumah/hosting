@@ -1,6 +1,7 @@
 Feature: Feature One
   
   @ignore
+  # currently not working because specflow does not like "object"
   Scenario: Empty file gets default metadata
       Given '2022-01-01-example.md' is an empty post:
       When the files are retrieved:
