@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Test.Specflow.Entities;
-using Test.Specflow.Extensions;
-using Test.Specflow.Utilities;
-
-namespace Test.Specflow;
-
 using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -17,8 +11,12 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
+using Test.Specflow.Utilities;
+using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+
+namespace Test.Specflow.Steps;
 
 #pragma warning disable CS3001
 
