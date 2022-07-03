@@ -74,14 +74,14 @@ public class SiteInfoSteps
 }
 
 [Binding]
-public class Steps
+public class GlobalSteps
 {
     private readonly MockFileSystem _mockFileSystem = new();
     private readonly IFileProcessor _fileProcessor;
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
     private readonly List<File> _files = new();
 
-    public Steps(MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
+    public GlobalSteps(MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
