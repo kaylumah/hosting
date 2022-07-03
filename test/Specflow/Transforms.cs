@@ -20,7 +20,7 @@ public class Transforms
         collection.AddRange(articles);
         return collection;
     }
-    
+
     [StepArgumentTransformation]
     public static DefaultMetadatas ToDefaultMetadatas(Table table)
     {

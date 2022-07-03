@@ -65,13 +65,13 @@ public class Steps
     {
         _options.Defaults = metadatas;
     }
-    
+
     [Given("the following extension mapping:")]
     public void GivenTheFollowingExtensionMapping(Table table)
     {
         var set = table.CreateSet<(string key, string value)>();
         var dictionary = new Dictionary<string, string>();
-        foreach(var (key, value) in set)
+        foreach (var (key, value) in set)
         {
             dictionary.Add(key, value);
         }
