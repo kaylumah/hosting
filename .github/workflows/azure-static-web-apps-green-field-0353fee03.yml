@@ -43,7 +43,7 @@ jobs:
       - name: 'Make Test Reports'
         shell: pwsh
         run: |
-          dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Release/net6.0/Test.Specflow.dll --test-execution-json artifacts/bin/Test.Specflow/Release/net6.0/TestExecution.json  --output "LivingDoc.html
+          dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Release/net6.0/Test.Specflow.dll --test-execution-json artifacts/bin/Test.Specflow/Release/net6.0/TestExecution.json  --output "LivingDoc.html"
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
