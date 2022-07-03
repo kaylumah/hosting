@@ -8,7 +8,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
-public partial class FileMetadataParser: IFileMetadataParser
+public partial class FileMetadataParser : IFileMetadataParser
 {
     [LoggerMessage(
            EventId = 0,
@@ -28,7 +28,7 @@ public partial class FileMetadataParser: IFileMetadataParser
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
         var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-        if(result.Data == null)
+        if (result.Data == null)
         {
             result.Data = new FileMetaData();
         }

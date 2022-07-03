@@ -1,11 +1,11 @@
-// Copyright (c) Kaylumah, 2022. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Microsoft.Extensions.Logging;
-using System.Xml;
 using System.Text;
+using System.Xml;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
@@ -81,7 +81,7 @@ public partial class MetaTagGenerator
         if (result.Any())
         {
             sb.AppendLine("<!-- Common Meta Tags -->");
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 sb.AppendLine(item);
             }
@@ -108,7 +108,7 @@ public partial class MetaTagGenerator
         if (result.Any())
         {
             sb.AppendLine("<!-- Twitter Meta Tags -->");
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 sb.AppendLine(item);
             }
@@ -137,7 +137,7 @@ public partial class MetaTagGenerator
             result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
             result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
             result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
-            foreach(var tag in renderData.Page.Tags)
+            foreach (var tag in renderData.Page.Tags)
             {
                 result.Add(CreateOpenGraphMetaTag("article:tag", tag));
             }
@@ -146,7 +146,7 @@ public partial class MetaTagGenerator
         if (result.Any())
         {
             sb.AppendLine("<!-- OpenGraph Meta Tags -->");
-            foreach(var item in result)
+            foreach (var item in result)
             {
                 sb.AppendLine(item);
             }
@@ -159,8 +159,8 @@ public partial class MetaTagGenerator
         return CreateMetaTag("name", name, content);
     }
 
-     private static string CreateMetaTag(string idAttributeName, string name, string content)
-     {
+    private static string CreateMetaTag(string idAttributeName, string name, string content)
+    {
         var finalDocument = new XmlDocument();
         var createdElement = finalDocument.CreateElement("meta");
         var nameAttribute = finalDocument.CreateAttribute(idAttributeName);
@@ -170,7 +170,7 @@ public partial class MetaTagGenerator
         contentAttribute.Value = content;
         createdElement.Attributes.Append(contentAttribute);
         return createdElement.OuterXml;
-     }
+    }
 
     private static string CreateOpenGraphMetaTag(string name, string content)
     {

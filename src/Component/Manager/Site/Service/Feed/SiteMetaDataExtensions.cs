@@ -18,7 +18,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         public static Dictionary<string, SyndicationPerson> ToPersons(this SiteMetaData source)
         {
             var authors = source.AuthorMetaData
-                    .ToDictionary(x => x.Id, x => new SyndicationPerson() {
+                    .ToDictionary(x => x.Id, x => new SyndicationPerson()
+                    {
                         Name = x.FullName,
                         Email = x.Email,
                         Uri = x.Uri

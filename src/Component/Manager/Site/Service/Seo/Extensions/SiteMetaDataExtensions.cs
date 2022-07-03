@@ -12,7 +12,8 @@ public static class SiteMetaDataExtensions
     public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
     {
         var authors = source.AuthorMetaData
-            .ToDictionary(x => x.Id, x => {
+            .ToDictionary(x => x.Id, x =>
+            {
                 var uris = new List<Uri>();
 
                 if (!string.IsNullOrEmpty(x.Links.Linkedin))
@@ -25,7 +26,8 @@ public static class SiteMetaDataExtensions
                     uris.Add(new Uri(x.Links.TwitterProfileUrl));
                 }
 
-                var person = new Person() {
+                var person = new Person()
+                {
                     Name = x.FullName,
                     Email = x.Email,
                     Url = new Uri(x.Uri),
@@ -39,16 +41,18 @@ public static class SiteMetaDataExtensions
 
     public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
     {
-        # pragma warning disable RS0030
+#pragma warning disable RS0030
         var organizations = source.OrganizationMetaData
-            .ToDictionary(x => x.Id, x => {
+            .ToDictionary(x => x.Id, x =>
+            {
 
                 var uris = new List<Uri>
                 {
                     new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
                 };
 
-                var organization = new Organization() {
+                var organization = new Organization()
+                {
                     Name = x.FullName,
                     Logo = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Logo))),
                     FoundingDate = x.Founded.Date,
@@ -57,6 +61,6 @@ public static class SiteMetaDataExtensions
                 return organization;
             });
         return organizations;
-        # pragma warning restore RS0030
+#pragma warning restore RS0030
     }
 }
