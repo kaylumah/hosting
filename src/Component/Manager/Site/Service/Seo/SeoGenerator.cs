@@ -1,4 +1,4 @@
-// Copyright (c) Kaylumah, 2022. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using System.Text;
@@ -27,7 +27,7 @@ public partial class SeoGenerator
     private string GenerateLdJson(RenderData renderData)
     {
         var json = _structureDataGenerator.ToLdJson(renderData);
-        if(!string.IsNullOrEmpty(json))
+        if (!string.IsNullOrEmpty(json))
         {
             var finalDocument = new XmlDocument();
             var scriptElement = finalDocument.CreateElement("script");
