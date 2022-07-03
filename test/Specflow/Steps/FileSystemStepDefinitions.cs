@@ -26,6 +26,7 @@ public class FileSystemStepDefinitions
     }
 
     [Given("'(.*)' is an empty page:")]
+    [Given("an empty page named '(.*)':")]
     public void GivenIsAnEmptyPage(string fileName)
     {
         var pageDirectory = Path.Combine(_pagesDirectory, fileName);
