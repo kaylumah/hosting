@@ -18,12 +18,12 @@ using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 namespace Test.Specflow.Steps;
 
 [Binding]
-public class GlobalSteps
+public class FileProcessorStepDefinitions
 {
     private readonly IFileProcessor _fileProcessor;
     private readonly List<File> _files = new();
 
-    public GlobalSteps(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
+    public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
