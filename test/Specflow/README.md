@@ -16,4 +16,5 @@ https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerat
 
 https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Setup-the-LivingDocPlugin.html
 
-dotnet livingdoc test-assembly Test/Unit/bin/Debug/net6.0/Test.Unit.dll 
+dotnet livingdoc test-assembly Test/Unit/bin/Debug/net6.0/Test.Unit.dll
+dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Debug/net6.0/Test.Specflow.dll
