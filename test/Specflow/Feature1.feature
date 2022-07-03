@@ -7,6 +7,9 @@ Feature: Feature One
         * the following extension mapping:
             | Key | Value |
             | .md | .html |
+        Given the following collections:
+            | Name  | Output | TreatAs |
+            | posts | true   | <null>  |
         Given '<FileName>' is an empty post:
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |

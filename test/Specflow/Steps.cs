@@ -52,6 +52,28 @@ public class MetadataParserOptionsSteps
 }
 
 [Binding]
+public class SiteInfoSteps
+{
+    private readonly SiteInfo _siteInfo;
+
+    public SiteInfoSteps(SiteInfo siteInfo)
+    {
+        _siteInfo = siteInfo;
+    }
+
+    [Given("the following collections:")]
+    public void GivenTheFollowingCollections(Table table)
+    {
+        var collections = table.CreateSet<Collection>();
+        _siteInfo.Collections = new Collections();
+        foreach (var collection in collections)
+        {
+            _siteInfo.Collections.Add(collection);
+        }
+    }
+}
+
+[Binding]
 public class Steps
 {
     private readonly MockFileSystem _mockFileSystem = new();
