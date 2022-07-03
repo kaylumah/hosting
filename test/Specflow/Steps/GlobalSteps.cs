@@ -67,4 +67,10 @@ public class GlobalSteps
         var actualTransformed = actual.ToArticles();
         actualTransformed.Should().BeEquivalentTo(articleCollection);
     }
+
+    [Then("no articles are returned:")]
+    public void ThenNoArticlesAreReturned()
+    {
+        _files.Should().BeEmpty();
+    }
 }
