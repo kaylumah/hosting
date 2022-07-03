@@ -1,6 +1,9 @@
 Feature: Feature One
 
     Scenario Outline: Attemp1
+        Given the following defaults:
+          | Scope  | Path | Key    | Value |
+          | <null> |      | author | Max   |
         Given '<FileName>' is an empty post:
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |

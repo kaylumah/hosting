@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow;
@@ -131,14 +132,7 @@ public class Steps
     public void ThenTheFollowingV2(ArticleCollection articleCollection)
     {
         var actual = _files.ToPages(Guid.NewGuid());
-        var actualTransformed = actual.Select(x => new Article()
-        {
-            Uri = x.Uri,
-            Title = x.Title,
-            Description = x.Description,
-            Created = x.Published != DateTimeOffset.MinValue ? x.Published : null,
-            Modified = x.Modified != DateTimeOffset.MinValue ? x.Modified : null
-        });
+        var actualTransformed = actual.ToArticles();
         actualTransformed.Should().BeEquivalentTo(articleCollection);
         // var expectedTransformed = expected.Select(x => new PageMetaData())
     }
