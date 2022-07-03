@@ -134,6 +134,8 @@ public class Steps
         var actualTransformed = actual.Select(x => new Article()
         {
             Uri = x.Uri,
+            Title = x.Title,
+            Description = x.Description,
             Created = x.Published != DateTimeOffset.MinValue ? x.Published : null,
             Modified = x.Modified != DateTimeOffset.MinValue ? x.Modified : null
         });

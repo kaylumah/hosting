@@ -6,11 +6,11 @@ Feature: Feature One
           | DirectoriesToSkip | FileExtensionsToTarget |
           |                   | .md, .txt              |
         Then the following V2:
-          | Uri   | Created   | Modified   |
-          | <Uri> | <Created> | <Modified> |
+          | Uri   | Title   | Description   | Created   | Modified   |
+          | <Uri> | <Title> | <Description> | <Created> | <Modified> |
         Examples:
-         | FileName   | Uri        | Created | Modified |
-         | example.md | example.md | <null>  | <null>   |
+         | FileName   | Uri        | Title  | Description | Created | Modified |
+         | example.md | example.md | <null> | <null>      | <null>  | <null>   |
         
     
     
