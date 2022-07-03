@@ -88,6 +88,22 @@ Feature: File Processor Tests
           | 001.md | <null> | <null>      | Max    | <null>  | <null>   |
           | 002.md | <null> | <null>      | <null> | <null>  | <null>   |
 
+    Scenario Outline: most specfic scopes apply
+        Given the following defaults:
+          | Scope  | Path | Key    | Value    |
+          | <null> |      | author | everyone |
+        Given '<OriginalFileName>' is an empty file:
+        When the files are retrieved:
+          | DirectoriesToSkip | FileExtensionsToTarget |
+          |                   | .md                    |
+        Then the following articles are returned:
+          | Uri              | Title  | Description | Author   | Created | Modified |
+          | <OutputLocation> | <null> | <null>      | <Author> | <null>  | <null>   |
+
+        Examples:
+          | Description | OriginalFileName | OutputLocation | Author   |
+          |             | _pages/001.md    | 001.md         | everyone |
+
     Scenario Outline: a file defines a custom output location
 
     Every file has a default output location of `/:year/:month/:day/:name:ext`

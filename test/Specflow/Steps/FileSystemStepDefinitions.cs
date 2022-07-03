@@ -10,8 +10,9 @@ namespace Test.Specflow.Steps;
 public class FileSystemStepDefinitions
 {
     private readonly MockFileSystem _mockFileSystem;
-    private readonly string _postsDirectory = Path.Combine("_site", "_posts");
-    private readonly string _pagesDirectory = Path.Combine("_site", "_pages");
+    private static readonly string _rootDirectory = "_site";
+    private readonly string _postsDirectory = Path.Combine(_rootDirectory, "_posts");
+    private readonly string _pagesDirectory = Path.Combine(_rootDirectory, "_pages");
 
     public FileSystemStepDefinitions(MockFileSystem mockFileSystem)
     {
@@ -30,6 +31,14 @@ public class FileSystemStepDefinitions
     {
         var pageDirectory = Path.Combine(_pagesDirectory, fileName);
         _mockFileSystem.AddFile(pageDirectory, MockFileDataFactory.EmptyFile());
+    }
+
+    [Given("'(.*)' is an empty file:")]
+    public void GivenIsAnEmptyFile(string fileName)
+    {
+        var normalizedFileName = fileName.Replace('/', Path.DirectorySeparatorChar);
+        var filePath = Path.Combine(_rootDirectory, normalizedFileName);
+        _mockFileSystem.AddFile(filePath, MockFileDataFactory.EmptyFile());
     }
 
     [Given("'(.*)' is a post with the following contents:")]
