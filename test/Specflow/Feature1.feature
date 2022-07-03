@@ -1,6 +1,6 @@
 Feature: File Processor Tests
 
-    Scenario: An empty file
+    Scenario: An empty file gets no data
         Given '001.md' is an empty post:
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |
