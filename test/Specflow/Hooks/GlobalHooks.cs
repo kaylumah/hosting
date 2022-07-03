@@ -3,10 +3,10 @@
 
 using TechTalk.SpecFlow.Assist.ValueRetrievers;
 
-namespace Test.Specflow;
+namespace Test.Specflow.Hooks;
 
 [Binding]
-public class Hooks
+public class GlobalHooks
 {
     [BeforeTestRun]
     public static void BeforeTestRun()
