@@ -15,6 +15,7 @@ public static partial class MappingExtensions
             Uri = x.Uri,
             Title = x.Title,
             Description = x.Description,
+            Author = x.Author,
             Created = x.Published != DateTimeOffset.MinValue ? x.Published : null,
             Modified = x.Modified != DateTimeOffset.MinValue ? x.Modified : null
         });
