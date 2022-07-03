@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Test.Specflow.Entities;
 
 namespace Test.Specflow;
@@ -48,5 +49,12 @@ public class Transforms
         }
 
         return defaultMetaDatas;
+    }
+    
+    [StepArgumentTransformation]
+    private static FileFilterCriteria ToFileFilterCriteria(Table table)
+    {
+        var criteria = table.CreateInstance<FileFilterCriteria>();
+        return criteria;
     }
 }

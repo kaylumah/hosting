@@ -60,37 +60,11 @@ public class GlobalSteps
         _files.AddRange(result);
     }
 
-    [Then("the following:")]
-    public void ThenTheFollowing(Table table)
-    {
-        var actual = new List<(string Path, string Key, object Value)>();
-        foreach (var file in _files)
-        {
-            foreach (var item in file.MetaData)
-            {
-                actual.Add(new(file.Name, item.Key, item.Value));
-            }
-        }
-
-        var expected = table
-            .CreateSet<(string Path, string Key, string Value)>()
-            .ToList();
-        actual.Should().BeEquivalentTo(expected);
-    }
-
-    [Then("the following V2:")]
-    public void ThenTheFollowingV2(ArticleCollection articleCollection)
+    [Then("the following articles are returned:")]
+    public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
     {
         var actual = _files.ToPages(Guid.NewGuid());
         var actualTransformed = actual.ToArticles();
         actualTransformed.Should().BeEquivalentTo(articleCollection);
-        // var expectedTransformed = expected.Select(x => new PageMetaData())
-    }
-
-    [StepArgumentTransformation]
-    private static FileFilterCriteria ToFileFilterCriteria(Table table)
-    {
-        var criteria = table.CreateInstance<FileFilterCriteria>();
-        return criteria;
     }
 }
