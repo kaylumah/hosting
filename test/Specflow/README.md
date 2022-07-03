@@ -18,3 +18,4 @@ https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerat
 
 dotnet livingdoc test-assembly Test/Unit/bin/Debug/net6.0/Test.Unit.dll
 dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Debug/net6.0/Test.Specflow.dll
+dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Debug/net6.0/Test.Specflow.dll --test-execution-json artifacts/bin/Test.Specflow/Debug/net6.0/TestExecution.json
