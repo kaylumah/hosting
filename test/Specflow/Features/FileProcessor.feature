@@ -90,20 +90,22 @@ Feature: File Processor Tests
 
     Scenario Outline: most specfic scopes apply
         Given the following defaults:
-          | Scope  | Path | Key    | Value    |
-          | <null> |      | author | everyone |
+          | Scope  | Path | Key    | Value     |
+          | <null> |      | author | everyone  |
+          | posts  |      | author | all-posts |
         Given '<OriginalFileName>' is an empty file:
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |
           |                   | .md                    |
         Then the following articles are returned:
-          | Uri              | Title  | Description | Author   | Created | Modified |
-          | <OutputLocation> | <null> | <null>      | <Author> | <null>  | <null>   |
+          | Uri              | Title  | Description | Author   | Created   | Modified   |
+          | <OutputLocation> | <null> | <null>      | <Author> | <Created> | <Modified> |
 
         Examples:
-          | Description | OriginalFileName | OutputLocation | Author   |
-          |             | _pages/001.md    | 001.md         | everyone |
-          |             | _posts/002.md    | 002.md         | everyone |
+          | Description | OriginalFileName         | OutputLocation    | Author    | Created                | Modified               |
+          |             | _pages/001.md            | 001.md            | everyone  | <null>                 | <null>                 |
+          |             | _posts/002.md            | 002.md            | all-posts | <null>                 | <null>                 |
+          |             | _posts/2022-01-01-003.md | 2022/01/01/003.md | all-posts | 2022-01-01T00:00+01:00 | 2022-01-01T00:00+01:00 |
 
     Scenario Outline: a file defines a custom output location
 
