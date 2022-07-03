@@ -87,3 +87,29 @@ Feature: File Processor Tests
           | Uri    | Title  | Description | Author | Created | Modified |
           | 001.md | <null> | <null>      | Max    | <null>  | <null>   |
           | 002.md | <null> | <null>      | <null> | <null>  | <null>   |
+
+    Scenario Outline: a file defines a custom output location
+
+    Every file has a default output location of `/:year/:month/:day/:name:ext`
+
+        Given the following extension mapping:
+          | Key | Value |
+          | .md | .html |
+        Given '<OriginalFileName>' is a post with the following contents:
+        """
+        ---
+        outputlocation: :name:ext
+        ---
+        """
+        When the files are retrieved:
+          | DirectoriesToSkip | FileExtensionsToTarget |
+          |                   | .html, .txt            |
+        Then the following articles are returned:
+          | Uri              | Title  | Description | Author | Created   | Modified   |
+          | <OutputLocation> | <null> | <null>      | <null> | <Created> | <Modified> |
+
+        Examples:
+          | Description         | OriginalFileName   | OutputLocation | Created                | Modified               |
+          | extension changes   | 001.md             | 001.html       | <null>                 | <null>                 |
+          | date prefix removed | 2022-01-01-002.txt | 002.txt        | 2022-01-01T00:00+01:00 | 2022-01-01T00:00+01:00 |
+          | no changes applied  | 001.txt            | 001.txt        | <null>                 | <null>                 |
