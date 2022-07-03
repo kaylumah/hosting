@@ -103,6 +103,7 @@ Feature: File Processor Tests
         Examples:
           | Description | OriginalFileName | OutputLocation | Author   |
           |             | _pages/001.md    | 001.md         | everyone |
+          |             | _posts/002.md    | 002.md         | everyone |
 
     Scenario Outline: a file defines a custom output location
 
