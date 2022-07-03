@@ -25,6 +25,15 @@ Feature: File Processor Tests
         Then the following articles are returned:
           | Uri    | Title  | Description | Author | Created | Modified |
           | 001.md | <null> | <null>      | <null> | <null>  | <null>   |
+          
+    Scenario: An file with a date pattern gets timestamps
+        Given '2022-03-05-001.md' is an empty post:
+        When the files are retrieved:
+          | DirectoriesToSkip | FileExtensionsToTarget |
+          |                   | .md                    |
+        Then the following articles are returned:
+          | Uri               | Title  | Description | Author | Created    | Modified   |
+          | 2022/03/05/001.md | <null> | <null>      | <null> | 2022-03-05 | 2022-03-05 |
 
 
     #    Scenario Outline: Attemp1
