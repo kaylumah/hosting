@@ -94,6 +94,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Time
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Specflow", "test\Specflow\Test.Specflow.csproj", "{FD594C4D-2679-4D5F-82F3-6805CCE68E4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{C582E646-7AAC-4950-9D8F-FA4D8CA5428C}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -430,6 +435,7 @@ Global
 		{3648FEFC-4D86-4890-97BD-E6F7E581CBC7} = {66C2BAEE-316B-4C0E-AAB5-2C665B01AA00}
 		{D6644869-E8F7-4280-896E-66BFFF7B1FB2} = {66C2BAEE-316B-4C0E-AAB5-2C665B01AA00}
 		{FD594C4D-2679-4D5F-82F3-6805CCE68E4D} = {7176D671-2E97-4EE4-8156-14EC1C941F76}
+		{C582E646-7AAC-4950-9D8F-FA4D8CA5428C} = {6F5B96CC-4F71-433C-A022-1EEA2CC3D6AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81162A9C-B870-4562-B529-B01111CC7EB9}
