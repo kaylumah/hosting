@@ -46,32 +46,11 @@ public class GlobalSteps
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EmptyFile());
     }
 
-    
-
-    
-
-    [Given("post '(.*)' has the following contents:")]
-    public void GivenFileHasTheFollowingContents(string fileName, string contents)
+    [Given("'(.*)' is a post with the following contents:")]
+    public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
     {
         var articleDirectory = Path.Combine(_postsDirectory, fileName);
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.PlainFile(contents));
-    }
-
-    [Given("a test post named '(.*)':")]
-    public void GivenATestPost(string fileName)
-    {
-        var articleDirectory = Path.Combine(_postsDirectory, fileName);
-        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!"));
-    }
-
-    [Given("a test post v2 named '(.*)':")]
-    public void GivenATestPostV2(string fileName)
-    {
-        var articleDirectory = Path.Combine(_postsDirectory, fileName);
-        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EnrichedFile("Hello World!", new Dictionary<string, object>()
-        {
-            ["output"] = true
-        }));
     }
 
     [When("the files are retrieved:")]
