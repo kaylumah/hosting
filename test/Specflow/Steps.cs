@@ -23,19 +23,47 @@ using TechTalk.SpecFlow.Assist;
 #pragma warning disable CS3001
 
 [Binding]
+public class MetadataParserOptionsSteps
+{
+    private readonly MetadataParserOptions _metadataParserOptions;
+
+    public MetadataParserOptionsSteps(MetadataParserOptions metadataParserOptions)
+    {
+        _metadataParserOptions = metadataParserOptions;
+    }
+    
+    [Given("the following defaults:")]
+    public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
+    {
+        _metadataParserOptions.Defaults = metadatas;
+    }
+    
+    [Given("the following extension mapping:")]
+    public void GivenTheFollowingExtensionMapping(Table table)
+    {
+        var set = table.CreateSet<(string key, string value)>();
+        var dictionary = new Dictionary<string, string>();
+        foreach (var (key, value) in set)
+        {
+            dictionary.Add(key, value);
+        }
+        _metadataParserOptions.ExtensionMapping = dictionary;
+    }
+}
+
+[Binding]
 public class Steps
 {
-    private readonly MetadataParserOptions _options = new();
     private readonly MockFileSystem _mockFileSystem = new();
     private readonly IFileProcessor _fileProcessor;
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
     private readonly List<File> _files = new();
 
-    public Steps()
+    public Steps(MetadataParserOptions metadataParserOptions)
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
-            _options);
+            metadataParserOptions);
         IFileSystem fileSystem = new FileSystem(_mockFileSystem);
         _fileProcessor = new FileProcessor(fileSystem,
             NullLogger<FileProcessor>.Instance,
@@ -61,23 +89,9 @@ public class Steps
         _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EmptyFile());
     }
 
-    [Given("the following defaults:")]
-    public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
-    {
-        _options.Defaults = metadatas;
-    }
+    
 
-    [Given("the following extension mapping:")]
-    public void GivenTheFollowingExtensionMapping(Table table)
-    {
-        var set = table.CreateSet<(string key, string value)>();
-        var dictionary = new Dictionary<string, string>();
-        foreach (var (key, value) in set)
-        {
-            dictionary.Add(key, value);
-        }
-        _options.ExtensionMapping = dictionary;
-    }
+    
 
     [Given("post '(.*)' has the following contents:")]
     public void GivenFileHasTheFollowingContents(string fileName, string contents)
