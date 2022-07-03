@@ -14,13 +14,13 @@ public class MetadataParserOptionsStepDefinitions
     {
         _metadataParserOptions = metadataParserOptions;
     }
-    
+
     [Given("the following defaults:")]
     public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
     {
         _metadataParserOptions.Defaults = metadatas;
     }
-    
+
     [Given("the following extension mapping:")]
     public void GivenTheFollowingExtensionMapping(Table table)
     {

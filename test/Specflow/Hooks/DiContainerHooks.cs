@@ -10,12 +10,12 @@ namespace Test.Specflow;
 public class DiContainerHooks
 {
     private readonly IObjectContainer _objectContainer;
-    
+
     public DiContainerHooks(IObjectContainer objectContainer)
     {
         _objectContainer = objectContainer;
     }
-    
+
     [BeforeScenario]
     public void InitializeWebDriver()
     {

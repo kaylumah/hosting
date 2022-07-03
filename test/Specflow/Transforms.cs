@@ -50,7 +50,7 @@ public class Transforms
 
         return defaultMetaDatas;
     }
-    
+
     [StepArgumentTransformation]
     private static FileFilterCriteria ToFileFilterCriteria(Table table)
     {
