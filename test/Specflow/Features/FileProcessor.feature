@@ -61,15 +61,15 @@ Feature: File Processor Tests
         Given '001.md' is a post with the following contents:
         """
         ---
-        outputlocation: changed/:name:ext
+        outputlocation: changed/renamed.txt
         ---
         """
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          |                   | .txt                   |
         Then the following articles are returned:
-          | Uri            | Title | Description | Author | Created | Modified |
-          | changed/001.md | <null> | <null>      | <null> | <null>  | <null>   |
+          | Uri                 | Title  | Description | Author | Created | Modified |
+          | changed/renamed.txt | <null> | <null>      | <null> | <null>  | <null>   |
 
 
     #    Scenario Outline: Attemp1
