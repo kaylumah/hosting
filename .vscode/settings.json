@@ -1,0 +1,9 @@
+{
+    "cucumber.glue": [
+        "test/Specflow/**/*.cs"
+    ],
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.feature": "$(capture).feature.cs"
+    }
+}
