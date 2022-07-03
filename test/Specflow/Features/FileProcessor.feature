@@ -57,19 +57,27 @@ Feature: File Processor Tests
           | Uri               | Title  | Description | Author | Created    | Modified   |
           | 2022/03/05/001.md | <null> | <null>      | <null> | 2022-03-05 | 2022-03-05 |
 
-    Scenario: a file with a custom output location controls output location
-        Given '001.md' is a post with the following contents:
+    Scenario Outline: a file defines a custom output location
+
+    The default output location for a file is `/:year/:month/:day/:name:ext`
+
+        Given '<OriginalFileName>' is a post with the following contents:
         """
         ---
-        outputlocation: changed/renamed.txt
+        outputlocation: :name:ext
         ---
         """
         When the files are retrieved:
           | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .txt                   |
+          |                   | .md                    |
         Then the following articles are returned:
-          | Uri                 | Title  | Description | Author | Created | Modified |
-          | changed/renamed.txt | <null> | <null>      | <null> | <null>  | <null>   |
+          | Uri              | Title  | Description | Author | Created | Modified |
+          | <OutputLocation> | <null> | <null>      | <null> | <null>  | <null>   |
+
+        Examples:
+          | Description         | OriginalFileName  | OutputLocation | Created    | Modified   |
+          | unmodified          | 001.md            | 001.md         | <null>     | <null>     |
+          | date prefix removed | 2022-01-01-001.md | 001.md         | 2022-01-01 | 2022-01-01 |
 
     Scenario: An empty file gets default data
         Given the following defaults:
