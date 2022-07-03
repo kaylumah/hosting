@@ -81,7 +81,7 @@ public class Steps
     private readonly string _postsDirectory = Path.Combine("_site", "_posts");
     private readonly List<File> _files = new();
 
-    public Steps(MetadataParserOptions metadataParserOptions)
+    public Steps(MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
     {
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
@@ -90,17 +90,7 @@ public class Steps
         _fileProcessor = new FileProcessor(fileSystem,
             NullLogger<FileProcessor>.Instance,
             Enumerable.Empty<IContentPreprocessorStrategy>(),
-            new SiteInfo()
-            {
-                Collections = new Collections()
-                {
-                    new Collection()
-                    {
-                        Name = "posts",
-                        Output = true
-                    }
-                }
-            },
+            siteInfo,
             metadataParser);
     }
 
