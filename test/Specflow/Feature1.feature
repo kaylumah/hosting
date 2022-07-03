@@ -1,5 +1,21 @@
 Feature: Feature One
 
+    Scenario Outline: Attemp1
+        Given '<FileName>' is an empty post:
+        When the files are retrieved:
+          | DirectoriesToSkip | FileExtensionsToTarget |
+          |                   | .md, .txt              |
+        Then the following V2:
+          | Uri   | Created   | Modified   |
+          | <Uri> | <Created> | <Modified> |
+        Examples:
+         | FileName   | Uri        | Created | Modified |
+         | example.md | example.md | <null>  | <null>   |
+        
+    
+    
+    
+    
 # @ignore
 # currently not working because specflow does not like "object"
 
