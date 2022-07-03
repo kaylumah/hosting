@@ -1,10 +1,7 @@
-// Copyright (c) Kaylumah, 2022. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 namespace Test.Unit;
-
-using System;
-using Kaylumah.Ssg.Utilities.Time;
 using Xunit;
 
 public class SystemClockTests

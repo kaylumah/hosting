@@ -1,4 +1,4 @@
-// Copyright (c) Kaylumah, 2022. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -11,29 +11,29 @@ public static class PageMetaDataExtensions
 {
     public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<string, Person> persons, Dictionary<string, Organization> organizations)
     {
-            var blogPost = new BlogPosting
-            {
-                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
-                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(page.Uri))),
-                Headline = page.Title,
+        var blogPost = new BlogPosting
+        {
+            // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
+            MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(page.Uri))),
+            Headline = page.Title,
 #pragma warning disable RS0030 // datetime is expected here
-                DatePublished = page.Published.DateTime,
-                DateModified = page.Modified.DateTime,
+            DatePublished = page.Published.DateTime,
+            DateModified = page.Modified.DateTime,
 #pragma warning restore RS0030 // datetime is expected here
-                Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)))
-            };
+            Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)))
+        };
 
-            if (persons.ContainsKey(page.Author))
-            {
-                blogPost.Author = persons[page.Author];
-            }
+        if (persons.ContainsKey(page.Author))
+        {
+            blogPost.Author = persons[page.Author];
+        }
 
-            if (organizations.ContainsKey(page.Organization))
-            {
-                blogPost.Publisher = organizations[page.Organization];
-            }
+        if (organizations.ContainsKey(page.Organization))
+        {
+            blogPost.Publisher = organizations[page.Organization];
+        }
 
-            return blogPost;
+        return blogPost;
     }
 
     public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages, Dictionary<string, Person> persons, Dictionary<string, Organization> organizations)

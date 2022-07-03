@@ -75,13 +75,13 @@ public static class MarkdownUtil
                 if (!anchor.Url.StartsWith(GlobalFunctions.Url.Value, StringComparison.Ordinal))
                 {
                     link.GetAttributes().AddClass("external");
-                }     
+                }
             }
 
             // TODO disable pending Medium response...
             if (anchor is LinkInline imageLink && imageLink.IsImage)
             {
-                if (imageLink.Url.StartsWith("/assets",  StringComparison.Ordinal))
+                if (imageLink.Url.StartsWith("/assets", StringComparison.Ordinal))
                 {
                     imageLink.Url = GlobalFunctions.Url.Value + imageLink.Url;
                 }

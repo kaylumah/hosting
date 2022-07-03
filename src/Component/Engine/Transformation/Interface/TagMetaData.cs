@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System.Diagnostics;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 

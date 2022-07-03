@@ -47,21 +47,6 @@ public class FileSystem : IFileSystem
 
     public IEnumerable<IFileSystemInfo> GetFiles(string path, bool recursive = false)
     {
-        /*
-        var result = new List<IFileInfo>();
-        var directoryContents = _fileProvider.GetDirectoryContents(path);
-        result.AddRange(directoryContents);
-
-        if (recursive)
-        {
-            var directories = directoryContents.Where(x => x.IsDirectory);
-            foreach (var directory in directories)
-            {
-                result.AddRange(GetFiles(Path.Combine(path, directory.Name), recursive));
-            }
-        }
-        */
-
         // TODO: better solution
         var workingDirectory = string.IsNullOrEmpty(path) ? _fileSystem.Directory.GetCurrentDirectory() : path;
         var result = new List<IFileSystemInfo>();
