@@ -18,8 +18,6 @@ using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
 namespace Test.Specflow.Steps;
 
-#pragma warning disable CS3001
-
 [Binding]
 public class GlobalSteps
 {
@@ -117,4 +115,3 @@ public class GlobalSteps
         return criteria;
     }
 }
-#pragma warning restore CS3001

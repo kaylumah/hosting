@@ -5,7 +5,6 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
 namespace Test.Specflow.Steps;
 
-#pragma warning disable CS3001
 [Binding]
 public class MetadataParserOptionsStepDefinitions
 {

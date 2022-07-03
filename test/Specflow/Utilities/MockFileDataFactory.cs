@@ -5,7 +5,6 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Text;
 
 namespace Test.Specflow.Utilities;
-#pragma warning disable CS3002
 public class MockFileDataFactory
 {
     private Encoding _encoding;
@@ -79,4 +78,3 @@ public class MockFileDataFactory
             .Create();
     }
 }
-#pragma warning restore CS3002

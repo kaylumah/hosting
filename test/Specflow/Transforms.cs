@@ -6,7 +6,6 @@ using Test.Specflow.Entities;
 
 namespace Test.Specflow;
 
-#pragma warning disable CS3001
 [Binding]
 public class Transforms
 {
@@ -51,5 +50,3 @@ public class Transforms
         return defaultMetaDatas;
     }
 }
-#pragma warning restore CS3001
-

@@ -3,7 +3,6 @@
 
 namespace Test.Specflow;
 
-#pragma warning disable CS3001
 public static class SpecFlowExtensions
 {
     public static Dictionary<string, object> ToDictionary(this Table table)
@@ -21,4 +20,3 @@ public static class SpecFlowExtensions
         return table.Rows.ToDictionary(row => row[0], row => (object)row[1]);
     }
 }
-#pragma warning restore CS3001
