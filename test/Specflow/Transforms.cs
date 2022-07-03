@@ -2,8 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 
 namespace Test.Specflow;
