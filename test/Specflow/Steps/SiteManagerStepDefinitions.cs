@@ -32,7 +32,7 @@ public class SiteManagerStepDefinitions
         _validationContext = validationContext;
         var clock = new Mock<ISystemClock>();
         var fileProcessor = new FileProcessorMock(_articleCollection);
-        var artifactAccess = new Mock<IArtifactAccess>();
+        var artifactAccess = new ArtifactAccessMock();
         var fileSystem = new Mock<IFileSystem>();
         var logger = NullLogger<SiteManager>.Instance;
         var transformationEngine = new TransformationEngineMock();
