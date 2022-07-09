@@ -61,6 +61,8 @@ public class SiteManagerStepDefinitions
             {
                 Configuration = new SiteConfiguration()
                 {
+                    AssetDirectory = "assets",
+                    DataDirectory = "data"
                 }
             });
         }
