@@ -55,7 +55,7 @@ public static partial class MappingExtensions
         var pages = files.ToPages(siteGuid);
         return pages.ToArticles();
     }
-    
+
     public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
     {
         return pageMetaData.Select(ToArticle);

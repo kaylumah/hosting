@@ -7,5 +7,5 @@ namespace Test.Specflow.Utilities;
 
 public class StrictMock<T> : Mock<T> where T : class
 {
-    protected StrictMock() : base(MockBehavior.Strict) {}
+    protected StrictMock() : base(MockBehavior.Strict) { }
 }
