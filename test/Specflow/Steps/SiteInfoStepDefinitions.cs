@@ -15,6 +15,14 @@ public class SiteInfoStepDefinitions
         _siteInfo = siteInfo;
     }
 
+    [Given("the following site info:")]
+    public void GivenTheFollowingSiteInfo(Table table)
+    {
+        var data = table.CreateInstance<(string url, string baseUrl)>();
+        _siteInfo.Url = data.url;
+        _siteInfo.BaseUrl = data.baseUrl;
+    }
+
     [Given("the following collections:")]
     public void GivenTheFollowingCollections(Table table)
     {
