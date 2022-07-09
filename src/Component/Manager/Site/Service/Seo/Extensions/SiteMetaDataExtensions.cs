@@ -15,7 +15,7 @@ public static class SiteMetaDataExtensions
         {
             return new();
         }
-        
+
         var authors = source.AuthorMetaData
             .ToDictionary(x => x.Id, x =>
             {

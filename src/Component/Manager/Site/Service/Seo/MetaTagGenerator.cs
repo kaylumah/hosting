@@ -108,7 +108,7 @@ public partial class MetaTagGenerator
         {
             result.Add(CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
         }
-        
+
         if (!string.IsNullOrEmpty(renderData.Page.Organization))
         {
             var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
