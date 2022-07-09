@@ -94,6 +94,7 @@ public class SiteManager : ISiteManager
 
         var processed = await _fileProcessor.Process(new FileFilterCriteria
         {
+            RootDirectory = request.Configuration.Source,
             DirectoriesToSkip = new string[] {
                     request.Configuration.LayoutDirectory,
                     request.Configuration.PartialsDirectory,
@@ -149,10 +150,10 @@ public class SiteManager : ISiteManager
         artifacts.AddRange(siteMapArtifacts);
 
         var assets = _fileSystem
-            .GetFiles(Path.Combine("_site", request.Configuration.AssetDirectory), true)
+            .GetFiles(Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory), true)
             .Where(x => !x.IsDirectory());
 
-        var env = Path.Combine(Environment.CurrentDirectory, "_site") + Path.DirectorySeparatorChar;
+        var env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
 
         artifacts.AddRange(assets.Select(asset =>
         {
