@@ -43,7 +43,7 @@ public partial class FileProcessor : IFileProcessor
     {
         var result = new List<File>();
 
-        var directoryContents = _fileSystem.GetFiles("_site").ToList();
+        var directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
 
         if (!directoryContents.Any())
         {
@@ -68,7 +68,7 @@ public partial class FileProcessor : IFileProcessor
 
         result.AddRange(files);
 
-        var collections = await ProcessDirectories(directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
+        var collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
         foreach (var collection in collections)
         {
             var targetFiles = collection
@@ -99,14 +99,14 @@ public partial class FileProcessor : IFileProcessor
         return result;
     }
 
-    private async Task<List<FileCollection>> ProcessDirectories(string[] collections)
+    private async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
     {
         var result = new List<FileCollection>();
         foreach (var collection in collections)
         {
             using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
             var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(Path.Combine("_site", collection)).Where(x => !x.IsDirectory()).ToList();
+            var targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
             var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection

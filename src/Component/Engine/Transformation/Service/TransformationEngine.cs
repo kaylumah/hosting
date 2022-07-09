@@ -13,8 +13,6 @@ namespace Kaylumah.Ssg.Engine.Transformation.Service;
 
 public class TransformationEngine : ITransformationEngine
 {
-    private readonly string _layoutDirectory = "_layouts";
-    private readonly string _templateDirectory = "_includes";
     private readonly IFileSystem _fileSystem;
     private readonly IMetadataProvider _metadataProvider;
     private readonly ILogger _logger;
@@ -25,12 +23,12 @@ public class TransformationEngine : ITransformationEngine
         _metadataProvider = metadataProvider;
     }
 
-    public async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
+    public async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
     {
         var renderedResults = new List<MetadataRenderResult>();
         // TODO apply better solution for access to directories.
-        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine("_site", _layoutDirectory)).ConfigureAwait(false);
-        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine("_site", _templateDirectory));
+        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
+        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
 
         foreach (var request in requests)
         {

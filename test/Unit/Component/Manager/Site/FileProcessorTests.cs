@@ -61,6 +61,7 @@ public class FileProcessorTests
         var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
+            RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { ".md" }
         });
@@ -83,6 +84,7 @@ public class FileProcessorTests
         var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
+            RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { ".txt" }
         });
@@ -111,6 +113,7 @@ public class FileProcessorTests
         var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
+            RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { ".txt" }
         });
@@ -160,6 +163,7 @@ public class FileProcessorTests
         var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
+            RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { }
         });
@@ -181,6 +185,7 @@ public class FileProcessorTests
         var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
+            RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { ".html" }
         });

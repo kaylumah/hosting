@@ -3,8 +3,8 @@ Feature: File Processor Tests
     Scenario: empty filter results in 0 files
         Given '001.md' is an empty post:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   |                        |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   |                        |
         Then no articles are returned:
 
     Scenario: a file whoes extension changes is not returned
@@ -13,8 +13,8 @@ Feature: File Processor Tests
           | Key | Value |
           | .md | .html |
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then no articles are returned:
 
     Scenario: a file whoes extension changes can be returned
@@ -23,8 +23,8 @@ Feature: File Processor Tests
           | Key | Value |
           | .md | .html |
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .html                  |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .html                  |
         Then the following articles are returned:
           | Uri      | Title  | Description | Author | Created | Modified |
           | 001.html | <null> | <null>      | <null> | <null>  | <null>   |
@@ -33,8 +33,8 @@ Feature: File Processor Tests
         Given '001.md' is an empty post:
         Given '001.txt' is an empty post:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .txt                   |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .txt                   |
         Then the following articles are returned:
           | Uri     | Title  | Description | Author | Created | Modified |
           | 001.txt | <null> | <null>      | <null> | <null>  | <null>   |
@@ -42,12 +42,12 @@ Feature: File Processor Tests
     Scenario: An empty file gets no data
         Given '001.md' is an empty post:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then the following articles are returned:
           | Uri    | Title  | Description | Author | Created | Modified |
           | 001.md | <null> | <null>      | <null> | <null>  | <null>   |
- 
+
     Scenario: An empty file gets default data
         Given the following defaults:
           | Scope  | Path | Key    | Value |
@@ -55,8 +55,8 @@ Feature: File Processor Tests
         Given '001.md' is an empty post:
         And '002.md' is an empty page:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then the following articles are returned:
           | Uri    | Title  | Description | Author | Created | Modified |
           | 001.md | <null> | <null>      | Max    | <null>  | <null>   |
@@ -65,8 +65,8 @@ Feature: File Processor Tests
     Scenario: An file with a date pattern gets timestamps
         Given '2022-03-05-001.md' is an empty post:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then the following articles are returned:
           | Uri               | Title  | Description | Author | Created    | Modified   |
           | 2022/03/05/001.md | <null> | <null>      | <null> | 2022-03-05 | 2022-03-05 |
@@ -81,8 +81,8 @@ Feature: File Processor Tests
         Given '001.md' is an empty post:
         And '002.md' is an empty page:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then the following articles are returned:
           | Uri    | Title  | Description | Author | Created | Modified |
           | 001.md | <null> | <null>      | Max    | <null>  | <null>   |
@@ -96,8 +96,8 @@ Feature: File Processor Tests
           | posts  | 2022 | author | all-2022-posts |
         Given '<OriginalFileName>' is an empty file:
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .md                    |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .md                    |
         Then the following articles are returned:
           | Uri              | Title  | Description | Author   | Created   | Modified   |
           | <OutputLocation> | <null> | <null>      | <Author> | <Created> | <Modified> |
@@ -122,8 +122,8 @@ Feature: File Processor Tests
         ---
         """
         When the files are retrieved:
-          | DirectoriesToSkip | FileExtensionsToTarget |
-          |                   | .html, .txt            |
+          | RootDirectory | DirectoriesToSkip | FileExtensionsToTarget |
+          | _site         |                   | .html, .txt            |
         Then the following articles are returned:
           | Uri              | Title  | Description | Author | Created   | Modified   |
           | <OutputLocation> | <null> | <null>      | <null> | <Created> | <Modified> |
