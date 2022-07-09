@@ -24,10 +24,12 @@ public class FileSystemMock : Mock<IFileSystem>
         //directoryContentsMock.Setup(dc => dc.Exists).Returns(false);
         //Setup(x => x.GetFiles(It.IsAny<string>())).Returns(directoryContentsMock.Object);
 
+        /*
         Setup(x => x.CreateDirectory(It.IsAny<string>()))
             .Callback<string>(path =>
             {
                 CreatedDirectories.Add(path);
             });
+            */
     }
 }

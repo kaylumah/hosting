@@ -28,11 +28,6 @@ public class FileSystem : IFileSystem
         _fileSystem = fileSystem;
     }
 
-    public void CreateDirectory(string path)
-    {
-        Directory.CreateDirectory(path);
-    }
-
     public IFileInfo GetFile(string path)
     {
         return _fileSystem.FileInfo.FromFileName(path);

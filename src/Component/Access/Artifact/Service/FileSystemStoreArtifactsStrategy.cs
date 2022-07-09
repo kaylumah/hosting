@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Access.Artifact.Service;
@@ -20,10 +19,10 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
         Level = LogLevel.Information,
         Message = "Creating file `{FileName}`")]
     public partial void CreatingFile(string fileName);
-    private readonly IFileSystem _fileSystem;
+    private readonly System.IO.Abstractions.IFileSystem _fileSystem;
     private readonly ILogger _logger;
 
-    public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
+    public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, System.IO.Abstractions.IFileSystem fileSystem)
     {
         _logger = logger;
         _fileSystem = fileSystem;
@@ -41,11 +40,11 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
                 if (!Directory.Exists(directory))
                 {
                     CreatingDirectory(directory);
-                    _fileSystem.CreateDirectory(directory);
+                    _fileSystem.Directory.CreateDirectory(directory);
                 }
 
                 CreatingFile(filePath);
-                await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                await _fileSystem.File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
             }
         }
     }
