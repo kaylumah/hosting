@@ -22,7 +22,7 @@ public static class MatchExtensions
         return null;
     }
 
-    public static DateTimeOffset? DateByPattern(this System.Text.RegularExpressions.Match match)
+    public static DateTimeOffset? DateByPattern(this Match match)
     {
         if (match.Success)
         {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions.TestingHelpers;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -23,7 +24,7 @@ public class SiteManagerTests
     {
         var fileProcessorMock = new FileProcessorMock();
         var artifactAccessMock = new ArtifactAccessMock();
-        var fileSystemMock = new FileSystemMock();
+        var fileSystemMock = new MockFileSystem();
         var yamlParserMock = new YamlParserMock();
         var transformEngineMock = new Mock<ITransformationEngine>();
 
@@ -56,7 +57,7 @@ public class SiteManagerTests
             .AddSiteManager(configuration)
             .AddSingleton(fileProcessorMock.Object)
             .AddSingleton(artifactAccessMock.Object)
-            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton(fileSystemMock)
             .AddSingleton(yamlParserMock.Object)
             .AddSingleton(transformEngineMock.Object)
             .Configure<SiteInfo>(_ =>

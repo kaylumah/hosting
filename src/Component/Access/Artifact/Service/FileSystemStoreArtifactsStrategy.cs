@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
@@ -19,10 +20,10 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
         Level = LogLevel.Information,
         Message = "Creating file `{FileName}`")]
     public partial void CreatingFile(string fileName);
-    private readonly System.IO.Abstractions.IFileSystem _fileSystem;
+    private readonly IFileSystem _fileSystem;
     private readonly ILogger _logger;
 
-    public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, System.IO.Abstractions.IFileSystem fileSystem)
+    public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
     {
         _logger = logger;
         _fileSystem = fileSystem;

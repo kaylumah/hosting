@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
@@ -125,7 +126,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithData(site, dataFiles);
         }
 
-        private void EnrichSiteWithData(SiteMetaData site, List<System.IO.Abstractions.IFileSystemInfo> dataFiles)
+        private void EnrichSiteWithData(SiteMetaData site, List<IFileSystemInfo> dataFiles)
         {
             foreach (var file in dataFiles)
             {

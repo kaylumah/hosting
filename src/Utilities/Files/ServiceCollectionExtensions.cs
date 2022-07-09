@@ -9,7 +9,6 @@ namespace Kaylumah.Ssg.Utilities.Files
     {
         public static IServiceCollection AddFileSystem(this IServiceCollection services)
         {
-            services.AddSingleton<IFileSystem, FileSystem>();
             services.AddSingleton<System.IO.Abstractions.IFileSystem, System.IO.Abstractions.FileSystem>();
             return services;
         }

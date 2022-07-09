@@ -17,14 +17,14 @@ public partial class FileProcessor : IFileProcessor
        Message = "No files present")]
     private partial void LogNoFiles();
 
-    private readonly Utilities.IFileSystem _fileSystem;
+    private readonly IFileSystem _fileSystem;
     private readonly ILogger _logger;
     private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
     private readonly IFileMetadataParser _fileMetaDataProcessor;
     private readonly SiteInfo _siteInfo;
 
     public FileProcessor(
-        Utilities.IFileSystem fileSystem,
+        IFileSystem fileSystem,
         ILogger<FileProcessor> logger,
         IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
         SiteInfo options,
@@ -120,7 +120,7 @@ public partial class FileProcessor : IFileProcessor
 
     private async Task<List<File>> ProcessFiles(string[] files)
     {
-        var fileInfos = new List<System.IO.Abstractions.IFileInfo>();
+        var fileInfos = new List<IFileInfo>();
         foreach (var file in files)
         {
             fileInfos.Add(_fileSystem.GetFile(file));
