@@ -55,7 +55,6 @@ public partial class MetaTagGenerator
     private static string ToCommonTags(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
-        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
         var finalDocument = new XmlDocument();
         var titleElement = finalDocument.CreateElement("title");
         titleElement.InnerText = renderData.Title;
@@ -74,10 +73,15 @@ public partial class MetaTagGenerator
             linkElement.OuterXml,
             CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
             CreateMetaTag("description", renderData.Description),
-            CreateMetaTag("author", author.FullName),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
             CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))
         };
+        if (!string.IsNullOrEmpty(renderData.Page.Author))
+        {
+            var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+            CreateMetaTag("author", author.FullName);
+        }
+
         if (result.Any())
         {
             sb.AppendLine("<!-- Common Meta Tags -->");
@@ -92,18 +96,29 @@ public partial class MetaTagGenerator
     private static string ToTwitterTags(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
-        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-        var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
         var sb = new StringBuilder();
         var result = new List<string>
         {
             CreateMetaTag("twitter:card", "summary_large_image"),
             CreateMetaTag("twitter:title", renderData.Page.Title),
-            CreateMetaTag("twitter:site", $"@{organization.Twitter}"),
-            CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"),
-            CreateMetaTag("twitter:description", renderData.Description),
-            CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image))
+            CreateMetaTag("twitter:description", renderData.Description)
         };
+
+        if (!string.IsNullOrEmpty(renderData.Page.Image))
+        {
+            result.Add(CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
+        }
+        
+        if (!string.IsNullOrEmpty(renderData.Page.Organization))
+        {
+            var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
+            result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
+        }
+        if (!string.IsNullOrEmpty(renderData.Page.Author))
+        {
+            var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+            result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
+        }
 
         if (result.Any())
         {
@@ -119,7 +134,6 @@ public partial class MetaTagGenerator
     private static string ToOpenGraphTags(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
-        var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
         var sb = new StringBuilder();
         var result = new List<string>
         {
@@ -128,13 +142,22 @@ public partial class MetaTagGenerator
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
             CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
             CreateOpenGraphMetaTag("og:url", GlobalFunctions.AbsoluteUrl(renderData.Page.Uri)),
-            CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
+        if (!string.IsNullOrEmpty(renderData.Page.Image))
+        {
+            result.Add(CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
+        }
+
         if (renderData.Page.Type == ContentType.Article)
         {
-            result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+            if (!string.IsNullOrEmpty(renderData.Page.Author))
+            {
+                var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+            }
+
             result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
             result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
             foreach (var tag in renderData.Page.Tags)
