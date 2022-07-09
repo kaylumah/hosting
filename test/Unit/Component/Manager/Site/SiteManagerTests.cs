@@ -26,10 +26,9 @@ public class SiteManagerTests
         var fileProcessorMock = new FileProcessorMock();
         var artifactAccessMock = new ArtifactAccessMock();
         var fileSystemMock = new MockFileSystem();
-        var rootDirectory = Path.Combine(Environment.CurrentDirectory);
-        fileSystemMock.Directory.CreateDirectory(Path.Combine(rootDirectory, "_site"));
-        fileSystemMock.Directory.CreateDirectory(Path.Combine(rootDirectory, "_site", "_data"));
-        fileSystemMock.Directory.CreateDirectory(Path.Combine(rootDirectory, "_site", "assets"));
+        fileSystemMock.Directory.CreateDirectory("_site");
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_data"));
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
 
         var yamlParserMock = new YamlParserMock();
         var transformEngineMock = new Mock<ITransformationEngine>();

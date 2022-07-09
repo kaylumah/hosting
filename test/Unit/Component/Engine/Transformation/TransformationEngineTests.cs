@@ -33,10 +33,11 @@ public class TransformationEngineTests
         var transformationEngine = serviceProvider.GetRequiredService<ITransformationEngine>();
     }
 
-    [Fact(Skip = "skip")]
+    [Fact]
     public async Task Test_SeoPlugin_WithoutUsingResultsInEmptyString()
     {
         var fileSystemMock = new MockFileSystem();
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
 
         var configuration = new ConfigurationBuilder().Build();
