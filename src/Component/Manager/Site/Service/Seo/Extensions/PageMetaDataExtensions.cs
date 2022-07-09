@@ -18,17 +18,21 @@ public static class PageMetaDataExtensions
             Headline = page.Title,
 #pragma warning disable RS0030 // datetime is expected here
             DatePublished = page.Published.DateTime,
-            DateModified = page.Modified.DateTime,
+            DateModified = page.Modified.DateTime
 #pragma warning restore RS0030 // datetime is expected here
-            Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)))
         };
 
-        if (persons.ContainsKey(page.Author))
+        if (!string.IsNullOrEmpty(page.Image))
+        {
+            blogPost.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)));
+        }
+
+        if (!string.IsNullOrEmpty(page.Author) && persons.ContainsKey(page.Author))
         {
             blogPost.Author = persons[page.Author];
         }
 
-        if (organizations.ContainsKey(page.Organization))
+        if (!string.IsNullOrEmpty(page.Organization) && organizations.ContainsKey(page.Organization))
         {
             blogPost.Publisher = organizations[page.Organization];
         }
