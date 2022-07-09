@@ -36,7 +36,7 @@ public class SiteManagerStepDefinitions
         var artifactAccess = new Mock<IArtifactAccess>();
         var fileSystem = new Mock<IFileSystem>();
         var logger = NullLogger<SiteManager>.Instance;
-        var transformationEngine = new Mock<ITransformationEngine>();
+        var transformationEngine = new TransformationEngineMock();
         var yamlParser = new YamlParser();
         var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, fileSystem.Object, NullLogger<SiteMetadataFactory>.Instance);
         var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
