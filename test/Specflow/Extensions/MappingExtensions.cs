@@ -23,6 +23,7 @@ public static partial class MappingExtensions
         {
             Name = string.Empty,
             Content = string.Empty,
+            LastModified = default,
             MetaData = fileMetaData
         };
         return file;
@@ -42,6 +43,7 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
         pageDictionary.SetValue(nameof(PageMetaData.Published), article.Created);
         pageDictionary.SetValue(nameof(PageMetaData.Modified), article.Modified);
+        pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
         return new PageMetaData(pageDictionary);
     }
 

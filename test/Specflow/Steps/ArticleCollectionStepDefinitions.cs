@@ -1,0 +1,23 @@
+﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
+// See LICENSE file in the project root for full license information.
+
+using Test.Specflow.Entities;
+
+namespace Test.Specflow.Steps;
+
+[Binding]
+public class ArticleCollectionStepDefinitions
+{
+    private readonly ArticleCollection _articleCollection;
+
+    public ArticleCollectionStepDefinitions(ArticleCollection articleCollection)
+    {
+        _articleCollection = articleCollection;
+    }
+
+    [Given("the following articles:")]
+    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
+    {
+        _articleCollection.AddRange(articleCollection);
+    }
+}
