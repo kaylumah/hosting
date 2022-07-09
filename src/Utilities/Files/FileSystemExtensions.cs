@@ -17,40 +17,20 @@ public static class FileSystemExtensions
     {
         return fileSystemInfo.GetType().IsAssignableTo(typeof(IDirectoryInfo));
     }
-}
-
-public class FileSystem : IFileSystem
-{
-    private readonly System.IO.Abstractions.IFileSystem _fileSystem;
-
-    public FileSystem(System.IO.Abstractions.IFileSystem fileSystem)
+    
+    public static byte[] GetFileBytes(this IFileSystem fileSystem, string path)
     {
-        _fileSystem = fileSystem;
-    }
-
-    public void CreateDirectory(string path)
-    {
-        Directory.CreateDirectory(path);
-    }
-
-    public IFileInfo GetFile(string path)
-    {
-        return _fileSystem.FileInfo.FromFileName(path);
-    }
-
-    public byte[] GetFileBytes(string path)
-    {
-        var fileInfo = GetFile(path);
+        var fileInfo = fileSystem.GetFile(path);
         using var fileStream = fileInfo.CreateReadStream();
         return fileStream.ToByteArray();
     }
-
-    public IEnumerable<IFileSystemInfo> GetFiles(string path, bool recursive = false)
+    public static IEnumerable<IFileSystemInfo> GetFiles(this IFileSystem fileSystem, string path,
+        bool recursive = false)
     {
         // TODO: better solution
-        var workingDirectory = string.IsNullOrEmpty(path) ? _fileSystem.Directory.GetCurrentDirectory() : path;
+        var workingDirectory = string.IsNullOrEmpty(path) ? fileSystem.Directory.GetCurrentDirectory() : path;
         var result = new List<IFileSystemInfo>();
-        var scanDirectory = _fileSystem.DirectoryInfo.FromDirectoryName(workingDirectory);
+        var scanDirectory = fileSystem.DirectoryInfo.FromDirectoryName(workingDirectory);
         var scanResult = scanDirectory.GetFileSystemInfos();
         result.AddRange(scanResult);
 
@@ -59,15 +39,15 @@ public class FileSystem : IFileSystem
             var directories = scanResult.Where(x => x.IsDirectory());
             foreach (var directory in directories)
             {
-                result.AddRange(GetFiles(directory.FullName, recursive));
+                result.AddRange(fileSystem.GetFiles(directory.FullName, recursive));
             }
         }
 
         return result;
     }
 
-    public async Task WriteAllBytesAsync(string path, byte[] bytes)
+    public static IFileInfo GetFile(this IFileSystem fileSystem, string path)
     {
-        await File.WriteAllBytesAsync(path, bytes).ConfigureAwait(false);
+        return fileSystem.FileInfo.FromFileName(path);
     }
 }

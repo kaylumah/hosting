@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -10,7 +12,6 @@ using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
-using Test.Unit.Mocks;
 using Xunit;
 
 namespace Test.Unit;
@@ -20,13 +21,13 @@ public class TransformationEngineTests
     [Fact]
     public void Test1()
     {
-        var fileSystemMock = new FileSystemMock();
+        var fileSystemMock = new MockFileSystem();
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
 
         var configuration = new ConfigurationBuilder().Build();
         var serviceProvider = new ServiceCollection()
             .AddTransformationEngine(configuration)
-            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IFileSystem>(fileSystemMock)
             .AddSingleton<IMetadataProvider>(metadataProviderMock)
             .BuildServiceProvider();
         var transformationEngine = serviceProvider.GetRequiredService<ITransformationEngine>();
@@ -35,13 +36,14 @@ public class TransformationEngineTests
     [Fact]
     public async Task Test_SeoPlugin_WithoutUsingResultsInEmptyString()
     {
-        var fileSystemMock = new FileSystemMock();
+        var fileSystemMock = new MockFileSystem();
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
 
         var configuration = new ConfigurationBuilder().Build();
         var serviceProvider = new ServiceCollection()
             .AddTransformationEngine(configuration)
-            .AddSingleton(fileSystemMock.Object)
+            .AddSingleton<IFileSystem>(fileSystemMock)
             .AddSingleton<IMetadataProvider>(metadataProviderMock)
             .BuildServiceProvider();
         var engine = serviceProvider.GetRequiredService<ITransformationEngine>();

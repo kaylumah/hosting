@@ -31,7 +31,7 @@ public class MockFileDataFactory
         return this;
     }
 
-    public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new System.Text.UTF8Encoding(false));
+    public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new UTF8Encoding(false));
     private MockFileDataFactory WithEncoding(Encoding encoding)
     {
         _encoding = encoding;

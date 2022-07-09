@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using System.Text;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
