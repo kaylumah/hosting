@@ -11,6 +11,11 @@ public static class SiteMetaDataExtensions
 {
     public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
     {
+        if (source.AuthorMetaData == null)
+        {
+            return new();
+        }
+        
         var authors = source.AuthorMetaData
             .ToDictionary(x => x.Id, x =>
             {
@@ -41,6 +46,10 @@ public static class SiteMetaDataExtensions
 
     public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
     {
+        if (source.OrganizationMetaData == null)
+        {
+            return new();
+        }
 #pragma warning disable RS0030
         var organizations = source.OrganizationMetaData
             .ToDictionary(x => x.Id, x =>
