@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
@@ -22,9 +23,11 @@ namespace Test.Specflow.Steps;
 public class SiteManagerStepDefinitions
 {
     private readonly ISiteManager _siteManager;
+    private readonly ValidationContext _validationContext;
 
-    public SiteManagerStepDefinitions(SiteInfo siteInfo)
+    public SiteManagerStepDefinitions(ValidationContext validationContext, SiteInfo siteInfo)
     {
+        _validationContext = validationContext;
         var clock = new Mock<ISystemClock>();
         var fileProcessor = new Mock<IFileProcessor>();
         var artifactAccess = new Mock<IArtifactAccess>();
@@ -68,7 +71,13 @@ public class SiteManagerStepDefinitions
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            _validationContext.TestServiceException = ex;
         }
+    }
+
+    [Then("the scenario executed successfully:")]
+    public void ThenTheScenarioExecutedSuccessfully()
+    {
+        _validationContext.TestServiceException.Should().BeNull();
     }
 }

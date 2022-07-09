@@ -8,3 +8,4 @@ Feature: SiteManager
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
         When the site is generated:
+        Then the scenario executed successfully:
