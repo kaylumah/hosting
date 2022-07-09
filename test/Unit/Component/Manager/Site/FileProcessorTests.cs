@@ -9,7 +9,6 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
@@ -51,7 +50,6 @@ public class FileProcessorTests
             { $"{root}/test.md", EmptyFile() }
         });
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
             new MetadataParserOptions()
             {
@@ -60,7 +58,7 @@ public class FileProcessorTests
                 }
             }
         );
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -81,9 +79,8 @@ public class FileProcessorTests
         {
             { $"{root}/_subdir/test.txt", EmptyFile() }
         });
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -110,9 +107,8 @@ public class FileProcessorTests
             { $"{root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
 
         });
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -140,9 +136,8 @@ public class FileProcessorTests
         var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
         var mockFileSystem = new MockFileSystem(
             new Dictionary<string, MockFileData> { });
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -161,9 +156,8 @@ public class FileProcessorTests
         {
             { $"{root}/index.html", EmptyFile() }
         });
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -183,9 +177,8 @@ public class FileProcessorTests
             { $"{root}/index.html", EmptyFile() },
             { $"{root}/other.png", EmptyFile() }
         });
-        var fileSystem = new FileSystem(mockFileSystem);
         var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(fileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
         var result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
@@ -216,7 +209,7 @@ public class FileProcessorTests
             Encoding = Encoding.UTF8
         };
         var stream = new MemoryStream();
-        using (System.Xml.XmlWriter writer = XmlWriter.Create(stream, settings))
+        using (XmlWriter writer = XmlWriter.Create(stream, settings))
         {
             writer.WriteStartDocument();
             writer.WriteStartElement("feed");

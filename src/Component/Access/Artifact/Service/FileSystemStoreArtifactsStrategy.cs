@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Access.Artifact.Service;
@@ -41,11 +41,11 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
                 if (!Directory.Exists(directory))
                 {
                     CreatingDirectory(directory);
-                    _fileSystem.CreateDirectory(directory);
+                    _fileSystem.Directory.CreateDirectory(directory);
                 }
 
                 CreatingFile(filePath);
-                await _fileSystem.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                await _fileSystem.File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
             }
         }
     }

@@ -7,7 +7,6 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
@@ -28,8 +27,7 @@ public class FileProcessorStepDefinitions
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
             metadataParserOptions);
-        IFileSystem fileSystem = new FileSystem(mockFileSystem);
-        _fileProcessor = new FileProcessor(fileSystem,
+        _fileProcessor = new FileProcessor(mockFileSystem,
             NullLogger<FileProcessor>.Instance,
             Enumerable.Empty<IContentPreprocessorStrategy>(),
             siteInfo,
