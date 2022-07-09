@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Hosting;
@@ -19,7 +20,7 @@ namespace Test.Unit;
 
 public class SiteManagerTests
 {
-    [Fact(Skip = "skip")]
+    [Fact]
     public async Task Test_SiteManager_GenerateSite()
     {
         var fileProcessorMock = new FileProcessorMock();
@@ -58,7 +59,7 @@ public class SiteManagerTests
             .AddSiteManager(configuration)
             .AddSingleton(fileProcessorMock.Object)
             .AddSingleton(artifactAccessMock.Object)
-            .AddSingleton(fileSystemMock)
+            .AddSingleton<IFileSystem>(fileSystemMock)
             .AddSingleton(yamlParserMock.Object)
             .AddSingleton(transformEngineMock.Object)
             .Configure<SiteInfo>(_ =>
