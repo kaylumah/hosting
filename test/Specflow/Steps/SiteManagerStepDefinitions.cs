@@ -65,15 +65,8 @@ public class SiteManagerStepDefinitions
         {
             await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
-                Configuration = new SiteConfiguration()
-                {
-                    AssetDirectory = "assets",
-                    DataDirectory = "data"
-                }
+                Configuration = new SiteConfiguration() { AssetDirectory = "assets", DataDirectory = "data" }
             });
-            
-            _articleCollection.Add(new Article() {});
-            
             await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
                 Configuration = new SiteConfiguration()
