@@ -60,9 +60,4 @@ public class FileSystem : IFileSystem
 
         return result;
     }
-
-    public async Task WriteAllBytesAsync(string path, byte[] bytes)
-    {
-        await File.WriteAllBytesAsync(path, bytes).ConfigureAwait(false);
-    }
 }

@@ -10,5 +10,4 @@ public interface IFileSystem
     IEnumerable<IFileSystemInfo> GetFiles(string path, bool recursive = false);
     IFileInfo GetFile(string path);
     byte[] GetFileBytes(string path);
-    Task WriteAllBytesAsync(string path, byte[] bytes);
 }
