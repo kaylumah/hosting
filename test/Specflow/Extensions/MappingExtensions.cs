@@ -16,16 +16,21 @@ public static partial class MappingExtensions
         return pages.ToArticles();
     }
 
+    public static Article ToArticle(this PageMetaData pageMetaData)
+    {
+        return new Article()
+        {
+            Uri = pageMetaData.Uri,
+            Title = pageMetaData.Title,
+            Description = pageMetaData.Description,
+            Author = pageMetaData.Author,
+            Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null,
+            Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null
+        };
+    }
+    
     public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
     {
-        return pageMetaData.Select(x => new Article()
-        {
-            Uri = x.Uri,
-            Title = x.Title,
-            Description = x.Description,
-            Author = x.Author,
-            Created = x.Published != DateTimeOffset.MinValue ? x.Published : null,
-            Modified = x.Modified != DateTimeOffset.MinValue ? x.Modified : null
-        });
+        return pageMetaData.Select(ToArticle);
     }
 }
