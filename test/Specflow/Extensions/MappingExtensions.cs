@@ -11,28 +11,39 @@ namespace Test.Specflow.Extensions;
 
 public static partial class MappingExtensions
 {
-    public static File ToFile(this Article article)
+    public static File ToFile(this PageMetaData pageMetaData)
     {
-        var metaData = new FileMetaData() { };
-        return new File()
+        var fileMetaData = new FileMetaData();
+        foreach (var item in pageMetaData)
         {
-            Content = string.Empty,
-            Name = string.Empty,
-            LastModified = default,
-            MetaData = metaData
-            
-        };
+            fileMetaData.Add(item.Key, item.Value);
+        }
+
+        var file = new File() { MetaData = fileMetaData };
+        return file;
     }
 
-    public static IEnumerable<File> ToFiles(this IEnumerable<Article> articles)
+    public static PageMetaData ToPageMetaData(this Article article)
     {
-        return articles.Select(ToFile);
+        var pageDictionary = new Dictionary<string, object>();
+        pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
+        pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
+        pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
+        pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
+        pageDictionary.SetValue(nameof(PageMetaData.Published), article.Created);
+        pageDictionary.SetValue(nameof(PageMetaData.Modified), article.Modified);
+        return new PageMetaData(pageDictionary);
     }
 
     public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
     {
         var pages = files.ToPages(siteGuid);
         return pages.ToArticles();
+    }
+    
+    public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
+    {
+        return pageMetaData.Select(ToArticle);
     }
 
     public static Article ToArticle(this PageMetaData pageMetaData)
@@ -46,10 +57,5 @@ public static partial class MappingExtensions
             Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null,
             Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null
         };
-    }
-    
-    public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
-    {
-        return pageMetaData.Select(ToArticle);
     }
 }
