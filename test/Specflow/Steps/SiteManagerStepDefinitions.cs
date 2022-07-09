@@ -14,6 +14,7 @@ using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
+using Test.Specflow.Entities;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps;
@@ -23,13 +24,15 @@ namespace Test.Specflow.Steps;
 public class SiteManagerStepDefinitions
 {
     private readonly ISiteManager _siteManager;
+    private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
 
-    public SiteManagerStepDefinitions(ValidationContext validationContext, SiteInfo siteInfo)
+    public SiteManagerStepDefinitions(ArticleCollection articleCollection, ValidationContext validationContext, SiteInfo siteInfo)
     {
+        _articleCollection = articleCollection;
         _validationContext = validationContext;
         var clock = new Mock<ISystemClock>();
-        var fileProcessor = new FileProcessorMock();
+        var fileProcessor = new FileProcessorMock(_articleCollection);
         var artifactAccess = new Mock<IArtifactAccess>();
         var fileSystem = new Mock<IFileSystem>();
         var logger = NullLogger<SiteManager>.Instance;
@@ -60,6 +63,17 @@ public class SiteManagerStepDefinitions
     {
         try
         {
+            await _siteManager.GenerateSite(new GenerateSiteRequest()
+            {
+                Configuration = new SiteConfiguration()
+                {
+                    AssetDirectory = "assets",
+                    DataDirectory = "data"
+                }
+            });
+            
+            _articleCollection.Add(new Article() {});
+            
             await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
                 Configuration = new SiteConfiguration()

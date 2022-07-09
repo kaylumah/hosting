@@ -4,14 +4,19 @@
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Moq;
+using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
 namespace Test.Specflow.Utilities;
 
 public class FileProcessorMock : StrictMock<IFileProcessor>
 {
-    public FileProcessorMock()
+    private readonly ArticleCollection _articles;
+    
+    public FileProcessorMock(ArticleCollection articles)
     {
+        _articles = articles;
         SetupProcess();
     }
 
@@ -22,15 +27,12 @@ public class FileProcessorMock : StrictMock<IFileProcessor>
             .Callback((FileFilterCriteria criteria) => { })
             .ReturnsAsync((FileFilterCriteria criteria) =>
             {
-                var result = new List<File>
+                var result = new List<File>();
+
+                if (_articles.Any())
                 {
-                    new File()
-                    {
-                        Content = String.Empty,
-                        Name = "Hello World!",
-                        MetaData = new FileMetaData()
-                    }
-                };
+                    result.AddRange(_articles.ToPageMetaData().ToFile());
+                }
 
                 return result;
             });

@@ -19,8 +19,18 @@ public static partial class MappingExtensions
             fileMetaData.Add(item.Key, item.Value);
         }
 
-        var file = new File() { MetaData = fileMetaData };
+        var file = new File()
+        {
+            Name = string.Empty,
+            Content = string.Empty,
+            MetaData = fileMetaData
+        };
         return file;
+    }
+
+    public static IEnumerable<File> ToFile(this IEnumerable<PageMetaData> pageMetaData)
+    {
+        return pageMetaData.Select(ToFile);
     }
 
     public static PageMetaData ToPageMetaData(this Article article)
@@ -33,6 +43,11 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Published), article.Created);
         pageDictionary.SetValue(nameof(PageMetaData.Modified), article.Modified);
         return new PageMetaData(pageDictionary);
+    }
+
+    public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Article> article)
+    {
+        return article.Select(ToPageMetaData);
     }
 
     public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
