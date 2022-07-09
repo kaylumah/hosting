@@ -2,12 +2,20 @@
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Test.Specflow.Entities;
+using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
 namespace Test.Specflow.Extensions;
 
 public static partial class MappingExtensions
 {
+    public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+    {
+        var pages = files.ToPages(siteGuid);
+        return pages.ToArticles();
+    }
+
     public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
     {
         return pageMetaData.Select(x => new Article()
