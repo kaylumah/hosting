@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
@@ -26,18 +27,17 @@ public class SiteManagerStepDefinitions
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
 
-    public SiteManagerStepDefinitions(ArticleCollection articleCollection, ValidationContext validationContext, SiteInfo siteInfo)
+    public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection, ValidationContext validationContext, SiteInfo siteInfo)
     {
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         var clock = new Mock<ISystemClock>();
         var fileProcessor = new FileProcessorMock(_articleCollection);
         var artifactAccess = new ArtifactAccessMock();
-        var fileSystem = new Mock<IFileSystem>();
         var logger = NullLogger<SiteManager>.Instance;
         var transformationEngine = new TransformationEngineMock();
         var yamlParser = new YamlParser();
-        var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, fileSystem.Object, NullLogger<SiteMetadataFactory>.Instance);
+        var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem, NullLogger<SiteMetadataFactory>.Instance);
         var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
         var metaTagGenerator = new MetaTagGenerator(NullLogger<MetaTagGenerator>.Instance);
         var structureDataGenerator = new StructureDataGenerator(NullLogger<StructureDataGenerator>.Instance);
@@ -46,7 +46,7 @@ public class SiteManagerStepDefinitions
         _siteManager = new SiteManager(
             fileProcessor.Object,
             artifactAccess.Object,
-            fileSystem.Object,
+            mockFileSystem,
             logger,
             siteInfo,
             transformationEngine.Object,
