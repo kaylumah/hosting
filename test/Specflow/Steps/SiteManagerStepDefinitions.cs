@@ -15,6 +15,7 @@ using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
+using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps;
 
@@ -29,7 +30,7 @@ public class SiteManagerStepDefinitions
     {
         _validationContext = validationContext;
         var clock = new Mock<ISystemClock>();
-        var fileProcessor = new Mock<IFileProcessor>();
+        var fileProcessor = new FileProcessorMock();
         var artifactAccess = new Mock<IArtifactAccess>();
         var fileSystem = new Mock<IFileSystem>();
         var logger = NullLogger<SiteManager>.Instance;
