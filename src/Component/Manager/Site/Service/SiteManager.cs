@@ -130,7 +130,13 @@ public class SiteManager : ISiteManager
             _seoGenerator.ApplySeo(item.Metadata);
         });
 
-        var renderResults = await _transformationEngine.Render(requests).ConfigureAwait(false);
+        var directoryConfig = new DirectoryConfiguration()
+        {
+            SourceDirectory = request.Configuration.Source,
+            LayoutsDirectory = request.Configuration.LayoutDirectory,
+            TemplateDirectory = request.Configuration.PartialsDirectory
+        };
+        var renderResults = await _transformationEngine.Render(directoryConfig, requests).ConfigureAwait(false);
 
 
         var artifacts = processed.Select((t, i) =>

@@ -3,7 +3,9 @@
 
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
-public interface ITransformationEngine
+public class DirectoryConfiguration
 {
-    Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests);
+    public string SourceDirectory { get; set; }
+    public string LayoutsDirectory { get; set; }
+    public string TemplateDirectory { get; set; }
 }
