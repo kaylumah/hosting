@@ -2,9 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Xml.Serialization;
-using System.Xml.XPath;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Moq;
 

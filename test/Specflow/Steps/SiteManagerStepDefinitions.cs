@@ -79,6 +79,7 @@ public class SiteManagerStepDefinitions
     public void ThenTheAtomFeedArtifactsHasTheFollowingArticles()
     {
         var feed = _artifactAccess.GetFeedArtifact();
+        var sitemap = _artifactAccess.GetSiteMapArtifact();
     }
 
     [Then("the following artifacts are created:")]
