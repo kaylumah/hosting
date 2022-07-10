@@ -64,15 +64,7 @@ public class SiteManagerStepDefinitions
         {
             await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
-                Configuration = new SiteConfiguration() { AssetDirectory = "assets", DataDirectory = "data" }
-            });
-            await _siteManager.GenerateSite(new GenerateSiteRequest()
-            {
-                Configuration = new SiteConfiguration()
-                {
-                    AssetDirectory = "assets",
-                    DataDirectory = "data"
-                }
+                Configuration = new SiteConfiguration() { Source = "_site", AssetDirectory = "assets", DataDirectory = "data" }
             });
         }
         catch (Exception ex)
