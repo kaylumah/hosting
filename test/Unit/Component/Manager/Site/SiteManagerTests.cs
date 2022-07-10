@@ -71,6 +71,7 @@ public class SiteManagerTests
         {
             Configuration = new SiteConfiguration
             {
+                Source = "_site",
                 DataDirectory = "_data",
                 AssetDirectory = "assets"
             }

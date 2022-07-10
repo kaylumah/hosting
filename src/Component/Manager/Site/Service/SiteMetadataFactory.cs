@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Data");
 
-            var dataDirectory = Path.Combine("_site", siteConfiguration.DataDirectory);
+            var dataDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.DataDirectory);
             var extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
             var dataFiles = _fileSystem.GetFiles(dataDirectory)
                 .Where(file => !file.IsDirectory())

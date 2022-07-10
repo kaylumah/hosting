@@ -49,7 +49,13 @@ public class TransformationEngineTests
         var engine = serviceProvider.GetRequiredService<ITransformationEngine>();
 
         var model = new Mock<RenderData>();
-        var renderResult = await engine.Render(new MetadataRenderRequest[] {
+        var config = new DirectoryConfiguration()
+        {
+            SourceDirectory = "_site",
+            LayoutsDirectory = "_layouts",
+            TemplateDirectory = "_includes"
+        };
+        var renderResult = await engine.Render(config, new MetadataRenderRequest[] {
                 new MetadataRenderRequest {
                     Metadata = model.Object
                 }
