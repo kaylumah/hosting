@@ -21,7 +21,7 @@ public static partial class MappingExtensions
 
         var file = new File()
         {
-            Name = string.Empty,
+            Name = (string) fileMetaData.GetValueOrDefault("uri", string.Empty),
             Content = string.Empty,
             LastModified = default,
             MetaData = fileMetaData
@@ -38,6 +38,7 @@ public static partial class MappingExtensions
     {
         var pageDictionary = new Dictionary<string, object>();
         pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
+        pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
         pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
         pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
         pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
@@ -46,6 +47,7 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
         pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
         pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
+        pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
         return new PageMetaData(pageDictionary);
     }
 
