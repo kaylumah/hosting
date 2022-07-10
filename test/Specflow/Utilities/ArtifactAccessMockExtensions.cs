@@ -15,7 +15,7 @@ public static class ArtifactAccessMockExtensions
     {
         var bytes = artifactAccess
             .Artifacts
-            .SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
+            .GetArtifactContents(path);
         return bytes;
     }
 
