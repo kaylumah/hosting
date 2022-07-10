@@ -44,6 +44,8 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Published), article.Created);
         pageDictionary.SetValue(nameof(PageMetaData.Modified), article.Modified);
         pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
+        pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
+        pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
         return new PageMetaData(pageDictionary);
     }
 
