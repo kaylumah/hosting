@@ -11,12 +11,20 @@ public class FileSystemStepDefinitions
 {
     private readonly MockFileSystem _mockFileSystem;
     private static readonly string _rootDirectory = "_site";
+    private readonly string _layoutsDirectory = Path.Combine(_rootDirectory, "_layouts");
     private readonly string _postsDirectory = Path.Combine(_rootDirectory, "_posts");
     private readonly string _pagesDirectory = Path.Combine(_rootDirectory, "_pages");
 
     public FileSystemStepDefinitions(MockFileSystem mockFileSystem)
     {
         _mockFileSystem = mockFileSystem;
+    }
+    
+    [Given("'(.*)' is a layout with the following contents:")]
+    public void GivenIsALayoutWithTheFollowingContents(string fileName, string contents)
+    {
+        var layoutDirectory = Path.Combine(_layoutsDirectory, fileName);
+        _mockFileSystem.AddFile(layoutDirectory, MockFileDataFactory.PlainFile(contents));
     }
 
     [Given("'(.*)' is an empty post:")]

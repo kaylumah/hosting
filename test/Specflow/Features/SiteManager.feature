@@ -1,6 +1,12 @@
 Feature: SiteManager
 
     Scenario: Add two numbers
+        Given 'default.html' is a layout with the following contents:
+            """
+            <!DOCTYPE html>
+            <html>
+            </html>
+            """
         Given the following articles:
           | Uri          | Title  | Description | Author | Created    | Modified   |
           | example.html | <null> | <null>      | <null> | 2022-07-03 | 2022-07-03 |
