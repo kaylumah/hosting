@@ -2,9 +2,10 @@ Feature: SystemTests
 
     Scenario: System Test
         Given the following defaults:
-          | Scope | Path | Key    | Value |
-          | posts |      | author | Max   |
-          | posts |      | type | Article   |
+          | Scope | Path | Key     | Value   |
+          | posts |      | type    | Article |
+          | posts |      | feed    | True    |
+          | posts |      | sitemap | True    |
         Given the following collections:
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
