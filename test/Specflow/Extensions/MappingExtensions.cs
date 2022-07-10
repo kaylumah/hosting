@@ -21,7 +21,7 @@ public static partial class MappingExtensions
 
         var file = new File()
         {
-            Name = (string) fileMetaData.GetValueOrDefault("uri", string.Empty),
+            Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
             Content = string.Empty,
             LastModified = default,
             MetaData = fileMetaData
