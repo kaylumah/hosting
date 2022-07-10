@@ -96,6 +96,8 @@ public class SiteManagerStepDefinitions
         var sitemap = _artifactAccess.GetSiteMapArtifact();
         var html = _artifactAccess.GetHtmlDocument("example.html");
         var nodes = html.DocumentNode.SelectNodes("//meta");
+        var node = html.DocumentNode.SelectSingleNode("//meta[@name='description']");
+
     }
 
     [Then("the following artifacts are created:")]
