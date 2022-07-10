@@ -9,8 +9,7 @@ public static class ArtifactExtensions
 {
     public static byte[] GetArtifactContents(this IEnumerable<Artifact> artifacts, string path)
     {
-        var bytes = artifacts
-            .SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
+        var bytes = artifacts.SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
         return bytes;
     }
 }

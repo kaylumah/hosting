@@ -31,10 +31,7 @@ public static class ArtifactAccessMockExtensions
     public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
     {
         var atomFeedXmlBytes = artifactAccess.GetArtifactContents(path);
-        using var stream = new MemoryStream(atomFeedXmlBytes);
-        using var xmlReader = XmlReader.Create(stream);
-        var feed = SyndicationFeed.Load(xmlReader);
-        return feed;
+        return atomFeedXmlBytes.ToSyndicationFeed();
     }
 
     public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
