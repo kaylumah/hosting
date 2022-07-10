@@ -3,6 +3,8 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
@@ -12,6 +14,8 @@ using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
+using Ssg.Extensions.Metadata.Abstractions;
+using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Test.Specflow.Entities;
 using Test.Specflow.Utilities;
 
@@ -25,14 +29,19 @@ public class SiteManagerStepDefinitions
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
     private readonly ArtifactAccessMock _artifactAccess;
-    private readonly TransformationEngineMock _transformationEngine;
+    // private readonly TransformationEngineMock _transformationEngine;
 
     public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection, ValidationContext validationContext, SiteInfo siteInfo)
     {
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         _artifactAccess = new ArtifactAccessMock();
-        _transformationEngine = new TransformationEngineMock();
+        // _transformationEngine = new TransformationEngineMock();
+        IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(new YamlParser());
+        ITransformationEngine transformationEngine = new TransformationEngine(
+            NullLogger<TransformationEngine>.Instance,
+            mockFileSystem,
+            metadataProvider);
         var clock = new Mock<ISystemClock>();
         var fileProcessor = new FileProcessorMock(_articleCollection);
         var logger = NullLogger<SiteManager>.Instance;
@@ -49,7 +58,7 @@ public class SiteManagerStepDefinitions
             mockFileSystem,
             logger,
             siteInfo,
-            _transformationEngine.Object,
+            transformationEngine,
             siteMetadataFactory,
             feedGenerator,
             seoGenerator,
@@ -64,7 +73,14 @@ public class SiteManagerStepDefinitions
         {
             await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
-                Configuration = new SiteConfiguration() { Source = "_site", AssetDirectory = "assets", DataDirectory = "data" }
+                Configuration = new SiteConfiguration()
+                {
+                    Source = "_site",
+                    AssetDirectory = "assets",
+                    DataDirectory = "data",
+                    LayoutDirectory = "_layouts",
+                    PartialsDirectory = "_includes"
+                }
             });
         }
         catch (Exception ex)
