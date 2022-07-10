@@ -81,21 +81,30 @@ public class SystemTestStepDefinitions
         );
     }
 
-    [When("the site is generated:")]
+    [When("the site is generated v2:")]
     public async Task WhenTheSiteIsGenerated()
     {
-        await _siteManager.GenerateSite(new GenerateSiteRequest()
+        try
         {
-            Configuration = new SiteConfiguration()
+            await _siteManager.GenerateSite(new GenerateSiteRequest()
             {
-                Source = Constants.SourceDirectory,
-                Destination = Constants.DestinationDirectory,
-                AssetDirectory = Constants.AssetDirectory,
-                DataDirectory = Constants.DataDirectory,
-                LayoutDirectory = Constants.LayoutDirectory,
-                PartialsDirectory = Constants.PartialsDirectory
-            }
-        }).ConfigureAwait(false);
+                Configuration = new SiteConfiguration()
+                {
+                    Source = Constants.SourceDirectory,
+                    Destination = Constants.DestinationDirectory,
+                    AssetDirectory = Constants.AssetDirectory,
+                    DataDirectory = Constants.DataDirectory,
+                    LayoutDirectory = Constants.LayoutDirectory,
+                    PartialsDirectory = Constants.PartialsDirectory
+                }
+            }).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
     [Then("the following:")]
