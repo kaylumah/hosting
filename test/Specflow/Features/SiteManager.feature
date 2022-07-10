@@ -1,7 +1,7 @@
 Feature: SiteManager
 
     Scenario: Add two numbers
-        Given 'default.html' is a layout with the following contents:
+        Given 'default.html' is a layout file with the following contents:
         """
         <!DOCTYPE html>
         <html>
@@ -16,8 +16,8 @@ Feature: SiteManager
           | Uri          | Title  | Description | Author | Created    | Modified   |
           | example.html | <null> | <null>      | <null> | 2022-07-03 | 2022-07-03 |
         Given the following site info:
-          | Url                 | BaseUrl |
-          | https://example.com | <null>  |
+          | Url                 | BaseUrl | SupportedFileExtensions |
+          | https://example.com | <null>  | .html                   |
         Given the following collections:
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
