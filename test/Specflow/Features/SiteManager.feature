@@ -5,6 +5,11 @@ Feature: SiteManager
         """
         <!DOCTYPE html>
         <html>
+            <head>
+            {{ page.metatags }}
+            </head>
+            <body>
+            </body>
         </html>
         """
         Given the following articles:

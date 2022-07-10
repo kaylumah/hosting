@@ -95,6 +95,7 @@ public class SiteManagerStepDefinitions
         var feed = _artifactAccess.GetFeedArtifact();
         var sitemap = _artifactAccess.GetSiteMapArtifact();
         var html = _artifactAccess.GetHtmlDocument("example.html");
+        var nodes = html.DocumentNode.SelectNodes("//meta");
     }
 
     [Then("the following artifacts are created:")]
