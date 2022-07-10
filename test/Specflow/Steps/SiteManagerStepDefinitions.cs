@@ -2,6 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
+using System.ServiceModel.Syndication;
+using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -71,6 +73,32 @@ public class SiteManagerStepDefinitions
         {
             _validationContext.TestServiceException = ex;
         }
+    }
+
+    [Then("the atom feed artifacts has the following articles:")]
+    public void ThenTheAtomFeedArtifactsHasTheFollowingArticles()
+    {
+        var atomFeedXmlBytes = _artifactAccess
+            .StoreArtifactRequests.SelectMany(x => x.Artifacts)
+            .SingleOrDefault(x => "feed.xml".Equals(x.Path))?.Contents ?? Array.Empty<byte>();
+
+        using var stream = new MemoryStream(atomFeedXmlBytes);
+        using var xmlReader = XmlReader.Create(stream);
+        var feed = SyndicationFeed.Load(xmlReader);
+        /*
+         *XmlReader reader = XmlReader.Create("http://localhost/feeds/serializedFeed.xml");
+SyndicationFeed feed = SyndicationFeed.Load(reader);
+         * var settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                Encoding = new System.Text.UTF8Encoding(false)
+            };
+            using var stream = new MemoryStream();
+            using var writer = XmlWriter.Create(stream, settings);
+            syndicationFeed.SaveAsAtom10(writer);
+            writer.Close();
+            return stream.ToArray();
+         */
     }
 
     [Then("the following artifacts are created:")]

@@ -17,3 +17,4 @@ Feature: SiteManager
             | example.html |
             | sitemap.xml  |
             | feed.xml     |
+        And the atom feed artifacts has the following articles:
