@@ -73,6 +73,19 @@ public class SiteManagerStepDefinitions
         }
     }
 
+    [Then("the following artifacts are created:")]
+    public void ThenTheFollowingArtifactsAreCreated(Table table)
+    {
+        var actualArtifacts = _artifactAccess
+            .StoreArtifactRequests
+            .SelectMany(x => x.Artifacts)
+            .Select(x => x.Path)
+            .ToList();
+
+        var expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
+        actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
+    }
+
     [Then("the scenario executed successfully:")]
     public void ThenTheScenarioExecutedSuccessfully()
     {

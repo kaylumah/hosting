@@ -12,3 +12,8 @@ Feature: SiteManager
           | posts | true   | <null>  |
         When the site is generated:
         Then the scenario executed successfully:
+        And the following artifacts are created:
+            | Path         |
+            | example.html |
+            | sitemap.xml  |
+            | feed.xml     |
