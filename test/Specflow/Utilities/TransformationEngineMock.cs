@@ -32,8 +32,8 @@ public class TransformationEngineMock : StrictMock<ITransformationEngine>
     public void SetupRender()
     {
         Setup(transformationEngine =>
-                transformationEngine.Render(It.IsAny<MetadataRenderRequest[]>()))
-            .ReturnsAsync((MetadataRenderRequest[] requests) =>
+                transformationEngine.Render(It.IsAny<DirectoryConfiguration>(),It.IsAny<MetadataRenderRequest[]>()))
+            .ReturnsAsync((DirectoryConfiguration _, MetadataRenderRequest[] requests) =>
             {
                 var result = new List<MetadataRenderResult>();
                 foreach (var renderRequest in requests)
