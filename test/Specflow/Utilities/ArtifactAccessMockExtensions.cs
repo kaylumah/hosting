@@ -11,27 +11,16 @@ public static class ArtifactAccessMockExtensions
 {
     public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
     {
-        var bytes = artifactAccess
-            .Artifacts
-            .GetArtifactContents(path);
+        var bytes = artifactAccess.Artifacts.GetArtifactContents(path);
         return bytes;
     }
 
     public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
-    {
-        var htmlBytes = artifactAccess.GetArtifactContents(path);
-        return htmlBytes.ToHtmlDocument();
-    }
+        => artifactAccess.GetArtifactContents(path).ToHtmlDocument();
 
     public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
-    {
-        var atomFeedXmlBytes = artifactAccess.GetArtifactContents(path);
-        return atomFeedXmlBytes.ToSyndicationFeed();
-    }
+        => artifactAccess.GetArtifactContents(path).ToSyndicationFeed();
 
     public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
-    {
-        var siteMapXmlBytes = artifactAccess.GetArtifactContents(path);
-        return siteMapXmlBytes.ToSiteMap();
-    }
+        => artifactAccess.GetArtifactContents(path).ToSiteMap();
 }
