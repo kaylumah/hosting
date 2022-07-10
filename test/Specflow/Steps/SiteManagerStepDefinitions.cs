@@ -97,7 +97,8 @@ public class SiteManagerStepDefinitions
         var html = _artifactAccess.GetHtmlDocument("example.html");
         var nodes = html.DocumentNode.SelectNodes("//meta");
         var node = html.DocumentNode.SelectSingleNode("//meta[@name='description']");
-
+        var node2 = html.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
+        var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
     }
 
     [Then("the following artifacts are created:")]
