@@ -2,8 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
-using System.ServiceModel.Syndication;
-using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
