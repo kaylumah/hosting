@@ -2,7 +2,9 @@
 // See LICENSE file in the project root for full license information.
 
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Xml;
+using HtmlAgilityPack;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 
 namespace Test.Specflow.Utilities;
@@ -15,6 +17,15 @@ public static class ArtifactAccessMockExtensions
             .Artifacts
             .SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
         return bytes;
+    }
+
+    public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
+    {
+        var htmlBytes = artifactAccess.GetArtifactContents(path);
+        var contents = new UTF8Encoding(false).GetString(htmlBytes);
+        var htmlDoc = new HtmlDocument();
+        htmlDoc.LoadHtml(contents);
+        return htmlDoc;
     }
 
     public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
