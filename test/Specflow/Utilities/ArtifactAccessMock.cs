@@ -2,32 +2,13 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.ObjectModel;
-using System.ServiceModel.Syndication;
-using System.Xml;
+using System.Text;
+using System.Xml.Serialization;
+using System.Xml.XPath;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Moq;
 
 namespace Test.Specflow.Utilities;
-
-public static class ArtifactAccessMockExtensions
-{
-    public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
-    {
-        var bytes = artifactAccess
-            .Artifacts
-            .SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
-        return bytes;
-    }
-
-    public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
-    {
-        var atomFeedXmlBytes = artifactAccess.GetArtifactContents(path);
-        using var stream = new MemoryStream(atomFeedXmlBytes);
-        using var xmlReader = XmlReader.Create(stream);
-        var feed = SyndicationFeed.Load(xmlReader);
-        return feed;
-    }
-}
 
 public class ArtifactAccessMock : StrictMock<IArtifactAccess>
 {
