@@ -93,9 +93,12 @@ public class SiteManagerStepDefinitions
     public void ThenTheAtomFeedArtifactsHasTheFollowingArticles()
     {
         var feed = _artifactAccess.GetFeedArtifact();
+        var articles = feed.ToArticles();
+        
         var sitemap = _artifactAccess.GetSiteMapArtifact();
+
         var html = _artifactAccess.GetHtmlDocument("example.html");
-        var test = html.ToMetaTags();
+        var htmlTags = html.ToMetaTags();
     }
 
     [Then("the following artifacts are created:")]
