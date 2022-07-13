@@ -9,6 +9,9 @@ Feature: SystemTests
         Given the following collections:
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
+        Given the following articles v2:
+          | Uri      | Title  | Description | Author | Created | Modified |
+          | 001.html | <null> | <null>      | Max    | <null>  | <null>   |
         Given the following site info:
           | Url                 | BaseUrl | SupportedFileExtensions |
           | https://example.com | <null>  | .html                   |

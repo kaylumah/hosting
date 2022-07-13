@@ -20,6 +20,9 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
+using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
+using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps;
 
@@ -79,6 +82,17 @@ public class SystemTestStepDefinitions
             new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance),
             clock
         );
+    }
+
+    [Given("the following articles v2:")]
+    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
+    {
+        var files = articleCollection.ToPageMetaData().ToFile().ToList();
+        foreach (var file in files)
+        {
+            var mockFile = MockFileDataFactory.EnrichedFile(file.Content, file.MetaData);
+            _mockFileSystem.AddFile(Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, file.Name), mockFile);
+        }
     }
 
     [When("the site is generated v2:")]
