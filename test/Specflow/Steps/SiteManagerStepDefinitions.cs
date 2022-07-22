@@ -17,6 +17,7 @@ using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps;
@@ -28,10 +29,12 @@ public class SiteManagerStepDefinitions
     private readonly ISiteManager _siteManager;
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
+
     private readonly ArtifactAccessMock _artifactAccess;
     // private readonly TransformationEngineMock _transformationEngine;
 
-    public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection, ValidationContext validationContext, SiteInfo siteInfo)
+    public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection,
+        ValidationContext validationContext, SiteInfo siteInfo)
     {
         _articleCollection = articleCollection;
         _validationContext = validationContext;
@@ -46,7 +49,8 @@ public class SiteManagerStepDefinitions
         var fileProcessor = new FileProcessorMock(_articleCollection);
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
-        var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem, NullLogger<SiteMetadataFactory>.Instance);
+        var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
+            NullLogger<SiteMetadataFactory>.Instance);
         var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
         var metaTagGenerator = new MetaTagGenerator(NullLogger<MetaTagGenerator>.Instance);
         var structureDataGenerator = new StructureDataGenerator(NullLogger<StructureDataGenerator>.Instance);
@@ -64,6 +68,50 @@ public class SiteManagerStepDefinitions
             seoGenerator,
             siteMapGenerator,
             clock.Object);
+    }
+
+    [Given("the following articles v2:")]
+    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
+    {
+        var files = articleCollection.ToPageMetaData().ToFile().ToList();
+        foreach (var file in files)
+        {
+            // var mockFile = MockFileDataFactory.EnrichedFile(file.Content, file.MetaData);
+            // _mockFileSystem.AddFile(Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, file.Name), mockFile);
+        }
+    }
+
+    [When("the site is generated v2:")]
+    public async Task WhenTheSiteIsGenerated2()
+    {
+        try
+        {
+            await _siteManager.GenerateSite(new GenerateSiteRequest()
+            {
+                Configuration = new SiteConfiguration()
+                {
+                    Source = Constants.SourceDirectory,
+                    Destination = Constants.DestinationDirectory,
+                    AssetDirectory = Constants.AssetDirectory,
+                    DataDirectory = Constants.DataDirectory,
+                    LayoutDirectory = Constants.LayoutDirectory,
+                    PartialsDirectory = Constants.PartialsDirectory
+                }
+            }).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+
+    [Then("the following:")]
+    public void ThenFollowing()
+    {
+        // var fileNames = _mockFileSystem.AllFiles.ToList();
+        // var bytes = _mockFileSystem.GetFileBytes("dist/feed.xml");
     }
 
     [When("the site is generated:")]
@@ -94,7 +142,7 @@ public class SiteManagerStepDefinitions
     {
         var feed = _artifactAccess.GetFeedArtifact();
         var articles = feed.ToArticles();
-        
+
         var sitemap = _artifactAccess.GetSiteMapArtifact();
 
         var html = _artifactAccess.GetHtmlDocument("example.html");
