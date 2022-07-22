@@ -111,8 +111,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(authorFile);
                 var authorData = _yamlParser.Parse<AuthorMetaDataCollection>(authorFile);
-                site.Data["authors"] = authorData.Dictionary;
-                site.AuthorMetaData = authorData;
+                site.AuthorMetaData.AddRange(authorData);
+                site.Data["authors"] = site.AuthorMetaData.Dictionary;
             }
 
             var organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
