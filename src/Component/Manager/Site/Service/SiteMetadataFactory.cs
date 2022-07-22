@@ -120,8 +120,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(organizationFile);
                 var organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
-                site.Data["organizations"] = organizationData.Dictionary;
-                site.OrganizationMetaData = organizationData;
+                site.OrganizationMetaData.AddRange(organizationData);
+                site.Data["organizations"] = site.OrganizationMetaData.Dictionary;
             }
 
             EnrichSiteWithData(site, dataFiles);
