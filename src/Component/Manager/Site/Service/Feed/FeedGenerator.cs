@@ -82,16 +82,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             var posts = RetrievePostPageMetaDatas(siteMetaData)
-                .ByRecentlyPublished();
+                .ByRecentlyPublished()
+                .ToList();
             var result = new List<SyndicationItem>();
             if (posts.Any())
             {
-                FeedCount(posts.Count());
+                FeedCount(posts.Count);
                 var persons = siteMetaData.ToPersons();
                 var tags = siteMetaData.ToCategories();
                 foreach (var pageMetaData in posts)
                 {
-                    var author = persons[pageMetaData.Author];
                     var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
                     var item = new SyndicationItem
                     {
@@ -110,7 +110,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         .ToList();
                     itemCategories.ForEach(category => item.Categories.Add(category));
                     item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
-                    item.Authors.Add(author);
+                    if (!string.IsNullOrEmpty(pageMetaData.Author))
+                    {
+                        var author = persons[pageMetaData.Author];
+                        item.Authors.Add(author);
+                    }
                     result.Add(item);
                 }
             }

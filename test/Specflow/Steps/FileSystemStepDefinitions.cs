@@ -10,26 +10,51 @@ namespace Test.Specflow.Steps;
 public class FileSystemStepDefinitions
 {
     private readonly MockFileSystem _mockFileSystem;
-    private static readonly string _rootDirectory = "_site";
-    private readonly string _postsDirectory = Path.Combine(_rootDirectory, "_posts");
-    private readonly string _pagesDirectory = Path.Combine(_rootDirectory, "_pages");
 
     public FileSystemStepDefinitions(MockFileSystem mockFileSystem)
     {
         _mockFileSystem = mockFileSystem;
     }
 
+    [Given("'(.*)' is a data file with the following contents:")]
+    public void GivenIsADataFileWithTheFollowingContents(string fileName, string contents)
+    {
+        var dataFileName = Path.Combine(Constants.SourceDirectory, Constants.DataDirectory, fileName);
+        _mockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(contents));
+    }
+
+    [Given("'(.*)' is a layout file with the following contents:")]
+    public void GivenIsALayoutFileWithTheFollowingContents(string fileName, string contents)
+    {
+        var layoutFileName = Path.Combine(Constants.SourceDirectory, Constants.LayoutDirectory, fileName);
+        _mockFileSystem.AddFile(layoutFileName, MockFileDataFactory.PlainFile(contents));
+    }
+
+    [Given("'(.*)' is an asset file with the following contents:")]
+    public void GivenIsAnAssetFileWithTheFollowingContents(string fileName, string contents)
+    {
+        var assetFileName = Path.Combine(Constants.SourceDirectory, Constants.AssetDirectory, fileName);
+        _mockFileSystem.AddFile(assetFileName, MockFileDataFactory.PlainFile(contents));
+    }
+
+    [Given("'(.*)' is a post with the following contents:")]
+    public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
+    {
+        var postFileName = Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, fileName);
+        _mockFileSystem.AddFile(postFileName, MockFileDataFactory.PlainFile(contents));
+    }
+
     [Given("'(.*)' is an empty post:")]
     public void GivenIsAnEmptyPost(string fileName)
     {
-        var articleDirectory = Path.Combine(_postsDirectory, fileName);
-        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.EmptyFile());
+        var postFileName = Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, fileName);
+        _mockFileSystem.AddFile(postFileName, MockFileDataFactory.EmptyFile());
     }
 
     [Given("'(.*)' is an empty page:")]
     public void GivenIsAnEmptyPage(string fileName)
     {
-        var pageDirectory = Path.Combine(_pagesDirectory, fileName);
+        var pageDirectory = Path.Combine(Constants.SourceDirectory, Constants.PageDirectory, fileName);
         _mockFileSystem.AddFile(pageDirectory, MockFileDataFactory.EmptyFile());
     }
 
@@ -37,14 +62,7 @@ public class FileSystemStepDefinitions
     public void GivenIsAnEmptyFile(string fileName)
     {
         var normalizedFileName = fileName.Replace('/', Path.DirectorySeparatorChar);
-        var filePath = Path.Combine(_rootDirectory, normalizedFileName);
+        var filePath = Path.Combine(Constants.SourceDirectory, normalizedFileName);
         _mockFileSystem.AddFile(filePath, MockFileDataFactory.EmptyFile());
-    }
-
-    [Given("'(.*)' is a post with the following contents:")]
-    public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
-    {
-        var articleDirectory = Path.Combine(_postsDirectory, fileName);
-        _mockFileSystem.AddFile(articleDirectory, MockFileDataFactory.PlainFile(contents));
     }
 }

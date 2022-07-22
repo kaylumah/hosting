@@ -10,6 +10,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
     {
         public static Dictionary<string, SyndicationCategory> ToCategories(this SiteMetaData source)
         {
+            if (source.TagMetaData == null)
+            {
+                return new();
+            }
+            
             var tags = source.TagMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
             return tags;
@@ -17,6 +22,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         public static Dictionary<string, SyndicationPerson> ToPersons(this SiteMetaData source)
         {
+            if (source.AuthorMetaData == null)
+            {
+                return new();
+            }
+            
             var authors = source.AuthorMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationPerson()
                     {

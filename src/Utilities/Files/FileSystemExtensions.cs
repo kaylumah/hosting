@@ -31,6 +31,11 @@ public static class FileSystemExtensions
         var workingDirectory = string.IsNullOrEmpty(path) ? fileSystem.Directory.GetCurrentDirectory() : path;
         var result = new List<IFileSystemInfo>();
         var scanDirectory = fileSystem.DirectoryInfo.FromDirectoryName(workingDirectory);
+        if (!scanDirectory.Exists)
+        {
+            return result;
+        }
+
         var scanResult = scanDirectory.GetFileSystemInfos();
         result.AddRange(scanResult);
 

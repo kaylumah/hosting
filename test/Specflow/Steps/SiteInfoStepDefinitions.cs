@@ -25,4 +25,13 @@ public class SiteInfoStepDefinitions
             _siteInfo.Collections.Add(collection);
         }
     }
+
+    [Given("the following site info:")]
+    public void GivenTheFollowingSiteInfo(Table table)
+    {
+        var data = table.CreateInstance<(string url, string baseUrl, string[] supportedFileExtensions)>();
+        _siteInfo.Url = data.url;
+        _siteInfo.BaseUrl = data.baseUrl;
+        _siteInfo.SupportedFileExtensions = new HashSet<string>(data.supportedFileExtensions);
+    }
 }

@@ -43,9 +43,8 @@ public class FileProcessorStepDefinitions
     [Then("the following articles are returned:")]
     public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
     {
-        var actual = _files.ToPages(Guid.NewGuid());
-        var actualTransformed = actual.ToArticles();
-        actualTransformed.Should().BeEquivalentTo(articleCollection);
+        var actual = _files.ToArticles();
+        actual.Should().BeEquivalentTo(articleCollection);
     }
 
     [Then("no articles are returned:")]
