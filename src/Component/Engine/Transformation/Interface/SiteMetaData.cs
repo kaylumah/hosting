@@ -5,9 +5,9 @@ namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public class SiteMetaData
 {
-    public TagMetaDataCollection TagMetaData { get; set; }
-    public AuthorMetaDataCollection AuthorMetaData { get; set; }
-    public OrganizationMetaDataCollection OrganizationMetaData { get; set; }
+    public TagMetaDataCollection TagMetaData { get; set; } = new();
+    public AuthorMetaDataCollection AuthorMetaData { get; set; } = new();
+    public OrganizationMetaDataCollection OrganizationMetaData { get; set; } = new();
     public BuildData Build { get; set; }
     public string Id { get; set; }
     public string Title { get; set; }

@@ -110,7 +110,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         .ToList();
                     itemCategories.ForEach(category => item.Categories.Add(category));
                     item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
-                    if (!string.IsNullOrEmpty(pageMetaData.Author))
+                    if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.ContainsKey(pageMetaData.Author))
                     {
                         var author = persons[pageMetaData.Author];
                         item.Authors.Add(author);

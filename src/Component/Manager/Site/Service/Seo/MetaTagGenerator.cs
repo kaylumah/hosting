@@ -76,7 +76,7 @@ public partial class MetaTagGenerator
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
             CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))
         };
-        if (!string.IsNullOrEmpty(renderData.Page.Author))
+        if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
         {
             var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
             CreateMetaTag("author", author.FullName);
@@ -114,7 +114,7 @@ public partial class MetaTagGenerator
             var organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
             result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
         }
-        if (!string.IsNullOrEmpty(renderData.Page.Author))
+        if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
         {
             var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
             result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
@@ -152,7 +152,7 @@ public partial class MetaTagGenerator
 
         if (renderData.Page.Type == ContentType.Article)
         {
-            if (!string.IsNullOrEmpty(renderData.Page.Author))
+            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
             {
                 var author = renderData.Site.AuthorMetaData[renderData.Page.Author];
                 result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));

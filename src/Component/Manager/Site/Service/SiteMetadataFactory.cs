@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.ObjectModel;
 using System.IO.Abstractions;
 using System.Reflection;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
@@ -101,8 +102,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .Except(tagData.Keys)
                     .Concat(tagData.Keys.Except(tags));
                 LogMissingTags(string.Join(",", unmatchedTags));
-                site.Data["tags"] = tagData.Dictionary;
-                site.TagMetaData = tagData;
+                site.TagMetaData.AddRange(tagData);
+                site.Data["tags"] = site.TagMetaData.Dictionary;
             }
 
             var authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
@@ -110,8 +111,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(authorFile);
                 var authorData = _yamlParser.Parse<AuthorMetaDataCollection>(authorFile);
-                site.Data["authors"] = authorData.Dictionary;
-                site.AuthorMetaData = authorData;
+                site.AuthorMetaData.AddRange(authorData);
+                site.Data["authors"] = site.AuthorMetaData.Dictionary;
             }
 
             var organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
@@ -119,8 +120,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(organizationFile);
                 var organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
-                site.Data["organizations"] = organizationData.Dictionary;
-                site.OrganizationMetaData = organizationData;
+                site.OrganizationMetaData.AddRange(organizationData);
+                site.Data["organizations"] = site.OrganizationMetaData.Dictionary;
             }
 
             EnrichSiteWithData(site, dataFiles);
