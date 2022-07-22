@@ -19,7 +19,7 @@ public class Transforms
     [StepArgumentTransformation]
     public List<String> TransformToListOfString(string commaSeparatedList)
     {
-        return commaSeparatedList.Split(",").ToList();
+        return commaSeparatedList.Split(Constants.Separator).ToList();
     }
     
     [StepArgumentTransformation]

@@ -6,4 +6,5 @@ namespace Test.Specflow;
 public static class Constants
 {
     public const string NullIndicator = "<null>";
+    public const string Separator = ",";
 }
