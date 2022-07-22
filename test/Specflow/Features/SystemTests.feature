@@ -1,6 +1,5 @@
 Feature: SystemTests
 
-    @ignore
     Scenario: System Test
         Given the following defaults:
           | Scope | Path | Key     | Value   |
