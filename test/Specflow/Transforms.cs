@@ -11,6 +11,18 @@ namespace Test.Specflow;
 public class Transforms
 {
     [StepArgumentTransformation]
+    public static string ToNullableString(string value)
+    {
+        return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
+    }
+    
+    [StepArgumentTransformation]
+    public List<String> TransformToListOfString(string commaSeparatedList)
+    {
+        return commaSeparatedList.Split(Constants.Separator).ToList();
+    }
+    
+    [StepArgumentTransformation]
     public static ArticleCollection ToArticles(Table table)
     {
         var articles = table.CreateSet<Article>();
