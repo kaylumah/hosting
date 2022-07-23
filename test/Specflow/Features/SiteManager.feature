@@ -26,8 +26,8 @@ Feature: SiteManager
           | Uri          | Title | Description | Author | Created    | Modified   | Tags             |
           | example.html | Title | Description | <null> | 2022-07-03 | 2022-07-03 | dotnet, specflow |
         Given the following site info:
-          | Url                 | BaseUrl | SupportedFileExtensions |
-          | https://example.com | <null>  | .html                   |
+          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
+          | Kaylumah | en       | https://example.com | <null>  | .html                   |
         Given the following collections:
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
@@ -46,8 +46,8 @@ Feature: SiteManager
           | copyright              | © Kaylumah. All rights reserved.  |
           | keywords               | dotnet, specflow                  |
           | og:type                | article                           |
-          | og:locale              |                                   |
-          | og:site_name           |                                   |
+          | og:locale              | en                                |
+          | og:site_name           | Kaylumah                          |
           | og:title               | Title                             |
           | og:url                 | https://example.com/example.html  |
           | og:description         | Description                       |
@@ -72,8 +72,8 @@ Feature: SiteManager
           | Uri      | Title  | Description | Author | Created | Modified |
           | 001.html | <null> | <null>      | Max    | <null>  | <null>   |
         Given the following site info:
-          | Url                 | BaseUrl | SupportedFileExtensions |
-          | https://example.com | <null>  | .html                   |
+          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
+          | Kaylumah | en       | https://example.com | <null>  | .html                   |
         Given 'example.html' is an empty post:
         And 'authors.yml' is a data file with the following contents:
         """
