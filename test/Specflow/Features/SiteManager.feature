@@ -63,5 +63,5 @@ Feature: SiteManager
         And 'image.xml' is an asset file with the following contents:
         """
         """
-        When the site is generated v2:
+        When the site is generated:
         Then the following:

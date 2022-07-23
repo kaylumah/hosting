@@ -81,32 +81,6 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [When("the site is generated v2:")]
-    public async Task WhenTheSiteIsGenerated2()
-    {
-        try
-        {
-            await _siteManager.GenerateSite(new GenerateSiteRequest()
-            {
-                Configuration = new SiteConfiguration()
-                {
-                    Source = Constants.Directories.SourceDirectory,
-                    Destination = Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Constants.Directories.AssetDirectory,
-                    DataDirectory = Constants.Directories.DataDirectory,
-                    LayoutDirectory = Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Constants.Directories.PartialsDirectory
-                }
-            }).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
-
-
     [Then("the following:")]
     public void ThenFollowing()
     {
@@ -123,11 +97,12 @@ public class SiteManagerStepDefinitions
             {
                 Configuration = new SiteConfiguration()
                 {
-                    Source = "_site",
-                    AssetDirectory = "assets",
-                    DataDirectory = "data",
-                    LayoutDirectory = "_layouts",
-                    PartialsDirectory = "_includes"
+                    Source = Constants.Directories.SourceDirectory,
+                    Destination = Constants.Directories.DestinationDirectory,
+                    AssetDirectory = Constants.Directories.AssetDirectory,
+                    DataDirectory = Constants.Directories.DataDirectory,
+                    LayoutDirectory = Constants.Directories.LayoutDirectory,
+                    PartialsDirectory = Constants.Directories.PartialsDirectory
                 }
             });
         }
