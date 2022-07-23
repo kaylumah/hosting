@@ -8,8 +8,9 @@ Feature: SiteManager
           | Id       |
           | Kaylumah |
         Given the following tags:
-          | Id     |
-          | dotnet |
+          | Id       |
+          | dotnet   |
+          | specflow |
         Given 'default.html' is a layout file with the following contents:
         """
         <!DOCTYPE html>
@@ -22,8 +23,8 @@ Feature: SiteManager
         </html>
         """
         Given the following articles:
-          | Uri          | Title | Description | Author | Created    | Modified   |
-          | example.html | Title | Description | <null> | 2022-07-03 | 2022-07-03 |
+          | Uri          | Title | Description | Author | Created    | Modified   | Tags             |
+          | example.html | Title | Description | <null> | 2022-07-03 | 2022-07-03 | dotnet, specflow |
         Given the following site info:
           | Url                 | BaseUrl | SupportedFileExtensions |
           | https://example.com | <null>  | .html                   |
@@ -43,7 +44,7 @@ Feature: SiteManager
           | generator              | Kaylumah vd8b6637                 |
           | description            | Description                       |
           | copyright              | © Kaylumah. All rights reserved.  |
-          | keywords               |                                   |
+          | keywords               | dotnet, specflow                  |
           | og:type                | article                           |
           | og:locale              |                                   |
           | og:site_name           |                                   |
@@ -52,6 +53,8 @@ Feature: SiteManager
           | og:description         | Description                       |
           | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
           | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
+          | article:tag            | dotnet                            |
+          | article:tag            | specflow                          |
           | twitter:card           | summary_large_image               |
           | twitter:title          | Title                             |
           | twitter:description    | Description                       |
