@@ -38,6 +38,23 @@ Feature: SiteManager
           | sitemap.xml  |
           | feed.xml     |
         And the atom feed artifacts has the following articles:
+        And 'example.html' is a document with the following meta tags:
+          | Tag                    | Value                             |
+          | generator              | Kaylumah vd8b6637                 |
+          | description            |                                   |
+          | copyright              | © Kaylumah. All rights reserved.  |
+          | keywords               |                                   |
+          | og:type                | article                           |
+          | og:locale              |                                   |
+          | og:site_name           |                                   |
+          | og:title               |                                   |
+          | og:url                 | https://example.com/example.html  |
+          | og:description         |                                   |
+          | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
+          | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
+          | twitter:card           | summary_large_image               |
+          | twitter:title          |                                   |
+          | twitter:description    |                                   |
 
     Scenario: System Test
         Given the following defaults:

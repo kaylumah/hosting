@@ -119,9 +119,16 @@ public class SiteManagerStepDefinitions
         var articles = feed.ToArticles();
 
         var sitemap = _artifactAccess.GetSiteMapArtifact();
+    }
 
-        var html = _artifactAccess.GetHtmlDocument("example.html");
-        var htmlTags = html.ToMetaTags();
+    [Then("'(.*)' is a document with the following meta tags:")]
+    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+    {
+        ArgumentNullException.ThrowIfNull(table);
+        var expected = table.CreateSet<(string Tag, string Value)>();
+        var html = _artifactAccess.GetHtmlDocument(documentPath);
+        var actual = html.ToMetaTags();
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [Then("the following artifacts are created:")]
