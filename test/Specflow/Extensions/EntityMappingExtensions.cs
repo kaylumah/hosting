@@ -17,7 +17,8 @@ public static class EntityMappingExtensions
     {
         return new AuthorMetaData()
         {
-            Id = author.Id
+            Id = author.Id,
+            Links = null
         };
     }
     
