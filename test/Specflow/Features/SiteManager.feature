@@ -22,8 +22,8 @@ Feature: SiteManager
         </html>
         """
         Given the following articles:
-          | Uri          | Title  | Description | Author | Created    | Modified   |
-          | example.html | <null> | <null>      | <null> | 2022-07-03 | 2022-07-03 |
+          | Uri          | Title | Description | Author | Created    | Modified   |
+          | example.html | Title | Description | <null> | 2022-07-03 | 2022-07-03 |
         Given the following site info:
           | Url                 | BaseUrl | SupportedFileExtensions |
           | https://example.com | <null>  | .html                   |
@@ -41,20 +41,20 @@ Feature: SiteManager
         And 'example.html' is a document with the following meta tags:
           | Tag                    | Value                             |
           | generator              | Kaylumah vd8b6637                 |
-          | description            |                                   |
+          | description            | Description                       |
           | copyright              | © Kaylumah. All rights reserved.  |
           | keywords               |                                   |
           | og:type                | article                           |
           | og:locale              |                                   |
           | og:site_name           |                                   |
-          | og:title               |                                   |
+          | og:title               | Title                             |
           | og:url                 | https://example.com/example.html  |
-          | og:description         |                                   |
+          | og:description         | Description                       |
           | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
           | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
           | twitter:card           | summary_large_image               |
-          | twitter:title          |                                   |
-          | twitter:description    |                                   |
+          | twitter:title          | Title                             |
+          | twitter:description    | Description                       |
 
     Scenario: System Test
         Given the following defaults:
