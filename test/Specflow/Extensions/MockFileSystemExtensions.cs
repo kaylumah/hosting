@@ -16,7 +16,7 @@ public static class MockFileSystemExtensions
     {
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
+            .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitDefaults)
             .Build();
         
         var yamlContents = serializer.Serialize(data);
