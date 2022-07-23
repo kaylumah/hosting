@@ -36,6 +36,7 @@ public static partial class MappingExtensions
 
     public static PageMetaData ToPageMetaData(this Article article)
     {
+        var tags = article.Tags.Cast<object>().ToList();
         var pageDictionary = new Dictionary<string, object>();
         pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
         pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
@@ -49,6 +50,7 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
         pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
         pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
+        pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
         return new PageMetaData(pageDictionary);
     }
 

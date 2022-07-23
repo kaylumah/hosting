@@ -7,13 +7,13 @@ namespace Test.Specflow.Utilities;
 
 public static class HtmlDocumentExtensions
 {
-    public static Dictionary<string, string> ToMetaTags(this HtmlDocument document)
+    public static List<(string Tag, string Value)> ToMetaTags(this HtmlDocument document)
     {
         var nodes = document.DocumentNode.SelectNodes("//meta");
         // var node = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
         // var node2 = document.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
         // var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
-        var dictionary = new Dictionary<string, string>();
+        var result = new List<(string Tag, string Value)>();
         foreach (var node in nodes)
         {
             var keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
@@ -21,9 +21,9 @@ public static class HtmlDocumentExtensions
             var valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
             if (keyAttribute != null && valueAttribute != null)
             {
-                dictionary.Add(keyAttribute.Value, valueAttribute.Value);
+                result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
             }
         }
-        return dictionary;
+        return result;
     }
 }

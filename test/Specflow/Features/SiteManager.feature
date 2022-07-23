@@ -1,6 +1,6 @@
 Feature: SiteManager
 
-    Scenario: Add two numbers
+    Scenario: Generate website
         Given the following authors:
           | Id  |
           | Max |
@@ -8,8 +8,9 @@ Feature: SiteManager
           | Id       |
           | Kaylumah |
         Given the following tags:
-          | Id     |
-          | dotnet |
+          | Id       |
+          | dotnet   |
+          | specflow |
         Given 'default.html' is a layout file with the following contents:
         """
         <!DOCTYPE html>
@@ -22,11 +23,11 @@ Feature: SiteManager
         </html>
         """
         Given the following articles:
-          | Uri          | Title  | Description | Author | Created    | Modified   |
-          | example.html | <null> | <null>      | <null> | 2022-07-03 | 2022-07-03 |
+          | Uri          | Title | Description | Author | Created    | Modified   | Tags             |
+          | example.html | Title | Description | Max    | 2022-07-03 | 2022-07-03 | dotnet, specflow |
         Given the following site info:
-          | Url                 | BaseUrl | SupportedFileExtensions |
-          | https://example.com | <null>  | .html                   |
+          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
+          | Kaylumah | en       | https://example.com | <null>  | .html                   |
         Given the following collections:
           | Name  | Output | TreatAs |
           | posts | true   | <null>  |
@@ -38,7 +39,29 @@ Feature: SiteManager
           | sitemap.xml  |
           | feed.xml     |
         And the atom feed artifacts has the following articles:
+        And 'example.html' is a document with the following meta tags:
+          | Tag                    | Value                             |
+          | generator              | Kaylumah vd8b6637                 |
+          | description            | Description                       |
+          | copyright              | © Kaylumah. All rights reserved.  |
+          | keywords               | dotnet, specflow                  |
+          | og:type                | article                           |
+          | og:locale              | en                                |
+          | og:site_name           | Kaylumah                          |
+          | og:title               | Title                             |
+          | og:url                 | https://example.com/example.html  |
+          | og:description         | Description                       |
+          | article:author         |                                   |
+          | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
+          | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
+          | article:tag            | dotnet                            |
+          | article:tag            | specflow                          |
+          | twitter:card           | summary_large_image               |
+          | twitter:title          | Title                             |
+          | twitter:description    | Description                       |
+          | twitter:creator        | @Max                              |
 
+    @ignore
     Scenario: System Test
         Given the following defaults:
           | Scope | Path | Key     | Value   |
@@ -52,8 +75,8 @@ Feature: SiteManager
           | Uri      | Title  | Description | Author | Created | Modified |
           | 001.html | <null> | <null>      | Max    | <null>  | <null>   |
         Given the following site info:
-          | Url                 | BaseUrl | SupportedFileExtensions |
-          | https://example.com | <null>  | .html                   |
+          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
+          | Kaylumah | en       | https://example.com | <null>  | .html                   |
         Given 'example.html' is an empty post:
         And 'authors.yml' is a data file with the following contents:
         """

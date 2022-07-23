@@ -119,9 +119,22 @@ public class SiteManagerStepDefinitions
         var articles = feed.ToArticles();
 
         var sitemap = _artifactAccess.GetSiteMapArtifact();
+    }
 
-        var html = _artifactAccess.GetHtmlDocument("example.html");
-        var htmlTags = html.ToMetaTags();
+    [Then("'(.*)' is a document with the following meta tags:")]
+    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+    {
+        ArgumentNullException.ThrowIfNull(table);
+        var expected = table.CreateSet<(string Tag, string Value)>().ToList();
+        var html = _artifactAccess.GetHtmlDocument(documentPath);
+        var actual = html.ToMetaTags();
+
+        // Known issue: generator uses GitHash
+        var expectedGenerator = expected.Single(x => x.Tag == "generator");
+        expected.Remove(expectedGenerator);
+        var actualGenerator = actual.Single(x => x.Tag == "generator");
+        actual.Remove(actualGenerator);
+        actual.Should().BeEquivalentTo(expected);
     }
 
     [Then("the following artifacts are created:")]
