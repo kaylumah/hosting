@@ -90,12 +90,12 @@ public class SiteManagerStepDefinitions
             {
                 Configuration = new SiteConfiguration()
                 {
-                    Source = Constants.SourceDirectory,
-                    Destination = Constants.DestinationDirectory,
-                    AssetDirectory = Constants.AssetDirectory,
-                    DataDirectory = Constants.DataDirectory,
-                    LayoutDirectory = Constants.LayoutDirectory,
-                    PartialsDirectory = Constants.PartialsDirectory
+                    Source = Constants.Directories.SourceDirectory,
+                    Destination = Constants.Directories.DestinationDirectory,
+                    AssetDirectory = Constants.Directories.AssetDirectory,
+                    DataDirectory = Constants.Directories.DataDirectory,
+                    LayoutDirectory = Constants.Directories.LayoutDirectory,
+                    PartialsDirectory = Constants.Directories.PartialsDirectory
                 }
             }).ConfigureAwait(false);
         }
