@@ -33,5 +33,6 @@ public class SiteInfoStepDefinitions
         _siteInfo.Url = data.url;
         _siteInfo.BaseUrl = data.baseUrl;
         _siteInfo.SupportedFileExtensions = new HashSet<string>(data.supportedFileExtensions);
+        _siteInfo.SupportedDataFileExtensions = new HashSet<string>() { ".yml" };
     }
 }

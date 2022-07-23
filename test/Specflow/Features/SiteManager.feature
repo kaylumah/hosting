@@ -1,6 +1,15 @@
 Feature: SiteManager
 
     Scenario: Add two numbers
+        Given the following authors:
+          | Id  |
+          | Max |
+        Given the following organizations:
+          | Id       |
+          | Kaylumah |
+        Given the following tags:
+          | Id     |
+          | dotnet |
         Given 'default.html' is a layout file with the following contents:
         """
         <!DOCTYPE html>
@@ -29,7 +38,7 @@ Feature: SiteManager
           | sitemap.xml  |
           | feed.xml     |
         And the atom feed artifacts has the following articles:
-        
+
     Scenario: System Test
         Given the following defaults:
           | Scope | Path | Key     | Value   |
@@ -63,5 +72,5 @@ Feature: SiteManager
         And 'image.xml' is an asset file with the following contents:
         """
         """
-        When the site is generated v2:
+        When the site is generated:
         Then the following:
