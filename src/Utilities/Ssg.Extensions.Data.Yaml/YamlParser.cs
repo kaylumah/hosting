@@ -13,7 +13,8 @@ public class YamlParser : IYamlParser
     public YamlParser()
     {
         _deserializer = new DeserializerBuilder()
-           .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .IgnoreUnmatchedProperties()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
            .Build();
     }
 
