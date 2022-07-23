@@ -1,6 +1,6 @@
 Feature: SiteManager
 
-    Scenario: Add two numbers
+    Scenario: Generate website
         Given the following authors:
           | Id  |
           | Max |
@@ -61,6 +61,7 @@ Feature: SiteManager
           | twitter:description    | Description                       |
           | twitter:creator        | @Max                              |
 
+    @ignore
     Scenario: System Test
         Given the following defaults:
           | Scope | Path | Key     | Value   |
