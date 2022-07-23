@@ -1,4 +1,4 @@
-Feature: SiteManager
+Feature: Site Manager Tests
 
     Scenario: Add two numbers
         Given the following authors:
