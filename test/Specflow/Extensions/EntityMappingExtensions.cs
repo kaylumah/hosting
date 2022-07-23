@@ -33,4 +33,17 @@ public static class EntityMappingExtensions
             Id = organization.Id
         };
     }
+    
+    public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
+    {
+        return tags.Select(ToTagMetadata);
+    }
+
+    public static TagMetaData ToTagMetadata(this Tag tag)
+    {
+        return new TagMetaData()
+        {
+            Id = tag.Id
+        };
+    }
 }

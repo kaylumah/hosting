@@ -27,4 +27,14 @@ public class TableTransforms
         organizationCollection.AddRange(table.CreateSet<Organization>());
         return organizationCollection;
     }
+    
+    [StepArgumentTransformation]
+    public static TagCollection ToTags(Table table)
+    {
+        ArgumentNullException.ThrowIfNull(table);
+        table.ValidateIfMappedCorrectlyTo<Tag>();
+        var tagCollection = new TagCollection();
+        tagCollection.AddRange(table.CreateSet<Tag>());
+        return tagCollection;
+    }
 }
