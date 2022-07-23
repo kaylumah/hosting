@@ -1,4 +1,4 @@
-Feature: Site Manager Tests
+Feature: SiteManager
 
     Scenario: Add two numbers
         Given the following authors:
@@ -24,7 +24,7 @@ Feature: Site Manager Tests
         """
         Given the following articles:
           | Uri          | Title | Description | Author | Created    | Modified   | Tags             |
-          | example.html | Title | Description | <null> | 2022-07-03 | 2022-07-03 | dotnet, specflow |
+          | example.html | Title | Description | Max    | 2022-07-03 | 2022-07-03 | dotnet, specflow |
         Given the following site info:
           | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
           | Kaylumah | en       | https://example.com | <null>  | .html                   |
@@ -51,6 +51,7 @@ Feature: Site Manager Tests
           | og:title               | Title                             |
           | og:url                 | https://example.com/example.html  |
           | og:description         | Description                       |
+          | article:author         |                                   |
           | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
           | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
           | article:tag            | dotnet                            |
@@ -58,6 +59,7 @@ Feature: Site Manager Tests
           | twitter:card           | summary_large_image               |
           | twitter:title          | Title                             |
           | twitter:description    | Description                       |
+          | twitter:creator        | @Max                              |
 
     Scenario: System Test
         Given the following defaults:
