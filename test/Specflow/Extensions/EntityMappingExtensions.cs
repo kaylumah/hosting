@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-// ReSharper disable once CheckNamespace
-
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 
+// ReSharper disable once CheckNamespace
 namespace Test.Specflow.Entities;
 
 public static class EntityMappingExtensions
@@ -18,7 +17,7 @@ public static class EntityMappingExtensions
     {
         return new AuthorMetaData()
         {
-            Id = author.Ids
+            Id = author.Id
         };
     }
 }
