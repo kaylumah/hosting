@@ -20,6 +20,13 @@ public static class Constants
         public static string PageDirectory = "_pages";
     }
     
+    public static class Files
+    {
+        public static string Authors = "authors.yml";
+        public static string Organizations = "organizations.yml";
+        public static string Tags = "tags.yml";
+    }
+    
     
 
 }
