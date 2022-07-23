@@ -18,7 +18,14 @@ public static class EntityMappingExtensions
         return new AuthorMetaData()
         {
             Id = author.Id,
-            Links = null
+            Links = new Links()
+            {
+                Devto = author.Id,
+                Github = author.Id,
+                Linkedin = author.Id,
+                Medium = author.Id,
+                Twitter = author.Id
+            }
         };
     }
     
