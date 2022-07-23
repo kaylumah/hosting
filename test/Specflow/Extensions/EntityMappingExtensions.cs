@@ -20,4 +20,17 @@ public static class EntityMappingExtensions
             Id = author.Id
         };
     }
+    
+    public static IEnumerable<OrganizationMetaData> ToOrganizationMetadata(this IEnumerable<Organization> organizations)
+    {
+        return organizations.Select(ToOrganizationMetadata);
+    }
+
+    public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
+    {
+        return new OrganizationMetaData()
+        {
+            Id = organization.Id
+        };
+    }
 }
