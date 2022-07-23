@@ -35,10 +35,19 @@ public static class SiteMetaDataExtensions
                 {
                     Name = x.FullName,
                     Email = x.Email,
-                    Url = new Uri(x.Uri),
-                    Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Picture))),
                     SameAs = new OneOrMany<Uri>(uris)
                 };
+                
+                if (!string.IsNullOrEmpty(x.Uri))
+                {
+                    person.Url = new Uri(x.Uri);
+                }
+
+                if (!string.IsNullOrEmpty(x.Picture))
+                {
+                    person.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Picture)));
+                }
+                
                 return person;
             });
         return authors;
@@ -63,10 +72,16 @@ public static class SiteMetaDataExtensions
                 var organization = new Organization()
                 {
                     Name = x.FullName,
-                    Logo = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)x.Logo))),
                     FoundingDate = x.Founded.Date,
                     SameAs = new OneOrMany<Uri>(uris)
                 };
+
+                if (!string.IsNullOrEmpty(x.Logo))
+                {
+                    organization.Logo =
+                        new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Logo)));
+                }
+                
                 return organization;
             });
         return organizations;
