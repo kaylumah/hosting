@@ -6,7 +6,7 @@ tags:
   - csharp
   - azure
 publishedtime: '21:30'
-commentid: '70'
+commentid: '138'
 ---
 February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a [small contribution](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08) to the `Azure SDK for .NET`. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.
 

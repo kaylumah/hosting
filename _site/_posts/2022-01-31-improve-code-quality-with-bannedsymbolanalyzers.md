@@ -6,7 +6,7 @@ tags:
   - csharp
   - code-quality
 publishedtime: '21:45'
-commentid: '67'
+commentid: '139'
 ---
 There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.
 
