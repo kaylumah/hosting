@@ -8,6 +8,9 @@ using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Utilities.Time;
@@ -29,13 +32,15 @@ public class SiteManagerStepDefinitions
     private readonly ISiteManager _siteManager;
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
+    private readonly MockFileSystem _mockFileSystem;
 
     private readonly ArtifactAccessMock _artifactAccess;
     // private readonly TransformationEngineMock _transformationEngine;
 
-    public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection,
+    public SiteManagerStepDefinitions(MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
     {
+        _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         _artifactAccess = new ArtifactAccessMock();
@@ -47,6 +52,15 @@ public class SiteManagerStepDefinitions
             metadataProvider);
         var clock = new Mock<ISystemClock>();
         var fileProcessor = new FileProcessorMock(_articleCollection);
+        /*var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+            new YamlFrontMatterMetadataProvider(new YamlParser()),
+            metadataParserOptions);
+        var fileProcessor = new FileProcessor(mockFileSystem,
+            NullLogger<FileProcessor>.Instance,
+            Enumerable.Empty<IContentPreprocessorStrategy>(),
+            siteInfo,
+            metadataParser);
+        */
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
         var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
@@ -58,6 +72,7 @@ public class SiteManagerStepDefinitions
         var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
         _siteManager = new SiteManager(
             fileProcessor.Object,
+            // fileProcessor,
             _artifactAccess.Object,
             mockFileSystem,
             logger,
@@ -70,24 +85,21 @@ public class SiteManagerStepDefinitions
             clock.Object);
     }
 
-    [Given("the following articles v2:")]
+    [Given("the following articles:")]
     public void GivenTheFollowingArticles(ArticleCollection articleCollection)
     {
-        var files = articleCollection.ToPageMetaData().ToFile().ToList();
-        foreach (var file in files)
+        // just an idea at the moment...
+        // only the output dates are incorrect
+        _articleCollection.AddRange(articleCollection);
+        foreach (var article in articleCollection)
         {
-            // var mockFile = MockFileDataFactory.EnrichedFile(file.Content, file.MetaData);
-            // _mockFileSystem.AddFile(Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, file.Name), mockFile);
+            var pageMeta = article.ToPageMetaData();
+            var mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
+            var postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+            _mockFileSystem.AddFile(postFileName, mockFile);
         }
     }
-
-    [Then("the following:")]
-    public void ThenFollowing()
-    {
-        // var fileNames = _mockFileSystem.AllFiles.ToList();
-        // var bytes = _mockFileSystem.GetFileBytes("dist/feed.xml");
-    }
-
+    
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {
@@ -112,13 +124,20 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [Then("the atom feed artifacts has the following articles:")]
-    public void ThenTheAtomFeedArtifactsHasTheFollowingArticles()
+    [Then("the atom feed '(.*)' has the following articles:")]
+    public void ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
-        var feed = _artifactAccess.GetFeedArtifact();
+        var feed = _artifactAccess.GetFeedArtifact(feedPath);
         var articles = feed.ToArticles();
+        articles.Should().NotBeEmpty();
+    }
 
-        var sitemap = _artifactAccess.GetSiteMapArtifact();
+    [Then("the sitemap '(.*)' has the following articles:")]
+    public void ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
+    {
+        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
+        var articles = sitemap.ToArticles();
+        articles.Should().NotBeEmpty();
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]

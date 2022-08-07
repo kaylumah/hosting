@@ -36,13 +36,13 @@
 
   <ItemGroup Label="Test Packages">
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
-    <PackageVersion Include="xunit" Version="2.4.1" />
+    <PackageVersion Include="xunit" Version="2.4.2" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
     <PackageVersion Include="coverlet.collector" Version="3.1.2" />
-    <PackageVersion Include="Moq" Version="4.18.1" />
+    <PackageVersion Include="Moq" Version="4.18.2" />
     <PackageVersion Include="coverlet.msbuild" Version="3.1.2" />
     <PackageVersion Include="FluentAssertions" Version="6.7.0" />
-    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="17.0.15" />
+    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="17.0.24" />
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
   </ItemGroup>

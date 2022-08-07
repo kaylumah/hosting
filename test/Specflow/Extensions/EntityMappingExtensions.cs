@@ -18,6 +18,10 @@ public static class EntityMappingExtensions
         return new AuthorMetaData()
         {
             Id = author.Id,
+            FullName = author.Name,
+            Email = author.Email,
+            Uri = author.Uri,
+            Picture = author.Picture,
             Links = new Links()
             {
                 Devto = author.Id,
@@ -38,7 +42,8 @@ public static class EntityMappingExtensions
     {
         return new OrganizationMetaData()
         {
-            Id = organization.Id
+            Id = organization.Id,
+            FullName = organization.Name
         };
     }
     
