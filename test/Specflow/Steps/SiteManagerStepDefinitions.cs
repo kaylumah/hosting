@@ -112,13 +112,18 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [Then("the atom feed artifacts has the following articles:")]
-    public void ThenTheAtomFeedArtifactsHasTheFollowingArticles()
+    [Then("the atom feed '(.*)' has the following articles:")]
+    public void ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
-        var feed = _artifactAccess.GetFeedArtifact();
+        var feed = _artifactAccess.GetFeedArtifact(feedPath);
         var articles = feed.ToArticles();
 
-        var sitemap = _artifactAccess.GetSiteMapArtifact();
+    }
+
+    [Then("the sitemap '(.*)' has the following articles:")]
+    public void ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
+    {
+        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
