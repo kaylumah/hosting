@@ -1,6 +1,14 @@
 Feature: SiteManager
 
     Scenario: Generate website
+        Given the following defaults:
+          | Scope | Path | Key     | Value   |
+          | posts |      | type    | Article |
+          | posts |      | feed    | True    |
+          | posts |      | sitemap | True    |
+        Given the following collections:
+          | Name  | Output | TreatAs |
+          | posts | true   | <null>  |
         Given the following authors:
           | Id  | Name         | Email           | Uri                 | Picture                        |
           | Max | Max Hamulyák | max@kaylumah.nl | https://kaylumah.nl | https://kaylumah.nl/avatar.png |
@@ -28,9 +36,6 @@ Feature: SiteManager
         Given the following site info:
           | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
           | Kaylumah | en       | https://example.com | <null>  | .html                   |
-        Given the following collections:
-          | Name  | Output | TreatAs |
-          | posts | true   | <null>  |
         When the site is generated:
         Then the scenario executed successfully:
         And the following artifacts are created:
