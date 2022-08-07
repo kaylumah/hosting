@@ -4,10 +4,10 @@ Feature: SiteManager
         Given the following authors:
           | Id  | Name         | Email           | Uri                 | Picture                        |
           | Max | Max Hamulyák | max@kaylumah.nl | https://kaylumah.nl | https://kaylumah.nl/avatar.png |
-        Given the following organizations:
+        And the following organizations:
           | Id       | Name     |
           | Kaylumah | Kaylumah |
-        Given the following tags:
+        And the following tags:
           | Id       |
           | dotnet   |
           | specflow |
