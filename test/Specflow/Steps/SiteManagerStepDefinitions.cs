@@ -122,11 +122,13 @@ public class SiteManagerStepDefinitions
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
-    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+    public async Task ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
     {
         ArgumentNullException.ThrowIfNull(table);
         var expected = table.CreateSet<(string Tag, string Value)>().ToList();
         var html = _artifactAccess.GetHtmlDocument(documentPath);
+        await Task.CompletedTask;
+        await Verify(html.Text);
         var actual = html.ToMetaTags();
 
         // Known issue: generator uses GitHash
