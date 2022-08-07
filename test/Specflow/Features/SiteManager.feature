@@ -69,6 +69,3 @@ Feature: SiteManager
           | posts |      | type    | Article |
           | posts |      | feed    | True    |
           | posts |      | sitemap | True    |
-        Given the following articles v2:
-          | Uri      | Title  | Description | Author | Created | Modified |
-          | 001.html | <null> | <null>      | Max    | <null>  | <null>   |

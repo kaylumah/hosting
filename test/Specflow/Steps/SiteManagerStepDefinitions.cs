@@ -70,17 +70,6 @@ public class SiteManagerStepDefinitions
             clock.Object);
     }
 
-    [Given("the following articles v2:")]
-    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
-    {
-        var files = articleCollection.ToPageMetaData().ToFile().ToList();
-        foreach (var file in files)
-        {
-            // var mockFile = MockFileDataFactory.EnrichedFile(file.Content, file.MetaData);
-            // _mockFileSystem.AddFile(Path.Combine(Constants.SourceDirectory, Constants.PostDirectory, file.Name), mockFile);
-        }
-    }
-
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {
