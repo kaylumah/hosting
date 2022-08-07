@@ -9,6 +9,8 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Utilities.Time;
@@ -58,7 +60,7 @@ public class SiteManagerStepDefinitions
             Enumerable.Empty<IContentPreprocessorStrategy>(),
             siteInfo,
             metadataParser);
-            */
+        */
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
         var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
@@ -87,12 +89,14 @@ public class SiteManagerStepDefinitions
     public void GivenTheFollowingArticles(ArticleCollection articleCollection)
     {
         // just an idea at the moment...
+        // only the output dates are incorrect
         _articleCollection.AddRange(articleCollection);
         foreach (var article in articleCollection)
         {
             var pageMeta = article.ToPageMetaData();
             var mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-            _mockFileSystem.AddFile(article.Uri, mockFile);
+            var postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+            _mockFileSystem.AddFile(postFileName, mockFile);
         }
     }
     
