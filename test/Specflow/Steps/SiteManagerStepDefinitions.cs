@@ -18,6 +18,7 @@ using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Test.Specflow.Entities;
+using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps;
@@ -29,6 +30,7 @@ public class SiteManagerStepDefinitions
     private readonly ISiteManager _siteManager;
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
+    private readonly MockFileSystem _mockFileSystem;
 
     private readonly ArtifactAccessMock _artifactAccess;
     // private readonly TransformationEngineMock _transformationEngine;
@@ -36,6 +38,7 @@ public class SiteManagerStepDefinitions
     public SiteManagerStepDefinitions(MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
     {
+        _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         _artifactAccess = new ArtifactAccessMock();
@@ -80,6 +83,19 @@ public class SiteManagerStepDefinitions
             clock.Object);
     }
 
+    [Given("the following articles:")]
+    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
+    {
+        // just an idea at the moment...
+        _articleCollection.AddRange(articleCollection);
+        foreach (var article in articleCollection)
+        {
+            var pageMeta = article.ToPageMetaData();
+            var mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
+            _mockFileSystem.AddFile(article.Uri, mockFile);
+        }
+    }
+    
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {
