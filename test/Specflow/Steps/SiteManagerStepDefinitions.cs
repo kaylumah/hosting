@@ -99,7 +99,7 @@ public class SiteManagerStepDefinitions
     {
         var feed = _artifactAccess.GetFeedArtifact(feedPath);
         var articles = feed.ToArticles();
-
+        articles.Should().NotBeEmpty();
     }
 
     [Then("the sitemap '(.*)' has the following articles:")]
@@ -107,6 +107,7 @@ public class SiteManagerStepDefinitions
     {
         var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
         var articles = sitemap.ToArticles();
+        articles.Should().NotBeEmpty();
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
