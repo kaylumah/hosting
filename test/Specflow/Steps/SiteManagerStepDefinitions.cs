@@ -81,13 +81,6 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [Then("the following:")]
-    public void ThenFollowing()
-    {
-        // var fileNames = _mockFileSystem.AllFiles.ToList();
-        // var bytes = _mockFileSystem.GetFileBytes("dist/feed.xml");
-    }
-
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {
