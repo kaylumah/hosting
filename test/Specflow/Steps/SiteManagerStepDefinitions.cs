@@ -106,6 +106,7 @@ public class SiteManagerStepDefinitions
     public void ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
     {
         var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
+        var articles = sitemap.ToArticles();
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
