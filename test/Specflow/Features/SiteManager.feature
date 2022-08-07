@@ -5,8 +5,8 @@ Feature: SiteManager
           | Id  | Name         | Email           | Uri                 | Picture                        |
           | Max | Max Hamulyák | max@kaylumah.nl | https://kaylumah.nl | https://kaylumah.nl/avatar.png |
         Given the following organizations:
-          | Id       |
-          | Kaylumah |
+          | Id       | Name     |
+          | Kaylumah | Kaylumah |
         Given the following tags:
           | Id       |
           | dotnet   |

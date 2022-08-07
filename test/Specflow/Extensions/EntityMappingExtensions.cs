@@ -42,7 +42,8 @@ public static class EntityMappingExtensions
     {
         return new OrganizationMetaData()
         {
-            Id = organization.Id
+            Id = organization.Id,
+            FullName = organization.Name
         };
     }
     
