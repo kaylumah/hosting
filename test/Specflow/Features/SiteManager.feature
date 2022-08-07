@@ -61,11 +61,3 @@ Feature: SiteManager
           | twitter:title          | Title                             |
           | twitter:description    | Description                       |
           | twitter:creator        | @Max                              |
-
-    @ignore
-    Scenario: System Test
-        Given the following defaults:
-          | Scope | Path | Key     | Value   |
-          | posts |      | type    | Article |
-          | posts |      | feed    | True    |
-          | posts |      | sitemap | True    |
