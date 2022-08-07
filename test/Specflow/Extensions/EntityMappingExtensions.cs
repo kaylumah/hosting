@@ -18,6 +18,10 @@ public static class EntityMappingExtensions
         return new AuthorMetaData()
         {
             Id = author.Id,
+            FullName = author.Name,
+            Email = author.Email,
+            Uri = author.Uri,
+            Picture = author.Picture,
             Links = new Links()
             {
                 Devto = author.Id,

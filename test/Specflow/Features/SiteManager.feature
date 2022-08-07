@@ -2,8 +2,8 @@ Feature: SiteManager
 
     Scenario: Generate website
         Given the following authors:
-          | Id  |
-          | Max |
+          | Id  | Name         | Email           | Uri                 | Picture                        |
+          | Max | Max Hamulyák | max@kaylumah.nl | https://kaylumah.nl | https://kaylumah.nl/avatar.png |
         Given the following organizations:
           | Id       |
           | Kaylumah |
@@ -51,7 +51,7 @@ Feature: SiteManager
           | og:title               | Title                             |
           | og:url                 | https://example.com/example.html  |
           | og:description         | Description                       |
-          | article:author         |                                   |
+          | article:author         | Max Hamulyák                      |
           | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
           | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
           | article:tag            | dotnet                            |
