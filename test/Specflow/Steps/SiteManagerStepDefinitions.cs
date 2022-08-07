@@ -8,6 +8,9 @@ using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Utilities.Time;
@@ -33,7 +36,7 @@ public class SiteManagerStepDefinitions
     private readonly ArtifactAccessMock _artifactAccess;
     // private readonly TransformationEngineMock _transformationEngine;
 
-    public SiteManagerStepDefinitions(MockFileSystem mockFileSystem, ArticleCollection articleCollection,
+    public SiteManagerStepDefinitions(MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
     {
         _articleCollection = articleCollection;
@@ -46,7 +49,15 @@ public class SiteManagerStepDefinitions
             mockFileSystem,
             metadataProvider);
         var clock = new Mock<ISystemClock>();
-        var fileProcessor = new FileProcessorMock(_articleCollection);
+        // var fileProcessor = new FileProcessorMock(_articleCollection);
+        var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+            new YamlFrontMatterMetadataProvider(new YamlParser()),
+            metadataParserOptions);
+        var fileProcessor = new FileProcessor(mockFileSystem,
+            NullLogger<FileProcessor>.Instance,
+            Enumerable.Empty<IContentPreprocessorStrategy>(),
+            siteInfo,
+            metadataParser);
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
         var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
@@ -57,7 +68,8 @@ public class SiteManagerStepDefinitions
         var seoGenerator = new SeoGenerator(metaTagGenerator, structureDataGenerator);
         var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
         _siteManager = new SiteManager(
-            fileProcessor.Object,
+            // fileProcessor.Object,
+            fileProcessor,
             _artifactAccess.Object,
             mockFileSystem,
             logger,
