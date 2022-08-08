@@ -51,8 +51,8 @@ public class SiteManagerStepDefinitions
             mockFileSystem,
             metadataProvider);
         var clock = new Mock<ISystemClock>();
-        var fileProcessor = new FileProcessorMock(_articleCollection);
-        /*var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+        //var fileProcessor = new FileProcessorMock(_articleCollection);
+        var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
             metadataParserOptions);
         var fileProcessor = new FileProcessor(mockFileSystem,
@@ -60,7 +60,6 @@ public class SiteManagerStepDefinitions
             Enumerable.Empty<IContentPreprocessorStrategy>(),
             siteInfo,
             metadataParser);
-        */
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
         var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
@@ -71,8 +70,8 @@ public class SiteManagerStepDefinitions
         var seoGenerator = new SeoGenerator(metaTagGenerator, structureDataGenerator);
         var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
         _siteManager = new SiteManager(
-            fileProcessor.Object,
-            // fileProcessor,
+            // fileProcessor.Object,
+            fileProcessor,
             _artifactAccess.Object,
             mockFileSystem,
             logger,
