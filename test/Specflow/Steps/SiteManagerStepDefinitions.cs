@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
+using System.Text;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
@@ -124,19 +125,23 @@ public class SiteManagerStepDefinitions
     }
 
     [Then("the atom feed '(.*)' has the following articles:")]
-    public void ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
+    public async Task ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
-        var feed = _artifactAccess.GetFeedArtifact(feedPath);
-        var articles = feed.ToArticles();
-        articles.Should().NotBeEmpty();
+        var rawFeed = _artifactAccess.GetArtifactContents(feedPath);
+        await Verify(rawFeed.GetStringContent());
+        // var feed = _artifactAccess.GetFeedArtifact(feedPath);
+        // var articles = feed.ToArticles();
+        // articles.Should().NotBeEmpty();
     }
 
     [Then("the sitemap '(.*)' has the following articles:")]
-    public void ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
+    public async Task ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
     {
-        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
-        var articles = sitemap.ToArticles();
-        articles.Should().NotBeEmpty();
+        var rawSitemap = _artifactAccess.GetArtifactContents(sitemapPath);
+        await Verify(rawSitemap.GetStringContent());
+        // var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
+        // var articles = sitemap.ToArticles();
+        // articles.Should().NotBeEmpty();
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
