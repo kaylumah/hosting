@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using System.Text;
+using Test.Specflow.Helpers;
 
 namespace Test.Specflow.Utilities;
 public class MockFileDataFactory
@@ -23,7 +24,8 @@ public class MockFileDataFactory
         stringBuilder.AppendLine("---");
         if (data != null && data.Any())
         {
-            var raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
+            var serializer = YamlSerializer.Create();
+            var raw = serializer.Serialize(data);
             stringBuilder.Append(raw);
         }
         stringBuilder.AppendLine("---");

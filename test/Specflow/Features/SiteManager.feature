@@ -1,13 +1,21 @@
 Feature: SiteManager
 
     Scenario: Generate website
+        Given the following defaults:
+          | Scope | Path | Key     | Value   |
+          | posts |      | type    | Article |
+          | posts |      | feed    | True    |
+          | posts |      | sitemap | True    |
+        Given the following collections:
+          | Name  | Output | TreatAs |
+          | posts | true   | <null>  |
         Given the following authors:
-          | Id  |
-          | Max |
-        Given the following organizations:
-          | Id       |
-          | Kaylumah |
-        Given the following tags:
+          | Id  | Name         | Email           | Uri                 | Picture                        |
+          | Max | Max Hamulyák | max@kaylumah.nl | https://kaylumah.nl | https://kaylumah.nl/avatar.png |
+        And the following organizations:
+          | Id       | Name     |
+          | Kaylumah | Kaylumah |
+        And the following tags:
           | Id       |
           | dotnet   |
           | specflow |
@@ -28,9 +36,6 @@ Feature: SiteManager
         Given the following site info:
           | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
           | Kaylumah | en       | https://example.com | <null>  | .html                   |
-        Given the following collections:
-          | Name  | Output | TreatAs |
-          | posts | true   | <null>  |
         When the site is generated:
         Then the scenario executed successfully:
         And the following artifacts are created:
@@ -38,7 +43,8 @@ Feature: SiteManager
           | example.html |
           | sitemap.xml  |
           | feed.xml     |
-        And the atom feed artifacts has the following articles:
+        And the atom feed 'feed.xml' has the following articles:
+        And the sitemap 'sitemap.xml' has the following articles:
         And 'example.html' is a document with the following meta tags:
           | Tag                    | Value                             |
           | generator              | Kaylumah vd8b6637                 |
@@ -51,7 +57,7 @@ Feature: SiteManager
           | og:title               | Title                             |
           | og:url                 | https://example.com/example.html  |
           | og:description         | Description                       |
-          | article:author         |                                   |
+          | article:author         | Max Hamulyák                      |
           | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
           | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
           | article:tag            | dotnet                            |
@@ -60,40 +66,3 @@ Feature: SiteManager
           | twitter:title          | Title                             |
           | twitter:description    | Description                       |
           | twitter:creator        | @Max                              |
-
-    @ignore
-    Scenario: System Test
-        Given the following defaults:
-          | Scope | Path | Key     | Value   |
-          | posts |      | type    | Article |
-          | posts |      | feed    | True    |
-          | posts |      | sitemap | True    |
-        Given the following collections:
-          | Name  | Output | TreatAs |
-          | posts | true   | <null>  |
-        Given the following articles v2:
-          | Uri      | Title  | Description | Author | Created | Modified |
-          | 001.html | <null> | <null>      | Max    | <null>  | <null>   |
-        Given the following site info:
-          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
-          | Kaylumah | en       | https://example.com | <null>  | .html                   |
-        Given 'example.html' is an empty post:
-        And 'authors.yml' is a data file with the following contents:
-        """
-        """
-        And 'default.html' is a layout file with the following contents:
-        """
-         <!DOCTYPE html>
-         <html>
-             <head>
-             {{ page.metatags }}
-             </head>
-             <body>
-             </body>
-         </html>
-        """
-        And 'image.xml' is an asset file with the following contents:
-        """
-        """
-        When the site is generated:
-        Then the following:
