@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2022. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Globalization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
@@ -43,8 +44,8 @@ public static partial class MappingExtensions
         pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
         pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
         pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
-        pageDictionary.SetValue(nameof(PageMetaData.Published), article.Created);
-        pageDictionary.SetValue(nameof(PageMetaData.Modified), article.Modified);
+        pageDictionary.SetValue("PublishedDate", article.Created.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+        pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
         pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
         pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
         pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
