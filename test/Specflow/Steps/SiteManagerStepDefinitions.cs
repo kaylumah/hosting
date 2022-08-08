@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
+using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
@@ -127,7 +128,36 @@ public class SiteManagerStepDefinitions
     public async Task ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
         var rawFeed = _artifactAccess.GetArtifactContents(feedPath);
-        await Verify(rawFeed.GetStringContent());
+        await Verify(rawFeed.GetStringContent())
+            //.ScrubLinesContaining("<updated>")
+            .ScrubLinesWithReplace(
+                replaceLine: line =>
+                {
+                    if (line.Contains("<updated>"))
+                    {
+                        return "<updated />";
+                    }
+
+                    return line;
+                })
+            /*
+            .AddScrubber(sb =>
+            {
+                // sb.Clear();
+                
+                var settings = new XmlReaderSettings()
+                {
+                    //Indent = true,
+                    //Encoding = new System.Text.UTF8Encoding(false)
+                };
+                using var stream = new MemoryStream();
+                using var reader = XmlReader.Create(stream, settings);
+                
+                
+                
+                sb.Append("max was here");
+            })*/
+            ;
         // var feed = _artifactAccess.GetFeedArtifact(feedPath);
         // var articles = feed.ToArticles();
         // articles.Should().NotBeEmpty();
