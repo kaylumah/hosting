@@ -13,7 +13,12 @@ public static class ByteExtensions
 {
     public static string GetStringContent(this byte[] bytes)
     {
-        var contents = new UTF8Encoding(false).GetString(bytes);
+        return bytes.GetStringContent(new UTF8Encoding(false));
+    }
+    
+    public static string GetStringContent(this byte[] bytes, Encoding encoding)
+    {
+        var contents = encoding.GetString(bytes);
         return contents;
     }
     
