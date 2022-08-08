@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
-using System.Text;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
