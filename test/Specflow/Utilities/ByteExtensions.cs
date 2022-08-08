@@ -11,9 +11,15 @@ namespace Test.Specflow.Utilities;
 
 public static class ByteExtensions
 {
-    public static HtmlDocument ToHtmlDocument(this byte[] bytes)
+    public static string GetStringContent(this byte[] bytes)
     {
         var contents = new UTF8Encoding(false).GetString(bytes);
+        return contents;
+    }
+    
+    public static HtmlDocument ToHtmlDocument(this byte[] bytes)
+    {
+        var contents = bytes.GetStringContent();
         var htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(contents);
         return htmlDoc;
