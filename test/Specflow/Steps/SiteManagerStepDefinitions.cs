@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using System.Xml;
+using System.Xml.XPath;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
@@ -127,9 +128,37 @@ public class SiteManagerStepDefinitions
     [Then("the atom feed '(.*)' has the following articles:")]
     public async Task ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
+        /*
         var feed = _artifactAccess.GetFeedArtifact(feedPath);
         await Verify(feed)
             .UseMethodName("AtomFeed");
+        */
+        var feed = _artifactAccess.GetString(feedPath);
+        await Verify(feed)
+            .UseMethodName("AtomFeed")
+            .AddScrubber(inputStringBuilder =>
+            {
+                var original = inputStringBuilder.ToString();
+                using var reader = new StringReader(original);
+                inputStringBuilder.Clear();
+
+                var settings = new XmlReaderSettings();
+                using var xmlReader = XmlReader.Create(new StringReader(original), settings);
+                var document = new XmlDocument();  
+                document.Load(reader); 
+                var navigator = document.CreateNavigator();
+                if (navigator == null)
+                {
+                    return;
+                }
+
+                var manager = new XmlNamespaceManager(navigator.NameTable);
+                manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
+                XPathNavigator x = navigator.SelectSingleNode("//atom:feed/atom:updated", manager);
+                x?.SetValue("REPLACED_DATE");
+
+                inputStringBuilder.Append(navigator.OuterXml);
+            });
     }
 
     [Then("the sitemap '(.*)' has the following articles:")]
