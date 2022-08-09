@@ -152,7 +152,17 @@ public class SiteManagerStepDefinitions
                 
                 var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
                 valueElement.InnerXml = "replaced";
-                inputStringBuilder.Append(document.OuterXml);
+                //inputStringBuilder.Append(document.OuterXml);
+                
+                XmlWriterSettings settings2 = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = "  ",
+                    NewLineChars = "\r\n",
+                    NewLineHandling = NewLineHandling.Replace
+                };
+                using var writer = XmlWriter.Create(inputStringBuilder, settings2);
+                document.Save(writer);
 
 
                 /*
