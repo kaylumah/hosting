@@ -145,7 +145,17 @@ public class SiteManagerStepDefinitions
                 var settings = new XmlReaderSettings();
                 using var xmlReader = XmlReader.Create(new StringReader(original), settings);
                 var document = new XmlDocument();  
-                document.Load(reader); 
+                document.Load(reader);
+                
+                var manager = new XmlNamespaceManager(document.NameTable);
+                manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
+                
+                var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
+                valueElement.InnerXml = "replaced";
+                inputStringBuilder.Append(document.OuterXml);
+
+
+                /*
                 var navigator = document.CreateNavigator();
                 if (navigator == null)
                 {
@@ -158,6 +168,7 @@ public class SiteManagerStepDefinitions
                 x?.SetValue("REPLACED_DATE");
 
                 inputStringBuilder.Append(navigator.OuterXml);
+                */
             });
     }
 
