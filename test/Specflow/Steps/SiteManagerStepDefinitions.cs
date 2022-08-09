@@ -127,50 +127,17 @@ public class SiteManagerStepDefinitions
     [Then("the atom feed '(.*)' has the following articles:")]
     public async Task ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
     {
-        var rawFeed = _artifactAccess.GetArtifactContents(feedPath);
-        await Verify(rawFeed.GetStringContent())
-            //.ScrubLinesContaining("<updated>")
-            .ScrubLinesWithReplace(
-                replaceLine: line =>
-                {
-                    if (line.Contains("<updated>"))
-                    {
-                        return "<updated />";
-                    }
-
-                    return line;
-                })
-            /*
-            .AddScrubber(sb =>
-            {
-                // sb.Clear();
-                
-                var settings = new XmlReaderSettings()
-                {
-                    //Indent = true,
-                    //Encoding = new System.Text.UTF8Encoding(false)
-                };
-                using var stream = new MemoryStream();
-                using var reader = XmlReader.Create(stream, settings);
-                
-                
-                
-                sb.Append("max was here");
-            })*/
-            ;
-        // var feed = _artifactAccess.GetFeedArtifact(feedPath);
-        // var articles = feed.ToArticles();
-        // articles.Should().NotBeEmpty();
+        var feed = _artifactAccess.GetFeedArtifact(feedPath);
+        await Verify(feed)
+            .UseMethodName("AtomFeed");
     }
 
     [Then("the sitemap '(.*)' has the following articles:")]
     public async Task ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
     {
-        var rawSitemap = _artifactAccess.GetArtifactContents(sitemapPath);
-        await Verify(rawSitemap.GetStringContent());
-        // var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
-        // var articles = sitemap.ToArticles();
-        // articles.Should().NotBeEmpty();
+        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
+        await Verify(sitemap)
+            .UseMethodName("SiteMap");
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
