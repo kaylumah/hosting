@@ -117,8 +117,8 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [Then("the atom feed '(.*)' has the following articles:")]
-    public async Task ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
+    [Then("the atom feed '(.*)' is verified:")]
+    public async Task ThenTheAtomFeedIsVerified(string feedPath)
     {
         /*
         var feed = _artifactAccess.GetFeedArtifact(feedPath);
