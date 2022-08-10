@@ -33,7 +33,6 @@ public class SiteManagerStepDefinitions
     private readonly ValidationContext _validationContext;
     private readonly MockFileSystem _mockFileSystem;
     private readonly ArtifactAccessMock _artifactAccess;
-    // private readonly TransformationEngineMock _transformationEngine;
 
     public SiteManagerStepDefinitions(SystemClockMock systemClockMock, ScenarioContext scenarioContext, MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
@@ -43,13 +42,11 @@ public class SiteManagerStepDefinitions
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         _artifactAccess = new ArtifactAccessMock();
-        // _transformationEngine = new TransformationEngineMock();
         IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(new YamlParser());
         ITransformationEngine transformationEngine = new TransformationEngine(
             NullLogger<TransformationEngine>.Instance,
             mockFileSystem,
             metadataProvider);
-        //var fileProcessor = new FileProcessorMock(_articleCollection);
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
             metadataParserOptions);
@@ -68,7 +65,6 @@ public class SiteManagerStepDefinitions
         var seoGenerator = new SeoGenerator(metaTagGenerator, structureDataGenerator);
         var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
         _siteManager = new SiteManager(
-            // fileProcessor.Object,
             fileProcessor,
             _artifactAccess.Object,
             mockFileSystem,
