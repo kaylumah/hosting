@@ -159,15 +159,18 @@ public class SiteManagerStepDefinitions
             ;
     }
 
-    [Then("the sitemap '(.*)' has the following articles:")]
-    public async Task ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
+    [Then("the sitemap '(.*)' is verified:")]
+    public async Task ThenTheSitemapIsVerified(string sitemapPath)
     {
         /*
         var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
         await Verify(sitemap)
             .UseMethodName("SiteMap");
             */
-        await Task.CompletedTask;
+        var sitemap = _artifactAccess.GetString(sitemapPath);
+        await Verify(sitemap)
+            .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
+
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]

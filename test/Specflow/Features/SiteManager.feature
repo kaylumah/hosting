@@ -47,7 +47,7 @@ Feature: SiteManager
           | sitemap.xml  |
           | feed.xml     |
         And the atom feed 'feed.xml' is verified:
-        And the sitemap 'sitemap.xml' has the following articles:
+        And the sitemap 'sitemap.xml' is verified:
         And 'example.html' is a document with the following meta tags:
           | Tag                    | Value                             |
           | generator              | Kaylumah vd8b6637                 |
