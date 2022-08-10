@@ -129,11 +129,9 @@ public class SiteManagerStepDefinitions
         await Verify(feed)
             .UseMethodName("AtomFeed");
         */
-        var info = _scenarioContext.ScenarioInfo;
-        var testName = info.Title.Replace(" ", String.Empty);
         var feed = _artifactAccess.GetString(feedPath);
         await Verify(feed)
-            //.UseMethodName($"{testName}-AtomFeed")
+            .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
             /*.AddScrubber(inputStringBuilder =>
             {
                 var original = inputStringBuilder.ToString();
