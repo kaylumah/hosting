@@ -9,6 +9,8 @@ namespace Test.Specflow.Utilities;
 
 public static class ArtifactAccessMockExtensions
 {
+    public static string GetString(this ArtifactAccessMock artifactAccess, string path) => artifactAccess.GetArtifactContents(path).GetString();
+
     public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
     {
         var bytes = artifactAccess.Artifacts.GetArtifactContents(path);

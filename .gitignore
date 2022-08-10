@@ -458,3 +458,4 @@ $RECYCLE.BIN/
 ##
 dist/
 *.feature.cs
+*.received.*

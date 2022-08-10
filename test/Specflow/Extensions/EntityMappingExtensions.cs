@@ -56,7 +56,8 @@ public static class EntityMappingExtensions
     {
         return new TagMetaData()
         {
-            Id = tag.Id
+            Id = tag.Id,
+            Name = tag.Id
         };
     }
 }

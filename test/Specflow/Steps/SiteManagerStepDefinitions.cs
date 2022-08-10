@@ -13,9 +13,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
@@ -29,29 +27,26 @@ namespace Test.Specflow.Steps;
 [Scope(Feature = "SiteManager")]
 public class SiteManagerStepDefinitions
 {
+    private readonly ScenarioContext _scenarioContext;
     private readonly ISiteManager _siteManager;
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
     private readonly MockFileSystem _mockFileSystem;
-
     private readonly ArtifactAccessMock _artifactAccess;
-    // private readonly TransformationEngineMock _transformationEngine;
 
-    public SiteManagerStepDefinitions(MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
+    public SiteManagerStepDefinitions(SystemClockMock systemClockMock, ScenarioContext scenarioContext, MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
     {
+        _scenarioContext = scenarioContext;
         _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
         _validationContext = validationContext;
         _artifactAccess = new ArtifactAccessMock();
-        // _transformationEngine = new TransformationEngineMock();
         IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(new YamlParser());
         ITransformationEngine transformationEngine = new TransformationEngine(
             NullLogger<TransformationEngine>.Instance,
             mockFileSystem,
             metadataProvider);
-        var clock = new Mock<ISystemClock>();
-        //var fileProcessor = new FileProcessorMock(_articleCollection);
         var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
             metadataParserOptions);
@@ -62,7 +57,7 @@ public class SiteManagerStepDefinitions
             metadataParser);
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
-        var siteMetadataFactory = new SiteMetadataFactory(clock.Object, siteInfo, yamlParser, mockFileSystem,
+        var siteMetadataFactory = new SiteMetadataFactory(systemClockMock.Object, siteInfo, yamlParser, mockFileSystem,
             NullLogger<SiteMetadataFactory>.Instance);
         var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
         var metaTagGenerator = new MetaTagGenerator(NullLogger<MetaTagGenerator>.Instance);
@@ -70,7 +65,6 @@ public class SiteManagerStepDefinitions
         var seoGenerator = new SeoGenerator(metaTagGenerator, structureDataGenerator);
         var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
         _siteManager = new SiteManager(
-            // fileProcessor.Object,
             fileProcessor,
             _artifactAccess.Object,
             mockFileSystem,
@@ -81,7 +75,7 @@ public class SiteManagerStepDefinitions
             feedGenerator,
             seoGenerator,
             siteMapGenerator,
-            clock.Object);
+            systemClockMock.Object);
     }
 
     [Given("the following articles:")]
@@ -123,20 +117,60 @@ public class SiteManagerStepDefinitions
         }
     }
 
-    [Then("the atom feed '(.*)' has the following articles:")]
-    public void ThenTheAtomFeedArtifactHasTheFollowingArticles(string feedPath)
+    [Then("the atom feed '(.*)' is verified:")]
+    public async Task ThenTheAtomFeedIsVerified(string feedPath)
     {
+        /*
         var feed = _artifactAccess.GetFeedArtifact(feedPath);
-        var articles = feed.ToArticles();
-        articles.Should().NotBeEmpty();
+        await Verify(feed)
+            .UseMethodName("AtomFeed");
+        */
+        var feed = _artifactAccess.GetString(feedPath);
+        await Verify(feed)
+            .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
+            /*.AddScrubber(inputStringBuilder =>
+            {
+                var original = inputStringBuilder.ToString();
+                using var reader = new StringReader(original);
+                inputStringBuilder.Clear();
+
+                var settings = new XmlReaderSettings();
+                using var xmlReader = XmlReader.Create(new StringReader(original), settings);
+                var document = new XmlDocument();  
+                document.Load(reader);
+                
+                var manager = new XmlNamespaceManager(document.NameTable);
+                manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
+                
+                var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
+                valueElement.InnerXml = "replaced";
+                //inputStringBuilder.Append(document.OuterXml);
+                
+                XmlWriterSettings settings2 = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = "  ",
+                    NewLineChars = "\r\n",
+                    NewLineHandling = NewLineHandling.Replace
+                };
+                using var writer = XmlWriter.Create(inputStringBuilder, settings2);
+                document.Save(writer);
+            })*/
+            ;
     }
 
-    [Then("the sitemap '(.*)' has the following articles:")]
-    public void ThenTheSiteMapHasTheFollowingArticles(string sitemapPath)
+    [Then("the sitemap '(.*)' is verified:")]
+    public async Task ThenTheSitemapIsVerified(string sitemapPath)
     {
+        /*
         var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
-        var articles = sitemap.ToArticles();
-        articles.Should().NotBeEmpty();
+        await Verify(sitemap)
+            .UseMethodName("SiteMap");
+            */
+        var sitemap = _artifactAccess.GetString(sitemapPath);
+        await Verify(sitemap)
+            .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
+
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]

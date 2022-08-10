@@ -29,9 +29,10 @@ public class SiteInfoStepDefinitions
     [Given("the following site info:")]
     public void GivenTheFollowingSiteInfo(Table table)
     {
-        var data = table.CreateInstance<(string title, string Language, string url, string baseUrl, string[] supportedFileExtensions)>();
+        var data = table.CreateInstance<(string title, string description, string Language, string url, string baseUrl, string[] supportedFileExtensions)>();
         _siteInfo.Url = data.url;
         _siteInfo.Title = data.title;
+        _siteInfo.Description = data.description;
         _siteInfo.Lang = data.Language;
         _siteInfo.BaseUrl = data.baseUrl;
         _siteInfo.SupportedFileExtensions = new HashSet<string>(data.supportedFileExtensions);

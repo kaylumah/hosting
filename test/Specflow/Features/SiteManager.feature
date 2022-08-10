@@ -1,5 +1,8 @@
 Feature: SiteManager
 
+    Background: 
+        Given the current date is '2022-08-10': 
+    
     Scenario: Generate website
         Given the following defaults:
           | Scope | Path | Key     | Value   |
@@ -34,8 +37,8 @@ Feature: SiteManager
           | Uri          | Title | Description | Author | Created    | Modified   | Tags             |
           | example.html | Title | Description | Max    | 2022-07-03 | 2022-07-03 | dotnet, specflow |
         Given the following site info:
-          | Title    | Language | Url                 | BaseUrl | SupportedFileExtensions |
-          | Kaylumah | en       | https://example.com | <null>  | .html                   |
+          | Title    | Description | Language | Url                 | BaseUrl | SupportedFileExtensions |
+          | Kaylumah | My Blog     | en       | https://example.com | <null>  | .html                   |
         When the site is generated:
         Then the scenario executed successfully:
         And the following artifacts are created:
@@ -43,8 +46,8 @@ Feature: SiteManager
           | example.html |
           | sitemap.xml  |
           | feed.xml     |
-        And the atom feed 'feed.xml' has the following articles:
-        And the sitemap 'sitemap.xml' has the following articles:
+        And the atom feed 'feed.xml' is verified:
+        And the sitemap 'sitemap.xml' is verified:
         And 'example.html' is a document with the following meta tags:
           | Tag                    | Value                             |
           | generator              | Kaylumah vd8b6637                 |
