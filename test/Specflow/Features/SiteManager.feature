@@ -1,5 +1,8 @@
 Feature: SiteManager
 
+    Background: 
+        Given the current date is '2022-08-10': 
+    
     Scenario: Generate website
         Given the following defaults:
           | Scope | Path | Key     | Value   |

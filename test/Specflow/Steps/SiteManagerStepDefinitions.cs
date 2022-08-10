@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
-using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
@@ -14,9 +13,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
@@ -35,14 +32,12 @@ public class SiteManagerStepDefinitions
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
     private readonly MockFileSystem _mockFileSystem;
-    private readonly SystemClockMock _systemClockMock;
     private readonly ArtifactAccessMock _artifactAccess;
     // private readonly TransformationEngineMock _transformationEngine;
 
     public SiteManagerStepDefinitions(SystemClockMock systemClockMock, ScenarioContext scenarioContext, MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
         ValidationContext validationContext, SiteInfo siteInfo)
     {
-        _systemClockMock = systemClockMock;
         _scenarioContext = scenarioContext;
         _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
@@ -65,7 +60,7 @@ public class SiteManagerStepDefinitions
             metadataParser);
         var logger = NullLogger<SiteManager>.Instance;
         var yamlParser = new YamlParser();
-        var siteMetadataFactory = new SiteMetadataFactory(_systemClockMock.Object, siteInfo, yamlParser, mockFileSystem,
+        var siteMetadataFactory = new SiteMetadataFactory(systemClockMock.Object, siteInfo, yamlParser, mockFileSystem,
             NullLogger<SiteMetadataFactory>.Instance);
         var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
         var metaTagGenerator = new MetaTagGenerator(NullLogger<MetaTagGenerator>.Instance);
@@ -84,7 +79,7 @@ public class SiteManagerStepDefinitions
             feedGenerator,
             seoGenerator,
             siteMapGenerator,
-            _systemClockMock.Object);
+            systemClockMock.Object);
     }
 
     [Given("the following articles:")]
@@ -135,10 +130,11 @@ public class SiteManagerStepDefinitions
             .UseMethodName("AtomFeed");
         */
         var info = _scenarioContext.ScenarioInfo;
+        var testName = info.Title.Replace(" ", String.Empty);
         var feed = _artifactAccess.GetString(feedPath);
         await Verify(feed)
-            //.UseMethodName("AtomFeed")
-            .AddScrubber(inputStringBuilder =>
+            //.UseMethodName($"{testName}-AtomFeed")
+            /*.AddScrubber(inputStringBuilder =>
             {
                 var original = inputStringBuilder.ToString();
                 using var reader = new StringReader(original);
@@ -165,23 +161,8 @@ public class SiteManagerStepDefinitions
                 };
                 using var writer = XmlWriter.Create(inputStringBuilder, settings2);
                 document.Save(writer);
-
-
-                /*
-                var navigator = document.CreateNavigator();
-                if (navigator == null)
-                {
-                    return;
-                }
-
-                var manager = new XmlNamespaceManager(navigator.NameTable);
-                manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-                XPathNavigator x = navigator.SelectSingleNode("//atom:feed/atom:updated", manager);
-                x?.SetValue("REPLACED_DATE");
-
-                inputStringBuilder.Append(navigator.OuterXml);
-                */
-            });
+            })*/
+            ;
     }
 
     [Then("the sitemap '(.*)' has the following articles:")]
@@ -196,13 +177,11 @@ public class SiteManagerStepDefinitions
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
-    public async Task ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
     {
         ArgumentNullException.ThrowIfNull(table);
         var expected = table.CreateSet<(string Tag, string Value)>().ToList();
         var html = _artifactAccess.GetHtmlDocument(documentPath);
-        await Task.CompletedTask;
-        await Verify(html.Text);
         var actual = html.ToMetaTags();
 
         // Known issue: generator uses GitHash
