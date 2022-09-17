@@ -3,9 +3,9 @@ title: How to test Azure Storage in dotnet using Azurite?
 description: ...
 image: /assets/images/posts/20220607/launch-settings/cover_image.png
 tags:
-    - rider
-    - visualstudio
-    - vscode
+  - csharp
+  - azure
+  - testing
 publishedtime: '23:30'
 commentid: '137'
 ---
