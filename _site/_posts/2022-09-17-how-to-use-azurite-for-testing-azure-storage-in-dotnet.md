@@ -78,7 +78,7 @@ var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(fal
 
 Based on the default configuration, the above snippet should have worked. However, you get the following error `System.ArgumentException: Cannot use TokenCredential without HTTPS.`
 
-Azurite has an overload to provide HTTPS support. You can use a tool called mkcert to generate the required files.
+Azurite has an overload to provide HTTPS support. You can [use a tool](https://github.com/Azure/Azurite#https-setup) called mkcert to generate the required files.
 
 ```shell
 # Run once
