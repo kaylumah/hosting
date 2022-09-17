@@ -7,7 +7,7 @@ tags:
   - azure
   - testing
 publishedtime: '18:00'
-commentid: '152'
+commentid: '154'
 ---
 ## How to test a dependency on Azure?
 
