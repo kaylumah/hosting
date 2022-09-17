@@ -1,6 +1,6 @@
 ---
 title: How to use Azurite for testing Azure Storage in dotnet?
-description: ...
+description: Learn how to setup the Azure SDK for dotnet with Azurite
 image: /assets/images/posts/20220917/azurite/cover_image.png
 tags:
   - csharp
