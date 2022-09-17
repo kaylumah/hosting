@@ -6,7 +6,7 @@ tags:
   - csharp
   - azure
   - testing
-publishedtime: '23:30'
+publishedtime: '18:00'
 commentid: '152'
 ---
 ## How to test a dependency on Azure?
