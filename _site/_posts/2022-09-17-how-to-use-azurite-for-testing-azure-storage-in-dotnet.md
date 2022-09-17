@@ -11,7 +11,7 @@ commentid: '137'
 ---
 ## How to test a dependency on Azure?
 
-A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post "Working with Azure SDK for .NET", I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.
+A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post ["Working with Azure SDK for .NET"](https://kaylumah.nl/2022/02/21/working-with-azure-sdk-for-dotnet.html), I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.
 
 There are a few ways we can go about testing this:
 1. Create a mock or fake implementation of every Storage API required.
