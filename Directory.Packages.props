@@ -16,7 +16,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
