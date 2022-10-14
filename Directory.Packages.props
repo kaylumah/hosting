@@ -28,7 +28,7 @@
     <PackageVersion Include="System.ServiceModel.Syndication" Version="6.0.0" />
     <PackageVersion Include="Scriban" Version="5.4.5" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.42" />
-    <PackageVersion Include="System.IO.Abstractions" Version="17.0.15" />
+    <PackageVersion Include="System.IO.Abstractions" Version="17.2.3" />
     <PackageVersion Include="YamlDotNet" Version="11.2.1" />
     <PackageVersion Include="System.Text.Json" Version="6.0.4" />
     <PackageVersion Include="Markdig" Version="0.30.2" />
@@ -42,7 +42,7 @@
     <PackageVersion Include="Moq" Version="4.18.2" />
     <PackageVersion Include="coverlet.msbuild" Version="3.1.2" />
     <PackageVersion Include="FluentAssertions" Version="6.7.0" />
-    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="17.0.24" />
+    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="17.2.3" />
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageVersion Include="Verify.Xunit" Version="17.6.0" />
