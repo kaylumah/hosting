@@ -31,7 +31,7 @@
     <PackageVersion Include="System.IO.Abstractions" Version="17.0.15" />
     <PackageVersion Include="YamlDotNet" Version="11.2.1" />
     <PackageVersion Include="System.Text.Json" Version="6.0.4" />
-    <PackageVersion Include="Markdig" Version="0.30.2" />
+    <PackageVersion Include="Markdig" Version="0.30.4" />
   </ItemGroup>
 
   <ItemGroup Label="Test Packages">
