@@ -55,11 +55,11 @@ dotnet test --configuration $CONFIGURATION --no-build --verbosity normal /p:Coll
 if [ -z "$PR_BUILD_ID" ]
 then
       echo "Production Build"
-      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
 else
       PR_BASE_URl="https://green-field-0353fee03-$PR_BUILD_ID.westeurope.1.azurestaticapps.net"
       echo "PR Build for '$PR_BUILD_ID' has url '$PR_BASE_URl'"
-      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$PR_BASE_URl
+      dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$CONFIGURATION/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$PR_BASE_URl
 fi
 
 cd dist
