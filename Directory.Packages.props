@@ -7,25 +7,25 @@
   <!-- https://github.com/NuGet/Home/wiki/Centrally-managing-NuGet-package-versions -->
 
   <ItemGroup Label="Microsoft Extensions">
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="6.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageVersion Include="Schema.NET" Version="11.0.1" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.3" />
-    <PackageVersion Include="System.ServiceModel.Syndication" Version="6.0.0" />
+    <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="Scriban" Version="5.5.0" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageVersion Include="System.IO.Abstractions" Version="17.2.3" />
