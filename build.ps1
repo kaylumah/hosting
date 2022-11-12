@@ -31,13 +31,13 @@ dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p
 if ([string]::IsNullOrEmpty($PrBuildId))
 {
     Write-Host "Production Build"
-    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
 }
 else
 {
     Write-Host "PullRequest Build ($PrBuildId)"
     [string] $BaseUrl="https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net"
-    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net6.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
+    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 }
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
