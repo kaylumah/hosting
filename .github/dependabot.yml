@@ -13,3 +13,5 @@ updates:
   ignore:
     - dependency-name: "Microsoft.Extensions.*"
       versions: [ "7.x" ]
+    - dependency-name: "Microsoft.Extensions.FileProviders.Abstractions"
+      versions: [ "7.x" ]
