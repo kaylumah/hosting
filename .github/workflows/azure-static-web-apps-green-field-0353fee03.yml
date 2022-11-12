@@ -18,6 +18,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - name: 'For Dependabot'
+        if: github.actor == 'dependabot[bot]'
+        shell: pwsh
+        run: |
+          Write-Output "PR created by Dependabot"
       - name: Use Node.js v16
         uses: actions/setup-node@v1
         with:
