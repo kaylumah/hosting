@@ -69,6 +69,7 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
       - name: 'Verify Website'
+        if: github.actor != 'dependabot[bot]'
         id: verifywebsite
         shell: pwsh
         run: |
