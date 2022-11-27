@@ -10,7 +10,7 @@ public static class FileSystemExtensions
     public static Stream CreateReadStream(this IFileSystemInfo fileInfo)
     {
         var fileSystem = fileInfo.FileSystem;
-        return fileSystem.FileStream.Create(fileInfo.FullName, FileMode.Open);
+        return fileSystem.FileStream.New(fileInfo.FullName, FileMode.Open);
     }
 
     public static bool IsDirectory(this IFileSystemInfo fileSystemInfo)
@@ -30,7 +30,7 @@ public static class FileSystemExtensions
         // TODO: better solution
         var workingDirectory = string.IsNullOrEmpty(path) ? fileSystem.Directory.GetCurrentDirectory() : path;
         var result = new List<IFileSystemInfo>();
-        var scanDirectory = fileSystem.DirectoryInfo.FromDirectoryName(workingDirectory);
+        var scanDirectory = fileSystem.DirectoryInfo.New(workingDirectory);
         if (!scanDirectory.Exists)
         {
             return result;
@@ -53,6 +53,6 @@ public static class FileSystemExtensions
 
     public static IFileInfo GetFile(this IFileSystem fileSystem, string path)
     {
-        return fileSystem.FileInfo.FromFileName(path);
+        return fileSystem.FileInfo.New(path);
     }
 }
