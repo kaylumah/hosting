@@ -55,6 +55,7 @@ jobs:
           name: Test Reports
           path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
+        if: github.actor != 'dependabot[bot]'
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -68,6 +69,7 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
       - name: 'Verify Website'
+        if: github.actor != 'dependabot[bot]'
         id: verifywebsite
         shell: pwsh
         run: |
@@ -76,18 +78,20 @@ jobs:
           echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
       - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
       - name: Lighthouse
+        if: github.actor != 'dependabot[bot]'
         uses: foo-software/lighthouse-check-action@master
         with:
           outputDirectory: '${{ github.workspace }}/tmp/artifacts'
           urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
       - name: Upload artifacts
+        if: github.actor != 'dependabot[bot]'
         uses: actions/upload-artifact@master
         with:
           name: Lighthouse reports
           path: ${{ github.workspace }}/tmp/artifacts
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
