@@ -55,6 +55,7 @@ jobs:
           name: Test Reports
           path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
+        if: github.actor != 'dependabot[bot]'
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -74,20 +75,22 @@ jobs:
           $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
           $SiteMapOutputAsString = $SiteMapOutput -join ","
           echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
-      - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-      - name: Lighthouse
-        uses: foo-software/lighthouse-check-action@master
-        with:
-          outputDirectory: '${{ github.workspace }}/tmp/artifacts'
-          urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
-      - name: Upload artifacts
-        uses: actions/upload-artifact@master
-        with:
-          name: Lighthouse reports
-          path: ${{ github.workspace }}/tmp/artifacts
+      # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+      # - name: Lighthouse
+      #   if: github.actor != 'dependabot[bot]'
+      #   uses: foo-software/lighthouse-check-action@master
+      #   with:
+      #     outputDirectory: '${{ github.workspace }}/tmp/artifacts'
+      #     urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
+      # - name: Upload artifacts
+      #   if: github.actor != 'dependabot[bot]'
+      #   uses: actions/upload-artifact@master
+      #   with:
+      #     name: Lighthouse reports
+      #     path: ${{ github.workspace }}/tmp/artifacts
 
   close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
