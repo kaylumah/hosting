@@ -17,7 +17,7 @@ interface IFilter
     bool Validate(HtmlDocument document);
 }
 
-class TagFilter : IFilter
+sealed class TagFilter : IFilter
 {
     private readonly string _path;
 
@@ -33,7 +33,7 @@ class TagFilter : IFilter
     }
 }
 
-class Program
+sealed class Program
 {
     static void Main(string[] args)
     {
@@ -106,7 +106,7 @@ class Program
     }
 }
 
-internal class PageLinkResult
+sealed class PageLinkResult
 {
     private readonly string _fileName;
     private readonly HtmlNode _node;

@@ -55,10 +55,11 @@ public partial class FileMetadataParser : IFileMetadataParser
     private string RetrieveExtension(string fileName)
     {
         var ext = Path.GetExtension(fileName);
-        if (_options.ExtensionMapping.ContainsKey(ext))
+        if (_options.ExtensionMapping.TryGetValue(ext, out string value))
         {
-            return _options.ExtensionMapping[ext];
+            return value;
         }
+        
         return ext;
     }
 
@@ -205,11 +206,14 @@ public partial class FileMetadataParser : IFileMetadataParser
         {
             foreach (var entry in source)
             {
+#pragma warning disable CA1854
                 if (target.ContainsKey(entry.Key))
                 {
                     LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
                 }
                 target[entry.Key] = entry.Value;
+#pragma warning restore CA1854
+
             }
         }
     }

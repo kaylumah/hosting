@@ -9,7 +9,7 @@ using Scriban.Runtime;
 
 namespace Kaylumah.Ssg.Engine.Transformation.Service;
 
-internal class MyIncludeFromDisk : ITemplateLoader
+sealed class MyIncludeFromDisk : ITemplateLoader
 {
     private readonly IFileSystem _fileSystem;
     private readonly string _templateFolder;
