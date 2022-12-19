@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Client.SiteGenerator;
 
-class Program
+sealed class Program
 {
     private static void ShowKaylumahLogo()
     {

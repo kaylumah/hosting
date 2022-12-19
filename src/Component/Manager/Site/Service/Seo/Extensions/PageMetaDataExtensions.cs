@@ -27,14 +27,14 @@ public static class PageMetaDataExtensions
             blogPost.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)));
         }
 
-        if (!string.IsNullOrEmpty(page.Author) && persons.ContainsKey(page.Author))
+        if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person person))
         {
-            blogPost.Author = persons[page.Author];
+            blogPost.Author = person;
         }
 
-        if (!string.IsNullOrEmpty(page.Organization) && organizations.ContainsKey(page.Organization))
+        if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization organization))
         {
-            blogPost.Publisher = organizations[page.Organization];
+            blogPost.Publisher = organization;
         }
 
         return blogPost;
