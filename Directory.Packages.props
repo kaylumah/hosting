@@ -45,6 +45,6 @@
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="19.1.5" />
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
-    <PackageVersion Include="Verify.Xunit" Version="19.5.0" />
+    <PackageVersion Include="Verify.Xunit" Version="19.6.0" />
   </ItemGroup>
 </Project>
