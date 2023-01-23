@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <PackageVersion Include="Schema.NET" Version="11.0.1" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.3" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="Scriban" Version="5.5.2" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.46" />
