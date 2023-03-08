@@ -30,7 +30,7 @@
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.46" />
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.1" />
     <PackageVersion Include="YamlDotNet" Version="13.0.0" />
-    <PackageVersion Include="System.Text.Json" Version="7.0.1" />
+    <PackageVersion Include="System.Text.Json" Version="7.0.2" />
     <PackageVersion Include="Markdig" Version="0.30.4" />
   </ItemGroup>
 
