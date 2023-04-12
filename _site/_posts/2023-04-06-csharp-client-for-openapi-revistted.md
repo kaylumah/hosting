@@ -34,4 +34,4 @@ We can now change the project file and add a custom MSBuild target. For the comm
   </Target>
 ```
 
-In our case the variable `OutputPath` resolves as `bin/Debug/net7.0/` and `AssemblyName` to `Demo`.  After the project is build you will have a file named `bin/Debug/net7.0/Demo.json` which is the API specification for the project. 
+In our case the variable `OutputPath` resolves as `bin/Debug/net7.0/` and `AssemblyName` to `Demo`.  After the project is build you will have a file named `bin/Debug/net7.0/Demo.json` which is the API specification for the project. For our purpose putting the file in the bin is sufficient, in some cases I do prefer to put the swagger specification under source control. This helps track unexpected changes to the API. 
