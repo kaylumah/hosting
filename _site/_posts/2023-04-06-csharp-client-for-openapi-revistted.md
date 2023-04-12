@@ -37,3 +37,33 @@ We can now change the project file and add a custom MSBuild target. For the comm
 In our case the variable `OutputPath` resolves as `bin/Debug/net7.0/` and `AssemblyName` to `Demo`.  After the project is build you will have a file named `bin/Debug/net7.0/Demo.json` which is the API specification for the project. For our purpose putting the file in the bin is sufficient, in some cases I do prefer to put the swagger specification under source control. This helps track unexpected changes to the API. 
 
 ## Use NSwag the classic way...
+
+Fortunately not much has changed in the way we do it in the old way.
+
+```
+dotnet add package NSwag.MSBuild --version 13.18.2
+```
+
+```xml
+```
+
+
+> We can use `<Exec Command="$(NSwagExe_Net70) new" />` to generate a fresh `nswag.json`
+
+We then need to modify the top half to specify the correct runtime and source document like so:
+
+```json
+{
+  "runtime": "Net70",
+  "defaultVariables": null,
+  "documentGenerator": {
+    "fromDocument": {
+      "json": "$(OpenApiDocument)"
+    }
+  },
+  "codeGenerators": {}
+}
+```
+
+
+
