@@ -85,4 +85,8 @@ We then need to modify the top half to specify the correct runtime and source do
 ## Using OpenAPI Reference
 
 ### Using OpenAPI reference from Visual Studio
+
+Project right mouse click -> Add -> Connected Service
+
+
 ### Using OpenAPI reference from command line
