@@ -81,3 +81,8 @@ We then need to modify the top half to specify the correct runtime and source do
 ```
 
 > Unless you change the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson` you also need to install Newtonsoft.
+
+## Using OpenAPI Reference
+
+### Using OpenAPI reference from Visual Studio
+### Using OpenAPI reference from command line
