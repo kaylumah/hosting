@@ -45,6 +45,16 @@ dotnet add package NSwag.MSBuild --version 13.18.2
 ```
 
 ```xml
+<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
+    <!--https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild-->
+    <Exec Command="$(NSwagExe_Net70) new" />
+    <PropertyGroup>
+      <OpenApiDocument>../../Api/Demo/bin/Debug/net7.0/Demo.json</OpenApiDocument>
+      <NSwagConfiguration>nswag.json</NSwagConfiguration>
+      <GeneratedOutput>Client.g.cs</GeneratedOutput>
+    </PropertyGroup>
+    <Exec Command="$(NSwagExe_Net70) run $(NSwagConfiguration) /variables:OpenApiDocument=$(OpenApiDocument),GeneratedOutput=$(GeneratedOutput)" />
+</Target>
 ```
 
 
