@@ -24,10 +24,14 @@ dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0
 We can now change the project file and add a custom MSBuild target. For the command to work you need a build DLL and the name of of the api document. We take care of the dll bit by specifying `AfterTargets="Build"` and the document name has a default name "v1"
 
 ```xml
-<Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
-  <PropertyGroup>
-    <OpenApiDocumentName>v1</OpenApiDocumentName>
-  </PropertyGroup>
-  <Exec Command="dotnet swagger tofile --output $(OutputPath)$(AssemblyName).json $(OutputPath)$(AssemblyName).dll $(OpenApiDocumentName)" ContinueOnError="true" />
-</Target>
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+    <PropertyGroup>
+      <OpenApiDocumentName>v1</OpenApiDocumentName>
+      <ApiDll>$(OutputPath)$(AssemblyName).dll</ApiDll>
+      <OutputApiDocument>$(OutputPath)$(AssemblyName).json</OutputApiDocument>
+    </PropertyGroup>
+    <Exec Command="dotnet swagger tofile --output $(OutputApiDocument) $(ApiDll) $(OpenApiDocumentName)" ContinueOnError="true" />
+  </Target>
 ```
+
+In our case the variable `OutputPath` resolves as `bin/Debug/net7.0/` and `AssemblyName` to `Demo`.  After the project is build you will have a file named `bin/Debug/net7.0/Demo.json` which is the API specification for the project. 
