@@ -58,8 +58,7 @@ dotnet add package NSwag.MSBuild --version 13.18.2
 ```
 
 
-> We can use `<Exec Command="$(NSwagExe_Net70) new" />` to generate a fresh `nswag.json`
-
+Uncomment `<Exec Command="$(NSwagExe_Net70) new" />` to generate a fresh `nswag.json`
 We then need to modify the top half to specify the correct runtime and source document like so:
 
 ```json
@@ -71,9 +70,14 @@ We then need to modify the top half to specify the correct runtime and source do
       "json": "$(OpenApiDocument)"
     }
   },
-  "codeGenerators": {}
+  "codeGenerators": {
+     "openApiToCSharpClient": { 
+      // ...
+      "output": "$(GeneratedOutput)"
+      // ...
+     }
+  }
 }
 ```
 
-
-
+> Unless you change the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson` you also need to install Newtonsoft.
