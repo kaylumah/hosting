@@ -95,3 +95,5 @@ Project right mouse click -> Add -> Connected Service
 ### Customizing...
 
 ## Conclusion
+
+I am not sure I prefer one option of the other. Adding a custom build target feels like magic, but its explici
