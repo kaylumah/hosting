@@ -14,7 +14,7 @@ In my previous article, ["Adventures with Mock"](https://kaylumah.nl/2021/04/11/
 
 
 
-# Generating Specification on build
+## Generating Specification on build
 In this post, I won't detail setting up an API that offers the OpenAPI specification. The starter web api template (dotnet new webapi via the command line) is sufficient for our cases. I will, however, explain how to generate the specification as part of every build. The template uses `Swashbuckle.AspNetCore` for setting up all the openapi stuff. We can use a corresponding  swashbuckle cli tool for interacting with our build system. The version needs to be the same, so in my case
 
 ```
@@ -35,3 +35,5 @@ We can now change the project file and add a custom MSBuild target. For the comm
 ```
 
 In our case the variable `OutputPath` resolves as `bin/Debug/net7.0/` and `AssemblyName` to `Demo`.  After the project is build you will have a file named `bin/Debug/net7.0/Demo.json` which is the API specification for the project. For our purpose putting the file in the bin is sufficient, in some cases I do prefer to put the swagger specification under source control. This helps track unexpected changes to the API. 
+
+## Use NSwag the classic way...
