@@ -91,6 +91,11 @@ Project right mouse click -> Add -> Connected Service
 
 ### Using OpenAPI reference from command line
 
+Even without Visual Studio you can add an open api specification.
+
+dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4
+
+dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
 
 ### Customizing...
 
