@@ -1,6 +1,6 @@
 ---
-title: Generate C# client for OpenAPI
-description: A look at using OpenAPI clients in C#
+title: Generate C# client for OpenAPI - Revisited
+description: A comparison of NSwag.MSBuild and OpenApiReference
 image: /assets/images/posts/20230414/openapi/cover_image.png
 tags:
   - csharp
