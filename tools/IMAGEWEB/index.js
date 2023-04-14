@@ -12,7 +12,8 @@ const posts = [
   "../../_site/assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers",
   "../../_site/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet",
   "../../_site/assets/images/posts/20220607/launch-settings",
-  "../../_site/assets/images/posts/20220917/azurite"
+  "../../_site/assets/images/posts/20220917/azurite",
+  "../../_site/assets/images/posts/20230414/openapi"
 ];
 
 posts.forEach(path => {
