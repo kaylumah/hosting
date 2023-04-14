@@ -78,16 +78,15 @@ I don't remember it being possible back then, but you can now change the JSON se
 
 You can right-click on any project to add a connected service to the project. 
 
-[IMAGE HERE]
-![Microsoft Visual Studio - Console Launch Profile](/assets/images/posts/20230414/openapi/01_add_service_reference.png){width=2640 height=796}
+![Microsoft Visual Studio - Add Service reference](/assets/images/posts/20230414/openapi/01_add_service_reference.png){width=1546 height=1000}
 
-[IMAGE HERE]
+![Microsoft Visual Studio - Select service reference type](/assets/images/posts/20230414/openapi/02_select_service_type.png){width=1443 height=925}
 
 Note by choosing the option "Service reference..." instead of "Connected Service" you get the second prompt at once. By choosing "Connected service" you get the overview for all connected service for the project and then need to an extra click to add the service reference.
 
 On the third screen we can customize the input for the msbuild task. 
 
-[IMAGE HERE]
+![Microsoft Visual Studio - Add service reference OpenAPI](/assets/images/posts/20230414/openapi/03_add_openapi.png){width=1547 height=923}
 
 The result looks like this:
 
