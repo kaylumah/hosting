@@ -124,12 +124,28 @@ If you build the project the generated code will be in the `obj` folder for the 
 
 ### Using OpenAPI reference from command line
 
-Even without Visual Studio you can add an open api specification.
+If you do not have Visual Studio you can use a package called `Microsoft.dotnet-openapi` which is available as a dotnet tool.
+You can install it with the command `dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4`
 
-dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4
+You can then add the `OpenApiReference` by running the following command from your project directory
 
+```shell
 dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
+```
 
+The result looks like this:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5" />
+</ItemGroup>
+<ItemGroup>
+  <OpenApiReference Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" />
+</ItemGroup>
+```
+
+My expectation would have been
 
 
 ### Customizing...
