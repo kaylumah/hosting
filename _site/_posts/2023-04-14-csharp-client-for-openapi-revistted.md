@@ -138,6 +138,7 @@ Yeah, that is right, it is similar but not the same as if done via Visual Studio
 - The CodeGenerator is not specified, and it defaults to `NSwagCSharp`.
 I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of `NSwag.ApiDescription.Client`, with the installed version it is just a preview build.
 
+Do note that it is not required to use the dotnet tool for this; you can manually add the same lines as provided above. The tool is just there for convenience.
 
 ### Customizing...
 
