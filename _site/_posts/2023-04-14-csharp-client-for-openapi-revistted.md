@@ -34,16 +34,12 @@ Note that as part of the `bin` folder, the specification is not under source con
 
 ## Use NSwag the classic way...
 
-Fortunately not much has changed in the way we do it in the old way.
-
-```
-dotnet add package NSwag.MSBuild --version 13.18.2
-```
+To add NSwag manually to our project, we need the `NSwag.MSBuild` NuGet package. Which we can install via `dotnet add package NSwag.MSBuild --version 13.18.2`. The process is mostly the same as I detailed in 2021; one of the few changes is the target framework to use. Modify the csproj as follows:
 
 ```xml
 <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
     <!--https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild-->
-    <Exec Command="$(NSwagExe_Net70) new" />
+    <!-- <Exec Command="$(NSwagExe_Net70) new" /> -->
     <PropertyGroup>
       <OpenApiDocument>../../Api/Demo/bin/Debug/net7.0/Demo.json</OpenApiDocument>
       <NSwagConfiguration>nswag.json</NSwagConfiguration>
@@ -53,9 +49,7 @@ dotnet add package NSwag.MSBuild --version 13.18.2
 </Target>
 ```
 
-
-Uncomment `<Exec Command="$(NSwagExe_Net70) new" />` to generate a fresh `nswag.json`
-We then need to modify the top half to specify the correct runtime and source document like so:
+You can uncomment `$(NSwagExe_Net70) new` to generate a fresh nswag.json, the configuration file used for NSwag. After you have the config file, you still need to specify the runtime, the document, and the output location. Abbreviated the change to the file looks like this:
 
 ```json
 {
@@ -76,7 +70,7 @@ We then need to modify the top half to specify the correct runtime and source do
 }
 ```
 
-> Unless you change the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson` you also need to install Newtonsoft.
+I don't remember it being possible back then, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson`. If you do not do this, you must install the `Newtonsoft.Json` package, or the generated code will not compile.
 
 ## Using OpenAPI Reference
 
