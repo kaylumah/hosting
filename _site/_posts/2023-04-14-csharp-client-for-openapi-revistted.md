@@ -211,3 +211,20 @@ It has a duplicate `/Namespace`, and the first wins. The only way to customize t
 ## Conclusion
 
 I am not sure I prefer one option of the other. Adding a custom build target feels like magic, but its explici
+
+
+
+
+
+
+
+
+As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
+
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/WorkingWithAzureSdkForDotnet).
+
+See you next time, stay healthy and happy coding to all 🧸!
+
+## Additional Resources
+
+- [Visual Studio Connected Services](https://devblogs.microsoft.com/dotnet/generating-http-api-clients-using-visual-studio-connected-services/)
