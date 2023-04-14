@@ -142,6 +142,44 @@ Do note that it is not required to use the dotnet tool for this; you can manuall
 
 ### Influence created output
 
+We have already seen that for the manual approach, making changes to the configuration can be done by modifying the nswag.json, a file we do not have when using OpenApiReference. So this section will go into making the same modification for this version. 
+
+Before I go into it, we must fix one issue with the template used so far. There is a glaring issue which only appears if you have built the project in different ways. For example, here is the output building from Visual Studio
+
+```shell
+1>GenerateNSwagCSharp:
+1>  "C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\build\../tools/Win/NSwag.exe" openapi2csclient /className:DemoClient /namespace:ConnectedService /input:C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json /output:obj\DemoClient.cs
+1>NSwag command line tool for .NET 4.6.1+ WinX64, toolchain v13.0.5.0 (NJsonSchema v10.0.22.0 (Newtonsoft.Json v11.0.0.0))
+1>Visit http://NSwag.org for more information.
+1>NSwag bin directory: C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\tools\Win
+1>Code has been successfully written to file.
+```
+
+Compare that with the output from the dotnet CLI:
+
+```shell
+  GenerateNSwagCSharp:
+    dotnet --roll-forward-on-no-candidate-fx 2 C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\build\../tools/NetCore21//dotnet-nswag.dll openapi2csclient /className:DemoClient /na
+  mespace:ConnectedService /input:C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json /output:obj\DemoClient.cs
+  NSwag command line tool for .NET Core NetCore21, toolchain v13.0.5.0 (NJsonSchema v10.0.22.0 (Newtonsoft.Json v11.0.0.0))
+  Visit http://NSwag.org for more information.
+  NSwag bin directory: C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\tools\NetCore21
+  Code has been successfully written to file.
+```
+
+Do you see the issue? The CLI variant differs from the NSwag version used; it uses a `NetCore21` dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.
+
+Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <OpenApiReference> line like this:
+
+```xml
+<OpenApiReference Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" 
+                  CodeGenerator="NSwagCSharp" 
+                  Namespace="MyNamespace"
+                  ClassName="MyClient" 
+                  Link="OpenAPIs\Demo.json" />
+```
+
+
 ## Conclusion
 
 I am not sure I prefer one option of the other. Adding a custom build target feels like magic, but its explici
