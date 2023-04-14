@@ -86,7 +86,14 @@ We then need to modify the top half to specify the correct runtime and source do
 
 ### Using OpenAPI reference from Visual Studio
 
-Project right mouse click -> Add -> Connected Service
+You can right-click on any project to add a connected service to the project. 
+
+[IMAGE HERE]
+
+[IMAGE HERE]
+
+Note by choosing the option "Service reference..." instead of "Connected Service" you get the second prompt at once. By choosing "Connected service" you get the overview for all connected service for the project and then need to an extra click to add the service reference.
+
 
 
 ### Using OpenAPI reference from command line
