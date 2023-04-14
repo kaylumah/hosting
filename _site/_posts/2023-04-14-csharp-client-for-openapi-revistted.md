@@ -138,9 +138,9 @@ Yeah, that is right, it is similar but not the same as if done via Visual Studio
 - The CodeGenerator is not specified, and it defaults to `NSwagCSharp`.
 I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of `NSwag.ApiDescription.Client`, with the installed version it is just a preview build.
 
-Do note that it is not required to use the dotnet tool for this; you can manually add the same lines as provided above. The tool is just there for convenience.
+Do note that it is not required to use the dotnet tool for this; you can manually add the same lines as provided above. The tool is just there for convenience. Documentation for the tool is still somewhat limited but is described at the [docs](https://learn.microsoft.com/en-us/aspnet/core/web-api/microsoft.dotnet-openapi?view=aspnetcore-7.0) over here.
 
-### Customizing...
+### Influence created output
 
 ## Conclusion
 
