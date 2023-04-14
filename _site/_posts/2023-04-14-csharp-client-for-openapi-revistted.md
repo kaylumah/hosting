@@ -76,19 +76,19 @@ I don't remember it being possible back in 2021, but you can now change the JSON
 
 ### Using OpenAPI reference from Visual Studio
 
-You can right-click on any project to add a connected service to the project. 
+I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.
 
 ![Microsoft Visual Studio - Add Service reference](/assets/images/posts/20230414/openapi/01_add_service_reference.png){width=1546 height=1000}
 
 ![Microsoft Visual Studio - Select service reference type](/assets/images/posts/20230414/openapi/02_select_service_type.png){width=1443 height=925}
 
-Note by choosing the option "Service reference..." instead of "Connected Service" you get the second prompt at once. By choosing "Connected service" you get the overview for all connected service for the project and then need to an extra click to add the service reference.
+By choosing the option "Service reference..." instead of "Connected Service" you get the second prompt immediately. By selecting "Connected service" you get the overview of all connected services for the project and then need an extra click to add the service reference.
 
-On the third screen we can customize the input for the msbuild task. 
+We can customize the input for the msbuild task on the third screen. We only need to specify the file location of the Open API JSON.
 
 ![Microsoft Visual Studio - Add service reference OpenAPI](/assets/images/posts/20230414/openapi/03_add_openapi.png){width=1547 height=923}
 
-The result looks like this:
+By selecting "finish", Visual Studio will make all necessary modifications. Easy right? The project file should now look like this:
 
 ```xml
 <ItemGroup>
