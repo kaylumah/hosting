@@ -94,6 +94,7 @@ You can right-click on any project to add a connected service to the project.
 
 Note by choosing the option "Service reference..." instead of "Connected Service" you get the second prompt at once. By choosing "Connected service" you get the overview for all connected service for the project and then need to an extra click to add the service reference.
 
+On the third screen we can customize the input for the msbuild task. 
 
 
 ### Using OpenAPI reference from command line
