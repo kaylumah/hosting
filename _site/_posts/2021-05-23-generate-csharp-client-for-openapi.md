@@ -9,6 +9,9 @@ tags:
   - swashbuckle
 commentid: '143'
 ---
+
+> **note**: on 2023-04-14 I published a revised version of this article which you can find here ["Generate C# client for OpenAPI - Revisited"](https://kaylumah.nl/2023/04/14/csharp-client-for-openapi-revistted.html) it compares an alternative to the way described in this article. Including an update to `net7.0`, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)
+
 I've recently worked on a project where I was the consumer of a third party API. Luckily for me, we decided on an Open API specification which made integrating services a breeze. If you have been following my content, you know I often use C# in my projects. So I needed a type-safe client for use in my C# code base.
 
 To accomplish my goals, I used the [NSwag library](https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild) created by Rico Suter. This project provides me with an MSBuild task for generating clients. In my case, I used a JSON file version to generate my client. NSwag is not limited to just one way of working.
