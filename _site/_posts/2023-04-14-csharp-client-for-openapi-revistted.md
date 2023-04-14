@@ -110,7 +110,7 @@ By selecting "finish", Visual Studio will make all necessary modifications. Easy
 </ItemGroup>
 ```
 
-If you build the project the generated code will be in the `obj` folder for the project.
+The generated code will be in the `obj` folder if you build the project. As mentioned above, the API specification is in the `Debug/net7.0` folder, so it will break if I retarget this solution to a newer framework. That is another reason to just put the specification at the root of the API project.
 
 ### Using OpenAPI reference from command line
 
