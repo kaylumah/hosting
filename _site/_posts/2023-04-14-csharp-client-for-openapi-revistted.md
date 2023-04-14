@@ -98,7 +98,27 @@ On the third screen we can customize the input for the msbuild task.
 
 [IMAGE HERE]
 
+The result looks like this:
 
+```xml
+<ItemGroup>
+  <OpenApiReference Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" 
+                    CodeGenerator="NSwagCSharp"
+                    Link="OpenAPIs\Demo.json" />
+</ItemGroup>
+
+<ItemGroup>
+  <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+  </PackageReference>
+</ItemGroup>
+```
 
 ### Using OpenAPI reference from command line
 
