@@ -70,7 +70,7 @@ You can uncomment `$(NSwagExe_Net70) new` to generate a fresh nswag.json, the co
 }
 ```
 
-I don't remember it being possible back then, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson`. If you do not do this, you must install the `Newtonsoft.Json` package, or the generated code will not compile.
+I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson`. If you do not do this, you must install the `Newtonsoft.Json` package, or the generated code will not compile.
 
 ## Using OpenAPI Reference
 
