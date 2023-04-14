@@ -32,7 +32,7 @@ The `swagger` command takes the output location (OutputApiDocument), the DLL for
 
 Note that as part of the `bin` folder, the specification is not under source control. Sometimes I place it in the project root to track any changes made to the specification. Doing so is especially useful for monitoring unexpected or unintended changes to the specification.
 
-## Use NSwag the classic way...
+## Use NSwag.MSBuild to generate a csharp client
 
 To add NSwag manually to our project, we need the `NSwag.MSBuild` NuGet package. Which we can install via `dotnet add package NSwag.MSBuild --version 13.18.2`. The process is mostly the same as I detailed in 2021; one of the few changes is the target framework to use. Modify the csproj as follows:
 
