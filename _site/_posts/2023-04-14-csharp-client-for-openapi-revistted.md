@@ -221,7 +221,7 @@ I am not sure I prefer one option of the other. Adding a custom build target fee
 
 As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
-The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/WorkingWithAzureSdkForDotnet).
+The corresponding source code for this article is on [GitHub](https://github.com/kaylumah/GenerateCSharpClientForOpenAPIRevisited).
 
 See you next time, stay healthy and happy coding to all 🧸!
 
