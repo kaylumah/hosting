@@ -105,6 +105,8 @@ dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4
 
 dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
 
+[IMAGE HERE]
+
 ### Customizing...
 
 ## Conclusion
