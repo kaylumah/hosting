@@ -187,9 +187,26 @@ Other options, like the JsonLibrary, need to be formatted differently. Like `Nam
                   Options="/JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException" 
                   ClassName="MyClient" 
                   Link="OpenAPIs\Demo.json" />
-
 ```
 
+Any value set by nswag.json can also be provided here in the format `/propertyName:value`. I like to point out that properties like namespace can not be set here, so the following snippet will not work.
+
+```xml
+<OpenApiReference 
+  Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" 
+  CodeGenerator="NSwagCSharp" 
+  Options="/Namespace:MyNamspace /JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException" 
+  ClassName="MyClient" 
+  Link="OpenAPIs\Demo.json" />
+```
+
+The reason is that task creates the following NSwag command (displayed in the output window)
+
+```shell
+dotnet --roll-forward-on-no-candidate-fx 2 "C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.18.2\build\../tools/Net70//dotnet-nswag.dll" openapi2csclient /className:MyClient /namespace:Override /input:"C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json" /output:"obj\DemoClient.cs" /Namespace:MyNamspace /JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException
+```
+
+It has a duplicate `/Namespace`, and the first wins. The only way to customize the namespace is by providing it as an attribute. Otherwise, the default value, which is the assembly name, will be used.
 
 ## Conclusion
 
