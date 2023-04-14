@@ -7,7 +7,7 @@ tags:
   - nswag
   - openapi
   - swashbuckle
-commentid: '143'
+commentid: '266'
 ---
 I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called ["Generate C# client for OpenAPI"](https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html). So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born. 
 
