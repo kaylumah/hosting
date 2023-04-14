@@ -82,3 +82,7 @@
   name: 2022
   description: posts from 2022
   icon: /assets/icons/custom/2022.svg
+- id: 2023
+  name: 2023
+  description: posts from 2023
+  icon: /assets/icons/custom/2023.svg
