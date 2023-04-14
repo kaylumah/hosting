@@ -96,6 +96,9 @@ Note by choosing the option "Service reference..." instead of "Connected Service
 
 On the third screen we can customize the input for the msbuild task. 
 
+[IMAGE HERE]
+
+
 
 ### Using OpenAPI reference from command line
 
@@ -105,7 +108,7 @@ dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4
 
 dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
 
-[IMAGE HERE]
+
 
 ### Customizing...
 
