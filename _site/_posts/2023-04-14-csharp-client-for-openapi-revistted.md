@@ -114,10 +114,7 @@ The generated code will be in the `obj` folder if you build the project. As ment
 
 ### Using OpenAPI reference from command line
 
-If you do not have Visual Studio you can use a package called `Microsoft.dotnet-openapi` which is available as a dotnet tool.
-You can install it with the command `dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4`
-
-You can then add the `OpenApiReference` by running the following command from your project directory
+You may wonder if it is as simple if you do not have Visual Studio as your IDE. It is; Microsoft published a dotnet tool for this exact reason. You can install it by running `dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4`. You can add the API specification by using a terminal from your project's directory and running the following command. 
 
 ```shell
 dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
@@ -135,7 +132,11 @@ The result looks like this:
 </ItemGroup>
 ```
 
-My expectation would have been
+Yeah, that is right, it is similar but not the same as if done via Visual Studio. 
+- The package `Microsoft.Extensions.ApiDescription.Client` is missing.
+- The version for NewtonSoft is different.
+- The CodeGenerator is not specified, and it defaults to `NSwagCSharp`.
+I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of `NSwag.ApiDescription.Client`, with the installed version it is just a preview build.
 
 
 ### Customizing...
