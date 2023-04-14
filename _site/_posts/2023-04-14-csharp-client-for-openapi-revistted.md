@@ -1,7 +1,7 @@
 ---
 title: Generate C# client for OpenAPI
 description: A look at using OpenAPI clients in C#
-image: /assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png
+image: /assets/images/posts/20230414/openapi/cover_image.png
 tags:
   - csharp
   - nswag
@@ -79,6 +79,7 @@ I don't remember it being possible back then, but you can now change the JSON se
 You can right-click on any project to add a connected service to the project. 
 
 [IMAGE HERE]
+![Microsoft Visual Studio - Console Launch Profile](/assets/images/posts/20230414/openapi/01_add_service_reference.png){width=2640 height=796}
 
 [IMAGE HERE]
 
