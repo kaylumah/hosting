@@ -179,6 +179,17 @@ Back to the issue at hand, how do we customize the output? It is a mix-match sit
                   Link="OpenAPIs\Demo.json" />
 ```
 
+Other options, like the JsonLibrary, need to be formatted differently. Like `Namespace`, there is an `Options` attribute. For example, we change the configuration below to use SystemTextJson and provide a custom name for the Exception class in the generated code base.
+
+```xml
+<OpenApiReference Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" 
+                  CodeGenerator="NSwagCSharp" 
+                  Options="/JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException" 
+                  ClassName="MyClient" 
+                  Link="OpenAPIs\Demo.json" />
+
+```
+
 
 ## Conclusion
 
