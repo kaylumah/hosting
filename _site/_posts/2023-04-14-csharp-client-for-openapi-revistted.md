@@ -120,6 +120,8 @@ The result looks like this:
 </ItemGroup>
 ```
 
+If you build the project the generated code will be in the `obj` folder for the project.
+
 ### Using OpenAPI reference from command line
 
 Even without Visual Studio you can add an open api specification.
