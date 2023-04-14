@@ -210,14 +210,7 @@ It has a duplicate `/Namespace`, and the first wins. The only way to customize t
 
 ## Conclusion
 
-I am not sure I prefer one option of the other. Adding a custom build target feels like magic, but its explici
-
-
-
-
-
-
-
+In conclusion, I cannot deny that the OpenApiReference feels a lot easier than the manual approach. It has its issues. For example, the lack of documentation configuring the generated code is disappointing. I also think it is weird that the different approaches between Visual Studio and command-line are out of sync and that both templates are outdated. It makes me question if people are using it. Both reasons are not a hard no-go for me. The new approach does feel less like magic, but the trade-off for me is that the settings used are less transparent than a nswag.json file. As I showed in the previous version of this article, NSwag can also function without specifying all options and will apply the defaults themselves. I like things to be explicit, so that is a point in favour of the manual approach, that it gives me a choice to specify everything or omit the things I don't need. The abstraction might have been better if we could still provide a config file or if there were properties that Microsoft would map to NSwag stuff internally, decoupling my code generation from the implementation. What do you think about this? Which version do you prefer?
 
 As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.
 
