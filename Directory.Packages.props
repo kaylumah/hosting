@@ -28,7 +28,7 @@
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="Scriban" Version="5.7.0" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageVersion Include="System.IO.Abstractions" Version="19.2.4" />
+    <PackageVersion Include="System.IO.Abstractions" Version="19.2.15" />
     <PackageVersion Include="YamlDotNet" Version="13.0.2" />
     <PackageVersion Include="System.Text.Json" Version="7.0.2" />
     <PackageVersion Include="Markdig" Version="0.31.0" />
