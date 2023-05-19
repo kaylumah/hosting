@@ -42,6 +42,7 @@
   </ItemGroup>
   
   <PropertyGroup Label="BannedApiAnalyzers">
+    <!-- https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md -->
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <EnableBannedApiAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableBannedApiAnalyzers>
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
