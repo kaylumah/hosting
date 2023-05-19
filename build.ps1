@@ -27,8 +27,9 @@ if (Test-Path $DistFolder)
 [string] $BuildConfiguration = "Release"
 dotnet restore
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
-dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
-
+# https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
+dotnet test --configuration $BuildConfiguration
+# dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 [string] $PrBuildId = $env:PR_BUILD_ID
 if ([string]::IsNullOrEmpty($PrBuildId))
 {
