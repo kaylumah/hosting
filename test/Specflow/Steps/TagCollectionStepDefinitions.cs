@@ -19,7 +19,7 @@ public class TagCollectionStepDefinitions
         _fileSystem = fileSystem;
         _tagCollection = tagCollection;
     }
-    
+
     [Given("the following tags:")]
     public void GivenTheFollowingTags(TagCollection tagCollection)
     {

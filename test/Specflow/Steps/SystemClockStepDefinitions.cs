@@ -14,7 +14,7 @@ public class SystemClockStepDefinitions
     {
         _systemClockMock = systemClockMock;
     }
-    
+
     [Given(@"the current date is '(.*)':")]
     public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
     {

@@ -19,7 +19,7 @@ public class OrganizationCollectionStepDefinitions
         _fileSystem = fileSystem;
         _organizationCollection = organizationCollection;
     }
-    
+
     [Given("the following organizations:")]
     public void GivenTheFollowingOrganizations(OrganizationCollection organizationCollection)
     {

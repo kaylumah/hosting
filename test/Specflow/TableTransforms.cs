@@ -17,7 +17,7 @@ public class TableTransforms
         authorCollection.AddRange(table.CreateSet<Author>());
         return authorCollection;
     }
-    
+
     [StepArgumentTransformation]
     public static OrganizationCollection ToOrganizations(Table table)
     {
@@ -27,7 +27,7 @@ public class TableTransforms
         organizationCollection.AddRange(table.CreateSet<Organization>());
         return organizationCollection;
     }
-    
+
     [StepArgumentTransformation]
     public static TagCollection ToTags(Table table)
     {

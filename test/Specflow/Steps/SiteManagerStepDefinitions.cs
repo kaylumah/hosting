@@ -92,7 +92,7 @@ public class SiteManagerStepDefinitions
             _mockFileSystem.AddFile(postFileName, mockFile);
         }
     }
-    
+
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {

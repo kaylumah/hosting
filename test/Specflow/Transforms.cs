@@ -15,13 +15,13 @@ public class Transforms
     {
         return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
     }
-    
+
     [StepArgumentTransformation]
     public List<String> TransformToListOfString(string commaSeparatedList)
     {
         return commaSeparatedList.Split(Constants.Separator).ToList();
     }
-    
+
     [StepArgumentTransformation]
     public static ArticleCollection ToArticles(Table table)
     {

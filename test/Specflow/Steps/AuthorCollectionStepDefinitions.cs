@@ -19,7 +19,7 @@ public class AuthorCollectionStepDefinitions
         _fileSystem = fileSystem;
         _authorCollection = authorCollection;
     }
-    
+
     [Given("the following authors:")]
     public void GivenTheFollowingAuthors(AuthorCollection authorCollection)
     {

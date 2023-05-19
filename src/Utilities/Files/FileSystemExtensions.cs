@@ -17,7 +17,7 @@ public static class FileSystemExtensions
     {
         return fileSystemInfo.GetType().IsAssignableTo(typeof(IDirectoryInfo));
     }
-    
+
     public static byte[] GetFileBytes(this IFileSystem fileSystem, string path)
     {
         var fileInfo = fileSystem.GetFile(path);

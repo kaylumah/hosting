@@ -15,13 +15,13 @@ public static class ByteExtensions
     {
         return bytes.GetString(new UTF8Encoding(false));
     }
-    
+
     public static string GetString(this byte[] bytes, Encoding encoding)
     {
         var contents = encoding.GetString(bytes);
         return contents;
     }
-    
+
     public static HtmlDocument ToHtmlDocument(this byte[] bytes)
     {
         var contents = bytes.GetString();
@@ -29,7 +29,7 @@ public static class ByteExtensions
         htmlDoc.LoadHtml(contents);
         return htmlDoc;
     }
-    
+
     public static SyndicationFeed ToSyndicationFeed(this byte[] bytes)
     {
         using var stream = new MemoryStream(bytes);
