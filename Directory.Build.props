@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+
   <PropertyGroup Label="Runtime Info">
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Authors>Max Hamulyák</Authors>
-    <Company>Kaylumah</Company>
-    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
-    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+  <PropertyGroup Label="Code analysis properties">
+    <!--https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties-->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup>
+    <Authors>Max Hamulyák</Authors>
+    <Company>Kaylumah</Company>
+    <!-- <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright> -->
+    <CopyrightKaylumah>© $(Company). All rights reserved.</CopyrightKaylumah>
+    <Copyright>$(CopyrightKaylumah)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- source-link -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
@@ -23,46 +37,14 @@
     <!--<Using Include="Microsoft.Extensions.Logging" />-->
   </ItemGroup>
 
-  <PropertyGroup Label="CodeAnalysis properties" Condition="'$(EnableNETAnalyzers)' == ''">
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <EnableNETAnalyzers>true</EnableNETAnalyzers>
-    <AnalysisLevel>Latest</AnalysisLevel>
-    <AnalysisMode>Recommended</AnalysisMode>
-    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-  </PropertyGroup>
-
-  <PropertyGroup>
+  <PropertyGroup Label="BannedApiAnalyzers">
+    <!-- https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md -->
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <EnableBannedApiAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableBannedApiAnalyzers>
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
-  <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="False">
-    <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
-    <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
-    <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
-    <Message Importance="High" Text="The Property AnalysisLevel = '$(AnalysisLevel)'" />
-    <Message Importance="High" Text="The Property AnalysisMode = '$(AnalysisMode)'" />
-    <Message Importance="High" Text="The Property TreatWarningsAsErrors = '$(TreatWarningsAsErrors)'" />
-    <Message Importance="High" Text="The Property CodeAnalysisTreatWarningsAsErrors = '$(CodeAnalysisTreatWarningsAsErrors)'" />
-    <Message Importance="High" Text="The Property EnforceCodeStyleInBuild = '$(EnforceCodeStyleInBuild)'" />
-    <Message Importance="High" Text="The Property BannedSymbolsFullPath = '$(BannedSymbolsFullPath)'" />
-    <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
-  </Target>
-
   <PropertyGroup>
-    <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
-    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
-    <Copyright>$(CopyrightKaylumah)</Copyright>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!--
-        <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
-        -->
     <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>
   </PropertyGroup>
 </Project>

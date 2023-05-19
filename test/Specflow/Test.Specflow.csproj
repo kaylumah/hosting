@@ -30,8 +30,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
-    <ProjectReference Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
-    <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
+    <ProjectReference
+      Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
+    <ProjectReference
+      Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </ItemGroup>
 

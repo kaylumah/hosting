@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
   <Import Project="../Directory.Build.targets" />
 </Project>
