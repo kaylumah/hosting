@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <NoWarn>$(NoWarn);CS3001;CS3002;CS3016</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="xunit"/>
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -16,30 +15,29 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.msbuild">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="SpecFlow.xUnit" />
-    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" />
-    <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
-    <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="Verify.Xunit" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
-    <ProjectReference
-      Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
-    <ProjectReference
-      Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
-    <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
+    <PackageReference Include="SpecFlow.xUnit"/>
+    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin"/>
+    <PackageReference Include="System.IO.Abstractions.TestingHelpers"/>
+    <PackageReference Include="FluentAssertions"/>
+    <PackageReference Include="Moq"/>
+    <PackageReference Include="Verify.Xunit"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="TechTalk.SpecFlow" />
-    <Using Include="TechTalk.SpecFlow.Assist" />
+    <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj"/>
+    <ProjectReference
+      Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj"/>
+    <ProjectReference
+      Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj"/>
+    <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="TechTalk.SpecFlow"/>
+    <Using Include="TechTalk.SpecFlow.Assist"/>
   </ItemGroup>
 
 </Project>

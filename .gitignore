@@ -460,3 +460,4 @@ dist/
 *.feature.cs
 *.received.*
 LivingDoc.html
+test/html-coverage-report
