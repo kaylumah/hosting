@@ -15,16 +15,6 @@
     </PackageReference>
     <AdditionalFiles Include="$(BannedSymbolsFullPath)" />
   </ItemGroup>
-
-      <!-- Include package icon in the package. -->
-    <ItemGroup>
-        <None Link="$(PackageIcon)" Include="$(PackageIconFullPath)" Pack="true" PackagePath="$(PackageIcon)" Visible="false" />
-    </ItemGroup>
-
-    <!-- Include license file in the package. -->
-    <ItemGroup>
-        <None Link="$(PackageLicenseFile)" Include="$(PackageLicenseFullPath)" Pack="true" PackagePath="" Visible="true" />
-    </ItemGroup>
   <ItemGroup>
     <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
     <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
