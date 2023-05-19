@@ -6,5 +6,12 @@
   <PropertyGroup>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>True</IsTestProject>
+  </PropertyGroup>
+  
+  
 
 </Project>

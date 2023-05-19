@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <NoWarn>$(NoWarn);CS3001;CS3002;CS3016</NoWarn>
   </PropertyGroup>
 
@@ -16,6 +15,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.msbuild">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -27,7 +29,7 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="Verify.Xunit" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
     <ProjectReference
