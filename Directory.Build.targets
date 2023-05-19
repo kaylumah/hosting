@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
+
+  <Target Name="CustomAfterBuildTarget" AfterTargets="Build">
+    <Message Text="Hello from CustomAfterBuildTarget" Importance="high" />
+  </Target>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
