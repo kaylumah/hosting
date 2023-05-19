@@ -32,6 +32,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!-- source-link -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
@@ -49,9 +50,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!--
-        <RunSettingsFilePath>$(MSBuildThisFileDirectory)runsettings.xml</RunSettingsFilePath>
-        -->
     <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>
   </PropertyGroup>
 </Project>
