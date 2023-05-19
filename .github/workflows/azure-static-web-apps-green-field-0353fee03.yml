@@ -12,7 +12,8 @@ on:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v3
@@ -45,11 +46,11 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: Test Reports
-      #     path: ${{ github.workspace }}/LivingDoc.html
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Test Reports
+          path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
         if: github.actor != 'dependabot[bot]'
         id: builddeploy
@@ -88,7 +89,8 @@ jobs:
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
