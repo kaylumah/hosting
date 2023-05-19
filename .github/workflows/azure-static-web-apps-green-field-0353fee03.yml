@@ -48,7 +48,7 @@ jobs:
       - name: 'Make Test Reports'
         shell: pwsh
         run: |
-          ./tools/test-reports.ps1 -BuildConfiguration Release
+          ./tools/test-reports.ps1
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
