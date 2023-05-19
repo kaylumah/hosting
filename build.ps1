@@ -14,6 +14,8 @@ Write-Host "[args] BuildId '$BuildId' BuildNumber '$BuildNumber'"
 # $RepoRoot = Split-Path $PSScriptRoot -Parent
 Write-Host "RepoRoot is '$RepoRoot'"
 
+$ReportScript = "$RepoRoot/tools/test-reports.ps1"
+
 [string] $DistFolder = "$RepoRoot/dist"
 if (Test-Path $DistFolder)
 { 
@@ -31,14 +33,16 @@ dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p
 if ([string]::IsNullOrEmpty($PrBuildId))
 {
     Write-Host "Production Build"
-    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
 }
 else
 {
     Write-Host "PullRequest Build ($PrBuildId)"
     [string] $BaseUrl="https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net"
-    dotnet "artifacts/bin/Kaylumah.Ssg.Client.SiteGenerator/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
+    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 }
+
+# & $ReportScript -BuildConfiguration $BuildConfiguration
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 

@@ -45,15 +45,11 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-      - name: 'Make Test Reports'
-        shell: pwsh
-        run: |
-          dotnet livingdoc test-assembly artifacts/bin/Test.Specflow/Release/net7.0/Test.Specflow.dll --test-execution-json artifacts/bin/Test.Specflow/Release/net7.0/TestExecution.json  --output "LivingDoc.html"
-      - name: Upload artifacts
-        uses: actions/upload-artifact@master
-        with:
-          name: Test Reports
-          path: ${{ github.workspace }}/LivingDoc.html
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@master
+      #   with:
+      #     name: Test Reports
+      #     path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
         if: github.actor != 'dependabot[bot]'
         id: builddeploy
