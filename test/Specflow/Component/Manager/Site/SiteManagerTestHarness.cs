@@ -22,7 +22,7 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Test.Specflow.Utilities;
 using Test.Utilities;
 
-namespace Test.Specflow;
+namespace Test.Specflow.Component.Manager.Site;
 
 public sealed class SiteManagerTestHarness
 {
