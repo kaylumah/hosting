@@ -6,12 +6,25 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <AdditionalFiles Include="$(BannedSymbolsFullPath)" />
   </ItemGroup>
+
+      <!-- Include package icon in the package. -->
+    <ItemGroup>
+        <None Link="$(PackageIcon)" Include="$(PackageIconFullPath)" Pack="true" PackagePath="$(PackageIcon)" Visible="false" />
+    </ItemGroup>
+
+    <!-- Include license file in the package. -->
+    <ItemGroup>
+        <None Link="$(PackageLicenseFile)" Include="$(PackageLicenseFullPath)" Pack="true" PackagePath="" Visible="true" />
+    </ItemGroup>
   <ItemGroup>
     <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
     <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
