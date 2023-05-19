@@ -6,7 +6,7 @@ namespace System.Collections.ObjectModel;
 
 public static class KeyedCollectionExtensions
 {
-    public static void AddRange<TKey,TItem>(this KeyedCollection<TKey, TItem> source, IEnumerable<TItem> items)
+    public static void AddRange<TKey, TItem>(this KeyedCollection<TKey, TItem> source, IEnumerable<TItem> items)
     {
         _ = items ?? throw new ArgumentNullException(nameof(items));
 

@@ -59,7 +59,7 @@ public partial class FileMetadataParser : IFileMetadataParser
         {
             return value;
         }
-        
+
         return ext;
     }
 

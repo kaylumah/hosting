@@ -32,7 +32,7 @@ public static class EntityMappingExtensions
             }
         };
     }
-    
+
     public static IEnumerable<OrganizationMetaData> ToOrganizationMetadata(this IEnumerable<Organization> organizations)
     {
         return organizations.Select(ToOrganizationMetadata);
@@ -46,7 +46,7 @@ public static class EntityMappingExtensions
             FullName = organization.Name
         };
     }
-    
+
     public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
     {
         return tags.Select(ToTagMetadata);

@@ -37,7 +37,7 @@ public static class SiteMetaDataExtensions
                     Email = x.Email,
                     SameAs = new OneOrMany<Uri>(uris)
                 };
-                
+
                 if (!string.IsNullOrEmpty(x.Uri))
                 {
                     person.Url = new Uri(x.Uri);
@@ -47,7 +47,7 @@ public static class SiteMetaDataExtensions
                 {
                     person.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Picture)));
                 }
-                
+
                 return person;
             });
         return authors;
@@ -81,7 +81,7 @@ public static class SiteMetaDataExtensions
                     organization.Logo =
                         new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Logo)));
                 }
-                
+
                 return organization;
             });
         return organizations;

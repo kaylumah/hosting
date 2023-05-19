@@ -9,7 +9,7 @@ public class Organization
 {
     [GherkinTableHeader(0)]
     public string Id { get; set; }
-    
+
     [GherkinTableHeader(1)]
     public string Name { get; set; }
 }
