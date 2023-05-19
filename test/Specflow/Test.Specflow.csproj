@@ -24,6 +24,10 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Verify.Xunit" />
+    <PackageReference Include="Castle.Core" />
+    <PackageReference Include="Castle.Core.AsyncInterceptor" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +35,6 @@
     <ProjectReference Include="..\..\src\Component\Engine\Transformation\Service\Kaylumah.Ssg.Engine.Transformation.Service.csproj" />
     <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
-    <ProjectReference Include="..\Utilities\Test.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
