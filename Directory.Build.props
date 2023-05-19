@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Import Project="Sdk.props" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
-
   <PropertyGroup Label="Runtime Info">
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

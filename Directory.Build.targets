@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
-  <Import Project="Sdk.targets" Sdk="Kaylumah.DotNet.Arcade.Sdk" />
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>true</_Parameter1>
