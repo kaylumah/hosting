@@ -2,6 +2,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
 
+  <PropertyGroup Label="Runtime Info">
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  
   <PropertyGroup Label="Code analysis properties">
     <!--https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties-->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -12,22 +18,11 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
-  <PropertyGroup Label="Runtime Info">
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
-
   <PropertyGroup>
     <Authors>Max Hamulyák</Authors>
     <Company>Kaylumah</Company>
-    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
-    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
-    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+    <!-- <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright> -->
+    <CopyrightKaylumah>© $(Company). All rights reserved.</CopyrightKaylumah>
     <Copyright>$(CopyrightKaylumah)</Copyright>
   </PropertyGroup>
 
