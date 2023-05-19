@@ -7,7 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
   </PropertyGroup>
-  
+
   <PropertyGroup Label="Code analysis properties">
     <!--https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties-->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -36,7 +36,7 @@
     <!--<Using Include="Microsoft.Extensions.DependencyInjection" />-->
     <!--<Using Include="Microsoft.Extensions.Logging" />-->
   </ItemGroup>
-  
+
   <PropertyGroup Label="BannedApiAnalyzers">
     <!-- https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md -->
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>

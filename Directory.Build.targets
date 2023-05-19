@@ -4,25 +4,25 @@
 
   <Target Name="CustomAfterBuildTarget" AfterTargets="Build">
     <!--    <Message Text="Hello from CustomAfterBuildTarget" Importance="high" />-->
-    <Message Text="EnableNETAnalyzers '$(EnableNETAnalyzers)'" Importance="high" />
-    <Message Text="AnalysisLevel '$(AnalysisLevel)'" Importance="high" />
-    <Message Text="AnalysisMode '$(AnalysisMode)'" Importance="high" />
-    <Message Text="TreatWarningsAsErrors '$(TreatWarningsAsErrors)'" Importance="high" />
-    <Message Text="CodeAnalysisTreatWarningsAsErrors '$(CodeAnalysisTreatWarningsAsErrors)'" Importance="high" />
-    <Message Text="EnforceCodeStyleInBuild '$(EnforceCodeStyleInBuild)'" Importance="high" />
-    <Message Text="TargetFramework '$(TargetFramework)'" Importance="high" />
-    <Message Text="ImplicitUsings '$(ImplicitUsings)'" Importance="high" />
-    <Message Text="Nullable '$(Nullable)'" Importance="high" />
-    <Message Text="Authors '$(Authors)'" Importance="high" />
-    <Message Text="Company '$(Company)'" Importance="high" />
-    <Message Text="Copyright '$(Copyright)'" Importance="high" />
-    <Message Text="CopyrightKaylumah '$(CopyrightKaylumah)'" Importance="high" />
-    <Message Text="PublishRepositoryUrl '$(PublishRepositoryUrl)'" Importance="high" />
-    <Message Text="Language '$(Language)'" Importance="high" />
-    <Message Text="EnableBannedApiAnalyzers '$(EnableBannedApiAnalyzers)'" Importance="high" />
-    <Message Text="MSBuildProjectExtension '$(MSBuildProjectExtension)'" Importance="high" />
-    <Message Text="BannedSymbolsFullPath '$(BannedSymbolsFullPath)'" Importance="high" />
-    <Message Text="RunSettingsFilePath '$(RunSettingsFilePath)'" Importance="high" />
+    <!--    <Message Text="EnableNETAnalyzers '$(EnableNETAnalyzers)'" Importance="high"/>-->
+    <!--    <Message Text="AnalysisLevel '$(AnalysisLevel)'" Importance="high"/>-->
+    <!--    <Message Text="AnalysisMode '$(AnalysisMode)'" Importance="high"/>-->
+    <!--    <Message Text="TreatWarningsAsErrors '$(TreatWarningsAsErrors)'" Importance="high"/>-->
+    <!--    <Message Text="CodeAnalysisTreatWarningsAsErrors '$(CodeAnalysisTreatWarningsAsErrors)'" Importance="high"/>-->
+    <!--    <Message Text="EnforceCodeStyleInBuild '$(EnforceCodeStyleInBuild)'" Importance="high"/>-->
+    <!--    <Message Text="TargetFramework '$(TargetFramework)'" Importance="high"/>-->
+    <!--    <Message Text="ImplicitUsings '$(ImplicitUsings)'" Importance="high"/>-->
+    <!--    <Message Text="Nullable '$(Nullable)'" Importance="high"/>-->
+    <!--    <Message Text="Authors '$(Authors)'" Importance="high"/>-->
+    <!--    <Message Text="Company '$(Company)'" Importance="high"/>-->
+    <!--    <Message Text="Copyright '$(Copyright)'" Importance="high"/>-->
+    <!--    <Message Text="CopyrightKaylumah '$(CopyrightKaylumah)'" Importance="high"/>-->
+    <!--    <Message Text="PublishRepositoryUrl '$(PublishRepositoryUrl)'" Importance="high"/>-->
+    <!--    <Message Text="Language '$(Language)'" Importance="high"/>-->
+    <!--    <Message Text="EnableBannedApiAnalyzers '$(EnableBannedApiAnalyzers)'" Importance="high"/>-->
+    <!--    <Message Text="MSBuildProjectExtension '$(MSBuildProjectExtension)'" Importance="high"/>-->
+    <!--    <Message Text="BannedSymbolsFullPath '$(BannedSymbolsFullPath)'" Importance="high"/>-->
+    <!--    <Message Text="RunSettingsFilePath '$(RunSettingsFilePath)'" Importance="high"/>-->
   </Target>
 
   <ItemGroup Label="BannedApiAnalyzers" Condition="'$(EnableBannedApiAnalyzers)' == 'true' AND Exists('$(BannedSymbolsFullPath)')">
@@ -32,14 +32,14 @@
     </PackageReference>
     <AdditionalFiles Include="$(BannedSymbolsFullPath)"/>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-  
+
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>true</_Parameter1>
@@ -47,14 +47,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
-    <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
-    <AssemblyMetadata Include="BuildNumber" Value="$(BuildNumber)" />
+    <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)"/>
+    <AssemblyMetadata Include="BuildId" Value="$(BuildId)"/>
+    <AssemblyMetadata Include="BuildNumber" Value="$(BuildNumber)"/>
   </ItemGroup>
   <Target Name="IncludeSourceRevisionId" BeforeTargets="GetAssemblyAttributes">
     <ItemGroup>
-      <AssemblyMetadata Include="SourceRevisionId" Value="$(SourceRevisionId)" />
-      <AssemblyMetadata Include="RepositoryType" Value="$(RepositoryType)" />
+      <AssemblyMetadata Include="SourceRevisionId" Value="$(SourceRevisionId)"/>
+      <AssemblyMetadata Include="RepositoryType" Value="$(RepositoryType)"/>
     </ItemGroup>
   </Target>
 
