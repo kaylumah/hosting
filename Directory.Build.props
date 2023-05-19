@@ -7,27 +7,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
-        <Authors>Max Hamulyák</Authors>
-        <Company>Kaylumah</Company>
-        <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
-        <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <PackageIcon>Icon.png</PackageIcon>
-        <PackageIconFullPath>$(MSBuildThisFileDirectory)Assets\PackageIcon.png</PackageIconFullPath>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageLicenseFullPath>$(RepoRoot)LICENSE</PackageLicenseFullPath>
-    </PropertyGroup>
+    <Authors>Max Hamulyák</Authors>
+    <Company>Kaylumah</Company>
+    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
+    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+  </PropertyGroup>
 
   <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Language)' == 'C#' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
