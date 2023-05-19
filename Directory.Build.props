@@ -40,12 +40,12 @@
     <!--<Using Include="Microsoft.Extensions.DependencyInjection" />-->
     <!--<Using Include="Microsoft.Extensions.Logging" />-->
   </ItemGroup>
-
-  <PropertyGroup>
+  
+  <PropertyGroup Label="BannedApiAnalyzers">
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <EnableBannedApiAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableBannedApiAnalyzers>
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
-
-
 
   <PropertyGroup>
     <!--
