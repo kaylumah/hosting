@@ -45,10 +45,6 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-      - name: 'Make Test Reports'
-        shell: pwsh
-        run: |
-          ./tools/test-reports.ps1
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
