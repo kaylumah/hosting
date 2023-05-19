@@ -8,7 +8,7 @@ using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
-namespace Test.Specflow.Steps;
+namespace Test.Specflow.Component.Manager.Site.Steps;
 
 [Binding]
 [Scope(Feature = "SiteManager")]
