@@ -75,6 +75,7 @@ public sealed class SiteManagerTestHarness
     {
         var testHarness = TestHarnessBuilder.Build();
 
-        await scenario(_siteManager).ConfigureAwait(false);
+        await testHarness.TestService(scenario).ConfigureAwait(false);
+        // await scenario(_siteManager).ConfigureAwait(false);
     }
 }
