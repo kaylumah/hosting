@@ -3,7 +3,7 @@
 
 using Test.Specflow.Entities;
 
-namespace Test.Specflow.Steps;
+namespace Test.Specflow.Steps.Collections;
 
 [Binding]
 public class ArticleCollectionStepDefinitions

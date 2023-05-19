@@ -6,7 +6,7 @@ using System.IO.Abstractions.TestingHelpers;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Test.Specflow.Entities;
 
-namespace Test.Specflow.Steps;
+namespace Test.Specflow.Steps.Collections;
 
 [Binding]
 public class AuthorCollectionStepDefinitions
