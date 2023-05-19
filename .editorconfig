@@ -65,7 +65,7 @@ dotnet_style_prefer_conditional_expression_over_return = true:silent
 ###############################
 # Style Definitions
 dotnet_naming_style.pascal_case_style.capitalization             = pascal_case
-# Use PascalCase for constant fields  
+# Use PascalCase for constant fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style
@@ -99,7 +99,7 @@ csharp_preferred_modifier_order = public,private,protected,internal,static,exter
 csharp_prefer_braces = true:silent
 csharp_style_deconstructed_variable_declaration = true:suggestion
 csharp_prefer_simple_default_expression = true:suggestion
-csharp_style_pattern_local_over_anonymous_function = true:suggestion
+csharp_style_prefer_local_over_anonymous_function = true:suggestion
 csharp_style_inlined_variable_declaration = true:suggestion
 ###############################
 # C# Formatting Rules         #
@@ -133,7 +133,7 @@ csharp_preserve_single_line_statements = true
 csharp_preserve_single_line_blocks = true
 
 # License header
-file_header_template=Copyright (c) Kaylumah, 2022. All rights reserved.\nSee LICENSE file in the project root for full license information.
+file_header_template=Copyright (c) Kaylumah, 2023. All rights reserved.\nSee LICENSE file in the project root for full license information.
 # IDE0073: The file header does not match the required text
 dotnet_diagnostic.IDE0073.severity = error
 
