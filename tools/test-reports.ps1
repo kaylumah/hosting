@@ -15,8 +15,8 @@ try
 {
     Push-Location $RepoRoot
 
-    $TestProject = "./Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
-    $TestExecutionResult = "./Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
+    $TestProject = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
+    $TestExecutionResult = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
 
     if (!(Test-Path -Path $TestProject))
     {
