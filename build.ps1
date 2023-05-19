@@ -31,7 +31,6 @@ dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildI
 dotnet test --configuration $BuildConfiguration
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 & $ReportScript -BuildConfiguration $BuildConfiguration
-exit
 
 [string] $PrBuildId = $env:PR_BUILD_ID
 if ([string]::IsNullOrEmpty($PrBuildId))
