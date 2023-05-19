@@ -18,6 +18,9 @@ try
     $TestProject = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
     $TestExecutionResult = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
 
+    Write-Host "TestProject: '$TestProject'"
+    Write-Host "TestExecutionResult: '$TestExecutionResult'"
+
     if (!(Test-Path -Path $TestProject))
     {
         Write-Error "Build project in '$BuildConfiguration' mode first"
