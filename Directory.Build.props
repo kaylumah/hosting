@@ -25,6 +25,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
+    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
+    <Copyright>$(CopyrightKaylumah)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
@@ -38,11 +44,7 @@
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
-    <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
-    <Copyright>$(CopyrightKaylumah)</Copyright>
-  </PropertyGroup>
+
 
   <PropertyGroup>
     <!--
