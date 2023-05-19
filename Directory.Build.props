@@ -38,27 +38,10 @@
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
-  <Target Name="EmitCustomMessage" AfterTargets="Build" Condition="False">
-    <Message Importance="High" Text="=== BEGIN '$(MSBuildProjectName)' ===" />
-    <Message Importance="High" Text="The Property Language = '$(Language)' Version = '$(LangVersion)'" />
-    <Message Importance="High" Text="The Property EnableNETAnalyzers = '$(EnableNETAnalyzers)'" />
-    <Message Importance="High" Text="The Property AnalysisLevel = '$(AnalysisLevel)'" />
-    <Message Importance="High" Text="The Property AnalysisMode = '$(AnalysisMode)'" />
-    <Message Importance="High" Text="The Property TreatWarningsAsErrors = '$(TreatWarningsAsErrors)'" />
-    <Message Importance="High" Text="The Property CodeAnalysisTreatWarningsAsErrors = '$(CodeAnalysisTreatWarningsAsErrors)'" />
-    <Message Importance="High" Text="The Property EnforceCodeStyleInBuild = '$(EnforceCodeStyleInBuild)'" />
-    <Message Importance="High" Text="The Property BannedSymbolsFullPath = '$(BannedSymbolsFullPath)'" />
-    <Message Importance="High" Text="=== END '$(MSBuildProjectName)' ===" />
-  </Target>
-
   <PropertyGroup>
     <CopyrightKaylumahAlternative>Copyright (c) $(Company). All rights reserved.</CopyrightKaylumahAlternative>
     <CopyrightKaylumah>© Kaylumah. All rights reserved.</CopyrightKaylumah>
     <Copyright>$(CopyrightKaylumah)</Copyright>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <PropertyGroup>
