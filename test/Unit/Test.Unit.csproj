@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk"/>
-    <PackageReference Include="xunit"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -14,26 +14,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.IO.Abstractions.TestingHelpers"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration"/>
-    <PackageReference Include="FluentAssertions"/>
-    <PackageReference Include="Moq"/>
-    <PackageReference Include="HtmlAgilityPack"/>
+    <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="HtmlAgilityPack" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj"/>
-    <ProjectReference
-      Include="..\..\src\Component\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj"/>
-    <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj"/>
-    <ProjectReference Include="..\..\src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj"/>
-    <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj"/>
-    <ProjectReference
-      Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj"/>
+    <ProjectReference Include="..\..\src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\Component\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
+    <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj" />
+    <ProjectReference Include="..\..\src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
+    <ProjectReference Include="..\Utilities\Test.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
