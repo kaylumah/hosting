@@ -3,79 +3,36 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using FluentAssertions;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service;
-using Kaylumah.Ssg.Manager.Site.Service.Feed;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Manager.Site.Service.Seo;
-using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Microsoft.Extensions.Logging.Abstractions;
-using Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
-using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
-namespace Test.Specflow.Steps;
+namespace Test.Specflow.Component.Manager.Site.Steps;
 
 [Binding]
 [Scope(Feature = "SiteManager")]
 public class SiteManagerStepDefinitions
 {
+    private readonly SiteManagerTestHarness _siteManagerTestHarness;
     private readonly ScenarioContext _scenarioContext;
-    private readonly ISiteManager _siteManager;
     private readonly ArticleCollection _articleCollection;
     private readonly ValidationContext _validationContext;
     private readonly MockFileSystem _mockFileSystem;
     private readonly ArtifactAccessMock _artifactAccess;
 
-    public SiteManagerStepDefinitions(SystemClockMock systemClockMock, ScenarioContext scenarioContext, MetadataParserOptions metadataParserOptions, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
-        ValidationContext validationContext, SiteInfo siteInfo)
+    public SiteManagerStepDefinitions(
+        ArtifactAccessMock artifactAccessMock,
+        SiteManagerTestHarness siteManagerTestHarness,
+        ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
+        ValidationContext validationContext)
     {
+        _siteManagerTestHarness = siteManagerTestHarness;
+        _artifactAccess = artifactAccessMock;
         _scenarioContext = scenarioContext;
         _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
         _validationContext = validationContext;
-        _artifactAccess = new ArtifactAccessMock();
-        IMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(new YamlParser());
-        ITransformationEngine transformationEngine = new TransformationEngine(
-            NullLogger<TransformationEngine>.Instance,
-            mockFileSystem,
-            metadataProvider);
-        var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
-            new YamlFrontMatterMetadataProvider(new YamlParser()),
-            metadataParserOptions);
-        var fileProcessor = new FileProcessor(mockFileSystem,
-            NullLogger<FileProcessor>.Instance,
-            Enumerable.Empty<IContentPreprocessorStrategy>(),
-            siteInfo,
-            metadataParser);
-        var logger = NullLogger<SiteManager>.Instance;
-        var yamlParser = new YamlParser();
-        var siteMetadataFactory = new SiteMetadataFactory(systemClockMock.Object, siteInfo, yamlParser, mockFileSystem,
-            NullLogger<SiteMetadataFactory>.Instance);
-        var feedGenerator = new FeedGenerator(NullLogger<FeedGenerator>.Instance);
-        var metaTagGenerator = new MetaTagGenerator(NullLogger<MetaTagGenerator>.Instance);
-        var structureDataGenerator = new StructureDataGenerator(NullLogger<StructureDataGenerator>.Instance);
-        var seoGenerator = new SeoGenerator(metaTagGenerator, structureDataGenerator);
-        var siteMapGenerator = new SiteMapGenerator(NullLogger<SiteMapGenerator>.Instance);
-        _siteManager = new SiteManager(
-            fileProcessor,
-            _artifactAccess.Object,
-            mockFileSystem,
-            logger,
-            siteInfo,
-            transformationEngine,
-            siteMetadataFactory,
-            feedGenerator,
-            seoGenerator,
-            siteMapGenerator,
-            systemClockMock.Object);
     }
 
     [Given("the following articles:")]
@@ -96,9 +53,9 @@ public class SiteManagerStepDefinitions
     [When("the site is generated:")]
     public async Task WhenTheSiteIsGenerated()
     {
-        try
+        async Task Scenario(ISiteManager siteManager)
         {
-            await _siteManager.GenerateSite(new GenerateSiteRequest()
+            await siteManager.GenerateSite(new GenerateSiteRequest()
             {
                 Configuration = new SiteConfiguration()
                 {
@@ -111,10 +68,8 @@ public class SiteManagerStepDefinitions
                 }
             });
         }
-        catch (Exception ex)
-        {
-            _validationContext.TestServiceException = ex;
-        }
+
+        await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
     }
 
     [Then("the atom feed '(.*)' is verified:")]

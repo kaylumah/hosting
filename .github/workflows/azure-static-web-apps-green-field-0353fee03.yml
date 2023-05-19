@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
       - name: 'For Dependabot'
@@ -24,13 +24,13 @@ jobs:
         run: |
           Write-Output "PR created by Dependabot"
       - name: Use Node.js v16
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16
       - name: Setup dotnet
         uses: actions/setup-dotnet@v2
       - name: Set TimeZone
-        uses: szenius/set-timezone@v1.0
+        uses: szenius/set-timezone@v1.2
         with:
           timezoneLinux: "Europe/Amsterdam"
       - name: Sets env vars for PR

@@ -43,7 +43,7 @@ else
     dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 }
 
-# & $ReportScript -BuildConfiguration $BuildConfiguration
+& $ReportScript -BuildConfiguration $BuildConfiguration
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 

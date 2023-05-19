@@ -19,7 +19,7 @@ public class SiteInfoStepDefinitions
     public void GivenTheFollowingCollections(Table table)
     {
         var collections = table.CreateSet<Collection>();
-        _siteInfo.Collections = new Collections();
+        _siteInfo.Collections = new Kaylumah.Ssg.Manager.Site.Service.Collections();
         foreach (var collection in collections)
         {
             _siteInfo.Collections.Add(collection);

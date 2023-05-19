@@ -4,7 +4,7 @@
 using System.IO.Abstractions.TestingHelpers;
 using Test.Specflow.Utilities;
 
-namespace Test.Specflow.Steps;
+namespace Test.Specflow.Steps.Utilities;
 
 [Binding]
 public class FileSystemStepDefinitions
