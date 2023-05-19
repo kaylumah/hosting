@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
+using Castle.DynamicProxy;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
+using TechTalk.SpecFlow.Infrastructure;
 using Test.Specflow.Utilities;
 using Test.Utilities;
 
@@ -29,6 +31,7 @@ public sealed class SiteManagerTestHarness
     public TestHarnessBuilder TestHarnessBuilder { get; }
 
     public SiteManagerTestHarness(
+        ISpecFlowOutputHelper specFlowOutputHelper,
         ArtifactAccessMock artifactAccessMock,
         MockFileSystem mockFileSystem,
         MetadataParserOptions metadataParserOptions,
@@ -36,6 +39,10 @@ public sealed class SiteManagerTestHarness
         SiteInfo siteInfo)
     {
         TestHarnessBuilder = TestHarnessBuilder.Create()
+            .Register(services =>
+            {
+                services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
+            })
             .Register(services =>
             {
                 services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
