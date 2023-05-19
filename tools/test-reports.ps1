@@ -18,6 +18,7 @@ try
     $TestProject = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
     $TestExecutionResult = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
 
+    Write-Host "BuildConfiguration: '$BuildConfiguration'"
     Write-Host "TestProject: '$TestProject'"
     Write-Host "TestExecutionResult: '$TestExecutionResult'"
 
