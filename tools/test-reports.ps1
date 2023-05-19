@@ -9,14 +9,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-# $RepoRoot = Split-Path $PSScriptRoot -Parent
+$RepoRoot = Split-Path $PSScriptRoot -Parent
 
 try
 {
     # Push-Location $RepoRoot
 
-    $TestProject = "Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
-    $TestExecutionResult = "Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
+    $TestProject = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
+    $TestExecutionResult = "$RepoRoot/Test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
 
     Write-Host "BuildConfiguration: '$BuildConfiguration'"
     Write-Host "TestProject: '$TestProject'"
