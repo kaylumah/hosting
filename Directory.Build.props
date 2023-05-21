@@ -43,6 +43,10 @@
     <EnableBannedApiAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableBannedApiAnalyzers>
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
+  
+  <PropertyGroup Label="SonarAnalyzers">
+    <EnableSonarAnalyzers>false</EnableSonarAnalyzers>
+  </PropertyGroup>
 
   <PropertyGroup>
     <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>

@@ -32,6 +32,13 @@
     </PackageReference>
     <AdditionalFiles Include="$(BannedSymbolsFullPath)"/>
   </ItemGroup>
+  
+  <ItemGroup Label="SonarAnalyzers" Condition="'$(EnableSonarAnalyzers)' == 'true'">
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.0.0.68202">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub">
