@@ -11,8 +11,8 @@ using Test.Specflow.Utilities;
 namespace Test.Specflow.Component.Manager.Site.Steps;
 
 [Binding]
-[Scope(Feature = "SiteManager")]
-public class SiteManagerStepDefinitions
+[Scope(Feature = "SiteManager GenerateSite")]
+public class GenerateSiteSteps
 {
     private readonly SiteManagerTestHarness _siteManagerTestHarness;
     private readonly ScenarioContext _scenarioContext;
@@ -21,7 +21,7 @@ public class SiteManagerStepDefinitions
     private readonly MockFileSystem _mockFileSystem;
     private readonly ArtifactAccessMock _artifactAccess;
 
-    public SiteManagerStepDefinitions(
+    public GenerateSiteSteps(
         ArtifactAccessMock artifactAccessMock,
         SiteManagerTestHarness siteManagerTestHarness,
         ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
