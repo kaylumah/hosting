@@ -14,8 +14,11 @@ public sealed class ArtifactAccessTestHarness
 {
     public TestHarnessBuilder TestHarnessBuilder { get; }
 
-    public ArtifactAccessTestHarness(MockFileSystem mockFileSystem)
+    private readonly ValidationContext _validationContext;
+
+    public ArtifactAccessTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
     {
+        _validationContext = validationContext;
         TestHarnessBuilder = TestHarnessBuilder.Create()
             .Register((serviceCollection, configuration) =>
             {
@@ -27,6 +30,6 @@ public sealed class ArtifactAccessTestHarness
     public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
     {
         var testHarness = TestHarnessBuilder.Build();
-        await testHarness.TestService(scenario).ConfigureAwait(false);
+        await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
     }
 }

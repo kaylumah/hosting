@@ -16,9 +16,12 @@ namespace Test.Specflow.Component.Engine.Transformation;
 public sealed class TransformationEngineTestHarness
 {
     public TestHarnessBuilder TestHarnessBuilder { get; }
+    
+    private readonly ValidationContext _validationContext;
 
-    public TransformationEngineTestHarness(MockFileSystem mockFileSystem)
+    public TransformationEngineTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
     {
+        _validationContext = validationContext;
         TestHarnessBuilder = TestHarnessBuilder.Create()
             .Register((serviceCollection, configuration) =>
             {
@@ -32,6 +35,6 @@ public sealed class TransformationEngineTestHarness
     public async Task TestTransformationEngine(Func<ITransformationEngine, Task> scenario)
     {
         var testHarness = TestHarnessBuilder.Build();
-        await testHarness.TestService(scenario).ConfigureAwait(false);
+        await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
     }
 }
