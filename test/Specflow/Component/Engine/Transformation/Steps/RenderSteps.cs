@@ -21,8 +21,14 @@ public sealed class RenderSteps
     {
         async Task TestScenario(ITransformationEngine transformationEngine)
         {
+            var directoryConfig = new DirectoryConfiguration()
+            {
+                SourceDirectory = "_site",
+                LayoutsDirectory = "_layouts",
+                TemplateDirectory = "_includes"
+            };
             var renderResult = await transformationEngine.Render(
-                    new DirectoryConfiguration(),
+                    directoryConfig,
                     new MetadataRenderRequest[] { })
                 .ConfigureAwait(false);
         }
