@@ -46,6 +46,7 @@
   
   <PropertyGroup Label="SonarAnalyzers">
     <EnableSonarAnalyzers>false</EnableSonarAnalyzers>
+    <EnableSonarAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableSonarAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup>
