@@ -1,4 +1,5 @@
-Feature: SiteManager
+@SiteManager
+Feature: SiteManager GenerateSite
 
     Background: 
         Given the current date is '2022-08-10': 

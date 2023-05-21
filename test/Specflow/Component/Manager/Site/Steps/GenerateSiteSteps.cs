@@ -11,28 +11,25 @@ using Test.Specflow.Utilities;
 namespace Test.Specflow.Component.Manager.Site.Steps;
 
 [Binding]
-[Scope(Feature = "SiteManager")]
-public class SiteManagerStepDefinitions
+[Scope(Feature = "SiteManager GenerateSite")]
+public class GenerateSiteSteps
 {
     private readonly SiteManagerTestHarness _siteManagerTestHarness;
     private readonly ScenarioContext _scenarioContext;
     private readonly ArticleCollection _articleCollection;
-    private readonly ValidationContext _validationContext;
     private readonly MockFileSystem _mockFileSystem;
     private readonly ArtifactAccessMock _artifactAccess;
 
-    public SiteManagerStepDefinitions(
+    public GenerateSiteSteps(
         ArtifactAccessMock artifactAccessMock,
         SiteManagerTestHarness siteManagerTestHarness,
-        ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection,
-        ValidationContext validationContext)
+        ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection)
     {
         _siteManagerTestHarness = siteManagerTestHarness;
         _artifactAccess = artifactAccessMock;
         _scenarioContext = scenarioContext;
         _mockFileSystem = mockFileSystem;
         _articleCollection = articleCollection;
-        _validationContext = validationContext;
     }
 
     [Given("the following articles:")]
@@ -155,11 +152,5 @@ public class SiteManagerStepDefinitions
 
         var expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
         actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
-    }
-
-    [Then("the scenario executed successfully:")]
-    public void ThenTheScenarioExecutedSuccessfully()
-    {
-        _validationContext.TestServiceException.Should().BeNull();
     }
 }
