@@ -34,7 +34,7 @@
   </ItemGroup>
   
   <ItemGroup Label="SonarAnalyzers" Condition="'$(EnableSonarAnalyzers)' == 'true'">
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="9.0.0.68202">
+    <PackageReference Include="SonarAnalyzer.CSharp">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
