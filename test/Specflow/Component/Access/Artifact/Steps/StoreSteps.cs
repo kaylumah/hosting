@@ -21,7 +21,11 @@ public sealed class StoreSteps
     {
         async Task TestScenario(IArtifactAccess artifactAccess)
         {
-            await artifactAccess.Store(new StoreArtifactsRequest() { }).ConfigureAwait(false);
+            await artifactAccess.Store(new StoreArtifactsRequest()
+            {
+                Artifacts = Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>(),
+                OutputLocation = new FileSystemOutputLocation() {}
+            }).ConfigureAwait(false);
         }
 
         await _artifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);
