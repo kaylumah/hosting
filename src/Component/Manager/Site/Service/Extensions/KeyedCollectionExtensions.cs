@@ -2,6 +2,9 @@
 // See LICENSE file in the project root for full license information.
 
 // ReSharper disable once CheckNamespace
+
+using System.Collections.Generic;
+
 namespace System.Collections.ObjectModel;
 
 public static class KeyedCollectionExtensions
