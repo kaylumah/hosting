@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow.Infrastructure;

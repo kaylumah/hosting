@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Threading.Tasks;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using TechTalk.SpecFlow;
 
 namespace Test.Specflow.Component.Engine.Transformation.Steps;
 

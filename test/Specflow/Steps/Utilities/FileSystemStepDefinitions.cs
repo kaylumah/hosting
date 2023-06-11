@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO;
 using System.IO.Abstractions.TestingHelpers;
+using TechTalk.SpecFlow;
 using Test.Specflow.Utilities;
 
 namespace Test.Specflow.Steps.Utilities;

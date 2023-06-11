@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using BoDi;
+using TechTalk.SpecFlow;
 
 namespace Test.Specflow;
 

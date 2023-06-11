@@ -37,8 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="TechTalk.SpecFlow" />
-    <Using Include="TechTalk.SpecFlow.Assist" />
+<!--    <Using Include="TechTalk.SpecFlow" />-->
+<!--    <Using Include="TechTalk.SpecFlow.Assist" />-->
   </ItemGroup>
 
 </Project>
