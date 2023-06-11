@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Kaylumah.Ssg.Utilities;

@@ -1,12 +1,19 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.IO;
 using System.IO.Abstractions.TestingHelpers;
+using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Interface;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
+using VerifyXunit;
 
 namespace Test.Specflow.Component.Manager.Site.Steps;
 
@@ -78,7 +85,7 @@ public class GenerateSiteSteps
             .UseMethodName("AtomFeed");
         */
         var feed = _artifactAccess.GetString(feedPath);
-        await Verify(feed)
+        await Verifier.Verify(feed)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
             /*.AddScrubber(inputStringBuilder =>
             {
@@ -120,7 +127,7 @@ public class GenerateSiteSteps
             .UseMethodName("SiteMap");
             */
         var sitemap = _artifactAccess.GetString(sitemapPath);
-        await Verify(sitemap)
+        await Verifier.Verify(sitemap)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
 
     }

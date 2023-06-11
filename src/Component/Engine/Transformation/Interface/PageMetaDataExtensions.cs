@@ -1,6 +1,11 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 namespace Kaylumah.Ssg.Engine.Transformation.Interface;
 
 public static class PageMetaDataExtensions

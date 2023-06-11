@@ -1,8 +1,12 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 
 namespace Test.Specflow;
@@ -17,7 +21,7 @@ public class Transforms
     }
 
     [StepArgumentTransformation]
-    public List<String> TransformToListOfString(string commaSeparatedList)
+    public List<string> TransformToListOfString(string commaSeparatedList)
     {
         return commaSeparatedList.Split(Constants.Separator).ToList();
     }
