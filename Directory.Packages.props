@@ -35,7 +35,7 @@
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.29" />
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="19.2.29" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
-    <PackageVersion Include="System.Text.Json" Version="7.0.2" />
+    <PackageVersion Include="System.Text.Json" Version="7.0.3" />
     <PackageVersion Include="Verify.Xunit" Version="20.3.2" />
     <PackageVersion Include="YamlDotNet" Version="13.1.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
