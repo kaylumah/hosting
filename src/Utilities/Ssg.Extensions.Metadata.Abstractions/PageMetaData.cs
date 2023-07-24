@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Ssg.Extensions.Metadata.Abstractions;
 
 [DebuggerDisplay("PageMetaData '{Uri}'")]
 public class PageMetaData : Dictionary<string, object>

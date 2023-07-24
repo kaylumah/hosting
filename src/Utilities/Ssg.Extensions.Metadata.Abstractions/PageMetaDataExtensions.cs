@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Ssg.Extensions.Metadata.Abstractions;
 
 public static class PageMetaDataExtensions
 {

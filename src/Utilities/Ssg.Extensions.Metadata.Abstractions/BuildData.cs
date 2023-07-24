@@ -4,7 +4,7 @@
 using System;
 using Kaylumah.Ssg.Utilities;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Ssg.Extensions.Metadata.Abstractions;
 
 public class BuildData
 {
