@@ -2,5 +2,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Utilities\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj" />
   </ItemGroup>
 </Project>
