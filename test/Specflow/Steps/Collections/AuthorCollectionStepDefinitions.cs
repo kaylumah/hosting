@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.IO.Abstractions.TestingHelpers;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Ssg.Extensions.Metadata.Abstractions;
 using TechTalk.SpecFlow;
 using Test.Specflow.Entities;
 

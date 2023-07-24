@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
 
