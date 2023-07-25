@@ -19,7 +19,7 @@ using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class FileProcessorTests
 {

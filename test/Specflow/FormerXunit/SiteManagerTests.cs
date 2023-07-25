@@ -17,10 +17,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Ssg.Extensions.Data.Yaml;
-using Test.Unit.Mocks;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class SiteManagerTests
 {

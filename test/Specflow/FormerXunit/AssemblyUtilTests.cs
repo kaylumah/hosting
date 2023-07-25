@@ -6,7 +6,7 @@ using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class AssemblyUtilTests
 {

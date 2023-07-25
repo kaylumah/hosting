@@ -8,7 +8,7 @@ using Kaylumah.Ssg.Utilities;
 using Markdig;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class MarkdownTests
 {
