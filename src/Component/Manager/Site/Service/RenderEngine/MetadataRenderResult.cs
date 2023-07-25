@@ -1,12 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
-public enum ContentType
+public class MetadataRenderResult
 {
-    Unknown,
-    Announcement,
-    Article,
-    Page
+    public string Content { get; set; }
 }

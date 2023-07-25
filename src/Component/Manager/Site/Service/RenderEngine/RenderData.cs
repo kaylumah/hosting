@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+using Ssg.Extensions.Metadata.Abstractions;
+
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
 public class RenderData
 {

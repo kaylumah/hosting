@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
-using Kaylumah.Ssg.Engine.Transformation.Hosting;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Utilities.Files;
@@ -81,7 +80,6 @@ sealed class Program
         });
         services.AddFileSystem();
         services.AddArtifactAccess(configuration);
-        services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);
 
 

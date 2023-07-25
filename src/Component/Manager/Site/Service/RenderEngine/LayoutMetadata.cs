@@ -3,7 +3,7 @@
 
 using YamlDotNet.Serialization;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Service;
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
 public class LayoutMetadata
 {

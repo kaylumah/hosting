@@ -9,7 +9,7 @@ using Scriban;
 using Scriban.Parsing;
 using Scriban.Runtime;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Service;
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
 sealed class MyIncludeFromDisk : ITemplateLoader
 {

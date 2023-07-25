@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
 public static class MetadataRenderRequestExtensions
 {

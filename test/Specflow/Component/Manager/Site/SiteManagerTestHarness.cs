@@ -6,8 +6,6 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
@@ -56,7 +54,6 @@ public sealed class SiteManagerTestHarness
                 services.AddSingleton<IFileSystem>(mockFileSystem);
                 services.AddSingleton<IYamlParser, YamlParser>();
                 services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
-                services.AddSingleton<ITransformationEngine, TransformationEngine>();
                 services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
                 services.AddSingleton(metadataParserOptions);
                 services.AddSingleton<IFileProcessor, FileProcessor>();

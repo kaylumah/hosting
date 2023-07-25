@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Ssg.Extensions.Metadata.Abstractions;
 
-public class MetadataRenderResult
+public enum ContentType
 {
-    public string Content { get; set; }
+    Unknown,
+    Announcement,
+    Article,
+    Page
 }

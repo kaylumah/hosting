@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Ssg.Extensions.Metadata.Abstractions;
 
 [DebuggerDisplay("OrganizationMetaData '{FullName}'")]
 public class OrganizationMetaData
