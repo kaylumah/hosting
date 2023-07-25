@@ -13,6 +13,8 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using Ssg.Extensions.Data.Yaml;
 using Test.Unit.Mocks;
 using Xunit;
 
@@ -31,7 +33,7 @@ public class SiteManagerTests
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
 
-        var yamlParserMock = new YamlParserMock();
+        var yamlParserMock = new Mock<IYamlParser>();
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
         {
