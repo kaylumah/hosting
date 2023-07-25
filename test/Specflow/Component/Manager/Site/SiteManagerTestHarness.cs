@@ -56,7 +56,6 @@ public sealed class SiteManagerTestHarness
                 services.AddSingleton<IFileSystem>(mockFileSystem);
                 services.AddSingleton<IYamlParser, YamlParser>();
                 services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
-                services.AddSingleton<ITransformationEngine, TransformationEngine>();
                 services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
                 services.AddSingleton(metadataParserOptions);
                 services.AddSingleton<IFileProcessor, FileProcessor>();

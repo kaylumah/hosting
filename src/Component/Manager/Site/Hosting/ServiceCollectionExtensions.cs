@@ -46,11 +46,4 @@ public static partial class ServiceCollectionExtensions
         services.AddSystemClock();
         return services;
     }
-
-    public static IServiceCollection AddTransformationEngine(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
-        services.AddSingleton<ITransformationEngine, TransformationEngine>();
-        return services;
-    }
 }

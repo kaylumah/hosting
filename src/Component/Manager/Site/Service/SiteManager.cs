@@ -32,7 +32,6 @@ public class SiteManager : ISiteManager
     private readonly ILogger _logger;
     private readonly IFileProcessor _fileProcessor;
     private readonly SiteInfo _siteInfo;
-    private readonly ITransformationEngine _transformationEngine;
     private readonly SiteMetadataFactory _siteMetadataFactory;
     private readonly FeedGenerator _feedGenerator;
     private readonly SeoGenerator _seoGenerator;
@@ -46,7 +45,6 @@ public class SiteManager : ISiteManager
         IFileSystem fileSystem,
         ILogger<SiteManager> logger,
         SiteInfo siteInfo,
-        ITransformationEngine transformationEngine,
         SiteMetadataFactory siteMetadataFactory,
         FeedGenerator feedGenerator,
         SeoGenerator seoGenerator,
@@ -61,7 +59,6 @@ public class SiteManager : ISiteManager
         _fileSystem = fileSystem;
         _logger = logger;
         _siteInfo = siteInfo;
-        _transformationEngine = transformationEngine;
         _feedGenerator = feedGenerator;
         _seoGenerator = seoGenerator;
         _siteMapGenerator = siteMapGenerator;

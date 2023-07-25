@@ -80,7 +80,6 @@ sealed class Program
         });
         services.AddFileSystem();
         services.AddArtifactAccess(configuration);
-        services.AddTransformationEngine(configuration);
         services.AddSiteManager(configuration);
 
 

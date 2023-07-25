@@ -33,7 +33,6 @@ public class SiteManagerTests
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
 
         var yamlParserMock = new YamlParserMock();
-        var transformEngineMock = new Mock<ITransformationEngine>();
         var configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
         {
@@ -56,13 +55,11 @@ public class SiteManagerTests
         var serviceProvider = new ServiceCollection()
             .AddFileSystem()
             .AddArtifactAccess(configuration)
-            .AddTransformationEngine(configuration)
             .AddSiteManager(configuration)
             .AddSingleton(fileProcessorMock.Object)
             .AddSingleton(artifactAccessMock.Object)
             .AddSingleton<IFileSystem>(fileSystemMock)
             .AddSingleton(yamlParserMock.Object)
-            .AddSingleton(transformEngineMock.Object)
             .Configure<SiteInfo>(_ =>
             {
                 _.Url = "https://example.com";
