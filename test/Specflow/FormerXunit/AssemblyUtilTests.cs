@@ -17,6 +17,6 @@ public class AssemblyUtilTests
         result.Should().NotBeNull();
         result.Copyright.Should().NotBeNull();
         result.Version.Should().NotBeNull();
-        result.Metadata.Count.Should().Be(6);
+        result.Metadata.Count.Should().Be(8);
     }
 }
