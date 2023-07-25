@@ -6,7 +6,7 @@ using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class AssemblyUtilTests
 {
@@ -17,6 +17,6 @@ public class AssemblyUtilTests
         result.Should().NotBeNull();
         result.Copyright.Should().NotBeNull();
         result.Version.Should().NotBeNull();
-        result.Metadata.Count.Should().Be(6);
+        result.Metadata.Count.Should().Be(8);
     }
 }

@@ -5,7 +5,7 @@ using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Xunit;
 
-namespace Test.Unit;
+namespace Test.Specflow.FormerXunit;
 
 public class DefaultMetadatasTests
 {
