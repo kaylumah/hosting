@@ -23,16 +23,17 @@ namespace Test.Specflow.FormerXunit;
 
 public class SiteManagerTests
 {
-    [Fact(Skip = "investigae")]
+    [Fact]
     public async Task Test_SiteManager_GenerateSite()
     {
         var fileProcessorMock = new Mock<IFileProcessor>();
         var artifactAccessMock = new Mock<IArtifactAccess>();
         var fileSystemMock = new MockFileSystem();
         fileSystemMock.Directory.CreateDirectory("_site");
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
+        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_includes"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_data"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
-        fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
 
         var yamlParserMock = new Mock<IYamlParser>();
         var configurationBuilder = new ConfigurationBuilder();
@@ -73,9 +74,10 @@ public class SiteManagerTests
             Configuration = new SiteConfiguration
             {
                 Source = "_site",
+                LayoutDirectory = "_layouts",
+                PartialsDirectory = "_includes",
                 DataDirectory = "_data",
                 AssetDirectory = "assets",
-                LayoutDirectory = "_layouts"
             }
         });
     }
