@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +26,7 @@ public class SiteManagerTests
     [Fact(Skip = "investigae")]
     public async Task Test_SiteManager_GenerateSite()
     {
-        var fileProcessorMock = new FileProcessorMock();
+        var fileProcessorMock = new Mock<IFileProcessor>();
         var artifactAccessMock = new ArtifactAccessMock();
         var fileSystemMock = new MockFileSystem();
         fileSystemMock.Directory.CreateDirectory("_site");
