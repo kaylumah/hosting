@@ -4,7 +4,7 @@
 using System;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Engine.Transformation.Interface;
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
 public static class RenderDataExtensions
 {

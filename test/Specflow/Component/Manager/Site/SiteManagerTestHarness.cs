@@ -6,8 +6,6 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Kaylumah.Ssg.Engine.Transformation.Interface;
-using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
