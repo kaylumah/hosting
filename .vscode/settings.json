@@ -1,5 +1,5 @@
 {
-    "cucumber.glue": [
+    "cucumberautocomplete.steps": [
         "test/Specflow/**/*.cs"
     ],
     "explorer.fileNesting.enabled": true,
