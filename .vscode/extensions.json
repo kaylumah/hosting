@@ -3,6 +3,7 @@
         "ms-dotnettools.csdevkit",
         "editorconfig.editorconfig",
         "streetsidesoftware.code-spell-checker",
-        "ryanluker.vscode-coverage-gutters"
+        "ryanluker.vscode-coverage-gutters",
+        "alexkrechik.cucumberautocomplete"
     ]
 }
