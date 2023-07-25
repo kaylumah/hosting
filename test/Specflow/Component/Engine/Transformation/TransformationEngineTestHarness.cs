@@ -5,7 +5,7 @@ using System;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
-using Kaylumah.Ssg.Engine.Transformation.Hosting;
+using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Ssg.Extensions.Data.Yaml;

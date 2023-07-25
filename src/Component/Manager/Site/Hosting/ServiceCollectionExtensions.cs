@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Kaylumah.Ssg.Engine.Transformation.Interface;
+using Kaylumah.Ssg.Engine.Transformation.Service;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
@@ -42,6 +44,13 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<SeoGenerator>();
         services.AddSingleton<SiteMapGenerator>();
         services.AddSystemClock();
+        return services;
+    }
+
+    public static IServiceCollection AddTransformationEngine(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
+        services.AddSingleton<ITransformationEngine, TransformationEngine>();
         return services;
     }
 }

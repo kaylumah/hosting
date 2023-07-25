@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kaylumah.Ssg.Engine.Transformation.Hosting;
+using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Engine.Transformation.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

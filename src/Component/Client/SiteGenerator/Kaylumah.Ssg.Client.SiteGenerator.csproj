@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
-    <ProjectReference Include="..\..\Engine\Transformation\Hosting\Kaylumah.Ssg.Engine.Transformation.Hosting.csproj" />
     <ProjectReference Include="..\..\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
   </ItemGroup>
   <ItemGroup>
