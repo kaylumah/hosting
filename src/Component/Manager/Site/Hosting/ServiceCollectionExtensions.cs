@@ -42,7 +42,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSingleton<SeoGenerator>();
         services.AddSingleton<SiteMapGenerator>();
         services.AddSystemClock();
-
+        services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
         services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();  
         services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();  
         return services;

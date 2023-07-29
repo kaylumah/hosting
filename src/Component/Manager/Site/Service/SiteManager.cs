@@ -12,7 +12,6 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
@@ -30,9 +29,9 @@ public class SiteManager : ISiteManager
     private readonly IFileProcessor _fileProcessor;
     private readonly SiteInfo _siteInfo;
     private readonly SiteMetadataFactory _siteMetadataFactory;
-    private readonly SeoGenerator _seoGenerator;
     private readonly ISystemClock _systemClock;
     private readonly IMetadataProvider _metadataProvider;
+    private readonly IRenderPlugin[] _renderPlugins;
     private readonly ISiteArtifactPlugin[] _siteArtifactPlugins;
 
     public SiteManager(
@@ -42,12 +41,13 @@ public class SiteManager : ISiteManager
         ILogger<SiteManager> logger,
         SiteInfo siteInfo,
         SiteMetadataFactory siteMetadataFactory,
-        SeoGenerator seoGenerator,
         ISystemClock systemClock,
         IMetadataProvider metadataProvider,
+        IEnumerable<IRenderPlugin> renderPlugins,
         IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
         )
     {
+        _renderPlugins = renderPlugins.ToArray();
         _siteArtifactPlugins = siteArtifactPlugins.ToArray();
         _siteMetadataFactory = siteMetadataFactory;
         _fileProcessor = fileProcessor;
@@ -55,7 +55,6 @@ public class SiteManager : ISiteManager
         _fileSystem = fileSystem;
         _logger = logger;
         _siteInfo = siteInfo;
-        _seoGenerator = seoGenerator;
         _systemClock = systemClock;
         _metadataProvider = metadataProvider;
     }
@@ -100,10 +99,14 @@ public class SiteManager : ISiteManager
             })
             .ToArray();
 
-        requests.Where(MetadataRenderRequestExtensions.IsHtml).ToList().ForEach(item =>
+        foreach (var renderRequest in requests)
         {
-            _seoGenerator.ApplySeo(item.Metadata);
-        });
+            var plugins = _renderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
+            foreach (var plugin in plugins)
+            {
+                plugin.Apply(renderRequest.Metadata);
+            }
+        }
 
         var directoryConfig = new DirectoryConfiguration()
         {
