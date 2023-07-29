@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Common Meta Tags -->
+    <title>Title</title>
+    <link rel="canonical" href="https://example.com/example.html" />
+    <meta name="generator" content="Kaylumah vf40b592" />
+    <meta name="description" content="Description" />
+    <meta name="copyright" content="© Kaylumah. All rights reserved." />
+    <meta name="keywords" content="dotnet, specflow" />
+    
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="Kaylumah" />
+    <meta property="og:title" content="Title" />
+    <meta property="og:url" content="https://example.com/example.html" />
+    <meta property="og:description" content="Description" />
+    <meta property="article:author" content="Max Hamulyák" />
+    <meta property="article:published_time" content="2022-07-03T00:00:00.0000000+02:00" />
+    <meta property="article:modified_time" content="2022-07-03T00:00:00.0000000+02:00" />
+    <meta property="article:tag" content="dotnet" />
+    <meta property="article:tag" content="specflow" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Title" />
+    <meta name="twitter:description" content="Description" />
+    <meta name="twitter:creator" content="@Max" />
+
+    </head>
+    <body>
+    </body>
+</html>

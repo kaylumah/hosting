@@ -8,21 +8,14 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
-using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using Kaylumah.Ssg.Manager.Site.Service.Seo;
-using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
-using Ssg.Extensions.Metadata.YamlFrontMatter;
 using TechTalk.SpecFlow.Infrastructure;
 using Test.Specflow.Utilities;
 using Test.Utilities;
+using Kaylumah.Ssg.Manager.Site.Hosting;
+using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace Test.Specflow.Component.Manager.Site;
 
@@ -42,29 +35,23 @@ public sealed class SiteManagerTestHarness
     {
         _validationContext = validationContext;
         TestHarnessBuilder = TestHarnessBuilder.Create()
+            .Configure(configurationBuilder => {
+                configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
+                    ["Site"] = string.Empty,
+                    ["Metadata"] = string.Empty
+                });
+            })
             .Register(services =>
             {
                 services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
             })
-            .Register(services =>
-            {
-                services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
-                services.AddSingleton(artifactAccessMock.Object);
+            .Register((services, configuration) => {
+                services.AddSiteManager(configuration);
                 services.AddSingleton(systemClockMock.Object);
+                services.AddSingleton(artifactAccessMock.Object);
                 services.AddSingleton<IFileSystem>(mockFileSystem);
-                services.AddSingleton<IYamlParser, YamlParser>();
-                services.AddSingleton<IMetadataProvider, YamlFrontMatterMetadataProvider>();
-                services.AddSingleton<IFileMetadataParser, FileMetadataParser>();
                 services.AddSingleton(metadataParserOptions);
-                services.AddSingleton<IFileProcessor, FileProcessor>();
                 services.AddSingleton(siteInfo);
-                services.AddSingleton<SiteMetadataFactory>();
-                services.AddSingleton<FeedGenerator>();
-                services.AddSingleton<MetaTagGenerator>();
-                services.AddSingleton<StructureDataGenerator>();
-                services.AddSingleton<SeoGenerator>();
-                services.AddSingleton<SiteMapGenerator>();
-                services.AddSingleton<ISiteManager, SiteManager>();
             });
     }
 

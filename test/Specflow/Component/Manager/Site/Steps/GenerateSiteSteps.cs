@@ -121,15 +121,17 @@ public class GenerateSiteSteps
     [Then("the sitemap '(.*)' is verified:")]
     public async Task ThenTheSitemapIsVerified(string sitemapPath)
     {
-        /*
-        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
-        await Verify(sitemap)
-            .UseMethodName("SiteMap");
-            */
         var sitemap = _artifactAccess.GetString(sitemapPath);
         await Verifier.Verify(sitemap)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
+    }
 
+    [Then("the html '(.*)' is verified:")]
+    public async Task ThenTheHtmlIsVerified(string htmlPath)
+    {
+        var htmlPage = _artifactAccess.GetString(htmlPath);
+        await Verifier.Verify(htmlPage)
+            .UseMethodName(_scenarioContext.ToVerifyMethodName("Html"));
     }
 
     [Then("'(.*)' is a document with the following meta tags:")]
