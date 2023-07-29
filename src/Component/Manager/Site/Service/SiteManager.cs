@@ -113,7 +113,6 @@ public class SiteManager : ISiteManager
         };
         var renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
-
         var artifacts = processed.Select((t, i) =>
         {
             var renderResult = renderResults[i];
