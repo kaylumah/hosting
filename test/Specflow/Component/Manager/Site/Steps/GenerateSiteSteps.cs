@@ -121,11 +121,6 @@ public class GenerateSiteSteps
     [Then("the sitemap '(.*)' is verified:")]
     public async Task ThenTheSitemapIsVerified(string sitemapPath)
     {
-        /*
-        var sitemap = _artifactAccess.GetSiteMapArtifact(sitemapPath);
-        await Verify(sitemap)
-            .UseMethodName("SiteMap");
-            */
         var sitemap = _artifactAccess.GetString(sitemapPath);
         await Verifier.Verify(sitemap)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
