@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Manager.Site.Interface;
-using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
-using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
@@ -32,11 +30,10 @@ public class SiteManager : ISiteManager
     private readonly IFileProcessor _fileProcessor;
     private readonly SiteInfo _siteInfo;
     private readonly SiteMetadataFactory _siteMetadataFactory;
-    private readonly FeedGenerator _feedGenerator;
     private readonly SeoGenerator _seoGenerator;
-    private readonly SiteMapGenerator _siteMapGenerator;
     private readonly ISystemClock _systemClock;
     private readonly IMetadataProvider _metadataProvider;
+    private readonly ISiteArtifactPlugin[] _siteArtifactPlugins;
 
     public SiteManager(
         IFileProcessor fileProcessor,
@@ -45,52 +42,22 @@ public class SiteManager : ISiteManager
         ILogger<SiteManager> logger,
         SiteInfo siteInfo,
         SiteMetadataFactory siteMetadataFactory,
-        FeedGenerator feedGenerator,
         SeoGenerator seoGenerator,
-        SiteMapGenerator siteMapGenerator,
         ISystemClock systemClock,
-        IMetadataProvider metadataProvider
+        IMetadataProvider metadataProvider,
+        IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
         )
     {
+        _siteArtifactPlugins = siteArtifactPlugins.ToArray();
         _siteMetadataFactory = siteMetadataFactory;
         _fileProcessor = fileProcessor;
         _artifactAccess = artifactAccess;
         _fileSystem = fileSystem;
         _logger = logger;
         _siteInfo = siteInfo;
-        _feedGenerator = feedGenerator;
         _seoGenerator = seoGenerator;
-        _siteMapGenerator = siteMapGenerator;
         _systemClock = systemClock;
         _metadataProvider = metadataProvider;
-    }
-
-    private Artifact[] CreateSiteMapArtifacts(SiteMetaData siteMetaData)
-    {
-        var result = new List<Artifact>();
-        var sitemap = _siteMapGenerator.Create(siteMetaData);
-        var bytes = sitemap
-                .SaveAsXml();
-        result.Add(new Artifact
-        {
-            Contents = bytes,
-            Path = "sitemap.xml"
-        });
-        return result.ToArray();
-    }
-
-    private Artifact[] CreateFeedArtifacts(SiteMetaData siteMetaData)
-    {
-        var result = new List<Artifact>();
-        var feed = _feedGenerator.Create(siteMetaData);
-        var bytes = feed
-            .SaveAsAtom10();
-        result.Add(new Artifact
-        {
-            Contents = bytes,
-            Path = "feed.xml"
-        });
-        return result.ToArray();
     }
 
     public async Task GenerateSite(GenerateSiteRequest request)
@@ -157,11 +124,11 @@ public class SiteManager : ISiteManager
             };
         }).ToList();
 
-        var feedArtifacts = CreateFeedArtifacts(siteMetadata);
-        artifacts.AddRange(feedArtifacts);
-
-        var siteMapArtifacts = CreateSiteMapArtifacts(siteMetadata);
-        artifacts.AddRange(siteMapArtifacts);
+        foreach(var siteArtifactPlugin in _siteArtifactPlugins)
+        {
+            var pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
+            artifacts.AddRange(pluginArtifacts);
+        }
 
         var assets = _fileSystem
             .GetFiles(Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory), true)

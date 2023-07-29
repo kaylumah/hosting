@@ -65,6 +65,8 @@ public sealed class SiteManagerTestHarness
                 services.AddSingleton<SeoGenerator>();
                 services.AddSingleton<SiteMapGenerator>();
                 services.AddSingleton<ISiteManager, SiteManager>();
+                services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();
+                services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();  
             });
     }
 
