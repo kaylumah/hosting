@@ -163,7 +163,7 @@ public class SiteManager : ISiteManager
         var renderedResults = new List<MetadataRenderResult>();
         // TODO apply better solution for access to directories.
         var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
-        var templateLoader = new MyIncludeFromDisk(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
+        var templateLoader = new IncludeFromFileSystemTemplateLoader(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
 
         foreach (var request in requests)
         {
