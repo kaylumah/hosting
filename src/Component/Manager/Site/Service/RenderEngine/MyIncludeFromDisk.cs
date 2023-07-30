@@ -30,9 +30,9 @@ sealed class MyIncludeFromDisk : ITemplateLoader
 
     public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
     {
+        // unused...
         using var reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
         return reader.ReadToEnd();
-        //return File.ReadAllText(templatePath);
     }
 
     public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
