@@ -25,7 +25,6 @@ sealed class MyIncludeFromDisk : ITemplateLoader
     {
         var templateLocation = Path.Combine(_fileSystem.GetFile(_templateFolder).FullName, templateName);
         return templateLocation;
-        // return Path.Combine(Environment.CurrentDirectory, templateName);
     }
 
     public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
