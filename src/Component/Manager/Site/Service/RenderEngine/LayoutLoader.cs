@@ -48,8 +48,6 @@ public class LayoutLoader
             };
 
             result.Add(fileWithMeta);
-
-            //var fileInfo = await _fileSystem.GetFile<LayoutMetadata>(path);
         }
 
         var baseTemplates = result
