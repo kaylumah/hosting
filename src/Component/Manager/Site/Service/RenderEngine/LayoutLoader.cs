@@ -37,13 +37,14 @@ public class LayoutLoader
 
             var text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
+            var content = metadata.Content;
 
             var fileWithMeta = new File<LayoutMetadata>
             {
                 Encoding = encoding.WebName,
                 Name = fileName,
                 Path = path,
-                Content = metadata.Content,
+                Content = content,
                 Data = metadata.Data
             };
 
