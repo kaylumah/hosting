@@ -11,11 +11,11 @@ using Scriban.Runtime;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 
-sealed class MyIncludeFromDisk : ITemplateLoader
+sealed class IncludeFromFileSystemTemplateLoader : ITemplateLoader
 {
     private readonly IFileSystem _fileSystem;
     private readonly string _templateFolder;
-    public MyIncludeFromDisk(IFileSystem fileSystem, string templateFolder)
+    public IncludeFromFileSystemTemplateLoader(IFileSystem fileSystem, string templateFolder)
     {
         _fileSystem = fileSystem;
         _templateFolder = templateFolder;
