@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Utilities;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -38,6 +40,21 @@ public class LayoutLoader
             var text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             var metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
             var content = metadata.Content;
+
+            var templateIsHtml = ".html".Equals(fileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
+            var developerMode = IsDeveloperMode();
+
+            var includeDevelopmentInfo = templateIsHtml && developerMode;
+            if (includeDevelopmentInfo)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Layout: '{0}' -->", path));
+                sb.Append(content);
+                sb.AppendLine();
+                sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- END Layout: '{0}' -->", path));
+                var modifiedContent = sb.ToString();
+                content = modifiedContent;
+            }
 
             var fileWithMeta = new File<LayoutMetadata>
             {
@@ -72,5 +89,13 @@ public class LayoutLoader
             dependency.Content = mergedLayout;
             Merge(dependency, templates);
         }
+    }
+
+    private static bool IsDeveloperMode()
+    {
+        var developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
+        var succeeded = bool.TryParse(developerMode, out var developerModeActive);
+        var result = succeeded && developerModeActive;
+        return result;
     }
 }
