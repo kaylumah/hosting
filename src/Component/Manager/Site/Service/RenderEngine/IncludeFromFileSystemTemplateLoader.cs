@@ -37,8 +37,10 @@ sealed class IncludeFromFileSystemTemplateLoader : ITemplateLoader
 
     public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
     {
-        using var reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
-        return await reader.ReadToEndAsync().ConfigureAwait(false);
-        // return await File.ReadAllTextAsync(templatePath);
+        var templateFileInfo = _fileSystem.GetFile(templatePath);
+        using var templateReadStream = templateFileInfo.CreateReadStream();
+        using var templateStreamReader = new StreamReader(templateReadStream);
+        var templateContent = await templateStreamReader.ReadToEndAsync().ConfigureAwait(false);
+        return templateContent;
     }
 }
