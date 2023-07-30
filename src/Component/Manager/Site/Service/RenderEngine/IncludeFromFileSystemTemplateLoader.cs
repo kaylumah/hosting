@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
+using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Utilities;
 using Scriban;
@@ -41,6 +44,30 @@ sealed class IncludeFromFileSystemTemplateLoader : ITemplateLoader
         using var templateReadStream = templateFileInfo.CreateReadStream();
         using var templateStreamReader = new StreamReader(templateReadStream);
         var templateContent = await templateStreamReader.ReadToEndAsync().ConfigureAwait(false);
+
+        var templateIsHtml = ".html".Equals(templateFileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
+        var developerMode = IsDeveloperMode();
+
+        var includeDevelopmentInfo = templateIsHtml && developerMode;
+        if (includeDevelopmentInfo)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Template: '{0}' -->", templatePath));
+            sb.Append(templateContent);
+            sb.AppendLine();
+            sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- END Template: '{0}' -->", templatePath));
+            var modifiedContent = sb.ToString();
+            return modifiedContent;
+        }
+
         return templateContent;
+    }
+
+    private static bool IsDeveloperMode()
+    {
+        var developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
+        var succeeded = bool.TryParse(developerMode, out var developerModeActive);
+        var result = succeeded && developerModeActive;
+        return result;
     }
 }
