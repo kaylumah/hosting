@@ -37,7 +37,7 @@
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="System.Text.Json" Version="7.0.3" />
     <PackageVersion Include="Verify.Xunit" Version="20.6.0" />
-    <PackageVersion Include="YamlDotNet" Version="13.1.1" />
+    <PackageVersion Include="YamlDotNet" Version="13.2.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.0" />
     <PackageVersion Include="xunit" Version="2.5.0" />
