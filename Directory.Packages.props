@@ -28,7 +28,7 @@
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
     <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="Schema.NET" Version="12.0.0" />
-    <PackageVersion Include="Scriban" Version="5.7.0" />
+    <PackageVersion Include="Scriban" Version="5.8.0" />
     <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.0.0.68202" />
