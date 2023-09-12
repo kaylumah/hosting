@@ -2,5 +2,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Packages.props, $(MSBuildThisFileDirectory)..))" />
   <ItemGroup>
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
   </ItemGroup>
 </Project>
