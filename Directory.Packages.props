@@ -26,7 +26,7 @@
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
     <PackageVersion Include="Schema.NET" Version="12.0.0" />
     <PackageVersion Include="Scriban" Version="5.9.0" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.0.0.68202" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.10.0.77988" />
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.69" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="System.Text.Json" Version="7.0.3" />
