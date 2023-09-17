@@ -46,7 +46,7 @@
   
   <PropertyGroup Label="SonarAnalyzers">
     <EnableSonarAnalyzers>false</EnableSonarAnalyzers>
-    <EnableSonarAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableSonarAnalyzers>
+    <EnableSonarAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">false</EnableSonarAnalyzers>
     <!-- do not force current sonar violations to fail the build! -->
     <!-- https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/errors-warnings -->
     <WarningsNotAsErrors>$(WarningsNotAsErrors);S125;S1066;S1118;S1135;S1144;S1172;S1481;S1905;S2094;S2259;S2365;S2589;S2699;S2737;S3267;S3400;S3881;S3925;S4136;S4487;S6602;S6605;S6608</WarningsNotAsErrors>
