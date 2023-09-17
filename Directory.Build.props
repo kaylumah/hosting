@@ -48,7 +48,7 @@
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
     <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers>
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
-    <NoWarn>$(NoWarn);IDESIGN100;IDESIGN102;IDESIGN103;IDESIGN104</NoWarn>
+    <NoWarn>$(NoWarn);IDESIGN100;IDESIGN101;IDESIGN102;IDESIGN103;IDESIGN104</NoWarn>
   </PropertyGroup>
   
   <PropertyGroup Label="SonarAnalyzers">
