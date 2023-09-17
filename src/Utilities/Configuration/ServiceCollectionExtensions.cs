@@ -25,22 +25,23 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
     {
         var key = typeof(TOptions).Name;
-        return services
-            .SetupOptions<TOptions>(configuration, key);
+        services.SetupOptions<TOptions>(configuration, key);
+        return services;
     }
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration, string key) where TOptions : class
     {
         var section = configuration.GetRequiredSection(key);
         var configureDelegate = (TOptions options) => section.Bind(options);
-        return services
-            .SetupOptions(configureDelegate);
+        services.SetupOptions(configureDelegate);
+        return services;
     }
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
     {
         services.Configure(configureDelegate);
-        services.AddSingleton<IValidateOptions<TOptions>>(new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName));
+        var options = new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName);
+        services.AddSingleton<IValidateOptions<TOptions>>(options);
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;
     }

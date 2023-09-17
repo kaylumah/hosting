@@ -47,7 +47,8 @@ public static class FileSystemExtensions
             var directories = scanResult.Where(x => x.IsDirectory());
             foreach (var directory in directories)
             {
-                result.AddRange(fileSystem.GetFiles(directory.FullName, recursive));
+                var files = fileSystem.GetFiles(directory.FullName, recursive);
+                result.AddRange(files);
             }
         }
 
@@ -56,6 +57,7 @@ public static class FileSystemExtensions
 
     public static IFileInfo GetFile(this IFileSystem fileSystem, string path)
     {
-        return fileSystem.FileInfo.New(path);
+        var result = fileSystem.FileInfo.New(path);
+        return result;
     }
 }

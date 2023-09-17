@@ -18,7 +18,9 @@ public static class GuidUtility
     {
         if (name is null)
             throw new ArgumentNullException(nameof(name));
-        return Create(namespaceId, Encoding.UTF8.GetBytes(name), version);
+        var encoding = Encoding.UTF8.GetBytes(name);
+        var result = Create(namespaceId, encoding, version);
+        return result;
     }
     public static Guid Create(Guid namespaceId, byte[] nameBytes) => Create(namespaceId, nameBytes, 5);
 
@@ -52,7 +54,8 @@ public static class GuidUtility
 
         // convert the resulting UUID to local byte order (step 13)
         SwapByteOrder(newGuid);
-        return new Guid(newGuid);
+        var result = new Guid(newGuid);
+        return result;
     }
 
     /// <summary>
