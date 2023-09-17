@@ -29,7 +29,9 @@ jobs:
         with:
           node-version: 16
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: global.json
       - name: Set TimeZone
         uses: szenius/set-timezone@v1.2
         with:
