@@ -32,6 +32,14 @@
     </PackageReference>
     <AdditionalFiles Include="$(BannedSymbolsFullPath)"/>
   </ItemGroup>
+
+  <ItemGroup Label="IDesignAnalyzers" Condition="'$(EnableIDesignAnalyzers)' == 'true' AND Exists('$(UsingAnalyzerFullPath)')">
+    <PackageReference Include="IDesign.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <AdditionalFiles Include="$(UsingAnalyzerFullPath)"/>
+  </ItemGroup>
   
   <ItemGroup Label="SonarAnalyzers" Condition="'$(EnableSonarAnalyzers)' == 'true'">
     <PackageReference Include="SonarAnalyzer.CSharp">
