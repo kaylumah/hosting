@@ -15,9 +15,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="SpecFlow.xUnit" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" />
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
@@ -33,11 +30,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-<!--    <Using Include="TechTalk.SpecFlow" />-->
-<!--    <Using Include="TechTalk.SpecFlow.Assist" />-->
   </ItemGroup>
 
 </Project>
