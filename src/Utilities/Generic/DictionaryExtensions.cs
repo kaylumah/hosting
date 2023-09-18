@@ -28,6 +28,7 @@ public static class DictionaryExtensions
 
     public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
     {
-        dictionary[key.ToLower(CultureInfo.InvariantCulture)] = value;
+        var lowerKey = key.ToLower(CultureInfo.InvariantCulture);
+        dictionary[lowerKey] = value;
     }
 }
