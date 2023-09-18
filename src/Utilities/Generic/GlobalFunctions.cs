@@ -20,7 +20,8 @@ public class GlobalFunctions
     public static DateTimeOffset ToDate(string input)
     {
         IFormatProvider culture = new CultureInfo("en-US", true);
-        return DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        var result = DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        return result;
     }
 
     public static string ReadingTime(string content)
@@ -113,12 +114,14 @@ public class GlobalFunctions
             return ts.Days + " days ago";
         if (delta < 12 * MONTH)
         {
-            int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+            var input = Math.Floor((double)ts.Days / 30);
+            int months = Convert.ToInt32(input);
             return months <= 1 ? "one month ago" : months + " months ago";
         }
         else
         {
-            int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+            var input = Math.Floor((double)ts.Days / 365);
+            int years = Convert.ToInt32(input);
             return years <= 1 ? "one year ago" : years + " years ago";
         }
 
@@ -127,7 +130,8 @@ public class GlobalFunctions
     public static string DateToPattern(DateTimeOffset date, string pattern)
     {
         // date.ToUniversalTime()
-        return date.ToString(pattern, CultureInfo.InvariantCulture);
+        var result = date.ToString(pattern, CultureInfo.InvariantCulture);
+        return result;
     }
 
     public static string ToCdata(string source)
@@ -148,7 +152,8 @@ public class GlobalFunctions
 
     public static string DateToXmlschema(DateTimeOffset date)
     {
-        return DateToPattern(date, "o");
+        var result = DateToPattern(date, "o");
+        return result;
     }
 
     public static string FileNameWithoutExtension(string source)
@@ -161,7 +166,8 @@ public class GlobalFunctions
     {
         if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
         {
-            return Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
+            var result = Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
+            return result;
         }
         return source;
     }
