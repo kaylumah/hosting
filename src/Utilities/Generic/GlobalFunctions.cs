@@ -141,7 +141,8 @@ public class GlobalFunctions
         using var writer = XmlWriter.Create(stream, settings);
         writer.WriteCData(source);
         writer.Close();
-        var text = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        var arr = stream.ToArray();
+        var text = System.Text.Encoding.UTF8.GetString(arr);
         return text;
     }
 
@@ -181,17 +182,18 @@ public class GlobalFunctions
                 resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
             }
         }
-        return resolvedSource
-            .Replace(Path.DirectorySeparatorChar, '/');
+        var result = resolvedSource.Replace(Path.DirectorySeparatorChar, '/');
+        return result;
     }
 
     public static string ToJson(object o)
     {
-        var options = new JsonSerializerOptions
+        var options = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
-        return JsonSerializer.Serialize(o, options);
+        var result = JsonSerializer.Serialize(o, options);
+        return result;
     }
 
     public static string Encode()

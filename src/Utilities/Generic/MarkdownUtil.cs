@@ -96,6 +96,7 @@ public static class MarkdownUtil
         pipeline.Setup(renderer);
         renderer.Render(doc);
 
-        return writer.ToString().Trim();
+        var result = writer.ToString().Trim();
+        return result;
     }
 }

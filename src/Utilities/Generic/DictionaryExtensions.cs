@@ -10,12 +10,14 @@ public static class DictionaryExtensions
     public static bool GetBoolValue(this Dictionary<string, object> dictionary, string key)
     {
         var stringValue = dictionary.GetValue<string>(key);
-        return bool.Parse(stringValue);
+        var result = bool.Parse(stringValue);
+        return result;
     }
 
     public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
     {
-        dictionary.TryGetValue(key.ToLower(CultureInfo.InvariantCulture), out object o);
+        var lowerKey = key.ToLower(CultureInfo.InvariantCulture);
+        dictionary.TryGetValue(lowerKey, out object o);
         if (o is T t)
         {
             return t;

@@ -13,19 +13,22 @@ public static class FileSystemExtensions
     public static Stream CreateReadStream(this IFileSystemInfo fileInfo)
     {
         var fileSystem = fileInfo.FileSystem;
-        return fileSystem.FileStream.New(fileInfo.FullName, FileMode.Open);
+        var result = fileSystem.FileStream.New(fileInfo.FullName, FileMode.Open);
+        return result;
     }
 
     public static bool IsDirectory(this IFileSystemInfo fileSystemInfo)
     {
-        return fileSystemInfo.GetType().IsAssignableTo(typeof(IDirectoryInfo));
+        var result = fileSystemInfo.GetType().IsAssignableTo(typeof(IDirectoryInfo));
+        return result;
     }
 
     public static byte[] GetFileBytes(this IFileSystem fileSystem, string path)
     {
         var fileInfo = fileSystem.GetFile(path);
         using var fileStream = fileInfo.CreateReadStream();
-        return fileStream.ToByteArray();
+        var result = fileStream.ToByteArray();
+        return result;
     }
     public static IEnumerable<IFileSystemInfo> GetFiles(this IFileSystem fileSystem, string path,
         bool recursive = false)
