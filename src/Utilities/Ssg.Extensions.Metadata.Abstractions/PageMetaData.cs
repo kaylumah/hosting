@@ -15,7 +15,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(Id));
+            var result = this.GetValue<string>(nameof(Id));
+            return result;
         }
         set
         {
@@ -35,7 +36,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(LdJson));
+            var result = this.GetValue<string>(nameof(LdJson));
+            return result;
         }
         set
         {
@@ -46,7 +48,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(MetaTags));
+            var result = this.GetValue<string>(nameof(MetaTags));
+            return result;
         }
         set
         {
@@ -62,7 +65,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(Name));
+            var result = this.GetValue<string>(nameof(Name));
+            return result;
         }
         set
         {
@@ -74,7 +78,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(Content));
+            var result = this.GetValue<string>(nameof(Content));
+            return result;
         }
         set
         {
@@ -86,7 +91,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(Collection));
+            var result = this.GetValue<string>(nameof(Collection));
+            return result;
         }
         set
         {
@@ -98,7 +104,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            return this.GetValue<string>(nameof(Series));
+            var result = this.GetValue<string>(nameof(Series));
+            return result;
         }
         set
         {
