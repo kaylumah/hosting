@@ -29,12 +29,14 @@ public static class AssemblyExtensions
             .GetAttribtutes<AssemblyMetadataAttribute>()
             .ToDictionary(a => a.Key, a => a.Value);
 
+        #pragma warning disable IDESIGN103
         var result = new AssemblyInfo()
         {
             Copyright = copyrightAttribute.Copyright,
             Version = informationalVersionAttribute.InformationalVersion,
             Metadata = metadataAttributes
         };
+        #pragma warning restore IDESIGN103
         return result;
     }
 }
