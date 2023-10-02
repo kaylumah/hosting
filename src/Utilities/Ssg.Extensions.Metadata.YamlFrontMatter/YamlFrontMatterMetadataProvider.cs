@@ -29,7 +29,7 @@ public class YamlFrontMatterMetadataProvider : IMetadataProvider
         }
 
         var data = _yamlParser.Parse<T>(frontMatterData);
-        var result = new Metadata<T>
+        var result = new Metadata<T>()
         {
             Content = contents,
             Data = data
