@@ -28,10 +28,12 @@ public class YamlFrontMatterMetadataProvider : IMetadataProvider
             contents = contents.Replace(frontMatter, string.Empty).TrimStart();
         }
 
-        return new Metadata<T>
+        var data = _yamlParser.Parse<T>(frontMatterData);
+        var result = new Metadata<T>
         {
             Content = contents,
-            Data = _yamlParser.Parse<T>(frontMatterData)
+            Data = data
         };
+        return result;
     }
 }
