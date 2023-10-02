@@ -47,6 +47,10 @@
   <PropertyGroup Label="IDesignAnalyzers">
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
     <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Client'))">false</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Manager'))">false</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Engine'))">false</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Access'))">false</EnableIDesignAnalyzers>
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
     <NoWarn>$(NoWarn);IDESIGN100;IDESIGN101;IDESIGN102;IDESIGN104</NoWarn>
     <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103</WarningsNotAsErrors>
