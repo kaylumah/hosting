@@ -20,7 +20,8 @@ public class GlobalFunctions
     public static DateTimeOffset ToDate(string input)
     {
         IFormatProvider culture = new CultureInfo("en-US", true);
-        return DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        var result = DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
+        return result;
     }
 
     public static string ReadingTime(string content)
@@ -113,12 +114,14 @@ public class GlobalFunctions
             return ts.Days + " days ago";
         if (delta < 12 * MONTH)
         {
-            int months = Convert.ToInt32(Math.Floor((double)ts.Days / 30));
+            var input = Math.Floor((double)ts.Days / 30);
+            int months = Convert.ToInt32(input);
             return months <= 1 ? "one month ago" : months + " months ago";
         }
         else
         {
-            int years = Convert.ToInt32(Math.Floor((double)ts.Days / 365));
+            var input = Math.Floor((double)ts.Days / 365);
+            int years = Convert.ToInt32(input);
             return years <= 1 ? "one year ago" : years + " years ago";
         }
 
@@ -127,27 +130,32 @@ public class GlobalFunctions
     public static string DateToPattern(DateTimeOffset date, string pattern)
     {
         // date.ToUniversalTime()
-        return date.ToString(pattern, CultureInfo.InvariantCulture);
+        var result = date.ToString(pattern, CultureInfo.InvariantCulture);
+        return result;
     }
 
     public static string ToCdata(string source)
     {
+        #pragma warning disable IDESIGN103
         var settings = new XmlWriterSettings()
         {
             ConformanceLevel = ConformanceLevel.Fragment,
             Encoding = new System.Text.UTF8Encoding(false)
         };
+        #pragma warning restore IDESIGN103
         using var stream = new MemoryStream();
         using var writer = XmlWriter.Create(stream, settings);
         writer.WriteCData(source);
         writer.Close();
-        var text = System.Text.Encoding.UTF8.GetString(stream.ToArray());
+        var arr = stream.ToArray();
+        var text = System.Text.Encoding.UTF8.GetString(arr);
         return text;
     }
 
     public static string DateToXmlschema(DateTimeOffset date)
     {
-        return DateToPattern(date, "o");
+        var result = DateToPattern(date, "o");
+        return result;
     }
 
     public static string FileNameWithoutExtension(string source)
@@ -160,7 +168,8 @@ public class GlobalFunctions
     {
         if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
         {
-            return Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
+            var result = Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
+            return result;
         }
         return source;
     }
@@ -181,17 +190,20 @@ public class GlobalFunctions
                 resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
             }
         }
-        return resolvedSource
-            .Replace(Path.DirectorySeparatorChar, '/');
+        var result = resolvedSource.Replace(Path.DirectorySeparatorChar, '/');
+        return result;
     }
 
     public static string ToJson(object o)
     {
-        var options = new JsonSerializerOptions
+        #pragma warning disable IDESIGN103
+        var options = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
-        return JsonSerializer.Serialize(o, options);
+        #pragma warning restore IDESIGN103
+        var result = JsonSerializer.Serialize(o, options);
+        return result;
     }
 
     public static string Encode()

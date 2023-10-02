@@ -11,13 +11,14 @@ public static class AssemblyExtensions
 {
     public static T GetAttribute<T>(this Assembly assembly)
     {
-        return assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
+        var result = assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
+        return result;
     }
 
     public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
     {
-        return assembly.GetCustomAttributes(typeof(T))
-            .Cast<T>();
+        var result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
+        return result;
     }
 
     public static AssemblyInfo RetrieveAssemblyInfo(this Assembly assembly)
@@ -28,11 +29,14 @@ public static class AssemblyExtensions
             .GetAttribtutes<AssemblyMetadataAttribute>()
             .ToDictionary(a => a.Key, a => a.Value);
 
-        return new AssemblyInfo()
+        #pragma warning disable IDESIGN103
+        var result = new AssemblyInfo()
         {
             Copyright = copyrightAttribute.Copyright,
             Version = informationalVersionAttribute.InformationalVersion,
             Metadata = metadataAttributes
         };
+        #pragma warning restore IDESIGN103
+        return result;
     }
 }

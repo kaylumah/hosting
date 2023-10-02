@@ -25,7 +25,8 @@ public static class MarkdownPipelineBuilderExtensions
 
         if (!extensions.Contains<LinkExtension>())
         {
-            extensions.Add(new LinkExtension());
+            var ext = new LinkExtension();
+            extensions.Add(ext);
         }
 
 

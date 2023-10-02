@@ -20,63 +20,74 @@ public static class PageMetaDataExtensions
 
     public static string GetExtension(this PageMetaData pageMetaData)
     {
-        return Path.GetExtension(pageMetaData.Uri);
+        var result = Path.GetExtension(pageMetaData.Uri);
+        return result;
     }
 
     public static bool IsExtension(this PageMetaData pageMetaData, string target)
     {
         ArgumentNullException.ThrowIfNull(target);
         var actual = pageMetaData.GetExtension();
-        return target.Equals(actual, StringComparison.Ordinal);
+        var result = target.Equals(actual, StringComparison.Ordinal);
+        return result;
     }
 
     public static bool IsHtml(this PageMetaData pageMetaData)
     {
-        return pageMetaData.IsExtension(".html");
+        var result = pageMetaData.IsExtension(".html");
+        return result;
     }
 
     public static IEnumerable<PageMetaData> HasTag(this IEnumerable<PageMetaData> source)
     {
-        return source.Where(Tags);
+        var result = source.Where(Tags);
+        return result;
     }
 
     public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PageMetaData> source, string tag)
     {
-        return source
+        var result = source
                 .HasTag()
                 .Where(page => page.Tags.Contains(tag));
+        return result;
     }
 
     public static IEnumerable<PageMetaData> HasSeries(this IEnumerable<PageMetaData> source)
     {
-        return source.Where(Series);
+        var result = source.Where(Series);
+        return result;
     }
 
     public static IEnumerable<PageMetaData> FromSeries(this IEnumerable<PageMetaData> source, string series)
     {
-        return source
+        var result = source
                 .HasSeries()
                 .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
+        return result;
     }
 
     public static IEnumerable<PageMetaData> FromContentType(this IEnumerable<PageMetaData> source, ContentType contentType)
     {
-        return source
+        var result = source
                 .Where(page => contentType.Equals(page.Type));
+        return result;
     }
 
     public static IEnumerable<PageMetaData> IsArticle(this IEnumerable<PageMetaData> source)
     {
-        return source.FromContentType(ContentType.Article);
+        var result = source.FromContentType(ContentType.Article);
+        return result;
     }
 
     public static IEnumerable<PageMetaData> IsFeatured(this IEnumerable<PageMetaData> source)
     {
-        return source.Where(Featured);
+        var result = source.Where(Featured);
+        return result;
     }
 
     public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
     {
-        return source.OrderByDescending(x => x.Published);
+        var result = source.OrderByDescending(x => x.Published);
+        return result;
     }
 }

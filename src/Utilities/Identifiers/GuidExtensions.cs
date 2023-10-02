@@ -9,11 +9,13 @@ public static class GuidUtilityExtensions
 {
     public static Guid CreateSiteGuid(this string site)
     {
-        return GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
+        var result = GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
+        return result;
     }
 
     public static Guid CreatePageGuid(this Guid siteGuid, string url)
     {
-        return GuidUtility.Create(siteGuid, url, 5);
+        var result = GuidUtility.Create(siteGuid, url, 5);
+        return result;
     }
 }

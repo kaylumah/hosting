@@ -20,6 +20,7 @@ public class YamlParser : IYamlParser
 
     public T Parse<T>(string raw)
     {
-        return _deserializer.Deserialize<T>(raw);
+        var result = _deserializer.Deserialize<T>(raw);
+        return result;
     }
 }

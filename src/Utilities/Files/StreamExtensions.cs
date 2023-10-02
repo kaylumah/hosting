@@ -9,6 +9,7 @@ public static class StreamExtensions
     {
         using MemoryStream ms = new MemoryStream();
         input.CopyTo(ms);
-        return ms.ToArray();
+        var result = ms.ToArray();
+        return result;
     }
 }
