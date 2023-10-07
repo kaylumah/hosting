@@ -15,9 +15,9 @@ public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddArtifactAccess(this IServiceCollection services, IConfiguration configuration)
     {
-        #pragma warning disable IDESIGN103
+#pragma warning disable IDESIGN103
         services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
-        #pragma warning restore IDESIGN103
+#pragma warning restore IDESIGN103
         services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
         services.AddSingleton<IArtifactAccess, ArtifactAccess>();
         return services;

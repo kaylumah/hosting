@@ -15,7 +15,7 @@ public class ValidationSteps
     {
         _validationContext = validationContext;
     }
-    
+
     [Then("the scenario executed successfully:")]
     public void ThenTheScenarioExecutedSuccessfully()
     {

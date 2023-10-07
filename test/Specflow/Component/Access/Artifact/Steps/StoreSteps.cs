@@ -27,7 +27,7 @@ public sealed class StoreSteps
             await artifactAccess.Store(new StoreArtifactsRequest()
             {
                 Artifacts = Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>(),
-                OutputLocation = new FileSystemOutputLocation() {}
+                OutputLocation = new FileSystemOutputLocation() { }
             }).ConfigureAwait(false);
         }
 
