@@ -1,3 +1,4 @@
+dotnet format --verify-no-changes
 {
 	"description": "A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák",
 	"@type": "WebSite",

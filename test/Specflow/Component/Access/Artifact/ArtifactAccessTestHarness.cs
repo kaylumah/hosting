@@ -28,7 +28,7 @@ public sealed class ArtifactAccessTestHarness
                 serviceCollection.AddArtifactAccess(configuration);
             });
     }
-    
+
     public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
     {
         var testHarness = TestHarnessBuilder.Build();

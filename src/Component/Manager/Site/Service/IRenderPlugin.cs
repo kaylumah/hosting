@@ -1,4 +1,4 @@
-// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
@@ -24,7 +24,7 @@ public class HtmlSeoRenderPlugin : IRenderPlugin
 
     public void Apply(RenderData renderData)
     {
-       _seoGenerator.ApplySeo(renderData);
+        _seoGenerator.ApplySeo(renderData);
     }
 
     public bool ShouldExecute(RenderData renderData)

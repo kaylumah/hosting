@@ -2,27 +2,27 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TechTalk.SpecFlow.Infrastructure;
 using Test.Specflow.Utilities;
 using Test.Utilities;
-using Kaylumah.Ssg.Manager.Site.Hosting;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 
 namespace Test.Specflow.Component.Manager.Site;
 
 public sealed class SiteManagerTestHarness
 {
     public TestHarnessBuilder TestHarnessBuilder { get; }
-    
+
     private readonly ValidationContext _validationContext;
 
     public SiteManagerTestHarness(
@@ -35,8 +35,10 @@ public sealed class SiteManagerTestHarness
     {
         _validationContext = validationContext;
         TestHarnessBuilder = TestHarnessBuilder.Create()
-            .Configure(configurationBuilder => {
-                configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
+            .Configure(configurationBuilder =>
+            {
+                configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+                {
                     ["Site"] = string.Empty,
                     ["Metadata"] = string.Empty
                 });
@@ -45,7 +47,8 @@ public sealed class SiteManagerTestHarness
             {
                 services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
             })
-            .Register((services, configuration) => {
+            .Register((services, configuration) =>
+            {
                 services.AddSiteManager(configuration);
                 services.AddSingleton(systemClockMock.Object);
                 services.AddSingleton(artifactAccessMock.Object);
@@ -58,6 +61,6 @@ public sealed class SiteManagerTestHarness
     public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
     {
         var testHarness = TestHarnessBuilder.Build();
-        await testHarness.TestService(scenario,_validationContext).ConfigureAwait(false);
+        await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
     }
 }

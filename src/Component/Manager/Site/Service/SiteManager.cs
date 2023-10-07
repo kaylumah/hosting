@@ -9,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
+using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Utilities;
 using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
@@ -126,7 +126,7 @@ public class SiteManager : ISiteManager
             };
         }).ToList();
 
-        foreach(var siteArtifactPlugin in _siteArtifactPlugins)
+        foreach (var siteArtifactPlugin in _siteArtifactPlugins)
         {
             var pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
             artifacts.AddRange(pluginArtifacts);

@@ -136,13 +136,13 @@ public class GlobalFunctions
 
     public static string ToCdata(string source)
     {
-        #pragma warning disable IDESIGN103
+#pragma warning disable IDESIGN103
         var settings = new XmlWriterSettings()
         {
             ConformanceLevel = ConformanceLevel.Fragment,
             Encoding = new System.Text.UTF8Encoding(false)
         };
-        #pragma warning restore IDESIGN103
+#pragma warning restore IDESIGN103
         using var stream = new MemoryStream();
         using var writer = XmlWriter.Create(stream, settings);
         writer.WriteCData(source);
@@ -196,12 +196,12 @@ public class GlobalFunctions
 
     public static string ToJson(object o)
     {
-        #pragma warning disable IDESIGN103
+#pragma warning disable IDESIGN103
         var options = new JsonSerializerOptions()
         {
             WriteIndented = true
         };
-        #pragma warning restore IDESIGN103
+#pragma warning restore IDESIGN103
         var result = JsonSerializer.Serialize(o, options);
         return result;
     }
