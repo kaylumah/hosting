@@ -30,7 +30,7 @@
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.69" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
     <PackageVersion Include="System.Text.Json" Version="7.0.3" />
-    <PackageVersion Include="YamlDotNet" Version="13.5.2" />
+    <PackageVersion Include="YamlDotNet" Version="13.7.0" />
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.10" />
     <!--<PackageVersion Include="ReportGenerator" Version="5.1.20"/>-->
   </ItemGroup>
