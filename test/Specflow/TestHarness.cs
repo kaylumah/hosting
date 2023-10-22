@@ -13,9 +13,9 @@ namespace Test.Utilities
 {
     public sealed class TestHarness
     {
-        private readonly IServiceProvider _serviceProvider;
-        private static readonly ProxyGenerator ProxyGenerator = new();
-        private readonly IReadOnlyList<IInterceptor> _interceptors;
+        readonly IServiceProvider _serviceProvider;
+        static readonly ProxyGenerator ProxyGenerator = new();
+        readonly IReadOnlyList<IInterceptor> _interceptors;
 
         public TestHarness(IServiceProvider serviceProvider)
         {
@@ -29,7 +29,7 @@ namespace Test.Utilities
             await TestService(proxy, scenario).ConfigureAwait(false);
         }
 
-        private T GetProxy<T>() where T : class
+        T GetProxy<T>() where T : class
         {
             Type targetType = typeof(T);
             T instance = _serviceProvider.GetRequiredService<T>();
@@ -52,7 +52,7 @@ namespace Test.Utilities
             return instance;
         }
 
-        private static async Task TestService<T>(T instance, Func<T, Task> scenario) where T : class
+        static async Task TestService<T>(T instance, Func<T, Task> scenario) where T : class
         {
             await scenario(instance).ConfigureAwait(false);
         }

@@ -16,8 +16,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public class LayoutLoader
     {
-        private readonly IFileSystem _fileSystem;
-        private readonly IMetadataProvider _metadataProvider;
+        readonly IFileSystem _fileSystem;
+        readonly IMetadataProvider _metadataProvider;
         public LayoutLoader(IFileSystem fileSystem, IMetadataProvider metadataProvider)
         {
             _fileSystem = fileSystem;
@@ -80,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             return result;
         }
 
-        private void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
+        void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
         {
             IEnumerable<File<LayoutMetadata>> dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout, StringComparison.Ordinal));
             foreach (File<LayoutMetadata> dependency in dependencies)
@@ -91,7 +91,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             }
         }
 
-        private static bool IsDeveloperMode()
+        static bool IsDeveloperMode()
         {
             string developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
             bool succeeded = bool.TryParse(developerMode, out bool developerModeActive);

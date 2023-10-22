@@ -8,7 +8,7 @@ namespace Ssg.Extensions.Data.Yaml
 {
     public class YamlParser : IYamlParser
     {
-        private readonly IDeserializer _deserializer;
+        readonly IDeserializer _deserializer;
 
         public YamlParser()
         {

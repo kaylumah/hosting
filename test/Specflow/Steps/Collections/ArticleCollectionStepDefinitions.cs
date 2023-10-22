@@ -9,7 +9,7 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class ArticleCollectionStepDefinitions
     {
-        private readonly ArticleCollection _articleCollection;
+        readonly ArticleCollection _articleCollection;
 
         public ArticleCollectionStepDefinitions(ArticleCollection articleCollection)
         {

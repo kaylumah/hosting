@@ -16,7 +16,7 @@ namespace Test.Specflow.Component.Access.Artifact
     {
         public TestHarnessBuilder TestHarnessBuilder { get; }
 
-        private readonly ValidationContext _validationContext;
+        readonly ValidationContext _validationContext;
 
         public ArtifactAccessTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
         {

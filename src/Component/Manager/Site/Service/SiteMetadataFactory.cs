@@ -31,12 +31,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Message = "Enrich Site with `{EnrichmentCategory}`")]
         private partial void LogEnrichSiteWith(string enrichmentCategory);
 
-        private readonly SiteInfo _siteInfo;
-        private readonly IYamlParser _yamlParser;
-        private readonly IFileSystem _fileSystem;
-        private readonly ILogger _logger;
+        readonly SiteInfo _siteInfo;
+        readonly IYamlParser _yamlParser;
+        readonly IFileSystem _fileSystem;
+        readonly ILogger _logger;
 
-        private readonly ISystemClock _systemClock;
+        readonly ISystemClock _systemClock;
 
 
         public SiteMetadataFactory(ISystemClock systemClock, SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
@@ -77,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return siteInfo;
         }
-        private void EnrichSiteWithAssemblyData(SiteMetaData site)
+        void EnrichSiteWithAssemblyData(SiteMetaData site)
         {
             LogEnrichSiteWith("AssemblyData");
             AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
@@ -85,7 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             site.Build = buildMetadata;
         }
 
-        private void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
+        void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
             LogEnrichSiteWith("Data");
 
@@ -131,7 +131,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithData(site, dataFiles);
         }
 
-        private void EnrichSiteWithData(SiteMetaData site, List<IFileSystemInfo> dataFiles)
+        void EnrichSiteWithData(SiteMetaData site, List<IFileSystemInfo> dataFiles)
         {
             foreach (IFileSystemInfo file in dataFiles)
             {
@@ -140,7 +140,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
+        void EnrichSiteWithCollections(SiteMetaData site, Guid siteGuid, List<PageMetaData> files)
         {
             LogEnrichSiteWith("Collections");
 
@@ -185,7 +185,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
 
 
-        private void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {
             LogEnrichSiteWith("Tags");
 
@@ -204,7 +204,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
         {
             LogEnrichSiteWith("Years");
             IEnumerable<int> years = pages
@@ -218,7 +218,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
         {
             LogEnrichSiteWith("Series");
 
@@ -237,7 +237,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        private void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
         {
             LogEnrichSiteWith("Types");
 

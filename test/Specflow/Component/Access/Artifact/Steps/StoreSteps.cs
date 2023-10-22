@@ -12,7 +12,7 @@ namespace Test.Specflow.Component.Access.Artifact.Steps
     [Scope(Feature = "ArtifactAccess Store")]
     public sealed class StoreSteps
     {
-        private readonly ArtifactAccessTestHarness _artifactAccessTestHarness;
+        readonly ArtifactAccessTestHarness _artifactAccessTestHarness;
 
         public StoreSteps(ArtifactAccessTestHarness artifactAccessTestHarness)
         {

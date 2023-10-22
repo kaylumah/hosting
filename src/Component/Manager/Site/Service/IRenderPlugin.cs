@@ -16,7 +16,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class HtmlSeoRenderPlugin : IRenderPlugin
     {
-        private readonly SeoGenerator _seoGenerator;
+        readonly SeoGenerator _seoGenerator;
 
         public HtmlSeoRenderPlugin(SeoGenerator seoGenerator)
         {

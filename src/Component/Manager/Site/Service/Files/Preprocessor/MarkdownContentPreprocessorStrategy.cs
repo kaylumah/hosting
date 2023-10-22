@@ -11,7 +11,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 {
     public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
     {
-        private readonly string[] _targetExtensions = new string[] { ".md" };
+        readonly string[] _targetExtensions = new string[] { ".md" };
 
         public string Execute(string raw)
         {

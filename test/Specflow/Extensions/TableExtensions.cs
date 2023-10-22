@@ -11,7 +11,7 @@ namespace TechTalk.SpecFlow
 {
     public static class TableExtensions
     {
-        private static readonly PropertyNameEqualityComparer PropertyNameEqualityComparer = new();
+        static readonly PropertyNameEqualityComparer PropertyNameEqualityComparer = new();
 
         public static IEnumerable<string> AsStrings(this Table table, string column)
         {
@@ -77,7 +77,7 @@ namespace TechTalk.SpecFlow
             }
         }
 
-        private static PropertyInfo[] FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(
+        static PropertyInfo[] FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(
             PropertyInfo[] gherkinTableHeaderPropertyInfos)
         {
             List<PropertyInfo> gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
@@ -95,7 +95,7 @@ namespace TechTalk.SpecFlow
             return gherkinTableHeaderPropertyInfosWithDuplicateIndex.ToArray();
         }
 
-        private static string[] FindGherkinTableHeadersNotDeclaredAsHeader(IEnumerable<string> tableHeaderNames,
+        static string[] FindGherkinTableHeadersNotDeclaredAsHeader(IEnumerable<string> tableHeaderNames,
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
             return gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
@@ -103,14 +103,14 @@ namespace TechTalk.SpecFlow
                 .ToArray();
         }
 
-        private static string[] FindHeadersNotAtCorrectIndex(IEnumerable<string> tableHeaderNames,
+        static string[] FindHeadersNotAtCorrectIndex(IEnumerable<string> tableHeaderNames,
             string[] orderedGherkinTableHeaderPropertyNames)
         {
             return tableHeaderNames.Where((t, i) =>
                 !PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
         }
 
-        private static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
+        static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
             return tableHeaderNames.Where(tableHeaderName =>

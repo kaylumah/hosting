@@ -43,7 +43,7 @@ namespace Kaylumah.Ssg.Utilities
             pipeline.DocumentProcessed += Pipeline_DocumentProcessed;
         }
 
-        private void Pipeline_DocumentProcessed(MarkdownDocument document)
+        void Pipeline_DocumentProcessed(MarkdownDocument document)
         {
             foreach (MarkdownObject node in document.Descendants())
             {

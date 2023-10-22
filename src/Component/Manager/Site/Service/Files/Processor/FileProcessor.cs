@@ -22,11 +22,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
            Message = "No files present")]
         private partial void LogNoFiles();
 
-        private readonly IFileSystem _fileSystem;
-        private readonly ILogger _logger;
-        private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
-        private readonly IFileMetadataParser _fileMetaDataProcessor;
-        private readonly SiteInfo _siteInfo;
+        readonly IFileSystem _fileSystem;
+        readonly ILogger _logger;
+        readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
+        readonly IFileMetadataParser _fileMetaDataProcessor;
+        readonly SiteInfo _siteInfo;
 
         public FileProcessor(
             IFileSystem fileSystem,
@@ -104,7 +104,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        private async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
+        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
         {
             List<FileCollection> result = new List<FileCollection>();
             foreach (string collection in collections)
@@ -123,7 +123,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        private async Task<List<File>> ProcessFiles(string[] files)
+        async Task<List<File>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
@@ -133,7 +133,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
         }
 
-        private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
+        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)

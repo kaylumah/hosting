@@ -8,8 +8,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public partial class SeoGenerator
     {
-        private readonly MetaTagGenerator _metaTagGenerator;
-        private readonly StructureDataGenerator _structureDataGenerator;
+        readonly MetaTagGenerator _metaTagGenerator;
+        readonly StructureDataGenerator _structureDataGenerator;
 
         public SeoGenerator(MetaTagGenerator metaTagGenerator, StructureDataGenerator structureDataGenerator)
         {
@@ -23,7 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             renderData.Page.MetaTags = _metaTagGenerator.ToMetaTags(renderData);
         }
 
-        private string GenerateLdJson(RenderData renderData)
+        string GenerateLdJson(RenderData renderData)
         {
             string json = _structureDataGenerator.ToLdJson(renderData);
             if (!string.IsNullOrEmpty(json))

@@ -23,16 +23,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class SiteManager : ISiteManager
     {
-        private readonly IArtifactAccess _artifactAccess;
-        private readonly IFileSystem _fileSystem;
-        private readonly ILogger _logger;
-        private readonly IFileProcessor _fileProcessor;
-        private readonly SiteInfo _siteInfo;
-        private readonly SiteMetadataFactory _siteMetadataFactory;
-        private readonly ISystemClock _systemClock;
-        private readonly IMetadataProvider _metadataProvider;
-        private readonly IRenderPlugin[] _renderPlugins;
-        private readonly ISiteArtifactPlugin[] _siteArtifactPlugins;
+        readonly IArtifactAccess _artifactAccess;
+        readonly IFileSystem _fileSystem;
+        readonly ILogger _logger;
+        readonly IFileProcessor _fileProcessor;
+        readonly SiteInfo _siteInfo;
+        readonly SiteMetadataFactory _siteMetadataFactory;
+        readonly ISystemClock _systemClock;
+        readonly IMetadataProvider _metadataProvider;
+        readonly IRenderPlugin[] _renderPlugins;
+        readonly ISiteArtifactPlugin[] _siteArtifactPlugins;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -158,7 +158,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }).ConfigureAwait(false);
         }
 
-        private async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
+        async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.

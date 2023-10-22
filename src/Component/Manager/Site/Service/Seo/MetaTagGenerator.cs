@@ -21,7 +21,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Message = "Attempting MetaTags `{Path}`")]
         private partial void LogMetaTags(string path);
 
-        private readonly ILogger _logger;
+        readonly ILogger _logger;
 
         public MetaTagGenerator(ILogger<MetaTagGenerator> logger)
         {
@@ -57,7 +57,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
-        private static string ToCommonTags(RenderData renderData)
+        static string ToCommonTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
             XmlDocument finalDocument = new XmlDocument();
@@ -98,7 +98,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
-        private static string ToTwitterTags(RenderData renderData)
+        static string ToTwitterTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
             StringBuilder sb = new StringBuilder();
@@ -136,7 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
-        private static string ToOpenGraphTags(RenderData renderData)
+        static string ToOpenGraphTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
             StringBuilder sb = new StringBuilder();
@@ -182,12 +182,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
-        private static string CreateMetaTag(string name, string content)
+        static string CreateMetaTag(string name, string content)
         {
             return CreateMetaTag("name", name, content);
         }
 
-        private static string CreateMetaTag(string idAttributeName, string name, string content)
+        static string CreateMetaTag(string idAttributeName, string name, string content)
         {
             XmlDocument finalDocument = new XmlDocument();
             XmlElement createdElement = finalDocument.CreateElement("meta");
@@ -200,7 +200,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return createdElement.OuterXml;
         }
 
-        private static string CreateOpenGraphMetaTag(string name, string content)
+        static string CreateOpenGraphMetaTag(string name, string content)
         {
             return CreateMetaTag("property", name, content);
         }

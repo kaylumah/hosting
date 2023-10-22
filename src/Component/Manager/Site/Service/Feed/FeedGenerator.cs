@@ -25,7 +25,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             Message = "Feed will have `{PostCount}` posts")]
         public partial void FeedCount(int postCount);
 
-        private readonly ILogger _logger;
+        readonly ILogger _logger;
 
         public FeedGenerator(ILogger<FeedGenerator> logger)
         {
@@ -40,7 +40,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return feed;
         }
 
-        private SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
+        SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
         {
             BuildData build = siteMetaData.Build;
             string generatorVersion = build.ShortGitHash;
@@ -82,7 +82,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
 
 
-        private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
+        List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             List<PageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)
                 .ByRecentlyPublished()
@@ -125,7 +125,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 .ToList();
         }
 
-        private static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
+        static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
             if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[] posts))
             {

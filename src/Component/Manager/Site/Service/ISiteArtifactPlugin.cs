@@ -16,7 +16,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        private readonly SiteMapGenerator _siteMapGenerator;
+        readonly SiteMapGenerator _siteMapGenerator;
 
         public SiteMapSiteArtifactPlugin(SiteMapGenerator siteMapGenerator)
         {
@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class FeedSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        private readonly FeedGenerator _feedGenerator;
+        readonly FeedGenerator _feedGenerator;
 
         public FeedSiteArtifactPlugin(FeedGenerator feedGenerator)
         {

@@ -9,9 +9,9 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
 {
     public class YamlFrontMatterMetadataProvider : IMetadataProvider
     {
-        private const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
+        const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
 
-        private readonly IYamlParser _yamlParser;
+        readonly IYamlParser _yamlParser;
         public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
         {
             _yamlParser = yamlParser;

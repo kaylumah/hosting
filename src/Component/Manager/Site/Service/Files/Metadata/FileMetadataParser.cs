@@ -21,9 +21,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                Level = LogLevel.Information,
                Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
         private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
-        private readonly ILogger _logger;
-        private readonly IMetadataProvider _metadataProvider;
-        private readonly MetadataParserOptions _options;
+        readonly ILogger _logger;
+        readonly IMetadataProvider _metadataProvider;
+        readonly MetadataParserOptions _options;
         public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
         {
             _logger = logger;
@@ -58,7 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return result;
         }
 
-        private string RetrieveExtension(string fileName)
+        string RetrieveExtension(string fileName)
         {
             string ext = Path.GetExtension(fileName);
             if (_options.ExtensionMapping.TryGetValue(ext, out string value))
@@ -69,7 +69,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return ext;
         }
 
-        private FileMetaData ApplyDefaults(List<string> filters, string scope)
+        FileMetaData ApplyDefaults(List<string> filters, string scope)
         {
             FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
@@ -92,7 +92,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return fileMetaData;
         }
 
-        private static List<string> DetermineFilters(string outputLocation)
+        static List<string> DetermineFilters(string outputLocation)
         {
             List<string> paths = new List<string>() { string.Empty };
             //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
@@ -107,7 +107,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return paths;
         }
 
-        private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
+        static List<string> DetermineFilterDirectories(string input, string urlSeperator)
         {
             List<string> result = new List<string>();
             int index;
@@ -124,7 +124,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return result;
         }
 
-        private string DetermineOutputLocation(string fileName, FileMetaData metaData)
+        string DetermineOutputLocation(string fileName, FileMetaData metaData)
         {
             string permalink = metaData.OutputLocation;
             string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
@@ -156,7 +156,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
         }
 
-        private static void ApplyDates(FileMetaData fileMetaData)
+        static void ApplyDates(FileMetaData fileMetaData)
         {
             TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
             ApplyPublishedDates(fileMetaData, tz);
@@ -168,7 +168,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
         }
 
-        private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+        static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
         {
             if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
             {
@@ -185,7 +185,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        private static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+        static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
         {
             if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
             {
@@ -206,7 +206,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
+        void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
         {
             if (source != null)
             {

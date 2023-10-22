@@ -17,7 +17,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
 {
     sealed class Program
     {
-        private static void ShowKaylumahLogo()
+        static void ShowKaylumahLogo()
         {
             string applicationName = typeof(Program).Namespace;
             const string message = @"

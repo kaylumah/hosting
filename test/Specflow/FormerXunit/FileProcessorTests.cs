@@ -23,20 +23,20 @@ namespace Test.Specflow.FormerXunit
 {
     public class FileProcessorTests
     {
-        private const string root = "_site";
+        const string root = "_site";
 
-        private static MockFileData EmptyFile()
+        static MockFileData EmptyFile()
         {
             return ContentFile(string.Empty);
         }
 
-        private static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
+        static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
         {
             string frontMatter = CreateFrontMatter(data);
             return ContentFile(frontMatter);
         }
 
-        private static MockFileData ContentFile(string content)
+        static MockFileData ContentFile(string content)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(content);
             return new MockFileData(bytes);
@@ -197,7 +197,7 @@ namespace Test.Specflow.FormerXunit
             result.Count().Should().Be(1);
         }
 
-        private static string CreateFrontMatter(Dictionary<string, object> data = null)
+        static string CreateFrontMatter(Dictionary<string, object> data = null)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("---");
@@ -210,7 +210,7 @@ namespace Test.Specflow.FormerXunit
             return stringBuilder.ToString();
         }
 
-        private string CreateEmptyXml()
+        string CreateEmptyXml()
         {
             XmlWriterSettings settings = new XmlWriterSettings
             {

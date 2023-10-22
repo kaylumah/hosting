@@ -11,7 +11,7 @@ namespace Test.Specflow
 {
     public sealed class MyInterceptor : IAsyncInterceptor
     {
-        private readonly ISpecFlowOutputHelper _specFlowOutputHelper;
+        readonly ISpecFlowOutputHelper _specFlowOutputHelper;
 
         public MyInterceptor(ISpecFlowOutputHelper specFlowOutputHelper)
         {
@@ -37,7 +37,7 @@ namespace Test.Specflow
             ValidateReturnValue(invocation, invocation.ReturnValue);
         }
 
-        private async Task InternalInterceptAsynchronous(IInvocation invocation)
+        async Task InternalInterceptAsynchronous(IInvocation invocation)
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             InternalIntercept(invocation);
@@ -45,7 +45,7 @@ namespace Test.Specflow
             await task.ConfigureAwait(false);
         }
 
-        private async Task<TResult> InternalInterceptAsynchronous<TResult>(IInvocation invocation)
+        async Task<TResult> InternalInterceptAsynchronous<TResult>(IInvocation invocation)
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             InternalIntercept(invocation);
@@ -55,7 +55,7 @@ namespace Test.Specflow
             return returnValue;
         }
 
-        private void ValidateReturnValue(IInvocation invocation, object returnValue)
+        void ValidateReturnValue(IInvocation invocation, object returnValue)
         {
             // var validationResults = _validator.ValidateObject(returnValue);
             // if (validationResults.Length > 0)
@@ -70,7 +70,7 @@ namespace Test.Specflow
             // }
         }
 
-        private void InternalIntercept(IInvocation invocation)
+        void InternalIntercept(IInvocation invocation)
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             string test = invocation.Method.DeclaringType?.FullName + "." + invocation.Method.Name;

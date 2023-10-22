@@ -13,7 +13,7 @@ namespace Test.Specflow.Utilities
 {
     public class FileProcessorMock : StrictMock<IFileProcessor>
     {
-        private readonly ArticleCollection _articles;
+        readonly ArticleCollection _articles;
 
         public FileProcessorMock(ArticleCollection articles)
         {

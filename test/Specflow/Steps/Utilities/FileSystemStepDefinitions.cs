@@ -11,7 +11,7 @@ namespace Test.Specflow.Steps.Utilities
     [Binding]
     public class FileSystemStepDefinitions
     {
-        private readonly MockFileSystem _mockFileSystem;
+        readonly MockFileSystem _mockFileSystem;
 
         public FileSystemStepDefinitions(MockFileSystem mockFileSystem)
         {

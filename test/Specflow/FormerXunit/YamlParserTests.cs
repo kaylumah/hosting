@@ -10,7 +10,7 @@ namespace Test.Specflow.FormerXunit
 {
     public class YamlParserTests
     {
-        private readonly IYamlParser _sut;
+        readonly IYamlParser _sut;
 
         public YamlParserTests()
         {
