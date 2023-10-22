@@ -26,17 +26,17 @@ public class SiteManagerTests
     [Fact]
     public async Task Test_SiteManager_GenerateSite()
     {
-        var fileProcessorMock = new Mock<IFileProcessor>();
-        var artifactAccessMock = new Mock<IArtifactAccess>();
-        var fileSystemMock = new MockFileSystem();
+        Mock<IFileProcessor> fileProcessorMock = new Mock<IFileProcessor>();
+        Mock<IArtifactAccess> artifactAccessMock = new Mock<IArtifactAccess>();
+        MockFileSystem fileSystemMock = new MockFileSystem();
         fileSystemMock.Directory.CreateDirectory("_site");
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_includes"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_data"));
         fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
 
-        var yamlParserMock = new Mock<IYamlParser>();
-        var configurationBuilder = new ConfigurationBuilder();
+        Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
         configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
         {
             ["Site:Lang"] = null
@@ -54,8 +54,8 @@ public class SiteManagerTests
                     { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
             });
 
-        var configuration = configurationBuilder.Build();
-        var serviceProvider = new ServiceCollection()
+        IConfigurationRoot configuration = configurationBuilder.Build();
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddFileSystem()
             .AddArtifactAccess(configuration)
             .AddSiteManager(configuration)
@@ -68,7 +68,7 @@ public class SiteManagerTests
                 _.Url = "https://example.com";
             })
             .BuildServiceProvider();
-        var siteManager = serviceProvider.GetService<ISiteManager>();
+        ISiteManager siteManager = serviceProvider.GetService<ISiteManager>();
         await siteManager.GenerateSite(new GenerateSiteRequest
         {
             Configuration = new SiteConfiguration

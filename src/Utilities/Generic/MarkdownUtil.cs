@@ -28,7 +28,7 @@ public static class MarkdownUtil
         // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/FigureFooterAndCiteSpecs.md
         // https://github.com/ilich/Markdig.Prism/blob/main/src/Markdig.Prism/PrismCodeBlockRenderer.cs
 
-        var pipeline = new MarkdownPipelineBuilder()
+        MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UseYamlFrontMatter()
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmojiSpecs.md
             //.UseEmojiAndSmiley(new Markdig.Extensions.Emoji.EmojiMapping(new Dictionary<string, string>() { { ":smiley:", "♥" } }, new Dictionary<string, string>()))
@@ -57,20 +57,20 @@ public static class MarkdownUtil
             .UseGenericAttributes()
             .Build();
 
-        var doc = Markdown.Parse(source, pipeline);
+        MarkdownDocument doc = Markdown.Parse(source, pipeline);
 
         // Process headings to insert an intermediate LinkInline
-        foreach (var headingBlock in doc.Descendants<HeadingBlock>())
+        foreach (HeadingBlock headingBlock in doc.Descendants<HeadingBlock>())
         {
-            var inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null);
-            var previousInline = headingBlock.Inline;
+            LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null);
+            ContainerInline previousInline = headingBlock.Inline;
             headingBlock.Inline = null;
             inline.AppendChild(previousInline);
             headingBlock.Inline = inline;
         }
 
-        var anchorTags = doc.Descendants<LinkInline>();
-        foreach (var anchor in anchorTags)
+        System.Collections.Generic.IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
+        foreach (LinkInline anchor in anchorTags)
         {
             if (anchor is LinkInline link && !link.IsImage)
             {
@@ -91,12 +91,12 @@ public static class MarkdownUtil
         }
 
         // Render the doc
-        var writer = new StringWriter();
-        var renderer = new HtmlRenderer(writer);
+        StringWriter writer = new StringWriter();
+        HtmlRenderer renderer = new HtmlRenderer(writer);
         pipeline.Setup(renderer);
         renderer.Render(doc);
 
-        var result = writer.ToString().Trim();
+        string result = writer.ToString().Trim();
         return result;
     }
 }

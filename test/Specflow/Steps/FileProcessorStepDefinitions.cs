@@ -28,7 +28,7 @@ public class FileProcessorStepDefinitions
 
     public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
     {
-        var metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+        FileMetadataParser metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
             new YamlFrontMatterMetadataProvider(new YamlParser()),
             metadataParserOptions);
         _fileProcessor = new FileProcessor(mockFileSystem,
@@ -40,14 +40,14 @@ public class FileProcessorStepDefinitions
     [When("the files are retrieved:")]
     public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
     {
-        var result = await _fileProcessor.Process(criteria);
+        IEnumerable<File> result = await _fileProcessor.Process(criteria);
         _files.AddRange(result);
     }
 
     [Then("the following articles are returned:")]
     public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
     {
-        var actual = _files.ToArticles();
+        IEnumerable<Article> actual = _files.ToArticles();
         actual.Should().BeEquivalentTo(articleCollection);
     }
 

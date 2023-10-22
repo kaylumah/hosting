@@ -41,7 +41,7 @@ public sealed class MyInterceptor : IAsyncInterceptor
     {
         _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
         InternalIntercept(invocation);
-        var task = (Task)invocation.ReturnValue;
+        Task task = (Task)invocation.ReturnValue;
         await task.ConfigureAwait(false);
     }
 
@@ -49,8 +49,8 @@ public sealed class MyInterceptor : IAsyncInterceptor
     {
         _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
         InternalIntercept(invocation);
-        var task = (Task<TResult>)invocation.ReturnValue;
-        var returnValue = await task.ConfigureAwait(false);
+        Task<TResult> task = (Task<TResult>)invocation.ReturnValue;
+        TResult returnValue = await task.ConfigureAwait(false);
         ValidateReturnValue(invocation, returnValue);
         return returnValue;
     }
@@ -73,11 +73,11 @@ public sealed class MyInterceptor : IAsyncInterceptor
     private void InternalIntercept(IInvocation invocation)
     {
         _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
-        var test = invocation.Method.DeclaringType?.FullName + "." + invocation.Method.Name;
+        string test = invocation.Method.DeclaringType?.FullName + "." + invocation.Method.Name;
         _specFlowOutputHelper.WriteLine(test);
         if (invocation.Arguments is { Length: > 0 })
         {
-            var first = invocation.Arguments[0];
+            object first = invocation.Arguments[0];
             _specFlowOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
         }
         // var validationResults = _validator.ValidateOperation(invocation.Method, invocation.Arguments);

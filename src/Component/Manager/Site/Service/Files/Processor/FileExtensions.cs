@@ -12,7 +12,7 @@ public static class FileExtensions
 {
     public static Dictionary<string, object> ToDictionary(this File file)
     {
-        var result = new Dictionary<string, object>(file.MetaData);
+        Dictionary<string, object> result = new Dictionary<string, object>(file.MetaData);
         // result.SetValue(nameof(file.LastModified), file.LastModified);
         result.SetValue(nameof(file.Content), file.Content);
         result.SetValue(nameof(file.Name), file.Name);
@@ -21,13 +21,13 @@ public static class FileExtensions
 
     public static PageMetaData ToPage(this File file)
     {
-        var data = file.ToDictionary();
+        Dictionary<string, object> data = file.ToDictionary();
         return new PageMetaData(data);
     }
 
     public static PageMetaData ToPage(this File file, Guid siteGuid)
     {
-        var page = file.ToPage();
+        PageMetaData page = file.ToPage();
         page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
         return page;
     }

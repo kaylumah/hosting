@@ -30,30 +30,30 @@ public partial class StructureDataGenerator
     public string ToLdJson(RenderData renderData)
     {
         ArgumentNullException.ThrowIfNull(renderData);
-        var settings = new JsonSerializerOptions()
+        JsonSerializerOptions settings = new JsonSerializerOptions()
         {
             AllowTrailingCommas = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             WriteIndented = true
         };
-        var authors = renderData.Site.ToPersons();
-        var organizations = renderData.Site.ToOrganizations();
+        System.Collections.Generic.Dictionary<string, Person> authors = renderData.Site.ToPersons();
+        System.Collections.Generic.Dictionary<string, Organization> organizations = renderData.Site.ToOrganizations();
         LogLdJson(renderData.Page.Uri, renderData.Page.Type);
         if (renderData.Page.Type == ContentType.Article)
         {
-            var blogPost = renderData.Page.ToBlogPosting(authors, organizations);
+            BlogPosting blogPost = renderData.Page.ToBlogPosting(authors, organizations);
             return blogPost.ToString(settings);
         }
         else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
         {
-            var posts = renderData.Site.Pages
+            System.Collections.Generic.List<BlogPosting> posts = renderData.Site.Pages
                 .IsArticle()
                 .IsFeatured()
                 .ByRecentlyPublished()
                 .ToBlogPostings(authors, organizations)
                 .ToList();
-            var blog = new Blog()
+            Blog blog = new Blog()
             {
                 BlogPost = new OneOrMany<IBlogPosting>(posts)
             };

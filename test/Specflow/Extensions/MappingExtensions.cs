@@ -17,13 +17,13 @@ public static partial class MappingExtensions
 {
     public static File ToFile(this PageMetaData pageMetaData)
     {
-        var fileMetaData = new FileMetaData();
-        foreach (var item in pageMetaData)
+        FileMetaData fileMetaData = new FileMetaData();
+        foreach (KeyValuePair<string, object> item in pageMetaData)
         {
             fileMetaData.Add(item.Key, item.Value);
         }
 
-        var file = new File()
+        File file = new File()
         {
             Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
             Content = string.Empty,
@@ -40,8 +40,8 @@ public static partial class MappingExtensions
 
     public static PageMetaData ToPageMetaData(this Article article)
     {
-        var tags = article.Tags.Cast<object>().ToList();
-        var pageDictionary = new Dictionary<string, object>();
+        List<object> tags = article.Tags.Cast<object>().ToList();
+        Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
         pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
         pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
         pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
@@ -65,7 +65,7 @@ public static partial class MappingExtensions
 
     public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
     {
-        var pages = files.ToPages(siteGuid);
+        PageMetaData[] pages = files.ToPages(siteGuid);
         return pages.ToArticles();
     }
 

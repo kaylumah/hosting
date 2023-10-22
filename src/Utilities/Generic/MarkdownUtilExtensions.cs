@@ -25,7 +25,7 @@ public static class MarkdownPipelineBuilderExtensions
 
         if (!extensions.Contains<LinkExtension>())
         {
-            var ext = new LinkExtension();
+            LinkExtension ext = new LinkExtension();
             extensions.Add(ext);
         }
 
@@ -45,13 +45,13 @@ public class LinkExtension : IMarkdownExtension
 
     private void Pipeline_DocumentProcessed(MarkdownDocument document)
     {
-        foreach (var node in document.Descendants())
+        foreach (MarkdownObject node in document.Descendants())
         {
             if (node is Inline)
             {
                 if (node is LinkInline linkInlineNode)
                 {
-                    var uri = linkInlineNode.Url;
+                    string uri = linkInlineNode.Url;
                     if (!uri.StartsWith("https://kaylumah.nl", StringComparison.Ordinal))
                     {
                         linkInlineNode.GetAttributes().AddClass("img-fluid");

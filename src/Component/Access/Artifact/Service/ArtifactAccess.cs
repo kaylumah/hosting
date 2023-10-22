@@ -29,7 +29,7 @@ public partial class ArtifactAccess : IArtifactAccess
     public async Task Store(StoreArtifactsRequest request)
     {
         StoreArtifacts();
-        var storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
+        IStoreArtifactsStrategy storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
         await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
     }
 }

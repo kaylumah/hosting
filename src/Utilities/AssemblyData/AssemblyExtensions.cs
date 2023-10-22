@@ -11,26 +11,26 @@ public static class AssemblyExtensions
 {
     public static T GetAttribute<T>(this Assembly assembly)
     {
-        var result = assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
+        T result = assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
         return result;
     }
 
     public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
     {
-        var result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
+        IEnumerable<T> result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
         return result;
     }
 
     public static AssemblyInfo RetrieveAssemblyInfo(this Assembly assembly)
     {
-        var copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
-        var informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
-        var metadataAttributes = assembly
+        AssemblyCopyrightAttribute copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
+        AssemblyInformationalVersionAttribute informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
+        Dictionary<string, string> metadataAttributes = assembly
             .GetAttribtutes<AssemblyMetadataAttribute>()
             .ToDictionary(a => a.Key, a => a.Value);
 
 #pragma warning disable IDESIGN103
-        var result = new AssemblyInfo()
+        AssemblyInfo result = new AssemblyInfo()
         {
             Copyright = copyrightAttribute.Copyright,
             Version = informationalVersionAttribute.InformationalVersion,

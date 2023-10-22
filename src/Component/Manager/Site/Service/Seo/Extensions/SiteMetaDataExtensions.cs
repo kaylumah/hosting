@@ -19,10 +19,10 @@ public static class SiteMetaDataExtensions
             return new();
         }
 
-        var authors = source.AuthorMetaData
+        Dictionary<string, Person> authors = source.AuthorMetaData
             .ToDictionary(x => x.Id, x =>
             {
-                var uris = new List<Uri>();
+                List<Uri> uris = new List<Uri>();
 
                 if (!string.IsNullOrEmpty(x.Links.Linkedin))
                 {
@@ -34,7 +34,7 @@ public static class SiteMetaDataExtensions
                     uris.Add(new Uri(x.Links.TwitterProfileUrl));
                 }
 
-                var person = new Person()
+                Person person = new Person()
                 {
                     Name = x.FullName,
                     Email = x.Email,
@@ -63,16 +63,16 @@ public static class SiteMetaDataExtensions
             return new();
         }
 #pragma warning disable RS0030
-        var organizations = source.OrganizationMetaData
+        Dictionary<string, Organization> organizations = source.OrganizationMetaData
             .ToDictionary(x => x.Id, x =>
             {
 
-                var uris = new List<Uri>
+                List<Uri> uris = new List<Uri>
                 {
                     new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
                 };
 
-                var organization = new Organization()
+                Organization organization = new Organization()
                 {
                     Name = x.FullName,
                     FoundingDate = x.Founded.Date,

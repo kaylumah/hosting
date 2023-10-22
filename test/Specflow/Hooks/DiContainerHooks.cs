@@ -20,7 +20,7 @@ public class DiContainerHooks
     [BeforeScenario]
     public void InitializeWebDriver()
     {
-        var mockFileSystem = new MockFileSystem();
+        MockFileSystem mockFileSystem = new MockFileSystem();
         _objectContainer.RegisterInstanceAs(mockFileSystem);
     }
 }

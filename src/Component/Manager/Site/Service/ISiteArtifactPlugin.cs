@@ -24,15 +24,15 @@ public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
 
     public Artifact[] Generate(SiteMetaData siteMetaData)
     {
-        var sitemap = _siteMapGenerator.Create(siteMetaData);
-        var bytes = sitemap
+        SiteMap.SiteMap sitemap = _siteMapGenerator.Create(siteMetaData);
+        byte[] bytes = sitemap
                 .SaveAsXml();
-        var siteMapAsArtifact = new Artifact
+        Artifact siteMapAsArtifact = new Artifact
         {
             Contents = bytes,
             Path = "sitemap.xml"
         };
-        var result = new Artifact[] {
+        Artifact[] result = new Artifact[] {
             siteMapAsArtifact
         };
         return result;
@@ -50,15 +50,15 @@ public class FeedSiteArtifactPlugin : ISiteArtifactPlugin
 
     public Artifact[] Generate(SiteMetaData siteMetaData)
     {
-        var feed = _feedGenerator.Create(siteMetaData);
-        var bytes = feed
+        System.ServiceModel.Syndication.SyndicationFeed feed = _feedGenerator.Create(siteMetaData);
+        byte[] bytes = feed
                 .SaveAsAtom10();
-        var feedAsArtifact = new Artifact
+        Artifact feedAsArtifact = new Artifact
         {
             Contents = bytes,
             Path = "feed.xml"
         };
-        var result = new Artifact[] {
+        Artifact[] result = new Artifact[] {
             feedAsArtifact
         };
         return result;

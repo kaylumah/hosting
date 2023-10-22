@@ -64,9 +64,9 @@ public class SiteManager : ISiteManager
         GlobalFunctions.Date.Value = _systemClock.LocalNow;
         GlobalFunctions.Url.Value = _siteInfo.Url;
         GlobalFunctions.BaseUrl.Value = _siteInfo.BaseUrl;
-        var siteGuid = _siteInfo.Url.CreateSiteGuid();
+        Guid siteGuid = _siteInfo.Url.CreateSiteGuid();
 
-        var processed = await _fileProcessor.Process(new FileFilterCriteria
+        IEnumerable<Files.Processor.File> processed = await _fileProcessor.Process(new FileFilterCriteria
         {
             RootDirectory = request.Configuration.Source,
             DirectoriesToSkip = new string[] {
@@ -78,16 +78,16 @@ public class SiteManager : ISiteManager
             FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
         }).ConfigureAwait(false);
 
-        var pageMetadatas = processed
+        PageMetaData[] pageMetadatas = processed
             .ToPages(siteGuid);
-        var siteMetadata = _siteMetadataFactory
+        SiteMetaData siteMetadata = _siteMetadataFactory
             .EnrichSite(
                 request.Configuration,
                 siteGuid,
                 pageMetadatas.ToList()
         );
 
-        var requests = pageMetadatas
+        MetadataRenderRequest[] requests = pageMetadatas
             .Select(pageMetadata => new MetadataRenderRequest
             {
                 Metadata = new RenderData
@@ -99,26 +99,26 @@ public class SiteManager : ISiteManager
             })
             .ToArray();
 
-        foreach (var renderRequest in requests)
+        foreach (MetadataRenderRequest renderRequest in requests)
         {
-            var plugins = _renderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
-            foreach (var plugin in plugins)
+            IRenderPlugin[] plugins = _renderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
+            foreach (IRenderPlugin plugin in plugins)
             {
                 plugin.Apply(renderRequest.Metadata);
             }
         }
 
-        var directoryConfig = new DirectoryConfiguration()
+        DirectoryConfiguration directoryConfig = new DirectoryConfiguration()
         {
             SourceDirectory = request.Configuration.Source,
             LayoutsDirectory = request.Configuration.LayoutDirectory,
             TemplateDirectory = request.Configuration.PartialsDirectory
         };
-        var renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
+        MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
-        var artifacts = processed.Select((t, i) =>
+        List<Artifact> artifacts = processed.Select((t, i) =>
         {
-            var renderResult = renderResults[i];
+            MetadataRenderResult renderResult = renderResults[i];
             return new Artifact
             {
                 Path = $"{t.MetaData.Uri}",
@@ -126,17 +126,17 @@ public class SiteManager : ISiteManager
             };
         }).ToList();
 
-        foreach (var siteArtifactPlugin in _siteArtifactPlugins)
+        foreach (ISiteArtifactPlugin siteArtifactPlugin in _siteArtifactPlugins)
         {
-            var pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
+            Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
             artifacts.AddRange(pluginArtifacts);
         }
 
-        var assets = _fileSystem
+        IEnumerable<IFileSystemInfo> assets = _fileSystem
             .GetFiles(Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory), true)
             .Where(x => !x.IsDirectory());
 
-        var env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
+        string env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
 
         artifacts.AddRange(assets.Select(asset =>
         {
@@ -160,24 +160,24 @@ public class SiteManager : ISiteManager
 
     private async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
     {
-        var renderedResults = new List<MetadataRenderResult>();
+        List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
         // TODO apply better solution for access to directories.
-        var templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
-        var templateLoader = new IncludeFromFileSystemTemplateLoader(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
+        List<File<LayoutMetadata>> templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
+        IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
 
-        foreach (var request in requests)
+        foreach (MetadataRenderRequest request in requests)
         {
             try
             {
-                var template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
-                var content = template?.Content ?? "{{ content }}";
+                File<LayoutMetadata> template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
+                string content = template?.Content ?? "{{ content }}";
                 content = content.Replace("{{ content }}", request.Metadata.Content);
-                var liquidTemplate = Template.ParseLiquid(content);
-                var context = new LiquidTemplateContext()
+                Template liquidTemplate = Template.ParseLiquid(content);
+                LiquidTemplateContext context = new LiquidTemplateContext()
                 {
                     TemplateLoader = templateLoader
                 };
-                var scriptObject = new ScriptObject();
+                ScriptObject scriptObject = new ScriptObject();
                 scriptObject.Import(request.Metadata);
                 // note: work-around for Build becoming part of Site
                 scriptObject.Import("build", () => request.Metadata.Site.Build);
@@ -188,7 +188,7 @@ public class SiteManager : ISiteManager
                 //     return "<strong>{{ build.git_hash }}</strong>";
                 // }));
 
-                var renderedContent = await liquidTemplate.RenderAsync(context).ConfigureAwait(false);
+                string renderedContent = await liquidTemplate.RenderAsync(context).ConfigureAwait(false);
                 renderedResults.Add(new MetadataRenderResult { Content = renderedContent });
             }
             catch (Exception)

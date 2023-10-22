@@ -20,16 +20,16 @@ public class YamlParserTests
     [Fact]
     public void Test_YamlParser_Parse_ReturnsNullOnEmptyInput()
     {
-        var input = string.Empty;
-        var result = _sut.Parse<Dictionary<string, object>>(input);
+        string input = string.Empty;
+        Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
         result.Should().BeNull();
     }
 
     [Fact]
     public void Test_YamlParser_Parse_CanReturnDictionary()
     {
-        var input = "title: doc1";
-        var result = _sut.Parse<Dictionary<string, object>>(input);
+        string input = "title: doc1";
+        Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
         result.Should().NotBeNull();
         result.ContainsKey("title").Should().BeTrue();
         result["title"].Should().Be("doc1");

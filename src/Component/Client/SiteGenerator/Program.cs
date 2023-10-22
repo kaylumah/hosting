@@ -19,7 +19,7 @@ sealed class Program
 {
     private static void ShowKaylumahLogo()
     {
-        var applicationName = typeof(Program).Namespace;
+        string applicationName = typeof(Program).Namespace;
         const string message = @"
   _  __           _                       _     
  | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__  
@@ -41,10 +41,10 @@ sealed class Program
     {
         ShowKaylumahLogo();
 
-        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 
         // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
-        var configurationBuilder = new ConfigurationBuilder();
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 
         configurationBuilder
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -66,8 +66,8 @@ sealed class Program
         }
 
         IConfiguration configuration = configurationBuilder.Build();
-        var root = (IConfigurationRoot)configuration;
-        var debugView = root.GetDebugView();
+        IConfigurationRoot root = (IConfigurationRoot)configuration;
+        string debugView = root.GetDebugView();
         Console.WriteLine(debugView);
 
         IServiceCollection services = new ServiceCollection();
@@ -83,10 +83,10 @@ sealed class Program
         services.AddSiteManager(configuration);
 
 
-        var serviceProvider = services.BuildServiceProvider();
-        var siteManager = serviceProvider.GetRequiredService<ISiteManager>();
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        ISiteManager siteManager = serviceProvider.GetRequiredService<ISiteManager>();
 
-        var siteConfiguration = new SiteConfiguration();
+        SiteConfiguration siteConfiguration = new SiteConfiguration();
         configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
         Stopwatch watch = new Stopwatch();
         Console.WriteLine("Start Site Generation");

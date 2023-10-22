@@ -45,11 +45,11 @@ public class GenerateSiteSteps
         // just an idea at the moment...
         // only the output dates are incorrect
         _articleCollection.AddRange(articleCollection);
-        foreach (var article in articleCollection)
+        foreach (Article article in articleCollection)
         {
-            var pageMeta = article.ToPageMetaData();
-            var mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-            var postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+            Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
+            MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
+            string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
             _mockFileSystem.AddFile(postFileName, mockFile);
         }
     }
@@ -84,7 +84,7 @@ public class GenerateSiteSteps
         await Verify(feed)
             .UseMethodName("AtomFeed");
         */
-        var feed = _artifactAccess.GetString(feedPath);
+        string feed = _artifactAccess.GetString(feedPath);
         await Verifier.Verify(feed)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
             /*.AddScrubber(inputStringBuilder =>
@@ -121,7 +121,7 @@ public class GenerateSiteSteps
     [Then("the sitemap '(.*)' is verified:")]
     public async Task ThenTheSitemapIsVerified(string sitemapPath)
     {
-        var sitemap = _artifactAccess.GetString(sitemapPath);
+        string sitemap = _artifactAccess.GetString(sitemapPath);
         await Verifier.Verify(sitemap)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
     }
@@ -129,7 +129,7 @@ public class GenerateSiteSteps
     [Then("the html '(.*)' is verified:")]
     public async Task ThenTheHtmlIsVerified(string htmlPath)
     {
-        var htmlPage = _artifactAccess.GetString(htmlPath);
+        string htmlPage = _artifactAccess.GetString(htmlPath);
         await Verifier.Verify(htmlPage)
             .UseMethodName(_scenarioContext.ToVerifyMethodName("Html"));
     }
@@ -138,14 +138,14 @@ public class GenerateSiteSteps
     public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
     {
         ArgumentNullException.ThrowIfNull(table);
-        var expected = table.CreateSet<(string Tag, string Value)>().ToList();
-        var html = _artifactAccess.GetHtmlDocument(documentPath);
-        var actual = html.ToMetaTags();
+        System.Collections.Generic.List<(string Tag, string Value)> expected = table.CreateSet<(string Tag, string Value)>().ToList();
+        HtmlAgilityPack.HtmlDocument html = _artifactAccess.GetHtmlDocument(documentPath);
+        System.Collections.Generic.List<(string Tag, string Value)> actual = html.ToMetaTags();
 
         // Known issue: generator uses GitHash
-        var expectedGenerator = expected.Single(x => x.Tag == "generator");
+        (string Tag, string Value) expectedGenerator = expected.Single(x => x.Tag == "generator");
         expected.Remove(expectedGenerator);
-        var actualGenerator = actual.Single(x => x.Tag == "generator");
+        (string Tag, string Value) actualGenerator = actual.Single(x => x.Tag == "generator");
         actual.Remove(actualGenerator);
         actual.Should().BeEquivalentTo(expected);
     }
@@ -153,13 +153,13 @@ public class GenerateSiteSteps
     [Then("the following artifacts are created:")]
     public void ThenTheFollowingArtifactsAreCreated(Table table)
     {
-        var actualArtifacts = _artifactAccess
+        System.Collections.Generic.List<string> actualArtifacts = _artifactAccess
             .StoreArtifactRequests
             .SelectMany(x => x.Artifacts)
             .Select(x => x.Path)
             .ToList();
 
-        var expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
+        string[] expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
         actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
     }
 }

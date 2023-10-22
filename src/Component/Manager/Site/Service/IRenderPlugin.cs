@@ -29,7 +29,7 @@ public class HtmlSeoRenderPlugin : IRenderPlugin
 
     public bool ShouldExecute(RenderData renderData)
     {
-        var result = renderData.IsHtml();
+        bool result = renderData.IsHtml();
         return result;
     }
 }

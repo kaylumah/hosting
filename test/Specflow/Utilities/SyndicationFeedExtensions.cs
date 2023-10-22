@@ -13,7 +13,7 @@ public static class SiteMapExtensions
 {
     public static Article ToArticle(this SiteMapNode siteMapNode)
     {
-        var article = new Article { Uri = siteMapNode.Url };
+        Article article = new Article { Uri = siteMapNode.Url };
         return article;
     }
 
@@ -24,7 +24,7 @@ public static class SiteMapExtensions
 
     public static ArticleCollection ToArticles(this SiteMap siteMap)
     {
-        var articles = new ArticleCollection();
+        ArticleCollection articles = new ArticleCollection();
         articles.AddRange(siteMap.Items.ToArticles());
         return articles;
     }
@@ -34,7 +34,7 @@ public static class SyndicationFeedExtensions
 {
     public static Article ToArticle(this SyndicationItem syndicationItem)
     {
-        var article = new Article();
+        Article article = new Article();
         article.Uri = syndicationItem.Id;
         article.Created = syndicationItem.PublishDate;
         article.Modified = syndicationItem.LastUpdatedTime;
@@ -48,7 +48,7 @@ public static class SyndicationFeedExtensions
 
     public static ArticleCollection ToArticles(this SyndicationFeed syndicationFeed)
     {
-        var articles = new ArticleCollection();
+        ArticleCollection articles = new ArticleCollection();
         articles.AddRange(syndicationFeed.Items.ToArticles());
         return articles;
     }

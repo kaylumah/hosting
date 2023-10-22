@@ -20,45 +20,45 @@ public static class ByteExtensions
 
     public static string GetString(this byte[] bytes, Encoding encoding)
     {
-        var contents = encoding.GetString(bytes);
+        string contents = encoding.GetString(bytes);
         return contents;
     }
 
     public static HtmlDocument ToHtmlDocument(this byte[] bytes)
     {
-        var contents = bytes.GetString();
-        var htmlDoc = new HtmlDocument();
+        string contents = bytes.GetString();
+        HtmlDocument htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(contents);
         return htmlDoc;
     }
 
     public static SyndicationFeed ToSyndicationFeed(this byte[] bytes)
     {
-        using var stream = new MemoryStream(bytes);
-        using var xmlReader = XmlReader.Create(stream);
-        var feed = SyndicationFeed.Load(xmlReader);
+        using MemoryStream stream = new MemoryStream(bytes);
+        using XmlReader xmlReader = XmlReader.Create(stream);
+        SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
         return feed;
     }
 
     public static SiteMap ToSiteMap(this byte[] bytes)
     {
-        using var stream = new MemoryStream(bytes);
-        using var xmlReader = XmlReader.Create(stream);
-        var document = new XmlDocument();
+        using MemoryStream stream = new MemoryStream(bytes);
+        using XmlReader xmlReader = XmlReader.Create(stream);
+        XmlDocument document = new XmlDocument();
         document.Load(xmlReader);
-        var root = document.DocumentElement?.SelectSingleNode("//*[local-name()='urlset']");
-        var children = root?.SelectNodes("//*[local-name()='url']");
+        XmlNode root = document.DocumentElement?.SelectSingleNode("//*[local-name()='urlset']");
+        XmlNodeList children = root?.SelectNodes("//*[local-name()='url']");
 
-        var nodes = new List<SiteMapNode>();
+        List<SiteMapNode> nodes = new List<SiteMapNode>();
         foreach (XmlNode child in children)
         {
-            var location = child.SelectSingleNode("//*[local-name()='loc']")?.InnerText;
+            string location = child.SelectSingleNode("//*[local-name()='loc']")?.InnerText;
             nodes.Add(new SiteMapNode()
             {
                 Url = location
             });
         }
-        var sitemap = new SiteMap()
+        SiteMap sitemap = new SiteMap()
         {
             Items = nodes
         };

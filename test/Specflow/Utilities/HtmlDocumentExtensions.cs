@@ -12,16 +12,16 @@ public static class HtmlDocumentExtensions
 {
     public static List<(string Tag, string Value)> ToMetaTags(this HtmlDocument document)
     {
-        var nodes = document.DocumentNode.SelectNodes("//meta");
+        HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//meta");
         // var node = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
         // var node2 = document.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
         // var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
-        var result = new List<(string Tag, string Value)>();
-        foreach (var node in nodes)
+        List<(string Tag, string Value)> result = new List<(string Tag, string Value)>();
+        foreach (HtmlNode node in nodes)
         {
-            var keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
+            HtmlAttribute keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
                                ?? node.Attributes.SingleOrDefault(x => x.Name == "property");
-            var valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
+            HtmlAttribute valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
             if (keyAttribute != null && valueAttribute != null)
             {
                 result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));

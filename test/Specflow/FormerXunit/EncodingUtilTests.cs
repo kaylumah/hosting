@@ -19,9 +19,9 @@ public class EncodingUtilTests
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
     public void Test_EncodingUtil_DetermineEncoding_ShouldReturnCorrectEncoding(Stream stream, string expectedEncoding)
     {
-        var result = stream.DetermineEncoding();
+        Encoding result = stream.DetermineEncoding();
         result.Should().NotBeNull();
-        var encoding = result.EncodingName;
+        string encoding = result.EncodingName;
         encoding.Should().Be(expectedEncoding);
     }
 

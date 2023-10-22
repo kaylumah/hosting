@@ -43,7 +43,7 @@ public class SiteMapFormatter
 
     private static void WriteItems(XmlWriter writer, IEnumerable<SiteMapNode> items)
     {
-        foreach (var item in items)
+        foreach (SiteMapNode item in items)
         {
             WriteItem(writer, item);
         }

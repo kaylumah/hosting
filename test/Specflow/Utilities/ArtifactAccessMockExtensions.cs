@@ -13,7 +13,7 @@ public static class ArtifactAccessMockExtensions
 
     public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
     {
-        var bytes = artifactAccess.Artifacts.GetArtifactContents(path);
+        byte[] bytes = artifactAccess.Artifacts.GetArtifactContents(path);
         return bytes;
     }
 

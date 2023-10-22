@@ -15,7 +15,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(Id));
+            string result = this.GetValue<string>(nameof(Id));
             return result;
         }
         set
@@ -36,7 +36,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(LdJson));
+            string result = this.GetValue<string>(nameof(LdJson));
             return result;
         }
         set
@@ -48,7 +48,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(MetaTags));
+            string result = this.GetValue<string>(nameof(MetaTags));
             return result;
         }
         set
@@ -65,7 +65,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(Name));
+            string result = this.GetValue<string>(nameof(Name));
             return result;
         }
         set
@@ -78,7 +78,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(Content));
+            string result = this.GetValue<string>(nameof(Content));
             return result;
         }
         set
@@ -91,7 +91,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(Collection));
+            string result = this.GetValue<string>(nameof(Collection));
             return result;
         }
         set
@@ -104,7 +104,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var result = this.GetValue<string>(nameof(Series));
+            string result = this.GetValue<string>(nameof(Series));
             return result;
         }
         set
@@ -117,7 +117,7 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            List<string> tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
             return tags ?? new List<string>();
         }
         set
@@ -130,8 +130,8 @@ public class PageMetaData : Dictionary<string, object>
     {
         get
         {
-            var contentType = this.GetValue<string>(nameof(Type));
-            var x = Enum.Parse<ContentType>(contentType);
+            string contentType = this.GetValue<string>(nameof(Type));
+            ContentType x = Enum.Parse<ContentType>(contentType);
             return x;
         }
         set

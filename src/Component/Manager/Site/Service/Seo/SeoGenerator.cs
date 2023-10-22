@@ -25,17 +25,17 @@ public partial class SeoGenerator
 
     private string GenerateLdJson(RenderData renderData)
     {
-        var json = _structureDataGenerator.ToLdJson(renderData);
+        string json = _structureDataGenerator.ToLdJson(renderData);
         if (!string.IsNullOrEmpty(json))
         {
-            var finalDocument = new XmlDocument();
-            var scriptElement = finalDocument.CreateElement("script");
-            var typeAttribute = finalDocument.CreateAttribute("type");
+            XmlDocument finalDocument = new XmlDocument();
+            XmlElement scriptElement = finalDocument.CreateElement("script");
+            XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
             typeAttribute.Value = "application/ld+json";
             scriptElement.Attributes.Append(typeAttribute);
             scriptElement.InnerText = json;
 
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.AppendLine("<!-- LdJson Meta Tags -->");
             sb.Append(scriptElement.OuterXml);
             return sb.ToString();

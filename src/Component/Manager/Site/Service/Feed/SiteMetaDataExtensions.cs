@@ -17,7 +17,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 return new();
             }
 
-            var tags = source.TagMetaData
+            Dictionary<string, SyndicationCategory> tags = source.TagMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
             return tags;
         }
@@ -29,7 +29,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 return new();
             }
 
-            var authors = source.AuthorMetaData
+            Dictionary<string, SyndicationPerson> authors = source.AuthorMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationPerson()
                     {
                         Name = x.FullName,

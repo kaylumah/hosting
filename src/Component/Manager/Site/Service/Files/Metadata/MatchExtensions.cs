@@ -12,8 +12,8 @@ public static class MatchExtensions
     {
         if (match.Success)
         {
-            var fileName = match.Groups.Cast<Group>().FirstOrDefault(x => "filename".Equals(x.Name, StringComparison.Ordinal));
-            var extension = match.Groups.Cast<Group>().FirstOrDefault(x => "ext".Equals(x.Name, StringComparison.Ordinal));
+            Group fileName = match.Groups.Cast<Group>().FirstOrDefault(x => "filename".Equals(x.Name, StringComparison.Ordinal));
+            Group extension = match.Groups.Cast<Group>().FirstOrDefault(x => "ext".Equals(x.Name, StringComparison.Ordinal));
 
             if (fileName != null && fileName.Success && extension != null && extension.Success)
             {
@@ -27,9 +27,9 @@ public static class MatchExtensions
     {
         if (match.Success)
         {
-            var year = match.Groups.Cast<Group>().FirstOrDefault(x => "year".Equals(x.Name, StringComparison.Ordinal));
-            var month = match.Groups.Cast<Group>().FirstOrDefault(x => "month".Equals(x.Name, StringComparison.Ordinal));
-            var day = match.Groups.Cast<Group>().FirstOrDefault(x => "day".Equals(x.Name, StringComparison.Ordinal));
+            Group year = match.Groups.Cast<Group>().FirstOrDefault(x => "year".Equals(x.Name, StringComparison.Ordinal));
+            Group month = match.Groups.Cast<Group>().FirstOrDefault(x => "month".Equals(x.Name, StringComparison.Ordinal));
+            Group day = match.Groups.Cast<Group>().FirstOrDefault(x => "day".Equals(x.Name, StringComparison.Ordinal));
 
             if (year != null && year.Success && month != null && month.Success && day != null && day.Success)
             {

@@ -28,7 +28,7 @@ public class FileProcessorMock : StrictMock<IFileProcessor>
             .Callback((FileFilterCriteria criteria) => { })
             .ReturnsAsync((FileFilterCriteria criteria) =>
             {
-                var result = new List<File>();
+                List<File> result = new List<File>();
 
                 if (_articles.Any())
                 {

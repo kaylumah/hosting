@@ -10,9 +10,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public static string ReadFile(this System.IO.Abstractions.IFileSystemInfo file)
         {
-            var stream = file.CreateReadStream();
-            using var reader = new StreamReader(stream);
-            var raw = reader.ReadToEnd();
+            Stream stream = file.CreateReadStream();
+            using StreamReader reader = new StreamReader(stream);
+            string raw = reader.ReadToEnd();
             return raw;
         }
     }

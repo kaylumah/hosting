@@ -45,22 +45,22 @@ public sealed class TestHarnessBuilder
 
     public TestHarness Build()
     {
-        var configurationBuilder = new ConfigurationBuilder();
-        foreach (var configurationRegistration in _configurationRegistrationActions)
+        ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        foreach (Action<IConfigurationBuilder> configurationRegistration in _configurationRegistrationActions)
         {
             configurationRegistration(configurationBuilder);
         }
 
-        var configuration = configurationBuilder.Build();
+        IConfigurationRoot configuration = configurationBuilder.Build();
 
-        var services = new ServiceCollection();
-        foreach (var serviceRegistrationAction in _serviceRegistrationActions)
+        ServiceCollection services = new ServiceCollection();
+        foreach (Action<IServiceCollection, IConfiguration> serviceRegistrationAction in _serviceRegistrationActions)
         {
             serviceRegistrationAction(services, configuration);
         }
 
-        var serviceProvider = services.BuildServiceProvider(validateScopes: true);
-        var testHarness = serviceProvider.GetRequiredService<TestHarness>();
+        ServiceProvider serviceProvider = services.BuildServiceProvider(validateScopes: true);
+        TestHarness testHarness = serviceProvider.GetRequiredService<TestHarness>();
         return testHarness;
     }
 }

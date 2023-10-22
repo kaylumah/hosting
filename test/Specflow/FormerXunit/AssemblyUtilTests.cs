@@ -13,7 +13,7 @@ public class AssemblyUtilTests
     [Fact]
     public void Test_AssemblyData()
     {
-        var result = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
+        AssemblyInfo result = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
         result.Should().NotBeNull();
         result.Copyright.Should().NotBeNull();
         result.Version.Should().NotBeNull();

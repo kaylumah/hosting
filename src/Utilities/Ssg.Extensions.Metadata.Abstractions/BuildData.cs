@@ -21,20 +21,20 @@ public class BuildData
     public BuildData(AssemblyInfo info, DateTimeOffset buildTime)
     {
         Time = buildTime;
-        var version = "1.0.0+LOCALBUILD";
+        string version = "1.0.0+LOCALBUILD";
         if (info.Version.Length > 6)
         {
             version = info.Version;
         }
-        var appVersion = version[..version.IndexOf('+')];
-        var gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
-        var shortGitHash = gitHash[..7];
-        var repositoryType = info.Metadata["RepositoryType"];
-        var repositoryUrl = info.Metadata["RepositoryUrl"];
+        string appVersion = version[..version.IndexOf('+')];
+        string gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
+        string shortGitHash = gitHash[..7];
+        string repositoryType = info.Metadata["RepositoryType"];
+        string repositoryUrl = info.Metadata["RepositoryUrl"];
 
         if (repositoryUrl.EndsWith($".{repositoryType}", StringComparison.Ordinal))
         {
-            var index = repositoryUrl.LastIndexOf($".{repositoryType}", StringComparison.Ordinal);
+            int index = repositoryUrl.LastIndexOf($".{repositoryType}", StringComparison.Ordinal);
             SourceBaseUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/commit");
             SourceBuildUri = repositoryUrl.Remove(index, repositoryType.Length + 1).Insert(index, "/actions/runs");
         }
