@@ -11,11 +11,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     public class SiteMapFormatter
     {
-        readonly SiteMap _siteMap;
+        readonly SiteMap _SiteMap;
 
         public SiteMapFormatter(SiteMap siteMap)
         {
-            _siteMap = siteMap;
+            _SiteMap = siteMap;
         }
 
         public void WriteXml(XmlWriter writer)
@@ -23,7 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             ArgumentNullException.ThrowIfNull(writer);
 
             writer.WriteStartElement(SiteMapConstants.UrlSetTag, SiteMapConstants.SiteMapNamespace);
-            WriteItems(writer, _siteMap.Items);
+            WriteItems(writer, _SiteMap.Items);
         }
 
         static void WriteItem(XmlWriter writer, SiteMapNode item)

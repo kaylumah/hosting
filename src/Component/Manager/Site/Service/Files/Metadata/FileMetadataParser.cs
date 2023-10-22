@@ -19,19 +19,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                Level = LogLevel.Information,
                Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
         private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
-        readonly ILogger _logger;
-        readonly IMetadataProvider _metadataProvider;
-        readonly MetadataParserOptions _options;
+        readonly ILogger _Logger;
+        readonly IMetadataProvider _MetadataProvider;
+        readonly MetadataParserOptions _Options;
         public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
         {
-            _logger = logger;
-            _metadataProvider = metadataProvider;
-            _options = options;
+            _Logger = logger;
+            _MetadataProvider = metadataProvider;
+            _Options = options;
         }
 
         public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
-            Metadata<FileMetaData> result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+            Metadata<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
             if (result.Data == null)
             {
                 result.Data = new FileMetaData();
@@ -61,7 +61,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         string RetrieveExtension(string fileName)
         {
             string ext = Path.GetExtension(fileName);
-            if (_options.ExtensionMapping.TryGetValue(ext, out string value))
+            if (_Options.ExtensionMapping.TryGetValue(ext, out string value))
             {
                 return value;
             }
@@ -74,7 +74,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
             {
-                DefaultMetadata defaultMeta = _options.Defaults.DefaultFilter(filter);
+                DefaultMetadata defaultMeta = _Options.Defaults.DefaultFilter(filter);
                 if (defaultMeta != null)
                 {
                     OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
@@ -82,7 +82,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 
                 if (!string.IsNullOrEmpty(scope))
                 {
-                    DefaultMetadata scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
+                    DefaultMetadata scopedMeta = _Options.Defaults.ScopeFilter(filter, scope);
                     if (scopedMeta != null)
                     {
                         OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");

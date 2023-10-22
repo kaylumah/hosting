@@ -13,11 +13,11 @@ namespace Test.Specflow.Utilities
 {
     public class FileProcessorMock : StrictMock<IFileProcessor>
     {
-        readonly ArticleCollection _articles;
+        readonly ArticleCollection _Articles;
 
         public FileProcessorMock(ArticleCollection articles)
         {
-            _articles = articles;
+            _Articles = articles;
             SetupProcess();
         }
 
@@ -30,9 +30,9 @@ namespace Test.Specflow.Utilities
                 {
                     List<File> result = new List<File>();
 
-                    if (_articles.Any())
+                    if (_Articles.Any())
                     {
-                        result.AddRange(_articles.ToPageMetaData().ToFile());
+                        result.AddRange(_Articles.ToPageMetaData().ToFile());
                     }
 
                     return result;

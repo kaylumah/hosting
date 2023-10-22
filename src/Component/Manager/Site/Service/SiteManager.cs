@@ -23,16 +23,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class SiteManager : ISiteManager
     {
-        readonly IArtifactAccess _artifactAccess;
-        readonly IFileSystem _fileSystem;
-        readonly ILogger _logger;
-        readonly IFileProcessor _fileProcessor;
-        readonly SiteInfo _siteInfo;
-        readonly SiteMetadataFactory _siteMetadataFactory;
-        readonly ISystemClock _systemClock;
-        readonly IMetadataProvider _metadataProvider;
-        readonly IRenderPlugin[] _renderPlugins;
-        readonly ISiteArtifactPlugin[] _siteArtifactPlugins;
+        readonly IArtifactAccess _ArtifactAccess;
+        readonly IFileSystem _FileSystem;
+        readonly ILogger _Logger;
+        readonly IFileProcessor _FileProcessor;
+        readonly SiteInfo _SiteInfo;
+        readonly SiteMetadataFactory _SiteMetadataFactory;
+        readonly ISystemClock _SystemClock;
+        readonly IMetadataProvider _MetadataProvider;
+        readonly IRenderPlugin[] _RenderPlugins;
+        readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -47,26 +47,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
             )
         {
-            _renderPlugins = renderPlugins.ToArray();
-            _siteArtifactPlugins = siteArtifactPlugins.ToArray();
-            _siteMetadataFactory = siteMetadataFactory;
-            _fileProcessor = fileProcessor;
-            _artifactAccess = artifactAccess;
-            _fileSystem = fileSystem;
-            _logger = logger;
-            _siteInfo = siteInfo;
-            _systemClock = systemClock;
-            _metadataProvider = metadataProvider;
+            _RenderPlugins = renderPlugins.ToArray();
+            _SiteArtifactPlugins = siteArtifactPlugins.ToArray();
+            _SiteMetadataFactory = siteMetadataFactory;
+            _FileProcessor = fileProcessor;
+            _ArtifactAccess = artifactAccess;
+            _FileSystem = fileSystem;
+            _Logger = logger;
+            _SiteInfo = siteInfo;
+            _SystemClock = systemClock;
+            _MetadataProvider = metadataProvider;
         }
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            GlobalFunctions.Date.Value = _systemClock.LocalNow;
-            GlobalFunctions.Url.Value = _siteInfo.Url;
-            GlobalFunctions.BaseUrl.Value = _siteInfo.BaseUrl;
-            Guid siteGuid = _siteInfo.Url.CreateSiteGuid();
+            GlobalFunctions.Date.Value = _SystemClock.LocalNow;
+            GlobalFunctions.Url.Value = _SiteInfo.Url;
+            GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
+            Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
-            IEnumerable<Files.Processor.File> processed = await _fileProcessor.Process(new FileFilterCriteria
+            IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(new FileFilterCriteria
             {
                 RootDirectory = request.Configuration.Source,
                 DirectoriesToSkip = new string[] {
@@ -75,12 +75,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     request.Configuration.DataDirectory,
                     request.Configuration.AssetDirectory
                 },
-                FileExtensionsToTarget = _siteInfo.SupportedFileExtensions.ToArray()
+                FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray()
             }).ConfigureAwait(false);
 
             PageMetaData[] pageMetadatas = processed
                 .ToPages(siteGuid);
-            SiteMetaData siteMetadata = _siteMetadataFactory
+            SiteMetaData siteMetadata = _SiteMetadataFactory
                 .EnrichSite(
                     request.Configuration,
                     siteGuid,
@@ -101,7 +101,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (MetadataRenderRequest renderRequest in requests)
             {
-                IRenderPlugin[] plugins = _renderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
+                IRenderPlugin[] plugins = _RenderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
                 foreach (IRenderPlugin plugin in plugins)
                 {
                     plugin.Apply(renderRequest.Metadata);
@@ -126,13 +126,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 };
             }).ToList();
 
-            foreach (ISiteArtifactPlugin siteArtifactPlugin in _siteArtifactPlugins)
+            foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
             {
                 Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
                 artifacts.AddRange(pluginArtifacts);
             }
 
-            IEnumerable<IFileSystemInfo> assets = _fileSystem
+            IEnumerable<IFileSystemInfo> assets = _FileSystem
                 .GetFiles(Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory), true)
                 .Where(x => !x.IsDirectory());
 
@@ -143,11 +143,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return new Artifact
                 {
                     Path = asset.FullName.Replace(env, ""),
-                    Contents = _fileSystem.GetFileBytes(asset.FullName)
+                    Contents = _FileSystem.GetFileBytes(asset.FullName)
                 };
             }));
 
-            await _artifactAccess.Store(new StoreArtifactsRequest
+            await _ArtifactAccess.Store(new StoreArtifactsRequest
             {
                 Artifacts = artifacts.ToArray(),
                 OutputLocation = new FileSystemOutputLocation()
@@ -162,8 +162,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.
-            List<File<LayoutMetadata>> templates = await new LayoutLoader(_fileSystem, _metadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
-            IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_fileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
+            List<File<LayoutMetadata>> templates = await new LayoutLoader(_FileSystem, _MetadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
+            IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_FileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
 
             foreach (MetadataRenderRequest request in requests)
             {

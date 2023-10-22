@@ -31,32 +31,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Message = "Enrich Site with `{EnrichmentCategory}`")]
         private partial void LogEnrichSiteWith(string enrichmentCategory);
 
-        readonly SiteInfo _siteInfo;
-        readonly IYamlParser _yamlParser;
-        readonly IFileSystem _fileSystem;
-        readonly ILogger _logger;
+        readonly SiteInfo _SiteInfo;
+        readonly IYamlParser _YamlParser;
+        readonly IFileSystem _FileSystem;
+        readonly ILogger _Logger;
 
-        readonly ISystemClock _systemClock;
+        readonly ISystemClock _SystemClock;
 
         public SiteMetadataFactory(ISystemClock systemClock, SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
         {
-            _systemClock = systemClock;
-            _siteInfo = siteInfo;
-            _yamlParser = yamlParser;
-            _fileSystem = fileSystem;
-            _logger = logger;
+            _SystemClock = systemClock;
+            _SiteInfo = siteInfo;
+            _YamlParser = yamlParser;
+            _FileSystem = fileSystem;
+            _Logger = logger;
         }
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
-            using IDisposable logScope = _logger.BeginScope("[EnrichSite]");
+            using IDisposable logScope = _Logger.BeginScope("[EnrichSite]");
             SiteMetaData siteInfo = new SiteMetaData()
             {
                 Id = siteGuid.ToString(),
-                Title = _siteInfo.Title,
-                Description = _siteInfo.Description,
-                Language = _siteInfo.Lang,
-                Url = _siteInfo.Url,
+                Title = _SiteInfo.Title,
+                Description = _SiteInfo.Description,
+                Language = _SiteInfo.Lang,
+                Url = _SiteInfo.Url,
                 Author = null,
                 Data = new Dictionary<string, object>(),
                 Tags = new SortedDictionary<string, PageMetaData[]>(),
@@ -80,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("AssemblyData");
             AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-            BuildData buildMetadata = new BuildData(assemblyInfo, _systemClock.LocalNow);
+            BuildData buildMetadata = new BuildData(assemblyInfo, _SystemClock.LocalNow);
             site.Build = buildMetadata;
         }
 
@@ -89,8 +89,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             LogEnrichSiteWith("Data");
 
             string dataDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.DataDirectory);
-            string[] extensions = _siteInfo.SupportedDataFileExtensions.ToArray();
-            List<IFileSystemInfo> dataFiles = _fileSystem.GetFiles(dataDirectory)
+            string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
+            List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
                 .Where(file => !file.IsDirectory())
                 .Where(file => extensions.Contains(Path.GetExtension(file.Name)))
                 .ToList();
@@ -99,7 +99,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (tagFile != null)
             {
                 dataFiles.Remove(tagFile);
-                TagMetaDataCollection tagData = _yamlParser.Parse<TagMetaDataCollection>(tagFile);
+                TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(tagFile);
                 List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
                 IEnumerable<string> unmatchedTags = tags
                     .Except(tagData.Keys)
@@ -113,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (authorFile != null)
             {
                 dataFiles.Remove(authorFile);
-                AuthorMetaDataCollection authorData = _yamlParser.Parse<AuthorMetaDataCollection>(authorFile);
+                AuthorMetaDataCollection authorData = _YamlParser.Parse<AuthorMetaDataCollection>(authorFile);
                 site.AuthorMetaData.AddRange(authorData);
                 site.Data["authors"] = site.AuthorMetaData.Dictionary;
             }
@@ -122,7 +122,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (organizationFile != null)
             {
                 dataFiles.Remove(organizationFile);
-                OrganizationMetaDataCollection organizationData = _yamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
+                OrganizationMetaDataCollection organizationData = _YamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
                 site.OrganizationMetaData.AddRange(organizationData);
                 site.Data["organizations"] = site.OrganizationMetaData.Dictionary;
             }
@@ -134,7 +134,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             foreach (IFileSystemInfo file in dataFiles)
             {
-                object result = _yamlParser.Parse<object>(file);
+                object result = _YamlParser.Parse<object>(file);
                 site.Data[Path.GetFileNameWithoutExtension(file.Name)] = result;
             }
         }
@@ -152,12 +152,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             for (int i = collections.Count - 1; i > 0; i--)
             {
                 string collection = collections[i];
-                if (_siteInfo.Collections.Contains(collection))
+                if (_SiteInfo.Collections.Contains(collection))
                 {
-                    Collection collectionSettings = _siteInfo.Collections[collection];
+                    Collection collectionSettings = _SiteInfo.Collections[collection];
                     if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
                     {
-                        if (_siteInfo.Collections.Contains(collectionSettings.TreatAs))
+                        if (_SiteInfo.Collections.Contains(collectionSettings.TreatAs))
                         {
                             // todo log
                             IEnumerable<PageMetaData> collectionFiles = files

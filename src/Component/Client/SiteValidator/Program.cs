@@ -23,16 +23,16 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
     sealed class TagFilter : IFilter
     {
-        readonly string _path;
+        readonly string _Path;
 
         public TagFilter(string path)
         {
-            _path = path;
+            _Path = path;
         }
 
         public bool Validate(HtmlDocument document)
         {
-            HtmlNode result = document.DocumentNode.SelectNodes(_path).SingleOrDefault();
+            HtmlNode result = document.DocumentNode.SelectNodes(_Path).SingleOrDefault();
             return result != null;
         }
     }
@@ -110,8 +110,8 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
     sealed class PageLinkResult
     {
-        readonly string _fileName;
-        readonly HtmlNode _node;
+        readonly string _FileName;
+        readonly HtmlNode _Node;
 
         public HashSet<string> ExternalAnchors { get; } = new HashSet<string>();
         public HashSet<string> InternalAnchors { get; } = new HashSet<string>();
@@ -120,14 +120,14 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
         public PageLinkResult(string fileName, HtmlNode node)
         {
-            _fileName = fileName;
-            _node = node;
+            _FileName = fileName;
+            _Node = node;
             Process();
         }
 
         void Process()
         {
-            HtmlNodeCollection anchorTags = _node.SelectNodes("//a[@href]");
+            HtmlNodeCollection anchorTags = _Node.SelectNodes("//a[@href]");
             foreach (HtmlNode tag in anchorTags)
             {
                 string attrValue = tag.GetAttributeValue("href", string.Empty);
@@ -144,7 +144,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                 }
             }
 
-            HtmlNodeCollection imageTags = _node.SelectNodes("//img[@src]");
+            HtmlNodeCollection imageTags = _Node.SelectNodes("//img[@src]");
             foreach (HtmlNode tag in imageTags)
             {
                 string attrValue = tag.GetAttributeValue("src", string.Empty);

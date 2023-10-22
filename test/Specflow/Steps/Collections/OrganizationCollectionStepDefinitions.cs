@@ -12,22 +12,22 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class OrganizationCollectionStepDefinitions
     {
-        readonly OrganizationCollection _organizationCollection;
-        readonly MockFileSystem _fileSystem;
+        readonly OrganizationCollection _OrganizationCollection;
+        readonly MockFileSystem _FileSystem;
 
         public OrganizationCollectionStepDefinitions(MockFileSystem fileSystem, OrganizationCollection organizationCollection)
         {
-            _fileSystem = fileSystem;
-            _organizationCollection = organizationCollection;
+            _FileSystem = fileSystem;
+            _OrganizationCollection = organizationCollection;
         }
 
         [Given("the following organizations:")]
         public void GivenTheFollowingOrganizations(OrganizationCollection organizationCollection)
         {
-            _organizationCollection.AddRange(organizationCollection);
+            _OrganizationCollection.AddRange(organizationCollection);
             OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
-            organizationMetaDataCollection.AddRange(_organizationCollection.ToOrganizationMetadata());
-            _fileSystem.AddYamlDataFile(Constants.Files.Organizations, organizationMetaDataCollection);
+            organizationMetaDataCollection.AddRange(_OrganizationCollection.ToOrganizationMetadata());
+            _FileSystem.AddYamlDataFile(Constants.Files.Organizations, organizationMetaDataCollection);
         }
     }
 }

@@ -16,31 +16,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     sealed class IncludeFromFileSystemTemplateLoader : ITemplateLoader
     {
-        readonly IFileSystem _fileSystem;
-        readonly string _templateFolder;
+        readonly IFileSystem _FileSystem;
+        readonly string _TemplateFolder;
         public IncludeFromFileSystemTemplateLoader(IFileSystem fileSystem, string templateFolder)
         {
-            _fileSystem = fileSystem;
-            _templateFolder = templateFolder;
+            _FileSystem = fileSystem;
+            _TemplateFolder = templateFolder;
         }
 
         public string GetPath(TemplateContext context, SourceSpan callerSpan, string templateName)
         {
-            string templateFolderPath = _fileSystem.GetFile(_templateFolder).FullName;
-            string templateFilePath = _fileSystem.Path.Combine(templateFolderPath, templateName);
+            string templateFolderPath = _FileSystem.GetFile(_TemplateFolder).FullName;
+            string templateFilePath = _FileSystem.Path.Combine(templateFolderPath, templateName);
             return templateFilePath;
         }
 
         public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
             // unused...
-            using StreamReader reader = new StreamReader(_fileSystem.GetFile(templatePath).CreateReadStream());
+            using StreamReader reader = new StreamReader(_FileSystem.GetFile(templatePath).CreateReadStream());
             return reader.ReadToEnd();
         }
 
         public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
-            IFileInfo templateFileInfo = _fileSystem.GetFile(templatePath);
+            IFileInfo templateFileInfo = _FileSystem.GetFile(templatePath);
             using Stream templateReadStream = templateFileInfo.CreateReadStream();
             using StreamReader templateStreamReader = new StreamReader(templateReadStream);
             string templateContent = await templateStreamReader.ReadToEndAsync().ConfigureAwait(false);

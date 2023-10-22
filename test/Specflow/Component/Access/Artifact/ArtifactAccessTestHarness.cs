@@ -16,11 +16,11 @@ namespace Test.Specflow.Component.Access.Artifact
     {
         public TestHarnessBuilder TestHarnessBuilder { get; }
 
-        readonly ValidationContext _validationContext;
+        readonly ValidationContext _ValidationContext;
 
         public ArtifactAccessTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
         {
-            _validationContext = validationContext;
+            _ValidationContext = validationContext;
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Register((serviceCollection, configuration) =>
                 {
@@ -32,7 +32,7 @@ namespace Test.Specflow.Component.Access.Artifact
         public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
         {
             TestHarness testHarness = TestHarnessBuilder.Build();
-            await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+            await testHarness.TestService(scenario, _ValidationContext).ConfigureAwait(false);
         }
     }
 }

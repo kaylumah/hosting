@@ -10,18 +10,18 @@ namespace Test.Specflow
     [Binding]
     public class DiContainerHooks
     {
-        readonly IObjectContainer _objectContainer;
+        readonly IObjectContainer _ObjectContainer;
 
         public DiContainerHooks(IObjectContainer objectContainer)
         {
-            _objectContainer = objectContainer;
+            _ObjectContainer = objectContainer;
         }
 
         [BeforeScenario]
         public void InitializeWebDriver()
         {
             MockFileSystem mockFileSystem = new MockFileSystem();
-            _objectContainer.RegisterInstanceAs(mockFileSystem);
+            _ObjectContainer.RegisterInstanceAs(mockFileSystem);
         }
     }
 }

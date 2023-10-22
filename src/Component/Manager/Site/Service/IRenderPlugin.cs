@@ -16,16 +16,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class HtmlSeoRenderPlugin : IRenderPlugin
     {
-        readonly SeoGenerator _seoGenerator;
+        readonly SeoGenerator _SeoGenerator;
 
         public HtmlSeoRenderPlugin(SeoGenerator seoGenerator)
         {
-            _seoGenerator = seoGenerator;
+            _SeoGenerator = seoGenerator;
         }
 
         public void Apply(RenderData renderData)
         {
-            _seoGenerator.ApplySeo(renderData);
+            _SeoGenerator.ApplySeo(renderData);
         }
 
         public bool ShouldExecute(RenderData renderData)

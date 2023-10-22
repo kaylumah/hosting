@@ -23,7 +23,7 @@ namespace Test.Specflow.Component.Manager.Site
     {
         public TestHarnessBuilder TestHarnessBuilder { get; }
 
-        readonly ValidationContext _validationContext;
+        readonly ValidationContext _ValidationContext;
 
         public SiteManagerTestHarness(
             ISpecFlowOutputHelper specFlowOutputHelper,
@@ -33,7 +33,7 @@ namespace Test.Specflow.Component.Manager.Site
             SystemClockMock systemClockMock,
             SiteInfo siteInfo, ValidationContext validationContext)
         {
-            _validationContext = validationContext;
+            _ValidationContext = validationContext;
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Configure(configurationBuilder =>
                 {
@@ -61,7 +61,7 @@ namespace Test.Specflow.Component.Manager.Site
         public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
         {
             TestHarness testHarness = TestHarnessBuilder.Build();
-            await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+            await testHarness.TestService(scenario, _ValidationContext).ConfigureAwait(false);
         }
     }
 }

@@ -25,11 +25,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             Message = "Feed will have `{PostCount}` posts")]
         public partial void FeedCount(int postCount);
 
-        readonly ILogger _logger;
+        readonly ILogger _Logger;
 
         public FeedGenerator(ILogger<FeedGenerator> logger)
         {
-            _logger = logger;
+            _Logger = logger;
         }
 
         public SyndicationFeed Create(SiteMetaData siteMetaData)

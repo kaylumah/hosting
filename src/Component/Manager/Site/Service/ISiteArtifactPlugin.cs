@@ -16,16 +16,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        readonly SiteMapGenerator _siteMapGenerator;
+        readonly SiteMapGenerator _SiteMapGenerator;
 
         public SiteMapSiteArtifactPlugin(SiteMapGenerator siteMapGenerator)
         {
-            _siteMapGenerator = siteMapGenerator;
+            _SiteMapGenerator = siteMapGenerator;
         }
 
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
-            SiteMap.SiteMap sitemap = _siteMapGenerator.Create(siteMetaData);
+            SiteMap.SiteMap sitemap = _SiteMapGenerator.Create(siteMetaData);
             byte[] bytes = sitemap
                     .SaveAsXml();
             Artifact siteMapAsArtifact = new Artifact
@@ -42,16 +42,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class FeedSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        readonly FeedGenerator _feedGenerator;
+        readonly FeedGenerator _FeedGenerator;
 
         public FeedSiteArtifactPlugin(FeedGenerator feedGenerator)
         {
-            _feedGenerator = feedGenerator;
+            _FeedGenerator = feedGenerator;
         }
 
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
-            System.ServiceModel.Syndication.SyndicationFeed feed = _feedGenerator.Create(siteMetaData);
+            System.ServiceModel.Syndication.SyndicationFeed feed = _FeedGenerator.Create(siteMetaData);
             byte[] bytes = feed
                     .SaveAsAtom10();
             Artifact feedAsArtifact = new Artifact
