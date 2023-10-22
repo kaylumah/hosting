@@ -167,6 +167,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                             {
                                 file.Collection = collectionSettings.TreatAs;
                             }
+
                             collections.RemoveAt(i);
                         }
                     }

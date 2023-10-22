@@ -40,6 +40,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 sb.Append(scriptElement.OuterXml);
                 return sb.ToString();
             }
+
             return string.Empty;
         }
     }

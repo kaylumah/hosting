@@ -26,6 +26,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             {
                 version = info.Version;
             }
+
             string appVersion = version[..version.IndexOf('+')];
             string gitHash = version[(version.IndexOf('+') + 1)..]; // version.Substring(version.IndexOf('+') + 1);
             string shortGitHash = gitHash[..7];

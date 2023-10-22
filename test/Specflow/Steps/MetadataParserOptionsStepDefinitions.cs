@@ -33,6 +33,7 @@ namespace Test.Specflow.Steps
             {
                 dictionary.Add(key, value);
             }
+
             _metadataParserOptions.ExtensionMapping = dictionary;
         }
     }

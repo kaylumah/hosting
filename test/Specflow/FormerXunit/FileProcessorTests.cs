@@ -206,6 +206,7 @@ namespace Test.Specflow.FormerXunit
                 string raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
                 stringBuilder.Append(raw);
             }
+
             stringBuilder.AppendLine("---");
             return stringBuilder.ToString();
         }
@@ -226,6 +227,7 @@ namespace Test.Specflow.FormerXunit
                 writer.Flush();
                 writer.Close();
             }
+
             stream.Position = 0;
             StreamReader streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();

@@ -13,6 +13,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 return $"{item.Path}.{item.Scope}";
             }
+
             return item.Path;
         }
     }

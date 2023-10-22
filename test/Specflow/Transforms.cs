@@ -55,6 +55,7 @@ namespace Test.Specflow
                     {
                         fileMetaData.Add(item.Key, item.Value);
                     }
+
                     defaultMetaDatas.Add(new DefaultMetadata
                     {
                         Path = path,

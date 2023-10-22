@@ -31,6 +31,7 @@ namespace Test.Specflow.Utilities
                 string raw = serializer.Serialize(data);
                 stringBuilder.Append(raw);
             }
+
             stringBuilder.AppendLine("---");
             _frontMatter = stringBuilder.ToString();
             return this;
@@ -50,10 +51,12 @@ namespace Test.Specflow.Utilities
             {
                 sb.Append(_frontMatter);
             }
+
             if (!string.IsNullOrEmpty(_contents))
             {
                 sb.Append(_contents);
             }
+
             string data = sb.ToString();
             byte[] bytes = _encoding.GetBytes(data);
             return new MockFileData(bytes);
