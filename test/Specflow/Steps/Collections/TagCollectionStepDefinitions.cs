@@ -12,8 +12,8 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class TagCollectionStepDefinitions
     {
-        private readonly TagCollection _tagCollection;
-        private readonly MockFileSystem _fileSystem;
+        readonly TagCollection _tagCollection;
+        readonly MockFileSystem _fileSystem;
 
         public TagCollectionStepDefinitions(MockFileSystem fileSystem, TagCollection tagCollection)
         {

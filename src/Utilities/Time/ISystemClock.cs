@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Utilities.Time
         // https://github.com/dotnet/aspnetcore/issues/16844
         // https://github.com/dotnet/runtime/issues/36617
 
-        private readonly TimeZoneInfo _timeZone;
+        readonly TimeZoneInfo _timeZone;
 
         public SystemClock()
         {

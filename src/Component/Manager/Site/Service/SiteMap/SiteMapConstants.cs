@@ -3,7 +3,7 @@
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
-    internal static class SiteMapConstants
+    static class SiteMapConstants
     {
         public const string SiteMapNamespace = "http://www.sitemaps.org/schemas/sitemap/0.9";
         public const string UrlSetTag = "urlset";

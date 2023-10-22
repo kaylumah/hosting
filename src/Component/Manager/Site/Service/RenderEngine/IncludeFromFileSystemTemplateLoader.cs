@@ -16,8 +16,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     sealed class IncludeFromFileSystemTemplateLoader : ITemplateLoader
     {
-        private readonly IFileSystem _fileSystem;
-        private readonly string _templateFolder;
+        readonly IFileSystem _fileSystem;
+        readonly string _templateFolder;
         public IncludeFromFileSystemTemplateLoader(IFileSystem fileSystem, string templateFolder)
         {
             _fileSystem = fileSystem;
@@ -63,7 +63,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             return templateContent;
         }
 
-        private static bool IsDeveloperMode()
+        static bool IsDeveloperMode()
         {
             string developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
             bool succeeded = bool.TryParse(developerMode, out bool developerModeActive);

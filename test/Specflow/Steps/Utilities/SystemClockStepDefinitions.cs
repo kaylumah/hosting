@@ -10,7 +10,7 @@ namespace Test.Specflow.Steps.Utilities
     [Binding]
     public class SystemClockStepDefinitions
     {
-        private readonly SystemClockMock _systemClockMock;
+        readonly SystemClockMock _systemClockMock;
 
         public SystemClockStepDefinitions(SystemClockMock systemClockMock)
         {

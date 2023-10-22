@@ -12,8 +12,8 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class AuthorCollectionStepDefinitions
     {
-        private readonly AuthorCollection _authorCollection;
-        private readonly MockFileSystem _fileSystem;
+        readonly AuthorCollection _authorCollection;
+        readonly MockFileSystem _fileSystem;
 
         public AuthorCollectionStepDefinitions(MockFileSystem fileSystem, AuthorCollection authorCollection)
         {

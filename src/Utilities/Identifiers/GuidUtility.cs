@@ -88,7 +88,7 @@ namespace Kaylumah.Ssg.Utilities
             SwapBytes(guid, 6, 7);
         }
 
-        private static void SwapBytes(byte[] guid, int left, int right)
+        static void SwapBytes(byte[] guid, int left, int right)
         {
             byte temp = guid[left];
             guid[left] = guid[right];

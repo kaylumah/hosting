@@ -23,7 +23,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
     sealed class TagFilter : IFilter
     {
-        private readonly string _path;
+        readonly string _path;
 
         public TagFilter(string path)
         {
@@ -112,8 +112,8 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
     sealed class PageLinkResult
     {
-        private readonly string _fileName;
-        private readonly HtmlNode _node;
+        readonly string _fileName;
+        readonly HtmlNode _node;
 
         public HashSet<string> ExternalAnchors { get; } = new HashSet<string>();
         public HashSet<string> InternalAnchors { get; } = new HashSet<string>();
@@ -127,7 +127,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
             Process();
         }
 
-        private void Process()
+        void Process()
         {
             HtmlNodeCollection anchorTags = _node.SelectNodes("//a[@href]");
             foreach (HtmlNode tag in anchorTags)

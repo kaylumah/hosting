@@ -11,7 +11,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     public class SiteMapFormatter
     {
-        private readonly SiteMap _siteMap;
+        readonly SiteMap _siteMap;
 
         public SiteMapFormatter(SiteMap siteMap)
         {
@@ -26,14 +26,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             WriteItems(writer, _siteMap.Items);
         }
 
-        private static void WriteItem(XmlWriter writer, SiteMapNode item)
+        static void WriteItem(XmlWriter writer, SiteMapNode item)
         {
             writer.WriteStartElement(SiteMapConstants.UrlTag);
             WriteItemContents(writer, item);
             writer.WriteEndElement();
         }
 
-        private static void WriteItemContents(XmlWriter writer, SiteMapNode item)
+        static void WriteItemContents(XmlWriter writer, SiteMapNode item)
         {
             writer.WriteElementString(SiteMapConstants.LocationTag, item.Url);
             if (item.LastModified.HasValue)
@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             }
         }
 
-        private static void WriteItems(XmlWriter writer, IEnumerable<SiteMapNode> items)
+        static void WriteItems(XmlWriter writer, IEnumerable<SiteMapNode> items)
         {
             foreach (SiteMapNode item in items)
             {

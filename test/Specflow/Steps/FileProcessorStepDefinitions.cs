@@ -23,8 +23,8 @@ namespace Test.Specflow.Steps
     [Binding]
     public class FileProcessorStepDefinitions
     {
-        private readonly IFileProcessor _fileProcessor;
-        private readonly List<File> _files = new();
+        readonly IFileProcessor _fileProcessor;
+        readonly List<File> _files = new();
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {

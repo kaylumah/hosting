@@ -21,11 +21,11 @@ namespace Test.Specflow.Component.Manager.Site.Steps
     [Scope(Feature = "SiteManager GenerateSite")]
     public class GenerateSiteSteps
     {
-        private readonly SiteManagerTestHarness _siteManagerTestHarness;
-        private readonly ScenarioContext _scenarioContext;
-        private readonly ArticleCollection _articleCollection;
-        private readonly MockFileSystem _mockFileSystem;
-        private readonly ArtifactAccessMock _artifactAccess;
+        readonly SiteManagerTestHarness _siteManagerTestHarness;
+        readonly ScenarioContext _scenarioContext;
+        readonly ArticleCollection _articleCollection;
+        readonly MockFileSystem _mockFileSystem;
+        readonly ArtifactAccessMock _artifactAccess;
 
         public GenerateSiteSteps(
             ArtifactAccessMock artifactAccessMock,

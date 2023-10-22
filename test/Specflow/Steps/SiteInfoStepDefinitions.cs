@@ -11,7 +11,7 @@ namespace Test.Specflow.Steps
     [Binding]
     public class SiteInfoStepDefinitions
     {
-        private readonly SiteInfo _siteInfo;
+        readonly SiteInfo _siteInfo;
 
         public SiteInfoStepDefinitions(SiteInfo siteInfo)
         {

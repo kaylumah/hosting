@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             Message = "Generate SiteMap")]
         private partial void LogGenerateSiteMap();
 
-        private readonly ILogger _logger;
+        readonly ILogger _logger;
         public SiteMapGenerator(ILogger<SiteMapGenerator> logger)
         {
             _logger = logger;

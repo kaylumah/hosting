@@ -68,7 +68,7 @@ namespace Test.Specflow
         }
 
         [StepArgumentTransformation]
-        private static FileFilterCriteria ToFileFilterCriteria(Table table)
+static FileFilterCriteria ToFileFilterCriteria(Table table)
         {
             FileFilterCriteria criteria = table.CreateInstance<FileFilterCriteria>();
             return criteria;

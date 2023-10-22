@@ -11,9 +11,9 @@ namespace Test.Specflow.Utilities
 {
     public class MockFileDataFactory
     {
-        private Encoding _encoding;
-        private string _frontMatter;
-        private string _contents;
+        Encoding _encoding;
+        string _frontMatter;
+        string _contents;
 
         public MockFileDataFactory WithContents(string contents)
         {
@@ -37,7 +37,7 @@ namespace Test.Specflow.Utilities
         }
 
         public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new UTF8Encoding(false));
-        private MockFileDataFactory WithEncoding(Encoding encoding)
+        MockFileDataFactory WithEncoding(Encoding encoding)
         {
             _encoding = encoding;
             return this;

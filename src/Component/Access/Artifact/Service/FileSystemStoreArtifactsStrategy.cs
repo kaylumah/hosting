@@ -22,8 +22,8 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
             Level = LogLevel.Information,
             Message = "Creating file `{FileName}`")]
         public partial void CreatingFile(string fileName);
-        private readonly IFileSystem _fileSystem;
-        private readonly ILogger _logger;
+        readonly IFileSystem _fileSystem;
+        readonly ILogger _logger;
 
         public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
         {

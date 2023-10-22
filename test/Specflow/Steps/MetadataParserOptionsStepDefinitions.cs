@@ -11,7 +11,7 @@ namespace Test.Specflow.Steps
     [Binding]
     public class MetadataParserOptionsStepDefinitions
     {
-        private readonly MetadataParserOptions _metadataParserOptions;
+        readonly MetadataParserOptions _metadataParserOptions;
 
         public MetadataParserOptionsStepDefinitions(MetadataParserOptions metadataParserOptions)
         {

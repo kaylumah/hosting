@@ -17,8 +17,8 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
             Message = "Storing artifacts")]
         public partial void StoreArtifacts();
 
-        private readonly ILogger _logger;
-        private readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
+        readonly ILogger _logger;
+        readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
 
         public ArtifactAccess(ILogger<ArtifactAccess> logger, IEnumerable<IStoreArtifactsStrategy> storeArtifactsStrategies)
         {

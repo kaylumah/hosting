@@ -12,7 +12,7 @@ namespace Test.Specflow.Utilities
 {
     public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {
-        private readonly List<StoreArtifactsRequest> _storeArtifactsRequests = new();
+        readonly List<StoreArtifactsRequest> _storeArtifactsRequests = new();
         public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_storeArtifactsRequests);
         public ReadOnlyCollection<Artifact> Artifacts => new(StoreArtifactRequests.SelectMany(x => x.Artifacts).ToList());
 

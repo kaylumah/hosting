@@ -10,7 +10,7 @@ namespace Test.Specflow
     [Binding]
     public class DiContainerHooks
     {
-        private readonly IObjectContainer _objectContainer;
+        readonly IObjectContainer _objectContainer;
 
         public DiContainerHooks(IObjectContainer objectContainer)
         {

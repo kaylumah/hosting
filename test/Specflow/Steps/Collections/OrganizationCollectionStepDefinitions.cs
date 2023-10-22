@@ -12,8 +12,8 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class OrganizationCollectionStepDefinitions
     {
-        private readonly OrganizationCollection _organizationCollection;
-        private readonly MockFileSystem _fileSystem;
+        readonly OrganizationCollection _organizationCollection;
+        readonly MockFileSystem _fileSystem;
 
         public OrganizationCollectionStepDefinitions(MockFileSystem fileSystem, OrganizationCollection organizationCollection)
         {

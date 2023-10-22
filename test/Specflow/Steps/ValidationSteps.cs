@@ -9,7 +9,7 @@ namespace Test.Specflow.Steps
     [Binding]
     public class ValidationSteps
     {
-        private readonly ValidationContext _validationContext;
+        readonly ValidationContext _validationContext;
 
         public ValidationSteps(ValidationContext validationContext)
         {

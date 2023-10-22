@@ -23,7 +23,7 @@ namespace Test.Specflow.Component.Manager.Site
     {
         public TestHarnessBuilder TestHarnessBuilder { get; }
 
-        private readonly ValidationContext _validationContext;
+        readonly ValidationContext _validationContext;
 
         public SiteManagerTestHarness(
             ISpecFlowOutputHelper specFlowOutputHelper,
