@@ -97,9 +97,7 @@ namespace Kaylumah.Ssg.Utilities
             renderer.Render(doc);
 
             string result = writer.ToString().Trim();
-            return res
-            ult;
+            return result;
         }
- 
-   }
+    }
 }

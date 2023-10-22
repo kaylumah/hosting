@@ -3,15 +3,14 @@
 
 using Kaylumah.Ssg.Utilities;
 
-namespace System
+namespace System 
 {
     public static class GuidUtilityExtensions
     {
         public static Guid CreateSiteGuid(this string site)
         {
             Guid result = GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
-            return res
-            ult;
+            return result;
         }
 
         public static Guid CreatePageGuid(this Guid siteGuid, string url)
