@@ -9,33 +9,34 @@ using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Utilities;
-
-public class FileProcessorMock : StrictMock<IFileProcessor>
+namespace Test.Specflow.Utilities
 {
-    private readonly ArticleCollection _articles;
-
-    public FileProcessorMock(ArticleCollection articles)
+    public class FileProcessorMock : StrictMock<IFileProcessor>
     {
-        _articles = articles;
-        SetupProcess();
-    }
+        private readonly ArticleCollection _articles;
 
-    public void SetupProcess()
-    {
-        Setup(fileProcessor =>
-                fileProcessor.Process(It.IsAny<FileFilterCriteria>()))
-            .Callback((FileFilterCriteria criteria) => { })
-            .ReturnsAsync((FileFilterCriteria criteria) =>
-            {
-                List<File> result = new List<File>();
+        public FileProcessorMock(ArticleCollection articles)
+        {
+            _articles = articles;
+            SetupProcess();
+        }
 
-                if (_articles.Any())
+        public void SetupProcess()
+        {
+            Setup(fileProcessor =>
+                    fileProcessor.Process(It.IsAny<FileFilterCriteria>()))
+                .Callback((FileFilterCriteria criteria) => { })
+                .ReturnsAsync((FileFilterCriteria criteria) =>
                 {
-                    result.AddRange(_articles.ToPageMetaData().ToFile());
-                }
+                    List<File> result = new List<File>();
 
-                return result;
-            });
+                    if (_articles.Any())
+                    {
+                        result.AddRange(_articles.ToPageMetaData().ToFile());
+                    }
+
+                    return result;
+                });
+        }
     }
 }

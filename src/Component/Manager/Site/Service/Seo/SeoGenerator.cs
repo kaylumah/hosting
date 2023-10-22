@@ -4,42 +4,43 @@
 using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
-namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
-
-public partial class SeoGenerator
+namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    private readonly MetaTagGenerator _metaTagGenerator;
-    private readonly StructureDataGenerator _structureDataGenerator;
-
-    public SeoGenerator(MetaTagGenerator metaTagGenerator, StructureDataGenerator structureDataGenerator)
+    public partial class SeoGenerator
     {
-        _metaTagGenerator = metaTagGenerator;
-        _structureDataGenerator = structureDataGenerator;
-    }
+        private readonly MetaTagGenerator _metaTagGenerator;
+        private readonly StructureDataGenerator _structureDataGenerator;
 
-    public void ApplySeo(RenderData renderData)
-    {
-        renderData.Page.LdJson = GenerateLdJson(renderData);
-        renderData.Page.MetaTags = _metaTagGenerator.ToMetaTags(renderData);
-    }
-
-    private string GenerateLdJson(RenderData renderData)
-    {
-        string json = _structureDataGenerator.ToLdJson(renderData);
-        if (!string.IsNullOrEmpty(json))
+        public SeoGenerator(MetaTagGenerator metaTagGenerator, StructureDataGenerator structureDataGenerator)
         {
-            XmlDocument finalDocument = new XmlDocument();
-            XmlElement scriptElement = finalDocument.CreateElement("script");
-            XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
-            typeAttribute.Value = "application/ld+json";
-            scriptElement.Attributes.Append(typeAttribute);
-            scriptElement.InnerText = json;
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("<!-- LdJson Meta Tags -->");
-            sb.Append(scriptElement.OuterXml);
-            return sb.ToString();
+            _metaTagGenerator = metaTagGenerator;
+            _structureDataGenerator = structureDataGenerator;
         }
-        return string.Empty;
+
+        public void ApplySeo(RenderData renderData)
+        {
+            renderData.Page.LdJson = GenerateLdJson(renderData);
+            renderData.Page.MetaTags = _metaTagGenerator.ToMetaTags(renderData);
+        }
+
+        private string GenerateLdJson(RenderData renderData)
+        {
+            string json = _structureDataGenerator.ToLdJson(renderData);
+            if (!string.IsNullOrEmpty(json))
+            {
+                XmlDocument finalDocument = new XmlDocument();
+                XmlElement scriptElement = finalDocument.CreateElement("script");
+                XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
+                typeAttribute.Value = "application/ld+json";
+                scriptElement.Attributes.Append(typeAttribute);
+                scriptElement.InnerText = json;
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<!-- LdJson Meta Tags -->");
+                sb.Append(scriptElement.OuterXml);
+                return sb.ToString();
+            }
+            return string.Empty;
+        }
     }
 }

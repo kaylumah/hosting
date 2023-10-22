@@ -3,18 +3,19 @@
 
 using Test.Specflow.Helpers;
 
-namespace Test.Specflow.Entities;
-
-public class Tag
+namespace Test.Specflow.Entities
 {
-    [GherkinTableHeader(0)]
-    public string Id { get; set; }
-}
-
-public class TagCollection : MockEntityCollection<string, Tag>
-{
-    public override string BuildKey(Tag item)
+    public class Tag
     {
-        return item.Id;
+        [GherkinTableHeader(0)]
+        public string Id { get; set; }
+    }
+
+    public class TagCollection : MockEntityCollection<string, Tag>
+    {
+        public override string BuildKey(Tag item)
+        {
+            return item.Id;
+        }
     }
 }

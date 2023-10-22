@@ -1,21 +1,23 @@
-﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿
+// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 // ReSharper disable once CheckNamespace
 
 using System.Collections.Generic;
 
-namespace System.Collections.ObjectModel;
-
-public static class KeyedCollectionExtensions
+namespace System.Collections.ObjectModel
 {
-    public static void AddRange<TKey, TItem>(this KeyedCollection<TKey, TItem> source, IEnumerable<TItem> items)
+    public static class KeyedCollectionExtensions
     {
-        _ = items ?? throw new ArgumentNullException(nameof(items));
-
-        foreach (TItem obj in items)
+        public static void AddRange<TKey, TItem>(this KeyedCollection<TKey, TItem> source, IEnumerable<TItem> items)
         {
-            source.Add(obj);
+            _ = items ?? throw new ArgumentNullException(nameof(items));
+
+            foreach (TItem obj in items)
+            {
+                source.Add(obj);
+            }
         }
     }
 }

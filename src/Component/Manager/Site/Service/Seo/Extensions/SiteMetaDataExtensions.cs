@@ -8,86 +8,87 @@ using Kaylumah.Ssg.Utilities;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
-
-public static class SiteMetaDataExtensions
+namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
+    public static class SiteMetaDataExtensions
     {
-        if (source.AuthorMetaData == null)
+        public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
         {
-            return new();
-        }
-
-        Dictionary<string, Person> authors = source.AuthorMetaData
-            .ToDictionary(x => x.Id, x =>
+            if (source.AuthorMetaData == null)
             {
-                List<Uri> uris = new List<Uri>();
+                return new();
+            }
 
-                if (!string.IsNullOrEmpty(x.Links.Linkedin))
+            Dictionary<string, Person> authors = source.AuthorMetaData
+                .ToDictionary(x => x.Id, x =>
                 {
-                    uris.Add(new Uri(x.Links.LinkedinProfileUrl));
-                }
+                    List<Uri> uris = new List<Uri>();
 
-                if (!string.IsNullOrEmpty(x.Links.Twitter))
-                {
-                    uris.Add(new Uri(x.Links.TwitterProfileUrl));
-                }
+                    if (!string.IsNullOrEmpty(x.Links.Linkedin))
+                    {
+                        uris.Add(new Uri(x.Links.LinkedinProfileUrl));
+                    }
 
-                Person person = new Person()
-                {
-                    Name = x.FullName,
-                    Email = x.Email,
-                    SameAs = new OneOrMany<Uri>(uris)
-                };
+                    if (!string.IsNullOrEmpty(x.Links.Twitter))
+                    {
+                        uris.Add(new Uri(x.Links.TwitterProfileUrl));
+                    }
 
-                if (!string.IsNullOrEmpty(x.Uri))
-                {
-                    person.Url = new Uri(x.Uri);
-                }
+                    Person person = new Person()
+                    {
+                        Name = x.FullName,
+                        Email = x.Email,
+                        SameAs = new OneOrMany<Uri>(uris)
+                    };
 
-                if (!string.IsNullOrEmpty(x.Picture))
-                {
-                    person.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Picture)));
-                }
+                    if (!string.IsNullOrEmpty(x.Uri))
+                    {
+                        person.Url = new Uri(x.Uri);
+                    }
 
-                return person;
-            });
-        return authors;
-    }
+                    if (!string.IsNullOrEmpty(x.Picture))
+                    {
+                        person.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Picture)));
+                    }
 
-    public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
-    {
-        if (source.OrganizationMetaData == null)
-        {
-            return new();
+                    return person;
+                });
+            return authors;
         }
+
+        public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
+        {
+            if (source.OrganizationMetaData == null)
+            {
+                return new();
+            }
 #pragma warning disable RS0030
-        Dictionary<string, Organization> organizations = source.OrganizationMetaData
-            .ToDictionary(x => x.Id, x =>
-            {
-
-                List<Uri> uris = new List<Uri>
+            Dictionary<string, Organization> organizations = source.OrganizationMetaData
+                .ToDictionary(x => x.Id, x =>
                 {
+
+                    List<Uri> uris = new List<Uri>
+                    {
                     new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
-                };
+                    };
 
-                Organization organization = new Organization()
-                {
-                    Name = x.FullName,
-                    FoundingDate = x.Founded.Date,
-                    SameAs = new OneOrMany<Uri>(uris)
-                };
+                    Organization organization = new Organization()
+                    {
+                        Name = x.FullName,
+                        FoundingDate = x.Founded.Date,
+                        SameAs = new OneOrMany<Uri>(uris)
+                    };
 
-                if (!string.IsNullOrEmpty(x.Logo))
-                {
-                    organization.Logo =
-                        new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Logo)));
-                }
+                    if (!string.IsNullOrEmpty(x.Logo))
+                    {
+                        organization.Logo =
+                            new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Logo)));
+                    }
 
-                return organization;
-            });
-        return organizations;
+                    return organization;
+                });
+            return organizations;
 #pragma warning restore RS0030
+        }
     }
 }

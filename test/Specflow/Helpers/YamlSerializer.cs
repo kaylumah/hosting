@@ -8,34 +8,35 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Test.Specflow.Helpers;
-
-public static class YamlSerializer
+namespace Test.Specflow.Helpers
 {
-    public class CustomDateTimeYamlTypeConverter : IYamlTypeConverter
+    public static class YamlSerializer
     {
-        public bool Accepts(Type type) => type == typeof(DateTimeOffset);
-
-        public object ReadYaml(IParser parser, Type type)
+        public class CustomDateTimeYamlTypeConverter : IYamlTypeConverter
         {
-            throw new NotImplementedException();
+            public bool Accepts(Type type) => type == typeof(DateTimeOffset);
+
+            public object ReadYaml(IParser parser, Type type)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void WriteYaml(IEmitter emitter, object value, Type type)
+            {
+                DateTimeOffset dateTime = (DateTimeOffset)value;
+                string str = dateTime.ToString("o", CultureInfo.InvariantCulture);
+                emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+            }
         }
 
-        public void WriteYaml(IEmitter emitter, object value, Type type)
+        public static ISerializer Create()
         {
-            DateTimeOffset dateTime = (DateTimeOffset)value;
-            string str = dateTime.ToString("o", CultureInfo.InvariantCulture);
-            emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+            ISerializer serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
+                .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
+                .Build();
+            return serializer;
         }
-    }
-
-    public static ISerializer Create()
-    {
-        ISerializer serializer = new SerializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
-            .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
-            .Build();
-        return serializer;
     }
 }

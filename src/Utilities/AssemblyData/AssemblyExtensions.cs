@@ -5,38 +5,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Kaylumah.Ssg.Utilities;
-
-public static class AssemblyExtensions
+namespace Kaylumah.Ssg.Utilities
 {
-    public static T GetAttribute<T>(this Assembly assembly)
+    public static class AssemblyExtensions
     {
-        T result = assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
-        return result;
-    }
-
-    public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
-    {
-        IEnumerable<T> result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
-        return result;
-    }
-
-    public static AssemblyInfo RetrieveAssemblyInfo(this Assembly assembly)
-    {
-        AssemblyCopyrightAttribute copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
-        AssemblyInformationalVersionAttribute informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
-        Dictionary<string, string> metadataAttributes = assembly
-            .GetAttribtutes<AssemblyMetadataAttribute>()
-            .ToDictionary(a => a.Key, a => a.Value);
-
-#pragma warning disable IDESIGN103
-        AssemblyInfo result = new AssemblyInfo()
+        public static T GetAttribute<T>(this Assembly assembly)
         {
-            Copyright = copyrightAttribute.Copyright,
-            Version = informationalVersionAttribute.InformationalVersion,
-            Metadata = metadataAttributes
-        };
+            T result = assembly.GetCustomAttributes(typeof(T)).Cast<T>().Single();
+            return result;
+        }
+
+        public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
+        {
+            IEnumerable<T> result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
+            return result;
+        }
+
+        public static AssemblyInfo RetrieveAssemblyInfo(this Assembly assembly)
+        {
+            AssemblyCopyrightAttribute copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
+            AssemblyInformationalVersionAttribute informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
+            Dictionary<string, string> metadataAttributes = assembly
+                .GetAttribtutes<AssemblyMetadataAttribute>()
+                .ToDictionary(a => a.Key, a => a.Value);
+
+
+            AssemblyInfo result = new AssemblyInfo()
+            {
+                Copyright = copyrightAttribute.Copyright,
+                Version = informationalVersionAttribute.InformationalVersion,
+                Metadata = metadataAttributes
+            };
 #pragma warning restore IDESIGN103
-        return result;
+            return result;
+        }
     }
 }

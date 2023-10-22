@@ -4,26 +4,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace Test.Specflow.Helpers;
-
-public class PropertyNameEqualityComparer : IEqualityComparer<string>
+namespace Test.Specflow.Helpers
 {
-    public bool Equals(string x, string y)
+    public class PropertyNameEqualityComparer : IEqualityComparer<string>
     {
-        if (x == null || y == null)
+        public bool Equals(string x, string y)
         {
-            return x == y;
+            if (x == null || y == null)
+            {
+                return x == y;
+            }
+
+            return string.Equals(x.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase),
+                y.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase), StringComparison.OrdinalIgnoreCase);
         }
 
-        return string.Equals(x.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase),
-            y.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase), StringComparison.OrdinalIgnoreCase);
-    }
+        public int GetHashCode(string obj)
+        {
+            _ = obj ?? throw new ArgumentNullException(nameof(obj));
 
-    public int GetHashCode(string obj)
-    {
-        _ = obj ?? throw new ArgumentNullException(nameof(obj));
-
-        return obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
-            .GetHashCode(StringComparison.OrdinalIgnoreCase);
+            return obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
+                .GetHashCode(StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

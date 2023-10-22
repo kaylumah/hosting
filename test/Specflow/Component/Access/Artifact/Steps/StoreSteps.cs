@@ -6,31 +6,32 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow.Component.Access.Artifact.Steps;
-
-[Binding]
-[Scope(Feature = "ArtifactAccess Store")]
-public sealed class StoreSteps
+namespace Test.Specflow.Component.Access.Artifact.Steps
 {
-    private readonly ArtifactAccessTestHarness _artifactAccessTestHarness;
-
-    public StoreSteps(ArtifactAccessTestHarness artifactAccessTestHarness)
+    [Binding]
+    [Scope(Feature = "ArtifactAccess Store")]
+    public sealed class StoreSteps
     {
-        _artifactAccessTestHarness = artifactAccessTestHarness;
-    }
+        private readonly ArtifactAccessTestHarness _artifactAccessTestHarness;
 
-    [When]
-    public async Task WhenTheArtifactAccessIsCalled()
-    {
-        async Task TestScenario(IArtifactAccess artifactAccess)
+        public StoreSteps(ArtifactAccessTestHarness artifactAccessTestHarness)
         {
-            await artifactAccess.Store(new StoreArtifactsRequest()
-            {
-                Artifacts = Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>(),
-                OutputLocation = new FileSystemOutputLocation() { }
-            }).ConfigureAwait(false);
+            _artifactAccessTestHarness = artifactAccessTestHarness;
         }
 
-        await _artifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);
+        [When]
+        public async Task WhenTheArtifactAccessIsCalled()
+        {
+            async Task TestScenario(IArtifactAccess artifactAccess)
+            {
+                await artifactAccess.Store(new StoreArtifactsRequest()
+                {
+                    Artifacts = Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>(),
+                    OutputLocation = new FileSystemOutputLocation() { }
+                }).ConfigureAwait(false);
+            }
+
+            await _artifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);
+        }
     }
 }

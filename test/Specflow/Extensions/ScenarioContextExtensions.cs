@@ -4,14 +4,15 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Tracing;
 
-namespace Test.Specflow.Extensions;
-
-public static class ScenarioContextExtensions
+namespace Test.Specflow.Extensions
 {
-    public static string ToVerifyMethodName(this ScenarioContext scenarioContext, string artifact)
+    public static class ScenarioContextExtensions
     {
-        ScenarioInfo info = scenarioContext.ScenarioInfo;
-        string testName = info.Title.ToIdentifier();
-        return $"{testName}-{artifact}";
+        public static string ToVerifyMethodName(this ScenarioContext scenarioContext, string artifact)
+        {
+            ScenarioInfo info = scenarioContext.ScenarioInfo;
+            string testName = info.Title.ToIdentifier();
+            return $"{testName}-{artifact}";
+        }
     }
 }

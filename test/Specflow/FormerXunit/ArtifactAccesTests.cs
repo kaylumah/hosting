@@ -14,106 +14,107 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit;
-
-public class ArtifactAccessTests
+namespace Test.Specflow.FormerXunit
 {
-    [Fact]
-    public async Task Test_ArtifactAccess_StoreWithoutClean()
+    public class ArtifactAccessTests
     {
-        MockFileSystem fileSystemMock = new MockFileSystem();
-        int currentCount = fileSystemMock.AllDirectories.Count();
-
-        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
-        ServiceProvider serviceProvider = new ServiceCollection()
-            .AddArtifactAccess(configuration)
-            .AddSingleton<IFileSystem>(fileSystemMock)
-            .BuildServiceProvider();
-
-        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
-
-        await sut.Store(new StoreArtifactsRequest
+        [Fact]
+        public async Task Test_ArtifactAccess_StoreWithoutClean()
         {
-            OutputLocation = new FileSystemOutputLocation()
+            MockFileSystem fileSystemMock = new MockFileSystem();
+            int currentCount = fileSystemMock.AllDirectories.Count();
+
+            IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+            ServiceProvider serviceProvider = new ServiceCollection()
+                .AddArtifactAccess(configuration)
+                .AddSingleton<IFileSystem>(fileSystemMock)
+                .BuildServiceProvider();
+
+            IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+
+            await sut.Store(new StoreArtifactsRequest
             {
-                Path = "dist",
-                Clean = false
-            },
-            Artifacts = new Artifact[] {
+                OutputLocation = new FileSystemOutputLocation()
+                {
+                    Path = "dist",
+                    Clean = false
+                },
+                Artifacts = new Artifact[] {
                     new Artifact()
                     {
                         Path = "test.txt",
                         Contents = Encoding.UTF8.GetBytes(string.Empty)
                     }
                 }
-        });
-        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-        createdCount.Should().Be(1);
-    }
+            });
+            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+            createdCount.Should().Be(1);
+        }
 
-    [Fact]
-    public async Task Test_ArtifactAccess_StoreWithSubdirectory()
-    {
-        MockFileSystem fileSystemMock = new MockFileSystem();
-        int currentCount = fileSystemMock.AllDirectories.Count();
-
-        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
-        ServiceProvider serviceProvider = new ServiceCollection()
-            .AddArtifactAccess(configuration)
-            .AddSingleton<IFileSystem>(fileSystemMock)
-            .BuildServiceProvider();
-
-        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
-
-        await sut.Store(new StoreArtifactsRequest
+        [Fact]
+        public async Task Test_ArtifactAccess_StoreWithSubdirectory()
         {
-            OutputLocation = new FileSystemOutputLocation()
+            MockFileSystem fileSystemMock = new MockFileSystem();
+            int currentCount = fileSystemMock.AllDirectories.Count();
+
+            IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+            ServiceProvider serviceProvider = new ServiceCollection()
+                .AddArtifactAccess(configuration)
+                .AddSingleton<IFileSystem>(fileSystemMock)
+                .BuildServiceProvider();
+
+            IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+
+            await sut.Store(new StoreArtifactsRequest
             {
-                Path = "dist",
-                Clean = false
-            },
-            Artifacts = new Artifact[] {
+                OutputLocation = new FileSystemOutputLocation()
+                {
+                    Path = "dist",
+                    Clean = false
+                },
+                Artifacts = new Artifact[] {
                     new Artifact()
                     {
                         Path = Path.Combine("assets", "test.txt"),
                         Contents = Encoding.UTF8.GetBytes(string.Empty)
                     }
                 }
-        });
-        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-        createdCount.Should().Be(2);
-    }
+            });
+            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+            createdCount.Should().Be(2);
+        }
 
-    [Fact]
-    public async Task Test_ArtifactAccess_StoreWithClean()
-    {
-        MockFileSystem fileSystemMock = new MockFileSystem();
-        int currentCount = fileSystemMock.AllDirectories.Count();
-
-        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
-        ServiceProvider serviceProvider = new ServiceCollection()
-            .AddArtifactAccess(configuration)
-            .AddSingleton<IFileSystem>(fileSystemMock)
-            .BuildServiceProvider();
-
-        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
-
-        await sut.Store(new StoreArtifactsRequest
+        [Fact]
+        public async Task Test_ArtifactAccess_StoreWithClean()
         {
-            OutputLocation = new FileSystemOutputLocation()
+            MockFileSystem fileSystemMock = new MockFileSystem();
+            int currentCount = fileSystemMock.AllDirectories.Count();
+
+            IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+            ServiceProvider serviceProvider = new ServiceCollection()
+                .AddArtifactAccess(configuration)
+                .AddSingleton<IFileSystem>(fileSystemMock)
+                .BuildServiceProvider();
+
+            IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+
+            await sut.Store(new StoreArtifactsRequest
             {
-                Path = "dist",
-                Clean = true
-            },
-            Artifacts = new Artifact[] {
+                OutputLocation = new FileSystemOutputLocation()
+                {
+                    Path = "dist",
+                    Clean = true
+                },
+                Artifacts = new Artifact[] {
                     new Artifact()
                     {
                         Path = "test.txt",
                         Contents = Encoding.UTF8.GetBytes(string.Empty)
                     }
                 }
-        });
-        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-        createdCount.Should().Be(1);
+            });
+            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+            createdCount.Should().Be(1);
+        }
     }
 }

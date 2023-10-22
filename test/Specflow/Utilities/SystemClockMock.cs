@@ -4,12 +4,13 @@
 using System;
 using Kaylumah.Ssg.Utilities.Time;
 
-namespace Test.Specflow.Utilities;
-
-public class SystemClockMock : StrictMock<ISystemClock>
+namespace Test.Specflow.Utilities
 {
-    public void SetupSystemTime(DateTimeOffset systemTime)
+    public class SystemClockMock : StrictMock<ISystemClock>
     {
-        Setup(x => x.LocalNow).Returns(systemTime);
+        public void SetupSystemTime(DateTimeOffset systemTime)
+        {
+            Setup(x => x.LocalNow).Returns(systemTime);
+        }
     }
 }

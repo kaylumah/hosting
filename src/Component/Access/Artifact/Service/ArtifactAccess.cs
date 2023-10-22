@@ -7,29 +7,30 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
-namespace Kaylumah.Ssg.Access.Artifact.Service;
-
-public partial class ArtifactAccess : IArtifactAccess
+namespace Kaylumah.Ssg.Access.Artifact.Service
 {
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Information,
-        Message = "Storing artifacts")]
-    public partial void StoreArtifacts();
-
-    private readonly ILogger _logger;
-    private readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
-
-    public ArtifactAccess(ILogger<ArtifactAccess> logger, IEnumerable<IStoreArtifactsStrategy> storeArtifactsStrategies)
+    public partial class ArtifactAccess : IArtifactAccess
     {
-        _logger = logger;
-        _storeArtifactsStrategies = storeArtifactsStrategies;
-    }
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Information,
+            Message = "Storing artifacts")]
+        public partial void StoreArtifacts();
 
-    public async Task Store(StoreArtifactsRequest request)
-    {
-        StoreArtifacts();
-        IStoreArtifactsStrategy storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
-        await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
+        private readonly ILogger _logger;
+        private readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
+
+        public ArtifactAccess(ILogger<ArtifactAccess> logger, IEnumerable<IStoreArtifactsStrategy> storeArtifactsStrategies)
+        {
+            _logger = logger;
+            _storeArtifactsStrategies = storeArtifactsStrategies;
+        }
+
+        public async Task Store(StoreArtifactsRequest request)
+        {
+            StoreArtifacts();
+            IStoreArtifactsStrategy storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
+            await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
+        }
     }
 }

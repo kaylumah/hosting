@@ -5,24 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Test.Specflow.Entities;
-
-public abstract class MockEntityCollection<TKey, TItem> : KeyedCollection<TKey, TItem> where TKey : notnull
+namespace Test.Specflow.Entities
 {
-    public void AddRange(IEnumerable<TItem> items)
+    public abstract class MockEntityCollection<TKey, TItem> : KeyedCollection<TKey, TItem> where TKey : notnull
     {
-        _ = items ?? throw new ArgumentNullException(nameof(items));
-
-        foreach (TItem obj in items)
+        public void AddRange(IEnumerable<TItem> items)
         {
-            Add(obj);
+            _ = items ?? throw new ArgumentNullException(nameof(items));
+
+            foreach (TItem obj in items)
+            {
+                Add(obj);
+            }
         }
-    }
 
-    public abstract TKey BuildKey(TItem item);
+        public abstract TKey BuildKey(TItem item);
 
-    protected override TKey GetKeyForItem(TItem item)
-    {
-        return BuildKey(item);
+        protected override TKey GetKeyForItem(TItem item)
+        {
+            return BuildKey(item);
+        }
     }
 }

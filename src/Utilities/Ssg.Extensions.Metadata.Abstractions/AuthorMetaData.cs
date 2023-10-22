@@ -6,28 +6,29 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Ssg.Extensions.Metadata.Abstractions;
-
-[DebuggerDisplay("AuthorMetaData '{FullName}'")]
-public class AuthorMetaData
+namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public string Id { get; set; }
-    public string FullName { get; set; }
-    public string Email { get; set; }
-    public string Uri { get; set; }
-    public string Picture { get; set; }
-    public Links Links { get; set; } = new();
-}
-
-public class AuthorMetaDataCollection : KeyedCollection<string, AuthorMetaData>
-{
-    protected override string GetKeyForItem(AuthorMetaData item)
+    [DebuggerDisplay("AuthorMetaData '{FullName}'")]
+    public class AuthorMetaData
     {
-        return item.Id;
+        public string Id { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string Uri { get; set; }
+        public string Picture { get; set; }
+        public Links Links { get; set; } = new();
     }
 
-    public new IDictionary<string, AuthorMetaData> Dictionary => base.Dictionary;
+    public class AuthorMetaDataCollection : KeyedCollection<string, AuthorMetaData>
+    {
+        protected override string GetKeyForItem(AuthorMetaData item)
+        {
+            return item.Id;
+        }
 
-    public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
+        public new IDictionary<string, AuthorMetaData> Dictionary => base.Dictionary;
 
+        public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
+
+    }
 }

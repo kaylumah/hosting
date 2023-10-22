@@ -4,21 +4,22 @@
 using System.IO;
 using System.Xml;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-
-public static class SiteMapExtensions
+namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
-    public static byte[] SaveAsXml(this SiteMap siteMap)
+    public static class SiteMapExtensions
     {
-        XmlWriterSettings settings = new XmlWriterSettings()
+        public static byte[] SaveAsXml(this SiteMap siteMap)
         {
-            Indent = true,
-            Encoding = new System.Text.UTF8Encoding(false)
-        };
-        using MemoryStream stream = new MemoryStream();
-        using XmlWriter writer = XmlWriter.Create(stream, settings);
-        siteMap.SaveAsXml(writer);
-        writer.Close();
-        return stream.ToArray();
+            XmlWriterSettings settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                Encoding = new System.Text.UTF8Encoding(false)
+            };
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream, settings);
+            siteMap.SaveAsXml(writer);
+            writer.Close();
+            return stream.ToArray();
+        }
     }
 }

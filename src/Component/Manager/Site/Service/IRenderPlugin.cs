@@ -1,35 +1,37 @@
-﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿
+// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 
-namespace Kaylumah.Ssg.Manager.Site.Service;
-
-public interface IRenderPlugin
+namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    bool ShouldExecute(RenderData renderData);
-
-    void Apply(RenderData renderData);
-}
-
-public class HtmlSeoRenderPlugin : IRenderPlugin
-{
-    private readonly SeoGenerator _seoGenerator;
-
-    public HtmlSeoRenderPlugin(SeoGenerator seoGenerator)
+    public interface IRenderPlugin
     {
-        _seoGenerator = seoGenerator;
+        bool ShouldExecute(RenderData renderData);
+
+        void Apply(RenderData renderData);
     }
 
-    public void Apply(RenderData renderData)
+    public class HtmlSeoRenderPlugin : IRenderPlugin
     {
-        _seoGenerator.ApplySeo(renderData);
-    }
+        private readonly SeoGenerator _seoGenerator;
 
-    public bool ShouldExecute(RenderData renderData)
-    {
-        bool result = renderData.IsHtml();
-        return result;
+        public HtmlSeoRenderPlugin(SeoGenerator seoGenerator)
+        {
+            _seoGenerator = seoGenerator;
+        }
+
+        public void Apply(RenderData renderData)
+        {
+            _seoGenerator.ApplySeo(renderData);
+        }
+
+        public bool ShouldExecute(RenderData renderData)
+        {
+            bool result = renderData.IsHtml();
+            return result;
+        }
     }
 }

@@ -11,79 +11,80 @@ using Ssg.Extensions.Metadata.Abstractions;
 using Test.Specflow.Entities;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Extensions;
-
-public static partial class MappingExtensions
+namespace Test.Specflow.Extensions
 {
-    public static File ToFile(this PageMetaData pageMetaData)
+    public static partial class MappingExtensions
     {
-        FileMetaData fileMetaData = new FileMetaData();
-        foreach (KeyValuePair<string, object> item in pageMetaData)
+        public static File ToFile(this PageMetaData pageMetaData)
         {
-            fileMetaData.Add(item.Key, item.Value);
+            FileMetaData fileMetaData = new FileMetaData();
+            foreach (KeyValuePair<string, object> item in pageMetaData)
+            {
+                fileMetaData.Add(item.Key, item.Value);
+            }
+
+            File file = new File()
+            {
+                Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
+                Content = string.Empty,
+                LastModified = default,
+                MetaData = fileMetaData
+            };
+            return file;
         }
 
-        File file = new File()
+        public static IEnumerable<File> ToFile(this IEnumerable<PageMetaData> pageMetaData)
         {
-            Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
-            Content = string.Empty,
-            LastModified = default,
-            MetaData = fileMetaData
-        };
-        return file;
-    }
+            return pageMetaData.Select(ToFile);
+        }
 
-    public static IEnumerable<File> ToFile(this IEnumerable<PageMetaData> pageMetaData)
-    {
-        return pageMetaData.Select(ToFile);
-    }
-
-    public static PageMetaData ToPageMetaData(this Article article)
-    {
-        List<object> tags = article.Tags.Cast<object>().ToList();
-        Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
-        pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
-        pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
-        pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
-        pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
-        pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
-        pageDictionary.SetValue("PublishedDate", article.Created.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-        pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-        pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
-        pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
-        pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
-        pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
-        pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
-        pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
-        return new PageMetaData(pageDictionary);
-    }
-
-    public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Article> article)
-    {
-        return article.Select(ToPageMetaData);
-    }
-
-    public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
-    {
-        PageMetaData[] pages = files.ToPages(siteGuid);
-        return pages.ToArticles();
-    }
-
-    public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
-    {
-        return pageMetaData.Select(ToArticle);
-    }
-
-    public static Article ToArticle(this PageMetaData pageMetaData)
-    {
-        return new Article()
+        public static PageMetaData ToPageMetaData(this Article article)
         {
-            Uri = pageMetaData.Uri,
-            Title = pageMetaData.Title,
-            Description = pageMetaData.Description,
-            Author = pageMetaData.Author,
-            Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null,
-            Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null
-        };
+            List<object> tags = article.Tags.Cast<object>().ToList();
+            Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
+            pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
+            pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
+            pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
+            pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
+            pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
+            pageDictionary.SetValue("PublishedDate", article.Created.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+            pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+            pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
+            pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
+            pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
+            pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
+            pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
+            pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
+            return new PageMetaData(pageDictionary);
+        }
+
+        public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Article> article)
+        {
+            return article.Select(ToPageMetaData);
+        }
+
+        public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+        {
+            PageMetaData[] pages = files.ToPages(siteGuid);
+            return pages.ToArticles();
+        }
+
+        public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
+        {
+            return pageMetaData.Select(ToArticle);
+        }
+
+        public static Article ToArticle(this PageMetaData pageMetaData)
+        {
+            return new Article()
+            {
+                Uri = pageMetaData.Uri,
+                Title = pageMetaData.Title,
+                Description = pageMetaData.Description,
+                Author = pageMetaData.Author,
+                Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null,
+                Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null
+            };
+        }
     }
 }

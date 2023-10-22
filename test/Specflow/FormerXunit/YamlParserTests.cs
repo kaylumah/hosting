@@ -6,32 +6,33 @@ using FluentAssertions;
 using Ssg.Extensions.Data.Yaml;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit;
-
-public class YamlParserTests
+namespace Test.Specflow.FormerXunit
 {
-    private readonly IYamlParser _sut;
-
-    public YamlParserTests()
+    public class YamlParserTests
     {
-        _sut = new YamlParser();
-    }
+        private readonly IYamlParser _sut;
 
-    [Fact]
-    public void Test_YamlParser_Parse_ReturnsNullOnEmptyInput()
-    {
-        string input = string.Empty;
-        Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
-        result.Should().BeNull();
-    }
+        public YamlParserTests()
+        {
+            _sut = new YamlParser();
+        }
 
-    [Fact]
-    public void Test_YamlParser_Parse_CanReturnDictionary()
-    {
-        string input = "title: doc1";
-        Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
-        result.Should().NotBeNull();
-        result.ContainsKey("title").Should().BeTrue();
-        result["title"].Should().Be("doc1");
+        [Fact]
+        public void Test_YamlParser_Parse_ReturnsNullOnEmptyInput()
+        {
+            string input = string.Empty;
+            Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
+            result.Should().BeNull();
+        }
+
+        [Fact]
+        public void Test_YamlParser_Parse_CanReturnDictionary()
+        {
+            string input = "title: doc1";
+            Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
+            result.Should().NotBeNull();
+            result.ContainsKey("title").Should().BeTrue();
+            result["title"].Should().Be("doc1");
+        }
     }
 }

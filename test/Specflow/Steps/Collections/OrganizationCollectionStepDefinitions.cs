@@ -7,26 +7,27 @@ using Ssg.Extensions.Metadata.Abstractions;
 using TechTalk.SpecFlow;
 using Test.Specflow.Entities;
 
-namespace Test.Specflow.Steps.Collections;
-
-[Binding]
-public class OrganizationCollectionStepDefinitions
+namespace Test.Specflow.Steps.Collections
 {
-    private readonly OrganizationCollection _organizationCollection;
-    private readonly MockFileSystem _fileSystem;
-
-    public OrganizationCollectionStepDefinitions(MockFileSystem fileSystem, OrganizationCollection organizationCollection)
+    [Binding]
+    public class OrganizationCollectionStepDefinitions
     {
-        _fileSystem = fileSystem;
-        _organizationCollection = organizationCollection;
-    }
+        private readonly OrganizationCollection _organizationCollection;
+        private readonly MockFileSystem _fileSystem;
 
-    [Given("the following organizations:")]
-    public void GivenTheFollowingOrganizations(OrganizationCollection organizationCollection)
-    {
-        _organizationCollection.AddRange(organizationCollection);
-        OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
-        organizationMetaDataCollection.AddRange(_organizationCollection.ToOrganizationMetadata());
-        _fileSystem.AddYamlDataFile(Constants.Files.Organizations, organizationMetaDataCollection);
+        public OrganizationCollectionStepDefinitions(MockFileSystem fileSystem, OrganizationCollection organizationCollection)
+        {
+            _fileSystem = fileSystem;
+            _organizationCollection = organizationCollection;
+        }
+
+        [Given("the following organizations:")]
+        public void GivenTheFollowingOrganizations(OrganizationCollection organizationCollection)
+        {
+            _organizationCollection.AddRange(organizationCollection);
+            OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
+            organizationMetaDataCollection.AddRange(_organizationCollection.ToOrganizationMetadata());
+            _fileSystem.AddYamlDataFile(Constants.Files.Organizations, organizationMetaDataCollection);
+        }
     }
 }

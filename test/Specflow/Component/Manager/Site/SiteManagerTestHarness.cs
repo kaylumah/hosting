@@ -17,50 +17,51 @@ using TechTalk.SpecFlow.Infrastructure;
 using Test.Specflow.Utilities;
 using Test.Utilities;
 
-namespace Test.Specflow.Component.Manager.Site;
-
-public sealed class SiteManagerTestHarness
+namespace Test.Specflow.Component.Manager.Site
 {
-    public TestHarnessBuilder TestHarnessBuilder { get; }
-
-    private readonly ValidationContext _validationContext;
-
-    public SiteManagerTestHarness(
-        ISpecFlowOutputHelper specFlowOutputHelper,
-        ArtifactAccessMock artifactAccessMock,
-        MockFileSystem mockFileSystem,
-        MetadataParserOptions metadataParserOptions,
-        SystemClockMock systemClockMock,
-        SiteInfo siteInfo, ValidationContext validationContext)
+    public sealed class SiteManagerTestHarness
     {
-        _validationContext = validationContext;
-        TestHarnessBuilder = TestHarnessBuilder.Create()
-            .Configure(configurationBuilder =>
-            {
-                configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+        public TestHarnessBuilder TestHarnessBuilder { get; }
+
+        private readonly ValidationContext _validationContext;
+
+        public SiteManagerTestHarness(
+            ISpecFlowOutputHelper specFlowOutputHelper,
+            ArtifactAccessMock artifactAccessMock,
+            MockFileSystem mockFileSystem,
+            MetadataParserOptions metadataParserOptions,
+            SystemClockMock systemClockMock,
+            SiteInfo siteInfo, ValidationContext validationContext)
+        {
+            _validationContext = validationContext;
+            TestHarnessBuilder = TestHarnessBuilder.Create()
+                .Configure(configurationBuilder =>
                 {
-                    ["Site"] = string.Empty,
-                    ["Metadata"] = string.Empty
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        ["Site"] = string.Empty,
+                        ["Metadata"] = string.Empty
+                    });
+                })
+                .Register(services =>
+                {
+                    services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
+                })
+                .Register((services, configuration) =>
+                {
+                    services.AddSiteManager(configuration);
+                    services.AddSingleton(systemClockMock.Object);
+                    services.AddSingleton(artifactAccessMock.Object);
+                    services.AddSingleton<IFileSystem>(mockFileSystem);
+                    services.AddSingleton(metadataParserOptions);
+                    services.AddSingleton(siteInfo);
                 });
-            })
-            .Register(services =>
-            {
-                services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
-            })
-            .Register((services, configuration) =>
-            {
-                services.AddSiteManager(configuration);
-                services.AddSingleton(systemClockMock.Object);
-                services.AddSingleton(artifactAccessMock.Object);
-                services.AddSingleton<IFileSystem>(mockFileSystem);
-                services.AddSingleton(metadataParserOptions);
-                services.AddSingleton(siteInfo);
-            });
-    }
+        }
 
-    public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
-    {
-        TestHarness testHarness = TestHarnessBuilder.Build();
-        await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+        public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
+        {
+            TestHarness testHarness = TestHarnessBuilder.Build();
+            await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+        }
     }
 }

@@ -4,16 +4,17 @@
 using System.Collections.Generic;
 using System.Xml;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-
-public class SiteMap
+namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
-    public IEnumerable<SiteMapNode> Items { get; set; }
-
-    public SiteMapFormatter GetFormatter() => new SiteMapFormatter(this);
-
-    public void SaveAsXml(XmlWriter writer)
+    public class SiteMap
     {
-        GetFormatter().WriteXml(writer);
+        public IEnumerable<SiteMapNode> Items { get; set; }
+
+        public SiteMapFormatter GetFormatter() => new SiteMapFormatter(this);
+
+        public void SaveAsXml(XmlWriter writer)
+        {
+            GetFormatter().WriteXml(writer);
+        }
     }
 }

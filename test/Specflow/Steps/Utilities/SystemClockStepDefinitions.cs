@@ -5,21 +5,22 @@ using System;
 using TechTalk.SpecFlow;
 using Test.Specflow.Utilities;
 
-namespace Test.Specflow.Steps.Utilities;
-
-[Binding]
-public class SystemClockStepDefinitions
+namespace Test.Specflow.Steps.Utilities
 {
-    private readonly SystemClockMock _systemClockMock;
-
-    public SystemClockStepDefinitions(SystemClockMock systemClockMock)
+    [Binding]
+    public class SystemClockStepDefinitions
     {
-        _systemClockMock = systemClockMock;
-    }
+        private readonly SystemClockMock _systemClockMock;
 
-    [Given(@"the current date is '(.*)':")]
-    public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
-    {
-        _systemClockMock.SetupSystemTime(systemDateTime);
+        public SystemClockStepDefinitions(SystemClockMock systemClockMock)
+        {
+            _systemClockMock = systemClockMock;
+        }
+
+        [Given(@"the current date is '(.*)':")]
+        public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
+        {
+            _systemClockMock.SetupSystemTime(systemDateTime);
+        }
     }
 }

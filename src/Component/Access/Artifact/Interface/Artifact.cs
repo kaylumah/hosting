@@ -3,11 +3,12 @@
 
 using System.Diagnostics;
 
-namespace Kaylumah.Ssg.Access.Artifact.Interface;
-
-[DebuggerDisplay("Artifact '{Path}'")]
-public class Artifact
+namespace Kaylumah.Ssg.Access.Artifact.Interface
 {
-    public byte[] Contents { get; set; }
-    public string Path { get; set; }
+    [DebuggerDisplay("Artifact '{Path}'")]
+    public class Artifact
+    {
+        public byte[] Contents { get; set; }
+        public string Path { get; set; }
+    }
 }

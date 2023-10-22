@@ -5,22 +5,23 @@ using System.IO.Abstractions.TestingHelpers;
 using BoDi;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow;
-
-[Binding]
-public class DiContainerHooks
+namespace Test.Specflow
 {
-    private readonly IObjectContainer _objectContainer;
-
-    public DiContainerHooks(IObjectContainer objectContainer)
+    [Binding]
+    public class DiContainerHooks
     {
-        _objectContainer = objectContainer;
-    }
+        private readonly IObjectContainer _objectContainer;
 
-    [BeforeScenario]
-    public void InitializeWebDriver()
-    {
-        MockFileSystem mockFileSystem = new MockFileSystem();
-        _objectContainer.RegisterInstanceAs(mockFileSystem);
+        public DiContainerHooks(IObjectContainer objectContainer)
+        {
+            _objectContainer = objectContainer;
+        }
+
+        [BeforeScenario]
+        public void InitializeWebDriver()
+        {
+            MockFileSystem mockFileSystem = new MockFileSystem();
+            _objectContainer.RegisterInstanceAs(mockFileSystem);
+        }
     }
 }

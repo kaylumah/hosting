@@ -3,19 +3,20 @@
 
 using Kaylumah.Ssg.Utilities;
 
-namespace System;
-
-public static class GuidUtilityExtensions
+namespace System 
 {
-    public static Guid CreateSiteGuid(this string site)
+    public static class GuidUtilityExtensions
     {
-        Guid result = GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
-        return result;
-    }
+        public static Guid CreateSiteGuid(this string site)
+        {
+            Guid result = GuidUtility.Create(GuidUtility.DnsNamespace, site, 5);
+            return result;
+        }
 
-    public static Guid CreatePageGuid(this Guid siteGuid, string url)
-    {
-        Guid result = GuidUtility.Create(siteGuid, url, 5);
-        return result;
+        public static Guid CreatePageGuid(this Guid siteGuid, string url)
+        {
+            Guid result = GuidUtility.Create(siteGuid, url, 5);
+            return result;
+        }
     }
 }

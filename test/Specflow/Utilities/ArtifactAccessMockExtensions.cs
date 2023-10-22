@@ -5,24 +5,25 @@ using System.ServiceModel.Syndication;
 using HtmlAgilityPack;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 
-namespace Test.Specflow.Utilities;
-
-public static class ArtifactAccessMockExtensions
+namespace Test.Specflow.Utilities
 {
-    public static string GetString(this ArtifactAccessMock artifactAccess, string path) => artifactAccess.GetArtifactContents(path).GetString();
-
-    public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
+    public static class ArtifactAccessMockExtensions
     {
-        byte[] bytes = artifactAccess.Artifacts.GetArtifactContents(path);
-        return bytes;
+        public static string GetString(this ArtifactAccessMock artifactAccess, string path) => artifactAccess.GetArtifactContents(path).GetString();
+
+        public static byte[] GetArtifactContents(this ArtifactAccessMock artifactAccess, string path)
+        {
+            byte[] bytes = artifactAccess.Artifacts.GetArtifactContents(path);
+            return bytes;
+        }
+
+        public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
+            => artifactAccess.GetArtifactContents(path).ToHtmlDocument();
+
+        public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
+            => artifactAccess.GetArtifactContents(path).ToSyndicationFeed();
+
+        public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
+            => artifactAccess.GetArtifactContents(path).ToSiteMap();
     }
-
-    public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
-        => artifactAccess.GetArtifactContents(path).ToHtmlDocument();
-
-    public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
-        => artifactAccess.GetArtifactContents(path).ToSyndicationFeed();
-
-    public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
-        => artifactAccess.GetArtifactContents(path).ToSiteMap();
 }

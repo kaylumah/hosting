@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 using Test.Specflow;
 
 // ReSharper disable once CheckNamespace
-namespace Test.Utilities;
-
-public static class TestHarnessExtensions
+namespace Test.Utilities
 {
-    public static async Task TestService<T>(this TestHarness testHarness, Func<T, Task> scenario, ValidationContext validationContext) where T : class
+    public static class TestHarnessExtensions
     {
-        try
+        public static async Task TestService<T>(this TestHarness testHarness, Func<T, Task> scenario, ValidationContext validationContext) where T : class
         {
-            await testHarness.TestService(scenario).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            validationContext.TestServiceException = ex;
+            try
+            {
+                await testHarness.TestService(scenario).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                validationContext.TestServiceException = ex;
+            }
         }
     }
 }

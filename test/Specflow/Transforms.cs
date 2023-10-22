@@ -9,68 +9,69 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 
-namespace Test.Specflow;
-
-[Binding]
-public class Transforms
+namespace Test.Specflow
 {
-    [StepArgumentTransformation]
-    public static string ToNullableString(string value)
+    [Binding]
+    public class Transforms
     {
-        return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
-    }
-
-    [StepArgumentTransformation]
-    public List<string> TransformToListOfString(string commaSeparatedList)
-    {
-        return commaSeparatedList.Split(Constants.Separator).ToList();
-    }
-
-    [StepArgumentTransformation]
-    public static ArticleCollection ToArticles(Table table)
-    {
-        IEnumerable<Article> articles = table.CreateSet<Article>();
-        ArticleCollection collection = new ArticleCollection();
-        collection.AddRange(articles);
-        return collection;
-    }
-
-    [StepArgumentTransformation]
-    public static DefaultMetadatas ToDefaultMetadatas(Table table)
-    {
-        DefaultMetadatas defaultMetaDatas = new DefaultMetadatas();
-        List<(string Scope, string Path, string Key, string Value)> items = table
-            .CreateSet<(string Scope, string Path, string Key, string Value)>()
-            .ToList();
-        IEnumerable<IGrouping<string, (string Scope, string Path, string Key, string Value)>> groupedByScope = items.GroupBy(x => x.Scope);
-        foreach (IGrouping<string, (string Scope, string Path, string Key, string Value)> scopeGroup in groupedByScope)
+        [StepArgumentTransformation]
+        public static string ToNullableString(string value)
         {
-            string scope = scopeGroup.Key;
-            IEnumerable<IGrouping<string, (string Scope, string Path, string Key, string Value)>> groupedByPath = scopeGroup.GroupBy(x => x.Path);
-            foreach (IGrouping<string, (string Scope, string Path, string Key, string Value)> pathGroup in groupedByPath)
-            {
-                string path = pathGroup.Key;
-                FileMetaData fileMetaData = new FileMetaData();
-                foreach ((string Scope, string Path, string Key, string Value) item in pathGroup)
-                {
-                    fileMetaData.Add(item.Key, item.Value);
-                }
-                defaultMetaDatas.Add(new DefaultMetadata
-                {
-                    Path = path,
-                    Scope = scope,
-                    Values = fileMetaData
-                });
-            }
+            return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
         }
 
-        return defaultMetaDatas;
-    }
+        [StepArgumentTransformation]
+        public List<string> TransformToListOfString(string commaSeparatedList)
+        {
+            return commaSeparatedList.Split(Constants.Separator).ToList();
+        }
 
-    [StepArgumentTransformation]
-    private static FileFilterCriteria ToFileFilterCriteria(Table table)
-    {
-        FileFilterCriteria criteria = table.CreateInstance<FileFilterCriteria>();
-        return criteria;
+        [StepArgumentTransformation]
+        public static ArticleCollection ToArticles(Table table)
+        {
+            IEnumerable<Article> articles = table.CreateSet<Article>();
+            ArticleCollection collection = new ArticleCollection();
+            collection.AddRange(articles);
+            return collection;
+        }
+
+        [StepArgumentTransformation]
+        public static DefaultMetadatas ToDefaultMetadatas(Table table)
+        {
+            DefaultMetadatas defaultMetaDatas = new DefaultMetadatas();
+            List<(string Scope, string Path, string Key, string Value)> items = table
+                .CreateSet<(string Scope, string Path, string Key, string Value)>()
+                .ToList();
+            IEnumerable<IGrouping<string, (string Scope, string Path, string Key, string Value)>> groupedByScope = items.GroupBy(x => x.Scope);
+            foreach (IGrouping<string, (string Scope, string Path, string Key, string Value)> scopeGroup in groupedByScope)
+            {
+                string scope = scopeGroup.Key;
+                IEnumerable<IGrouping<string, (string Scope, string Path, string Key, string Value)>> groupedByPath = scopeGroup.GroupBy(x => x.Path);
+                foreach (IGrouping<string, (string Scope, string Path, string Key, string Value)> pathGroup in groupedByPath)
+                {
+                    string path = pathGroup.Key;
+                    FileMetaData fileMetaData = new FileMetaData();
+                    foreach ((string Scope, string Path, string Key, string Value) item in pathGroup)
+                    {
+                        fileMetaData.Add(item.Key, item.Value);
+                    }
+                    defaultMetaDatas.Add(new DefaultMetadata
+                    {
+                        Path = path,
+                        Scope = scope,
+                        Values = fileMetaData
+                    });
+                }
+            }
+
+            return defaultMetaDatas;
+        }
+
+        [StepArgumentTransformation]
+        private static FileFilterCriteria ToFileFilterCriteria(Table table)
+        {
+            FileFilterCriteria criteria = table.CreateInstance<FileFilterCriteria>();
+            return criteria;
+        }
     }
 }

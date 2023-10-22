@@ -3,13 +3,14 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Kaylumah.Ssg.Utilities.Time;
-
-public static partial class ServiceCollectionExtensions
+namespace Kaylumah.Ssg.Utilities.Time
 {
-    public static IServiceCollection AddSystemClock(this IServiceCollection services)
+    public static partial class ServiceCollectionExtensions
     {
-        services.AddTransient<ISystemClock, SystemClock>();
-        return services;
+        public static IServiceCollection AddSystemClock(this IServiceCollection services)
+        {
+            services.AddTransient<ISystemClock, SystemClock>();
+            return services;
+        }
     }
 }

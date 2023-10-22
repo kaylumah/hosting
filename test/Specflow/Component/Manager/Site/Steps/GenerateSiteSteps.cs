@@ -15,151 +15,152 @@ using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 using VerifyXunit;
 
-namespace Test.Specflow.Component.Manager.Site.Steps;
-
-[Binding]
-[Scope(Feature = "SiteManager GenerateSite")]
-public class GenerateSiteSteps
+namespace Test.Specflow.Component.Manager.Site.Steps
 {
-    private readonly SiteManagerTestHarness _siteManagerTestHarness;
-    private readonly ScenarioContext _scenarioContext;
-    private readonly ArticleCollection _articleCollection;
-    private readonly MockFileSystem _mockFileSystem;
-    private readonly ArtifactAccessMock _artifactAccess;
-
-    public GenerateSiteSteps(
-        ArtifactAccessMock artifactAccessMock,
-        SiteManagerTestHarness siteManagerTestHarness,
-        ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection)
+    [Binding]
+    [Scope(Feature = "SiteManager GenerateSite")]
+    public class GenerateSiteSteps
     {
-        _siteManagerTestHarness = siteManagerTestHarness;
-        _artifactAccess = artifactAccessMock;
-        _scenarioContext = scenarioContext;
-        _mockFileSystem = mockFileSystem;
-        _articleCollection = articleCollection;
-    }
+        private readonly SiteManagerTestHarness _siteManagerTestHarness;
+        private readonly ScenarioContext _scenarioContext;
+        private readonly ArticleCollection _articleCollection;
+        private readonly MockFileSystem _mockFileSystem;
+        private readonly ArtifactAccessMock _artifactAccess;
 
-    [Given("the following articles:")]
-    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
-    {
-        // just an idea at the moment...
-        // only the output dates are incorrect
-        _articleCollection.AddRange(articleCollection);
-        foreach (Article article in articleCollection)
+        public GenerateSiteSteps(
+            ArtifactAccessMock artifactAccessMock,
+            SiteManagerTestHarness siteManagerTestHarness,
+            ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection)
         {
-            Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
-            MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-            string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
-            _mockFileSystem.AddFile(postFileName, mockFile);
-        }
-    }
-
-    [When("the site is generated:")]
-    public async Task WhenTheSiteIsGenerated()
-    {
-        async Task Scenario(ISiteManager siteManager)
-        {
-            await siteManager.GenerateSite(new GenerateSiteRequest()
-            {
-                Configuration = new SiteConfiguration()
-                {
-                    Source = Constants.Directories.SourceDirectory,
-                    Destination = Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Constants.Directories.AssetDirectory,
-                    DataDirectory = Constants.Directories.DataDirectory,
-                    LayoutDirectory = Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Constants.Directories.PartialsDirectory
-                }
-            });
+            _siteManagerTestHarness = siteManagerTestHarness;
+            _artifactAccess = artifactAccessMock;
+            _scenarioContext = scenarioContext;
+            _mockFileSystem = mockFileSystem;
+            _articleCollection = articleCollection;
         }
 
-        await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
-    }
-
-    [Then("the atom feed '(.*)' is verified:")]
-    public async Task ThenTheAtomFeedIsVerified(string feedPath)
-    {
-        /*
-        var feed = _artifactAccess.GetFeedArtifact(feedPath);
-        await Verify(feed)
-            .UseMethodName("AtomFeed");
-        */
-        string feed = _artifactAccess.GetString(feedPath);
-        await Verifier.Verify(feed)
-            .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
-            /*.AddScrubber(inputStringBuilder =>
+        [Given("the following articles:")]
+        public void GivenTheFollowingArticles(ArticleCollection articleCollection)
+        {
+            // just an idea at the moment...
+            // only the output dates are incorrect
+            _articleCollection.AddRange(articleCollection);
+            foreach (Article article in articleCollection)
             {
-                var original = inputStringBuilder.ToString();
-                using var reader = new StringReader(original);
-                inputStringBuilder.Clear();
+                Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
+                MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
+                string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+                _mockFileSystem.AddFile(postFileName, mockFile);
+            }
+        }
 
-                var settings = new XmlReaderSettings();
-                using var xmlReader = XmlReader.Create(new StringReader(original), settings);
-                var document = new XmlDocument();  
-                document.Load(reader);
-                
-                var manager = new XmlNamespaceManager(document.NameTable);
-                manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-                
-                var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
-                valueElement.InnerXml = "replaced";
-                //inputStringBuilder.Append(document.OuterXml);
-                
-                XmlWriterSettings settings2 = new XmlWriterSettings
+        [When("the site is generated:")]
+        public async Task WhenTheSiteIsGenerated()
+        {
+            async Task Scenario(ISiteManager siteManager)
+            {
+                await siteManager.GenerateSite(new GenerateSiteRequest()
                 {
-                    Indent = true,
-                    IndentChars = "  ",
-                    NewLineChars = "\r\n",
-                    NewLineHandling = NewLineHandling.Replace
-                };
-                using var writer = XmlWriter.Create(inputStringBuilder, settings2);
-                document.Save(writer);
-            })*/
-            ;
-    }
+                    Configuration = new SiteConfiguration()
+                    {
+                        Source = Constants.Directories.SourceDirectory,
+                        Destination = Constants.Directories.DestinationDirectory,
+                        AssetDirectory = Constants.Directories.AssetDirectory,
+                        DataDirectory = Constants.Directories.DataDirectory,
+                        LayoutDirectory = Constants.Directories.LayoutDirectory,
+                        PartialsDirectory = Constants.Directories.PartialsDirectory
+                    }
+                });
+            }
 
-    [Then("the sitemap '(.*)' is verified:")]
-    public async Task ThenTheSitemapIsVerified(string sitemapPath)
-    {
-        string sitemap = _artifactAccess.GetString(sitemapPath);
-        await Verifier.Verify(sitemap)
-            .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
-    }
+            await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
+        }
 
-    [Then("the html '(.*)' is verified:")]
-    public async Task ThenTheHtmlIsVerified(string htmlPath)
-    {
-        string htmlPage = _artifactAccess.GetString(htmlPath);
-        await Verifier.Verify(htmlPage)
-            .UseMethodName(_scenarioContext.ToVerifyMethodName("Html"));
-    }
+        [Then("the atom feed '(.*)' is verified:")]
+        public async Task ThenTheAtomFeedIsVerified(string feedPath)
+        {
+            /*
+            var feed = _artifactAccess.GetFeedArtifact(feedPath);
+            await Verify(feed)
+                .UseMethodName("AtomFeed");
+            */
+            string feed = _artifactAccess.GetString(feedPath);
+            await Verifier.Verify(feed)
+                .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
+                /*.AddScrubber(inputStringBuilder =>
+                {
+                    var original = inputStringBuilder.ToString();
+                    using var reader = new StringReader(original);
+                    inputStringBuilder.Clear();
 
-    [Then("'(.*)' is a document with the following meta tags:")]
-    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
-    {
-        ArgumentNullException.ThrowIfNull(table);
-        System.Collections.Generic.List<(string Tag, string Value)> expected = table.CreateSet<(string Tag, string Value)>().ToList();
-        HtmlAgilityPack.HtmlDocument html = _artifactAccess.GetHtmlDocument(documentPath);
-        System.Collections.Generic.List<(string Tag, string Value)> actual = html.ToMetaTags();
+                    var settings = new XmlReaderSettings();
+                    using var xmlReader = XmlReader.Create(new StringReader(original), settings);
+                    var document = new XmlDocument();  
+                    document.Load(reader);
 
-        // Known issue: generator uses GitHash
-        (string Tag, string Value) expectedGenerator = expected.Single(x => x.Tag == "generator");
-        expected.Remove(expectedGenerator);
-        (string Tag, string Value) actualGenerator = actual.Single(x => x.Tag == "generator");
-        actual.Remove(actualGenerator);
-        actual.Should().BeEquivalentTo(expected);
-    }
+                    var manager = new XmlNamespaceManager(document.NameTable);
+                    manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
 
-    [Then("the following artifacts are created:")]
-    public void ThenTheFollowingArtifactsAreCreated(Table table)
-    {
-        System.Collections.Generic.List<string> actualArtifacts = _artifactAccess
-            .StoreArtifactRequests
-            .SelectMany(x => x.Artifacts)
-            .Select(x => x.Path)
-            .ToList();
+                    var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
+                    valueElement.InnerXml = "replaced";
+                    //inputStringBuilder.Append(document.OuterXml);
 
-        string[] expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
-        actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
+                    XmlWriterSettings settings2 = new XmlWriterSettings
+                    {
+                        Indent = true,
+                        IndentChars = "  ",
+                        NewLineChars = "\r\n",
+                        NewLineHandling = NewLineHandling.Replace
+                    };
+                    using var writer = XmlWriter.Create(inputStringBuilder, settings2);
+                    document.Save(writer);
+                })*/
+                ;
+        }
+
+        [Then("the sitemap '(.*)' is verified:")]
+        public async Task ThenTheSitemapIsVerified(string sitemapPath)
+        {
+            string sitemap = _artifactAccess.GetString(sitemapPath);
+            await Verifier.Verify(sitemap)
+                .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
+        }
+
+        [Then("the html '(.*)' is verified:")]
+        public async Task ThenTheHtmlIsVerified(string htmlPath)
+        {
+            string htmlPage = _artifactAccess.GetString(htmlPath);
+            await Verifier.Verify(htmlPage)
+                .UseMethodName(_scenarioContext.ToVerifyMethodName("Html"));
+        }
+
+        [Then("'(.*)' is a document with the following meta tags:")]
+        public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+        {
+            ArgumentNullException.ThrowIfNull(table);
+            System.Collections.Generic.List<(string Tag, string Value)> expected = table.CreateSet<(string Tag, string Value)>().ToList();
+            HtmlAgilityPack.HtmlDocument html = _artifactAccess.GetHtmlDocument(documentPath);
+            System.Collections.Generic.List<(string Tag, string Value)> actual = html.ToMetaTags();
+
+            // Known issue: generator uses GitHash
+            (string Tag, string Value) expectedGenerator = expected.Single(x => x.Tag == "generator");
+            expected.Remove(expectedGenerator);
+            (string Tag, string Value) actualGenerator = actual.Single(x => x.Tag == "generator");
+            actual.Remove(actualGenerator);
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Then("the following artifacts are created:")]
+        public void ThenTheFollowingArtifactsAreCreated(Table table)
+        {
+            System.Collections.Generic.List<string> actualArtifacts = _artifactAccess
+                .StoreArtifactRequests
+                .SelectMany(x => x.Artifacts)
+                .Select(x => x.Path)
+                .ToList();
+
+            string[] expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
+            actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
+        }
     }
 }
