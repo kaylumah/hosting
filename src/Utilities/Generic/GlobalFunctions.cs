@@ -145,7 +145,6 @@ namespace Kaylumah.Ssg.Utilities
                 int years = Convert.ToInt32(input);
                 return years <= 1 ? "one year ago" : years + " years ago";
             }
-
         }
 
         public static string DateToPattern(DateTimeOffset date, string pattern)

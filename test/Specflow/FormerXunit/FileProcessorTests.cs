@@ -110,7 +110,6 @@ namespace Test.Specflow.FormerXunit
             { $"{root}/b.txt", WithFrontMatter() },
             { $"{root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
             { $"{root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
-
         });
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);

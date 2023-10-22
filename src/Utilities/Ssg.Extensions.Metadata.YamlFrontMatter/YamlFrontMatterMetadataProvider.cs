@@ -30,7 +30,6 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
 
             T data = _yamlParser.Parse<T>(frontMatterData);
             Metadata<T> result = new Metadata<T>()
-         
             {
                 Content = contents,
                 Data = data

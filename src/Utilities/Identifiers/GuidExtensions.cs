@@ -3,7 +3,7 @@
 
 using Kaylumah.Ssg.Utilities;
 
-namespace System 
+namespace System
 {
     public static class GuidUtilityExtensions
     {
