@@ -13,8 +13,10 @@ namespace Kaylumah.Ssg.Access.Artifact.Hosting
 {
     public static partial class ServiceCollectionExtensions
     {
+#pragma warning disable IDE0060
         public static IServiceCollection AddArtifactAccess(this IServiceCollection services, IConfiguration configuration)
         {
+#pragma warning restore IDE0060
 #pragma warning disable IDESIGN103
             services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 #pragma warning restore IDESIGN103

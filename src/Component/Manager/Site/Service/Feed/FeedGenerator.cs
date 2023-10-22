@@ -106,10 +106,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
                     List<SyndicationCategory> itemCategories = pageMetaData
                         .Tags
-                        .Where(tag => tags.ContainsKey(tag))
+                        .Where(tags.ContainsKey)
                         .Select(tag => tags[tag])
                         .ToList();
-                    itemCategories.ForEach(category => item.Categories.Add(category));
+                    itemCategories.ForEach(item.Categories.Add);
                     item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson person))
                     {

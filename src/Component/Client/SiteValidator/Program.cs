@@ -39,7 +39,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
     sealed class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             IFilter[] rules = new IFilter[] {
                 new TagFilter("//meta[@name='description']")

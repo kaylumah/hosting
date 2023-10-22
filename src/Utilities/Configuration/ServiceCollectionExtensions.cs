@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration, string key) where TOptions : class
         {
             IConfigurationSection section = configuration.GetRequiredSection(key);
-            Action<TOptions> configureDelegate = (TOptions options) => section.Bind(options);
+            Action<TOptions> configureDelegate = section.Bind;
             services.SetupOptions(configureDelegate);
             return services;
         }

@@ -45,7 +45,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             using StreamReader templateStreamReader = new StreamReader(templateReadStream);
             string templateContent = await templateStreamReader.ReadToEndAsync().ConfigureAwait(false);
 
-            bool templateIsHtml = ".html".Equals(templateFileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
+            bool templateIsHtml = ".html".Equals(templateFileInfo.Extension, StringComparison.OrdinalIgnoreCase);
             bool developerMode = IsDeveloperMode();
 
             bool includeDevelopmentInfo = templateIsHtml && developerMode;
