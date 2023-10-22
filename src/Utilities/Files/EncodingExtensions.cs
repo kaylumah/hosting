@@ -12,7 +12,9 @@ namespace Kaylumah.Ssg.Utilities
         {
             using StreamReader reader = new StreamReader(stream, Encoding.Default, detectEncodingFromByteOrderMarks: true);
             if (reader.Peek() >= 0) // you need this!
+            {
                 reader.Read();
+            }
 
             return reader.CurrentEncoding;
         }

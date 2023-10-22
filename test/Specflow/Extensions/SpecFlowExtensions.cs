@@ -14,13 +14,19 @@ namespace Test.Specflow
         {
             // https://stackoverflow.com/questions/47503580/convert-specflow-table-todictionary
             if (table == null)
+            {
                 throw new ArgumentNullException(nameof(table));
+            }
 
             if (table.Rows.Count == 0)
+            {
                 throw new InvalidOperationException("Gherkin data table has no rows");
+            }
 
             if (table.Rows.First().Count != 2)
+            {
                 throw new InvalidOperationException($@"Gherkin data table must have exactly 2 columns. Columns found: ""{string.Join(@""", """, table.Rows.First().Keys)}""");
+            }
 
             return table.Rows.ToDictionary(row => row[0], row => (object)row[1]);
         }

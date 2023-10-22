@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Xunit;
+
 namespace Test.Specflow.FormerXunit
 {
-    using Xunit;
-
     public class SystemClockTests
     {
         [Fact]

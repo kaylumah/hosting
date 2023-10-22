@@ -17,7 +17,10 @@ namespace Kaylumah.Ssg.Utilities
         public static Guid Create(Guid namespaceId, string name, int version)
         {
             if (name is null)
+            {
                 throw new ArgumentNullException(nameof(name));
+            }
+
             byte[] encoding = Encoding.UTF8.GetBytes(name);
             Guid result = Create(namespaceId, encoding, version);
             return result;
@@ -27,7 +30,9 @@ namespace Kaylumah.Ssg.Utilities
         public static Guid Create(Guid namespaceId, byte[] nameBytes, int version)
         {
             if (version != 3 && version != 5)
+            {
                 throw new ArgumentOutOfRangeException(nameof(version), "version must be either 3 or 5.");
+            }
             // convert the namespace UUID to network order (step 3)
             byte[] namespaceBytes = namespaceId.ToByteArray();
             SwapByteOrder(namespaceBytes);
@@ -38,7 +43,9 @@ namespace Kaylumah.Ssg.Utilities
 #pragma warning disable CA5351 // Do Not Use Broken Cryptographic Algorithms
 #pragma warning disable CA5350 // Do Not Use Weak Cryptographic Algorithms
             using (HashAlgorithm algorithm = version == 3 ? (HashAlgorithm)MD5.Create() : SHA1.Create())
+            {
                 hash = algorithm.ComputeHash(data);
+            }
 #pragma warning restore CA5350 // Do Not Use Weak Cryptographic Algorithms
 #pragma warning restore CA5351 // Do Not Use Broken Cryptographic Algorithms
 

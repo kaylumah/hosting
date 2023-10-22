@@ -99,19 +99,40 @@ namespace Kaylumah.Ssg.Utilities
             double delta = Math.Abs(ts.TotalSeconds);
 
             if (delta < 1 * MINUTE)
+            {
                 return ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
+            }
+
             if (delta < 2 * MINUTE)
+            {
                 return "a minute ago";
+            }
+
             if (delta < 45 * MINUTE)
+            {
                 return ts.Minutes + " minutes ago";
+            }
+
             if (delta < 90 * MINUTE)
+            {
                 return "an hour ago";
+            }
+
             if (delta < 24 * HOUR)
+            {
                 return ts.Hours + " hours ago";
+            }
+
             if (delta < 48 * HOUR)
+            {
                 return "yesterday";
+            }
+
             if (delta < 30 * DAY)
+            {
                 return ts.Days + " days ago";
+            }
+
             if (delta < 12 * MONTH)
             {
                 double input = Math.Floor((double)ts.Days / 30);
