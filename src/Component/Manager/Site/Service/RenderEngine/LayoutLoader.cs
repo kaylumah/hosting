@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
                 Metadata<LayoutMetadata> metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
                 string content = metadata.Content;
 
-                bool templateIsHtml = ".html".Equals(fileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
+                bool templateIsHtml = ".html".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase);
                 bool developerMode = IsDeveloperMode();
 
                 bool includeDevelopmentInfo = templateIsHtml && developerMode;

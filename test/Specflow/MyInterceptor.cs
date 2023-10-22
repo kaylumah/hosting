@@ -34,7 +34,7 @@ namespace Test.Specflow
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             InternalIntercept(invocation);
-            ValidateReturnValue(invocation, invocation.ReturnValue);
+            // ValidateReturnValue(invocation, invocation.ReturnValue);
         }
 
         async Task InternalInterceptAsynchronous(IInvocation invocation)
@@ -51,24 +51,24 @@ namespace Test.Specflow
             InternalIntercept(invocation);
             Task<TResult> task = (Task<TResult>)invocation.ReturnValue;
             TResult returnValue = await task.ConfigureAwait(false);
-            ValidateReturnValue(invocation, returnValue);
+            // ValidateReturnValue(invocation, returnValue);
             return returnValue;
         }
 
-        void ValidateReturnValue(IInvocation invocation, object returnValue)
-        {
-            // var validationResults = _validator.ValidateObject(returnValue);
-            // if (validationResults.Length > 0)
-            // {
-            //     var faultDetail = new ResponseValidationFault
-            //     {
-            //         ValidationResults = validationResults.ToDataContractValidationResults().ToArray()
-            //     };
-            //     var operationName = $"{invocation.Method?.DeclaringType?.FullName}.{invocation.Method?.Name}";
-            //     var error = $"Response validation failed for '{operationName}':{Environment.NewLine}{validationResults.PrettyPrint()}";
-            //     throw new FaultException<ResponseValidationFault>(faultDetail, new FaultReason(error));
-            // }
-        }
+        // void ValidateReturnValue(IInvocation invocation, object returnValue)
+        // {
+        // var validationResults = _validator.ValidateObject(returnValue);
+        // if (validationResults.Length > 0)
+        // {
+        //     var faultDetail = new ResponseValidationFault
+        //     {
+        //         ValidationResults = validationResults.ToDataContractValidationResults().ToArray()
+        //     };
+        //     var operationName = $"{invocation.Method?.DeclaringType?.FullName}.{invocation.Method?.Name}";
+        //     var error = $"Response validation failed for '{operationName}':{Environment.NewLine}{validationResults.PrettyPrint()}";
+        //     throw new FaultException<ResponseValidationFault>(faultDetail, new FaultReason(error));
+        // }
+        // }
 
         void InternalIntercept(IInvocation invocation)
         {
