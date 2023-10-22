@@ -16,8 +16,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <NoWarn>$(NoWarn);IDE1006</NoWarn>
-    <WarningsAsErrors>$(WarningsAsErrors);IDE2002</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup>
