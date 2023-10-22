@@ -11,11 +11,11 @@ namespace Test.Specflow
 {
     public sealed class MyInterceptor : IAsyncInterceptor
     {
-        readonly ISpecFlowOutputHelper _specFlowOutputHelper;
+        readonly ISpecFlowOutputHelper _SpecFlowOutputHelper;
 
         public MyInterceptor(ISpecFlowOutputHelper specFlowOutputHelper)
         {
-            _specFlowOutputHelper = specFlowOutputHelper;
+            _SpecFlowOutputHelper = specFlowOutputHelper;
         }
 
         public void InterceptAsynchronous(IInvocation invocation)
@@ -74,11 +74,11 @@ namespace Test.Specflow
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             string test = invocation.Method.DeclaringType?.FullName + "." + invocation.Method.Name;
-            _specFlowOutputHelper.WriteLine(test);
+            _SpecFlowOutputHelper.WriteLine(test);
             if (invocation.Arguments is { Length: > 0 })
             {
                 object first = invocation.Arguments[0];
-                _specFlowOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
+                _SpecFlowOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
             }
             // var validationResults = _validator.ValidateOperation(invocation.Method, invocation.Arguments);
             // if (validationResults.Length > 0)

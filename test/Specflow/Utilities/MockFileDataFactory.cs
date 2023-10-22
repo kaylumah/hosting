@@ -11,13 +11,13 @@ namespace Test.Specflow.Utilities
 {
     public class MockFileDataFactory
     {
-        Encoding _encoding;
-        string _frontMatter;
-        string _contents;
+        Encoding _Encoding;
+        string _FrontMatter;
+        string _Contents;
 
         public MockFileDataFactory WithContents(string contents)
         {
-            _contents = contents;
+            _Contents = contents;
             return this;
         }
 
@@ -33,32 +33,32 @@ namespace Test.Specflow.Utilities
             }
 
             stringBuilder.AppendLine("---");
-            _frontMatter = stringBuilder.ToString();
+            _FrontMatter = stringBuilder.ToString();
             return this;
         }
 
         public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new UTF8Encoding(false));
         MockFileDataFactory WithEncoding(Encoding encoding)
         {
-            _encoding = encoding;
+            _Encoding = encoding;
             return this;
         }
 
         public MockFileData Create()
         {
             StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(_frontMatter))
+            if (!string.IsNullOrEmpty(_FrontMatter))
             {
-                sb.Append(_frontMatter);
+                sb.Append(_FrontMatter);
             }
 
-            if (!string.IsNullOrEmpty(_contents))
+            if (!string.IsNullOrEmpty(_Contents))
             {
-                sb.Append(_contents);
+                sb.Append(_Contents);
             }
 
             string data = sb.ToString();
-            byte[] bytes = _encoding.GetBytes(data);
+            byte[] bytes = _Encoding.GetBytes(data);
             return new MockFileData(bytes);
         }
 

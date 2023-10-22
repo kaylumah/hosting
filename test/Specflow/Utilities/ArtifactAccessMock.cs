@@ -12,8 +12,8 @@ namespace Test.Specflow.Utilities
 {
     public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {
-        readonly List<StoreArtifactsRequest> _storeArtifactsRequests = new();
-        public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_storeArtifactsRequests);
+        readonly List<StoreArtifactsRequest> _StoreArtifactsRequests = new();
+        public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_StoreArtifactsRequests);
         public ReadOnlyCollection<Artifact> Artifacts => new(StoreArtifactRequests.SelectMany(x => x.Artifacts).ToList());
 
         public ArtifactAccessMock()
@@ -27,7 +27,7 @@ namespace Test.Specflow.Utilities
                     artifactAccess.Store(It.IsAny<StoreArtifactsRequest>()))
                 .Callback((StoreArtifactsRequest request) =>
                 {
-                    _storeArtifactsRequests.Add(request);
+                    _StoreArtifactsRequests.Add(request);
                 })
                 .Returns(Task.CompletedTask);
         }

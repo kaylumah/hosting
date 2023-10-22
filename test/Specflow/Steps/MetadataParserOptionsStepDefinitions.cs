@@ -11,17 +11,17 @@ namespace Test.Specflow.Steps
     [Binding]
     public class MetadataParserOptionsStepDefinitions
     {
-        readonly MetadataParserOptions _metadataParserOptions;
+        readonly MetadataParserOptions _MetadataParserOptions;
 
         public MetadataParserOptionsStepDefinitions(MetadataParserOptions metadataParserOptions)
         {
-            _metadataParserOptions = metadataParserOptions;
+            _MetadataParserOptions = metadataParserOptions;
         }
 
         [Given("the following defaults:")]
         public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
         {
-            _metadataParserOptions.Defaults = metadatas;
+            _MetadataParserOptions.Defaults = metadatas;
         }
 
         [Given("the following extension mapping:")]
@@ -34,7 +34,7 @@ namespace Test.Specflow.Steps
                 dictionary.Add(key, value);
             }
 
-            _metadataParserOptions.ExtensionMapping = dictionary;
+            _MetadataParserOptions.ExtensionMapping = dictionary;
         }
     }
 }

@@ -21,11 +21,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Message = "Attempting LdJson `{Path}` and `{Type:g}`")]
         private partial void LogLdJson(string path, ContentType type);
 
-        readonly ILogger _logger;
+        readonly ILogger _Logger;
 
         public StructureDataGenerator(ILogger<StructureDataGenerator> logger)
         {
-            _logger = logger;
+            _Logger = logger;
         }
 
         public string ToLdJson(RenderData renderData)

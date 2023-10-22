@@ -20,11 +20,10 @@ namespace Test.Specflow.Component.Manager.Site.Steps
     [Scope(Feature = "SiteManager GenerateSite")]
     public class GenerateSiteSteps
     {
-        readonly SiteManagerTestHarness _siteManagerTestHarness;
-
-        readonly ArticleCollection _articleCollection;
-        readonly MockFileSystem _mockFileSystem;
-        readonly ArtifactAccessMock _artifactAccess;
+        readonly SiteManagerTestHarness _SiteManagerTestHarness;
+        readonly ArticleCollection _ArticleCollection;
+        readonly MockFileSystem _MockFileSystem;
+        readonly ArtifactAccessMock _ArtifactAccess;
 
         public GenerateSiteSteps(
             ArtifactAccessMock artifactAccessMock,
@@ -32,10 +31,10 @@ namespace Test.Specflow.Component.Manager.Site.Steps
             MockFileSystem mockFileSystem,
             ArticleCollection articleCollection)
         {
-            _siteManagerTestHarness = siteManagerTestHarness;
-            _artifactAccess = artifactAccessMock;
-            _mockFileSystem = mockFileSystem;
-            _articleCollection = articleCollection;
+            _SiteManagerTestHarness = siteManagerTestHarness;
+            _ArtifactAccess = artifactAccessMock;
+            _MockFileSystem = mockFileSystem;
+            _ArticleCollection = articleCollection;
         }
 
         [Given("the following articles:")]
@@ -43,13 +42,13 @@ namespace Test.Specflow.Component.Manager.Site.Steps
         {
             // just an idea at the moment...
             // only the output dates are incorrect
-            _articleCollection.AddRange(articleCollection);
+            _ArticleCollection.AddRange(articleCollection);
             foreach (Article article in articleCollection)
             {
                 Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
                 MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
                 string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
-                _mockFileSystem.AddFile(postFileName, mockFile);
+                _MockFileSystem.AddFile(postFileName, mockFile);
             }
         }
 
@@ -72,7 +71,7 @@ namespace Test.Specflow.Component.Manager.Site.Steps
                 });
             }
 
-            await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
+            await _SiteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
         }
 
         [Then("'(.*)' is a document with the following meta tags:")]
@@ -80,7 +79,7 @@ namespace Test.Specflow.Component.Manager.Site.Steps
         {
             ArgumentNullException.ThrowIfNull(table);
             System.Collections.Generic.List<(string Tag, string Value)> expected = table.CreateSet<(string Tag, string Value)>().ToList();
-            HtmlAgilityPack.HtmlDocument html = _artifactAccess.GetHtmlDocument(documentPath);
+            HtmlAgilityPack.HtmlDocument html = _ArtifactAccess.GetHtmlDocument(documentPath);
             System.Collections.Generic.List<(string Tag, string Value)> actual = html.ToMetaTags();
 
             // Known issue: generator uses GitHash
@@ -94,7 +93,7 @@ namespace Test.Specflow.Component.Manager.Site.Steps
         [Then("the following artifacts are created:")]
         public void ThenTheFollowingArtifactsAreCreated(Table table)
         {
-            System.Collections.Generic.List<string> actualArtifacts = _artifactAccess
+            System.Collections.Generic.List<string> actualArtifacts = _ArtifactAccess
                 .StoreArtifactRequests
                 .SelectMany(x => x.Artifacts)
                 .Select(x => x.Path)

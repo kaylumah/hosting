@@ -23,15 +23,15 @@ namespace Test.Specflow.Steps
     [Binding]
     public class FileProcessorStepDefinitions
     {
-        readonly IFileProcessor _fileProcessor;
-        readonly List<File> _files = new();
+        readonly IFileProcessor _FileProcessor;
+        readonly List<File> _Files = new();
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
             FileMetadataParser metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
                 new YamlFrontMatterMetadataProvider(new YamlParser()),
                 metadataParserOptions);
-            _fileProcessor = new FileProcessor(mockFileSystem,
+            _FileProcessor = new FileProcessor(mockFileSystem,
                 NullLogger<FileProcessor>.Instance,
                 Enumerable.Empty<IContentPreprocessorStrategy>(),
                 siteInfo,
@@ -40,21 +40,21 @@ namespace Test.Specflow.Steps
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
         {
-            IEnumerable<File> result = await _fileProcessor.Process(criteria);
-            _files.AddRange(result);
+            IEnumerable<File> result = await _FileProcessor.Process(criteria);
+            _Files.AddRange(result);
         }
 
         [Then("the following articles are returned:")]
         public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
         {
-            IEnumerable<Article> actual = _files.ToArticles();
+            IEnumerable<Article> actual = _Files.ToArticles();
             actual.Should().BeEquivalentTo(articleCollection);
         }
 
         [Then("no articles are returned:")]
         public void ThenNoArticlesAreReturned()
         {
-            _files.Should().BeEmpty();
+            _Files.Should().BeEmpty();
         }
     }
 }

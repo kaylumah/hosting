@@ -23,7 +23,7 @@ namespace Test.Specflow.FormerXunit
 {
     public class FileProcessorTests
     {
-        const string root = "_site";
+        const string Root = "_site";
 
         static MockFileData EmptyFile()
         {
@@ -50,7 +50,7 @@ namespace Test.Specflow.FormerXunit
 
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
-            { $"{root}/test.md", EmptyFile() }
+            { $"{Root}/test.md", EmptyFile() }
         });
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
@@ -81,7 +81,7 @@ namespace Test.Specflow.FormerXunit
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
-            { $"{root}/_subdir/test.txt", EmptyFile() }
+            { $"{Root}/_subdir/test.txt", EmptyFile() }
         });
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
@@ -106,10 +106,10 @@ namespace Test.Specflow.FormerXunit
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
-            { $"{root}/a.txt", EmptyFile() },
-            { $"{root}/b.txt", WithFrontMatter() },
-            { $"{root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
-            { $"{root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
+            { $"{Root}/a.txt", EmptyFile() },
+            { $"{Root}/b.txt", WithFrontMatter() },
+            { $"{Root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
+            { $"{Root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
         });
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
@@ -159,7 +159,7 @@ namespace Test.Specflow.FormerXunit
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
-            { $"{root}/index.html", EmptyFile() }
+            { $"{Root}/index.html", EmptyFile() }
         });
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
@@ -180,8 +180,8 @@ namespace Test.Specflow.FormerXunit
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
-            { $"{root}/index.html", EmptyFile() },
-            { $"{root}/other.png", EmptyFile() }
+            { $"{Root}/index.html", EmptyFile() },
+            { $"{Root}/other.png", EmptyFile() }
         });
             FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);

@@ -21,11 +21,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Message = "Attempting MetaTags `{Path}`")]
         private partial void LogMetaTags(string path);
 
-        readonly ILogger _logger;
+        readonly ILogger _Logger;
 
         public MetaTagGenerator(ILogger<MetaTagGenerator> logger)
         {
-            _logger = logger;
+            _Logger = logger;
         }
 
         public string ToMetaTags(RenderData renderData)

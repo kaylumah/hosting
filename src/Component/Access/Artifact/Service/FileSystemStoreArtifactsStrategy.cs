@@ -22,13 +22,13 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
             Level = LogLevel.Information,
             Message = "Creating file `{FileName}`")]
         public partial void CreatingFile(string fileName);
-        readonly IFileSystem _fileSystem;
-        readonly ILogger _logger;
+        readonly IFileSystem _FileSystem;
+        readonly ILogger _Logger;
 
         public FileSystemStoreArtifactsStrategy(ILogger<FileSystemStoreArtifactsStrategy> logger, IFileSystem fileSystem)
         {
-            _logger = logger;
-            _fileSystem = fileSystem;
+            _Logger = logger;
+            _FileSystem = fileSystem;
         }
 
         public async Task Execute(StoreArtifactsRequest request)
@@ -43,11 +43,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
                     if (!Directory.Exists(directory))
                     {
                         CreatingDirectory(directory);
-                        _fileSystem.Directory.CreateDirectory(directory);
+                        _FileSystem.Directory.CreateDirectory(directory);
                     }
 
                     CreatingFile(filePath);
-                    await _fileSystem.File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
+                    await _FileSystem.File.WriteAllBytesAsync(filePath, artifact.Contents).ConfigureAwait(false);
                 }
             }
         }

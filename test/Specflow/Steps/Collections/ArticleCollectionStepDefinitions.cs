@@ -9,17 +9,17 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class ArticleCollectionStepDefinitions
     {
-        readonly ArticleCollection _articleCollection;
+        readonly ArticleCollection _ArticleCollection;
 
         public ArticleCollectionStepDefinitions(ArticleCollection articleCollection)
         {
-            _articleCollection = articleCollection;
+            _ArticleCollection = articleCollection;
         }
 
         [Given("the following articles:")]
         public void GivenTheFollowingArticles(ArticleCollection articleCollection)
         {
-            _articleCollection.AddRange(articleCollection);
+            _ArticleCollection.AddRange(articleCollection);
         }
     }
 }

@@ -8,11 +8,11 @@ namespace Ssg.Extensions.Data.Yaml
 {
     public class YamlParser : IYamlParser
     {
-        readonly IDeserializer _deserializer;
+        readonly IDeserializer _Deserializer;
 
         public YamlParser()
         {
-            _deserializer = new DeserializerBuilder()
+            _Deserializer = new DeserializerBuilder()
                 .IgnoreUnmatchedProperties()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                .Build();
@@ -20,7 +20,7 @@ namespace Ssg.Extensions.Data.Yaml
 
         public T Parse<T>(string raw)
         {
-            T result = _deserializer.Deserialize<T>(raw);
+            T result = _Deserializer.Deserialize<T>(raw);
             return result;
         }
     }

@@ -9,17 +9,17 @@ namespace Test.Specflow.Steps
     [Binding]
     public class ValidationSteps
     {
-        readonly ValidationContext _validationContext;
+        readonly ValidationContext _ValidationContext;
 
         public ValidationSteps(ValidationContext validationContext)
         {
-            _validationContext = validationContext;
+            _ValidationContext = validationContext;
         }
 
         [Then("the scenario executed successfully:")]
         public void ThenTheScenarioExecutedSuccessfully()
         {
-            _validationContext.TestServiceException.Should().BeNull();
+            _ValidationContext.TestServiceException.Should().BeNull();
         }
     }
 }

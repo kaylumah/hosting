@@ -11,7 +11,7 @@ namespace TechTalk.SpecFlow
 {
     public static class TableExtensions
     {
-        static readonly PropertyNameEqualityComparer PropertyNameEqualityComparer = new();
+        static readonly PropertyNameEqualityComparer _PropertyNameEqualityComparer = new();
 
         public static IEnumerable<string> AsStrings(this Table table, string column)
         {
@@ -99,7 +99,7 @@ namespace TechTalk.SpecFlow
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
             return gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
-                    !tableHeaderNames.Contains(orderedGherkinTableHeaderPropertyName, PropertyNameEqualityComparer))
+                    !tableHeaderNames.Contains(orderedGherkinTableHeaderPropertyName, _PropertyNameEqualityComparer))
                 .ToArray();
         }
 
@@ -107,14 +107,14 @@ namespace TechTalk.SpecFlow
             string[] orderedGherkinTableHeaderPropertyNames)
         {
             return tableHeaderNames.Where((t, i) =>
-                !PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
+                !_PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
         }
 
         static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
             return tableHeaderNames.Where(tableHeaderName =>
-                !gherkinTableHeaderPropertyNames.Contains(tableHeaderName, PropertyNameEqualityComparer)).ToArray();
+                !gherkinTableHeaderPropertyNames.Contains(tableHeaderName, _PropertyNameEqualityComparer)).ToArray();
         }
     }
 }

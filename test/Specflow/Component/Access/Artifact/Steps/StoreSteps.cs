@@ -12,11 +12,11 @@ namespace Test.Specflow.Component.Access.Artifact.Steps
     [Scope(Feature = "ArtifactAccess Store")]
     public sealed class StoreSteps
     {
-        readonly ArtifactAccessTestHarness _artifactAccessTestHarness;
+        readonly ArtifactAccessTestHarness _ArtifactAccessTestHarness;
 
         public StoreSteps(ArtifactAccessTestHarness artifactAccessTestHarness)
         {
-            _artifactAccessTestHarness = artifactAccessTestHarness;
+            _ArtifactAccessTestHarness = artifactAccessTestHarness;
         }
 
         [When]
@@ -31,7 +31,7 @@ namespace Test.Specflow.Component.Access.Artifact.Steps
                 }).ConfigureAwait(false);
             }
 
-            await _artifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);
+            await _ArtifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);
         }
     }
 }

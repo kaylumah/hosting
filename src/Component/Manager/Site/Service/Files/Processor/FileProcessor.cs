@@ -22,11 +22,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
            Message = "No files present")]
         private partial void LogNoFiles();
 
-        readonly IFileSystem _fileSystem;
-        readonly ILogger _logger;
-        readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
-        readonly IFileMetadataParser _fileMetaDataProcessor;
-        readonly SiteInfo _siteInfo;
+        readonly IFileSystem _FileSystem;
+        readonly ILogger _Logger;
+        readonly IEnumerable<IContentPreprocessorStrategy> _PreprocessorStrategies;
+        readonly IFileMetadataParser _FileMetaDataProcessor;
+        readonly SiteInfo _SiteInfo;
 
         public FileProcessor(
             IFileSystem fileSystem,
@@ -35,18 +35,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             SiteInfo options,
             IFileMetadataParser fileMetadataParser)
         {
-            _siteInfo = options;
-            _preprocessorStrategies = preprocessorStrategies;
-            _fileSystem = fileSystem;
-            _logger = logger;
-            _fileMetaDataProcessor = fileMetadataParser;
+            _SiteInfo = options;
+            _PreprocessorStrategies = preprocessorStrategies;
+            _FileSystem = fileSystem;
+            _Logger = logger;
+            _FileMetaDataProcessor = fileMetadataParser;
         }
 
         public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
             List<File> result = new List<File>();
 
-            List<IFileSystemInfo> directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
+            List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
 
             if (!directoryContents.Any())
             {
@@ -78,14 +78,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     .Files
                     .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                     .ToList();
-                bool exists = _siteInfo.Collections.Contains(collection.Name);
+                bool exists = _SiteInfo.Collections.Contains(collection.Name);
                 if (!exists)
                 {
                     result.AddRange(targetFiles);
                 }
                 else
                 {
-                    if (exists && _siteInfo.Collections[collection.Name].Output)
+                    if (exists && _SiteInfo.Collections[collection.Name].Output)
                     {
                         targetFiles = targetFiles
                             .Select(x =>
@@ -107,9 +107,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> result = new List<FileCollection>();
             foreach (string collection in collections)
             {
-                using System.IDisposable logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
+                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
                 string keyName = collection[1..];
-                List<IFileSystemInfo> targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
+                List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
                 List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
                 result.Add(new FileCollection
@@ -127,7 +127,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
             {
-                fileInfos.Add(_fileSystem.GetFile(file));
+                fileInfos.Add(_FileSystem.GetFile(file));
             }
 
             return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
@@ -138,12 +138,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                using System.IDisposable logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
                 Stream fileStream = fileInfo.CreateReadStream();
                 using StreamReader streamReader = new StreamReader(fileStream);
 
                 string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _fileMetaDataProcessor.Parse(new MetadataCriteria
+                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(new MetadataCriteria
                 {
                     Content = rawContent,
                     Scope = scope,
@@ -153,7 +153,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
 
-                IContentPreprocessorStrategy preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                IContentPreprocessorStrategy preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
                 if (preprocessor != null)
                 {
                     fileContents = preprocessor.Execute(fileContents);

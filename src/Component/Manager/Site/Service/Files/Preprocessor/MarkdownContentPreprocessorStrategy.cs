@@ -11,7 +11,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 {
     public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
     {
-        readonly string[] _targetExtensions = new string[] { ".md" };
+        readonly string[] _TargetExtensions = new string[] { ".md" };
 
         public string Execute(string raw)
         {
@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 
         public bool ShouldExecute(IFileSystemInfo fileInfo)
         {
-            return _targetExtensions.Contains(Path.GetExtension(fileInfo.Name));
+            return _TargetExtensions.Contains(Path.GetExtension(fileInfo.Name));
         }
     }
 }

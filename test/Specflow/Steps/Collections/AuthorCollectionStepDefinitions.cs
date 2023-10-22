@@ -12,22 +12,22 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class AuthorCollectionStepDefinitions
     {
-        readonly AuthorCollection _authorCollection;
-        readonly MockFileSystem _fileSystem;
+        readonly AuthorCollection _AuthorCollection;
+        readonly MockFileSystem _FileSystem;
 
         public AuthorCollectionStepDefinitions(MockFileSystem fileSystem, AuthorCollection authorCollection)
         {
-            _fileSystem = fileSystem;
-            _authorCollection = authorCollection;
+            _FileSystem = fileSystem;
+            _AuthorCollection = authorCollection;
         }
 
         [Given("the following authors:")]
         public void GivenTheFollowingAuthors(AuthorCollection authorCollection)
         {
-            _authorCollection.AddRange(authorCollection);
+            _AuthorCollection.AddRange(authorCollection);
             AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
-            authorMetaDataCollection.AddRange(_authorCollection.ToAuthorMetadata());
-            _fileSystem.AddYamlDataFile(Constants.Files.Authors, authorMetaDataCollection);
+            authorMetaDataCollection.AddRange(_AuthorCollection.ToAuthorMetadata());
+            _FileSystem.AddYamlDataFile(Constants.Files.Authors, authorMetaDataCollection);
         }
     }
 }

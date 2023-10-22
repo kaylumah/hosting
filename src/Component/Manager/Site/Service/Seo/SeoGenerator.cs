@@ -8,24 +8,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public partial class SeoGenerator
     {
-        readonly MetaTagGenerator _metaTagGenerator;
-        readonly StructureDataGenerator _structureDataGenerator;
+        readonly MetaTagGenerator _MetaTagGenerator;
+        readonly StructureDataGenerator _StructureDataGenerator;
 
         public SeoGenerator(MetaTagGenerator metaTagGenerator, StructureDataGenerator structureDataGenerator)
         {
-            _metaTagGenerator = metaTagGenerator;
-            _structureDataGenerator = structureDataGenerator;
+            _MetaTagGenerator = metaTagGenerator;
+            _StructureDataGenerator = structureDataGenerator;
         }
 
         public void ApplySeo(RenderData renderData)
         {
             renderData.Page.LdJson = GenerateLdJson(renderData);
-            renderData.Page.MetaTags = _metaTagGenerator.ToMetaTags(renderData);
+            renderData.Page.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
         }
 
         string GenerateLdJson(RenderData renderData)
         {
-            string json = _structureDataGenerator.ToLdJson(renderData);
+            string json = _StructureDataGenerator.ToLdJson(renderData);
             if (!string.IsNullOrEmpty(json))
             {
                 XmlDocument finalDocument = new XmlDocument();

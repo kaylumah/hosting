@@ -10,17 +10,17 @@ namespace Test.Specflow.Steps.Utilities
     [Binding]
     public class SystemClockStepDefinitions
     {
-        readonly SystemClockMock _systemClockMock;
+        readonly SystemClockMock _SystemClockMock;
 
         public SystemClockStepDefinitions(SystemClockMock systemClockMock)
         {
-            _systemClockMock = systemClockMock;
+            _SystemClockMock = systemClockMock;
         }
 
         [Given(@"the current date is '(.*)':")]
         public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
         {
-            _systemClockMock.SetupSystemTime(systemDateTime);
+            _SystemClockMock.SetupSystemTime(systemDateTime);
         }
     }
 }

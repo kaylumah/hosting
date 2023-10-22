@@ -9,18 +9,18 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
 {
     public class YamlFrontMatterMetadataProvider : IMetadataProvider
     {
-        const string _pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
+        const string Pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
 
-        readonly IYamlParser _yamlParser;
+        readonly IYamlParser _YamlParser;
         public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
         {
-            _yamlParser = yamlParser;
+            _YamlParser = yamlParser;
         }
 
         public Metadata<T> Retrieve<T>(string contents)
         {
             string frontMatterData = string.Empty;
-            Match match = Regex.Match(contents, _pattern);
+            Match match = Regex.Match(contents, Pattern);
             if (match.Success)
             {
                 frontMatterData = match.Groups["yaml"].Value.TrimEnd();
@@ -28,7 +28,7 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
                 contents = contents.Replace(frontMatter, string.Empty).TrimStart();
             }
 
-            T data = _yamlParser.Parse<T>(frontMatterData);
+            T data = _YamlParser.Parse<T>(frontMatterData);
             Metadata<T> result = new Metadata<T>()
             {
                 Content = contents,

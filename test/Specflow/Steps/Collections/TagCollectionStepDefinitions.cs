@@ -12,22 +12,22 @@ namespace Test.Specflow.Steps.Collections
     [Binding]
     public class TagCollectionStepDefinitions
     {
-        readonly TagCollection _tagCollection;
-        readonly MockFileSystem _fileSystem;
+        readonly TagCollection _TagCollection;
+        readonly MockFileSystem _FileSystem;
 
         public TagCollectionStepDefinitions(MockFileSystem fileSystem, TagCollection tagCollection)
         {
-            _fileSystem = fileSystem;
-            _tagCollection = tagCollection;
+            _FileSystem = fileSystem;
+            _TagCollection = tagCollection;
         }
 
         [Given("the following tags:")]
         public void GivenTheFollowingTags(TagCollection tagCollection)
         {
-            _tagCollection.AddRange(tagCollection);
+            _TagCollection.AddRange(tagCollection);
             TagMetaDataCollection tagMetaDataCollection = new TagMetaDataCollection();
-            tagMetaDataCollection.AddRange(_tagCollection.ToTagMetadata());
-            _fileSystem.AddYamlDataFile(Constants.Files.Tags, tagMetaDataCollection);
+            tagMetaDataCollection.AddRange(_TagCollection.ToTagMetadata());
+            _FileSystem.AddYamlDataFile(Constants.Files.Tags, tagMetaDataCollection);
         }
     }
 }

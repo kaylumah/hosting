@@ -20,14 +20,14 @@ namespace Kaylumah.Ssg.Utilities.Time
         // https://github.com/dotnet/aspnetcore/issues/16844
         // https://github.com/dotnet/runtime/issues/36617
 
-        readonly TimeZoneInfo _timeZone;
+        readonly TimeZoneInfo _TimeZone;
 
         public SystemClock()
         {
-            _timeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+            _TimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
         }
 
-        public DateTimeOffset LocalNow => TimeZoneInfo.ConvertTime(UtcNow, _timeZone);
+        public DateTimeOffset LocalNow => TimeZoneInfo.ConvertTime(UtcNow, _TimeZone);
         public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
         public long UtcNowTicks => UtcNow.Ticks;
     }

@@ -17,19 +17,19 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
             Message = "Storing artifacts")]
         public partial void StoreArtifacts();
 
-        readonly ILogger _logger;
-        readonly IEnumerable<IStoreArtifactsStrategy> _storeArtifactsStrategies;
+        readonly ILogger _Logger;
+        readonly IEnumerable<IStoreArtifactsStrategy> _StoreArtifactsStrategies;
 
         public ArtifactAccess(ILogger<ArtifactAccess> logger, IEnumerable<IStoreArtifactsStrategy> storeArtifactsStrategies)
         {
-            _logger = logger;
-            _storeArtifactsStrategies = storeArtifactsStrategies;
+            _Logger = logger;
+            _StoreArtifactsStrategies = storeArtifactsStrategies;
         }
 
         public async Task Store(StoreArtifactsRequest request)
         {
             StoreArtifacts();
-            IStoreArtifactsStrategy storeArtifactsStrategy = _storeArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
+            IStoreArtifactsStrategy storeArtifactsStrategy = _StoreArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
             await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
         }
     }

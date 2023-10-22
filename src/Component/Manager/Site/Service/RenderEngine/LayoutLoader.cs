@@ -16,29 +16,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public class LayoutLoader
     {
-        readonly IFileSystem _fileSystem;
-        readonly IMetadataProvider _metadataProvider;
+        readonly IFileSystem _FileSystem;
+        readonly IMetadataProvider _MetadataProvider;
         public LayoutLoader(IFileSystem fileSystem, IMetadataProvider metadataProvider)
         {
-            _fileSystem = fileSystem;
-            _metadataProvider = metadataProvider;
+            _FileSystem = fileSystem;
+            _MetadataProvider = metadataProvider;
         }
 
         public async Task<List<File<LayoutMetadata>>> Load(string layoutFolder)
         {
             List<File<LayoutMetadata>> result = new List<File<LayoutMetadata>>();
-            IEnumerable<IFileSystemInfo> templateDirectoryContents = _fileSystem.GetFiles(layoutFolder);
+            IEnumerable<IFileSystemInfo> templateDirectoryContents = _FileSystem.GetFiles(layoutFolder);
             foreach (IFileSystemInfo file in templateDirectoryContents)
             {
                 string path = Path.Combine(layoutFolder, file.Name);
-                IFileInfo fileInfo = _fileSystem.GetFile(path);
+                IFileInfo fileInfo = _FileSystem.GetFile(path);
 
                 Encoding encoding = fileInfo.CreateReadStream().DetermineEncoding();
                 string fileName = fileInfo.Name;
                 using StreamReader streamReader = new StreamReader(fileInfo.CreateReadStream());
 
                 string text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                Metadata<LayoutMetadata> metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
+                Metadata<LayoutMetadata> metadata = _MetadataProvider.Retrieve<LayoutMetadata>(text);
                 string content = metadata.Content;
 
                 bool templateIsHtml = ".html".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase);

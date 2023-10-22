@@ -10,18 +10,18 @@ namespace Test.Specflow.FormerXunit
 {
     public class YamlParserTests
     {
-        readonly IYamlParser _sut;
+        readonly IYamlParser _Sut;
 
         public YamlParserTests()
         {
-            _sut = new YamlParser();
+            _Sut = new YamlParser();
         }
 
         [Fact]
         public void Test_YamlParser_Parse_ReturnsNullOnEmptyInput()
         {
             string input = string.Empty;
-            Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
+            Dictionary<string, object> result = _Sut.Parse<Dictionary<string, object>>(input);
             result.Should().BeNull();
         }
 
@@ -29,7 +29,7 @@ namespace Test.Specflow.FormerXunit
         public void Test_YamlParser_Parse_CanReturnDictionary()
         {
             string input = "title: doc1";
-            Dictionary<string, object> result = _sut.Parse<Dictionary<string, object>>(input);
+            Dictionary<string, object> result = _Sut.Parse<Dictionary<string, object>>(input);
             result.Should().NotBeNull();
             result.ContainsKey("title").Should().BeTrue();
             result["title"].Should().Be("doc1");

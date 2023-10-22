@@ -10,8 +10,8 @@ namespace Test.Utilities
 {
     public sealed class TestHarnessBuilder
     {
-        readonly List<Action<IConfigurationBuilder>> _configurationRegistrationActions = new();
-        readonly List<Action<IServiceCollection, IConfiguration>> _serviceRegistrationActions = new();
+        readonly List<Action<IConfigurationBuilder>> _ConfigurationRegistrationActions = new();
+        readonly List<Action<IServiceCollection, IConfiguration>> _ServiceRegistrationActions = new();
 
         TestHarnessBuilder()
         {
@@ -28,13 +28,13 @@ namespace Test.Utilities
 
         public TestHarnessBuilder Configure(Action<IConfigurationBuilder> configurationRegistrationAction)
         {
-            _configurationRegistrationActions.Add(configurationRegistrationAction);
+            _ConfigurationRegistrationActions.Add(configurationRegistrationAction);
             return this;
         }
 
         public TestHarnessBuilder Register(Action<IServiceCollection, IConfiguration> serviceRegistrationAction)
         {
-            _serviceRegistrationActions.Add(serviceRegistrationAction);
+            _ServiceRegistrationActions.Add(serviceRegistrationAction);
             return this;
         }
 
@@ -46,7 +46,7 @@ namespace Test.Utilities
         public TestHarness Build()
         {
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            foreach (Action<IConfigurationBuilder> configurationRegistration in _configurationRegistrationActions)
+            foreach (Action<IConfigurationBuilder> configurationRegistration in _ConfigurationRegistrationActions)
             {
                 configurationRegistration(configurationBuilder);
             }
@@ -54,7 +54,7 @@ namespace Test.Utilities
             IConfigurationRoot configuration = configurationBuilder.Build();
 
             ServiceCollection services = new ServiceCollection();
-            foreach (Action<IServiceCollection, IConfiguration> serviceRegistrationAction in _serviceRegistrationActions)
+            foreach (Action<IServiceCollection, IConfiguration> serviceRegistrationAction in _ServiceRegistrationActions)
             {
                 serviceRegistrationAction(services, configuration);
             }
