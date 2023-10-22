@@ -14,93 +14,94 @@ using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
 
-namespace Test.Specflow.Component.Manager.Site.Steps;
-
-[Binding]
-[Scope(Feature = "SiteManager GenerateSite")]
-public class GenerateSiteSteps
+namespace Test.Specflow.Component.Manager.Site.Steps
 {
-    private readonly SiteManagerTestHarness _siteManagerTestHarness;
-    
-    private readonly ArticleCollection _articleCollection;
-    private readonly MockFileSystem _mockFileSystem;
-    private readonly ArtifactAccessMock _artifactAccess;
-
-    public GenerateSiteSteps(
-        ArtifactAccessMock artifactAccessMock,
-        SiteManagerTestHarness siteManagerTestHarness,
-        MockFileSystem mockFileSystem,
-        ArticleCollection articleCollection)
+    [Binding]
+    [Scope(Feature = "SiteManager GenerateSite")]
+    public class GenerateSiteSteps
     {
-        _siteManagerTestHarness = siteManagerTestHarness;
-        _artifactAccess = artifactAccessMock;
-        _mockFileSystem = mockFileSystem;
-        _articleCollection = articleCollection;
-    }
+        readonly SiteManagerTestHarness _siteManagerTestHarness;
 
-    [Given("the following articles:")]
-    public void GivenTheFollowingArticles(ArticleCollection articleCollection)
-    {
-        // just an idea at the moment...
-        // only the output dates are incorrect
-        _articleCollection.AddRange(articleCollection);
-        foreach (var article in articleCollection)
+        readonly ArticleCollection _articleCollection;
+        readonly MockFileSystem _mockFileSystem;
+        readonly ArtifactAccessMock _artifactAccess;
+
+        public GenerateSiteSteps(
+            ArtifactAccessMock artifactAccessMock,
+            SiteManagerTestHarness siteManagerTestHarness,
+            MockFileSystem mockFileSystem,
+            ArticleCollection articleCollection)
         {
-            var pageMeta = article.ToPageMetaData();
-            var mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-            var postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
-            _mockFileSystem.AddFile(postFileName, mockFile);
+            _siteManagerTestHarness = siteManagerTestHarness;
+            _artifactAccess = artifactAccessMock;
+            _mockFileSystem = mockFileSystem;
+            _articleCollection = articleCollection;
         }
-    }
 
-    [When("the site is generated:")]
-    public async Task WhenTheSiteIsGenerated()
-    {
-        async Task Scenario(ISiteManager siteManager)
+        [Given("the following articles:")]
+        public void GivenTheFollowingArticles(ArticleCollection articleCollection)
         {
-            await siteManager.GenerateSite(new GenerateSiteRequest()
+            // just an idea at the moment...
+            // only the output dates are incorrect
+            _articleCollection.AddRange(articleCollection);
+            foreach (Article article in articleCollection)
             {
-                Configuration = new SiteConfiguration()
-                {
-                    Source = Constants.Directories.SourceDirectory,
-                    Destination = Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Constants.Directories.AssetDirectory,
-                    DataDirectory = Constants.Directories.DataDirectory,
-                    LayoutDirectory = Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Constants.Directories.PartialsDirectory
-                }
-            });
+                Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
+                MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
+                string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+                _mockFileSystem.AddFile(postFileName, mockFile);
+            }
         }
 
-        await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
-    }
+        [When("the site is generated:")]
+        public async Task WhenTheSiteIsGenerated()
+        {
+            async Task Scenario(ISiteManager siteManager)
+            {
+                await siteManager.GenerateSite(new GenerateSiteRequest()
+                {
+                    Configuration = new SiteConfiguration()
+                    {
+                        Source = Constants.Directories.SourceDirectory,
+                        Destination = Constants.Directories.DestinationDirectory,
+                        AssetDirectory = Constants.Directories.AssetDirectory,
+                        DataDirectory = Constants.Directories.DataDirectory,
+                        LayoutDirectory = Constants.Directories.LayoutDirectory,
+                        PartialsDirectory = Constants.Directories.PartialsDirectory
+                    }
+                });
+            }
 
-    [Then("'(.*)' is a document with the following meta tags:")]
-    public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
-    {
-        ArgumentNullException.ThrowIfNull(table);
-        var expected = table.CreateSet<(string Tag, string Value)>().ToList();
-        var html = _artifactAccess.GetHtmlDocument(documentPath);
-        var actual = html.ToMetaTags();
+            await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
+        }
 
-        // Known issue: generator uses GitHash
-        var expectedGenerator = expected.Single(x => x.Tag == "generator");
-        expected.Remove(expectedGenerator);
-        var actualGenerator = actual.Single(x => x.Tag == "generator");
-        actual.Remove(actualGenerator);
-        actual.Should().BeEquivalentTo(expected);
-    }
+        [Then("'(.*)' is a document with the following meta tags:")]
+        public void ThenIsADocumentWithTheFollowingMetaTags(string documentPath, Table table)
+        {
+            ArgumentNullException.ThrowIfNull(table);
+            System.Collections.Generic.List<(string Tag, string Value)> expected = table.CreateSet<(string Tag, string Value)>().ToList();
+            HtmlAgilityPack.HtmlDocument html = _artifactAccess.GetHtmlDocument(documentPath);
+            System.Collections.Generic.List<(string Tag, string Value)> actual = html.ToMetaTags();
 
-    [Then("the following artifacts are created:")]
-    public void ThenTheFollowingArtifactsAreCreated(Table table)
-    {
-        var actualArtifacts = _artifactAccess
-            .StoreArtifactRequests
-            .SelectMany(x => x.Artifacts)
-            .Select(x => x.Path)
-            .ToList();
+            // Known issue: generator uses GitHash
+            (string Tag, string Value) expectedGenerator = expected.Single(x => x.Tag == "generator");
+            expected.Remove(expectedGenerator);
+            (string Tag, string Value) actualGenerator = actual.Single(x => x.Tag == "generator");
+            actual.Remove(actualGenerator);
+            actual.Should().BeEquivalentTo(expected);
+        }
 
-        var expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
-        actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
+        [Then("the following artifacts are created:")]
+        public void ThenTheFollowingArtifactsAreCreated(Table table)
+        {
+            System.Collections.Generic.List<string> actualArtifacts = _artifactAccess
+                .StoreArtifactRequests
+                .SelectMany(x => x.Artifacts)
+                .Select(x => x.Path)
+                .ToList();
+
+            string[] expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();
+            actualArtifacts.Should().BeEquivalentTo(expectedArtifacts);
+        }
     }
 }

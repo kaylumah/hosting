@@ -6,17 +6,18 @@ using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit;
-
-public class AssemblyUtilTests
+namespace Test.Specflow.FormerXunit
 {
-    [Fact(Skip = "Unstable")]
-    public void Test_AssemblyData()
+    public class AssemblyUtilTests
     {
-        var result = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-        result.Should().NotBeNull();
-        result.Copyright.Should().NotBeNull();
-        result.Version.Should().NotBeNull();
-        result.Metadata.Count.Should().Be(8);
+        [Fact(Skip = "Unstable")]
+        public void Test_AssemblyData()
+        {
+            AssemblyInfo result = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
+            result.Should().NotBeNull();
+            result.Copyright.Should().NotBeNull();
+            result.Version.Should().NotBeNull();
+            result.Metadata.Count.Should().Be(8);
+        }
     }
 }
