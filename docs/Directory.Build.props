@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <WarningLevel>6</WarningLevel>
+        <LangVersion>10.0</LangVersion>
+        <AnalysisLevel>6.0</AnalysisLevel>
+        <AnalysisMode>all</AnalysisMode>
+        <!-- 
+      Some IDE**** warnings/errors do not show up during build outside of the IDE
+      https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview?tabs=net-6#enable-on-build
+      https://github.com/dotnet/roslyn/blob/9f87b444da9c48a4d492b19f8337339056bf2b95/src/Analyzers/Core/Analyzers/EnforceOnBuildValues.cs#L95
+      -->
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+     <PropertyGroup>
+        <Authors>Some Author, Other Author</Authors>
+        <Company>My Company Inc.</Company>
+        <Description>This is an example description.</Description>
+        <Copyright>2023 My Company Inc., All rights reserved</Copyright>
+    </PropertyGroup>
+</Project>
