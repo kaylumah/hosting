@@ -13,9 +13,9 @@ public static class MockFileSystemExtensions
 {
     public static void AddYamlDataFile(this MockFileSystem mockFileSystem, string fileName, object data)
     {
-        var serializer = YamlSerializer.Create();
-        var yamlContents = serializer.Serialize(data);
-        var dataFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory, fileName);
+        YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
+        string yamlContents = serializer.Serialize(data);
+        string dataFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory, fileName);
         mockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(yamlContents));
     }
 }

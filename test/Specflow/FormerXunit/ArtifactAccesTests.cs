@@ -21,16 +21,16 @@ public class ArtifactAccessTests
     [Fact]
     public async Task Test_ArtifactAccess_StoreWithoutClean()
     {
-        var fileSystemMock = new MockFileSystem();
-        var currentCount = fileSystemMock.AllDirectories.Count();
+        MockFileSystem fileSystemMock = new MockFileSystem();
+        int currentCount = fileSystemMock.AllDirectories.Count();
 
-        var configuration = new ConfigurationBuilder().Build();
-        var serviceProvider = new ServiceCollection()
+        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddArtifactAccess(configuration)
             .AddSingleton<IFileSystem>(fileSystemMock)
             .BuildServiceProvider();
 
-        var sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
         await sut.Store(new StoreArtifactsRequest
         {
@@ -47,23 +47,23 @@ public class ArtifactAccessTests
                     }
                 }
         });
-        var createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
         createdCount.Should().Be(1);
     }
 
     [Fact]
     public async Task Test_ArtifactAccess_StoreWithSubdirectory()
     {
-        var fileSystemMock = new MockFileSystem();
-        var currentCount = fileSystemMock.AllDirectories.Count();
+        MockFileSystem fileSystemMock = new MockFileSystem();
+        int currentCount = fileSystemMock.AllDirectories.Count();
 
-        var configuration = new ConfigurationBuilder().Build();
-        var serviceProvider = new ServiceCollection()
+        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddArtifactAccess(configuration)
             .AddSingleton<IFileSystem>(fileSystemMock)
             .BuildServiceProvider();
 
-        var sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
         await sut.Store(new StoreArtifactsRequest
         {
@@ -80,23 +80,23 @@ public class ArtifactAccessTests
                     }
                 }
         });
-        var createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
         createdCount.Should().Be(2);
     }
 
     [Fact]
     public async Task Test_ArtifactAccess_StoreWithClean()
     {
-        var fileSystemMock = new MockFileSystem();
-        var currentCount = fileSystemMock.AllDirectories.Count();
+        MockFileSystem fileSystemMock = new MockFileSystem();
+        int currentCount = fileSystemMock.AllDirectories.Count();
 
-        var configuration = new ConfigurationBuilder().Build();
-        var serviceProvider = new ServiceCollection()
+        IConfigurationRoot configuration = new ConfigurationBuilder().Build();
+        ServiceProvider serviceProvider = new ServiceCollection()
             .AddArtifactAccess(configuration)
             .AddSingleton<IFileSystem>(fileSystemMock)
             .BuildServiceProvider();
 
-        var sut = serviceProvider.GetRequiredService<IArtifactAccess>();
+        IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
         await sut.Store(new StoreArtifactsRequest
         {
@@ -113,7 +113,7 @@ public class ArtifactAccessTests
                     }
                 }
         });
-        var createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
+        int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
         createdCount.Should().Be(1);
     }
 }

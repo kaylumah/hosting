@@ -25,25 +25,25 @@ public sealed class TestHarness
 
     public async Task TestService<T>(Func<T, Task> scenario) where T : class
     {
-        var proxy = GetProxy<T>();
+        T proxy = GetProxy<T>();
         await TestService(proxy, scenario).ConfigureAwait(false);
     }
 
     private T GetProxy<T>() where T : class
     {
-        var targetType = typeof(T);
-        var instance = _serviceProvider.GetRequiredService<T>();
+        Type targetType = typeof(T);
+        T instance = _serviceProvider.GetRequiredService<T>();
         if (targetType.IsInterface)
         {
-            var proxy = ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _interceptors.ToArray());
+            T proxy = ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _interceptors.ToArray());
             return proxy;
         }
         else
         {
-            var constructor = targetType.GetConstructor(Type.EmptyTypes);
+            System.Reflection.ConstructorInfo constructor = targetType.GetConstructor(Type.EmptyTypes);
             if (constructor != null)
             {
-                var proxy = ProxyGenerator.CreateClassProxyWithTarget(instance, _interceptors.ToArray());
+                T proxy = ProxyGenerator.CreateClassProxyWithTarget(instance, _interceptors.ToArray());
                 return proxy;
             }
         }

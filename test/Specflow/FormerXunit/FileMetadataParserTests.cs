@@ -17,23 +17,23 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithoutConfigOnlyGetsDefaultValues()
     {
         // Arange
-        var optionsMock = new MetadataParserOptions();
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        MetadataParserOptions optionsMock = new MetadataParserOptions();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
             .Returns(new Metadata<FileMetaData> { });
 
-        var loggerMock = new LoggerMock<FileMetadataParser>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
-        var criteria = new MetadataCriteria
+        LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();
@@ -47,7 +47,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigThatIsEmptyOnlyGetsDefaultValues()
     {
         // Arange
-        var options = new MetadataParserOptions
+        MetadataParserOptions options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -56,22 +56,22 @@ public class FileMetadataParserTests
                     }
                 }
         };
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
             .Returns(new Metadata<FileMetaData> { });
 
-        var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
-        var criteria = new MetadataCriteria
+        Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();
@@ -85,7 +85,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigTGetsDefaultValuesAndConfiguration()
     {
         // Arange
-        var options = new MetadataParserOptions
+        MetadataParserOptions options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -96,22 +96,22 @@ public class FileMetadataParserTests
                     }
                 }
         };
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
             .Returns(new Metadata<FileMetaData> { });
 
-        var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
-        var criteria = new MetadataCriteria
+        Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();
@@ -127,7 +127,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileWithConfigTGetsDefaultValuesAndMultipleConfigurations()
     {
         // Arange
-        var options = new MetadataParserOptions
+        MetadataParserOptions options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -144,7 +144,7 @@ public class FileMetadataParserTests
                     }
                 }
         };
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -156,16 +156,16 @@ public class FileMetadataParserTests
                 }
             });
 
-        var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
-        var criteria = new MetadataCriteria
+        Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "test/file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();
@@ -183,7 +183,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_EmptyFileIfMultipleConfigurationsApplyLastOneWins()
     {
         // Arange
-        var options = new MetadataParserOptions
+        MetadataParserOptions options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -201,7 +201,7 @@ public class FileMetadataParserTests
                     }
                 }
         };
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -213,16 +213,16 @@ public class FileMetadataParserTests
                 }
             });
 
-        var loggerMock = new LoggerMock<FileMetadataParser>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
-        var criteria = new MetadataCriteria
+        LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "test/file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();
@@ -240,7 +240,7 @@ public class FileMetadataParserTests
     public void Test_FilemetadataParser_MultipleLayers()
     {
         // Arange
-        var options = new MetadataParserOptions
+        MetadataParserOptions options = new MetadataParserOptions
         {
             Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
@@ -257,7 +257,7 @@ public class FileMetadataParserTests
                     }
                 }
         };
-        var metadataProviderMock = new Mock<IMetadataProvider>();
+        Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
         metadataProviderMock
             .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -269,16 +269,16 @@ public class FileMetadataParserTests
                 }
             });
 
-        var loggerMock = new Mock<ILogger<FileMetadataParser>>();
-        var sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
-        var criteria = new MetadataCriteria
+        Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
+        FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
+        MetadataCriteria criteria = new MetadataCriteria
         {
             Content = string.Empty,
             FileName = "posts/2021/file.html"
         };
 
         // Act
-        var result = sut.Parse(criteria);
+        Metadata<FileMetaData> result = sut.Parse(criteria);
 
         // Assert
         result.Should().NotBeNull();

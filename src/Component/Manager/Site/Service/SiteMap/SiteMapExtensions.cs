@@ -10,13 +10,13 @@ public static class SiteMapExtensions
 {
     public static byte[] SaveAsXml(this SiteMap siteMap)
     {
-        var settings = new XmlWriterSettings()
+        XmlWriterSettings settings = new XmlWriterSettings()
         {
             Indent = true,
             Encoding = new System.Text.UTF8Encoding(false)
         };
-        using var stream = new MemoryStream();
-        using var writer = XmlWriter.Create(stream, settings);
+        using MemoryStream stream = new MemoryStream();
+        using XmlWriter writer = XmlWriter.Create(stream, settings);
         siteMap.SaveAsXml(writer);
         writer.Close();
         return stream.ToArray();

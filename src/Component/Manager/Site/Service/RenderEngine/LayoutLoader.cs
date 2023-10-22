@@ -26,37 +26,37 @@ public class LayoutLoader
 
     public async Task<List<File<LayoutMetadata>>> Load(string layoutFolder)
     {
-        var result = new List<File<LayoutMetadata>>();
-        var templateDirectoryContents = _fileSystem.GetFiles(layoutFolder);
-        foreach (var file in templateDirectoryContents)
+        List<File<LayoutMetadata>> result = new List<File<LayoutMetadata>>();
+        IEnumerable<IFileSystemInfo> templateDirectoryContents = _fileSystem.GetFiles(layoutFolder);
+        foreach (IFileSystemInfo file in templateDirectoryContents)
         {
-            var path = Path.Combine(layoutFolder, file.Name);
-            var fileInfo = _fileSystem.GetFile(path);
+            string path = Path.Combine(layoutFolder, file.Name);
+            IFileInfo fileInfo = _fileSystem.GetFile(path);
 
-            var encoding = fileInfo.CreateReadStream().DetermineEncoding();
-            var fileName = fileInfo.Name;
-            using var streamReader = new StreamReader(fileInfo.CreateReadStream());
+            Encoding encoding = fileInfo.CreateReadStream().DetermineEncoding();
+            string fileName = fileInfo.Name;
+            using StreamReader streamReader = new StreamReader(fileInfo.CreateReadStream());
 
-            var text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            var metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
-            var content = metadata.Content;
+            string text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            Metadata<LayoutMetadata> metadata = _metadataProvider.Retrieve<LayoutMetadata>(text);
+            string content = metadata.Content;
 
-            var templateIsHtml = ".html".Equals(fileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
-            var developerMode = IsDeveloperMode();
+            bool templateIsHtml = ".html".Equals(fileInfo.Extension, System.StringComparison.OrdinalIgnoreCase);
+            bool developerMode = IsDeveloperMode();
 
-            var includeDevelopmentInfo = templateIsHtml && developerMode;
+            bool includeDevelopmentInfo = templateIsHtml && developerMode;
             if (includeDevelopmentInfo)
             {
-                var sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Layout: '{0}' -->", path));
                 sb.Append(content);
                 sb.AppendLine();
                 sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- END Layout: '{0}' -->", path));
-                var modifiedContent = sb.ToString();
+                string modifiedContent = sb.ToString();
                 content = modifiedContent;
             }
 
-            var fileWithMeta = new File<LayoutMetadata>
+            File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>
             {
                 Encoding = encoding.WebName,
                 Name = fileName,
@@ -68,11 +68,11 @@ public class LayoutLoader
             result.Add(fileWithMeta);
         }
 
-        var baseTemplates = result
+        List<File<LayoutMetadata>> baseTemplates = result
             .Where(template => template.Data == null)
             .ToList();
 
-        foreach (var template in baseTemplates)
+        foreach (File<LayoutMetadata> template in baseTemplates)
         {
             Merge(template, result);
         }
@@ -82,10 +82,10 @@ public class LayoutLoader
 
     private void Merge(File<LayoutMetadata> template, List<File<LayoutMetadata>> templates)
     {
-        var dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout, StringComparison.Ordinal));
-        foreach (var dependency in dependencies)
+        IEnumerable<File<LayoutMetadata>> dependencies = templates.Where(x => x.Data != null && !string.IsNullOrEmpty(x.Data.Layout) && template.Name.Equals(x.Data.Layout, StringComparison.Ordinal));
+        foreach (File<LayoutMetadata> dependency in dependencies)
         {
-            var mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);
+            string mergedLayout = template.Content.Replace("{{ content }}", dependency.Content);
             dependency.Content = mergedLayout;
             Merge(dependency, templates);
         }
@@ -93,9 +93,9 @@ public class LayoutLoader
 
     private static bool IsDeveloperMode()
     {
-        var developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
-        var succeeded = bool.TryParse(developerMode, out var developerModeActive);
-        var result = succeeded && developerModeActive;
+        string developerMode = Environment.GetEnvironmentVariable("DEVELOPER_MODE") ?? "false";
+        bool succeeded = bool.TryParse(developerMode, out bool developerModeActive);
+        bool result = succeeded && developerModeActive;
         return result;
     }
 }

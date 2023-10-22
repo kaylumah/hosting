@@ -22,7 +22,7 @@ public static partial class DefaultMetadatasExtensions
 
     public static DefaultMetadata Find(this DefaultMetadatas metadata, string path, Func<DefaultMetadata, bool> predicate)
     {
-        var item = metadata
+        DefaultMetadata item = metadata
             .Where(x => x.Path.Equals(path, StringComparison.Ordinal))
             .SingleOrDefault(predicate);
         return item;

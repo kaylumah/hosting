@@ -25,7 +25,7 @@ public class AuthorCollectionStepDefinitions
     public void GivenTheFollowingAuthors(AuthorCollection authorCollection)
     {
         _authorCollection.AddRange(authorCollection);
-        var authorMetaDataCollection = new AuthorMetaDataCollection();
+        AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
         authorMetaDataCollection.AddRange(_authorCollection.ToAuthorMetadata());
         _fileSystem.AddYamlDataFile(Constants.Files.Authors, authorMetaDataCollection);
     }

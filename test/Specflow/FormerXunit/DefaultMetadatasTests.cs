@@ -12,12 +12,12 @@ public class DefaultMetadatasTests
     [Fact]
     public void TestKey()
     {
-        var itemWithoutScope = new DefaultMetadata() { Path = "" };
-        var itemWithScope = new DefaultMetadata() { Path = "", Scope = "" };
-        var itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts" };
-        var itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts" };
+        DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "" };
+        DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "" };
+        DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts" };
+        DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts" };
 
-        var data = new DefaultMetadatas
+        DefaultMetadatas data = new DefaultMetadatas
             {
                 itemWithoutScope,
                 itemWithScope,

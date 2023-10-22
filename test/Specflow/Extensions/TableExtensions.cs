@@ -22,25 +22,25 @@ public static class TableExtensions
     {
         _ = table ?? throw new ArgumentNullException(nameof(table));
 
-        var tableHeaderNames = table.Header.ToArray();
-        var objectPropertyInfos = typeof(TObject).GetProperties(BindingFlags.Public | BindingFlags.Instance |
+        string[] tableHeaderNames = table.Header.ToArray();
+        PropertyInfo[] objectPropertyInfos = typeof(TObject).GetProperties(BindingFlags.Public | BindingFlags.Instance |
                                                                 BindingFlags.GetProperty |
                                                                 BindingFlags.SetProperty);
-        var gherkinTableHeaderPropertyInfos = objectPropertyInfos.Where(objectPropertyInfo =>
+        IEnumerable<PropertyInfo> gherkinTableHeaderPropertyInfos = objectPropertyInfos.Where(objectPropertyInfo =>
             objectPropertyInfo.GetCustomAttributes().Any(attribute => attribute is GherkinTableHeaderAttribute));
-        var orderedGherkinTableHeaderPropertyInfos = gherkinTableHeaderPropertyInfos.OrderBy(
+        PropertyInfo[] orderedGherkinTableHeaderPropertyInfos = gherkinTableHeaderPropertyInfos.OrderBy(
             gherkinTableHeaderPropertyInfo =>
                 gherkinTableHeaderPropertyInfo.GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex ??
                 throw new InvalidOperationException(
                     $"PropertyInfo must have declared {nameof(GherkinTableHeaderAttribute)}.")).ToArray();
-        var orderedGherkinTableHeaderPropertyNames = orderedGherkinTableHeaderPropertyInfos
+        string[] orderedGherkinTableHeaderPropertyNames = orderedGherkinTableHeaderPropertyInfos
             .Select(gherkinTableHeaderPropertyInfo => gherkinTableHeaderPropertyInfo.Name).ToArray();
 
-        var gherkinTableHeaderPropertyInfosWithDuplicateIndex =
+        PropertyInfo[] gherkinTableHeaderPropertyInfosWithDuplicateIndex =
             FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(orderedGherkinTableHeaderPropertyInfos);
         if (gherkinTableHeaderPropertyInfosWithDuplicateIndex.Any())
         {
-            var gherkinTableHeaderPropertyNamesWithDuplicateIndex =
+            IEnumerable<string> gherkinTableHeaderPropertyNamesWithDuplicateIndex =
                 gherkinTableHeaderPropertyInfosWithDuplicateIndex.Select(
                     gherkinTableHeaderPropertyInfoWithDuplicateIndex =>
                         gherkinTableHeaderPropertyInfoWithDuplicateIndex.Name);
@@ -49,7 +49,7 @@ public static class TableExtensions
                 nameof(table));
         }
 
-        var headersNotDeclaredAsGherkinTableHeader =
+        string[] headersNotDeclaredAsGherkinTableHeader =
             FindHeadersNotDeclaredAsGherkinTableHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
         if (headersNotDeclaredAsGherkinTableHeader.Any())
         {
@@ -58,7 +58,7 @@ public static class TableExtensions
                 nameof(table));
         }
 
-        var gherkinTableHeadersNotDeclaredAsHeader =
+        string[] gherkinTableHeadersNotDeclaredAsHeader =
             FindGherkinTableHeadersNotDeclaredAsHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
         if (gherkinTableHeadersNotDeclaredAsHeader.Any())
         {
@@ -67,7 +67,7 @@ public static class TableExtensions
                 nameof(table));
         }
 
-        var headersNotAtCorrectIndex =
+        string[] headersNotAtCorrectIndex =
             FindHeadersNotAtCorrectIndex(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
         if (headersNotAtCorrectIndex.Any())
         {
@@ -80,8 +80,8 @@ public static class TableExtensions
     private static PropertyInfo[] FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(
         PropertyInfo[] gherkinTableHeaderPropertyInfos)
     {
-        var gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
-        foreach (var gherkinTableHeaderPropertyInfo in gherkinTableHeaderPropertyInfos)
+        List<PropertyInfo> gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
+        foreach (PropertyInfo gherkinTableHeaderPropertyInfo in gherkinTableHeaderPropertyInfos)
         {
             if (gherkinTableHeaderPropertyInfos.Count(gherkinTableHeaderPropertyInfo2 =>
                     gherkinTableHeaderPropertyInfo2.GetCustomAttribute<GherkinTableHeaderAttribute>()

@@ -13,7 +13,7 @@ public abstract class MockEntityCollection<TKey, TItem> : KeyedCollection<TKey, 
     {
         _ = items ?? throw new ArgumentNullException(nameof(items));
 
-        foreach (var obj in items)
+        foreach (TItem obj in items)
         {
             Add(obj);
         }

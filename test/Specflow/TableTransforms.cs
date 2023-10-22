@@ -16,7 +16,7 @@ public class TableTransforms
     {
         ArgumentNullException.ThrowIfNull(table);
         table.ValidateIfMappedCorrectlyTo<Author>();
-        var authorCollection = new AuthorCollection();
+        AuthorCollection authorCollection = new AuthorCollection();
         authorCollection.AddRange(table.CreateSet<Author>());
         return authorCollection;
     }
@@ -26,7 +26,7 @@ public class TableTransforms
     {
         ArgumentNullException.ThrowIfNull(table);
         table.ValidateIfMappedCorrectlyTo<Organization>();
-        var organizationCollection = new OrganizationCollection();
+        OrganizationCollection organizationCollection = new OrganizationCollection();
         organizationCollection.AddRange(table.CreateSet<Organization>());
         return organizationCollection;
     }
@@ -36,7 +36,7 @@ public class TableTransforms
     {
         ArgumentNullException.ThrowIfNull(table);
         table.ValidateIfMappedCorrectlyTo<Tag>();
-        var tagCollection = new TagCollection();
+        TagCollection tagCollection = new TagCollection();
         tagCollection.AddRange(table.CreateSet<Tag>());
         return tagCollection;
     }

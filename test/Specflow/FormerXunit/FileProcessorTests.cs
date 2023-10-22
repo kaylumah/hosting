@@ -32,13 +32,13 @@ public class FileProcessorTests
 
     private static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
     {
-        var frontMatter = CreateFrontMatter(data);
+        string frontMatter = CreateFrontMatter(data);
         return ContentFile(frontMatter);
     }
 
     private static MockFileData ContentFile(string content)
     {
-        var bytes = Encoding.UTF8.GetBytes(content);
+        byte[] bytes = Encoding.UTF8.GetBytes(content);
         return new MockFileData(bytes);
     }
 
@@ -46,15 +46,15 @@ public class FileProcessorTests
     [Fact]
     public async Task Test_FileProcessor_ChangedFileExtension()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
 
-        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{root}/test.md", EmptyFile() }
         });
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock,
             new MetadataParserOptions()
             {
                 ExtensionMapping = new Dictionary<string, string> {
@@ -62,8 +62,8 @@ public class FileProcessorTests
                 }
             }
         );
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
@@ -71,22 +71,22 @@ public class FileProcessorTests
         });
         result.Should().NotBeEmpty();
         result.Count().Should().Be(1);
-        var testFile = result.Single(x => x.Name.Equals("test.html"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File testFile = result.Single(x => x.Name.Equals("test.html"));
     }
 
     [Fact]
     public async Task Test_FileProcessor_Subdirectories()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{root}/_subdir/test.txt", EmptyFile() }
         });
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
@@ -94,18 +94,18 @@ public class FileProcessorTests
         });
         result.Should().NotBeEmpty();
         result.Count().Should().Be(1);
-        var testFile = result.Single(x => x.Name.Equals("test.txt"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File testFile = result.Single(x => x.Name.Equals("test.txt"));
         //testFile.MetaData.Collection.Should().Be("subdir");
     }
 
     [Fact]
     public async Task Test_FileProcessor_FrontMatter()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
 
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{root}/a.txt", EmptyFile() },
             { $"{root}/b.txt", WithFrontMatter() },
@@ -113,9 +113,9 @@ public class FileProcessorTests
             { $"{root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
 
         });
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
@@ -124,10 +124,10 @@ public class FileProcessorTests
         result.Should().NotBeEmpty();
         result.Count().Should().Be(4);
 
-        var fileA = result.Single(x => x.Name.Equals("a.txt"));
-        var fileB = result.Single(x => x.Name.Equals("b.txt"));
-        var fileC = result.Single(x => x.Name.Equals("c.txt"));
-        var fileD = result.Single(x => x.Name.Equals("d.txt"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileA = result.Single(x => x.Name.Equals("a.txt"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileB = result.Single(x => x.Name.Equals("b.txt"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileC = result.Single(x => x.Name.Equals("c.txt"));
+        Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileD = result.Single(x => x.Name.Equals("d.txt"));
 
         fileA.MetaData.Count.Should().Be(1);
         fileB.MetaData.Count.Should().Be(1);
@@ -138,14 +138,14 @@ public class FileProcessorTests
     [Fact(Skip = "figure out empty directory")]
     public async Task Test_FileProcessor_WithoutFiles_Should_ReturnEmptyList()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var mockFileSystem = new MockFileSystem(
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        MockFileSystem mockFileSystem = new MockFileSystem(
             new Dictionary<string, MockFileData> { });
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             DirectoriesToSkip = new string[] { },
             FileExtensionsToTarget = new string[] { }
@@ -156,16 +156,16 @@ public class FileProcessorTests
     [Fact]
     public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{root}/index.html", EmptyFile() }
         });
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
@@ -177,17 +177,17 @@ public class FileProcessorTests
     [Fact]
     public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
     {
-        var optionsMock = new SiteInfo();
-        var loggerMock = new Mock<ILogger<FileProcessor>>();
-        var metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-        var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+        SiteInfo optionsMock = new SiteInfo();
+        Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
+        YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
+        MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{root}/index.html", EmptyFile() },
             { $"{root}/other.png", EmptyFile() }
         });
-        var fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-        var sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-        var result = await sut.Process(new FileFilterCriteria
+        FileMetadataParser fileMetadataParserMock = new FileMetadataParser(new Mock<ILogger<FileMetadataParser>>().Object, metadataProviderMock, new MetadataParserOptions());
+        FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+        IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
         {
             RootDirectory = "_site",
             DirectoriesToSkip = new string[] { },
@@ -199,11 +199,11 @@ public class FileProcessorTests
 
     private static string CreateFrontMatter(Dictionary<string, object> data = null)
     {
-        var stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("---");
         if (data != null)
         {
-            var raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
+            string raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
             stringBuilder.Append(raw);
         }
         stringBuilder.AppendLine("---");
@@ -212,12 +212,12 @@ public class FileProcessorTests
 
     private string CreateEmptyXml()
     {
-        var settings = new XmlWriterSettings
+        XmlWriterSettings settings = new XmlWriterSettings
         {
             OmitXmlDeclaration = false,
             Encoding = Encoding.UTF8
         };
-        var stream = new MemoryStream();
+        MemoryStream stream = new MemoryStream();
         using (XmlWriter writer = XmlWriter.Create(stream, settings))
         {
             writer.WriteStartDocument();
@@ -227,7 +227,7 @@ public class FileProcessorTests
             writer.Close();
         }
         stream.Position = 0;
-        var streamReader = new StreamReader(stream);
+        StreamReader streamReader = new StreamReader(stream);
         return streamReader.ReadToEnd();
     }
 }

@@ -13,7 +13,7 @@ public static class KeyedCollectionExtensions
     {
         _ = items ?? throw new ArgumentNullException(nameof(items));
 
-        foreach (var obj in items)
+        foreach (TItem obj in items)
         {
             source.Add(obj);
         }

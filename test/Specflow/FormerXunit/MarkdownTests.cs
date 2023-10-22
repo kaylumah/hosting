@@ -15,9 +15,9 @@ public class MarkdownTests
     [Fact]
     public void Test1()
     {
-        var markdown = "# Header 1 \r\n## Header 2\r\n### Header 3\r\n#### Header 4\r\n##### Header 5\r\n###### Header 6";
-        var expected = "<h1 id=\"header-1\"><a href=\"#header-1\">Header 1</a></h1>\n<h2 id=\"header-2\"><a href=\"#header-2\">Header 2</a></h2>\n<h3 id=\"header-3\"><a href=\"#header-3\">Header 3</a></h3>\n<h4 id=\"header-4\"><a href=\"#header-4\">Header 4</a></h4>\n<h5 id=\"header-5\"><a href=\"#header-5\">Header 5</a></h5>\n<h6 id=\"header-6\"><a href=\"#header-6\">Header 6</a></h6>";
-        var result = MarkdownUtil.Transform(markdown);
+        string markdown = "# Header 1 \r\n## Header 2\r\n### Header 3\r\n#### Header 4\r\n##### Header 5\r\n###### Header 6";
+        string expected = "<h1 id=\"header-1\"><a href=\"#header-1\">Header 1</a></h1>\n<h2 id=\"header-2\"><a href=\"#header-2\">Header 2</a></h2>\n<h3 id=\"header-3\"><a href=\"#header-3\">Header 3</a></h3>\n<h4 id=\"header-4\"><a href=\"#header-4\">Header 4</a></h4>\n<h5 id=\"header-5\"><a href=\"#header-5\">Header 5</a></h5>\n<h6 id=\"header-6\"><a href=\"#header-6\">Header 6</a></h6>";
+        string result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -26,9 +26,9 @@ public class MarkdownTests
     [Fact]
     public void Test2()
     {
-        var markdown = "| Column | Column |\r\n| - | - |\r\n| A | B |";
-        var expected = "<table>\n<thead>\n<tr>\n<th>Column</th>\n<th>Column</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>A</td>\n<td>B</td>\n</tr>\n</tbody>\n</table>";
-        var result = MarkdownUtil.Transform(markdown);
+        string markdown = "| Column | Column |\r\n| - | - |\r\n| A | B |";
+        string expected = "<table>\n<thead>\n<tr>\n<th>Column</th>\n<th>Column</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>A</td>\n<td>B</td>\n</tr>\n</tbody>\n</table>";
+        string result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -37,14 +37,14 @@ public class MarkdownTests
     [Fact]
     public void Test3()
     {
-        var markdown = @"
+        string markdown = @"
 | | | |
 |-|-|-|
 |__Bold Key__| Value1 |
 | Normal Key | Value2 |
 ".Trim();
-        var expected = "<table>\n<thead>\n<tr>\n<th></th>\n<th></th>\n<th></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Bold Key</strong></td>\n<td>Value1</td>\n<td></td>\n</tr>\n<tr>\n<td>Normal Key</td>\n<td>Value2</td>\n<td></td>\n</tr>\n</tbody>\n</table>";
-        var result = MarkdownUtil.Transform(markdown);
+        string expected = "<table>\n<thead>\n<tr>\n<th></th>\n<th></th>\n<th></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Bold Key</strong></td>\n<td>Value1</td>\n<td></td>\n</tr>\n<tr>\n<td>Normal Key</td>\n<td>Value2</td>\n<td></td>\n</tr>\n</tbody>\n</table>";
+        string result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -53,7 +53,7 @@ public class MarkdownTests
     [Fact]
     public void Test4()
     {
-        var markdown = @"
+        string markdown = @"
 ```cs
 public class Program
 {
@@ -61,8 +61,8 @@ public class Program
 }
 ```
 ".Trim();
-        var expected = "<pre><code class=\"language-cs\">public class Program\n{\n\tpublic static void Main(string[] args) {}\n}\n</code></pre>";
-        var result = MarkdownUtil.Transform(markdown);
+        string expected = "<pre><code class=\"language-cs\">public class Program\n{\n\tpublic static void Main(string[] args) {}\n}\n</code></pre>";
+        string result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -71,9 +71,9 @@ public class Program
     [Fact]
     public void Test5()
     {
-        var markdown = ":smiley:".Trim();
-        var expected = "<p>:smiley:</p>";
-        var result = MarkdownUtil.Transform(markdown);
+        string markdown = ":smiley:".Trim();
+        string expected = "<p>:smiley:</p>";
+        string result = MarkdownUtil.Transform(markdown);
         result
             .Should()
             .Be(expected);
@@ -82,18 +82,18 @@ public class Program
     [Fact]
     public void Test6()
     {
-        var result = MarkdownUtil.Transform(
+        string result = MarkdownUtil.Transform(
 @"# heading one
 ## heading two
 ### heading three
 #### heading four
 ##### heading five
 ###### heading six");
-        var pageDoc = new HtmlDocument();
+        HtmlDocument pageDoc = new HtmlDocument();
         pageDoc.LoadHtml(result);
 
-        var root = pageDoc.DocumentNode;
-        var nodes = root.Descendants()
+        HtmlNode root = pageDoc.DocumentNode;
+        System.Collections.Generic.List<HtmlNode> nodes = root.Descendants()
             .Where(n => n.NodeType == HtmlNodeType.Element)
             .ToList();
         nodes.Count.Should().Be(12);
@@ -132,23 +132,23 @@ public class Program
     [Fact]
     public void Test7()
     {
-        var pipeline = new MarkdownPipelineBuilder()
+        MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UseLinkExtension()
             .Build();
 
-        var input = @"[link](https://kaylumah.nl)";
-        var output = Markdown.ToHtml(input, pipeline);
+        string input = @"[link](https://kaylumah.nl)";
+        string output = Markdown.ToHtml(input, pipeline);
     }
 
     [Fact]
     public void Test8()
     {
-        var pipeline = new MarkdownPipelineBuilder()
+        MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
             .UseLinkExtension()
             .Build();
 
-        var input = @"[link](https://google.com)";
-        var output = Markdown.ToHtml(input, pipeline);
+        string input = @"[link](https://google.com)";
+        string output = Markdown.ToHtml(input, pipeline);
     }
 
 }

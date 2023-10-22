@@ -25,7 +25,7 @@ public class OrganizationCollectionStepDefinitions
     public void GivenTheFollowingOrganizations(OrganizationCollection organizationCollection)
     {
         _organizationCollection.AddRange(organizationCollection);
-        var organizationMetaDataCollection = new OrganizationMetaDataCollection();
+        OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
         organizationMetaDataCollection.AddRange(_organizationCollection.ToOrganizationMetadata());
         _fileSystem.AddYamlDataFile(Constants.Files.Organizations, organizationMetaDataCollection);
     }

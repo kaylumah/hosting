@@ -25,7 +25,7 @@ public class TagCollectionStepDefinitions
     public void GivenTheFollowingTags(TagCollection tagCollection)
     {
         _tagCollection.AddRange(tagCollection);
-        var tagMetaDataCollection = new TagMetaDataCollection();
+        TagMetaDataCollection tagMetaDataCollection = new TagMetaDataCollection();
         tagMetaDataCollection.AddRange(_tagCollection.ToTagMetadata());
         _fileSystem.AddYamlDataFile(Constants.Files.Tags, tagMetaDataCollection);
     }

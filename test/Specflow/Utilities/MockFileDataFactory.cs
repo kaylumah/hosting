@@ -22,12 +22,12 @@ public class MockFileDataFactory
 
     public MockFileDataFactory WithYamlFrontMatter(Dictionary<string, object> data = null)
     {
-        var stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("---");
         if (data != null && data.Any())
         {
-            var serializer = YamlSerializer.Create();
-            var raw = serializer.Serialize(data);
+            YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
+            string raw = serializer.Serialize(data);
             stringBuilder.Append(raw);
         }
         stringBuilder.AppendLine("---");
@@ -44,7 +44,7 @@ public class MockFileDataFactory
 
     public MockFileData Create()
     {
-        var sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         if (!string.IsNullOrEmpty(_frontMatter))
         {
             sb.Append(_frontMatter);
@@ -53,8 +53,8 @@ public class MockFileDataFactory
         {
             sb.Append(_contents);
         }
-        var data = sb.ToString();
-        var bytes = _encoding.GetBytes(data);
+        string data = sb.ToString();
+        byte[] bytes = _encoding.GetBytes(data);
         return new MockFileData(bytes);
     }
 

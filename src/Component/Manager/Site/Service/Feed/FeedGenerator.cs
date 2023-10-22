@@ -34,21 +34,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         public SyndicationFeed Create(SiteMetaData siteMetaData)
         {
-            var feed = GetBlogInformation(siteMetaData);
-            var posts = GetPosts(siteMetaData);
+            SyndicationFeed feed = GetBlogInformation(siteMetaData);
+            List<SyndicationItem> posts = GetPosts(siteMetaData);
             feed.Items = posts;
             return feed;
         }
 
         private SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
         {
-            var build = siteMetaData.Build;
-            var generatorVersion = build.ShortGitHash;
-            var copyrightClaim = build.Copyright;
-            var generatedAtBuildTime = build.Time;
+            BuildData build = siteMetaData.Build;
+            string generatorVersion = build.ShortGitHash;
+            string copyrightClaim = build.Copyright;
+            DateTimeOffset generatedAtBuildTime = build.Time;
             LogCreateBlog(generatorVersion);
 
-            var feed = new SyndicationFeed
+            SyndicationFeed feed = new SyndicationFeed
             {
                 Language = siteMetaData.Language,
                 Title = new CDataSyndicationContent(siteMetaData.Title),
@@ -84,19 +84,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         private List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
-            var posts = RetrievePostPageMetaDatas(siteMetaData)
+            List<PageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)
                 .ByRecentlyPublished()
                 .ToList();
-            var result = new List<SyndicationItem>();
+            List<SyndicationItem> result = new List<SyndicationItem>();
             if (posts.Any())
             {
                 FeedCount(posts.Count);
-                var persons = siteMetaData.ToPersons();
-                var tags = siteMetaData.ToCategories();
-                foreach (var pageMetaData in posts)
+                Dictionary<string, SyndicationPerson> persons = siteMetaData.ToPersons();
+                Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
+                foreach (PageMetaData pageMetaData in posts)
                 {
-                    var pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
-                    var item = new SyndicationItem
+                    string pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
+                    SyndicationItem item = new SyndicationItem
                     {
                         Id = pageUrl,
                         Title = new CDataSyndicationContent(pageMetaData.Title),
@@ -106,7 +106,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         LastUpdatedTime = pageMetaData.Modified
                     };
 
-                    var itemCategories = pageMetaData
+                    List<SyndicationCategory> itemCategories = pageMetaData
                         .Tags
                         .Where(tag => tags.ContainsKey(tag))
                         .Select(tag => tags[tag])
@@ -115,7 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson person))
                     {
-                        var author = person;
+                        SyndicationPerson author = person;
                         item.Authors.Add(author);
                     }
                     result.Add(item);
@@ -127,7 +127,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         private static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
-            if (siteMetaData.Collections.TryGetValue("posts", out var posts))
+            if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[] posts))
             {
                 return posts
                     .Where(x => x.Feed)

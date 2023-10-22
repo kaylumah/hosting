@@ -29,15 +29,15 @@ public partial class SiteMapGenerator
     {
         LogGenerateSiteMap();
 
-        var pages = siteMetaData.Pages
+        List<PageMetaData> pages = siteMetaData.Pages
                         .Where(file => ".html".Equals(Path.GetExtension(file.Name), StringComparison.Ordinal))
                         .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                         .ToList();
 
-        var siteMapNodes = new List<SiteMapNode>();
-        foreach (var page in pages)
+        List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
+        foreach (PageMetaData page in pages)
         {
-            var node = new SiteMapNode
+            SiteMapNode node = new SiteMapNode
             {
                 Url = GlobalFunctions.AbsoluteUrl(page.Uri),
                 LastModified = page.Modified
@@ -51,7 +51,7 @@ public partial class SiteMapGenerator
             siteMapNodes.Add(node);
         }
 
-        var siteMap = new SiteMap
+        SiteMap siteMap = new SiteMap
         {
             Items = siteMapNodes
         };

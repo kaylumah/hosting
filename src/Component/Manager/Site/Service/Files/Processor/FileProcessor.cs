@@ -45,9 +45,9 @@ public partial class FileProcessor : IFileProcessor
 
     public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
     {
-        var result = new List<File>();
+        List<File> result = new List<File>();
 
-        var directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
+        List<IFileSystemInfo> directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
 
         if (!directoryContents.Any())
         {
@@ -55,15 +55,15 @@ public partial class FileProcessor : IFileProcessor
             return result;
         }
 
-        var directoriesToProcessAsCollection = directoryContents
+        List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
             .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
             .ToList();
 
-        var filesWithoutCollections = directoryContents.Where(info =>
+        List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
             !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
         ).ToList();
 
-        var files =
+        List<File> files =
             await ProcessFiles(
                 filesWithoutCollections
                 .Select(x => x.FullName)
@@ -72,14 +72,14 @@ public partial class FileProcessor : IFileProcessor
 
         result.AddRange(files);
 
-        var collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
-        foreach (var collection in collections)
+        List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
+        foreach (FileCollection collection in collections)
         {
-            var targetFiles = collection
+            List<File> targetFiles = collection
                 .Files
                 .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
                 .ToList();
-            var exists = _siteInfo.Collections.Contains(collection.Name);
+            bool exists = _siteInfo.Collections.Contains(collection.Name);
             if (!exists)
             {
                 result.AddRange(targetFiles);
@@ -105,13 +105,13 @@ public partial class FileProcessor : IFileProcessor
 
     private async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
     {
-        var result = new List<FileCollection>();
-        foreach (var collection in collections)
+        List<FileCollection> result = new List<FileCollection>();
+        foreach (string collection in collections)
         {
-            using var logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
-            var keyName = collection[1..];
-            var targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
-            var files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
+            using System.IDisposable logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
+            string keyName = collection[1..];
+            List<IFileSystemInfo> targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
+            List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
 
             result.Add(new FileCollection
             {
@@ -124,8 +124,8 @@ public partial class FileProcessor : IFileProcessor
 
     private async Task<List<File>> ProcessFiles(string[] files)
     {
-        var fileInfos = new List<IFileInfo>();
-        foreach (var file in files)
+        List<IFileInfo> fileInfos = new List<IFileInfo>();
+        foreach (string file in files)
         {
             fileInfos.Add(_fileSystem.GetFile(file));
         }
@@ -134,25 +134,25 @@ public partial class FileProcessor : IFileProcessor
 
     private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
     {
-        var result = new List<File>();
-        foreach (var fileInfo in files)
+        List<File> result = new List<File>();
+        foreach (IFileSystemInfo fileInfo in files)
         {
-            using var logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
-            var fileStream = fileInfo.CreateReadStream();
-            using var streamReader = new StreamReader(fileStream);
+            using System.IDisposable logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+            Stream fileStream = fileInfo.CreateReadStream();
+            using StreamReader streamReader = new StreamReader(fileStream);
 
-            var rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            var response = _fileMetaDataProcessor.Parse(new MetadataCriteria
+            string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _fileMetaDataProcessor.Parse(new MetadataCriteria
             {
                 Content = rawContent,
                 Scope = scope,
                 FileName = fileInfo.Name
             });
 
-            var fileMeta = response.Data;
-            var fileContents = response.Content;
+            FileMetaData fileMeta = response.Data;
+            string fileContents = response.Content;
 
-            var preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+            IContentPreprocessorStrategy preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
             if (preprocessor != null)
             {
                 fileContents = preprocessor.Execute(fileContents);

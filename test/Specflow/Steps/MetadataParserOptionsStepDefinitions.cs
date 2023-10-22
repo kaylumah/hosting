@@ -27,9 +27,9 @@ public class MetadataParserOptionsStepDefinitions
     [Given("the following extension mapping:")]
     public void GivenTheFollowingExtensionMapping(Table table)
     {
-        var set = table.CreateSet<(string key, string value)>();
-        var dictionary = new Dictionary<string, string>();
-        foreach (var (key, value) in set)
+        IEnumerable<(string key, string value)> set = table.CreateSet<(string key, string value)>();
+        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+        foreach ((string key, string value) in set)
         {
             dictionary.Add(key, value);
         }

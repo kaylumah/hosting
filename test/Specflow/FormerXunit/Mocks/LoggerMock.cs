@@ -25,7 +25,7 @@ public class LoggerMock<T> : Mock<ILogger<T>>
             .Callback<LogLevel, EventId, object, Exception, Delegate>(
                 (level, eventid, state, ex, func) =>
                 {
-                    var result = state.ToString();
+                    string result = state.ToString();
                     //this.Out.WriteLine(state.ToString());
                 }
             );

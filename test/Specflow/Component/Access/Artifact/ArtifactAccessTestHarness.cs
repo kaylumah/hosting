@@ -31,7 +31,7 @@ public sealed class ArtifactAccessTestHarness
 
     public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
     {
-        var testHarness = TestHarnessBuilder.Build();
+        TestHarness testHarness = TestHarnessBuilder.Build();
         await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
     }
 }

@@ -24,15 +24,15 @@ public static partial class ServiceCollectionExtensions
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
     {
-        var key = typeof(TOptions).Name;
+        string key = typeof(TOptions).Name;
         services.SetupOptions<TOptions>(configuration, key);
         return services;
     }
 
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, IConfiguration configuration, string key) where TOptions : class
     {
-        var section = configuration.GetRequiredSection(key);
-        var configureDelegate = (TOptions options) => section.Bind(options);
+        IConfigurationSection section = configuration.GetRequiredSection(key);
+        Action<TOptions> configureDelegate = (TOptions options) => section.Bind(options);
         services.SetupOptions(configureDelegate);
         return services;
     }
@@ -40,7 +40,7 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection SetupOptions<TOptions>(this IServiceCollection services, Action<TOptions> configureDelegate) where TOptions : class
     {
         services.Configure(configureDelegate);
-        var options = new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName);
+        DataAnnotationValidateOptions<TOptions> options = new DataAnnotationValidateOptions<TOptions>(Options.Options.DefaultName);
         services.AddSingleton<IValidateOptions<TOptions>>(options);
         services.AddSingleton(sp => sp.GetRequiredService<IOptions<TOptions>>().Value);
         return services;

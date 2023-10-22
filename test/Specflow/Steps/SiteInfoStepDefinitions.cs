@@ -21,9 +21,9 @@ public class SiteInfoStepDefinitions
     [Given("the following collections:")]
     public void GivenTheFollowingCollections(Table table)
     {
-        var collections = table.CreateSet<Collection>();
+        IEnumerable<Collection> collections = table.CreateSet<Collection>();
         _siteInfo.Collections = new Kaylumah.Ssg.Manager.Site.Service.Collections();
-        foreach (var collection in collections)
+        foreach (Collection collection in collections)
         {
             _siteInfo.Collections.Add(collection);
         }
@@ -32,7 +32,7 @@ public class SiteInfoStepDefinitions
     [Given("the following site info:")]
     public void GivenTheFollowingSiteInfo(Table table)
     {
-        var data = table.CreateInstance<(string title, string description, string Language, string url, string baseUrl, string[] supportedFileExtensions)>();
+        (string title, string description, string Language, string url, string baseUrl, string[] supportedFileExtensions) data = table.CreateInstance<(string title, string description, string Language, string url, string baseUrl, string[] supportedFileExtensions)>();
         _siteInfo.Url = data.url;
         _siteInfo.Title = data.title;
         _siteInfo.Description = data.description;

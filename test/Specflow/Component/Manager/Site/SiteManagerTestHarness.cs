@@ -60,7 +60,7 @@ public sealed class SiteManagerTestHarness
 
     public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
     {
-        var testHarness = TestHarnessBuilder.Build();
+        TestHarness testHarness = TestHarnessBuilder.Build();
         await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
     }
 }

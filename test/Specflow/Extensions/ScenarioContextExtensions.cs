@@ -10,8 +10,8 @@ public static class ScenarioContextExtensions
 {
     public static string ToVerifyMethodName(this ScenarioContext scenarioContext, string artifact)
     {
-        var info = scenarioContext.ScenarioInfo;
-        var testName = info.Title.ToIdentifier();
+        ScenarioInfo info = scenarioContext.ScenarioInfo;
+        string testName = info.Title.ToIdentifier();
         return $"{testName}-{artifact}";
     }
 }

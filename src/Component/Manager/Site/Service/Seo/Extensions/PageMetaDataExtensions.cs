@@ -14,7 +14,7 @@ public static class PageMetaDataExtensions
 {
     public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<string, Person> persons, Dictionary<string, Organization> organizations)
     {
-        var blogPost = new BlogPosting
+        BlogPosting blogPost = new BlogPosting
         {
             // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
             MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(page.Uri))),

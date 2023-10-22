@@ -35,10 +35,10 @@ public partial class FileSystemStoreArtifactsStrategy : IStoreArtifactsStrategy
     {
         if (request.OutputLocation is FileSystemOutputLocation fileSystemOutputLocation)
         {
-            foreach (var artifact in request.Artifacts)
+            foreach (Interface.Artifact artifact in request.Artifacts)
             {
-                var filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
-                var directory = Path.GetDirectoryName(filePath);
+                string filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
+                string directory = Path.GetDirectoryName(filePath);
 
                 if (!Directory.Exists(directory))
                 {

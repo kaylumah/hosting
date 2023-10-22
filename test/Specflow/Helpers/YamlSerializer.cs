@@ -23,7 +23,7 @@ public static class YamlSerializer
 
         public void WriteYaml(IEmitter emitter, object value, Type type)
         {
-            var dateTime = (DateTimeOffset)value;
+            DateTimeOffset dateTime = (DateTimeOffset)value;
             string str = dateTime.ToString("o", CultureInfo.InvariantCulture);
             emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
         }
@@ -31,7 +31,7 @@ public static class YamlSerializer
 
     public static ISerializer Create()
     {
-        var serializer = new SerializerBuilder()
+        ISerializer serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
             .WithTypeConverter(new CustomDateTimeYamlTypeConverter())

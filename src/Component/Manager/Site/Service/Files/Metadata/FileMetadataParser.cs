@@ -31,7 +31,7 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
     {
-        var result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+        Metadata<FileMetaData> result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
         if (result.Data == null)
         {
             result.Data = new FileMetaData();
@@ -40,10 +40,10 @@ public partial class FileMetadataParser : IFileMetadataParser
         {
             result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
         }
-        var outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
-        var paths = DetermineFilters(outputLocation);
+        string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
+        List<string> paths = DetermineFilters(outputLocation);
 
-        var fileMetaData = ApplyDefaults(paths, criteria.Scope);
+        FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
         OverwriteMetaData(fileMetaData, result.Data, "file");
         ApplyDates(fileMetaData);
         fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
@@ -58,7 +58,7 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private string RetrieveExtension(string fileName)
     {
-        var ext = Path.GetExtension(fileName);
+        string ext = Path.GetExtension(fileName);
         if (_options.ExtensionMapping.TryGetValue(ext, out string value))
         {
             return value;
@@ -69,10 +69,10 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private FileMetaData ApplyDefaults(List<string> filters, string scope)
     {
-        var fileMetaData = new FileMetaData();
-        foreach (var filter in filters)
+        FileMetaData fileMetaData = new FileMetaData();
+        foreach (string filter in filters)
         {
-            var defaultMeta = _options.Defaults.DefaultFilter(filter);
+            DefaultMetadata defaultMeta = _options.Defaults.DefaultFilter(filter);
             if (defaultMeta != null)
             {
                 OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
@@ -80,7 +80,7 @@ public partial class FileMetadataParser : IFileMetadataParser
 
             if (!string.IsNullOrEmpty(scope))
             {
-                var scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
+                DefaultMetadata scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
                 if (scopedMeta != null)
                 {
                     OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");
@@ -92,13 +92,13 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private static List<string> DetermineFilters(string outputLocation)
     {
-        var paths = new List<string>() { string.Empty };
+        List<string> paths = new List<string>() { string.Empty };
         //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
-        var urlSeperator = "/";
-        var index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
+        string urlSeperator = "/";
+        int index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
         if (index >= 0)
         {
-            var input = outputLocation[..index];
+            string input = outputLocation[..index];
             paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
             paths = paths.OrderBy(x => x.Length).ToList();
         }
@@ -107,7 +107,7 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
     {
-        var result = new List<string>();
+        List<string> result = new List<string>();
         int index;
         while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
         {
@@ -124,20 +124,20 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private string DetermineOutputLocation(string fileName, FileMetaData metaData)
     {
-        var permalink = metaData.OutputLocation;
-        var pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
-        var match = Regex.Match(fileName, pattern);
+        string permalink = metaData.OutputLocation;
+        string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
+        Match match = Regex.Match(fileName, pattern);
 
-        var outputFileName = match.FileNameByPattern();
-        var fileDate = match.DateByPattern();
+        string outputFileName = match.FileNameByPattern();
+        DateTimeOffset? fileDate = match.DateByPattern();
         if (fileDate != null)
         {
             metaData.Date = fileDate;
         }
 
-        var outputExtension = RetrieveExtension(outputFileName);
+        string outputExtension = RetrieveExtension(outputFileName);
 
-        var result = permalink
+        string result = permalink
             .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy", CultureInfo.InvariantCulture)}")
             .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM", CultureInfo.InvariantCulture)}")
             .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd", CultureInfo.InvariantCulture)}");
@@ -156,7 +156,7 @@ public partial class FileMetadataParser : IFileMetadataParser
 
     private static void ApplyDates(FileMetaData fileMetaData)
     {
-        var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+        TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
         ApplyPublishedDates(fileMetaData, tz);
         ApplyModifiedDates(fileMetaData, tz);
         fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
@@ -175,10 +175,10 @@ public partial class FileMetadataParser : IFileMetadataParser
 
         if (!string.IsNullOrEmpty(fileMetaData.PublishedDate))
         {
-            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
-            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
-            var utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+            string dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
+            string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+            DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+            DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
             fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
         }
     }
@@ -196,10 +196,10 @@ public partial class FileMetadataParser : IFileMetadataParser
 
         if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
         {
-            var dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
-            var dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            var zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
-            var utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+            string dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
+            string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+            DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+            DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
             fileMetaData.Modified = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
         }
     }
@@ -208,7 +208,7 @@ public partial class FileMetadataParser : IFileMetadataParser
     {
         if (source != null)
         {
-            foreach (var entry in source)
+            foreach (KeyValuePair<string, object> entry in source)
             {
 #pragma warning disable CA1854
                 if (target.ContainsKey(entry.Key))

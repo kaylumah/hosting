@@ -19,17 +19,17 @@ public class YamlFrontMatterMetadataProvider : IMetadataProvider
 
     public Metadata<T> Retrieve<T>(string contents)
     {
-        var frontMatterData = string.Empty;
-        var match = Regex.Match(contents, _pattern);
+        string frontMatterData = string.Empty;
+        Match match = Regex.Match(contents, _pattern);
         if (match.Success)
         {
             frontMatterData = match.Groups["yaml"].Value.TrimEnd();
-            var frontMatter = match.Value;
+            string frontMatter = match.Value;
             contents = contents.Replace(frontMatter, string.Empty).TrimStart();
         }
 
-        var data = _yamlParser.Parse<T>(frontMatterData);
-        var result = new Metadata<T>()
+        T data = _yamlParser.Parse<T>(frontMatterData);
+        Metadata<T> result = new Metadata<T>()
         {
             Content = contents,
             Data = data
