@@ -42,7 +42,6 @@ namespace Test.Specflow.FormerXunit
             return new MockFileData(bytes);
         }
 
-
         [Fact]
         public async Task Test_FileProcessor_ChangedFileExtension()
         {

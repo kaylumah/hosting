@@ -13,14 +13,14 @@ namespace Test.Utilities
 {
     public sealed class TestHarness
     {
-        readonly IServiceProvider _serviceProvider;
-        static readonly ProxyGenerator ProxyGenerator = new();
-        readonly IReadOnlyList<IInterceptor> _interceptors;
+        readonly IServiceProvider _ServiceProvider;
+        static readonly ProxyGenerator _ProxyGenerator = new();
+        readonly IReadOnlyList<IInterceptor> _Interceptors;
 
         public TestHarness(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider;
-            _interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
+            _ServiceProvider = serviceProvider;
+            _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
         }
 
         public async Task TestService<T>(Func<T, Task> scenario) where T : class
@@ -32,10 +32,10 @@ namespace Test.Utilities
         T GetProxy<T>() where T : class
         {
             Type targetType = typeof(T);
-            T instance = _serviceProvider.GetRequiredService<T>();
+            T instance = _ServiceProvider.GetRequiredService<T>();
             if (targetType.IsInterface)
             {
-                T proxy = ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _interceptors.ToArray());
+                T proxy = _ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _Interceptors.ToArray());
                 return proxy;
             }
             else
@@ -43,7 +43,7 @@ namespace Test.Utilities
                 System.Reflection.ConstructorInfo constructor = targetType.GetConstructor(Type.EmptyTypes);
                 if (constructor != null)
                 {
-                    T proxy = ProxyGenerator.CreateClassProxyWithTarget(instance, _interceptors.ToArray());
+                    T proxy = _ProxyGenerator.CreateClassProxyWithTarget(instance, _Interceptors.ToArray());
                     return proxy;
                 }
             }

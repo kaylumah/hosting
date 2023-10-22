@@ -38,7 +38,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         readonly ISystemClock _systemClock;
 
-
         public SiteMetadataFactory(ISystemClock systemClock, SiteInfo siteInfo, IYamlParser yamlParser, IFileSystem fileSystem, ILogger<SiteMetadataFactory> logger)
         {
             _systemClock = systemClock;
@@ -184,7 +183,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 );
             }
         }
-
 
         void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
         {

@@ -42,8 +42,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             _fileMetaDataProcessor = fileMetadataParser;
         }
 
-
-
         public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
             List<File> result = new List<File>();

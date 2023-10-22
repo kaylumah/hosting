@@ -29,7 +29,6 @@ namespace Kaylumah.Ssg.Utilities
                 .GetAttribtutes<AssemblyMetadataAttribute>()
                 .ToDictionary(a => a.Key, a => a.Value);
 
-
             AssemblyInfo result = new AssemblyInfo()
             {
                 Copyright = copyrightAttribute.Copyright,

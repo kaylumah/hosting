@@ -80,8 +80,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return feed;
         }
 
-
-
         List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             List<PageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)

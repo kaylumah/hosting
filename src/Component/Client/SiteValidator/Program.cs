@@ -45,8 +45,6 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                 new TagFilter("//meta[@name='description']")
             };
 
-
-
             string path = Path.Combine(Environment.CurrentDirectory, "dist");
             if (Directory.Exists(path))
             {
