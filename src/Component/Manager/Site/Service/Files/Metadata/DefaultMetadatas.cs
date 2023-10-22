@@ -3,16 +3,17 @@
 
 using System.Collections.ObjectModel;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-
-public class DefaultMetadatas : KeyedCollection<string, DefaultMetadata>
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    protected override string GetKeyForItem(DefaultMetadata item)
+    public class DefaultMetadatas : KeyedCollection<string, DefaultMetadata>
     {
-        if (item.Scope != null)
+        protected override string GetKeyForItem(DefaultMetadata item)
         {
-            return $"{item.Path}.{item.Scope}";
+            if (item.Scope != null)
+            {
+                return $"{item.Path}.{item.Scope}";
+            }
+            return item.Path;
         }
-        return item.Path;
     }
 }

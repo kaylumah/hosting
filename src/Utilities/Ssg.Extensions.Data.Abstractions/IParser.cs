@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Ssg.Extensions.Data.Abstractions;
-
-public interface IParser
+namespace Ssg.Extensions.Data.Abstractions
 {
-    T Parse<T>(string raw);
+    public interface IParser
+    {
+        T Parse<T>(string raw);
+    }
 }

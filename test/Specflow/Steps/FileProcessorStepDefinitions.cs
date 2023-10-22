@@ -18,42 +18,43 @@ using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Steps;
-
-[Binding]
-public class FileProcessorStepDefinitions
+namespace Test.Specflow.Steps
 {
-    private readonly IFileProcessor _fileProcessor;
-    private readonly List<File> _files = new();
+    [Binding]
+    public class FileProcessorStepDefinitions
+    {
+        private readonly IFileProcessor _fileProcessor;
+        private readonly List<File> _files = new();
 
-    public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
-    {
-        FileMetadataParser metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
-            new YamlFrontMatterMetadataProvider(new YamlParser()),
-            metadataParserOptions);
-        _fileProcessor = new FileProcessor(mockFileSystem,
-            NullLogger<FileProcessor>.Instance,
-            Enumerable.Empty<IContentPreprocessorStrategy>(),
-            siteInfo,
-            metadataParser);
-    }
-    [When("the files are retrieved:")]
-    public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
-    {
-        IEnumerable<File> result = await _fileProcessor.Process(criteria);
-        _files.AddRange(result);
-    }
+        public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
+        {
+            FileMetadataParser metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+                new YamlFrontMatterMetadataProvider(new YamlParser()),
+                metadataParserOptions);
+            _fileProcessor = new FileProcessor(mockFileSystem,
+                NullLogger<FileProcessor>.Instance,
+                Enumerable.Empty<IContentPreprocessorStrategy>(),
+                siteInfo,
+                metadataParser);
+        }
+        [When("the files are retrieved:")]
+        public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
+        {
+            IEnumerable<File> result = await _fileProcessor.Process(criteria);
+            _files.AddRange(result);
+        }
 
-    [Then("the following articles are returned:")]
-    public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
-    {
-        IEnumerable<Article> actual = _files.ToArticles();
-        actual.Should().BeEquivalentTo(articleCollection);
-    }
+        [Then("the following articles are returned:")]
+        public void ThenTheFollowingArticlesAreReturned(ArticleCollection articleCollection)
+        {
+            IEnumerable<Article> actual = _files.ToArticles();
+            actual.Should().BeEquivalentTo(articleCollection);
+        }
 
-    [Then("no articles are returned:")]
-    public void ThenNoArticlesAreReturned()
-    {
-        _files.Should().BeEmpty();
+        [Then("no articles are returned:")]
+        public void ThenNoArticlesAreReturned()
+        {
+            _files.Should().BeEmpty();
+        }
     }
 }

@@ -3,32 +3,33 @@
 
 using System.Globalization;
 
-namespace System.Collections.Generic;
-
-public static class DictionaryExtensions
+namespace System.Collections.Generic
 {
-    public static bool GetBoolValue(this Dictionary<string, object> dictionary, string key)
+    public static class DictionaryExtensions
     {
-        string stringValue = dictionary.GetValue<string>(key);
-        bool result = bool.Parse(stringValue);
-        return result;
-    }
-
-    public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
-    {
-        string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-        dictionary.TryGetValue(lowerKey, out object o);
-        if (o is T t)
+        public static bool GetBoolValue(this Dictionary<string, object> dictionary, string key)
         {
-            return t;
+            string stringValue = dictionary.GetValue<string>(key);
+            bool result = bool.Parse(stringValue);
+            return result;
         }
-        T result = default(T);
-        return result;
-    }
 
-    public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
-    {
-        string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-        dictionary[lowerKey] = value;
+        public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
+        {
+            string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
+            dictionary.TryGetValue(lowerKey, out object o);
+            if (o is T t)
+            {
+                return t;
+            }
+            T result = default(T);
+            return result;
+        }
+
+        public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
+        {
+            string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
+            dictionary[lowerKey] = value;
+        }
     }
 }

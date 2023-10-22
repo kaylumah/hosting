@@ -3,15 +3,16 @@
 
 using System;
 
-namespace Test.Specflow.Helpers;
-
-[AttributeUsage(AttributeTargets.Property)]
-public sealed class GherkinTableHeaderAttribute : Attribute
+namespace Test.Specflow.Helpers
 {
-    public int HeaderIndex { get; }
-
-    public GherkinTableHeaderAttribute(int headerIndex)
+    [AttributeUsage(AttributeTargets.Property)]
+    public sealed class GherkinTableHeaderAttribute : Attribute
     {
-        HeaderIndex = headerIndex;
+        public int HeaderIndex { get; }
+
+        public GherkinTableHeaderAttribute(int headerIndex)
+        {
+            HeaderIndex = headerIndex;
+        }
     }
 }

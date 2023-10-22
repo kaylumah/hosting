@@ -1,4 +1,5 @@
-﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿
+// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
@@ -11,161 +12,162 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-
-public partial class FileProcessor : IFileProcessor
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
-    [LoggerMessage(
-       EventId = 0,
-       Level = LogLevel.Warning,
-       Message = "No files present")]
-    private partial void LogNoFiles();
-
-    private readonly IFileSystem _fileSystem;
-    private readonly ILogger _logger;
-    private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
-    private readonly IFileMetadataParser _fileMetaDataProcessor;
-    private readonly SiteInfo _siteInfo;
-
-    public FileProcessor(
-        IFileSystem fileSystem,
-        ILogger<FileProcessor> logger,
-        IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
-        SiteInfo options,
-        IFileMetadataParser fileMetadataParser)
+    public partial class FileProcessor : IFileProcessor
     {
-        _siteInfo = options;
-        _preprocessorStrategies = preprocessorStrategies;
-        _fileSystem = fileSystem;
-        _logger = logger;
-        _fileMetaDataProcessor = fileMetadataParser;
-    }
+        [LoggerMessage(
+           EventId = 0,
+           Level = LogLevel.Warning,
+           Message = "No files present")]
+        private partial void LogNoFiles();
 
+        private readonly IFileSystem _fileSystem;
+        private readonly ILogger _logger;
+        private readonly IEnumerable<IContentPreprocessorStrategy> _preprocessorStrategies;
+        private readonly IFileMetadataParser _fileMetaDataProcessor;
+        private readonly SiteInfo _siteInfo;
 
-
-    public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
-    {
-        List<File> result = new List<File>();
-
-        List<IFileSystemInfo> directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
-
-        if (!directoryContents.Any())
+        public FileProcessor(
+            IFileSystem fileSystem,
+            ILogger<FileProcessor> logger,
+            IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
+            SiteInfo options,
+            IFileMetadataParser fileMetadataParser)
         {
-            LogNoFiles();
+            _siteInfo = options;
+            _preprocessorStrategies = preprocessorStrategies;
+            _fileSystem = fileSystem;
+            _logger = logger;
+            _fileMetaDataProcessor = fileMetadataParser;
+        }
+
+
+
+        public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
+        {
+            List<File> result = new List<File>();
+
+            List<IFileSystemInfo> directoryContents = _fileSystem.GetFiles(criteria.RootDirectory).ToList();
+
+            if (!directoryContents.Any())
+            {
+                LogNoFiles();
+                return result;
+            }
+
+            List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
+                .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
+                .ToList();
+
+            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
+                !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
+            ).ToList();
+
+            List<File> files =
+                await ProcessFiles(
+                    filesWithoutCollections
+                    .Select(x => x.FullName)
+                    .ToArray()
+                ).ConfigureAwait(false);
+
+            result.AddRange(files);
+
+            List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
+            foreach (FileCollection collection in collections)
+            {
+                List<File> targetFiles = collection
+                    .Files
+                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
+                    .ToList();
+                bool exists = _siteInfo.Collections.Contains(collection.Name);
+                if (!exists)
+                {
+                    result.AddRange(targetFiles);
+                }
+                else
+                {
+                    if (exists && _siteInfo.Collections[collection.Name].Output)
+                    {
+                        targetFiles = targetFiles
+                            .Select(x =>
+                            {
+                                x.MetaData.Collection = collection.Name;
+                                return x;
+                            })
+                            .ToList();
+                        result.AddRange(targetFiles);
+                    }
+                }
+            }
+
             return result;
         }
 
-        List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
-            .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
-            .ToList();
-
-        List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
-            !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
-        ).ToList();
-
-        List<File> files =
-            await ProcessFiles(
-                filesWithoutCollections
-                .Select(x => x.FullName)
-                .ToArray()
-            ).ConfigureAwait(false);
-
-        result.AddRange(files);
-
-        List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
-        foreach (FileCollection collection in collections)
+        private async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
         {
-            List<File> targetFiles = collection
-                .Files
-                .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
-                .ToList();
-            bool exists = _siteInfo.Collections.Contains(collection.Name);
-            if (!exists)
+            List<FileCollection> result = new List<FileCollection>();
+            foreach (string collection in collections)
             {
-                result.AddRange(targetFiles);
-            }
-            else
-            {
-                if (exists && _siteInfo.Collections[collection.Name].Output)
+                using System.IDisposable logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
+                string keyName = collection[1..];
+                List<IFileSystemInfo> targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
+                List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
+
+                result.Add(new FileCollection
                 {
-                    targetFiles = targetFiles
-                        .Select(x =>
-                        {
-                            x.MetaData.Collection = collection.Name;
-                            return x;
-                        })
-                        .ToList();
-                    result.AddRange(targetFiles);
+                    Name = keyName,
+                    Files = files.ToArray()
+                });
+            }
+            return result;
+        }
+
+        private async Task<List<File>> ProcessFiles(string[] files)
+        {
+            List<IFileInfo> fileInfos = new List<IFileInfo>();
+            foreach (string file in files)
+            {
+                fileInfos.Add(_fileSystem.GetFile(file));
+            }
+            return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
+        }
+
+        private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
+        {
+            List<File> result = new List<File>();
+            foreach (IFileSystemInfo fileInfo in files)
+            {
+                using System.IDisposable logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+                Stream fileStream = fileInfo.CreateReadStream();
+                using StreamReader streamReader = new StreamReader(fileStream);
+
+                string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _fileMetaDataProcessor.Parse(new MetadataCriteria
+                {
+                    Content = rawContent,
+                    Scope = scope,
+                    FileName = fileInfo.Name
+                });
+
+                FileMetaData fileMeta = response.Data;
+                string fileContents = response.Content;
+
+                IContentPreprocessorStrategy preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                if (preprocessor != null)
+                {
+                    fileContents = preprocessor.Execute(fileContents);
                 }
+
+                result.Add(new File
+                {
+                    LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc,
+                    MetaData = fileMeta,
+                    Content = fileContents,
+                    Name = Path.GetFileName(fileMeta.Uri)
+                });
             }
+            return result;
         }
-
-        return result;
-    }
-
-    private async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
-    {
-        List<FileCollection> result = new List<FileCollection>();
-        foreach (string collection in collections)
-        {
-            using System.IDisposable logScope = _logger.BeginScope($"[ProcessDirectories '{collection}']");
-            string keyName = collection[1..];
-            List<IFileSystemInfo> targetFiles = _fileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
-            List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
-
-            result.Add(new FileCollection
-            {
-                Name = keyName,
-                Files = files.ToArray()
-            });
-        }
-        return result;
-    }
-
-    private async Task<List<File>> ProcessFiles(string[] files)
-    {
-        List<IFileInfo> fileInfos = new List<IFileInfo>();
-        foreach (string file in files)
-        {
-            fileInfos.Add(_fileSystem.GetFile(file));
-        }
-        return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
-    }
-
-    private async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
-    {
-        List<File> result = new List<File>();
-        foreach (IFileSystemInfo fileInfo in files)
-        {
-            using System.IDisposable logScope = _logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
-            Stream fileStream = fileInfo.CreateReadStream();
-            using StreamReader streamReader = new StreamReader(fileStream);
-
-            string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _fileMetaDataProcessor.Parse(new MetadataCriteria
-            {
-                Content = rawContent,
-                Scope = scope,
-                FileName = fileInfo.Name
-            });
-
-            FileMetaData fileMeta = response.Data;
-            string fileContents = response.Content;
-
-            IContentPreprocessorStrategy preprocessor = _preprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
-            if (preprocessor != null)
-            {
-                fileContents = preprocessor.Execute(fileContents);
-            }
-
-            result.Add(new File
-            {
-                LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc,
-                MetaData = fileMeta,
-                Content = fileContents,
-                Name = Path.GetFileName(fileMeta.Uri)
-            });
-        }
-        return result;
     }
 }

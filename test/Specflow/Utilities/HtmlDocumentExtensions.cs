@@ -6,27 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using HtmlAgilityPack;
 
-namespace Test.Specflow.Utilities;
-
-public static class HtmlDocumentExtensions
+namespace Test.Specflow.Utilities
 {
-    public static List<(string Tag, string Value)> ToMetaTags(this HtmlDocument document)
+    public static class HtmlDocumentExtensions
     {
-        HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//meta");
-        // var node = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
-        // var node2 = document.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
-        // var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
-        List<(string Tag, string Value)> result = new List<(string Tag, string Value)>();
-        foreach (HtmlNode node in nodes)
+        public static List<(string Tag, string Value)> ToMetaTags(this HtmlDocument document)
         {
-            HtmlAttribute keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
-                               ?? node.Attributes.SingleOrDefault(x => x.Name == "property");
-            HtmlAttribute valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
-            if (keyAttribute != null && valueAttribute != null)
+            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//meta");
+            // var node = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
+            // var node2 = document.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
+            // var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
+            List<(string Tag, string Value)> result = new List<(string Tag, string Value)>();
+            foreach (HtmlNode node in nodes)
             {
-                result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
+                HtmlAttribute keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
+                                   ?? node.Attributes.SingleOrDefault(x => x.Name == "property");
+                HtmlAttribute valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
+                if (keyAttribute != null && valueAttribute != null)
+                {
+                    result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
+                }
             }
+            return result;
         }
-        return result;
     }
 }

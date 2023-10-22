@@ -6,33 +6,34 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Test.Specflow.Steps;
-
-[Binding]
-public class MetadataParserOptionsStepDefinitions
+namespace Test.Specflow.Steps
 {
-    private readonly MetadataParserOptions _metadataParserOptions;
-
-    public MetadataParserOptionsStepDefinitions(MetadataParserOptions metadataParserOptions)
+    [Binding]
+    public class MetadataParserOptionsStepDefinitions
     {
-        _metadataParserOptions = metadataParserOptions;
-    }
+        private readonly MetadataParserOptions _metadataParserOptions;
 
-    [Given("the following defaults:")]
-    public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
-    {
-        _metadataParserOptions.Defaults = metadatas;
-    }
-
-    [Given("the following extension mapping:")]
-    public void GivenTheFollowingExtensionMapping(Table table)
-    {
-        IEnumerable<(string key, string value)> set = table.CreateSet<(string key, string value)>();
-        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-        foreach ((string key, string value) in set)
+        public MetadataParserOptionsStepDefinitions(MetadataParserOptions metadataParserOptions)
         {
-            dictionary.Add(key, value);
+            _metadataParserOptions = metadataParserOptions;
         }
-        _metadataParserOptions.ExtensionMapping = dictionary;
+
+        [Given("the following defaults:")]
+        public void GivenTheFollowingDefaults(DefaultMetadatas metadatas)
+        {
+            _metadataParserOptions.Defaults = metadatas;
+        }
+
+        [Given("the following extension mapping:")]
+        public void GivenTheFollowingExtensionMapping(Table table)
+        {
+            IEnumerable<(string key, string value)> set = table.CreateSet<(string key, string value)>();
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+            foreach ((string key, string value) in set)
+            {
+                dictionary.Add(key, value);
+            }
+            _metadataParserOptions.ExtensionMapping = dictionary;
+        }
     }
 }

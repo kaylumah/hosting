@@ -8,33 +8,34 @@ using FluentAssertions;
 using Kaylumah.Ssg.Utilities;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit;
-
-public class EncodingUtilTests
+namespace Test.Specflow.FormerXunit
 {
+    public class EncodingUtilTests
+    {
 
-    [Theory]
+        [Theory]
 #pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-    [MemberData(nameof(EncodingTestData))]
+        [MemberData(nameof(EncodingTestData))]
 #pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
-    public void Test_EncodingUtil_DetermineEncoding_ShouldReturnCorrectEncoding(Stream stream, string expectedEncoding)
-    {
-        Encoding result = stream.DetermineEncoding();
-        result.Should().NotBeNull();
-        string encoding = result.EncodingName;
-        encoding.Should().Be(expectedEncoding);
-    }
+        public void Test_EncodingUtil_DetermineEncoding_ShouldReturnCorrectEncoding(Stream stream, string expectedEncoding)
+        {
+            Encoding result = stream.DetermineEncoding();
+            result.Should().NotBeNull();
+            string encoding = result.EncodingName;
+            encoding.Should().Be(expectedEncoding);
+        }
 
-    public static IEnumerable<object[]> EncodingTestData()
-    {
-        yield return new object[] {
+        public static IEnumerable<object[]> EncodingTestData()
+        {
+            yield return new object[] {
                 new MemoryStream(Encoding.ASCII.GetBytes("Hello World!")),
                 Encoding.UTF8.EncodingName
             };
 
-        yield return new object[] {
+            yield return new object[] {
                 new MemoryStream(Encoding.UTF8.GetBytes("Hello World!")),
                 Encoding.UTF8.EncodingName
             };
+        }
     }
 }

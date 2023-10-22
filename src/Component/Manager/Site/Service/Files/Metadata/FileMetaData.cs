@@ -1,168 +1,171 @@
-﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿
+
+// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-
-public class FileMetaData : Dictionary<string, object>
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-
-    public string Series
+    public class FileMetaData : Dictionary<string, object>
     {
-        get
-        {
-            return this.GetValue<string>(nameof(Series));
-        }
-        set
-        {
-            this.SetValue(nameof(Series), value);
-        }
-    }
 
-    public string Layout
-    {
-        get
+        public string Series
         {
-            return this.GetValue<string>(nameof(Layout));
+            get
+            {
+                return this.GetValue<string>(nameof(Series));
+            }
+            set
+            {
+                this.SetValue(nameof(Series), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Layout), value);
-        }
-    }
 
-    public string OutputLocation
-    {
-        get
+        public string Layout
         {
-            return this.GetValue<string>(nameof(OutputLocation));
+            get
+            {
+                return this.GetValue<string>(nameof(Layout));
+            }
+            set
+            {
+                this.SetValue(nameof(Layout), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(OutputLocation), value);
-        }
-    }
 
-    public string Uri
-    {
-        get
+        public string OutputLocation
         {
-            return this.GetValue<string>(nameof(Uri));
+            get
+            {
+                return this.GetValue<string>(nameof(OutputLocation));
+            }
+            set
+            {
+                this.SetValue(nameof(OutputLocation), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Uri), value);
-        }
-    }
 
-    public string Collection
-    {
-        get
+        public string Uri
         {
-            return this.GetValue<string>(nameof(Collection));
+            get
+            {
+                return this.GetValue<string>(nameof(Uri));
+            }
+            set
+            {
+                this.SetValue(nameof(Uri), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Collection), value);
-        }
-    }
 
-    public List<string> Tags
-    {
-        get
+        public string Collection
         {
-            return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            get
+            {
+                return this.GetValue<string>(nameof(Collection));
+            }
+            set
+            {
+                this.SetValue(nameof(Collection), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Tags), value);
-        }
-    }
 
-    public DateTimeOffset? Date
-    {
-        get
+        public List<string> Tags
         {
-            return this.GetValue<DateTimeOffset?>(nameof(Date));
+            get
+            {
+                return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+            }
+            set
+            {
+                this.SetValue(nameof(Tags), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Date), value);
-        }
-    }
 
-    public string PublishedDate
-    {
-        get
+        public DateTimeOffset? Date
         {
-            return this.GetValue<string>(nameof(PublishedDate));
+            get
+            {
+                return this.GetValue<DateTimeOffset?>(nameof(Date));
+            }
+            set
+            {
+                this.SetValue(nameof(Date), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(PublishedDate), value);
-        }
-    }
 
-    public string PublishedTime
-    {
-        get
+        public string PublishedDate
         {
-            return this.GetValue<string>(nameof(PublishedTime));
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedDate), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(PublishedTime), value);
-        }
-    }
 
-    public DateTimeOffset? Published
-    {
-        get
+        public string PublishedTime
         {
-            return this.GetValue<DateTimeOffset?>(nameof(Published));
+            get
+            {
+                return this.GetValue<string>(nameof(PublishedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(PublishedTime), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(Published), value);
-        }
-    }
 
-    public string ModifiedDate
-    {
-        get
+        public DateTimeOffset? Published
         {
-            return this.GetValue<string>(nameof(ModifiedDate));
+            get
+            {
+                return this.GetValue<DateTimeOffset?>(nameof(Published));
+            }
+            set
+            {
+                this.SetValue(nameof(Published), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(ModifiedDate), value);
-        }
-    }
 
-    public string ModifiedTime
-    {
-        get
+        public string ModifiedDate
         {
-            return this.GetValue<string>(nameof(ModifiedTime));
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedDate));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedDate), value);
+            }
         }
-        set
-        {
-            this.SetValue(nameof(ModifiedTime), value);
-        }
-    }
 
-    public DateTimeOffset? Modified
-    {
-        get
+        public string ModifiedTime
         {
-            return this.GetValue<DateTimeOffset?>(nameof(Modified));
+            get
+            {
+                return this.GetValue<string>(nameof(ModifiedTime));
+            }
+            set
+            {
+                this.SetValue(nameof(ModifiedTime), value);
+            }
         }
-        set
+
+        public DateTimeOffset? Modified
         {
-            this.SetValue(nameof(Modified), value);
+            get
+            {
+                return this.GetValue<DateTimeOffset?>(nameof(Modified));
+            }
+            set
+            {
+                this.SetValue(nameof(Modified), value);
+            }
         }
     }
 }

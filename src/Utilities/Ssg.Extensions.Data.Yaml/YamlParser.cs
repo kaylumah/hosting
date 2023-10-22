@@ -4,23 +4,24 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Ssg.Extensions.Data.Yaml;
-
-public class YamlParser : IYamlParser
+namespace Ssg.Extensions.Data.Yaml
 {
-    private readonly IDeserializer _deserializer;
-
-    public YamlParser()
+    public class YamlParser : IYamlParser
     {
-        _deserializer = new DeserializerBuilder()
-            .IgnoreUnmatchedProperties()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-           .Build();
-    }
+        private readonly IDeserializer _deserializer;
 
-    public T Parse<T>(string raw)
-    {
-        T result = _deserializer.Deserialize<T>(raw);
-        return result;
+        public YamlParser()
+        {
+            _deserializer = new DeserializerBuilder()
+                .IgnoreUnmatchedProperties()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+               .Build();
+        }
+
+        public T Parse<T>(string raw)
+        {
+            T result = _deserializer.Deserialize<T>(raw);
+            return result;
+        }
     }
 }

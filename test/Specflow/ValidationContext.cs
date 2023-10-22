@@ -3,9 +3,10 @@
 
 using System;
 
-namespace Test.Specflow;
-
-public class ValidationContext
+namespace Test.Specflow
 {
-    public Exception TestServiceException { get; set; }
+    public class ValidationContext
+    {
+        public Exception TestServiceException { get; set; }
+    }
 }

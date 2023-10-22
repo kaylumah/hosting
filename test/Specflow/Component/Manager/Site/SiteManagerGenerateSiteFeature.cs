@@ -3,9 +3,10 @@
 
 using VerifyXunit;
 
-namespace Test.Specflow.Component.Manager.Site.Features;
-
-[UsesVerify]
-public partial class SiteManagerGenerateSiteFeature
+namespace Test.Specflow.Component.Manager.Site.Features
 {
+    [UsesVerify]
+    public partial class SiteManagerGenerateSiteFeature
+    {
+    }
 }

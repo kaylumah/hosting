@@ -4,14 +4,15 @@
 using System;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
-
-public static class RenderDataExtensions
+namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
-    public static readonly Func<RenderData, bool> Html = (renderData) => renderData.IsHtml();
-
-    public static bool IsHtml(this RenderData renderData)
+    public static class RenderDataExtensions
     {
-        return PageMetaDataExtensions.Html(renderData.Page);
+        public static readonly Func<RenderData, bool> Html = (renderData) => renderData.IsHtml();
+
+        public static bool IsHtml(this RenderData renderData)
+        {
+            return PageMetaDataExtensions.Html(renderData.Page);
+        }
     }
 }

@@ -4,10 +4,11 @@
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 
-namespace Kaylumah.Ssg.Access.Artifact.Service;
-
-public interface IStoreArtifactsStrategy
+namespace Kaylumah.Ssg.Access.Artifact.Service
 {
-    Task Execute(StoreArtifactsRequest request);
-    bool ShouldExecute(StoreArtifactsRequest request);
+    public interface IStoreArtifactsStrategy
+    {
+        Task Execute(StoreArtifactsRequest request);
+        bool ShouldExecute(StoreArtifactsRequest request);
+    }
 }

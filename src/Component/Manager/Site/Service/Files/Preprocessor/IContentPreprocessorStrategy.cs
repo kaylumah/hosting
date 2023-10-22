@@ -3,10 +3,11 @@
 
 using System.IO.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
-
-public interface IContentPreprocessorStrategy
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 {
-    bool ShouldExecute(IFileSystemInfo fileInfo);
-    string Execute(string raw);
+    public interface IContentPreprocessorStrategy
+    {
+        bool ShouldExecute(IFileSystemInfo fileInfo);
+        string Execute(string raw);
+    }
 }

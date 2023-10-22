@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 
-namespace Test.Specflow.Utilities;
-
-public static class ArtifactExtensions
+namespace Test.Specflow.Utilities
 {
-    public static byte[] GetArtifactContents(this IEnumerable<Artifact> artifacts, string path)
+    public static class ArtifactExtensions
     {
-        byte[] bytes = artifacts.SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
-        return bytes;
+        public static byte[] GetArtifactContents(this IEnumerable<Artifact> artifacts, string path)
+        {
+            byte[] bytes = artifacts.SingleOrDefault(x => path.Equals(x.Path))?.Contents ?? Array.Empty<byte>();
+            return bytes;
+        }
     }
 }

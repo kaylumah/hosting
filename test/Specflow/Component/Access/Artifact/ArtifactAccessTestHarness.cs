@@ -10,28 +10,29 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Test.Utilities;
 
-namespace Test.Specflow.Component.Access.Artifact;
-
-public sealed class ArtifactAccessTestHarness
+namespace Test.Specflow.Component.Access.Artifact
 {
-    public TestHarnessBuilder TestHarnessBuilder { get; }
-
-    private readonly ValidationContext _validationContext;
-
-    public ArtifactAccessTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
+    public sealed class ArtifactAccessTestHarness
     {
-        _validationContext = validationContext;
-        TestHarnessBuilder = TestHarnessBuilder.Create()
-            .Register((serviceCollection, configuration) =>
-            {
-                serviceCollection.AddSingleton<IFileSystem>(mockFileSystem);
-                serviceCollection.AddArtifactAccess(configuration);
-            });
-    }
+        public TestHarnessBuilder TestHarnessBuilder { get; }
 
-    public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
-    {
-        TestHarness testHarness = TestHarnessBuilder.Build();
-        await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+        private readonly ValidationContext _validationContext;
+
+        public ArtifactAccessTestHarness(MockFileSystem mockFileSystem, ValidationContext validationContext)
+        {
+            _validationContext = validationContext;
+            TestHarnessBuilder = TestHarnessBuilder.Create()
+                .Register((serviceCollection, configuration) =>
+                {
+                    serviceCollection.AddSingleton<IFileSystem>(mockFileSystem);
+                    serviceCollection.AddArtifactAccess(configuration);
+                });
+        }
+
+        public async Task TestArtifactAccess(Func<IArtifactAccess, Task> scenario)
+        {
+            TestHarness testHarness = TestHarnessBuilder.Build();
+            await testHarness.TestService(scenario, _validationContext).ConfigureAwait(false);
+        }
     }
 }

@@ -8,157 +8,158 @@ using System.IO;
 using System.Linq;
 using HtmlAgilityPack;
 
-namespace Kaylumah.Ssg.Client.SiteValidator;
-
-public class MarkupErrors
+namespace Kaylumah.Ssg.Client.SiteValidator
 {
-    public string ErrorCode { get; set; }
-    public string ErrorReason { get; set; }
-}
-
-interface IFilter
-{
-    bool Validate(HtmlDocument document);
-}
-
-sealed class TagFilter : IFilter
-{
-    private readonly string _path;
-
-    public TagFilter(string path)
+    public class MarkupErrors
     {
-        _path = path;
+        public string ErrorCode { get; set; }
+        public string ErrorReason { get; set; }
     }
 
-    public bool Validate(HtmlDocument document)
+    interface IFilter
     {
-        HtmlNode result = document.DocumentNode.SelectNodes(_path).SingleOrDefault();
-        return result != null;
+        bool Validate(HtmlDocument document);
     }
-}
 
-sealed class Program
-{
-    static void Main(string[] args)
+    sealed class TagFilter : IFilter
     {
-        IFilter[] rules = new IFilter[] {
+        private readonly string _path;
+
+        public TagFilter(string path)
+        {
+            _path = path;
+        }
+
+        public bool Validate(HtmlDocument document)
+        {
+            HtmlNode result = document.DocumentNode.SelectNodes(_path).SingleOrDefault();
+            return result != null;
+        }
+    }
+
+    sealed class Program
+    {
+        static void Main(string[] args)
+        {
+            IFilter[] rules = new IFilter[] {
                 new TagFilter("//meta[@name='description']")
             };
 
 
 
-        string path = Path.Combine(Environment.CurrentDirectory, "dist");
-        if (Directory.Exists(path))
-        {
-            string[] bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
-
-            List<string> assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS"))
-                .ToList();
-
-            List<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
-                .ToList();
-
-            List<string> htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
-
-            List<PageLinkResult> pageResults = new List<PageLinkResult>();
-
-            // https://html-agility-pack.net/knowledge-base/16645257/how-to-use-html-agility-pack-for-html-validations
-            // https://html-agility-pack.net/knowledge-base/2354653/grabbing-meta-tags-and-comments-using-html-agility-pack
-            // https://html-agility-pack.net/knowledge-base/25688847/html-agility-pack-get-all-anchors--href-attributes-on-page
-            foreach (string html in htmlFiles)
+            string path = Path.Combine(Environment.CurrentDirectory, "dist");
+            if (Directory.Exists(path))
             {
-                Console.WriteLine($"Validating {html}");
+                string[] bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
 
-                HtmlDocument document = new HtmlDocument()
-                {
-                    OptionFixNestedTags = true
-                };
-                document.LoadHtml(File.ReadAllText(html));
+                List<string> assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                    .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS"))
+                    .ToList();
 
-                List<MarkupErrors> errors = new List<MarkupErrors>();
-                foreach (HtmlParseError error in document.ParseErrors)
+                List<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                    .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
+                    .ToList();
+
+                List<string> htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
+
+                List<PageLinkResult> pageResults = new List<PageLinkResult>();
+
+                // https://html-agility-pack.net/knowledge-base/16645257/how-to-use-html-agility-pack-for-html-validations
+                // https://html-agility-pack.net/knowledge-base/2354653/grabbing-meta-tags-and-comments-using-html-agility-pack
+                // https://html-agility-pack.net/knowledge-base/25688847/html-agility-pack-get-all-anchors--href-attributes-on-page
+                foreach (string html in htmlFiles)
                 {
-                    errors.Add(new MarkupErrors
+                    Console.WriteLine($"Validating {html}");
+
+                    HtmlDocument document = new HtmlDocument()
                     {
-                        ErrorCode = error.Code.ToString(),
-                        ErrorReason = error.Reason
-                    });
+                        OptionFixNestedTags = true
+                    };
+                    document.LoadHtml(File.ReadAllText(html));
+
+                    List<MarkupErrors> errors = new List<MarkupErrors>();
+                    foreach (HtmlParseError error in document.ParseErrors)
+                    {
+                        errors.Add(new MarkupErrors
+                        {
+                            ErrorCode = error.Code.ToString(),
+                            ErrorReason = error.Reason
+                        });
+                    }
+
+                    foreach (IFilter rule in rules)
+                    {
+                        bool result = rule.Validate(document);
+                        Type type = rule.GetType();
+                    }
+
+                    bool hasHead = document.DocumentNode.SelectSingleNode("html/head") != null;
+                    bool hasBody = document.DocumentNode.SelectSingleNode("html/body") != null;
+
+                    HtmlNode rootNode = document.DocumentNode.SelectSingleNode("html");
+
+                    HtmlNode head = document.DocumentNode.SelectSingleNode("html/head");
+                    HtmlNodeCollection metaTags = head.SelectNodes("meta");
+                    HtmlNode titleTag = head.SelectSingleNode("title");
+
+                    HtmlNode body = document.DocumentNode.SelectSingleNode("html/body");
+                    PageLinkResult page = new PageLinkResult(html, body);
+                    pageResults.Add(page);
                 }
-
-                foreach (IFilter rule in rules)
-                {
-                    bool result = rule.Validate(document);
-                    Type type = rule.GetType();
-                }
-
-                bool hasHead = document.DocumentNode.SelectSingleNode("html/head") != null;
-                bool hasBody = document.DocumentNode.SelectSingleNode("html/body") != null;
-
-                HtmlNode rootNode = document.DocumentNode.SelectSingleNode("html");
-
-                HtmlNode head = document.DocumentNode.SelectSingleNode("html/head");
-                HtmlNodeCollection metaTags = head.SelectNodes("meta");
-                HtmlNode titleTag = head.SelectSingleNode("title");
-
-                HtmlNode body = document.DocumentNode.SelectSingleNode("html/body");
-                PageLinkResult page = new PageLinkResult(html, body);
-                pageResults.Add(page);
             }
         }
     }
-}
 
-sealed class PageLinkResult
-{
-    private readonly string _fileName;
-    private readonly HtmlNode _node;
-
-    public HashSet<string> ExternalAnchors { get; } = new HashSet<string>();
-    public HashSet<string> InternalAnchors { get; } = new HashSet<string>();
-    public HashSet<string> ExternalImages { get; } = new HashSet<string>();
-    public HashSet<string> InternalImages { get; } = new HashSet<string>();
-
-    public PageLinkResult(string fileName, HtmlNode node)
+    sealed class PageLinkResult
     {
-        _fileName = fileName;
-        _node = node;
-        Process();
-    }
+        private readonly string _fileName;
+        private readonly HtmlNode _node;
 
-    private void Process()
-    {
-        HtmlNodeCollection anchorTags = _node.SelectNodes("//a[@href]");
-        foreach (HtmlNode tag in anchorTags)
+        public HashSet<string> ExternalAnchors { get; } = new HashSet<string>();
+        public HashSet<string> InternalAnchors { get; } = new HashSet<string>();
+        public HashSet<string> ExternalImages { get; } = new HashSet<string>();
+        public HashSet<string> InternalImages { get; } = new HashSet<string>();
+
+        public PageLinkResult(string fileName, HtmlNode node)
         {
-            string attrValue = tag.GetAttributeValue("href", string.Empty);
-            if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue, StringComparison.Ordinal) && !"/".Equals(attrValue, StringComparison.Ordinal))
+            _fileName = fileName;
+            _node = node;
+            Process();
+        }
+
+        private void Process()
+        {
+            HtmlNodeCollection anchorTags = _node.SelectNodes("//a[@href]");
+            foreach (HtmlNode tag in anchorTags)
             {
+                string attrValue = tag.GetAttributeValue("href", string.Empty);
+                if (!string.IsNullOrEmpty(attrValue) && !"#".Equals(attrValue, StringComparison.Ordinal) && !"/".Equals(attrValue, StringComparison.Ordinal))
+                {
+                    if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
+                    {
+                        ExternalAnchors.Add(attrValue);
+                    }
+                    else
+                    {
+                        InternalAnchors.Add(attrValue);
+                    }
+                }
+            }
+
+            HtmlNodeCollection imageTags = _node.SelectNodes("//img[@src]");
+            foreach (HtmlNode tag in imageTags)
+            {
+                string attrValue = tag.GetAttributeValue("src", string.Empty);
                 if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
                 {
-                    ExternalAnchors.Add(attrValue);
+                    ExternalImages.Add(attrValue);
                 }
                 else
                 {
-                    InternalAnchors.Add(attrValue);
+                    InternalImages.Add(attrValue);
                 }
             }
-        }
 
-        HtmlNodeCollection imageTags = _node.SelectNodes("//img[@src]");
-        foreach (HtmlNode tag in imageTags)
-        {
-            string attrValue = tag.GetAttributeValue("src", string.Empty);
-            if (attrValue.StartsWith("http://", StringComparison.Ordinal) || attrValue.StartsWith("https://", StringComparison.Ordinal))
-            {
-                ExternalImages.Add(attrValue);
-            }
-            else
-            {
-                InternalImages.Add(attrValue);
-            }
         }
-
     }
 }

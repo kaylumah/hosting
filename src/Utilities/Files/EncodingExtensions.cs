@@ -4,16 +4,17 @@
 using System.IO;
 using System.Text;
 
-namespace Kaylumah.Ssg.Utilities;
-
-public static partial class EncodingExtensions
+namespace Kaylumah.Ssg.Utilities
 {
-    public static Encoding DetermineEncoding(this Stream stream)
+    public static partial class EncodingExtensions
     {
-        using StreamReader reader = new StreamReader(stream, Encoding.Default, detectEncodingFromByteOrderMarks: true);
-        if (reader.Peek() >= 0) // you need this!
-            reader.Read();
+        public static Encoding DetermineEncoding(this Stream stream)
+        {
+            using StreamReader reader = new StreamReader(stream, Encoding.Default, detectEncodingFromByteOrderMarks: true);
+            if (reader.Peek() >= 0) // you need this!
+                reader.Read();
 
-        return reader.CurrentEncoding;
+            return reader.CurrentEncoding;
+        }
     }
 }

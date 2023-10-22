@@ -3,9 +3,10 @@
 
 using System.Threading.Tasks;
 
-namespace Kaylumah.Ssg.Manager.Site.Interface;
-
-public interface ISiteManager
+namespace Kaylumah.Ssg.Manager.Site.Interface
 {
-    Task GenerateSite(GenerateSiteRequest request);
+    public interface ISiteManager
+    {
+        Task GenerateSite(GenerateSiteRequest request);
+    }
 }

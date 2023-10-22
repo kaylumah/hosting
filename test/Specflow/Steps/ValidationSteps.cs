@@ -4,21 +4,22 @@
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow.Steps;
-
-[Binding]
-public class ValidationSteps
+namespace Test.Specflow.Steps
 {
-    private readonly ValidationContext _validationContext;
-
-    public ValidationSteps(ValidationContext validationContext)
+    [Binding]
+    public class ValidationSteps
     {
-        _validationContext = validationContext;
-    }
+        private readonly ValidationContext _validationContext;
 
-    [Then("the scenario executed successfully:")]
-    public void ThenTheScenarioExecutedSuccessfully()
-    {
-        _validationContext.TestServiceException.Should().BeNull();
+        public ValidationSteps(ValidationContext validationContext)
+        {
+            _validationContext = validationContext;
+        }
+
+        [Then("the scenario executed successfully:")]
+        public void ThenTheScenarioExecutedSuccessfully()
+        {
+            _validationContext.TestServiceException.Should().BeNull();
+        }
     }
 }

@@ -3,9 +3,10 @@
 
 using Moq;
 
-namespace Test.Specflow.Utilities;
-
-public class StrictMock<T> : Mock<T> where T : class
+namespace Test.Specflow.Utilities
 {
-    protected StrictMock() : base(MockBehavior.Strict) { }
+    public class StrictMock<T> : Mock<T> where T : class
+    {
+        protected StrictMock() : base(MockBehavior.Strict) { }
+    }
 }

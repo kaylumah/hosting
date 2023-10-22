@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Moq;
 
-namespace Test.Specflow.Utilities;
-
-public class ArtifactAccessMock : StrictMock<IArtifactAccess>
+namespace Test.Specflow.Utilities
 {
-    private readonly List<StoreArtifactsRequest> _storeArtifactsRequests = new();
-    public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_storeArtifactsRequests);
-    public ReadOnlyCollection<Artifact> Artifacts => new(StoreArtifactRequests.SelectMany(x => x.Artifacts).ToList());
-
-    public ArtifactAccessMock()
+    public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {
-        SetupStore();
-    }
+        private readonly List<StoreArtifactsRequest> _storeArtifactsRequests = new();
+        public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_storeArtifactsRequests);
+        public ReadOnlyCollection<Artifact> Artifacts => new(StoreArtifactRequests.SelectMany(x => x.Artifacts).ToList());
 
-    public void SetupStore()
-    {
-        Setup(artifactAccess =>
-                artifactAccess.Store(It.IsAny<StoreArtifactsRequest>()))
-            .Callback((StoreArtifactsRequest request) =>
-            {
-                _storeArtifactsRequests.Add(request);
-            })
-            .Returns(Task.CompletedTask);
+        public ArtifactAccessMock()
+        {
+            SetupStore();
+        }
+
+        public void SetupStore()
+        {
+            Setup(artifactAccess =>
+                    artifactAccess.Store(It.IsAny<StoreArtifactsRequest>()))
+                .Callback((StoreArtifactsRequest request) =>
+                {
+                    _storeArtifactsRequests.Add(request);
+                })
+                .Returns(Task.CompletedTask);
+        }
     }
 }

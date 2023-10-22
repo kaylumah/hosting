@@ -1,4 +1,6 @@
-﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
+﻿
+
+// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
 using System;
@@ -10,214 +12,215 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
-
-public partial class FileMetadataParser : IFileMetadataParser
+namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    [LoggerMessage(
-           EventId = 0,
-           Level = LogLevel.Information,
-           Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
-    private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
-    private readonly ILogger _logger;
-    private readonly IMetadataProvider _metadataProvider;
-    private readonly MetadataParserOptions _options;
-    public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
+    public partial class FileMetadataParser : IFileMetadataParser
     {
-        _logger = logger;
-        _metadataProvider = metadataProvider;
-        _options = options;
-    }
-
-    public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
-    {
-        Metadata<FileMetaData> result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
-        if (result.Data == null)
+        [LoggerMessage(
+               EventId = 0,
+               Level = LogLevel.Information,
+               Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
+        private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
+        private readonly ILogger _logger;
+        private readonly IMetadataProvider _metadataProvider;
+        private readonly MetadataParserOptions _options;
+        public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
         {
-            result.Data = new FileMetaData();
-        }
-        if (string.IsNullOrEmpty(result.Data.OutputLocation))
-        {
-            result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
-        }
-        string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
-        List<string> paths = DetermineFilters(outputLocation);
-
-        FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
-        OverwriteMetaData(fileMetaData, result.Data, "file");
-        ApplyDates(fileMetaData);
-        fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
-
-        // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-        result.Data = fileMetaData;
-
-        result.Data.Uri = outputLocation;
-
-        return result;
-    }
-
-    private string RetrieveExtension(string fileName)
-    {
-        string ext = Path.GetExtension(fileName);
-        if (_options.ExtensionMapping.TryGetValue(ext, out string value))
-        {
-            return value;
+            _logger = logger;
+            _metadataProvider = metadataProvider;
+            _options = options;
         }
 
-        return ext;
-    }
-
-    private FileMetaData ApplyDefaults(List<string> filters, string scope)
-    {
-        FileMetaData fileMetaData = new FileMetaData();
-        foreach (string filter in filters)
+        public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
-            DefaultMetadata defaultMeta = _options.Defaults.DefaultFilter(filter);
-            if (defaultMeta != null)
+            Metadata<FileMetaData> result = _metadataProvider.Retrieve<FileMetaData>(criteria.Content);
+            if (result.Data == null)
             {
-                OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
+                result.Data = new FileMetaData();
+            }
+            if (string.IsNullOrEmpty(result.Data.OutputLocation))
+            {
+                result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
+            }
+            string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
+            List<string> paths = DetermineFilters(outputLocation);
+
+            FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
+            OverwriteMetaData(fileMetaData, result.Data, "file");
+            ApplyDates(fileMetaData);
+            fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
+
+            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
+            result.Data = fileMetaData;
+
+            result.Data.Uri = outputLocation;
+
+            return result;
+        }
+
+        private string RetrieveExtension(string fileName)
+        {
+            string ext = Path.GetExtension(fileName);
+            if (_options.ExtensionMapping.TryGetValue(ext, out string value))
+            {
+                return value;
             }
 
-            if (!string.IsNullOrEmpty(scope))
+            return ext;
+        }
+
+        private FileMetaData ApplyDefaults(List<string> filters, string scope)
+        {
+            FileMetaData fileMetaData = new FileMetaData();
+            foreach (string filter in filters)
             {
-                DefaultMetadata scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
-                if (scopedMeta != null)
+                DefaultMetadata defaultMeta = _options.Defaults.DefaultFilter(filter);
+                if (defaultMeta != null)
                 {
-                    OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");
+                    OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
+                }
+
+                if (!string.IsNullOrEmpty(scope))
+                {
+                    DefaultMetadata scopedMeta = _options.Defaults.ScopeFilter(filter, scope);
+                    if (scopedMeta != null)
+                    {
+                        OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");
+                    }
                 }
             }
-        }
-        return fileMetaData;
-    }
-
-    private static List<string> DetermineFilters(string outputLocation)
-    {
-        List<string> paths = new List<string>() { string.Empty };
-        //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
-        string urlSeperator = "/";
-        int index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
-        if (index >= 0)
-        {
-            string input = outputLocation[..index];
-            paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
-            paths = paths.OrderBy(x => x.Length).ToList();
-        }
-        return paths;
-    }
-
-    private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
-    {
-        List<string> result = new List<string>();
-        int index;
-        while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
-        {
-            result.Add(input);
-            input = input[..index];
+            return fileMetaData;
         }
 
-        if (!string.IsNullOrEmpty(input))
+        private static List<string> DetermineFilters(string outputLocation)
         {
-            result.Add(input);
-        }
-        return result;
-    }
-
-    private string DetermineOutputLocation(string fileName, FileMetaData metaData)
-    {
-        string permalink = metaData.OutputLocation;
-        string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
-        Match match = Regex.Match(fileName, pattern);
-
-        string outputFileName = match.FileNameByPattern();
-        DateTimeOffset? fileDate = match.DateByPattern();
-        if (fileDate != null)
-        {
-            metaData.Date = fileDate;
-        }
-
-        string outputExtension = RetrieveExtension(outputFileName);
-
-        string result = permalink
-            .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy", CultureInfo.InvariantCulture)}")
-            .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM", CultureInfo.InvariantCulture)}")
-            .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd", CultureInfo.InvariantCulture)}");
-
-        result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
-            .Replace(":ext", outputExtension);
-
-        if (result.StartsWith("/", StringComparison.Ordinal))
-        {
-            result = result[1..];
-        }
-        return result;
-        //metaData.Uri = result;
-        //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
-    }
-
-    private static void ApplyDates(FileMetaData fileMetaData)
-    {
-        TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
-        ApplyPublishedDates(fileMetaData, tz);
-        ApplyModifiedDates(fileMetaData, tz);
-        fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
-        fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
-        fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
-        fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
-        fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
-    }
-
-    private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
-    {
-        if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
-        {
-            fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-        }
-
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate))
-        {
-            string dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
-            string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
-            DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
-            fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
-        }
-    }
-
-    private static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
-    {
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
-        {
-            fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
-        }
-        if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
-        {
-            fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
-        }
-
-        if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
-        {
-            string dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
-            string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
-            DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
-            DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
-            fileMetaData.Modified = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
-        }
-    }
-
-    private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
-    {
-        if (source != null)
-        {
-            foreach (KeyValuePair<string, object> entry in source)
+            List<string> paths = new List<string>() { string.Empty };
+            //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
+            string urlSeperator = "/";
+            int index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
+            if (index >= 0)
             {
+                string input = outputLocation[..index];
+                paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
+                paths = paths.OrderBy(x => x.Length).ToList();
+            }
+            return paths;
+        }
+
+        private static List<string> DetermineFilterDirectories(string input, string urlSeperator)
+        {
+            List<string> result = new List<string>();
+            int index;
+            while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
+            {
+                result.Add(input);
+                input = input[..index];
+            }
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                result.Add(input);
+            }
+            return result;
+        }
+
+        private string DetermineOutputLocation(string fileName, FileMetaData metaData)
+        {
+            string permalink = metaData.OutputLocation;
+            string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
+            Match match = Regex.Match(fileName, pattern);
+
+            string outputFileName = match.FileNameByPattern();
+            DateTimeOffset? fileDate = match.DateByPattern();
+            if (fileDate != null)
+            {
+                metaData.Date = fileDate;
+            }
+
+            string outputExtension = RetrieveExtension(outputFileName);
+
+            string result = permalink
+                .Replace("/:year", fileDate == null ? string.Empty : $"/{fileDate?.ToString("yyyy", CultureInfo.InvariantCulture)}")
+                .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM", CultureInfo.InvariantCulture)}")
+                .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd", CultureInfo.InvariantCulture)}");
+
+            result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
+                .Replace(":ext", outputExtension);
+
+            if (result.StartsWith("/", StringComparison.Ordinal))
+            {
+                result = result[1..];
+            }
+            return result;
+            //metaData.Uri = result;
+            //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
+        }
+
+        private static void ApplyDates(FileMetaData fileMetaData)
+        {
+            TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+            ApplyPublishedDates(fileMetaData, tz);
+            ApplyModifiedDates(fileMetaData, tz);
+            fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
+            fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
+            fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
+            fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
+            fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
+        }
+
+        private static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+        {
+            if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
+            {
+                fileMetaData.PublishedDate = fileMetaData.Date.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate))
+            {
+                string dateTimeString = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? $"{fileMetaData.PublishedDate} {fileMetaData.PublishedTime}" : fileMetaData.PublishedDate;
+                string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.PublishedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+                DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+                DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+                fileMetaData.Published = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
+            }
+        }
+
+        private static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
+        {
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+            {
+                fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
+            }
+            if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
+            {
+                fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
+            }
+
+            if (!string.IsNullOrEmpty(fileMetaData.ModifiedDate))
+            {
+                string dateTimeString = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? $"{fileMetaData.ModifiedDate} {fileMetaData.ModifiedTime}" : fileMetaData.ModifiedDate;
+                string dateTimePattern = !string.IsNullOrEmpty(fileMetaData.ModifiedTime) ? "yyyy-MM-dd HH:mm" : "yyyy-MM-dd";
+                DateTime zonedDateTime = DateTimeOffset.ParseExact(dateTimeString, dateTimePattern, CultureInfo.InvariantCulture).DateTime;
+                DateTime utcDateTime = TimeZoneInfo.ConvertTimeToUtc(zonedDateTime, timeZone);
+                fileMetaData.Modified = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, timeZone);
+            }
+        }
+
+        private void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
+        {
+            if (source != null)
+            {
+                foreach (KeyValuePair<string, object> entry in source)
+                {
 #pragma warning disable CA1854
-                if (target.ContainsKey(entry.Key))
-                {
-                    LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
-                }
-                target[entry.Key] = entry.Value;
+                    if (target.ContainsKey(entry.Key))
+                    {
+                        LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
+                    }
+                    target[entry.Key] = entry.Value;
 #pragma warning restore CA1854
 
+                }
             }
         }
     }

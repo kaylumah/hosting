@@ -9,17 +9,18 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-namespace Kaylumah.Ssg.Access.Artifact.Hosting;
-
-public static partial class ServiceCollectionExtensions
+namespace Kaylumah.Ssg.Access.Artifact.Hosting
 {
-    public static IServiceCollection AddArtifactAccess(this IServiceCollection services, IConfiguration configuration)
+    public static partial class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddArtifactAccess(this IServiceCollection services, IConfiguration configuration)
+        {
 #pragma warning disable IDESIGN103
-        services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
+            services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
 #pragma warning restore IDESIGN103
-        services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
-        services.AddSingleton<IArtifactAccess, ArtifactAccess>();
-        return services;
+            services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
+            services.AddSingleton<IArtifactAccess, ArtifactAccess>();
+            return services;
+        }
     }
 }

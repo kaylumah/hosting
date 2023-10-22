@@ -7,15 +7,16 @@ using Test.Specflow.Utilities;
 using Constants = Test.Specflow.Constants;
 
 // ReSharper disable once CheckNamespace
-namespace System.IO.Abstractions.TestingHelpers;
-
-public static class MockFileSystemExtensions
+namespace System.IO.Abstractions.TestingHelpers
 {
-    public static void AddYamlDataFile(this MockFileSystem mockFileSystem, string fileName, object data)
+    public static class MockFileSystemExtensions
     {
-        YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
-        string yamlContents = serializer.Serialize(data);
-        string dataFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory, fileName);
-        mockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(yamlContents));
+        public static void AddYamlDataFile(this MockFileSystem mockFileSystem, string fileName, object data)
+        {
+            YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
+            string yamlContents = serializer.Serialize(data);
+            string dataFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory, fileName);
+            mockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(yamlContents));
+        }
     }
 }

@@ -9,51 +9,52 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Utilities;
-
-public sealed class TestHarness
+namespace Test.Utilities
 {
-    private readonly IServiceProvider _serviceProvider;
-    private static readonly ProxyGenerator ProxyGenerator = new();
-    private readonly IReadOnlyList<IInterceptor> _interceptors;
-
-    public TestHarness(IServiceProvider serviceProvider)
+    public sealed class TestHarness
     {
-        _serviceProvider = serviceProvider;
-        _interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
-    }
+        private readonly IServiceProvider _serviceProvider;
+        private static readonly ProxyGenerator ProxyGenerator = new();
+        private readonly IReadOnlyList<IInterceptor> _interceptors;
 
-    public async Task TestService<T>(Func<T, Task> scenario) where T : class
-    {
-        T proxy = GetProxy<T>();
-        await TestService(proxy, scenario).ConfigureAwait(false);
-    }
-
-    private T GetProxy<T>() where T : class
-    {
-        Type targetType = typeof(T);
-        T instance = _serviceProvider.GetRequiredService<T>();
-        if (targetType.IsInterface)
+        public TestHarness(IServiceProvider serviceProvider)
         {
-            T proxy = ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _interceptors.ToArray());
-            return proxy;
+            _serviceProvider = serviceProvider;
+            _interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
         }
-        else
+
+        public async Task TestService<T>(Func<T, Task> scenario) where T : class
         {
-            System.Reflection.ConstructorInfo constructor = targetType.GetConstructor(Type.EmptyTypes);
-            if (constructor != null)
+            T proxy = GetProxy<T>();
+            await TestService(proxy, scenario).ConfigureAwait(false);
+        }
+
+        private T GetProxy<T>() where T : class
+        {
+            Type targetType = typeof(T);
+            T instance = _serviceProvider.GetRequiredService<T>();
+            if (targetType.IsInterface)
             {
-                T proxy = ProxyGenerator.CreateClassProxyWithTarget(instance, _interceptors.ToArray());
+                T proxy = ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _interceptors.ToArray());
                 return proxy;
             }
+            else
+            {
+                System.Reflection.ConstructorInfo constructor = targetType.GetConstructor(Type.EmptyTypes);
+                if (constructor != null)
+                {
+                    T proxy = ProxyGenerator.CreateClassProxyWithTarget(instance, _interceptors.ToArray());
+                    return proxy;
+                }
+            }
+
+            // Fallback to the instance from DI without interception
+            return instance;
         }
 
-        // Fallback to the instance from DI without interception
-        return instance;
-    }
-
-    private static async Task TestService<T>(T instance, Func<T, Task> scenario) where T : class
-    {
-        await scenario(instance).ConfigureAwait(false);
+        private static async Task TestService<T>(T instance, Func<T, Task> scenario) where T : class
+        {
+            await scenario(instance).ConfigureAwait(false);
+        }
     }
 }

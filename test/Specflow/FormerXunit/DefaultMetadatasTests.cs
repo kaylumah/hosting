@@ -5,19 +5,19 @@ using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit;
-
-public class DefaultMetadatasTests
+namespace Test.Specflow.FormerXunit
 {
-    [Fact]
-    public void TestKey()
+    public class DefaultMetadatasTests
     {
-        DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "" };
-        DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "" };
-        DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts" };
-        DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts" };
+        [Fact]
+        public void TestKey()
+        {
+            DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "" };
+            DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "" };
+            DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts" };
+            DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts" };
 
-        DefaultMetadatas data = new DefaultMetadatas
+            DefaultMetadatas data = new DefaultMetadatas
             {
                 itemWithoutScope,
                 itemWithScope,
@@ -25,9 +25,10 @@ public class DefaultMetadatasTests
                 itemPathWithNameScope
             };
 
-        data[""].Should().NotBeNull();
-        data["."].Should().NotBeNull();
-        data[".posts"].Should().NotBeNull();
-        data["2019.posts"].Should().NotBeNull();
+            data[""].Should().NotBeNull();
+            data["."].Should().NotBeNull();
+            data[".posts"].Should().NotBeNull();
+            data["2019.posts"].Should().NotBeNull();
+        }
     }
 }

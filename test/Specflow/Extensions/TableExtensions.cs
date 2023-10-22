@@ -7,113 +7,114 @@ using System.Linq;
 using System.Reflection;
 using Test.Specflow.Helpers;
 
-namespace TechTalk.SpecFlow;
-
-public static class TableExtensions
+namespace TechTalk.SpecFlow
 {
-    private static readonly PropertyNameEqualityComparer PropertyNameEqualityComparer = new();
-
-    public static IEnumerable<string> AsStrings(this Table table, string column)
+    public static class TableExtensions
     {
-        return table.Rows.Select(r => r[column]).ToArray();
-    }
+        private static readonly PropertyNameEqualityComparer PropertyNameEqualityComparer = new();
 
-    public static void ValidateIfMappedCorrectlyTo<TObject>(this Table table) where TObject : class
-    {
-        _ = table ?? throw new ArgumentNullException(nameof(table));
-
-        string[] tableHeaderNames = table.Header.ToArray();
-        PropertyInfo[] objectPropertyInfos = typeof(TObject).GetProperties(BindingFlags.Public | BindingFlags.Instance |
-                                                                BindingFlags.GetProperty |
-                                                                BindingFlags.SetProperty);
-        IEnumerable<PropertyInfo> gherkinTableHeaderPropertyInfos = objectPropertyInfos.Where(objectPropertyInfo =>
-            objectPropertyInfo.GetCustomAttributes().Any(attribute => attribute is GherkinTableHeaderAttribute));
-        PropertyInfo[] orderedGherkinTableHeaderPropertyInfos = gherkinTableHeaderPropertyInfos.OrderBy(
-            gherkinTableHeaderPropertyInfo =>
-                gherkinTableHeaderPropertyInfo.GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex ??
-                throw new InvalidOperationException(
-                    $"PropertyInfo must have declared {nameof(GherkinTableHeaderAttribute)}.")).ToArray();
-        string[] orderedGherkinTableHeaderPropertyNames = orderedGherkinTableHeaderPropertyInfos
-            .Select(gherkinTableHeaderPropertyInfo => gherkinTableHeaderPropertyInfo.Name).ToArray();
-
-        PropertyInfo[] gherkinTableHeaderPropertyInfosWithDuplicateIndex =
-            FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(orderedGherkinTableHeaderPropertyInfos);
-        if (gherkinTableHeaderPropertyInfosWithDuplicateIndex.Any())
+        public static IEnumerable<string> AsStrings(this Table table, string column)
         {
-            IEnumerable<string> gherkinTableHeaderPropertyNamesWithDuplicateIndex =
-                gherkinTableHeaderPropertyInfosWithDuplicateIndex.Select(
-                    gherkinTableHeaderPropertyInfoWithDuplicateIndex =>
-                        gherkinTableHeaderPropertyInfoWithDuplicateIndex.Name);
-            throw new ArgumentException(
-                $"{typeof(TObject).FullName} declares two or more gherkin table headers with a duplicate index. (Headers with duplicate index: {string.Join(", ", gherkinTableHeaderPropertyNamesWithDuplicateIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
-                nameof(table));
+            return table.Rows.Select(r => r[column]).ToArray();
         }
 
-        string[] headersNotDeclaredAsGherkinTableHeader =
-            FindHeadersNotDeclaredAsGherkinTableHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-        if (headersNotDeclaredAsGherkinTableHeader.Any())
+        public static void ValidateIfMappedCorrectlyTo<TObject>(this Table table) where TObject : class
         {
-            throw new ArgumentException(
-                $"{nameof(table)} contains headers not declared as gherkin table header on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotDeclaredAsGherkinTableHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
-                nameof(table));
-        }
+            _ = table ?? throw new ArgumentNullException(nameof(table));
 
-        string[] gherkinTableHeadersNotDeclaredAsHeader =
-            FindGherkinTableHeadersNotDeclaredAsHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-        if (gherkinTableHeadersNotDeclaredAsHeader.Any())
-        {
-            throw new ArgumentException(
-                $"{nameof(table)} contains no headers for gherkin table headers declared on {typeof(TObject).FullName}. (Missing headers: {string.Join(", ", gherkinTableHeadersNotDeclaredAsHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
-                nameof(table));
-        }
+            string[] tableHeaderNames = table.Header.ToArray();
+            PropertyInfo[] objectPropertyInfos = typeof(TObject).GetProperties(BindingFlags.Public | BindingFlags.Instance |
+                                                                    BindingFlags.GetProperty |
+                                                                    BindingFlags.SetProperty);
+            IEnumerable<PropertyInfo> gherkinTableHeaderPropertyInfos = objectPropertyInfos.Where(objectPropertyInfo =>
+                objectPropertyInfo.GetCustomAttributes().Any(attribute => attribute is GherkinTableHeaderAttribute));
+            PropertyInfo[] orderedGherkinTableHeaderPropertyInfos = gherkinTableHeaderPropertyInfos.OrderBy(
+                gherkinTableHeaderPropertyInfo =>
+                    gherkinTableHeaderPropertyInfo.GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex ??
+                    throw new InvalidOperationException(
+                        $"PropertyInfo must have declared {nameof(GherkinTableHeaderAttribute)}.")).ToArray();
+            string[] orderedGherkinTableHeaderPropertyNames = orderedGherkinTableHeaderPropertyInfos
+                .Select(gherkinTableHeaderPropertyInfo => gherkinTableHeaderPropertyInfo.Name).ToArray();
 
-        string[] headersNotAtCorrectIndex =
-            FindHeadersNotAtCorrectIndex(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-        if (headersNotAtCorrectIndex.Any())
-        {
-            throw new ArgumentException(
-                $"The headers of {nameof(table)} are not in the order specified on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotAtCorrectIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
-                nameof(table));
-        }
-    }
-
-    private static PropertyInfo[] FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(
-        PropertyInfo[] gherkinTableHeaderPropertyInfos)
-    {
-        List<PropertyInfo> gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
-        foreach (PropertyInfo gherkinTableHeaderPropertyInfo in gherkinTableHeaderPropertyInfos)
-        {
-            if (gherkinTableHeaderPropertyInfos.Count(gherkinTableHeaderPropertyInfo2 =>
-                    gherkinTableHeaderPropertyInfo2.GetCustomAttribute<GherkinTableHeaderAttribute>()
-                        ?.HeaderIndex == gherkinTableHeaderPropertyInfo
-                        .GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex) > 1)
+            PropertyInfo[] gherkinTableHeaderPropertyInfosWithDuplicateIndex =
+                FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(orderedGherkinTableHeaderPropertyInfos);
+            if (gherkinTableHeaderPropertyInfosWithDuplicateIndex.Any())
             {
-                gherkinTableHeaderPropertyInfosWithDuplicateIndex.Add(gherkinTableHeaderPropertyInfo);
+                IEnumerable<string> gherkinTableHeaderPropertyNamesWithDuplicateIndex =
+                    gherkinTableHeaderPropertyInfosWithDuplicateIndex.Select(
+                        gherkinTableHeaderPropertyInfoWithDuplicateIndex =>
+                            gherkinTableHeaderPropertyInfoWithDuplicateIndex.Name);
+                throw new ArgumentException(
+                    $"{typeof(TObject).FullName} declares two or more gherkin table headers with a duplicate index. (Headers with duplicate index: {string.Join(", ", gherkinTableHeaderPropertyNamesWithDuplicateIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    nameof(table));
+            }
+
+            string[] headersNotDeclaredAsGherkinTableHeader =
+                FindHeadersNotDeclaredAsGherkinTableHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
+            if (headersNotDeclaredAsGherkinTableHeader.Any())
+            {
+                throw new ArgumentException(
+                    $"{nameof(table)} contains headers not declared as gherkin table header on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotDeclaredAsGherkinTableHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    nameof(table));
+            }
+
+            string[] gherkinTableHeadersNotDeclaredAsHeader =
+                FindGherkinTableHeadersNotDeclaredAsHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
+            if (gherkinTableHeadersNotDeclaredAsHeader.Any())
+            {
+                throw new ArgumentException(
+                    $"{nameof(table)} contains no headers for gherkin table headers declared on {typeof(TObject).FullName}. (Missing headers: {string.Join(", ", gherkinTableHeadersNotDeclaredAsHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    nameof(table));
+            }
+
+            string[] headersNotAtCorrectIndex =
+                FindHeadersNotAtCorrectIndex(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
+            if (headersNotAtCorrectIndex.Any())
+            {
+                throw new ArgumentException(
+                    $"The headers of {nameof(table)} are not in the order specified on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotAtCorrectIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    nameof(table));
             }
         }
 
-        return gherkinTableHeaderPropertyInfosWithDuplicateIndex.ToArray();
-    }
+        private static PropertyInfo[] FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(
+            PropertyInfo[] gherkinTableHeaderPropertyInfos)
+        {
+            List<PropertyInfo> gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
+            foreach (PropertyInfo gherkinTableHeaderPropertyInfo in gherkinTableHeaderPropertyInfos)
+            {
+                if (gherkinTableHeaderPropertyInfos.Count(gherkinTableHeaderPropertyInfo2 =>
+                        gherkinTableHeaderPropertyInfo2.GetCustomAttribute<GherkinTableHeaderAttribute>()
+                            ?.HeaderIndex == gherkinTableHeaderPropertyInfo
+                            .GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex) > 1)
+                {
+                    gherkinTableHeaderPropertyInfosWithDuplicateIndex.Add(gherkinTableHeaderPropertyInfo);
+                }
+            }
 
-    private static string[] FindGherkinTableHeadersNotDeclaredAsHeader(IEnumerable<string> tableHeaderNames,
-        IEnumerable<string> gherkinTableHeaderPropertyNames)
-    {
-        return gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
-                !tableHeaderNames.Contains(orderedGherkinTableHeaderPropertyName, PropertyNameEqualityComparer))
-            .ToArray();
-    }
+            return gherkinTableHeaderPropertyInfosWithDuplicateIndex.ToArray();
+        }
 
-    private static string[] FindHeadersNotAtCorrectIndex(IEnumerable<string> tableHeaderNames,
-        string[] orderedGherkinTableHeaderPropertyNames)
-    {
-        return tableHeaderNames.Where((t, i) =>
-            !PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
-    }
+        private static string[] FindGherkinTableHeadersNotDeclaredAsHeader(IEnumerable<string> tableHeaderNames,
+            IEnumerable<string> gherkinTableHeaderPropertyNames)
+        {
+            return gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
+                    !tableHeaderNames.Contains(orderedGherkinTableHeaderPropertyName, PropertyNameEqualityComparer))
+                .ToArray();
+        }
 
-    private static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
-        IEnumerable<string> gherkinTableHeaderPropertyNames)
-    {
-        return tableHeaderNames.Where(tableHeaderName =>
-            !gherkinTableHeaderPropertyNames.Contains(tableHeaderName, PropertyNameEqualityComparer)).ToArray();
+        private static string[] FindHeadersNotAtCorrectIndex(IEnumerable<string> tableHeaderNames,
+            string[] orderedGherkinTableHeaderPropertyNames)
+        {
+            return tableHeaderNames.Where((t, i) =>
+                !PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
+        }
+
+        private static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
+            IEnumerable<string> gherkinTableHeaderPropertyNames)
+        {
+            return tableHeaderNames.Where(tableHeaderName =>
+                !gherkinTableHeaderPropertyNames.Contains(tableHeaderName, PropertyNameEqualityComparer)).ToArray();
+        }
     }
 }

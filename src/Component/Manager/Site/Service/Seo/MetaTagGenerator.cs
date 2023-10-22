@@ -11,67 +11,68 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Kaylumah.Ssg.Manager.Site.Service.Seo;
-
-public partial class MetaTagGenerator
+namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    [LoggerMessage(
-        EventId = 0,
-        Level = LogLevel.Information,
-        Message = "Attempting MetaTags `{Path}`")]
-    private partial void LogMetaTags(string path);
-
-    private readonly ILogger _logger;
-
-    public MetaTagGenerator(ILogger<MetaTagGenerator> logger)
+    public partial class MetaTagGenerator
     {
-        _logger = logger;
-    }
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Information,
+            Message = "Attempting MetaTags `{Path}`")]
+        private partial void LogMetaTags(string path);
 
-    public string ToMetaTags(RenderData renderData)
-    {
-        ArgumentNullException.ThrowIfNull(renderData);
-        LogMetaTags(renderData.Page.Uri);
+        private readonly ILogger _logger;
 
-        StringBuilder sb = new StringBuilder();
-
-        string common = ToCommonTags(renderData);
-        if (!string.IsNullOrEmpty(common))
+        public MetaTagGenerator(ILogger<MetaTagGenerator> logger)
         {
-            sb.Append(common);
+            _logger = logger;
         }
 
-        string openGraph = ToOpenGraphTags(renderData);
-        if (!string.IsNullOrEmpty(openGraph))
+        public string ToMetaTags(RenderData renderData)
         {
-            sb.AppendLine(string.Empty);
-            sb.Append(openGraph);
+            ArgumentNullException.ThrowIfNull(renderData);
+            LogMetaTags(renderData.Page.Uri);
+
+            StringBuilder sb = new StringBuilder();
+
+            string common = ToCommonTags(renderData);
+            if (!string.IsNullOrEmpty(common))
+            {
+                sb.Append(common);
+            }
+
+            string openGraph = ToOpenGraphTags(renderData);
+            if (!string.IsNullOrEmpty(openGraph))
+            {
+                sb.AppendLine(string.Empty);
+                sb.Append(openGraph);
+            }
+            string twitter = ToTwitterTags(renderData);
+            if (!string.IsNullOrEmpty(twitter))
+            {
+                sb.AppendLine(string.Empty);
+                sb.Append(twitter);
+            }
+        
+            return sb.ToString();
         }
-        string twitter = ToTwitterTags(renderData);
-        if (!string.IsNullOrEmpty(twitter))
+
+        private static string ToCommonTags(RenderData renderData)
         {
-            sb.AppendLine(string.Empty);
-            sb.Append(twitter);
-        }
-        return sb.ToString();
-    }
+            ArgumentNullException.ThrowIfNull(renderData);
+            XmlDocument finalDocument = new XmlDocument();
+            XmlElement titleElement = finalDocument.CreateElement("title");
+            titleElement.InnerText = renderData.Title;
 
-    private static string ToCommonTags(RenderData renderData)
-    {
-        ArgumentNullException.ThrowIfNull(renderData);
-        XmlDocument finalDocument = new XmlDocument();
-        XmlElement titleElement = finalDocument.CreateElement("title");
-        titleElement.InnerText = renderData.Title;
-
-        XmlElement linkElement = finalDocument.CreateElement("link");
-        XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
-        relAttribute.Value = "canonical";
-        linkElement.Attributes.Append(relAttribute);
-        XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
-        hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
-        linkElement.Attributes.Append(hrefAttribute);
-        StringBuilder sb = new StringBuilder();
-        List<string> result = new List<string>()
+            XmlElement linkElement = finalDocument.CreateElement("link");
+            XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
+            relAttribute.Value = "canonical";
+            linkElement.Attributes.Append(relAttribute);
+            XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
+            hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
+            linkElement.Attributes.Append(hrefAttribute);
+            StringBuilder sb = new StringBuilder();
+            List<string> result = new List<string>()
         {
             titleElement.OuterXml,
             linkElement.OuterXml,
@@ -80,66 +81,66 @@ public partial class MetaTagGenerator
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
             CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))
         };
-        if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
-        {
-            AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-            CreateMetaTag("author", author.FullName);
-        }
-
-        if (result.Any())
-        {
-            sb.AppendLine("<!-- Common Meta Tags -->");
-            foreach (string item in result)
+            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
             {
-                sb.AppendLine(item);
+                AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                CreateMetaTag("author", author.FullName);
             }
-        }
-        return sb.ToString();
-    }
 
-    private static string ToTwitterTags(RenderData renderData)
-    {
-        ArgumentNullException.ThrowIfNull(renderData);
-        StringBuilder sb = new StringBuilder();
-        List<string> result = new List<string>
+            if (result.Any())
+            {
+                sb.AppendLine("<!-- Common Meta Tags -->");
+                foreach (string item in result)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+            return sb.ToString();
+        }
+
+        private static string ToTwitterTags(RenderData renderData)
+        {
+            ArgumentNullException.ThrowIfNull(renderData);
+            StringBuilder sb = new StringBuilder();
+            List<string> result = new List<string>
         {
             CreateMetaTag("twitter:card", "summary_large_image"),
             CreateMetaTag("twitter:title", renderData.Page.Title),
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
-        if (!string.IsNullOrEmpty(renderData.Page.Image))
-        {
-            result.Add(CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
-        }
-
-        if (!string.IsNullOrEmpty(renderData.Page.Organization))
-        {
-            OrganizationMetaData organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
-            result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
-        }
-        if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
-        {
-            AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-            result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
-        }
-
-        if (result.Any())
-        {
-            sb.AppendLine("<!-- Twitter Meta Tags -->");
-            foreach (string item in result)
+            if (!string.IsNullOrEmpty(renderData.Page.Image))
             {
-                sb.AppendLine(item);
+                result.Add(CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
             }
-        }
-        return sb.ToString();
-    }
 
-    private static string ToOpenGraphTags(RenderData renderData)
-    {
-        ArgumentNullException.ThrowIfNull(renderData);
-        StringBuilder sb = new StringBuilder();
-        List<string> result = new List<string>
+            if (!string.IsNullOrEmpty(renderData.Page.Organization))
+            {
+                OrganizationMetaData organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
+                result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
+            }
+            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+            {
+                AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
+            }
+
+            if (result.Any())
+            {
+                sb.AppendLine("<!-- Twitter Meta Tags -->");
+                foreach (string item in result)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+            return sb.ToString();
+        }
+
+        private static string ToOpenGraphTags(RenderData renderData)
+        {
+            ArgumentNullException.ThrowIfNull(renderData);
+            StringBuilder sb = new StringBuilder();
+            List<string> result = new List<string>
         {
             CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
@@ -149,58 +150,59 @@ public partial class MetaTagGenerator
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
-        if (!string.IsNullOrEmpty(renderData.Page.Image))
-        {
-            result.Add(CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
-        }
-
-        if (renderData.Page.Type == ContentType.Article)
-        {
-            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+            if (!string.IsNullOrEmpty(renderData.Page.Image))
             {
-                AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-                result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+                result.Add(CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
             }
 
-            result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
-            result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
-            foreach (string tag in renderData.Page.Tags)
+            if (renderData.Page.Type == ContentType.Article)
             {
-                result.Add(CreateOpenGraphMetaTag("article:tag", tag));
+                if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+                {
+                    AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                    result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+                }
+
+                result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
+                result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
+                foreach (string tag in renderData.Page.Tags)
+                {
+                    result.Add(CreateOpenGraphMetaTag("article:tag", tag));
+                }
             }
+
+            if (result.Any())
+            {
+                sb.AppendLine("<!-- OpenGraph Meta Tags -->");
+                foreach (string item in result)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+            return sb.ToString();
         }
 
-        if (result.Any())
+        private static string CreateMetaTag(string name, string content)
         {
-            sb.AppendLine("<!-- OpenGraph Meta Tags -->");
-            foreach (string item in result)
-            {
-                sb.AppendLine(item);
-            }
+            return CreateMetaTag("name", name, content);
         }
-        return sb.ToString();
-    }
 
-    private static string CreateMetaTag(string name, string content)
-    {
-        return CreateMetaTag("name", name, content);
-    }
+        private static string CreateMetaTag(string idAttributeName, string name, string content)
+        {
+            XmlDocument finalDocument = new XmlDocument();
+            XmlElement createdElement = finalDocument.CreateElement("meta");
+            XmlAttribute nameAttribute = finalDocument.CreateAttribute(idAttributeName);
+            nameAttribute.Value = name;
+            createdElement.Attributes.Append(nameAttribute);
+            XmlAttribute contentAttribute = finalDocument.CreateAttribute("content");
+            contentAttribute.Value = content;
+            createdElement.Attributes.Append(contentAttribute);
+            return createdElement.OuterXml;
+        }
 
-    private static string CreateMetaTag(string idAttributeName, string name, string content)
-    {
-        XmlDocument finalDocument = new XmlDocument();
-        XmlElement createdElement = finalDocument.CreateElement("meta");
-        XmlAttribute nameAttribute = finalDocument.CreateAttribute(idAttributeName);
-        nameAttribute.Value = name;
-        createdElement.Attributes.Append(nameAttribute);
-        XmlAttribute contentAttribute = finalDocument.CreateAttribute("content");
-        contentAttribute.Value = content;
-        createdElement.Attributes.Append(contentAttribute);
-        return createdElement.OuterXml;
-    }
-
-    private static string CreateOpenGraphMetaTag(string name, string content)
-    {
-        return CreateMetaTag("property", name, content);
+        private static string CreateOpenGraphMetaTag(string name, string content)
+        {
+            return CreateMetaTag("property", name, content);
+        }
     }
 }

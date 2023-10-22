@@ -1,28 +1,29 @@
 ﻿// Copyright (c) Kaylumah, 2023. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Test.Specflow.FormerXunit;
-
-using Xunit;
-
-public class SystemClockTests
+namespace Test.Specflow.FormerXunit
 {
-    [Fact]
-    public void Test1()
+    using Xunit;
+
+    public class SystemClockTests
     {
-        // ISystemClock clock = new SystemClock();
+        [Fact]
+        public void Test1()
+        {
+            // ISystemClock clock = new SystemClock();
 
-        // // TimeZone Stuff
-        // var localZone = TimeZoneInfo.Local;
-        // var namedZone1 = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
-        // var namedZone2 = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+            // // TimeZone Stuff
+            // var localZone = TimeZoneInfo.Local;
+            // var namedZone1 = TimeZoneInfo.FindSystemTimeZoneById("W. Europe Standard Time");
+            // var namedZone2 = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
 
-        // var now = clock.UtcNow;
+            // var now = clock.UtcNow;
 
-        // var converted1 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2);
-        // var converted2 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2).ToUniversalTime();
-        // var converted3 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime);
-        // var converted4 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime, namedZone2);
-        // var converted = TimeZoneInfo.ConvertTime(now, namedZone2);
+            // var converted1 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2);
+            // var converted2 = TimeZoneInfo.ConvertTimeFromUtc(now.DateTime, namedZone2).ToUniversalTime();
+            // var converted3 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime);
+            // var converted4 = TimeZoneInfo.ConvertTimeToUtc(now.DateTime, namedZone2);
+            // var converted = TimeZoneInfo.ConvertTime(now, namedZone2);
+        }
     }
 }
