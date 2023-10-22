@@ -82,7 +82,6 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             services.AddArtifactAccess(configuration);
             services.AddSiteManager(configuration);
 
-
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             ISiteManager siteManager = serviceProvider.GetRequiredService<ISiteManager>();
 

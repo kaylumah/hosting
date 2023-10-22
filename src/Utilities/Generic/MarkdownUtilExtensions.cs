@@ -22,13 +22,11 @@ namespace Kaylumah.Ssg.Utilities
             OrderedList<IMarkdownExtension> extensions;
             extensions = pipeline.Extensions;
 
-
             if (!extensions.Contains<LinkExtension>())
             {
                 LinkExtension ext = new LinkExtension();
                 extensions.Add(ext);
             }
-
 
             return pipeline;
         }

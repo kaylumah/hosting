@@ -26,8 +26,5 @@ namespace Test.Specflow
             public static string Organizations = "organizations.yml";
             public static string Tags = "tags.yml";
         }
-
-
-
     }
 }
