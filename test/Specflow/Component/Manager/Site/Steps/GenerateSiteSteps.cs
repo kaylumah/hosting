@@ -13,7 +13,6 @@ using TechTalk.SpecFlow.Assist;
 using Test.Specflow.Entities;
 using Test.Specflow.Extensions;
 using Test.Specflow.Utilities;
-using VerifyXunit;
 
 namespace Test.Specflow.Component.Manager.Site.Steps
 {
@@ -22,7 +21,7 @@ namespace Test.Specflow.Component.Manager.Site.Steps
     public class GenerateSiteSteps
     {
         readonly SiteManagerTestHarness _siteManagerTestHarness;
-        readonly ScenarioContext _scenarioContext;
+
         readonly ArticleCollection _articleCollection;
         readonly MockFileSystem _mockFileSystem;
         readonly ArtifactAccessMock _artifactAccess;
@@ -30,11 +29,11 @@ namespace Test.Specflow.Component.Manager.Site.Steps
         public GenerateSiteSteps(
             ArtifactAccessMock artifactAccessMock,
             SiteManagerTestHarness siteManagerTestHarness,
-            ScenarioContext scenarioContext, MockFileSystem mockFileSystem, ArticleCollection articleCollection)
+            MockFileSystem mockFileSystem,
+            ArticleCollection articleCollection)
         {
             _siteManagerTestHarness = siteManagerTestHarness;
             _artifactAccess = artifactAccessMock;
-            _scenarioContext = scenarioContext;
             _mockFileSystem = mockFileSystem;
             _articleCollection = articleCollection;
         }
@@ -74,64 +73,6 @@ namespace Test.Specflow.Component.Manager.Site.Steps
             }
 
             await _siteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);
-        }
-
-        [Then("the atom feed '(.*)' is verified:")]
-        public async Task ThenTheAtomFeedIsVerified(string feedPath)
-        {
-            /*
-            var feed = _artifactAccess.GetFeedArtifact(feedPath);
-            await Verify(feed)
-                .UseMethodName("AtomFeed");
-            */
-            string feed = _artifactAccess.GetString(feedPath);
-            await Verifier.Verify(feed)
-                .UseMethodName(_scenarioContext.ToVerifyMethodName("AtomFeed"))
-                /*.AddScrubber(inputStringBuilder =>
-                {
-                    var original = inputStringBuilder.ToString();
-                    using var reader = new StringReader(original);
-                    inputStringBuilder.Clear();
-
-                    var settings = new XmlReaderSettings();
-                    using var xmlReader = XmlReader.Create(new StringReader(original), settings);
-                    var document = new XmlDocument();  
-                    document.Load(reader);
-
-                    var manager = new XmlNamespaceManager(document.NameTable);
-                    manager.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-
-                    var valueElement = document.SelectSingleNode("//atom:feed/atom:updated", manager) as XmlElement;
-                    valueElement.InnerXml = "replaced";
-                    //inputStringBuilder.Append(document.OuterXml);
-
-                    XmlWriterSettings settings2 = new XmlWriterSettings
-                    {
-                        Indent = true,
-                        IndentChars = "  ",
-                        NewLineChars = "\r\n",
-                        NewLineHandling = NewLineHandling.Replace
-                    };
-                    using var writer = XmlWriter.Create(inputStringBuilder, settings2);
-                    document.Save(writer);
-                })*/
-                ;
-        }
-
-        [Then("the sitemap '(.*)' is verified:")]
-        public async Task ThenTheSitemapIsVerified(string sitemapPath)
-        {
-            string sitemap = _artifactAccess.GetString(sitemapPath);
-            await Verifier.Verify(sitemap)
-                .UseMethodName(_scenarioContext.ToVerifyMethodName("Sitemap"));
-        }
-
-        [Then("the html '(.*)' is verified:")]
-        public async Task ThenTheHtmlIsVerified(string htmlPath)
-        {
-            string htmlPage = _artifactAccess.GetString(htmlPath);
-            await Verifier.Verify(htmlPage)
-                .UseMethodName(_scenarioContext.ToVerifyMethodName("Html"));
         }
 
         [Then("'(.*)' is a document with the following meta tags:")]
