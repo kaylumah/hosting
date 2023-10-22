@@ -150,6 +150,5 @@ public class Program
             string input = @"[link](https://google.com)";
             string output = Markdown.ToHtml(input, pipeline);
         }
-
     }
 }

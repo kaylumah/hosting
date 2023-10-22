@@ -54,7 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 sb.AppendLine(string.Empty);
                 sb.Append(twitter);
             }
-        
+
             return sb.ToString();
         }
 

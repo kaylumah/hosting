@@ -157,7 +157,6 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                     InternalImages.Add(attrValue);
                 }
             }
-
         }
     }
 }
