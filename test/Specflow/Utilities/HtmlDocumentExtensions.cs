@@ -27,6 +27,7 @@ namespace Test.Specflow.Utilities
                     result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
                 }
             }
+
             return result;
         }
     }

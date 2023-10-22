@@ -47,6 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 sb.AppendLine(string.Empty);
                 sb.Append(openGraph);
             }
+
             string twitter = ToTwitterTags(renderData);
             if (!string.IsNullOrEmpty(twitter))
             {
@@ -95,6 +96,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     sb.AppendLine(item);
                 }
             }
+
             return sb.ToString();
         }
 
@@ -119,6 +121,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 OrganizationMetaData organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
                 result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
             }
+
             if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
             {
                 AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
@@ -133,6 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     sb.AppendLine(item);
                 }
             }
+
             return sb.ToString();
         }
 
@@ -179,6 +183,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     sb.AppendLine(item);
                 }
             }
+
             return sb.ToString();
         }
 

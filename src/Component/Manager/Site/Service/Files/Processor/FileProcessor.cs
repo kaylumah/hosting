@@ -120,6 +120,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     Files = files.ToArray()
                 });
             }
+
             return result;
         }
 
@@ -130,6 +131,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 fileInfos.Add(_fileSystem.GetFile(file));
             }
+
             return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
         }
 
@@ -167,6 +169,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     Name = Path.GetFileName(fileMeta.Uri)
                 });
             }
+
             return result;
         }
     }

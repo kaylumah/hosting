@@ -60,6 +60,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 };
                 return blog.ToString(settings);
             }
+
             return null;
         }
     }

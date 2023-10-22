@@ -192,6 +192,7 @@ namespace Kaylumah.Ssg.Utilities
                 string result = Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
                 return result;
             }
+
             return source;
         }
 
@@ -205,12 +206,14 @@ namespace Kaylumah.Ssg.Utilities
                 {
                     resolvedSource = resolvedSource[1..];
                 }
+
                 if (!string.IsNullOrWhiteSpace(Url.Value))
                 {
 
                     resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
                 }
             }
+
             string result = resolvedSource.Replace(Path.DirectorySeparatorChar, '/');
             return result;
         }

@@ -118,9 +118,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         SyndicationPerson author = person;
                         item.Authors.Add(author);
                     }
+
                     result.Add(item);
                 }
             }
+
             return result
                 .ToList();
         }
@@ -133,6 +135,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     .Where(x => x.Feed)
                     .ToList();
             }
+
             return Enumerable.Empty<PageMetaData>();
         }
     }

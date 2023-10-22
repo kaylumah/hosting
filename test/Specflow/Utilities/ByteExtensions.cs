@@ -58,6 +58,7 @@ namespace Test.Specflow.Utilities
                     Url = location
                 });
             }
+
             SiteMap sitemap = new SiteMap()
             {
                 Items = nodes

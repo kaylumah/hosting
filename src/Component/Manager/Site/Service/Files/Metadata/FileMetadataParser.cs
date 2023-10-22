@@ -38,10 +38,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 result.Data = new FileMetaData();
             }
+
             if (string.IsNullOrEmpty(result.Data.OutputLocation))
             {
                 result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
             }
+
             string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
             List<string> paths = DetermineFilters(outputLocation);
 
@@ -89,6 +91,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                     }
                 }
             }
+
             return fileMetaData;
         }
 
@@ -104,6 +107,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
                 paths = paths.OrderBy(x => x.Length).ToList();
             }
+
             return paths;
         }
 
@@ -121,6 +125,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 result.Add(input);
             }
+
             return result;
         }
 
@@ -151,6 +156,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 result = result[1..];
             }
+
             return result;
             //metaData.Uri = result;
             //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
@@ -191,6 +197,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             {
                 fileMetaData.ModifiedDate = fileMetaData.PublishedDate;
             }
+
             if (!string.IsNullOrEmpty(fileMetaData.PublishedTime) && string.IsNullOrEmpty(fileMetaData.ModifiedTime))
             {
                 fileMetaData.ModifiedTime = fileMetaData.PublishedTime;
@@ -217,6 +224,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                     {
                         LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
                     }
+
                     target[entry.Key] = entry.Value;
 #pragma warning restore CA1854
 

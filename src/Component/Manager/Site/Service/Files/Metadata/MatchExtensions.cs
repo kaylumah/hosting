@@ -21,6 +21,7 @@ namespace System.Text.RegularExpressions
                     return $"{fileName}.{extension}";
                 }
             }
+
             return null;
         }
 
@@ -37,6 +38,7 @@ namespace System.Text.RegularExpressions
                     return DateTimeOffset.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
                 }
             }
+
             return null;
         }
     }
