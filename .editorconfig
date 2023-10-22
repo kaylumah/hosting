@@ -16,6 +16,13 @@ indent_size = 2
 [*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
 indent_size = 2
 
+# Custom C#
+[*.cs]
+# License header
+file_header_template=Copyright (c) Kaylumah, 2023. All rights reserved.\nSee LICENSE file in the project root for full license information.
+# IDE0073: The file header does not match the required text
+dotnet_diagnostic.IDE0073.severity = error
+
 # C# files
 [*.cs]
 indent_size = 4
