@@ -16,10 +16,7 @@ namespace Kaylumah.Ssg.Utilities
 
         public static Guid Create(Guid namespaceId, string name, int version)
         {
-            if (name is null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            ArgumentNullException.ThrowIfNull(name);
 
             byte[] encoding = Encoding.UTF8.GetBytes(name);
             Guid result = Create(namespaceId, encoding, version);
