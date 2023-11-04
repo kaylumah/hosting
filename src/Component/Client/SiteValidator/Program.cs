@@ -51,11 +51,11 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                 string[] bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
 
                 List<string> assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                    .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS"))
+                    .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS", StringComparison.InvariantCultureIgnoreCase))
                     .ToList();
 
                 List<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                    .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d)))
+                    .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d, StringComparison.InvariantCultureIgnoreCase)))
                     .ToList();
 
                 List<string> htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
