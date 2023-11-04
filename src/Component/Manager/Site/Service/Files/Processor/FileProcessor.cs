@@ -48,7 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
 
-            if (!directoryContents.Any())
+            if (directoryContents.Count == 0)
             {
                 LogNoFiles();
                 return result;

@@ -10,7 +10,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public static class PageMetaDataExtensions
     {
-        public static readonly Func<PageMetaData, bool> Tags = (page) => page.Tags != null && page.Tags.Any();
+        public static readonly Func<PageMetaData, bool> Tags = (page) => page.Tags != null && page.Tags.Count > 0;
 
         public static readonly Func<PageMetaData, bool> Series = (page) => !string.IsNullOrEmpty(page.Series);
 

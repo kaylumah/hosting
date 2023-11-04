@@ -150,7 +150,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
                 .Replace(":ext", outputExtension);
 
-            if (result.StartsWith("/", StringComparison.Ordinal))
+            if (result.StartsWith('/'))
             {
                 result = result[1..];
             }

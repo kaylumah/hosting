@@ -14,6 +14,13 @@ namespace Kaylumah.Ssg.Utilities
 {
     public class GlobalFunctions
     {
+        #pragma warning disable IDESIGN103
+        static readonly JsonSerializerOptions _Options = new JsonSerializerOptions()
+        {
+            WriteIndented = true
+        };
+        #pragma warning restore IDESIGN103
+
         public static AsyncLocal<DateTimeOffset> Date { get; } = new();
         public static AsyncLocal<string> Url { get; } = new();
         public static AsyncLocal<string> BaseUrl { get; } = new();
@@ -219,13 +226,7 @@ namespace Kaylumah.Ssg.Utilities
 
         public static string ToJson(object o)
         {
-#pragma warning disable IDESIGN103
-            JsonSerializerOptions options = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-#pragma warning restore IDESIGN103
-            string result = JsonSerializer.Serialize(o, options);
+            string result = JsonSerializer.Serialize(o, _Options);
             return result;
         }
 

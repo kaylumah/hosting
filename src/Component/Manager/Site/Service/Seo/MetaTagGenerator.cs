@@ -88,7 +88,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 CreateMetaTag("author", author.FullName);
             }
 
-            if (result.Any())
+            if (result.Count > 0)
             {
                 sb.AppendLine("<!-- Common Meta Tags -->");
                 foreach (string item in result)
@@ -128,7 +128,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
             }
 
-            if (result.Any())
+            if (result.Count > 0)
             {
                 sb.AppendLine("<!-- Twitter Meta Tags -->");
                 foreach (string item in result)
@@ -175,7 +175,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            if (result.Any())
+            if (result.Count > 0)
             {
                 sb.AppendLine("<!-- OpenGraph Meta Tags -->");
                 foreach (string item in result)
