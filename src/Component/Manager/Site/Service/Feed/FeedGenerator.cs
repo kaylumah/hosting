@@ -86,7 +86,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 .ByRecentlyPublished()
                 .ToList();
             List<SyndicationItem> result = new List<SyndicationItem>();
-            if (posts.Any())
+            if (posts.Count > 0)
             {
                 FeedCount(posts.Count);
                 Dictionary<string, SyndicationPerson> persons = siteMetaData.ToPersons();
