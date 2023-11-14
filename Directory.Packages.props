@@ -29,7 +29,7 @@
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.69" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="7.0.0" />
-    <PackageVersion Include="System.Text.Json" Version="7.0.3" />
+    <PackageVersion Include="System.Text.Json" Version="8.0.0" />
     <PackageVersion Include="YamlDotNet" Version="13.7.1" />
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.10" />
     <!--<PackageVersion Include="ReportGenerator" Version="5.1.20"/>-->
