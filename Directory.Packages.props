@@ -11,7 +11,7 @@
     <PackageVersion Include="Markdig" Version="0.33.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
