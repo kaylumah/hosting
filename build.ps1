@@ -25,7 +25,7 @@ if (Test-Path $DistFolder)
 
 
 [string] $BuildConfiguration = "Release"
-[string] $TargetFramework = "net7.0"
+[string] $TargetFramework = "net8.0"
 
 dotnet restore
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber

@@ -3,7 +3,7 @@
 [CmdletBinding()]
 param(
     [string] $BuildConfiguration = "Debug",
-    [string] $TargetFramework = "net7.0",
+    [string] $TargetFramework = "net8.0",
     [string] $ReportFile = "LivingDoc.html"
 )
 
