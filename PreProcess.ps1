@@ -1,1 +1,0 @@
-dotnet build src/Component/Manager/Site/Interface/Kaylumah.Ssg.Manager.Site.Interface.csproj -pp:output.xml
