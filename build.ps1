@@ -25,6 +25,8 @@ if (Test-Path $DistFolder)
 
 
 [string] $BuildConfiguration = "Release"
+[string] $TargetFramework = "net8.0"
+
 dotnet restore
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
@@ -36,13 +38,13 @@ dotnet test --configuration $BuildConfiguration
 if ([string]::IsNullOrEmpty($PrBuildId))
 {
     Write-Host "Production Build"
-    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
+    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
 }
 else
 {
     Write-Host "PullRequest Build ($PrBuildId)"
     [string] $BaseUrl="https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net"
-    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net7.0/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
+    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 }
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
