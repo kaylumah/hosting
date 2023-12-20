@@ -1,1 +1,1 @@
-./bin/Debug/net8.0/playwright.ps1 codegen
+../bin/Debug/net8.0/playwright.ps1 codegen

@@ -49,5 +49,26 @@ namespace Test.Specflow.Playwright
             int actual = await locator.CountAsync();
             Assert.Equal(1, actual);
         }
+
+        [Fact]
+        public async Task Test2()
+        {
+            await using IBrowserContext context =  await _browser.NewContextAsync();
+
+            await context.Tracing.StartAsync(new() {
+                Screenshots = true,
+                Snapshots = true,
+                Sources = true
+            });
+
+            IPage page = await context.NewPageAsync();
+            await page.GotoAsync("https://playwright.dev");
+
+            // Stop tracing and export it into a zip archive.
+            await context.Tracing.StopAsync(new()
+            {
+                Path = "trace.zip"
+            });
+        }
     }
 }
