@@ -6,7 +6,7 @@ using Microsoft.Playwright;
 using Xunit;
 
 #pragma warning disable CS3003
-namespace Test.Specflow.Playwright
+namespace Test.Specflow.E2e
 {
     public class PlaywrightFixture : IAsyncLifetime
     {
@@ -21,7 +21,7 @@ namespace Test.Specflow.Playwright
 
         public async Task InitializeAsync()
         {
-            PlaywrightInstance = await Microsoft.Playwright.Playwright.CreateAsync();
+            PlaywrightInstance = await Playwright.CreateAsync();
             Browser = await PlaywrightInstance.Chromium.LaunchAsync();
         }
     }
