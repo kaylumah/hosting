@@ -1,1 +1,1 @@
-dotnet test --filter "PlaywrightTests"
+dotnet test --filter "PlaywrightTests" --settings:chromium.runsettings
