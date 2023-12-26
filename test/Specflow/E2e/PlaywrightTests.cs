@@ -8,27 +8,6 @@ using Xunit;
 #pragma warning disable CS3003
 namespace Test.Specflow.E2e
 {
-    public class PlaywrightFixture : IAsyncLifetime
-    {
-        public IBrowser Browser { get; set; } = null!;
-        private IPlaywright PlaywrightInstance { get; set; } = null!;
-
-        public async Task DisposeAsync()
-        {
-            await Browser.DisposeAsync();
-            PlaywrightInstance.Dispose();
-        }
-
-        public async Task InitializeAsync()
-        {
-            PlaywrightInstance = await Playwright.CreateAsync();
-            Browser = await PlaywrightInstance.Chromium.LaunchAsync();
-        }
-    }
-
-    [CollectionDefinition(nameof(PlaywrightFixture))]
-    public class PlaywrightCollection : ICollectionFixture<PlaywrightFixture>
-    {}
 
     [Collection(nameof(PlaywrightFixture))]
     public class PlaywrightTests
