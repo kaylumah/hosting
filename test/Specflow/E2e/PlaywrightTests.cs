@@ -20,34 +20,18 @@ namespace Test.Specflow.E2e
         }
 
         [Fact]
-        public async Task Test1()
+        public async Task Test_HomePage()
         {
             // IPage page = await _browser.NewPageAsync();
             // await page.GotoAsync("https://google.com");
             // ILocator locator = page.Locator("input#gbqfbb");
             // int actual = await locator.CountAsync();
             // Assert.Equal(1, actual);
-        }
 
-        [Fact]
-        public async Task Test2()
-        {
-            await using IBrowserContext context =  await _Browser.NewContextAsync();
-
-            await context.Tracing.StartAsync(new() {
-                Screenshots = true,
-                Snapshots = true,
-                Sources = true
-            });
-
+            IBrowserContext context = await _Browser.NewContextAsync();
             IPage page = await context.NewPageAsync();
-            await page.GotoAsync("https://playwright.dev");
+            await page.GotoAsync("https://kaylumah.nl/");
 
-            // Stop tracing and export it into a zip archive.
-            await context.Tracing.StopAsync(new()
-            {
-                Path = "trace.zip"
-            });
         }
     }
 }
