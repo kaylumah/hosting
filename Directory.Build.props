@@ -65,6 +65,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath>
+    <!-- <RunSettingsFilePath>$(MSBuildThisFileDirectory).runsettings</RunSettingsFilePath> -->
   </PropertyGroup>
 </Project>
