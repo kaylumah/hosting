@@ -12,11 +12,11 @@ namespace Test.Specflow.E2e
     [Collection(nameof(PlaywrightFixture))]
     public class PlaywrightTests
     {
-        private readonly IBrowser _browser;
+        readonly IBrowser _Browser;
 
         public PlaywrightTests(PlaywrightFixture playwrightFixture)
         {
-            _browser = playwrightFixture.Browser;
+            _Browser = playwrightFixture.Browser;
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace Test.Specflow.E2e
         [Fact]
         public async Task Test2()
         {
-            await using IBrowserContext context =  await _browser.NewContextAsync();
+            await using IBrowserContext context =  await _Browser.NewContextAsync();
 
             await context.Tracing.StartAsync(new() {
                 Screenshots = true,
