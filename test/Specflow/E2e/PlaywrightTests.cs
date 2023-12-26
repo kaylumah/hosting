@@ -33,8 +33,7 @@ namespace Test.Specflow.E2e
             IPage page = await context.NewPageAsync();
             await page.GotoAsync("https://kaylumah.nl/");
 
-            await Expect(page).ToHaveURLAsync("https://playwright.dev/");
-            
+            await Expect(page).ToHaveURLAsync("https://playwright.dev/");            
             // await Expect(page.GetByRole(AriaRole.Navigation).GetByRole(AriaRole.Link, new() { Name = "Kaylumah" })).ToBeVisibleAsync();
             // await Expect(page.GetByRole(AriaRole.Link, new() { Name = "About" })).ToBeVisibleAsync();
             // await Expect(page.GetByRole(AriaRole.Link, new() { Name = "Blog" })).ToBeVisibleAsync();
