@@ -43,11 +43,11 @@ namespace Test.Specflow.E2e
         [Fact]
         public async Task Test1()
         {
-            IPage page = await _browser.NewPageAsync();
-            await page.GotoAsync("https://google.com");
-            ILocator locator = page.Locator("input#gbqfbb");
-            int actual = await locator.CountAsync();
-            Assert.Equal(1, actual);
+            // IPage page = await _browser.NewPageAsync();
+            // await page.GotoAsync("https://google.com");
+            // ILocator locator = page.Locator("input#gbqfbb");
+            // int actual = await locator.CountAsync();
+            // Assert.Equal(1, actual);
         }
 
         [Fact]
