@@ -8,11 +8,17 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-Write-Host "[args] BuildId '$BuildId' BuildNumber '$BuildNumber'"
-
 [string] $RepoRoot = $PSScriptRoot
-# $RepoRoot = Split-Path $PSScriptRoot -Parent
-Write-Host "RepoRoot is '$RepoRoot'"
+[string] $BuildConfiguration = "Release"
+[string] $TargetFramework = "net8.0"
+[string] $PrBuildId = $env:PR_BUILD_ID
+[string] $BaseUrl = ![string]::IsNullOrEmpty($PrBuildId) ? "https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net" : "https://kaylumah.nl"
+
+Write-Host "Using build-id '$BuildId'"
+Write-Host "Using build-number '$BuildNumber'"
+Write-Host "Using configuration '$BuildConfiguration'"
+Write-Host "Using framework '$TargetFramework'"
+Write-Host "Using base url '$BaseUrl'"
 
 $ReportScript = "$RepoRoot/tools/test-reports.ps1"
 
@@ -23,10 +29,6 @@ if (Test-Path $DistFolder)
     Remove-Item $DistFolder -Recurse -Force
 }
 
-
-[string] $BuildConfiguration = "Release"
-[string] $TargetFramework = "net8.0"
-
 dotnet restore
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
@@ -34,21 +36,9 @@ dotnet test --configuration $BuildConfiguration
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 & $ReportScript -BuildConfiguration $BuildConfiguration
 
-[string] $PrBuildId = $env:PR_BUILD_ID
-if ([string]::IsNullOrEmpty($PrBuildId))
-{
-    Write-Host "Production Build"
-    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" SiteConfiguration:AssetDirectory=assets
-}
-else
-{
-    Write-Host "PullRequest Build ($PrBuildId)"
-    [string] $BaseUrl="https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net"
-    dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
-}
+dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
-
 try
 {
     Set-Location $DistFolder
