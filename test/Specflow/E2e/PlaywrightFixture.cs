@@ -21,11 +21,11 @@ namespace Test.Specflow.E2e
 
         public async Task InitializeAsync()
         {
-            BrowserTypeLaunchOptions options = new BrowserTypeLaunchOptions() {
-                Headless = false
-            };
+            // BrowserTypeLaunchOptions options = new BrowserTypeLaunchOptions() {
+            //     Headless = false
+            // };
             PlaywrightInstance = await Playwright.CreateAsync();
-            Browser = await PlaywrightInstance.Chromium.LaunchAsync(options);
+            Browser = await PlaywrightInstance.Chromium.LaunchAsync(/*options*/);
         }
     }
 }
