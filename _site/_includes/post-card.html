@@ -8,11 +8,11 @@
   <div class="flex-1 bg-white p-6 flex flex-col justify-between">
     <div class="flex-1">
       <p class="text-sm font-medium text-indigo-600">
-        <a href="/archive.html#{{ post.type }}" class="hover:underline" title="Posts in the {{ post.type }} category">
+        <a data-testid="BlogPostType" href="/archive.html#{{ post.type }}" class="hover:underline" title="Posts in the {{ post.type }} category">
           {{ post.type }}
         </a>
       </p>
-      <a href="{{ post.uri }}" class="block mt-2">
+      <a data-testid="BlogPostLink" href="{{ post.uri }}" class="block mt-2">
         <p class="text-xl font-semibold text-gray-900">
           {{ post.title }}
         </p>
