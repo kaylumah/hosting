@@ -43,11 +43,11 @@ modifieddate: '2021-08-07'
   </h2>
   <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-    {% for post in posts %}
-      {% if post.featured == true %}
+    {% for post in posts | array.filter post.featured %}
+      <!-- {% if post.featured == true %} -->
         {% capture post-card-id %}featured-card-{% forloop.index %}{% endcapture %}
         {% include 'post-card.html' %}
-      {% endif %}
+      <!-- {% endif %} -->
     {% endfor %}
   </div>
 </div>
