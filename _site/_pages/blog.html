@@ -57,7 +57,6 @@ modifieddate: '2021-08-07'
         Recent posts
   </h2>
   <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    <!-- {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse | array.limit 2 %} -->
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     {% for post in posts %}
       {% capture post-card-id %}blog-card-{% forloop.index %}{% endcapture %}
