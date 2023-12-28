@@ -45,7 +45,7 @@ modifieddate: '2021-08-07'
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     {% for post in posts %}
       {% if post.featured == true %}
-        {% assign post-card-id = "featured-card-" + forloop.index %}
+        {% capture post-card-id %}featured-card-{% forloop.index %}{% endcapture %}
         {% include 'post-card.html' %}
       {% endif %}
     {% endfor %}
