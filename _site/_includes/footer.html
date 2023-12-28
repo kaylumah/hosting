@@ -2,19 +2,19 @@
     <div class="py-4 px-4">
         <div class="flex justify-center space-x-6">
             {% if page_author.links.linkedin %}
-            <a target="_blank" rel=”noopener” href="{{ page_author.links.linkedin_profile_url }}" class="text-gray-100 hover:text-gray-400">
+            <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="{{ page_author.links.linkedin_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">LinkedIn</span>
                 <em class="fab fa-linkedin fa-lg"></em>
             </a>
             {% endif %}
             {% if page_author.links.github %}
-            <a target="_blank" rel=”noopener” href="{{ page_author.links.github_profile_url }}" class="text-gray-100 hover:text-gray-400">
+            <a data-testid="FooterLink-github" target="_blank" rel=”noopener” href="{{ page_author.links.github_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">GitHub</span>
                 <em class="fab fa-github-square fa-lg"></em>
             </a>
             {% endif %}
             {% if page_author.links.twitter %}
-            <a target="_blank" rel=”noopener” href="{{ page_author.links.twitter_profile_url }}" class="text-gray-100 hover:text-gray-400">
+            <a data-testid="FooterLink-twitter" target="_blank" rel=”noopener” href="{{ page_author.links.twitter_profile_url }}" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Twitter</span>
                 <em class="fab fa-twitter-square fa-lg"></em>
             </a>
@@ -25,7 +25,7 @@
             <span class="text-xs">Deployed from commit <a class="hover:text-gray-400" href="{{ build.source_base_uri }}/{{ build.git_hash }}">{{ build.short_git_hash }}</a> via build <a class="hover:text-gray-400" href="{{ build.source_build_uri }}/{{ build.build_id }}">{{ build.build_number }}</a></span>
         </div>
         <div class="pt-2 flex justify-center space-x-6">
-            <a href="/" class="text-gray-100 hover:text-gray-400">
+            <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
                 <span class="sr-only">Kaylumah</span>
                 <em class="fak fa-logo-kaylumah fa-lg"></em>
             </a>
