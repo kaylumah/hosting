@@ -44,7 +44,7 @@ modifieddate: '2021-08-07'
   <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     {% for post in posts | array.filter post.featured %}
-        {% capture post-card-id %}featured-card-{% forloop.index %}{% endcapture %}
+        {% capture post-card-id %}featured-blog-{% forloop.index %}{% endcapture %}
         {% include 'post-card.html' %}
     {% endfor %}
   </div>
@@ -57,7 +57,7 @@ modifieddate: '2021-08-07'
   <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     {% for post in posts %}
-      {% capture post-card-id %}blog-card-{% forloop.index %}{% endcapture %}
+      {% capture post-card-id %}blog-{% forloop.index %}{% endcapture %}
       {% include 'post-card.html' %}
     {% endfor %}
   </div>
