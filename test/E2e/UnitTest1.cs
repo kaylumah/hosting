@@ -24,6 +24,7 @@ namespace Test.E2e
             IAPIRequestContext context = await Playwright.APIRequest.NewContextAsync(options);
             IAPIResponse response = await context.GetAsync("feed.xml");
             await Expect(response).ToBeOKAsync();
+            bool hasContentHeader = response.Headers.TryGetValue("content-type", out string contentType);
         }
     }
 
