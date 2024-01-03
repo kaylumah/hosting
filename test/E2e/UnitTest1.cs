@@ -19,7 +19,7 @@ namespace Test.E2e
         {
             APIRequestNewContextOptions options = new APIRequestNewContextOptions()
             {
-                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL")
+                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
             };
             IAPIRequestContext context = await Playwright.APIRequest.NewContextAsync(options);
             IAPIResponse response = await context.GetAsync("feed.xml");
@@ -39,7 +39,7 @@ namespace Test.E2e
         public override BrowserNewContextOptions ContextOptions()
         {
             BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
-            browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL");
+            browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             return browserNewContextOptions;
         }
     }
