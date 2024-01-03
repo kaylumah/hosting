@@ -6,12 +6,12 @@ using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+#pragma warning disable CS3009 // Base type is not CLS-compliant
+#pragma warning disable CS3002 // Return type is not CLS-compliant
 namespace Test.E2e
 {
     [TestClass]
-#pragma warning disable CS3009 // Base type is not CLS-compliant
     public class UnitTest1 : PlaywrightTest
-#pragma warning restore CS3009 // Base type is not CLS-compliant
     {
         [TestMethod]
         public async Task TestMethod1()
@@ -19,6 +19,22 @@ namespace Test.E2e
             IAPIRequestContext context = await Playwright.APIRequest.NewContextAsync();
             IAPIResponse response = await context.GetAsync("feed.xml");
             await Expect(response).ToBeOKAsync();
+        }
+    }
+
+    [TestClass]
+    public class UnitTest2 : PageTest
+    {
+        [TestMethod]
+        public async Task TestMethod1()
+        {
+            await Page.GotoAsync("feed.xml");
+        }
+
+        public override BrowserNewContextOptions ContextOptions()
+        {
+            BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
+            return browserNewContextOptions;
         }
     }
 }
