@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
-using Microsoft.Playwright.TestAdapter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 #pragma warning disable CS3009 // Base type is not CLS-compliant
@@ -39,8 +38,6 @@ namespace Test.E2e
 
         public override BrowserNewContextOptions ContextOptions()
         {
-            BrowserTypeLaunchOptions settingsProvider = PlaywrightSettingsProvider.LaunchOptions;
-            TestContext testContext = TestContext;
             BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
             browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL");
             return browserNewContextOptions;
