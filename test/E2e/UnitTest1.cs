@@ -31,6 +31,7 @@ namespace Test.E2e
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
             await Page.GotoAsync($"{baseUrl}/{PagePath}");
+            IAPIRequestContext context = Page.APIRequest;
         }
     }
 
