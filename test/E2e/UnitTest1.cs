@@ -39,6 +39,7 @@ namespace Test.E2e
             System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
             string url = Page.Url;
             IAPIRequestContext apiRequest = Page.APIRequest;
+            string title = await Page.TitleAsync();
         }
     }
 
@@ -48,7 +49,7 @@ namespace Test.E2e
         {
         }
 
-        public override string PagePath => "feed.xml";
+        public override string PagePath => "about.html"; //"feed.xml";
     }
 
     [TestClass]
