@@ -28,10 +28,17 @@ namespace Test.E2e
         public async Task NavigateAsync ()
         {
             Page = await _Browser.NewPageAsync();
+            Page.Console += (_, msg) => {
+
+            };
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
             await Page.GotoAsync($"{baseUrl}/{PagePath}");
-            IAPIRequestContext context = Page.APIRequest;
+            string test = await Page.ContentAsync();
+            IBrowserContext context = Page.Context;
+            System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
+            string url = Page.Url;
+            IAPIRequestContext apiRequest = Page.APIRequest;
         }
     }
 
