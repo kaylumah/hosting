@@ -56,7 +56,7 @@ namespace Test.E2e
         {
         }
 
-        public override string PagePath => "about.html"; //"feed.xml";
+        public override string PagePath => "feed.xml"; //"about.html"; 
     }
 
     [TestClass]
