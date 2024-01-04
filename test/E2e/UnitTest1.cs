@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
@@ -31,8 +32,14 @@ namespace Test.E2e
             Page.Console += (_, msg) => {
 
             };
+
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
+            List<IResponse> responses = new List<IResponse>();
+            Page.Response += (_, response) => {
+                responses.Add(response);
+            };
+
             await Page.GotoAsync($"{baseUrl}/{PagePath}");
             string test = await Page.ContentAsync();
             IBrowserContext context = Page.Context;
