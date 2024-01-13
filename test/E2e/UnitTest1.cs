@@ -18,14 +18,14 @@ namespace Test.E2e
     public class UnitTest3 : PageTest
     {
         [TestMethod]
-        public async Task TestMethod1()
+        public async Task Test_AtomFeed()
         {
             AtomFeed atomFeed = new AtomFeed(Page);
             await atomFeed.NavigateAsync();
         }
 
         [TestMethod]
-        public async Task TestMethod2()
+        public async Task Test_AboutPage()
         {
             AboutPage aboutPage = new AboutPage(Page);
             await aboutPage.NavigateAsync();
