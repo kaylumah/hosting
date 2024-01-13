@@ -16,49 +16,49 @@ namespace Test.E2e
     {
         public abstract string PagePath { get; }
 
-        readonly IPage Page;
+        readonly IPage _Page;
 
         public BasePageObject(IPage page)
         {
-            Page = page;
+            _Page = page;
         }
 
         public async Task NavigateAsync()
         {
-            Page.Close += Page_Close;
-            Page.Console += Page_Console;
-            Page.Crash += Page_Crash;
-            // Page.Dialog += Page_Dialog;
-            // Page.DOMContentLoaded += Page_DOMContentLoaded;
-            // Page.Download += Page_Download;
-            // Page.FileChooser += Page_FileChooser;
-            // Page.FrameAttached += Page_FrameAttached;
-            // Page.FrameDetached += Page_FrameDetached;
-            // Page.FrameNavigated += Page_FrameNavigated;
-            Page.Load += Page_Load;
-            Page.PageError += Page_PageError;
-            // Page.Popup += Page_Popup;
-            Page.Request += Page_Request;
-            Page.RequestFailed += Page_RequestFailed;
-            Page.RequestFinished += Page_RequestFinished;
-            Page.Response += Page_Response;
-            // Page.WebSocket += Page_WebSocket;
-            // Page.Worker += Page_Worker;
+            _Page.Close += Page_Close;
+            _Page.Console += Page_Console;
+            _Page.Crash += Page_Crash;
+            // _Page.Dialog += Page_Dialog;
+            // _Page.DOMContentLoaded += Page_DOMContentLoaded;
+            // _Page.Download += Page_Download;
+            // _Page.FileChooser += Page_FileChooser;
+            // _Page.FrameAttached += Page_FrameAttached;
+            // _Page.FrameDetached += Page_FrameDetached;
+            // _Page.FrameNavigated += Page_FrameNavigated;
+            _Page.Load += Page_Load;
+            _Page.PageError += Page_PageError;
+            // _Page.Popup += Page_Popup;
+            _Page.Request += Page_Request;
+            _Page.RequestFailed += Page_RequestFailed;
+            _Page.RequestFinished += Page_RequestFinished;
+            _Page.Response += Page_Response;
+            // _Page.WebSocket += Page_WebSocket;
+            // _Page.Worker += Page_Worker;
 
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
 
             //List<IResponse> responses = new List<IResponse>();
-            //Page.Response += (_, response) => {
+            //_Page.Response += (_, response) => {
             //    responses.Add(response);
             //};
 
-            await Page.GotoAsync($"{baseUrl}/{PagePath}");
-            //string test = await Page.ContentAsync();
-            //IBrowserContext context = Page.Context;
-            //System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
-            //string url = Page.Url;
-            //IAPIRequestContext apiRequest = Page.APIRequest;
-            //string title = await Page.TitleAsync();
+            await _Page.GotoAsync($"{baseUrl}/{PagePath}");
+            //string test = await _Page.ContentAsync();
+            //IBrowserContext context = _Page.Context;
+            //System.Collections.Generic.IReadOnlyList<IFrame> frames = _Page.Frames;
+            //string url = _Page.Url;
+            //IAPIRequestContext apiRequest = _Page.APIRequest;
+            //string title = await _Page.TitleAsync();
         }
 
         private void Page_PageError(object sender, string e)
