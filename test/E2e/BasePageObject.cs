@@ -32,13 +32,10 @@ namespace Test.E2e
             _Page.Response += Page_Response;
 
             await _Page.GotoAsync(PagePath);
-            //string test = await _Page.ContentAsync();
-            //IBrowserContext context = _Page.Context;
-            //System.Collections.Generic.IReadOnlyList<IFrame> frames = _Page.Frames;
-            //string url = _Page.Url;
-            //IAPIRequestContext apiRequest = _Page.APIRequest;
-            //string title = await _Page.TitleAsync();
+            
+            // string title = await _Page.TitleAsync();
         }
+
         void Page_Response(object sender, IResponse e)
         {
             if (e.Url.EndsWith(PagePath, StringComparison.Ordinal))

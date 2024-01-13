@@ -22,6 +22,12 @@ namespace Test.E2e
         {
             AtomFeed atomFeed = new AtomFeed(Page);
             await atomFeed.NavigateAsync();
+            Dictionary<string, string> headers1 = await atomFeed.PageResponse.AllHeadersAsync();
+            Dictionary<string, string> headers2 = atomFeed.PageResponse.Headers;
+            string body = await atomFeed.PageResponse.TextAsync();
+            bool ok = atomFeed.PageResponse.Ok;
+            int status = atomFeed.PageResponse.Status;
+            string statusText = atomFeed.PageResponse.StatusText;
         }
 
         [TestMethod]
