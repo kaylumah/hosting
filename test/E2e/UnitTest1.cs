@@ -3,7 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
+using System.Xml;
+using FluentAssertions;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,8 +26,18 @@ namespace Test.E2e
         {
             AtomFeed atomFeed = new AtomFeed(Page);
             await atomFeed.NavigateAsync();
+
+            Page.Url.Should().EndWith(atomFeed.PagePath + "3");
+
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
-            string text = await atomFeed.GetContent();
+            //string text = await atomFeed.GetContent();
+            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
+
+            // TODO this is also in Specflow proj
+            using MemoryStream stream = new MemoryStream(bytes);
+            using XmlReader xmlReader = XmlReader.Create(stream);
+            SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
+            feed.Title.Text.Should().Be("Max");
         }
 
         [TestMethod]
