@@ -168,7 +168,16 @@ namespace Test.E2e
         {
         }
 
-        public override string PagePath => "feed.xml"; //"about.html"; 
+        public override string PagePath => "feed.xml";
+    }
+
+    public class AboutPage : BasePageObject
+    {
+        public AboutPage(IBrowser browser) : base(browser)
+        {
+        }
+
+        public override string PagePath => "about.html"; 
     }
 
     [TestClass]
@@ -216,6 +225,17 @@ namespace Test.E2e
             });
             AtomFeed atomFeed = new AtomFeed(context.Browser);
             await atomFeed.NavigateAsync();
+        }
+
+        [TestMethod]
+        public async Task TestMethod2()
+        {
+            IBrowserContext context = await NewContextAsync(new BrowserNewContextOptions()
+            {
+                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
+            });
+            AboutPage aboutPage = new AboutPage(context.Browser);
+            await aboutPage.NavigateAsync();
         }
     }
 }
