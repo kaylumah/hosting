@@ -8,6 +8,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
 using FluentAssertions;
+using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,7 +25,7 @@ namespace Test.E2e
         [TestMethod]
         public async Task Test_AtomFeed()
         {
-            AtomFeed atomFeed = new AtomFeed(Page);
+            AtomFeedPage atomFeed = new AtomFeedPage(Page);
             await atomFeed.NavigateAsync();
 
             Page.Url.Should().EndWith(atomFeed.PagePath);
@@ -32,29 +33,22 @@ namespace Test.E2e
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
             
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
-            // TODO this is also in Specflow proj
-            using MemoryStream stream = new MemoryStream(bytes);
-            using XmlReader xmlReader = XmlReader.Create(stream);
-            SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
+            SyndicationFeed feed = bytes.ToSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
         }
 
         [TestMethod]
         public async Task Test_Sitemap()
         {
-            Sitemap sitemap = new Sitemap(Page);
-            await sitemap.NavigateAsync();
+            SitemapPage sitemapPage = new SitemapPage(Page);
+            await sitemapPage.NavigateAsync();
 
-            Page.Url.Should().EndWith(sitemap.PagePath);
+            Page.Url.Should().EndWith(sitemapPage.PagePath);
 
-            Dictionary<string, string> headers = await sitemap.GetHeaders();
+            Dictionary<string, string> headers = await sitemapPage.GetHeaders();
 
-            byte[] bytes = await sitemap.PageResponse.BodyAsync();
-            // TODO this is also in Specflow proj
-            using MemoryStream stream = new MemoryStream(bytes);
-            using XmlReader xmlReader = XmlReader.Create(stream);
-            SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
-            feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
+            byte[] bytes = await sitemapPage.PageResponse.BodyAsync();
+            SiteMap sitemap = bytes.ToSiteMap();
         }
 
         [TestMethod]

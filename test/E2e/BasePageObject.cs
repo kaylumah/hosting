@@ -57,18 +57,18 @@ namespace Test.E2e
         }
     }
 
-    public class AtomFeed : BasePageObject
+    public class AtomFeedPage : BasePageObject
     {
-        public AtomFeed(IPage page) : base(page)
+        public AtomFeedPage(IPage page) : base(page)
         {
         }
 
         public override string PagePath => "feed.xml";
     }
 
-    public class Sitemap : BasePageObject
+    public class SitemapPage : BasePageObject
     {
-        public Sitemap(IPage page) : base(page)
+        public SitemapPage(IPage page) : base(page)
         {
         }
 
