@@ -27,6 +27,16 @@ namespace Test.E2e
             _Page = page;
         }
 
+        public Task<Dictionary<string, string>> GetHeaders()
+        {
+            return PageResponse.AllHeadersAsync();
+        }
+
+        public Task<string> GetContent()
+        {
+            return PageResponse.TextAsync();
+        }
+
         public async Task NavigateAsync()
         {
             _Page.Response += Page_Response;
