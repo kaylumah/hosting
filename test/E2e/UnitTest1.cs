@@ -226,12 +226,19 @@ namespace Test.E2e
     [TestClass]
     public class UnitTest3 : BrowserTest
     {
+        async Task<IBrowserContext> BuildContext()
+        {
+            IBrowserContext context = await NewContextAsync(new BrowserNewContextOptions()
+            {
+                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
+            });
+            return context;
+        }
+
         [TestMethod]
         public async Task TestMethod1()
         {
-            IBrowserContext context = await NewContextAsync(new BrowserNewContextOptions() {
-                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
-            });
+            IBrowserContext context = await BuildContext();
             AtomFeed atomFeed = new AtomFeed(context.Browser);
             await atomFeed.NavigateAsync();
         }
@@ -239,10 +246,7 @@ namespace Test.E2e
         [TestMethod]
         public async Task TestMethod2()
         {
-            IBrowserContext context = await NewContextAsync(new BrowserNewContextOptions()
-            {
-                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
-            });
+            IBrowserContext context = await BuildContext();
             AboutPage aboutPage = new AboutPage(context.Browser);
             await aboutPage.NavigateAsync();
         }
