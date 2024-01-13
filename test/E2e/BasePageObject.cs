@@ -16,17 +16,15 @@ namespace Test.E2e
     {
         public abstract string PagePath { get; }
 
-        readonly IBrowser _Browser;
-        protected IPage Page { get; private set; }
-        public BasePageObject(IBrowser browser)
+        readonly IPage Page;
+
+        public BasePageObject(IPage page)
         {
-            _Browser = browser;
+            Page = page;
         }
 
         public async Task NavigateAsync()
         {
-            Page = await _Browser.NewPageAsync();
-
             Page.Close += Page_Close;
             Page.Console += Page_Console;
             Page.Crash += Page_Crash;
@@ -120,7 +118,7 @@ namespace Test.E2e
 
     public class AtomFeed : BasePageObject
     {
-        public AtomFeed(IBrowser browser) : base(browser)
+        public AtomFeed(IPage page) : base(page)
         {
         }
 
@@ -129,7 +127,7 @@ namespace Test.E2e
 
     public class AboutPage : BasePageObject
     {
-        public AboutPage(IBrowser browser) : base(browser)
+        public AboutPage(IPage page) : base(page)
         {
         }
 
