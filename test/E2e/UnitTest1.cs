@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Microsoft.Playwright.MSTest;
@@ -132,8 +133,9 @@ namespace Test.E2e
         }
 
         private void Page_Request(object sender, IRequest e)
-        { 
-            // 1
+        {
+            string message = $"IRequest => {e.Method} {e.Url} {e.ResourceType} {e.RedirectedFrom}";
+            Log(message);
         }
 
         private void Page_Response(object sender, IResponse e)
@@ -159,6 +161,12 @@ namespace Test.E2e
         private void Page_Load(object sender, IPage e)
         {
             // 6
+        }
+
+        public void Log(string message, [CallerMemberName] string writer = "none")
+        {
+            string logMessage = $"[{writer}]: {message}";
+            Console.WriteLine(logMessage);
         }
     }
 
