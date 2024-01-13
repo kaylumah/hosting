@@ -118,12 +118,12 @@ namespace Test.E2e
 
         private void Page_Console(object sender, IConsoleMessage e)
         {
-            throw new NotImplementedException();
+            // Only for HTML
         }
 
         private void Page_Close(object sender, IPage e)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         private void Page_RequestFailed(object sender, IRequest e)
