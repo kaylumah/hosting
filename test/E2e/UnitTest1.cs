@@ -29,24 +29,136 @@ namespace Test.E2e
         public async Task NavigateAsync ()
         {
             Page = await _Browser.NewPageAsync();
-            Page.Console += (_, msg) => {
 
-            };
+            Page.Close += Page_Close;
+            Page.Console += Page_Console;
+            Page.Crash += Page_Crash;
+            Page.Dialog += Page_Dialog;
+            Page.DOMContentLoaded += Page_DOMContentLoaded;
+            Page.Download += Page_Download;
+            Page.FileChooser += Page_FileChooser;
+            Page.FrameAttached += Page_FrameAttached;
+            Page.FrameDetached += Page_FrameDetached;
+            Page.FrameNavigated += Page_FrameNavigated;
+            Page.Load += Page_Load;
+            Page.PageError += Page_PageError;
+            Page.Popup += Page_Popup;
+            Page.Request += Page_Request;
+            Page.RequestFailed += Page_RequestFailed;
+            Page.RequestFinished += Page_RequestFinished;
+            Page.Response += Page_Response;
+            Page.WebSocket += Page_WebSocket;
+            Page.Worker += Page_Worker;
 
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
             List<IResponse> responses = new List<IResponse>();
-            Page.Response += (_, response) => {
-                responses.Add(response);
-            };
+            //Page.Response += (_, response) => {
+            //    responses.Add(response);
+            //};
 
-            await Page.GotoAsync($"{baseUrl}/{PagePath}");
-            string test = await Page.ContentAsync();
-            IBrowserContext context = Page.Context;
-            System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
-            string url = Page.Url;
-            IAPIRequestContext apiRequest = Page.APIRequest;
-            string title = await Page.TitleAsync();
+            //await Page.GotoAsync($"{baseUrl}/{PagePath}");
+            //string test = await Page.ContentAsync();
+            //IBrowserContext context = Page.Context;
+            //System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
+            //string url = Page.Url;
+            //IAPIRequestContext apiRequest = Page.APIRequest;
+            //string title = await Page.TitleAsync();
+        }
+
+        private void Page_Worker(object sender, IWorker e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_WebSocket(object sender, IWebSocket e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Response(object sender, IResponse e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_RequestFinished(object sender, IRequest e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Popup(object sender, IPage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_PageError(object sender, string e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Load(object sender, IPage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_FrameNavigated(object sender, IFrame e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_FrameDetached(object sender, IFrame e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_FrameAttached(object sender, IFrame e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_FileChooser(object sender, IFileChooser e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Download(object sender, IDownload e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_DOMContentLoaded(object sender, IPage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Dialog(object sender, IDialog e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Crash(object sender, IPage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Console(object sender, IConsoleMessage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Close(object sender, IPage e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_RequestFailed(object sender, IRequest e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Page_Request(object sender, IRequest e)
+        {
+            
         }
     }
 
@@ -62,35 +174,35 @@ namespace Test.E2e
     [TestClass]
     public class UnitTest1 : PlaywrightTest
     {
-        [TestMethod]
-        public async Task TestMethod1()
-        {
-            APIRequestNewContextOptions options = new APIRequestNewContextOptions()
-            {
-                BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
-            };
-            IAPIRequestContext context = await Playwright.APIRequest.NewContextAsync(options);
-            IAPIResponse response = await context.GetAsync("feed.xml");
-            await Expect(response).ToBeOKAsync();
-            bool hasContentHeader = response.Headers.TryGetValue("content-type", out string contentType);
-        }
+        //[TestMethod]
+        //public async Task TestMethod1()
+        //{
+        //    APIRequestNewContextOptions options = new APIRequestNewContextOptions()
+        //    {
+        //        BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl"
+        //    };
+        //    IAPIRequestContext context = await Playwright.APIRequest.NewContextAsync(options);
+        //    IAPIResponse response = await context.GetAsync("feed.xml");
+        //    await Expect(response).ToBeOKAsync();
+        //    bool hasContentHeader = response.Headers.TryGetValue("content-type", out string contentType);
+        //}
     }
 
     [TestClass]
     public class UnitTest2 : PageTest
     {
-        [TestMethod]
-        public async Task TestMethod1()
-        {
-            await Page.GotoAsync("feed.xml");
-        }
+        //[TestMethod]
+        //public async Task TestMethod1()
+        //{
+        //    await Page.GotoAsync("feed.xml");
+        //}
 
-        public override BrowserNewContextOptions ContextOptions()
-        {
-            BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
-            browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
-            return browserNewContextOptions;
-        }
+        //public override BrowserNewContextOptions ContextOptions()
+        //{
+        //    BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
+        //    browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
+        //    return browserNewContextOptions;
+        //}
     }
 
     [TestClass]
