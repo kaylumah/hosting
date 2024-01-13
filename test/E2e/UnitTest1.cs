@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Xml;
@@ -49,6 +50,7 @@ namespace Test.E2e
 
             byte[] bytes = await sitemapPage.PageResponse.BodyAsync();
             SiteMap sitemap = bytes.ToSiteMap();
+            sitemap.Items.ToList().ElementAt(0).Url.Should().Be("https://kaylumah.nl");
         }
 
         [TestMethod]
@@ -57,7 +59,8 @@ namespace Test.E2e
             AboutPage aboutPage = new AboutPage(Page);
             await aboutPage.NavigateAsync();
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
-            string text = await aboutPage.GetContent();
+            string title = await Page.TitleAsync();
+            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
         }
 
         public override BrowserNewContextOptions ContextOptions()

@@ -40,8 +40,6 @@ namespace Test.E2e
             _Page.Response += Page_Response;
 
             await _Page.GotoAsync(PagePath);
-            
-            // string title = await _Page.TitleAsync();
         }
 
         void Page_Response(object sender, IResponse e)
