@@ -40,6 +40,24 @@ namespace Test.E2e
         }
 
         [TestMethod]
+        public async Task Test_Sitemap()
+        {
+            Sitemap sitemap = new Sitemap(Page);
+            await sitemap.NavigateAsync();
+
+            Page.Url.Should().EndWith(sitemap.PagePath);
+
+            Dictionary<string, string> headers = await sitemap.GetHeaders();
+
+            byte[] bytes = await sitemap.PageResponse.BodyAsync();
+            // TODO this is also in Specflow proj
+            using MemoryStream stream = new MemoryStream(bytes);
+            using XmlReader xmlReader = XmlReader.Create(stream);
+            SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
+            feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
+        }
+
+        [TestMethod]
         public async Task Test_AboutPage()
         {
             AboutPage aboutPage = new AboutPage(Page);

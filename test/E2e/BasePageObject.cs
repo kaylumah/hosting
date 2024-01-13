@@ -66,6 +66,15 @@ namespace Test.E2e
         public override string PagePath => "feed.xml";
     }
 
+    public class Sitemap : BasePageObject
+    {
+        public Sitemap(IPage page) : base(page)
+        {
+        }
+
+        public override string PagePath => "sitemap.xml";
+    }
+
     public class AboutPage : BasePageObject
     {
         public AboutPage(IPage page) : base(page)
