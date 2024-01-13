@@ -27,17 +27,16 @@ namespace Test.E2e
             AtomFeed atomFeed = new AtomFeed(Page);
             await atomFeed.NavigateAsync();
 
-            Page.Url.Should().EndWith(atomFeed.PagePath + "3");
+            Page.Url.Should().EndWith(atomFeed.PagePath);
 
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
-            //string text = await atomFeed.GetContent();
+            
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
-
             // TODO this is also in Specflow proj
             using MemoryStream stream = new MemoryStream(bytes);
             using XmlReader xmlReader = XmlReader.Create(stream);
             SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
-            feed.Title.Text.Should().Be("Max");
+            feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
         }
 
         [TestMethod]
