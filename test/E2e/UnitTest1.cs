@@ -76,32 +76,12 @@ namespace Test.E2e
             throw new NotImplementedException();
         }
 
-        private void Page_Response(object sender, IResponse e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_RequestFinished(object sender, IRequest e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void Page_Popup(object sender, IPage e)
         {
             throw new NotImplementedException();
         }
 
         private void Page_PageError(object sender, string e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_Load(object sender, IPage e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_FrameNavigated(object sender, IFrame e)
         {
             throw new NotImplementedException();
         }
@@ -122,11 +102,6 @@ namespace Test.E2e
         }
 
         private void Page_Download(object sender, IDownload e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_DOMContentLoaded(object sender, IPage e)
         {
             throw new NotImplementedException();
         }
@@ -157,8 +132,33 @@ namespace Test.E2e
         }
 
         private void Page_Request(object sender, IRequest e)
+        { 
+            // 1
+        }
+
+        private void Page_Response(object sender, IResponse e)
         {
-            
+            // 2
+        }
+
+        private void Page_FrameNavigated(object sender, IFrame e)
+        {
+            // 3
+        }
+
+        private void Page_RequestFinished(object sender, IRequest e)
+        {
+            // 4
+        }
+
+        private void Page_DOMContentLoaded(object sender, IPage e)
+        {
+            // 5
+        }
+
+        private void Page_Load(object sender, IPage e)
+        {
+            // 6
         }
     }
 
