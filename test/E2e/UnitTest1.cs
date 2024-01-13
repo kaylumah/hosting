@@ -67,47 +67,7 @@ namespace Test.E2e
             //string title = await Page.TitleAsync();
         }
 
-        private void Page_Worker(object sender, IWorker e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_WebSocket(object sender, IWebSocket e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_Popup(object sender, IPage e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void Page_PageError(object sender, string e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_FrameDetached(object sender, IFrame e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_FrameAttached(object sender, IFrame e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_FileChooser(object sender, IFileChooser e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_Download(object sender, IDownload e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Page_Dialog(object sender, IDialog e)
         {
             throw new NotImplementedException();
         }
@@ -144,20 +104,10 @@ namespace Test.E2e
             Log(message);
         }
 
-        private void Page_FrameNavigated(object sender, IFrame e)
-        {
-            // 3
-        }
-
         private void Page_RequestFinished(object sender, IRequest e)
         {
             string message = $"IRequest => {e.Method} {e.Url} {e.ResourceType} {e.RedirectedFrom}";
             Log(message);
-        }
-
-        private void Page_DOMContentLoaded(object sender, IPage e)
-        {
-            // 5
         }
 
         private void Page_Load(object sender, IPage e)
