@@ -34,22 +34,22 @@ namespace Test.E2e
             Page.Close += Page_Close;
             Page.Console += Page_Console;
             Page.Crash += Page_Crash;
-            Page.Dialog += Page_Dialog;
-            Page.DOMContentLoaded += Page_DOMContentLoaded;
-            Page.Download += Page_Download;
-            Page.FileChooser += Page_FileChooser;
-            Page.FrameAttached += Page_FrameAttached;
-            Page.FrameDetached += Page_FrameDetached;
-            Page.FrameNavigated += Page_FrameNavigated;
+            // Page.Dialog += Page_Dialog;
+            // Page.DOMContentLoaded += Page_DOMContentLoaded;
+            // Page.Download += Page_Download;
+            // Page.FileChooser += Page_FileChooser;
+            // Page.FrameAttached += Page_FrameAttached;
+            // Page.FrameDetached += Page_FrameDetached;
+            // Page.FrameNavigated += Page_FrameNavigated;
             Page.Load += Page_Load;
             Page.PageError += Page_PageError;
-            Page.Popup += Page_Popup;
+            // Page.Popup += Page_Popup;
             Page.Request += Page_Request;
             Page.RequestFailed += Page_RequestFailed;
             Page.RequestFinished += Page_RequestFinished;
             Page.Response += Page_Response;
-            Page.WebSocket += Page_WebSocket;
-            Page.Worker += Page_Worker;
+            // Page.WebSocket += Page_WebSocket;
+            // Page.Worker += Page_Worker;
 
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
@@ -151,7 +151,8 @@ namespace Test.E2e
 
         private void Page_RequestFinished(object sender, IRequest e)
         {
-            // 4
+            string message = $"IRequest => {e.Method} {e.Url} {e.ResourceType} {e.RedirectedFrom}";
+            Log(message);
         }
 
         private void Page_DOMContentLoaded(object sender, IPage e)
