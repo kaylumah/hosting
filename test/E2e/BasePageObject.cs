@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
@@ -17,6 +18,9 @@ namespace Test.E2e
         public abstract string PagePath { get; }
 
         readonly IPage _Page;
+
+        public IResponse PageResponse { get; private set; }
+        public List<IResponse> Responses { get; } = new List<IResponse>();
 
         public BasePageObject(IPage page)
         {
@@ -39,18 +43,12 @@ namespace Test.E2e
         {
             if (e.Url.EndsWith(PagePath, StringComparison.Ordinal))
             {
-                Log("TargetFound");
+                PageResponse = e;
             }
             else
             {
-                Log("Found: " + e.Url);
+                Responses.Add(e);
             }
-        }
-
-        public void Log(string message, [CallerMemberName] string writer = "none")
-        {
-            string logMessage = $"[{writer}]: {message}";
-            Console.WriteLine(logMessage);
         }
     }
 
