@@ -27,11 +27,7 @@ namespace Test.E2e
         {
             _Page.Response += Page_Response;
 
-            string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
-
-            //await _Page.GotoAsync($"{baseUrl}/{PagePath}");
-
-            await _Page.GotoAsync(PagePath.ToString());
+            await _Page.GotoAsync(PagePath);
             //string test = await _Page.ContentAsync();
             //IBrowserContext context = _Page.Context;
             //System.Collections.Generic.IReadOnlyList<IFrame> frames = _Page.Frames;
@@ -41,8 +37,14 @@ namespace Test.E2e
         }
         void Page_Response(object sender, IResponse e)
         {
-            string message = $"IResponse => (header) {e.Status} {e.Url}";
-            Log(message);
+            if (e.Url.EndsWith(PagePath, StringComparison.Ordinal))
+            {
+                Log("TargetFound");
+            }
+            else
+            {
+                Log("Found: " + e.Url);
+            }
         }
 
         public void Log(string message, [CallerMemberName] string writer = "none")
