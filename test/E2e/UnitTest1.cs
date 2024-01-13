@@ -50,7 +50,8 @@ namespace Test.E2e
 
             byte[] bytes = await sitemapPage.PageResponse.BodyAsync();
             SiteMap sitemap = bytes.ToSiteMap();
-            sitemap.Items.ToList().ElementAt(0).Url.Should().Be("https://kaylumah.nl");
+            string url = GetBaseUrl();
+            sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
         }
 
         [TestMethod]
@@ -66,8 +67,14 @@ namespace Test.E2e
         public override BrowserNewContextOptions ContextOptions()
         {
             BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
-            browserNewContextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
+            browserNewContextOptions.BaseURL = GetBaseUrl();
             return browserNewContextOptions;
+        }
+
+        string GetBaseUrl()
+        {
+            string result = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
+            return result;
         }
     }
 }
