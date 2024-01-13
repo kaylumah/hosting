@@ -29,7 +29,9 @@ namespace Test.E2e
 
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
 
-            await _Page.GotoAsync($"{baseUrl}/{PagePath}");
+            //await _Page.GotoAsync($"{baseUrl}/{PagePath}");
+
+            await _Page.GotoAsync(PagePath.ToString());
             //string test = await _Page.ContentAsync();
             //IBrowserContext context = _Page.Context;
             //System.Collections.Generic.IReadOnlyList<IFrame> frames = _Page.Frames;
