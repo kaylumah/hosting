@@ -9,8 +9,6 @@ using Microsoft.Playwright;
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
 #pragma warning disable CS3003 // Type is not CLS-compliant
-#pragma warning disable CS3009 // Base type is not CLS-compliant
-#pragma warning disable CS3002 // Return type is not CLS-compliant
 namespace Test.E2e
 {
     public abstract class BasePageObject
