@@ -140,7 +140,8 @@ namespace Test.E2e
 
         private void Page_Response(object sender, IResponse e)
         {
-            // 2
+            string message = $"IResponse => (header) {e.Status} {e.Url}";
+            Log(message);
         }
 
         private void Page_FrameNavigated(object sender, IFrame e)
