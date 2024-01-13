@@ -52,12 +52,12 @@ namespace Test.E2e
 
             string baseUrl = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             
-            List<IResponse> responses = new List<IResponse>();
+            //List<IResponse> responses = new List<IResponse>();
             //Page.Response += (_, response) => {
             //    responses.Add(response);
             //};
 
-            //await Page.GotoAsync($"{baseUrl}/{PagePath}");
+            await Page.GotoAsync($"{baseUrl}/{PagePath}");
             //string test = await Page.ContentAsync();
             //IBrowserContext context = Page.Context;
             //System.Collections.Generic.IReadOnlyList<IFrame> frames = Page.Frames;
