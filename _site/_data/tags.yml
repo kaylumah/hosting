@@ -86,3 +86,7 @@
   name: 2023
   description: posts from 2023
   icon: /assets/icons/custom/2023.svg
+- id: 2024
+  name: 2024
+  description: posts from 2024
+  icon: /assets/icons/custom/2024.svg
