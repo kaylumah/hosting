@@ -97,7 +97,7 @@ namespace Test.E2e
             await notFoundPage.NavigateAsync();
             Dictionary<string, string> headers = await notFoundPage.GetHeaders();
             string title = await Page.TitleAsync();
-            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+            title.Should().Be("Page not found · Kaylumah");
         }
 
         [TestMethod]
@@ -107,7 +107,7 @@ namespace Test.E2e
             await archivePage.NavigateAsync();
             Dictionary<string, string> headers = await archivePage.GetHeaders();
             string title = await Page.TitleAsync();
-            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+            title.Should().Be("The complete archive of blog posts · Kaylumah");
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace Test.E2e
             await blogPage.NavigateAsync();
             Dictionary<string, string> headers = await blogPage.GetHeaders();
             string title = await Page.TitleAsync();
-            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+            title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
 
         public override BrowserNewContextOptions ContextOptions()
