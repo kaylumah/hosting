@@ -55,6 +55,20 @@ namespace Test.E2e
         }
     }
 
+    public abstract class XmlPage : BasePageObject
+    {
+        protected XmlPage(IPage page) : base(page)
+        {
+        }
+    }
+
+    public abstract class HtmlPage : BasePageObject
+    {
+        protected HtmlPage(IPage page) : base(page)
+        {
+        }
+    }
+
     public class AtomFeedPage : BasePageObject
     {
         public AtomFeedPage(IPage page) : base(page)
