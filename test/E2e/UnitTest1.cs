@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using FluentAssertions;
@@ -52,6 +53,21 @@ namespace Test.E2e
             SiteMap sitemap = bytes.ToSiteMap();
             string url = GetBaseUrl();
             sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
+        }
+
+        [TestMethod]
+        public async Task Test_Robots()
+        {
+            RobotsPage robotsPage = new RobotsPage(Page);
+            await robotsPage.NavigateAsync();
+
+            Page.Url.Should().EndWith(robotsPage.PagePath);
+
+            Dictionary<string, string> headers = await robotsPage.GetHeaders();
+
+            byte[] bytes = await robotsPage.PageResponse.BodyAsync();
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            string robots = encoding.GetString(bytes);
         }
 
         [TestMethod]

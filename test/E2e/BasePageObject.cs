@@ -69,6 +69,22 @@ namespace Test.E2e
         }
     }
 
+    public abstract class TxtPage : BasePageObject
+    {
+        protected TxtPage(IPage page) : base(page)
+        {
+        }
+    }
+
+    public class RobotsPage : TxtPage
+    {
+        public RobotsPage(IPage page) : base(page)
+        {
+        }
+
+        public override string PagePath => "robots.txt";
+    }
+
     public class AtomFeedPage : XmlPage
     {
         public AtomFeedPage(IPage page) : base(page)
