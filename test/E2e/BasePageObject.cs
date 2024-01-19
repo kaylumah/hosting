@@ -69,7 +69,7 @@ namespace Test.E2e
         }
     }
 
-    public class AtomFeedPage : BasePageObject
+    public class AtomFeedPage : XmlPage
     {
         public AtomFeedPage(IPage page) : base(page)
         {
@@ -78,7 +78,7 @@ namespace Test.E2e
         public override string PagePath => "feed.xml";
     }
 
-    public class SitemapPage : BasePageObject
+    public class SitemapPage : XmlPage
     {
         public SitemapPage(IPage page) : base(page)
         {
@@ -87,7 +87,7 @@ namespace Test.E2e
         public override string PagePath => "sitemap.xml";
     }
 
-    public class AboutPage : BasePageObject
+    public class AboutPage : HtmlPage
     {
         public AboutPage(IPage page) : base(page)
         {
