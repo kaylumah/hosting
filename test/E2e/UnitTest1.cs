@@ -71,6 +71,16 @@ namespace Test.E2e
         }
 
         [TestMethod]
+        public async Task Test_HomePage()
+        {
+            HomePage homePage = new HomePage(Page);
+            await homePage.NavigateAsync();
+            Dictionary<string, string> headers = await homePage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("Max Hamulyák · Kaylumah");
+        }
+
+        [TestMethod]
         public async Task Test_AboutPage()
         {
             AboutPage aboutPage = new AboutPage(Page);

@@ -103,6 +103,16 @@ namespace Test.E2e
         public override string PagePath => "sitemap.xml";
     }
 
+    public class HomePage : HtmlPage
+    {
+        public HomePage(IPage page) : base(page)
+        {
+        }
+
+        public override string PagePath => "index.html";
+    }
+
+
     public class AboutPage : HtmlPage
     {
         public AboutPage(IPage page) : base(page)
