@@ -33,7 +33,7 @@ namespace Test.E2e
             Page.Url.Should().EndWith(atomFeed.PagePath);
 
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
-            
+
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
@@ -86,6 +86,36 @@ namespace Test.E2e
             AboutPage aboutPage = new AboutPage(Page);
             await aboutPage.NavigateAsync();
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_NotFoundPage()
+        {
+            NotFoundPage notFoundPage = new NotFoundPage(Page);
+            await notFoundPage.NavigateAsync();
+            Dictionary<string, string> headers = await notFoundPage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_ArchivePage()
+        {
+            ArchivePage archivePage = new ArchivePage(Page);
+            await archivePage.NavigateAsync();
+            Dictionary<string, string> headers = await archivePage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_BlogPage()
+        {
+            BlogPage blogPage = new BlogPage(Page);
+            await blogPage.NavigateAsync();
+            Dictionary<string, string> headers = await blogPage.GetHeaders();
             string title = await Page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
         }
