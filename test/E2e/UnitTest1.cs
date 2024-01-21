@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using FluentAssertions;
@@ -32,7 +33,7 @@ namespace Test.E2e
             Page.Url.Should().EndWith(atomFeed.PagePath);
 
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
-            
+
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
@@ -55,6 +56,31 @@ namespace Test.E2e
         }
 
         [TestMethod]
+        public async Task Test_Robots()
+        {
+            RobotsPage robotsPage = new RobotsPage(Page);
+            await robotsPage.NavigateAsync();
+
+            Page.Url.Should().EndWith(robotsPage.PagePath);
+
+            Dictionary<string, string> headers = await robotsPage.GetHeaders();
+
+            byte[] bytes = await robotsPage.PageResponse.BodyAsync();
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            string robots = encoding.GetString(bytes);
+        }
+
+        [TestMethod]
+        public async Task Test_HomePage()
+        {
+            HomePage homePage = new HomePage(Page);
+            await homePage.NavigateAsync();
+            Dictionary<string, string> headers = await homePage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("Max Hamulyák · Kaylumah");
+        }
+
+        [TestMethod]
         public async Task Test_AboutPage()
         {
             AboutPage aboutPage = new AboutPage(Page);
@@ -62,6 +88,36 @@ namespace Test.E2e
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
             string title = await Page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_NotFoundPage()
+        {
+            NotFoundPage notFoundPage = new NotFoundPage(Page);
+            await notFoundPage.NavigateAsync();
+            Dictionary<string, string> headers = await notFoundPage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("Page not found · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_ArchivePage()
+        {
+            ArchivePage archivePage = new ArchivePage(Page);
+            await archivePage.NavigateAsync();
+            Dictionary<string, string> headers = await archivePage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("The complete archive of blog posts · Kaylumah");
+        }
+
+        [TestMethod]
+        public async Task Test_BlogPage()
+        {
+            BlogPage blogPage = new BlogPage(Page);
+            await blogPage.NavigateAsync();
+            Dictionary<string, string> headers = await blogPage.GetHeaders();
+            string title = await Page.TitleAsync();
+            title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
 
         public override BrowserNewContextOptions ContextOptions()
