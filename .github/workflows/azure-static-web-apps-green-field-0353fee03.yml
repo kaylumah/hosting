@@ -67,8 +67,8 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-      - name: 'Run E2E'
-        if: github.event_name == 'pull_request'
+      - name: 'Run E2E (PR)'
+        if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
         run: |
            pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install --with-deps
            dotnet test test/E2e
