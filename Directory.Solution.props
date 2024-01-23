@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="EmitCustomMessage" AfterTargets="Build">
+    <!-- https://learn.microsoft.com/en-gb/visualstudio/msbuild/customize-solution-build?view=vs-2022 -->
+    <!-- <Message Importance="High" Text="The solution has completed the Build target" /> -->
+  </Target>
+  <Target Name="CheckDependencies" AfterTargets="Build">
+    <PropertyGroup>
+      <PowerShellCommand>dotnet pwsh</PowerShellCommand>
+      <PowerShellExecutionPolicy>Restricted</PowerShellExecutionPolicy>
+      <OutdatedScript>$(MSBuildProjectDirectory)/tools/Outdated.ps1</OutdatedScript>
+      <TargetProject>$(MSBuildProjectDirectory)/SSG.sln</TargetProject>
+    </PropertyGroup>
+    <Exec Command="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" />
+  </Target>
+</Project>
