@@ -31,7 +31,7 @@
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.0" />
     <PackageVersion Include="YamlDotNet" Version="13.7.1" />
-    <PackageVersion Include="IDesign.Analyzers" Version="1.0.10" />
+    <!--<PackageVersion Include="IDesign.Analyzers" Version="1.0.10" /> -->
     <!--<PackageVersion Include="ReportGenerator" Version="5.1.20"/>-->
   </ItemGroup>
 </Project>
