@@ -132,6 +132,5 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
-
     }
 }
