@@ -145,9 +145,11 @@ namespace Test.E2e
         {
             Regex regex = VersionQueryString();
             Regex regex1 = BaseUrl();
-            VerifySettings settings = new VerifySettings()
+            VerifySettings settings = new VerifySettings();
+            // settings.ScrubInlineGuids();
+            settings.ScrubInlineDateTimeOffsets("01/24/2024 20:46:30 +01:00");
                 //.ScrubMatches(regex1)
-            ; //    .ScrubMatches(regex);
+            //    .ScrubMatches(regex);
             return settings;
         }
     }
