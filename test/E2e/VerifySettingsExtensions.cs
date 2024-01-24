@@ -76,14 +76,5 @@ namespace VerifyTests
 
             return verifySettings;
         }
-
-        public static SettingsTask ScrubMatches(
-            this SettingsTask settingsTasks,
-            Regex regex,
-            string replacementPrefix = "Val_")
-        {
-            settingsTasks.CurrentSettings.ScrubMatches(regex, replacementPrefix);
-            return settingsTasks;
-        }
     }
 }
