@@ -148,7 +148,7 @@ namespace Test.E2e
             VerifySettings settings = new VerifySettings();
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
-                //.ScrubMatches(regex1)
+            settings.ScrubMatches(regex1);
             //    .ScrubMatches(regex);
             return settings;
         }
