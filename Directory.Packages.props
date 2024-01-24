@@ -24,7 +24,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
-    <PackageVersion Include="Schema.NET" Version="12.0.0" />
+    <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="5.9.1" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
     <PackageVersion Include="System.IO.Abstractions" Version="20.0.15" />
