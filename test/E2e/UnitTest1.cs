@@ -3,17 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
-using Microsoft.Playwright.MSTest;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
 #pragma warning disable CS3003 // Type is not CLS-compliant
@@ -21,16 +18,60 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 #pragma warning disable CS3002 // Return type is not CLS-compliant
 namespace Test.E2e
 {
-    [TestClass]
-    public class UnitTest3 : PageTest
+    public class PlaywrightFixture : IAsyncLifetime
     {
-        [TestMethod]
+        IPlaywright PlaywrightInstance { get; set; }
+        IBrowser Browser { get;set; }
+
+        public async Task DisposeAsync()
+        {
+            if (Browser != null)
+            {
+                await Browser.DisposeAsync();
+            }
+
+            PlaywrightInstance.Dispose();
+        }
+
+        public async Task InitializeAsync()
+        {
+            PlaywrightInstance = await Playwright.CreateAsync();
+            await GetBrowser();
+        }
+
+        public async Task<IBrowser> GetBrowser()
+        {
+            if (Browser == null)
+            {
+                Browser = await PlaywrightInstance.Chromium.LaunchAsync();
+            }
+
+            return Browser;
+        }
+
+        public Task<IPage> GetPage()
+        {
+            return Browser.NewPageAsync();
+        }
+    }
+
+    public class UnitTest3 : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public UnitTest3(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
+
+        [Fact]
         public async Task Test_AtomFeed()
         {
-            AtomFeedPage atomFeed = new AtomFeedPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            AtomFeedPage atomFeed = new AtomFeedPage(page);
             await atomFeed.NavigateAsync();
 
-            Page.Url.Should().EndWith(atomFeed.PagePath);
+            page.Url.Should().EndWith(atomFeed.PagePath);
 
             Dictionary<string, string> headers = await atomFeed.GetHeaders();
 
@@ -39,13 +80,14 @@ namespace Test.E2e
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_Sitemap()
         {
-            SitemapPage sitemapPage = new SitemapPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            SitemapPage sitemapPage = new SitemapPage(page);
             await sitemapPage.NavigateAsync();
 
-            Page.Url.Should().EndWith(sitemapPage.PagePath);
+            page.Url.Should().EndWith(sitemapPage.PagePath);
 
             Dictionary<string, string> headers = await sitemapPage.GetHeaders();
 
@@ -55,13 +97,14 @@ namespace Test.E2e
             sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_Robots()
         {
-            RobotsPage robotsPage = new RobotsPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            RobotsPage robotsPage = new RobotsPage(page);
             await robotsPage.NavigateAsync();
 
-            Page.Url.Should().EndWith(robotsPage.PagePath);
+            page.Url.Should().EndWith(robotsPage.PagePath);
 
             Dictionary<string, string> headers = await robotsPage.GetHeaders();
 
@@ -70,59 +113,64 @@ namespace Test.E2e
             string robots = encoding.GetString(bytes);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_HomePage()
         {
-            HomePage homePage = new HomePage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
             Dictionary<string, string> headers = await homePage.GetHeaders();
-            string title = await Page.TitleAsync();
+            string title = await page.TitleAsync();
             title.Should().Be("Max Hamulyák · Kaylumah");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_AboutPage()
         {
-            AboutPage aboutPage = new AboutPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            AboutPage aboutPage = new AboutPage(page);
             await aboutPage.NavigateAsync();
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
-            string title = await Page.TitleAsync();
+            string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_NotFoundPage()
         {
-            NotFoundPage notFoundPage = new NotFoundPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            NotFoundPage notFoundPage = new NotFoundPage(page);
             await notFoundPage.NavigateAsync();
             Dictionary<string, string> headers = await notFoundPage.GetHeaders();
-            string title = await Page.TitleAsync();
+            string title = await page.TitleAsync();
             title.Should().Be("Page not found · Kaylumah");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_ArchivePage()
         {
-            ArchivePage archivePage = new ArchivePage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            ArchivePage archivePage = new ArchivePage(page);
             await archivePage.NavigateAsync();
             Dictionary<string, string> headers = await archivePage.GetHeaders();
-            string title = await Page.TitleAsync();
+            string title = await page.TitleAsync();
             title.Should().Be("The complete archive of blog posts · Kaylumah");
         }
 
-        [TestMethod]
+        [Fact]
         public async Task Test_BlogPage()
         {
-            BlogPage blogPage = new BlogPage(Page);
+            IPage page = await _PlaywrightFixture.GetPage();
+            BlogPage blogPage = new BlogPage(page);
             await blogPage.NavigateAsync();
             Dictionary<string, string> headers = await blogPage.GetHeaders();
-            string title = await Page.TitleAsync();
+            string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
 
-        public override BrowserNewContextOptions ContextOptions()
+        public BrowserNewContextOptions ContextOptions()
         {
-            BrowserNewContextOptions browserNewContextOptions = base.ContextOptions();
+            BrowserNewContextOptions browserNewContextOptions = new BrowserNewContextOptions();
             browserNewContextOptions.BaseURL = GetBaseUrl();
             return browserNewContextOptions;
         }
