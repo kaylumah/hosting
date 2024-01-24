@@ -10,18 +10,12 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
-using VerifyTests;
-using VerifyTests.AngleSharp;
 using VerifyXunit;
 using Xunit;
 
 #pragma warning disable CS3002 // Return type is not CLS-compliant
 namespace Test.E2e
 {
-    public static class ModuleInitializer
-    {
-        public static void Init() => VerifyAngleSharpDiffing.Initialize();
-    }
 
     public class UnitTest3 : IClassFixture<PlaywrightFixture>
     {
