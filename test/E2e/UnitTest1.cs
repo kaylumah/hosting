@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
+using VerifyTests.AngleSharp;
+using VerifyXunit;
 using Xunit;
 
 #pragma warning disable CS3002 // Return type is not CLS-compliant
@@ -94,6 +96,10 @@ namespace Test.E2e
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+
+            string html = await aboutPage.GetContent();
+            await Verifier.Verify(html, "html")
+                .PrettyPrintHtml();
         }
 
         [Fact]
