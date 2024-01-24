@@ -21,7 +21,7 @@ namespace Test.E2e
     public class PlaywrightFixture : IAsyncLifetime
     {
         IPlaywright PlaywrightInstance { get; set; }
-        IBrowser Browser { get;set; }
+        IBrowser Browser { get; set; }
 
         public async Task DisposeAsync()
         {
@@ -49,9 +49,25 @@ namespace Test.E2e
             return Browser;
         }
 
-        public Task<IPage> GetPage()
+        public async Task<IPage> GetPage()
         {
-            return Browser.NewPageAsync();
+            BrowserNewContextOptions contextOptions = ContextOptions();
+            IBrowserContext context = await Browser.NewContextAsync(contextOptions);
+            IPage page = await context.NewPageAsync();
+            return page;
+        }
+
+        public BrowserNewContextOptions ContextOptions()
+        {
+            BrowserNewContextOptions browserNewContextOptions = new BrowserNewContextOptions();
+            browserNewContextOptions.BaseURL = GetBaseUrl();
+            return browserNewContextOptions;
+        }
+
+        public string GetBaseUrl()
+        {
+            string result = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
+            return result;
         }
     }
 
@@ -93,7 +109,7 @@ namespace Test.E2e
 
             byte[] bytes = await sitemapPage.PageResponse.BodyAsync();
             SiteMap sitemap = bytes.ToSiteMap();
-            string url = GetBaseUrl();
+            string url = _PlaywrightFixture.GetBaseUrl();
             sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
         }
 
@@ -168,17 +184,5 @@ namespace Test.E2e
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
 
-        public BrowserNewContextOptions ContextOptions()
-        {
-            BrowserNewContextOptions browserNewContextOptions = new BrowserNewContextOptions();
-            browserNewContextOptions.BaseURL = GetBaseUrl();
-            return browserNewContextOptions;
-        }
-
-        string GetBaseUrl()
-        {
-            string result = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
-            return result;
-        }
     }
 }
