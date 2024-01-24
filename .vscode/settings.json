@@ -1,6 +1,6 @@
 {
     "cucumberautocomplete.steps": [
-        "test/Specflow/**/*.cs"
+        "test/Unit/**/*.cs"
     ],
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
