@@ -10,7 +10,7 @@ using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using Test.Utilities;
 
-namespace Test.Specflow.Component.Access.Artifact
+namespace Test.Unit.Component.Access.Artifact
 {
     public sealed class ArtifactAccessTestHarness
     {

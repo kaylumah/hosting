@@ -10,11 +10,11 @@ using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Test.Specflow.Entities;
-using Test.Specflow.Extensions;
-using Test.Specflow.Utilities;
+using Test.Unit.Entities;
+using Test.Unit.Extensions;
+using Test.Unit.Utilities;
 
-namespace Test.Specflow.Component.Manager.Site.Steps
+namespace Test.Unit.Component.Manager.Site.Steps
 {
     [Binding]
     [Scope(Feature = "SiteManager GenerateSite")]

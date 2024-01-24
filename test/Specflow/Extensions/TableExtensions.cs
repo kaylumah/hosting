@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Test.Specflow.Helpers;
+using Test.Unit.Helpers;
 
 namespace TechTalk.SpecFlow
 {

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Text;
-using Test.Specflow.Helpers;
+using Test.Unit.Helpers;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public class MockFileDataFactory
     {

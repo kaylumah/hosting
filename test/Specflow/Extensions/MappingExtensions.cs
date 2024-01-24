@@ -8,10 +8,10 @@ using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Ssg.Extensions.Metadata.Abstractions;
-using Test.Specflow.Entities;
+using Test.Unit.Entities;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Extensions
+namespace Test.Unit.Extensions
 {
     public static partial class MappingExtensions
     {

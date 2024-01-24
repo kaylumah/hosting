@@ -6,7 +6,7 @@ using FluentAssertions;
 using Ssg.Extensions.Data.Yaml;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit
+namespace Test.Unit.FormerXunit
 {
     public class YamlParserTests
     {

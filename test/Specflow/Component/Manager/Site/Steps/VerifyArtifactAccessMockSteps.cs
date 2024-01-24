@@ -3,11 +3,11 @@
 
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-using Test.Specflow.Extensions;
-using Test.Specflow.Utilities;
+using Test.Unit.Extensions;
+using Test.Unit.Utilities;
 using VerifyXunit;
 
-namespace Test.Specflow.Component.Manager.Site.Steps
+namespace Test.Unit.Component.Manager.Site.Steps
 {
     [Binding]
     public class VerifyArtifactAccessMockSteps

@@ -14,11 +14,11 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using TechTalk.SpecFlow;
-using Test.Specflow.Entities;
-using Test.Specflow.Extensions;
+using Test.Unit.Entities;
+using Test.Unit.Extensions;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Steps
+namespace Test.Unit.Steps
 {
     [Binding]
     public class FileProcessorStepDefinitions

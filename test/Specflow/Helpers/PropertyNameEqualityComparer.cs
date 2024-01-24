@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Test.Specflow.Helpers
+namespace Test.Unit.Helpers
 {
     public class PropertyNameEqualityComparer : IEqualityComparer<string>
     {

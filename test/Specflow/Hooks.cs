@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using TechTalk.SpecFlow.Assist.ValueRetrievers;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     [Binding]
     public class Hooks

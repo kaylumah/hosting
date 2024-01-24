@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Moq;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {

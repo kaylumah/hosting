@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Test.Specflow.Entities
+namespace Test.Unit.Entities
 {
     public abstract class MockEntityCollection<TKey, TItem> : KeyedCollection<TKey, TItem> where TKey : notnull
     {

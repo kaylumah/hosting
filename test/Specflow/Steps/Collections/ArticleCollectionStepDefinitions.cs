@@ -2,9 +2,9 @@
 // See LICENSE file in the project root for full license information.
 
 using TechTalk.SpecFlow;
-using Test.Specflow.Entities;
+using Test.Unit.Entities;
 
-namespace Test.Specflow.Steps.Collections
+namespace Test.Unit.Steps.Collections
 {
     [Binding]
     public class ArticleCollectionStepDefinitions

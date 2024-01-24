@@ -5,9 +5,9 @@ using System.Collections.ObjectModel;
 using System.IO.Abstractions.TestingHelpers;
 using Ssg.Extensions.Metadata.Abstractions;
 using TechTalk.SpecFlow;
-using Test.Specflow.Entities;
+using Test.Unit.Entities;
 
-namespace Test.Specflow.Steps.Collections
+namespace Test.Unit.Steps.Collections
 {
     [Binding]
     public class OrganizationCollectionStepDefinitions

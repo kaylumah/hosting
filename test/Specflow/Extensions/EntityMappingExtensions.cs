@@ -6,7 +6,7 @@ using System.Linq;
 using Ssg.Extensions.Metadata.Abstractions;
 
 // ReSharper disable once CheckNamespace
-namespace Test.Specflow.Entities
+namespace Test.Unit.Entities
 {
     public static class EntityMappingExtensions
     {

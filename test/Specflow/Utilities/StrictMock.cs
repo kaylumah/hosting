@@ -3,7 +3,7 @@
 
 using Moq;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public class StrictMock<T> : Mock<T> where T : class
     {

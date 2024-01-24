@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     public class ValidationContext
     {

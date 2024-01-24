@@ -8,7 +8,7 @@ using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Test.Specflow.Helpers
+namespace Test.Unit.Helpers
 {
     public static class YamlSerializer
     {

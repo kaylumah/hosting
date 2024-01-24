@@ -14,10 +14,10 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TechTalk.SpecFlow.Infrastructure;
-using Test.Specflow.Utilities;
+using Test.Unit.Utilities;
 using Test.Utilities;
 
-namespace Test.Specflow.Component.Manager.Site
+namespace Test.Unit.Component.Manager.Site
 {
     public sealed class SiteManagerTestHarness
     {
