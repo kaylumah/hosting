@@ -18,7 +18,7 @@ namespace Test.E2e
             {
                 AngleSharp.Diffing.Strategies.IDiffingStrategyCollection options = action.AddDefaultOptions();
             });
-            HtmlPrettyPrint.All();
+            // HtmlPrettyPrint.All();
         }
     }
 }
