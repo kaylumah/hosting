@@ -138,7 +138,7 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})")]
         private static partial Regex VersionQueryString();
 
-        private static VerifySettings GetVerifySettings()
+        static VerifySettings GetVerifySettings()
         {
             Regex regex = VersionQueryString();
             VerifySettings settings = new VerifySettings()
