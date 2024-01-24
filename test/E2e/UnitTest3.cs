@@ -18,8 +18,7 @@ using Xunit;
 #pragma warning disable CS3002 // Return type is not CLS-compliant
 namespace Test.E2e
 {
-
-    public class UnitTest3 : IClassFixture<PlaywrightFixture>
+    public partial class UnitTest3 : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -98,7 +97,7 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
-            Regex regex = new Regex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})");
+            Regex regex = MyRegex();
             VerifySettings settings = new VerifySettings()
                 .ScrubMatches(regex);
             string html = await aboutPage.GetContent();
@@ -137,5 +136,8 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
+
+        [GeneratedRegex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})")]
+        private static partial Regex MyRegex();
     }
 }
