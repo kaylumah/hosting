@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using AngleSharp.Diffing;
 using VerifyTests;
 using VerifyTests.AngleSharp;
@@ -19,6 +20,8 @@ namespace Test.E2e
         public static void Initialize()
         {
             VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
+            Regex regex = new Regex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})");
+            VerifierSettings.ScrubMatches(regex);
         }
 
         [ModuleInitializer]
