@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
+using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
@@ -96,8 +98,11 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
+            Regex regex = new Regex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})");
+            VerifySettings settings = new VerifySettings()
+                .ScrubMatches(regex);
             string html = await aboutPage.GetContent();
-            await Verifier.Verify(html, "html");
+            await Verifier.Verify(html, "html", settings);
         }
 
         [Fact]

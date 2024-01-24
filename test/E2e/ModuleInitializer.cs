@@ -11,14 +11,69 @@ namespace Test.E2e
 {
     public static class ModuleInitializer
     {
+        // [ModuleInitializer]
+        // public static void Initialize() =>
+        //     VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
+
+         [ModuleInitializer]
+        public static void Initialize()
+        {
+            VerifierSettings.AddScrubber(_ => _.Replace("String to verify", "new value"));
+        }
+
         [ModuleInitializer]
         public static void Init()
         {
-            VerifyAngleSharpDiffing.Initialize(action =>
-            {
-                AngleSharp.Diffing.Strategies.IDiffingStrategyCollection options = action.AddDefaultOptions();
-            });
-            // HtmlPrettyPrint.All();
+
+
+            
+            // VerifyAngleSharpDiffing.Initialize(action =>
+            // {
+            //     AngleSharp.Diffing.Strategies.IDiffingStrategyCollection options = action.AddDefaultOptions();
+            // });
+            // HtmlPrettyPrint.All(nodes => {
+            //     nodes.ScrubAttributes(x => {
+            //         string ownerElementName = x.OwnerElement.LocalName;
+            //         if ("html".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("meta".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("link".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("script".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("body".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("div".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("header".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else if ("nav".Equals(ownerElementName))
+            //         {
+
+            //         }
+            //         else
+            //         {
+
+            //         }
+
+            //         return null;
+            //     });
+            // });
         }
     }
 }
