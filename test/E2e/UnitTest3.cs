@@ -149,7 +149,7 @@ namespace Test.E2e
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
             settings.ScrubMatches(regex1);
-            //    .ScrubMatches(regex);
+            settings.ScrubMatches(regex);
             return settings;
         }
     }
