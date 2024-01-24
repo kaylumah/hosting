@@ -97,8 +97,14 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
-            VerifySettings settings = GetVerifySettings();
             string html = await aboutPage.GetContent();
+
+            Regex regex = new Regex(@"© Kaylumah. All rights reserved.\s*(?<commithash>[\w]{40})");
+            Match m = regex.Match(html);
+            Group g = m.Groups["commithash"];
+            string commitHash = g.Value;
+            VerifySettings settings = GetVerifySettings();
+            settings.AddScrubber(_ => _.Replace(commitHash, "longhash"));
             await Verifier.Verify(html, "html", settings);
         }
 
