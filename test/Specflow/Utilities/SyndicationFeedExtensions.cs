@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Test.Specflow.Entities;
+using Test.Unit.Entities;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public static class SiteMapExtensions
     {

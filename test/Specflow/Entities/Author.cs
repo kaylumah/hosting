@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Test.Specflow.Helpers;
+using Test.Unit.Helpers;
 
-namespace Test.Specflow.Entities
+namespace Test.Unit.Entities
 {
     public class Author
     {

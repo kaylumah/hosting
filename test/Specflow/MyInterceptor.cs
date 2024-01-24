@@ -7,7 +7,7 @@ using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using TechTalk.SpecFlow.Infrastructure;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     public sealed class MyInterceptor : IAsyncInterceptor
     {

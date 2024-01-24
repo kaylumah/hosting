@@ -9,7 +9,7 @@ using System.Xml;
 using HtmlAgilityPack;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public static class ByteExtensions
     {

@@ -4,9 +4,9 @@
 using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
-using Test.Specflow.Entities;
+using Test.Unit.Entities;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     [Binding]
     public class TableTransforms

@@ -6,7 +6,7 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Test.Specflow.Steps
+namespace Test.Unit.Steps
 {
     [Binding]
     public class SiteInfoStepDefinitions

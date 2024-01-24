@@ -4,7 +4,7 @@
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow.Steps
+namespace Test.Unit.Steps
 {
     [Binding]
     public class ValidationSteps

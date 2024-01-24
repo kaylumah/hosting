@@ -6,10 +6,10 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Ssg.Extensions.Metadata.Abstractions;
-using Test.Specflow.FormerXunit.Mocks;
+using Test.Unit.FormerXunit.Mocks;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit
+namespace Test.Unit.FormerXunit
 {
     public class FileMetadataParserTests
     {

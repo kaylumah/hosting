@@ -4,7 +4,7 @@
 using System;
 using Kaylumah.Ssg.Utilities.Time;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public class SystemClockMock : StrictMock<ISystemClock>
     {

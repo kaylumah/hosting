@@ -5,7 +5,7 @@ using System;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace Test.Specflow.FormerXunit.Mocks
+namespace Test.Unit.FormerXunit.Mocks
 {
     public class LoggerMock<T> : Mock<ILogger<T>>
     {

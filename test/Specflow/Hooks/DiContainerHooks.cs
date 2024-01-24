@@ -5,7 +5,7 @@ using System.IO.Abstractions.TestingHelpers;
 using BoDi;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     [Binding]
     public class DiContainerHooks

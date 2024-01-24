@@ -3,7 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Test.Specflow;
+using Test.Unit;
 
 // ReSharper disable once CheckNamespace
 namespace Test.Utilities

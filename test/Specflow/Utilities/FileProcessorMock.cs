@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Moq;
-using Test.Specflow.Entities;
-using Test.Specflow.Extensions;
+using Test.Unit.Entities;
+using Test.Unit.Extensions;
 using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public class FileProcessorMock : StrictMock<IFileProcessor>
     {

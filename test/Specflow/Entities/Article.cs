@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Specflow.Entities
+namespace Test.Unit.Entities
 {
     public class Article
     {

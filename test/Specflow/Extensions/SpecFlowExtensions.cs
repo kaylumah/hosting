@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow
+namespace Test.Unit
 {
     public static class SpecFlowExtensions
     {

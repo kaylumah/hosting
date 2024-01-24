@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Specflow.Helpers
+namespace Test.Unit.Helpers
 {
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class GherkinTableHeaderAttribute : Attribute

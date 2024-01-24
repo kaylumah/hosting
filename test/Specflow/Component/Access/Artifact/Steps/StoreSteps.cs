@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using TechTalk.SpecFlow;
 
-namespace Test.Specflow.Component.Access.Artifact.Steps
+namespace Test.Unit.Component.Access.Artifact.Steps
 {
     [Binding]
     [Scope(Feature = "ArtifactAccess Store")]

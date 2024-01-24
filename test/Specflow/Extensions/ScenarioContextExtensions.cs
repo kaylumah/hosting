@@ -4,7 +4,7 @@
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Tracing;
 
-namespace Test.Specflow.Extensions
+namespace Test.Unit.Extensions
 {
     public static class ScenarioContextExtensions
     {

@@ -14,7 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Test.Specflow.FormerXunit
+namespace Test.Unit.FormerXunit
 {
     public class ArtifactAccessTests
     {

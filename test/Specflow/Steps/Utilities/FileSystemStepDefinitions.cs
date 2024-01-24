@@ -4,9 +4,9 @@
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using TechTalk.SpecFlow;
-using Test.Specflow.Utilities;
+using Test.Unit.Utilities;
 
-namespace Test.Specflow.Steps.Utilities
+namespace Test.Unit.Steps.Utilities
 {
     [Binding]
     public class FileSystemStepDefinitions

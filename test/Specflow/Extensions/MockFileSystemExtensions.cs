@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Test.Specflow.Helpers;
-using Test.Specflow.Utilities;
+using Test.Unit.Helpers;
+using Test.Unit.Utilities;
 
-using Constants = Test.Specflow.Constants;
+using Constants = Test.Unit.Constants;
 
 // ReSharper disable once CheckNamespace
 namespace System.IO.Abstractions.TestingHelpers

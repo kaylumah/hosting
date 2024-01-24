@@ -8,7 +8,7 @@
 //using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 //using Xunit;
 
-// namespace Test.Specflow.FormerXunit;
+// namespace Test.Unit.FormerXunit;
 
 //public class RenderDataTests
 //{

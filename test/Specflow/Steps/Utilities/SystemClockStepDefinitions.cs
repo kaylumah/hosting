@@ -3,9 +3,9 @@
 
 using System;
 using TechTalk.SpecFlow;
-using Test.Specflow.Utilities;
+using Test.Unit.Utilities;
 
-namespace Test.Specflow.Steps.Utilities
+namespace Test.Unit.Steps.Utilities
 {
     [Binding]
     public class SystemClockStepDefinitions

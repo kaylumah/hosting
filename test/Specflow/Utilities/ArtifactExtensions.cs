@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 
-namespace Test.Specflow.Utilities
+namespace Test.Unit.Utilities
 {
     public static class ArtifactExtensions
     {

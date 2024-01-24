@@ -15,7 +15,7 @@ try
 {
     Push-Location $RepoRoot
 
-    $TestProject = "./test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Specflow.dll"
+    $TestProject = "./test/Specflow/bin/$BuildConfiguration/$TargetFramework/Test.Unit.dll"
     $TestExecutionResult = "./test/Specflow/bin/$BuildConfiguration/$TargetFramework/TestExecution.json"
 
     Write-Host "BuildConfiguration: '$BuildConfiguration'"
