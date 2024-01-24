@@ -138,10 +138,15 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})")]
         private static partial Regex VersionQueryString();
 
+        [GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[a-zA-Z]*\.(html))")]
+        private static partial Regex BaseUrl();
+
         static VerifySettings GetVerifySettings()
         {
             Regex regex = VersionQueryString();
+            Regex regex1 = BaseUrl();
             VerifySettings settings = new VerifySettings()
+                .ScrubMatches(regex1)
             ; //    .ScrubMatches(regex);
             return settings;
         }
