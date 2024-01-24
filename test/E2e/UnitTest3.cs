@@ -97,9 +97,7 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
-            Regex regex = MyRegex();
-            VerifySettings settings = new VerifySettings()
-                .ScrubMatches(regex);
+            VerifySettings settings = GetVerifySettings();
             string html = await aboutPage.GetContent();
             await Verifier.Verify(html, "html", settings);
         }
@@ -138,6 +136,14 @@ namespace Test.E2e
         }
 
         [GeneratedRegex(@"(?<before>\?v=)(?<val>[a-zA-Z0-9]{7})")]
-        private static partial Regex MyRegex();
+        private static partial Regex VersionQueryString();
+
+        private static VerifySettings GetVerifySettings()
+        {
+            Regex regex = VersionQueryString();
+            VerifySettings settings = new VerifySettings()
+            ; //    .ScrubMatches(regex);
+            return settings;
+        }
     }
 }
