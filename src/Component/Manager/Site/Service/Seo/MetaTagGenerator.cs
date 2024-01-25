@@ -54,6 +54,34 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 sb.Append(twitter);
             }
 
+            string kaylumah = ToKaylumahTags(renderData);
+            if (!string.IsNullOrEmpty(kaylumah))
+            {
+                sb.AppendLine(string.Empty);
+                sb.Append(kaylumah);
+            }
+
+            return sb.ToString();
+        }
+
+        static string ToKaylumahTags(RenderData renderData)
+        {
+            ArgumentNullException.ThrowIfNull(renderData);
+            StringBuilder sb = new StringBuilder();
+            List<string> result = new List<string>
+            {
+                CreateOpenGraphMetaTag("a", "b")
+            };
+
+            if (result.Count > 0)
+            {
+                sb.AppendLine("<!-- Kaylumah BuildInfo Meta Tags -->");
+                foreach (string item in result)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+
             return sb.ToString();
         }
 
