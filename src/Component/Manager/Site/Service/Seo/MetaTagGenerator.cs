@@ -186,6 +186,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
+        static string CreateOpenGraphMetaTag(string name, string content)
+        {
+            return CreatePropertyMetaTag(name, content);
+        }
+
+        static string CreatePropertyMetaTag(string name, string content)
+        {
+            return CreateMetaTag("property", name, content);
+        }
+
         static string CreateMetaTag(string name, string content)
         {
             return CreateMetaTag("name", name, content);
@@ -202,16 +212,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             contentAttribute.Value = content;
             createdElement.Attributes.Append(contentAttribute);
             return createdElement.OuterXml;
-        }
-
-        static string CreateOpenGraphMetaTag(string name, string content)
-        {
-            return CreatePropertyMetaTag(name, content);
-        }
-
-        static string CreatePropertyMetaTag(string name, string content)
-        {
-            return CreateMetaTag("property", name, content);
         }
     }
 }
