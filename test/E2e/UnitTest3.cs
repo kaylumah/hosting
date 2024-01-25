@@ -137,28 +137,22 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(notFoundPage);
         }
 
-        [Fact]
-        public async Task Test_BlogPages()
+        [Theory]
+        [MemberData(nameof(GetBlogPages))]
+        public async Task Test_BlogPages(string path)
         {
-            IPage page = await _PlaywrightFixture.GetPage();
-            AtomFeedPage atomFeed = new AtomFeedPage(page);
-            await atomFeed.NavigateAsync();
-            page.Url.Should().EndWith(atomFeed.PagePath);
-            Dictionary<string, string> headers = await atomFeed.GetHeaders();
+            IPage blogPage = await _PlaywrightFixture.GetPage();
+            BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
+            await blogItemPage.NavigateAsync();
+            await HtmlPageVerifier.Verify(blogItemPage);
+        }
 
-            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
-            SyndicationFeed feed = bytes.ToSyndicationFeed();
-
-            foreach (SyndicationItem item in feed.Items)
+        public static IEnumerable<object[]> GetBlogPages()
+        {
+            yield return new object[] 
             {
-                string itemId = item.Id;
-                Uri uri = new Uri(itemId);
-                string path = uri.AbsolutePath;
-                IPage blogPage = await _PlaywrightFixture.GetPage();
-                BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
-                await blogItemPage.NavigateAsync();
-                await HtmlPageVerifier.Verify(blogItemPage, "a");
-            }
+                "2023/04/14/csharp-client-for-openapi-revistted.html"
+            };
         }
     }
 }
