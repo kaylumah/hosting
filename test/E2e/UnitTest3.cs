@@ -154,6 +154,9 @@ namespace Test.E2e
                 string itemId = item.Id;
                 Uri uri = new Uri(itemId);
                 string path = uri.AbsolutePath;
+                IPage blogPage = await _PlaywrightFixture.GetPage();
+                BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
+                await blogItemPage.NavigateAsync();
             }
         }
     }
