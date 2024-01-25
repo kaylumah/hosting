@@ -10,11 +10,8 @@ using VerifyXunit;
 namespace Test.E2e
 {
 
-    public static partial class HtmlPageVerifier
+    public static class HtmlPageVerifier
     {
-        [GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[\w/_-]*\.(html|xml|png))")]
-        private static partial Regex BaseUrl();
-
         public static async Task Verify(HtmlPage page, string methodName = null)
         {
             string html = await page.GetContent();
@@ -25,7 +22,7 @@ namespace Test.E2e
             string buildId = metaTags["kaylumah:buildId"];
             string buildNumber = metaTags["kaylumah:buildNumber"];
 
-            Regex baseUrlRegex = BaseUrl();
+            Regex baseUrlRegex = VerifierHelper.BaseUrl();
             VerifySettings settings = new VerifySettings();
             if (methodName != null)
             {
