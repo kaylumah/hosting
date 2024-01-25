@@ -78,7 +78,7 @@ namespace Kaylumah.Ssg.Utilities
                     bool isRelative = anchorUrl.StartsWith('/');
                     if (isRelative)
                     {
-                        anchorUrl = GlobalFunctions.Url.Value + anchorUrl;
+                        anchorUrl = GlobalFunctions.AbsoluteUrl(anchorUrl);
                         anchor.Url = anchorUrl;
                     }
 
