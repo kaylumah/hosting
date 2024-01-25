@@ -70,14 +70,14 @@ jobs:
       - name: 'Run E2E (PR)'
         if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
         run: |
-           pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install --with-deps
+           pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chrome --with-deps
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ steps.builddeploy.outputs.static_web_app_url }}
       - name: 'Run E2E'
         if: github.event_name != 'pull_request'
         run: |
-           pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install --with-deps
+           pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chrome --with-deps
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: https://kaylumah.nl
