@@ -153,6 +153,18 @@ namespace Test.E2e
             {
                 "2023/04/14/csharp-client-for-openapi-revistted.html"
             };
+
+            // 2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html
+            // 2022/06/07/share-debug-configuration-with-launch-profiles.html
+            // 2022/02/21/working-with-azure-sdk-for-dotnet.html
+            // 2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html
+            // 2021/11/29/validated-strongly-typed-ioptions.html
+            // 2021/11/14/capture-logs-in-unit-tests.html
+            // 2021/07/17/decreasing-solution-build-time-with-filters.html
+            // 2021/05/23/generate-csharp-client-for-openapi.html
+            // 2021/04/11/an-approach-to-writing-mocks.html
+            // 2021/03/27/set-nuget-metadata-via-msbuild.html
+            // 2019/09/07/using-csharp-code-your-git-hooks.html
         }
     }
 }
