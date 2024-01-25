@@ -32,7 +32,7 @@ namespace Test.E2e
                 settings.UseMethodName(methodName);
             }
 
-            settings.ScrubMatches(baseUrlRegex);
+            settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
