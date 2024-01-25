@@ -23,7 +23,7 @@ namespace Test.E2e
                 settings.UseMethodName(methodName);
             }
             settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
-            await Verifier.VerifyXml(xml, settings);
+            await Verifier.Verify(xml, settings);
         }
     }
 }
