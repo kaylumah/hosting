@@ -69,6 +69,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             ArgumentNullException.ThrowIfNull(renderData);
             StringBuilder sb = new StringBuilder();
             SiteMetaData siteMetaData = renderData.Site;
+            PageMetaData pageMetaData = renderData.Page;
             BuildData buildData = siteMetaData.Build;
             List<string> result = new List<string>
             {
