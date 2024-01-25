@@ -95,14 +95,14 @@ namespace Test.E2e
             AboutPage aboutPage = new AboutPage(page);
             await aboutPage.NavigateAsync();
 
-            ILocator metaTagLocator = page.Locator("head > meta");
-            IReadOnlyList<ILocator> x = await metaTagLocator.AllAsync();
-            foreach(ILocator a in x)
-            {
-                string attrName = await a.GetAttributeAsync("name");
-                string attrName2 = await a.GetAttributeAsync("property");
-                string attrName3 = await a.GetAttributeAsync("content");
-            }
+            // ILocator metaTagLocator = page.Locator("head > meta");
+            // IReadOnlyList<ILocator> x = await metaTagLocator.AllAsync();
+            // foreach(ILocator a in x)
+            // {
+            //     string attrName = await a.GetAttributeAsync("name");
+            //     string attrName2 = await a.GetAttributeAsync("property");
+            //     string attrName3 = await a.GetAttributeAsync("content");
+            // }
             
             //[name='description']
             // await Expect(description).ToHaveAttributeAsync("content", "");
