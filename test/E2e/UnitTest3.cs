@@ -73,6 +73,8 @@ namespace Test.E2e
             byte[] bytes = await robotsPage.PageResponse.BodyAsync();
             UTF8Encoding encoding = new UTF8Encoding(false);
             string robots = encoding.GetString(bytes);
+
+            await TxtPageVerifier.Verify(robotsPage);
         }
 
         [Fact]
