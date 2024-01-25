@@ -179,4 +179,15 @@ namespace Test.E2e
         public override string PagePath => "blog.html";
     }
 
+    public class BlogItemPage : HtmlPage
+    {
+        readonly string _PagePath;
+        public BlogItemPage(string pagePath, IPage page) : base(page)
+        {
+            _PagePath = pagePath;
+        }
+
+        public override string PagePath => _PagePath;
+    }
+
 }
