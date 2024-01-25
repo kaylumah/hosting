@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
@@ -53,6 +53,44 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             {
                 sb.AppendLine(string.Empty);
                 sb.Append(twitter);
+            }
+
+            string kaylumah = ToKaylumahTags(renderData);
+            if (!string.IsNullOrEmpty(kaylumah))
+            {
+                sb.AppendLine(string.Empty);
+                sb.Append(kaylumah);
+            }
+
+            return sb.ToString();
+        }
+
+        static string ToKaylumahTags(RenderData renderData)
+        {
+            ArgumentNullException.ThrowIfNull(renderData);
+            StringBuilder sb = new StringBuilder();
+            SiteMetaData siteMetaData = renderData.Site;
+            PageMetaData pageMetaData = renderData.Page;
+            BuildData buildData = siteMetaData.Build;
+            List<string> result = new List<string>
+            {
+                CreateKaylumahMetaTag("copyright", buildData.Copyright),
+                CreateKaylumahMetaTag("commit", buildData.GitHash),
+                CreateKaylumahMetaTag("version", buildData.Version),
+                CreateKaylumahMetaTag("buildId", buildData.BuildId),
+                CreateKaylumahMetaTag("buildNumber", buildData.BuildNumber),
+                CreateKaylumahMetaTag("time", buildData.Time.ToString("yyyy-MM-dd HH:mm:ss zzz", CultureInfo.InvariantCulture)),
+                CreateKaylumahMetaTag("site", siteMetaData.Id),
+                CreateKaylumahMetaTag("page", pageMetaData.Id)
+            };
+
+            if (result.Count > 0)
+            {
+                sb.AppendLine("<!-- Kaylumah BuildInfo Meta Tags -->");
+                foreach (string item in result)
+                {
+                    sb.AppendLine(item);
+                }
             }
 
             return sb.ToString();
@@ -187,6 +225,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
+        static string CreateKaylumahMetaTag(string name, string content)
+        {
+            string namespacedName = $"kaylumah:{name}";
+            return CreatePropertyMetaTag(namespacedName, content);
+        }
+        static string CreateOpenGraphMetaTag(string name, string content)
+        {
+            return CreatePropertyMetaTag(name, content);
+        }
+
+        static string CreatePropertyMetaTag(string name, string content)
+        {
+            return CreateMetaTag("property", name, content);
+        }
+
         static string CreateMetaTag(string name, string content)
         {
             return CreateMetaTag("name", name, content);
@@ -203,11 +256,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             contentAttribute.Value = content;
             createdElement.Attributes.Append(contentAttribute);
             return createdElement.OuterXml;
-        }
-
-        static string CreateOpenGraphMetaTag(string name, string content)
-        {
-            return CreateMetaTag("property", name, content);
         }
     }
 }
