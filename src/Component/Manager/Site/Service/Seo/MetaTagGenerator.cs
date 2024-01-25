@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
@@ -76,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 CreateKaylumahMetaTag("copyright", buildData.Copyright),
                 CreateKaylumahMetaTag("commit", buildData.GitHash),
                 CreateKaylumahMetaTag("version", buildData.Version),
-                // CreateKaylumahMetaTag("time", buildData.Time),
+                CreateKaylumahMetaTag("time", buildData.Time.ToString("yyyy-MM-dd HH:mm:ss zzz", CultureInfo.InvariantCulture)),
                 CreateKaylumahMetaTag("site", siteMetaData.Id),
                 CreateKaylumahMetaTag("page", pageMetaData.Id)
             };
