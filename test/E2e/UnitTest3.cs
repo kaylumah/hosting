@@ -101,14 +101,14 @@ namespace Test.E2e
         }
 
         [Fact]
-        public async Task Test_NotFoundPage()
+        public async Task Test_BlogPage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
-            NotFoundPage notFoundPage = new NotFoundPage(page);
-            await notFoundPage.NavigateAsync();
-            Dictionary<string, string> headers = await notFoundPage.GetHeaders();
+            BlogPage blogPage = new BlogPage(page);
+            await blogPage.NavigateAsync();
+            Dictionary<string, string> headers = await blogPage.GetHeaders();
             string title = await page.TitleAsync();
-            title.Should().Be("Page not found · Kaylumah");
+            title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
         }
 
         [Fact]
@@ -123,14 +123,14 @@ namespace Test.E2e
         }
 
         [Fact]
-        public async Task Test_BlogPage()
+        public async Task Test_NotFoundPage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
-            BlogPage blogPage = new BlogPage(page);
-            await blogPage.NavigateAsync();
-            Dictionary<string, string> headers = await blogPage.GetHeaders();
+            NotFoundPage notFoundPage = new NotFoundPage(page);
+            await notFoundPage.NavigateAsync();
+            Dictionary<string, string> headers = await notFoundPage.GetHeaders();
             string title = await page.TitleAsync();
-            title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
+            title.Should().Be("Page not found · Kaylumah");
         }
     }
 }
