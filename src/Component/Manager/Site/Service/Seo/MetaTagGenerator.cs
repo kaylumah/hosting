@@ -72,7 +72,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             BuildData buildData = siteMetaData.Build;
             List<string> result = new List<string>
             {
-                CreateKaylumahMetaTag("a", "b")
+                CreateKaylumahMetaTag("copyright", buildData.Copyright)
             };
 
             if (result.Count > 0)
