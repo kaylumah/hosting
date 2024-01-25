@@ -39,7 +39,6 @@ namespace Test.E2e
             settings.AddScrubber(_ => _.Replace(commitHash, "longhash"));
             settings.AddScrubber(_ => _.Replace(buildId, "buildId"));
             settings.AddScrubber(_ => _.Replace(buildNumber, "buildNumber"));
-
             await Verifier.Verify(html, "html", settings);
         }
     }
