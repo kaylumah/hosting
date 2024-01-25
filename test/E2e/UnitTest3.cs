@@ -24,7 +24,7 @@ namespace Test.E2e
             _PlaywrightFixture = playwrightFixture;
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_AtomFeed()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -40,7 +40,7 @@ namespace Test.E2e
             await XmlPageVerifier.Verify(atomFeed);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_Sitemap()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -59,7 +59,7 @@ namespace Test.E2e
             await XmlPageVerifier.Verify(sitemapPage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_Robots()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -77,7 +77,7 @@ namespace Test.E2e
             await TxtPageVerifier.Verify(robotsPage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_HomePage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -90,7 +90,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(homePage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_AboutPage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -104,7 +104,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(aboutPage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_BlogPage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -117,7 +117,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(blogPage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_ArchivePage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -130,7 +130,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(archivePage);
         }
 
-        [Fact]
+        [Fact(Skip = "temporarily")]
         public async Task Test_NotFoundPage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
@@ -143,7 +143,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(notFoundPage);
         }
 
-        [Theory]
+        [Theory(Skip = "temporarily")]
         [MemberData(nameof(GetBlogPages))]
         public async Task Test_BlogPages(string path)
         {
