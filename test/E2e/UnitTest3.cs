@@ -12,7 +12,7 @@ using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
 using Xunit;
 
-#pragma warning disable CS3002 // Return type is not CLS-compliant
+#pragma warning disable CS3016
 namespace Test.E2e
 {
     public class UnitTest3 : IClassFixture<PlaywrightFixture>
@@ -27,7 +27,14 @@ namespace Test.E2e
         [Fact]
         public async Task Test_AtomFeed()
         {
-            SyndicationFeed feed = await GetSyndicationFeed();
+            IPage page = await _PlaywrightFixture.GetPage();
+            AtomFeedPage atomFeed = new AtomFeedPage(page);
+            await atomFeed.NavigateAsync();
+            page.Url.Should().EndWith(atomFeed.PagePath);
+            Dictionary<string, string> headers = await atomFeed.GetHeaders();
+
+            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
+            SyndicationFeed feed = bytes.ToSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
         }
 
@@ -130,7 +137,8 @@ namespace Test.E2e
              await HtmlPageVerifier.Verify(notFoundPage);
         }
     
-        async Task<SyndicationFeed> GetSyndicationFeed()
+        [Fact]
+        public async Task Test_BlogPages()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             AtomFeedPage atomFeed = new AtomFeedPage(page);
@@ -140,7 +148,6 @@ namespace Test.E2e
 
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
-            return feed;
         }
     }
 }
