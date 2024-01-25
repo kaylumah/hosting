@@ -68,9 +68,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             ArgumentNullException.ThrowIfNull(renderData);
             StringBuilder sb = new StringBuilder();
+            SiteMetaData siteMetaData = renderData.Site;
+            BuildData buildData = siteMetaData.Build;
             List<string> result = new List<string>
             {
-                CreateOpenGraphMetaTag("a", "b")
+                CreateKaylumahMetaTag("a", "b")
             };
 
             if (result.Count > 0)
@@ -214,6 +216,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sb.ToString();
         }
 
+        static string CreateKaylumahMetaTag(string name, string content)
+        {
+            string namespacedName = $"kaylumah:{name}";
+            return CreatePropertyMetaTag(namespacedName, content);
+        }
         static string CreateOpenGraphMetaTag(string name, string content)
         {
             return CreatePropertyMetaTag(name, content);
