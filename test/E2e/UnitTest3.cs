@@ -36,6 +36,8 @@ namespace Test.E2e
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
+
+            await XmlPageVerifier.Verify(atomFeed);
         }
 
         [Fact]

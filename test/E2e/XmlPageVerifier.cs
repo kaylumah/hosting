@@ -1,8 +1,10 @@
 // Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Text;
 using System.Threading.Tasks;
 using VerifyTests;
+using VerifyXunit;
 
 namespace Test.E2e
 {
@@ -17,6 +19,8 @@ namespace Test.E2e
             {
                 settings.UseMethodName(methodName);
             }
+            
+            await Verifier.VerifyXml(xml, settings);
         }
     }
 }
