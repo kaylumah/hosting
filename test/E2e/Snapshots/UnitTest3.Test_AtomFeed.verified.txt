@@ -4,7 +4,7 @@
   <subtitle type="text"><![CDATA[A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák]]></subtitle>
   <id>https://BaseUrl_1/feed.xml</id>
   <rights type="text"><![CDATA[© Kaylumah. All rights reserved.]]></rights>
-  <updated>2024-01-25T22:02:47+01:00</updated>
+  <updated>2024-01-25T22:24:41+01:00</updated>
   <logo>https://BaseUrl_1/assets/logo_alt.svg</logo>
   <generator>Kaylumah Site Generator</generator>
   <link rel="self" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" />
@@ -18,7 +18,7 @@
     <updated>2023-04-14T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html" />
@@ -186,7 +186,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <updated>2022-09-17T18:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
@@ -344,7 +344,7 @@ public async Task Test2()
     <updated>2022-06-07T23:30:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
@@ -671,7 +671,7 @@ dotnet run
     <updated>2022-02-21T21:30:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
@@ -984,7 +984,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
     <updated>2022-01-31T21:45:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
@@ -1207,7 +1207,7 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
     <updated>2021-11-29T19:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
@@ -1716,7 +1716,7 @@ typedOptions.Name.Should().Be(options.Name);
     <updated>2021-11-14T20:30:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html" />
@@ -2058,7 +2058,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
     <updated>2021-07-17T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
@@ -2206,7 +2206,7 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
     <updated>2021-05-23T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
@@ -2578,7 +2578,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
     <updated>2021-04-11T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html" />
@@ -3388,7 +3388,7 @@ public async Task Test_ArticleAccess_Returns200OK()
     <updated>2021-03-27T00:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html" />
@@ -3698,7 +3698,7 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
     <updated>2021-03-21T00:00:00+01:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html" />
