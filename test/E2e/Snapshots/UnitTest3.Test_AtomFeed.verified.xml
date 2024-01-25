@@ -193,7 +193,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <category term="Azure" />
     <category term="Testing" />
     <content type="html">&lt;h2 id="how-to-test-a-dependency-on-azure"&gt;&lt;a href="#how-to-test-a-dependency-on-azure"&gt;How to test a dependency on Azure?&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post &lt;a href="/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt;, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.&lt;/p&gt;
+&lt;p&gt;A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post &lt;a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt;, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.&lt;/p&gt;
 &lt;p&gt;There are a few ways we can go about testing this:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Create a mock or fake implementation of every Storage API required.&lt;/li&gt;
@@ -232,7 +232,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in &lt;a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external"&gt;Azure Pipelines&lt;/a&gt;. I, however, am still not entirely happy with it.&lt;/p&gt;
 &lt;h2 id="how-to-use-azurite-without-a-connectionstring"&gt;&lt;a href="#how-to-use-azurite-without-a-connectionstring"&gt;How to use Azurite without a ConnectionString?&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;In the post &lt;a href="/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt; I made a point that connection strings should be a thing of the past. The &lt;code&gt;TokenCredential&lt;/code&gt; should be the way forward (&lt;code&gt;dotnet add package Azure.Identity&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;In the post &lt;a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt; I made a point that connection strings should be a thing of the past. The &lt;code&gt;TokenCredential&lt;/code&gt; should be the way forward (&lt;code&gt;dotnet add package Azure.Identity&lt;/code&gt;).&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;using Azure.Identity;
 using Azure.Storage.Blobs;
 
