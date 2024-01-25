@@ -109,6 +109,8 @@ namespace Test.E2e
             Dictionary<string, string> headers = await blogPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
+
+             await HtmlPageVerifier.Verify(blogPage);
         }
 
         [Fact]
@@ -120,6 +122,8 @@ namespace Test.E2e
             Dictionary<string, string> headers = await archivePage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("The complete archive of blog posts · Kaylumah");
+
+             await HtmlPageVerifier.Verify(archivePage);
         }
 
         [Fact]
@@ -131,6 +135,8 @@ namespace Test.E2e
             Dictionary<string, string> headers = await notFoundPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Page not found · Kaylumah");
+
+             await HtmlPageVerifier.Verify(notFoundPage);
         }
     }
 }
