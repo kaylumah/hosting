@@ -66,7 +66,7 @@
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://kaylumah.nl/assets/avatar_background.svg",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -83,7 +83,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://kaylumah.nl/assets/logo.svg"
+            "logo": "https://BaseUrl_1/assets/logo.svg"
           }
         }</script>
         
@@ -257,7 +257,7 @@
     </header>
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
         <h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
-<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
+<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_2/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
 <p>There are a few ways we can go about testing this:</p>
 <ol>
 <li>Create a mock or fake implementation of every Storage API required.</li>
@@ -296,7 +296,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 </code></pre>
 <p>Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external">Azure Pipelines</a>. I, however, am still not entirely happy with it.</p>
 <h2 id="how-to-use-azurite-without-a-connectionstring"><a href="#how-to-use-azurite-without-a-connectionstring">How to use Azurite without a ConnectionString?</a></h2>
-<p>In the post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
+<p>In the post <a href="https://BaseUrl_2/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
 <pre><code class="language-csharp">using Azure.Identity;
 using Azure.Storage.Blobs;
 

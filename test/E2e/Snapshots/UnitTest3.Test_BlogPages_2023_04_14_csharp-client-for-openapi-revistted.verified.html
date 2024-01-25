@@ -67,7 +67,7 @@
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://kaylumah.nl/assets/avatar_background.svg",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -84,7 +84,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://kaylumah.nl/assets/logo.svg"
+            "logo": "https://BaseUrl_1/assets/logo.svg"
           }
         }</script>
         
@@ -262,7 +262,7 @@
         <hr class="mt-8 border-t-2 w-20 mx-auto" />
     </header>
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
-        <p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
+        <p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_2/2021/05/23/generate-csharp-client-for-openapi.html" class="external">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
 <p>The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called <a href="https://stevetalkscode.co.uk/openapireference-commands" class="external">&quot;Using OpenApiReference To Generate Open API Client Code&quot;</a>. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.</p>
 <h2 id="safe-openapi-specification-on-build"><a href="#safe-openapi-specification-on-build">Safe OpenAPI specification on build</a></h2>
 <p>The purpose of the post is not to detail how to configure an OpenAPI spec for your project since the standard template already supports Swashbuckle. You can find more information on that over <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&amp;tabs=visual-studio" class="external">at Microsoft Learn</a>. One thing I like to add to the standard template, is that I want the specification to be part of the project output. We can achieve that with the Swashbuckle CLI, which you can install with the command <code>dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0</code>. Note that the version of the CLI must match the version of Swashbuckle used in the API project. After you install the tool, you can modify the csproj to look like this.</p>

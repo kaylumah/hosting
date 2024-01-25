@@ -65,7 +65,7 @@
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://kaylumah.nl/assets/avatar_background.svg",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -82,7 +82,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://kaylumah.nl/assets/logo.svg"
+            "logo": "https://BaseUrl_1/assets/logo.svg"
           }
         }</script>
         
@@ -252,7 +252,7 @@
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
         <p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
 <p>As I understand it, the <code>configuration</code> concept in <code>.NET</code> is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the <code>options</code> concept provides access to <code>configuration</code> from our application code. I've attempted to illustrate it with the image below.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
 <h2 id="configuration-in.net"><a href="#configuration-in.net">Configuration in .NET</a></h2>
 <p>Technically the image above is an over-simplification. In reality, you use an <code>IConfigurationBuilder</code> where different providers are provided, and the configuration block in the middle is the merged build-result of the configuration builder. In fact, you get a preconfigured configuration builder every time you use the <code>ASP.NET</code> Web templates. You get a <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/Host.cs#L53" class="external">default HostBuilder</a> that setups an <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostBuilder.cs#L124" class="external">IHost</a>. This default builder also takes care of the <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostingHostBuilderExtensions.cs#L188" class="external">default configuration</a>.</p>
 <p>The default configuration adds in order</p>
@@ -282,7 +282,7 @@
 <li><code>MySample:MyCollection:0:MyOtherText</code></li>
 </ul>
 <p>With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
 <blockquote>
 <p>As pointed out by the &quot;The Twelve-Factor App&quot; article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.</p>
 </blockquote>
@@ -347,7 +347,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 </code></pre>
 <h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
 <p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
-<p>In my article <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>In my article <a href="https://BaseUrl_2/2021/05/23/generate-csharp-client-for-openapi.html" class="external">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
 <p>As I see it, there are two distinct ways configuration can fail.</p>
 <h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
 <p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>
@@ -375,7 +375,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 <h3 id="dataannotations-validation"><a href="#dataannotations-validation">DataAnnotations Validation</a></h3>
 <p>The second variant is the most likely to occur. That is, settings are present but not valid in the context of the application. I recently browsed the Microsoft Docs after (again) losing time chasing configuration issues when I came across <code>IValidateOptions</code>. I also rediscovered <code>ValidateDataAnnotations</code> on the <code>IOptionsBuilder</code>, which I previously dismissed since it was a different API (<code>AddOptions&lt;&gt;</code>) than the <code>Configure&lt;&gt;</code> APIs. With Resharper by my side, I checked the implementation and discovered that it uses <code>DataAnnotationValidateOptions</code> a class that is a <code>IValidateOptions</code>.</p>
 <p>When consuming an IOptions, there are three hooks we can use. We have <code>IConfigureOptions</code>, <code>IPostConfigureOptions</code> and <code>IValidateOptions</code>. If you head back up to where I printed the dependency injection container, you see that every time you use <code>Configure&lt;&gt;</code>, you get an <code>IConfigureOptions</code>. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered &quot;option services&quot;.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
 <p>You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an <code>IPostConfigureOptions</code> or <code>IValidateOptions</code> before the normal <code>IConfigureOptions</code>, it won't run before it. The factory runs through 0 or more <code>IConfigureOptions</code>, 0 or more <code>IPostConfigureOptions</code> and finally 0 or more <code>IValidateOptions</code> and always in that order.</p>
 <p>To demonstrate how this works, consider the following example:</p>
 <pre><code class="language-csharp">public class ConfigureLibraryExampleServiceOptions : IConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IPostConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IValidateOptions&lt;LibraryExampleServiceOptions&gt;
