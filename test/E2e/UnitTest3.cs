@@ -159,7 +159,7 @@ namespace Test.E2e
             Regex regex1 = BaseUrl();
             VerifySettings settings = new VerifySettings();
             settings.ScrubInlineGuids();
-            settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
+            settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             settings.ScrubMatches(regex1);
             settings.ScrubMatches(regex);
             return settings;
