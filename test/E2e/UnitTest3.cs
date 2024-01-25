@@ -104,9 +104,13 @@ namespace Test.E2e
             Dictionary<string, string> metaTags = await aboutPage.GetMetaTags();
             string commitHash = metaTags["kaylumah:commit"];
             string shortCommitHash = commitHash[..7];
+            string buildId = metaTags["kaylumah:buildId"];
+            string buildNumber = metaTags["kaylumah:buildNumber"];
             VerifySettings settings = GetVerifySettings();
             settings.AddScrubber(_ => _.Replace(shortCommitHash, "short_hash"));
             settings.AddScrubber(_ => _.Replace(commitHash, "longhash"));
+            settings.AddScrubber(_ => _.Replace(buildId, "buildId"));
+            settings.AddScrubber(_ => _.Replace(buildNumber, "buildNumber"));
             await Verifier.Verify(html, "html", settings);
         }
 
