@@ -148,6 +148,13 @@ namespace Test.E2e
 
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
+
+            foreach(SyndicationItem item in feed.Items)
+            {
+                string itemId = item.Id;
+                Uri uri = new Uri(itemId);
+                string path = uri.AbsolutePath;
+            }
         }
     }
 }
