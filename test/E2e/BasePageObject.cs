@@ -85,7 +85,7 @@ namespace Test.E2e
             {
                 string key = await metaTag.GetAttributeAsync("name");
                 string value = await metaTag.GetAttributeAsync("content");
-                result.Add(key, value);
+                result.TryAdd(key, value);
             }
 
             ILocator metaTagPropertyLocator = _Page.Locator("//meta[@property]");
@@ -94,7 +94,7 @@ namespace Test.E2e
             {
                 string key = await metaTag.GetAttributeAsync("property");
                 string value = await metaTag.GetAttributeAsync("content");
-                result.Add(key, value);
+                result.TryAdd(key, value);
             }
 
             return result;
