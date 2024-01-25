@@ -17,7 +17,7 @@
         
         <!-- Common Meta Tags -->
         <title>How to use Azurite for testing Azure Storage in dotnet?</title>
-        <link rel="canonical" href="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+        <link rel="canonical" href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
         <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
         <meta name="description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
         <meta name="copyright" content="© Kaylumah. All rights reserved." />
@@ -28,9 +28,9 @@
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
         <meta property="og:title" content="How to use Azurite for testing Azure Storage in dotnet?" />
-        <meta property="og:url" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+        <meta property="og:url" content="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
         <meta property="og:description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
-        <meta property="og:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20220917/azurite/cover_image.png" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png" />
         <meta property="article:author" content="Max Hamulyák" />
         <meta property="article:published_time" content="2022-09-17T18:00:00.0000000+02:00" />
         <meta property="article:modified_time" content="2022-09-17T18:00:00.0000000+02:00" />
@@ -42,7 +42,7 @@
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="How to use Azurite for testing Azure Storage in dotnet?" />
         <meta name="twitter:description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
-        <meta name="twitter:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20220917/azurite/cover_image.png" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png" />
         <meta name="twitter:site" content="@kaylumah" />
         <meta name="twitter:creator" content="@kaylumah" />
         
@@ -60,13 +60,13 @@
         <script type="application/ld+json">{
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20220917/azurite/cover_image.png",
-          "mainEntityOfPage": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
+          "image": "https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
           "author": {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/avatar_background.svg",
+            "image": "https://kaylumah.nl/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -83,7 +83,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/logo.svg"
+            "logo": "https://kaylumah.nl/assets/logo.svg"
           }
         }</script>
         
@@ -92,7 +92,7 @@
         <link
           type="application/atom+xml"
           rel="alternate"
-          href="https://Val_1/feed.xml"
+          href="https://BaseUrl_1/feed.xml"
           title="Max Hamulyák · Kaylumah RSS Feed"
         />
         <!-- END Feed MetaData -->
@@ -257,7 +257,7 @@
     </header>
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
         <h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
-<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://kaylumah.nl/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
+<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
 <p>There are a few ways we can go about testing this:</p>
 <ol>
 <li>Create a mock or fake implementation of every Storage API required.</li>
@@ -296,7 +296,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 </code></pre>
 <p>Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external">Azure Pipelines</a>. I, however, am still not entirely happy with it.</p>
 <h2 id="how-to-use-azurite-without-a-connectionstring"><a href="#how-to-use-azurite-without-a-connectionstring">How to use Azurite without a ConnectionString?</a></h2>
-<p>In the post <a href="https://kaylumah.nl/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
+<p>In the post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
 <pre><code class="language-csharp">using Azure.Identity;
 using Azure.Storage.Blobs;
 
@@ -405,19 +405,19 @@ public async Task Test2()
                 <div class="social-share">
             <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
             <div class="flex justify-center space-x-6">
-                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
                         <span class="sr-only">LinkedIn Share</span>
                         <em class="fab fa-linkedin fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=How%20to%20use%20Azurite%20for%20testing%20Azure%20Storage%20in%20dotnet%3F&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=How%20to%20use%20Azurite%20for%20testing%20Azure%20Storage%20in%20dotnet%3F&url=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                         <span class="sr-only">Twitter Share</span>
                         <em class="fab fa-twitter-square fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
                         <span class="sr-only">Facebook Share</span>
                         <em class="fab fa-facebook fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=How to use Azurite for testing Azure Storage in dotnet?&amp;body=Thought you might like this article https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=How to use Azurite for testing Azure Storage in dotnet?&amp;body=Thought you might like this article https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html">
                         <span class="sr-only">Email Share</span>
                         <em class="fas fa-envelope-open-text fa-lg"></em>
                     </a>

@@ -17,7 +17,7 @@
         
         <!-- Common Meta Tags -->
         <title>Decreasing Solution Build time with Filters</title>
-        <link rel="canonical" href="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html" />
+        <link rel="canonical" href="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
         <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
         <meta name="description" content="How to use solution filters to increase focus and decrease build time" />
         <meta name="copyright" content="© Kaylumah. All rights reserved." />
@@ -28,9 +28,9 @@
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
         <meta property="og:title" content="Decreasing Solution Build time with Filters" />
-        <meta property="og:url" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html" />
+        <meta property="og:url" content="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
         <meta property="og:description" content="How to use solution filters to increase focus and decrease build time" />
-        <meta property="og:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png" />
         <meta property="article:author" content="Max Hamulyák" />
         <meta property="article:published_time" content="2021-07-17T00:00:00.0000000+02:00" />
         <meta property="article:modified_time" content="2021-07-17T00:00:00.0000000+02:00" />
@@ -41,7 +41,7 @@
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Decreasing Solution Build time with Filters" />
         <meta name="twitter:description" content="How to use solution filters to increase focus and decrease build time" />
-        <meta name="twitter:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png" />
         <meta name="twitter:site" content="@kaylumah" />
         <meta name="twitter:creator" content="@kaylumah" />
         
@@ -59,13 +59,13 @@
         <script type="application/ld+json">{
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png",
-          "mainEntityOfPage": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html",
+          "image": "https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html",
           "author": {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/avatar_background.svg",
+            "image": "https://kaylumah.nl/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -82,7 +82,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/logo.svg"
+            "logo": "https://kaylumah.nl/assets/logo.svg"
           }
         }</script>
         
@@ -91,7 +91,7 @@
         <link
           type="application/atom+xml"
           rel="alternate"
-          href="https://Val_1/feed.xml"
+          href="https://BaseUrl_1/feed.xml"
           title="Max Hamulyák · Kaylumah RSS Feed"
         />
         <!-- END Feed MetaData -->
@@ -251,7 +251,7 @@
     </header>
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
         <p>There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following <a href="https://imgs.xkcd.com/comics/compiling.png" class="external">xkcd joke</a> or some variant of it:</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/xkcd_joke_compiling.png" width="413" height="360" alt="xkcd_joke code is compiling" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/xkcd_joke_compiling.png" width="413" height="360" alt="xkcd_joke code is compiling" /></p>
 <p>The <a href="https://devblogs.microsoft.com/visualstudio/visual-studio-2022-preview-1-now-available" class="external">next version</a> of Visual Studio will come with a lot of promised performance improvements. VisualStudio 2022 is the first version that takes advantage of the 64-bit processor architecture. I have not yet tested it, but I am hopeful for a more performant experience developing when it ships.</p>
 <blockquote>
 <p>While I think the 1600+ projects in a solution demo are cool, I would not see myself using the single solution model at that scale.</p>
@@ -291,20 +291,20 @@ dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Ut
 </blockquote>
 <h2 id="setting-up-our-filters"><a href="#setting-up-our-filters">Setting up our filters</a></h2>
 <p>After following these steps, our project should look like the picture below in Visual Studio.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png" width="1428" height="1040" alt="Visual Studio 2019 - Solution all projects loaded" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/001_vs2019_sln_all_projects.png" width="1428" height="1040" alt="Visual Studio 2019 - Solution all projects loaded" /></p>
 <p>We can select one or more projects at a time and unload them from the solution.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/002_vs2019_sln_unload_projects.png" width="2360" height="1864" alt="Visual Studio 2019 - Unload project menu" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/002_vs2019_sln_unload_projects.png" width="2360" height="1864" alt="Visual Studio 2019 - Unload project menu" /></p>
 <p>Up until now, this is how I would have done things. Just unload projects I won't need and don't worry about them anymore. What I did not know is that we save the current state of the solution.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/003_vs2019_sln_save_filter_001.png" width="2464" height="224" alt="Visual Studio 2019 - Save as Solution Filter" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/003_vs2019_sln_save_filter_001.png" width="2464" height="224" alt="Visual Studio 2019 - Save as Solution Filter" /></p>
 <p>Unloading projects manually to create filters can be error-prone. Since a solution filter only builds the projects selected by the filter missing a project causes the build to fail.</p>
 <p>An alternative can be to unload all projects, select the project you want, and use the &quot;reload with dependencies&quot; option.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png" width="2316" height="1528" alt="Visual Studio 2019 - Reload Project with Dependencies" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/004_vs2019_sln_reload_project_dependencies.png" width="2316" height="1528" alt="Visual Studio 2019 - Reload Project with Dependencies" /></p>
 <p>Like before, we can save the solution filter with the <code>Save As Solution Filter</code> option. The only difference is that we now get 4/7 projects as opposed to 5/7 projects. That's because we loaded the <code>ConcreteBravo.Tests</code> projects and it's dependencies. Even though that loads <code>Extensions.Concept</code> it does not load <code>Extensions.Concept.Tests</code> since it is not a dependency of <code>ConcreteBravo.Tests</code>.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png" width="2464" height="2212" alt="Visual Studio 2019 - Save as Solution Filter - Scenario A" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/005_vs2019_sln_save_filter_002.png" width="2464" height="2212" alt="Visual Studio 2019 - Save as Solution Filter - Scenario A" /></p>
 <p>While researching something unrelated to this post, I noticed that the <a href="https://github.com/dotnet/efcore" class="external">EF Core team</a> used this feature I did not know existed. The cool thing was that they also had a filter for all projects. So I had to try that out, and as it turns out, you can create a filter without unloading projects.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png" width="2464" height="2160" alt="Visual Studio 2019 - Save as Solution Filter - Scenario B" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/006_vs2019_sln_save_filter_003.png" width="2464" height="2160" alt="Visual Studio 2019 - Save as Solution Filter - Scenario B" /></p>
 <p>The image below shows the difference between the three filters we created. It looks exactly like a traditional Solution Explorer with the addition that the name of the filter applied is displayed.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png" width="4284" height="1040" alt="Visual Studio 2019 - Solution Filter Scenarios Compared" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png" width="4284" height="1040" alt="Visual Studio 2019 - Solution Filter Scenarios Compared" /></p>
 <p>For example, the <code>SlnFilter.Alpha.slnf</code> I created for <code>Concept.ConcreteAlpha</code> implementation looks like this:</p>
 <pre><code class="language-json">{
   &quot;solution&quot;: {
@@ -326,10 +326,10 @@ dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Test.Ut
 <blockquote>
 <p>You cannot use <code>dotnet sln add</code> on slnf files, but you can use them with <code>dotnet build</code></p>
 </blockquote>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png" width="3088" height="1644" alt="Visual Studio 2019 - Add Existing Project" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/008_vs2019_slnf_add_existing_project.png" width="3088" height="1644" alt="Visual Studio 2019 - Add Existing Project" /></p>
 <p>As soon as you did this, you get this pop-up stating a mismatch between the loaded projects and the project specified in the filter.</p>
 <p>If you followed the steps in a GIT environment, you would see that even before pressing <code>Update Solution Filter</code> the underlying solution is already updated.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png" width="1428" height="1040" alt="Visual Studio 2019 - Regenerate Solution Filter" /></p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/009_vs2019_slnf_update_solution_filter.png" width="1428" height="1040" alt="Visual Studio 2019 - Regenerate Solution Filter" /></p>
 <h2 id="the-missing-bit"><a href="#the-missing-bit">The missing bit</a></h2>
 <p>I discussed this feature at work as a potential workaround for an issue we had in structuring our projects. One of my colleagues remembered looking at it about a year ago and finding it lacking. A few minutes later, he found a <a href="https://developercommunity.visualstudio.com/t/Solution-Filter-should-allow-for-Include/1090914?space=8&amp;q=solution+filter" class="external">post</a> on the developer community for Visual Studio. Funnily enough, it's a small world; the user-post links to a GitHub issue he created in this matter.</p>
 <p>The problem is the management of multiple solutions filters because the filters are inclusive with relative paths following the sln-filter location. A proposed improvement would be to use glob patterns to include/exclude projects. That would make it easier when following naming conventions to have always up-to-date filters.</p>
@@ -390,19 +390,19 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
                 <div class="social-share">
             <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
             <div class="flex justify-center space-x-6">
-                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
                         <span class="sr-only">LinkedIn Share</span>
                         <em class="fab fa-linkedin fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Decreasing%20Solution%20Build%20time%20with%20Filters&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Decreasing%20Solution%20Build%20time%20with%20Filters&url=https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                         <span class="sr-only">Twitter Share</span>
                         <em class="fab fa-twitter-square fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
                         <span class="sr-only">Facebook Share</span>
                         <em class="fab fa-facebook fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Decreasing Solution Build time with Filters&amp;body=Thought you might like this article https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/07/17/decreasing-solution-build-time-with-filters.html">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Decreasing Solution Build time with Filters&amp;body=Thought you might like this article https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html">
                         <span class="sr-only">Email Share</span>
                         <em class="fas fa-envelope-open-text fa-lg"></em>
                     </a>

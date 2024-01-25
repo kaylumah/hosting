@@ -17,7 +17,7 @@
         
         <!-- Common Meta Tags -->
         <title>Validated Strongly Typed IOptions</title>
-        <link rel="canonical" href="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html" />
+        <link rel="canonical" href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
         <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
         <meta name="description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
         <meta name="copyright" content="© Kaylumah. All rights reserved." />
@@ -28,9 +28,9 @@
         <meta property="og:locale" content="en" />
         <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
         <meta property="og:title" content="Validated Strongly Typed IOptions" />
-        <meta property="og:url" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html" />
+        <meta property="og:url" content="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
         <meta property="og:description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
-        <meta property="og:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
         <meta property="article:author" content="Max Hamulyák" />
         <meta property="article:published_time" content="2021-11-29T19:00:00.0000000+01:00" />
         <meta property="article:modified_time" content="2021-11-29T19:00:00.0000000+01:00" />
@@ -41,7 +41,7 @@
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Validated Strongly Typed IOptions" />
         <meta name="twitter:description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
-        <meta name="twitter:image" content="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
         <meta name="twitter:site" content="@kaylumah" />
         <meta name="twitter:creator" content="@kaylumah" />
         
@@ -59,13 +59,13 @@
         <script type="application/ld+json">{
           "@context": "https://schema.org",
           "@type": "BlogPosting",
-          "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png",
-          "mainEntityOfPage": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html",
+          "image": "https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html",
           "author": {
             "@context": "https://schema.org",
             "@type": "Person",
             "name": "Max Hamulyák",
-            "image": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/avatar_background.svg",
+            "image": "https://kaylumah.nl/assets/avatar_background.svg",
             "sameAs": [
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
@@ -82,7 +82,7 @@
             "name": "kaylumah",
             "sameAs": "https://www.linkedin.com/company/kaylumah",
             "foundingDate": "2020-01-01",
-            "logo": "https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/logo.svg"
+            "logo": "https://kaylumah.nl/assets/logo.svg"
           }
         }</script>
         
@@ -91,7 +91,7 @@
         <link
           type="application/atom+xml"
           rel="alternate"
-          href="https://Val_1/feed.xml"
+          href="https://BaseUrl_1/feed.xml"
           title="Max Hamulyák · Kaylumah RSS Feed"
         />
         <!-- END Feed MetaData -->
@@ -252,7 +252,7 @@
     <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
         <p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
 <p>As I understand it, the <code>configuration</code> concept in <code>.NET</code> is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the <code>options</code> concept provides access to <code>configuration</code> from our application code. I've attempted to illustrate it with the image below.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
 <h2 id="configuration-in.net"><a href="#configuration-in.net">Configuration in .NET</a></h2>
 <p>Technically the image above is an over-simplification. In reality, you use an <code>IConfigurationBuilder</code> where different providers are provided, and the configuration block in the middle is the merged build-result of the configuration builder. In fact, you get a preconfigured configuration builder every time you use the <code>ASP.NET</code> Web templates. You get a <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/Host.cs#L53" class="external">default HostBuilder</a> that setups an <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostBuilder.cs#L124" class="external">IHost</a>. This default builder also takes care of the <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostingHostBuilderExtensions.cs#L188" class="external">default configuration</a>.</p>
 <p>The default configuration adds in order</p>
@@ -282,7 +282,7 @@
 <li><code>MySample:MyCollection:0:MyOtherText</code></li>
 </ul>
 <p>With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
 <blockquote>
 <p>As pointed out by the &quot;The Twelve-Factor App&quot; article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.</p>
 </blockquote>
@@ -347,7 +347,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 </code></pre>
 <h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
 <p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
-<p>In my article <a href="https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html" class="external">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>In my article <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
 <p>As I see it, there are two distinct ways configuration can fail.</p>
 <h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
 <p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>
@@ -375,7 +375,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 <h3 id="dataannotations-validation"><a href="#dataannotations-validation">DataAnnotations Validation</a></h3>
 <p>The second variant is the most likely to occur. That is, settings are present but not valid in the context of the application. I recently browsed the Microsoft Docs after (again) losing time chasing configuration issues when I came across <code>IValidateOptions</code>. I also rediscovered <code>ValidateDataAnnotations</code> on the <code>IOptionsBuilder</code>, which I previously dismissed since it was a different API (<code>AddOptions&lt;&gt;</code>) than the <code>Configure&lt;&gt;</code> APIs. With Resharper by my side, I checked the implementation and discovered that it uses <code>DataAnnotationValidateOptions</code> a class that is a <code>IValidateOptions</code>.</p>
 <p>When consuming an IOptions, there are three hooks we can use. We have <code>IConfigureOptions</code>, <code>IPostConfigureOptions</code> and <code>IValidateOptions</code>. If you head back up to where I printed the dependency injection container, you see that every time you use <code>Configure&lt;&gt;</code>, you get an <code>IConfigureOptions</code>. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered &quot;option services&quot;.</p>
-<p><img src="https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
 <p>You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an <code>IPostConfigureOptions</code> or <code>IValidateOptions</code> before the normal <code>IConfigureOptions</code>, it won't run before it. The factory runs through 0 or more <code>IConfigureOptions</code>, 0 or more <code>IPostConfigureOptions</code> and finally 0 or more <code>IValidateOptions</code> and always in that order.</p>
 <p>To demonstrate how this works, consider the following example:</p>
 <pre><code class="language-csharp">public class ConfigureLibraryExampleServiceOptions : IConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IPostConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IValidateOptions&lt;LibraryExampleServiceOptions&gt;
@@ -751,19 +751,19 @@ typedOptions.Name.Should().Be(options.Name);
                 <div class="social-share">
             <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
             <div class="flex justify-center space-x-6">
-                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
                         <span class="sr-only">LinkedIn Share</span>
                         <em class="fab fa-linkedin fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Validated%20Strongly%20Typed%20IOptions&url=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Validated%20Strongly%20Typed%20IOptions&url=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                         <span class="sr-only">Twitter Share</span>
                         <em class="fab fa-twitter-square fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
                         <span class="sr-only">Facebook Share</span>
                         <em class="fab fa-facebook fa-lg"></em>
                     </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Validated Strongly Typed IOptions&amp;body=Thought you might like this article https://green-field-0353fee03-486.westeurope.1.azurestaticapps.net/2021/11/29/validated-strongly-typed-ioptions.html">
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Validated Strongly Typed IOptions&amp;body=Thought you might like this article https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html">
                         <span class="sr-only">Email Share</span>
                         <em class="fas fa-envelope-open-text fa-lg"></em>
                     </a>
