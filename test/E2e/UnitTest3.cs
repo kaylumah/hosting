@@ -108,7 +108,7 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
 
-             await HtmlPageVerifier.Verify(blogPage);
+            await HtmlPageVerifier.Verify(blogPage);
         }
 
         [Fact]
@@ -121,7 +121,7 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("The complete archive of blog posts · Kaylumah");
 
-             await HtmlPageVerifier.Verify(archivePage);
+            await HtmlPageVerifier.Verify(archivePage);
         }
 
         [Fact]
@@ -134,9 +134,9 @@ namespace Test.E2e
             string title = await page.TitleAsync();
             title.Should().Be("Page not found · Kaylumah");
 
-             await HtmlPageVerifier.Verify(notFoundPage);
+            await HtmlPageVerifier.Verify(notFoundPage);
         }
-    
+
         [Fact]
         public async Task Test_BlogPages()
         {
@@ -149,7 +149,7 @@ namespace Test.E2e
             byte[] bytes = await atomFeed.PageResponse.BodyAsync();
             SyndicationFeed feed = bytes.ToSyndicationFeed();
 
-            foreach(SyndicationItem item in feed.Items)
+            foreach (SyndicationItem item in feed.Items)
             {
                 string itemId = item.Id;
                 Uri uri = new Uri(itemId);
