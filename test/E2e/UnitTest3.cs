@@ -27,16 +27,7 @@ namespace Test.E2e
         [Fact]
         public async Task Test_AtomFeed()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
-            AtomFeedPage atomFeed = new AtomFeedPage(page);
-            await atomFeed.NavigateAsync();
-
-            page.Url.Should().EndWith(atomFeed.PagePath);
-
-            Dictionary<string, string> headers = await atomFeed.GetHeaders();
-
-            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
-            SyndicationFeed feed = bytes.ToSyndicationFeed();
+            SyndicationFeed feed = await GetSyndicationFeed();
             feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
         }
 
@@ -137,6 +128,19 @@ namespace Test.E2e
             title.Should().Be("Page not found · Kaylumah");
 
              await HtmlPageVerifier.Verify(notFoundPage);
+        }
+    
+        async Task<SyndicationFeed> GetSyndicationFeed()
+        {
+            IPage page = await _PlaywrightFixture.GetPage();
+            AtomFeedPage atomFeed = new AtomFeedPage(page);
+            await atomFeed.NavigateAsync();
+            page.Url.Should().EndWith(atomFeed.PagePath);
+            Dictionary<string, string> headers = await atomFeed.GetHeaders();
+
+            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
+            SyndicationFeed feed = bytes.ToSyndicationFeed();
+            return feed;
         }
     }
 }
