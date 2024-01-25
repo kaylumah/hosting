@@ -11,7 +11,7 @@ namespace Test.E2e
 {
     public static partial class HtmlPageVerifier
     {
-        [GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[a-zA-Z]*\.(html|xml|png))")]
+        [GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[a-zA-Z/_]*\.(html|xml|png))")]
         private static partial Regex BaseUrl();
 
         public static async Task Verify(HtmlPage page)
