@@ -82,6 +82,8 @@ namespace Test.E2e
             Dictionary<string, string> headers = await homePage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Max Hamulyák · Kaylumah");
+
+            await HtmlPageVerifier.Verify(homePage);
         }
 
         [Fact]

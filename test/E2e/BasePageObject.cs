@@ -45,7 +45,14 @@ namespace Test.E2e
 
         void Page_Response(object sender, IResponse e)
         {
-            if (e.Url.EndsWith(PagePath, StringComparison.Ordinal))
+            bool isRedirect = e.Status == 301;
+            bool isTargetUrl = e.Url.EndsWith(PagePath, StringComparison.Ordinal);
+            bool matchWithoutRedirect = isRedirect == false && isTargetUrl;
+
+            bool matchWithRedirect = e.Request.RedirectedFrom?.Url.EndsWith(PagePath, StringComparison.Ordinal) ?? false;
+
+            bool isPageResponse = matchWithoutRedirect || matchWithRedirect;
+            if (isPageResponse)
             {
                 PageResponse = e;
             }
