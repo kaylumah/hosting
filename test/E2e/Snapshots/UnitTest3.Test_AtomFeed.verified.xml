@@ -17,7 +17,7 @@
     <updated>DateTimeOffset_2</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html" />
@@ -25,7 +25,7 @@
     <category term="NSwag" />
     <category term="OpenAPI" />
     <category term="Swashbuckle" />
-    <content type="html">&lt;p&gt;I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called &lt;a href="https://BaseUrl_2/2021/05/23/generate-csharp-client-for-openapi.html" class="external"&gt;&amp;quot;Generate C# client for OpenAPI&amp;quot;&lt;/a&gt;. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called &lt;a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html"&gt;&amp;quot;Generate C# client for OpenAPI&amp;quot;&lt;/a&gt;. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.&lt;/p&gt;
 &lt;p&gt;The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called &lt;a href="https://stevetalkscode.co.uk/openapireference-commands" class="external"&gt;&amp;quot;Using OpenApiReference To Generate Open API Client Code&amp;quot;&lt;/a&gt;. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.&lt;/p&gt;
 &lt;h2 id="safe-openapi-specification-on-build"&gt;&lt;a href="#safe-openapi-specification-on-build"&gt;Safe OpenAPI specification on build&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The purpose of the post is not to detail how to configure an OpenAPI spec for your project since the standard template already supports Swashbuckle. You can find more information on that over &lt;a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&amp;amp;tabs=visual-studio" class="external"&gt;at Microsoft Learn&lt;/a&gt;. One thing I like to add to the standard template, is that I want the specification to be part of the project output. We can achieve that with the Swashbuckle CLI, which you can install with the command &lt;code&gt;dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0&lt;/code&gt;. Note that the version of the CLI must match the version of Swashbuckle used in the API project. After you install the tool, you can modify the csproj to look like this.&lt;/p&gt;
@@ -185,7 +185,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <updated>DateTimeOffset_3</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
@@ -193,7 +193,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <category term="Azure" />
     <category term="Testing" />
     <content type="html">&lt;h2 id="how-to-test-a-dependency-on-azure"&gt;&lt;a href="#how-to-test-a-dependency-on-azure"&gt;How to test a dependency on Azure?&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post &lt;a href="https://BaseUrl_2/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt;, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.&lt;/p&gt;
+&lt;p&gt;A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post &lt;a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt;, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.&lt;/p&gt;
 &lt;p&gt;There are a few ways we can go about testing this:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Create a mock or fake implementation of every Storage API required.&lt;/li&gt;
@@ -232,7 +232,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in &lt;a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external"&gt;Azure Pipelines&lt;/a&gt;. I, however, am still not entirely happy with it.&lt;/p&gt;
 &lt;h2 id="how-to-use-azurite-without-a-connectionstring"&gt;&lt;a href="#how-to-use-azurite-without-a-connectionstring"&gt;How to use Azurite without a ConnectionString?&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;In the post &lt;a href="https://BaseUrl_2/2022/02/21/working-with-azure-sdk-for-dotnet.html" class="external"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt; I made a point that connection strings should be a thing of the past. The &lt;code&gt;TokenCredential&lt;/code&gt; should be the way forward (&lt;code&gt;dotnet add package Azure.Identity&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;In the post &lt;a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html"&gt;&amp;quot;Working with Azure SDK for .NET&amp;quot;&lt;/a&gt; I made a point that connection strings should be a thing of the past. The &lt;code&gt;TokenCredential&lt;/code&gt; should be the way forward (&lt;code&gt;dotnet add package Azure.Identity&lt;/code&gt;).&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;using Azure.Identity;
 using Azure.Storage.Blobs;
 
@@ -343,7 +343,7 @@ public async Task Test2()
     <updated>DateTimeOffset_4</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
@@ -670,7 +670,7 @@ dotnet run
     <updated>DateTimeOffset_5</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
@@ -928,7 +928,7 @@ az role assignment create --assignee $UserIdentity --role &amp;quot;Azure Servic
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="can-i-use-configuration-to-create-azure-sdk-clients"&gt;&lt;a href="#can-i-use-configuration-to-create-azure-sdk-clients"&gt;Can I use configuration to create Azure SDK clients?&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.&lt;/p&gt;
-&lt;p&gt;In my &lt;a href="https://BaseUrl_2/2021/11/29/validated-strongly-typed-ioptions.html" class="external"&gt;previous article on validating IOptions&lt;/a&gt;, I wrote about a way to make sure all configuration for my app is valid.&lt;/p&gt;
+&lt;p&gt;In my &lt;a href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html"&gt;previous article on validating IOptions&lt;/a&gt;, I wrote about a way to make sure all configuration for my app is valid.&lt;/p&gt;
 &lt;p&gt;That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;public class UnitTest1
 {
@@ -983,14 +983,14 @@ az role assignment create --assignee $UserIdentity --role &amp;quot;Azure Servic
     <updated>DateTimeOffset_6</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
     <category term="C#" />
     <category term="Code Quality" />
     <content type="html">&lt;p&gt;There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.&lt;/p&gt;
-&lt;p&gt;Thanks to the combination of .editorConfig and Roslyn Analyzers, managing this for your team is easier. Recently, however, I was required to create a custom check for my code. A quick google search pointed me to &lt;a href="https://www.meziantou.net/the-roslyn-analyzers-i-use.htm" class="external"&gt;an article from Meziantou&lt;/a&gt; which mentioned the &amp;quot;Banned Symbol&amp;quot; Roslyn Analyzer.&lt;/p&gt;
+&lt;p&gt;Thanks to the combination of .editorConfig and Roslyn Analyzers, managing this for your team is easier. Recently, however, I was required to create a custom check for my code. A quick google search pointed me to &lt;a href="https://BaseUrl_2/the-roslyn-analyzers-i-use.htm" class="external"&gt;an article from Meziantou&lt;/a&gt; which mentioned the &amp;quot;Banned Symbol&amp;quot; Roslyn Analyzer.&lt;/p&gt;
 &lt;h2 id="scenario"&gt;&lt;a href="#scenario"&gt;Scenario&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Before diving into this Analyzer, let's take a few steps back and do a quick scenario sketch. Imagine you work for a company that allows funds transfer between two parties. Since your company needs to make money, you charge a small fee.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cs"&gt;public class FeeCalculator : IFeeCalculator
@@ -1132,7 +1132,7 @@ public class SystemClock : ISystemClock
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, &lt;a href="https://BaseUrl_2/2021/04/11/an-approach-to-writing-mocks.html" class="external"&gt;&amp;quot;Adventures with Mock&amp;quot;&lt;/a&gt; you can read more about my preferred way of creating mocks.&lt;/p&gt;
+&lt;p&gt;With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, &lt;a href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html"&gt;&amp;quot;Adventures with Mock&amp;quot;&lt;/a&gt; you can read more about my preferred way of creating mocks.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cs"&gt;public sealed class SystemClockMock : Mock&amp;lt;ISystemClock&amp;gt;
 {
     public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
@@ -1206,13 +1206,13 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
     <updated>DateTimeOffset_7</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
     <category term="C#" />
     <category term="Configuration" />
-    <content type="html">&lt;p&gt;Almost every project will have some settings that are configured differently per environment. Chapter three of &amp;quot;The Twelve-Factor App&amp;quot; &lt;a href="https://12factor.net/config" class="external"&gt;explains&lt;/a&gt; why separating configuration from code is a good idea. In &lt;code&gt;.NET&lt;/code&gt;, we use the &lt;code&gt;IConfigurationBuilder&lt;/code&gt; to manage our configuration. An &lt;code&gt;IOptions&amp;lt;&amp;gt;&lt;/code&gt; is used to make a configuration available as a strongly typed type in our applications.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Almost every project will have some settings that are configured differently per environment. Chapter three of &amp;quot;The Twelve-Factor App&amp;quot; &lt;a href="https://BaseUrl_3/config" class="external"&gt;explains&lt;/a&gt; why separating configuration from code is a good idea. In &lt;code&gt;.NET&lt;/code&gt;, we use the &lt;code&gt;IConfigurationBuilder&lt;/code&gt; to manage our configuration. An &lt;code&gt;IOptions&amp;lt;&amp;gt;&lt;/code&gt; is used to make a configuration available as a strongly typed type in our applications.&lt;/p&gt;
 &lt;p&gt;As I understand it, the &lt;code&gt;configuration&lt;/code&gt; concept in &lt;code&gt;.NET&lt;/code&gt; is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the &lt;code&gt;options&lt;/code&gt; concept provides access to &lt;code&gt;configuration&lt;/code&gt; from our application code. I've attempted to illustrate it with the image below.&lt;/p&gt;
 &lt;p&gt;&lt;img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /&gt;&lt;/p&gt;
 &lt;h2 id="configuration-in.net"&gt;&lt;a href="#configuration-in.net"&gt;Configuration in .NET&lt;/a&gt;&lt;/h2&gt;
@@ -1248,9 +1248,9 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
 &lt;blockquote&gt;
 &lt;p&gt;As pointed out by the &amp;quot;The Twelve-Factor App&amp;quot; article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;You can &lt;a href="https://andrewlock.net/exploring-dotnet-6-part-1-looking-inside-configurationmanager-in-dotnet-6/" class="external"&gt;read about changes to IConfiguration&lt;/a&gt; in &lt;code&gt;.NET6&lt;/code&gt; in a post from Andrew Lock. It also contains a different visual representation of configuration, which neatly displays the merging of the different levels.&lt;/p&gt;
+&lt;p&gt;You can &lt;a href="https://BaseUrl_4/exploring-dotnet-6-part-1-looking-inside-configurationmanager-in-dotnet-6/" class="external"&gt;read about changes to IConfiguration&lt;/a&gt; in &lt;code&gt;.NET6&lt;/code&gt; in a post from Andrew Lock. It also contains a different visual representation of configuration, which neatly displays the merging of the different levels.&lt;/p&gt;
 &lt;h2 id="options-in.net"&gt;&lt;a href="#options-in.net"&gt;Options in .NET&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;According to the &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0#bind-hierarchical-configuration" class="external"&gt;Microsoft Docs&lt;/a&gt; the options pattern is the preferred way to read related configuration values. The options pattern comes in three different flavours, &lt;code&gt;IOptions&amp;lt;&amp;gt;&lt;/code&gt;, &lt;code&gt;IOptionsSnapshot&amp;lt;&amp;gt;&lt;/code&gt; and &lt;code&gt;IOptionsMonitor&amp;lt;&amp;gt;&lt;/code&gt;. Probably the most used one is the default &lt;code&gt;IOptions&lt;/code&gt; one, with the drawback that you cannot read configuration after your app starts. Others have taken the task upon themself to explain the differences between the interfaces, for example &lt;a href="https://andrewlock.net/creating-singleton-named-options-with-ioptionsmonitor" class="external"&gt;Andrew Lock&lt;/a&gt; and &lt;a href="https://khalidabuhakmeh.com/aspnet-core-ioptions-configuration" class="external"&gt;Khalid Abuhakmeh&lt;/a&gt;. For this post, I will keep it simple with the regular &lt;code&gt;IOptions&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;According to the &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0#bind-hierarchical-configuration" class="external"&gt;Microsoft Docs&lt;/a&gt; the options pattern is the preferred way to read related configuration values. The options pattern comes in three different flavours, &lt;code&gt;IOptions&amp;lt;&amp;gt;&lt;/code&gt;, &lt;code&gt;IOptionsSnapshot&amp;lt;&amp;gt;&lt;/code&gt; and &lt;code&gt;IOptionsMonitor&amp;lt;&amp;gt;&lt;/code&gt;. Probably the most used one is the default &lt;code&gt;IOptions&lt;/code&gt; one, with the drawback that you cannot read configuration after your app starts. Others have taken the task upon themself to explain the differences between the interfaces, for example &lt;a href="https://BaseUrl_4/creating-singleton-named-options-with-ioptionsmonitor" class="external"&gt;Andrew Lock&lt;/a&gt; and &lt;a href="https://khalidabuhakmeh.com/aspnet-core-ioptions-configuration" class="external"&gt;Khalid Abuhakmeh&lt;/a&gt;. For this post, I will keep it simple with the regular &lt;code&gt;IOptions&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;A typical registration of configuration would look like this:&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-csharp"&gt;public static partial class ServiceCollectionExtensions
 {
@@ -1309,7 +1309,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id="validated-options"&gt;&lt;a href="#validated-options"&gt;Validated Options&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.&lt;/p&gt;
-&lt;p&gt;In my article &lt;a href="https://BaseUrl_2/2021/05/23/generate-csharp-client-for-openapi.html" class="external"&gt;Generate C# client for OpenAPI&lt;/a&gt;, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &amp;quot;not-an-url&amp;quot; as its value, which causes your application to crash and burn.&lt;/p&gt;
+&lt;p&gt;In my article &lt;a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html"&gt;Generate C# client for OpenAPI&lt;/a&gt;, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &amp;quot;not-an-url&amp;quot; as its value, which causes your application to crash and burn.&lt;/p&gt;
 &lt;p&gt;As I see it, there are two distinct ways configuration can fail.&lt;/p&gt;
 &lt;h3 id="missing-configuration-sections"&gt;&lt;a href="#missing-configuration-sections"&gt;Missing Configuration Sections&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;The first variant is binding configuration at a section that does not exist. That is because &lt;code&gt;configuration.GetSection&lt;/code&gt; does not throw but &lt;a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external"&gt;returns null&lt;/a&gt; for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an &lt;code&gt;IOptions&amp;lt;TOptions&amp;gt;&lt;/code&gt; but with null values.&lt;/p&gt;
@@ -1715,7 +1715,7 @@ typedOptions.Name.Should().Be(options.Name);
     <updated>DateTimeOffset_8</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html" />
@@ -1747,7 +1747,7 @@ typedOptions.Name.Should().Be(options.Name);
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For this article, the snippet above would be more than sufficient. But in a real-life application, I prefer to log the input as well. If, however, we would use simple string interpolation, we immediately get a Code-Analysis warning about it. The recommendation here is to use LoggerMessage that enables the use of &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage?view=aspnetcore-6.0" class="external"&gt;high-performance logging&lt;/a&gt;. I've always found that implementing the LoggerMessage pattern required quite a bit of boilerplate. Luckily in .NET 6, this is a lot easier. We can &lt;a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/logger-message-generator" class="external"&gt;generate&lt;/a&gt; all the boilerplate we need. As per usual, Andrew Lock &lt;a href="https://andrewlock.net/exploring-dotnet-6-part-8-improving-logging-performance-with-source-generators/" class="external"&gt;wrote a piece&lt;/a&gt; about this new feature already.&lt;/p&gt;
+&lt;p&gt;For this article, the snippet above would be more than sufficient. But in a real-life application, I prefer to log the input as well. If, however, we would use simple string interpolation, we immediately get a Code-Analysis warning about it. The recommendation here is to use LoggerMessage that enables the use of &lt;a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage?view=aspnetcore-6.0" class="external"&gt;high-performance logging&lt;/a&gt;. I've always found that implementing the LoggerMessage pattern required quite a bit of boilerplate. Luckily in .NET 6, this is a lot easier. We can &lt;a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/logger-message-generator" class="external"&gt;generate&lt;/a&gt; all the boilerplate we need. As per usual, Andrew Lock &lt;a href="https://BaseUrl_4/exploring-dotnet-6-part-8-improving-logging-performance-with-source-generators/" class="external"&gt;wrote a piece&lt;/a&gt; about this new feature already.&lt;/p&gt;
 &lt;p&gt;After applying our &lt;code&gt;LoggerMessage&lt;/code&gt; changes to the SUT it looks like the snippet below. Please note that in order for this to work the class &lt;code&gt;EchoService&lt;/code&gt; it self is now marked as &lt;code&gt;partial&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cs"&gt;public partial class EchoService : IEchoService
 {
@@ -1824,7 +1824,7 @@ public async Task Test_Manuel_NullLoggingFactory()
 &lt;p&gt;As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id="option-2"&gt;&lt;a href="#option-2"&gt;Option 2&lt;/a&gt;&lt;/h2&gt;
-&lt;p&gt;The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, &lt;a href="https://BaseUrl_2/2021/04/11/an-approach-to-writing-mocks.html" class="external"&gt;&amp;quot;Adventures with Mock&amp;quot;&lt;/a&gt;, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.&lt;/p&gt;
+&lt;p&gt;The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, &lt;a href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html"&gt;&amp;quot;Adventures with Mock&amp;quot;&lt;/a&gt;, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cs"&gt;public class LoggerMock&amp;lt;TCategoryName&amp;gt; : Mock&amp;lt;ILogger&amp;lt;TCategoryName&amp;gt;&amp;gt;
 {
     private readonly List&amp;lt;LogMessage&amp;gt; logMessages = new();
@@ -1914,7 +1914,7 @@ public async Task Test_Moq_LogLevelDisabledMockedLogger()
 {
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Next up is our Xunit logger itself. The ColoredConsole sample from the docs does nothing with scope, but to not limit ourselves later, we changed the implementation of &lt;code&gt;BeginScope&lt;/code&gt; to use &lt;code&gt;IExternalScopeProvider&lt;/code&gt;. To print the log line, we need the last argument of &lt;code&gt;Log&amp;lt;TState&amp;gt;&lt;/code&gt;, which is the formatter. We then pass it the Xunit's ITestOutputHelper to &lt;a href="https://xunit.net/docs/capturing-output" class="external"&gt;capture output&lt;/a&gt;. Depending on your specific needs, you can log the logger's category (name), event, log level, scope or even exception. For now, let's keep it simple.&lt;/p&gt;
+&lt;p&gt;Next up is our Xunit logger itself. The ColoredConsole sample from the docs does nothing with scope, but to not limit ourselves later, we changed the implementation of &lt;code&gt;BeginScope&lt;/code&gt; to use &lt;code&gt;IExternalScopeProvider&lt;/code&gt;. To print the log line, we need the last argument of &lt;code&gt;Log&amp;lt;TState&amp;gt;&lt;/code&gt;, which is the formatter. We then pass it the Xunit's ITestOutputHelper to &lt;a href="https://BaseUrl_5/docs/capturing-output" class="external"&gt;capture output&lt;/a&gt;. Depending on your specific needs, you can log the logger's category (name), event, log level, scope or even exception. For now, let's keep it simple.&lt;/p&gt;
 &lt;pre&gt;&lt;code class="language-cs"&gt;public class XunitLogger : ILogger
 {
     private readonly string _loggerName;
@@ -2057,7 +2057,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
     <updated>DateTimeOffset_9</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
@@ -2205,7 +2205,7 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
     <updated>DateTimeOffset_10</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
@@ -2214,7 +2214,7 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
     <category term="OpenAPI" />
     <category term="Swashbuckle" />
     <content type="html">&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: on 2023-04-14 I published a revised version of this article which you can find here &lt;a href="https://BaseUrl_2/2023/04/14/csharp-client-for-openapi-revistted.html" class="external"&gt;&amp;quot;Generate C# client for OpenAPI - Revisited&amp;quot;&lt;/a&gt; it compares an alternative to the way described in this article. Including an update to &lt;code&gt;net7.0&lt;/code&gt;, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;note&lt;/strong&gt;: on 2023-04-14 I published a revised version of this article which you can find here &lt;a href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html"&gt;&amp;quot;Generate C# client for OpenAPI - Revisited&amp;quot;&lt;/a&gt; it compares an alternative to the way described in this article. Including an update to &lt;code&gt;net7.0&lt;/code&gt;, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;I've recently worked on a project where I was the consumer of a third party API. Luckily for me, we decided on an Open API specification which made integrating services a breeze. If you have been following my content, you know I often use C# in my projects. So I needed a type-safe client for use in my C# code base.&lt;/p&gt;
 &lt;p&gt;To accomplish my goals, I used the &lt;a href="https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild" class="external"&gt;NSwag library&lt;/a&gt; created by Rico Suter. This project provides me with an MSBuild task for generating clients. In my case, I used a JSON file version to generate my client. NSwag is not limited to just one way of working.&lt;/p&gt;
@@ -2577,7 +2577,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
     <updated>DateTimeOffset_11</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html" />
@@ -2594,7 +2594,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
 &lt;li&gt;How should we structure our code base?&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;At the same time, I find that we do not give our tests the same amount of love.&lt;/p&gt;
-&lt;p&gt;Wouter Roos, a colleague of mine over at ilionx, gave me this idea, and after experimenting a bit with it, I like it so much that I decided to blog about it. I tried hard to find other articles about it but did not find a post doing something similar. It wanted to make sure that the idea would also transfer to other aspects like how to mock &lt;code&gt;ILogger&amp;lt;T&amp;gt;&lt;/code&gt;, that I stumbled upon &lt;a href="https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq" class="external"&gt;an excellent article&lt;/a&gt; by Adam Storr. Coincidentally Adam &lt;a href="https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external"&gt;linked&lt;/a&gt; to a part in a series by Matthew Jones about Fluent Mocks. I have been reading articles written by  Matthew for some time now but missed this one. Matthews approach and, for that matter, Adam's proposal on testing ILogger are not quite the same as what I will propose, but I think these ideas will complement each other nicely. Funnily enough, I have had Adam's idea to create extensions methods on &lt;code&gt;Mock&amp;lt;T&amp;gt;&lt;/code&gt; before when setting up a mock filesystem for use in unit tests. However, I can extend on that premise with what I learned from Wouter and make it even better.&lt;/p&gt;
+&lt;p&gt;Wouter Roos, a colleague of mine over at ilionx, gave me this idea, and after experimenting a bit with it, I like it so much that I decided to blog about it. I tried hard to find other articles about it but did not find a post doing something similar. It wanted to make sure that the idea would also transfer to other aspects like how to mock &lt;code&gt;ILogger&amp;lt;T&amp;gt;&lt;/code&gt;, that I stumbled upon &lt;a href="https://BaseUrl_6/blog/mocking-ilogger-with-moq" class="external"&gt;an excellent article&lt;/a&gt; by Adam Storr. Coincidentally Adam &lt;a href="https://BaseUrl_7/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external"&gt;linked&lt;/a&gt; to a part in a series by Matthew Jones about Fluent Mocks. I have been reading articles written by  Matthew for some time now but missed this one. Matthews approach and, for that matter, Adam's proposal on testing ILogger are not quite the same as what I will propose, but I think these ideas will complement each other nicely. Funnily enough, I have had Adam's idea to create extensions methods on &lt;code&gt;Mock&amp;lt;T&amp;gt;&lt;/code&gt; before when setting up a mock filesystem for use in unit tests. However, I can extend on that premise with what I learned from Wouter and make it even better.&lt;/p&gt;
 &lt;h2 id="system-setup"&gt;&lt;a href="#system-setup"&gt;System Setup&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Bear with me for a little while whilst we set up our demo scenario. In our architecture, we have defined three components. We have two resource access components and one manager. The manager is used to orchestrate our business code, and the resource access components interact with a resource, for example, a database.&lt;/p&gt;
 &lt;!-- 
@@ -3372,8 +3372,8 @@ public async Task Test_ArticleAccess_Returns200OK()
 &lt;p&gt;See you next time, stay healthy and happy coding to all 🧸!&lt;/p&gt;
 &lt;h2 id="sources"&gt;&lt;a href="#sources"&gt;Sources&lt;/a&gt;&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external"&gt;Fluent Mocks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq" class="external"&gt;Testing ILogger&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://BaseUrl_7/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external"&gt;Fluent Mocks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://BaseUrl_6/blog/mocking-ilogger-with-moq" class="external"&gt;Testing ILogger&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/Moq/moq4/wiki/Quickstart" class="external"&gt;Moq Quickstart&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://medium.com/webcom-engineering-and-product/a-cleaner-way-to-create-mocks-in-net-6e039c3d1db0" class="external"&gt;Cleaner way to create mocks&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://stackoverflow.com/a/57199040/1936600" class="external"&gt;Testing HttpClient&lt;/a&gt;&lt;/li&gt;
@@ -3387,7 +3387,7 @@ public async Task Test_ArticleAccess_Returns200OK()
     <updated>DateTimeOffset_12</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html" />
@@ -3697,7 +3697,7 @@ dotnet build -p:RepositoryUrl=&amp;quot;$REPO_URL&amp;quot; -p:RepositoryBranch=
     <updated>DateTimeOffset_14</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://kaylumah.nl/about</uri>
+      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html" />

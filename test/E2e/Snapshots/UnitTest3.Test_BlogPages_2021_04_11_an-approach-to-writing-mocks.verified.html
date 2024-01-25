@@ -72,7 +72,7 @@
               "https://www.linkedin.com/in/maxhamulyak",
               "https://twitter.com/kaylumah"
             ],
-            "url": "https://kaylumah.nl/about",
+            "url": "https://BaseUrl_1/about",
             "email": "max@kaylumah.nl"
           },
           "dateModified": "2021-04-11",
@@ -271,7 +271,7 @@
 <li>How should we structure our code base?</li>
 </ul>
 <p>At the same time, I find that we do not give our tests the same amount of love.</p>
-<p>Wouter Roos, a colleague of mine over at ilionx, gave me this idea, and after experimenting a bit with it, I like it so much that I decided to blog about it. I tried hard to find other articles about it but did not find a post doing something similar. It wanted to make sure that the idea would also transfer to other aspects like how to mock <code>ILogger&lt;T&gt;</code>, that I stumbled upon <a href="https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq" class="external">an excellent article</a> by Adam Storr. Coincidentally Adam <a href="https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external">linked</a> to a part in a series by Matthew Jones about Fluent Mocks. I have been reading articles written by  Matthew for some time now but missed this one. Matthews approach and, for that matter, Adam's proposal on testing ILogger are not quite the same as what I will propose, but I think these ideas will complement each other nicely. Funnily enough, I have had Adam's idea to create extensions methods on <code>Mock&lt;T&gt;</code> before when setting up a mock filesystem for use in unit tests. However, I can extend on that premise with what I learned from Wouter and make it even better.</p>
+<p>Wouter Roos, a colleague of mine over at ilionx, gave me this idea, and after experimenting a bit with it, I like it so much that I decided to blog about it. I tried hard to find other articles about it but did not find a post doing something similar. It wanted to make sure that the idea would also transfer to other aspects like how to mock <code>ILogger&lt;T&gt;</code>, that I stumbled upon <a href="https://BaseUrl_2/blog/mocking-ilogger-with-moq" class="external">an excellent article</a> by Adam Storr. Coincidentally Adam <a href="https://BaseUrl_3/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external">linked</a> to a part in a series by Matthew Jones about Fluent Mocks. I have been reading articles written by  Matthew for some time now but missed this one. Matthews approach and, for that matter, Adam's proposal on testing ILogger are not quite the same as what I will propose, but I think these ideas will complement each other nicely. Funnily enough, I have had Adam's idea to create extensions methods on <code>Mock&lt;T&gt;</code> before when setting up a mock filesystem for use in unit tests. However, I can extend on that premise with what I learned from Wouter and make it even better.</p>
 <h2 id="system-setup"><a href="#system-setup">System Setup</a></h2>
 <p>Bear with me for a little while whilst we set up our demo scenario. In our architecture, we have defined three components. We have two resource access components and one manager. The manager is used to orchestrate our business code, and the resource access components interact with a resource, for example, a database.</p>
 <!-- 
@@ -1049,8 +1049,8 @@ public async Task Test_ArticleAccess_Returns200OK()
 <p>See you next time, stay healthy and happy coding to all 🧸!</p>
 <h2 id="sources"><a href="#sources">Sources</a></h2>
 <ul>
-<li><a href="https://exceptionnotfound.net/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external">Fluent Mocks</a></li>
-<li><a href="https://adamstorr.azurewebsites.net/blog/mocking-ilogger-with-moq" class="external">Testing ILogger</a></li>
+<li><a href="https://BaseUrl_3/using-moq-to-create-fluent-test-classes-in-asp-net-core/" class="external">Fluent Mocks</a></li>
+<li><a href="https://BaseUrl_2/blog/mocking-ilogger-with-moq" class="external">Testing ILogger</a></li>
 <li><a href="https://github.com/Moq/moq4/wiki/Quickstart" class="external">Moq Quickstart</a></li>
 <li><a href="https://medium.com/webcom-engineering-and-product/a-cleaner-way-to-create-mocks-in-net-6e039c3d1db0" class="external">Cleaner way to create mocks</a></li>
 <li><a href="https://stackoverflow.com/a/57199040/1936600" class="external">Testing HttpClient</a></li>
