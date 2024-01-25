@@ -29,6 +29,7 @@ namespace Test.E2e
                 settings.UseMethodName(methodName);
             }
             settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
+            settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
             await Verifier.Verify(xml, settings);
         }
     }
