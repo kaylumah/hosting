@@ -502,7 +502,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </code></pre>
 <h2 id="can-i-use-configuration-to-create-azure-sdk-clients"><a href="#can-i-use-configuration-to-create-azure-sdk-clients">Can I use configuration to create Azure SDK clients?</a></h2>
 <p>If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.</p>
-<p>In my <a href="https://BaseUrl_2/2021/11/29/validated-strongly-typed-ioptions.html" class="external">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
+<p>In my <a href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
 <p>That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.</p>
 <pre><code class="language-csharp">public class UnitTest1
 {

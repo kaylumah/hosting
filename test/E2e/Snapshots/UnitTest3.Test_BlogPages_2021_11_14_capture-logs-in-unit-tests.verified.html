@@ -358,7 +358,7 @@ public async Task Test_Manuel_NullLoggingFactory()
 <p>As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.</p>
 </blockquote>
 <h2 id="option-2"><a href="#option-2">Option 2</a></h2>
-<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://BaseUrl_2/2021/04/11/an-approach-to-writing-mocks.html" class="external">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
+<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
 <pre><code class="language-cs">public class LoggerMock&lt;TCategoryName&gt; : Mock&lt;ILogger&lt;TCategoryName&gt;&gt;
 {
     private readonly List&lt;LogMessage&gt; logMessages = new();
