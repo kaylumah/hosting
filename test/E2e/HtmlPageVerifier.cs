@@ -14,7 +14,7 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[a-zA-Z/_]*\.(html|xml|png))")]
         private static partial Regex BaseUrl();
 
-        public static async Task Verify(HtmlPage page)
+        public static async Task Verify(HtmlPage page, string methodName = null)
         {
             string html = await page.GetContent();
             Dictionary<string, string> metaTags = await page.GetMetaTags();
@@ -26,6 +26,11 @@ namespace Test.E2e
 
             Regex baseUrlRegex = BaseUrl();
             VerifySettings settings = new VerifySettings();
+            if (methodName != null)
+            {
+                settings.UseMethodName(methodName);
+            }
+
             settings.ScrubMatches(baseUrlRegex);
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");

@@ -144,7 +144,11 @@ namespace Test.E2e
             IPage blogPage = await _PlaywrightFixture.GetPage();
             BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
             await blogItemPage.NavigateAsync();
-            await HtmlPageVerifier.Verify(blogItemPage);
+            string testParameter = path
+                .Replace("/", "_")
+                .Replace(".html", "");
+            string methodName = $"{nameof(Test_BlogPages)}_{testParameter}";
+            await HtmlPageVerifier.Verify(blogItemPage, methodName);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
