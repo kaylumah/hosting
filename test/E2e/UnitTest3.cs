@@ -55,6 +55,8 @@ namespace Test.E2e
             SiteMap sitemap = bytes.ToSiteMap();
             string url = _PlaywrightFixture.GetBaseUrl();
             sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
+
+            await XmlPageVerifier.Verify(sitemapPage);
         }
 
         [Fact]
