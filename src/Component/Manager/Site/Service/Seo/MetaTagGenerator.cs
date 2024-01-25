@@ -206,6 +206,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         static string CreateOpenGraphMetaTag(string name, string content)
         {
+            return CreatePropertyMetaTag(name, content);
+        }
+
+        static string CreatePropertyMetaTag(string name, string content)
+        {
             return CreateMetaTag("property", name, content);
         }
     }
