@@ -157,6 +157,7 @@ namespace Test.E2e
                 IPage blogPage = await _PlaywrightFixture.GetPage();
                 BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
                 await blogItemPage.NavigateAsync();
+                await HtmlPageVerifier.Verify(blogItemPage);
             }
         }
     }
