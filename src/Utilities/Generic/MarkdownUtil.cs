@@ -72,20 +72,28 @@ namespace Kaylumah.Ssg.Utilities
             System.Collections.Generic.IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
             foreach (LinkInline anchor in anchorTags)
             {
-                if (anchor is LinkInline link && !link.IsImage)
+                if (!anchor.IsImage)
                 {
-                    if (!anchor.Url.StartsWith(GlobalFunctions.Url.Value, StringComparison.Ordinal))
+                    string anchorUrl = anchor.Url;
+                    bool isRelative = anchorUrl.StartsWith('/');
+                    if (isRelative)
                     {
-                        link.GetAttributes().AddClass("external");
+                        string absoluteUrl = GlobalFunctions.Url.Value + anchor.Url;
+                        anchor.Url = absoluteUrl;
+                    }
+
+                    if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value, StringComparison.Ordinal))
+                    {
+                        anchor.GetAttributes().AddClass("external");
                     }
                 }
 
                 // TODO disable pending Medium response...
-                if (anchor is LinkInline imageLink && imageLink.IsImage)
+                if (anchor.IsImage)
                 {
-                    if (imageLink.Url.StartsWith("/assets", StringComparison.Ordinal))
+                    if (anchor.Url.StartsWith("/assets", StringComparison.Ordinal))
                     {
-                        imageLink.Url = GlobalFunctions.Url.Value + imageLink.Url;
+                        anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
                     }
                 }
             }
