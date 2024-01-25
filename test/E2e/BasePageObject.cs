@@ -74,7 +74,7 @@ namespace Test.E2e
             Dictionary<string, string> result = new Dictionary<string, string>();
             ILocator metaTagNameLocator = _Page.Locator("//meta[@name]");
             IReadOnlyList<ILocator> metaNameTags = await metaTagNameLocator.AllAsync();
-            foreach(ILocator metaTag in metaNameTags)
+            foreach (ILocator metaTag in metaNameTags)
             {
                 string key = await metaTag.GetAttributeAsync("name");
                 string value = await metaTag.GetAttributeAsync("content");
@@ -83,7 +83,7 @@ namespace Test.E2e
 
             ILocator metaTagPropertyLocator = _Page.Locator("//meta[@property]");
             IReadOnlyList<ILocator> metaPropertyTags = await metaTagPropertyLocator.AllAsync();
-            foreach(ILocator metaTag in metaPropertyTags)
+            foreach (ILocator metaTag in metaPropertyTags)
             {
                 string key = await metaTag.GetAttributeAsync("property");
                 string value = await metaTag.GetAttributeAsync("content");
