@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text;
@@ -160,6 +161,7 @@ namespace Test.E2e
             VerifySettings settings = new VerifySettings();
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
+            settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
             settings.ScrubMatches(regex1);
             settings.ScrubMatches(regex);
             return settings;
