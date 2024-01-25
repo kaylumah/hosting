@@ -36,7 +36,7 @@ namespace Test.E2e
             // settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             // settings.ScrubInlineDateTimeOffsets("MM/dd/yyyy HH:mm:ss zzz");
             // settings.AddScrubber(_ => _.Replace(shortCommitHash, "short_hash"));
-            // settings.AddScrubber(_ => _.Replace(commitHash, "longhash"));
+            settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
             // settings.AddScrubber(_ => _.Replace(buildId, "buildId"));
             // settings.AddScrubber(_ => _.Replace(buildNumber, "buildNumber"));
             await Verifier.Verify(html, "html", settings);
