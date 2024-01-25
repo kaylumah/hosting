@@ -9,13 +9,14 @@ using Microsoft.Playwright;
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
 #pragma warning disable CS3003 // Type is not CLS-compliant
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
 namespace Test.E2e
 {
     public abstract class BasePageObject
     {
         public abstract string PagePath { get; }
 
-        readonly IPage _Page;
+        protected readonly IPage _Page;
 
         public IResponse PageResponse { get; private set; }
         public List<IResponse> Responses { get; } = new List<IResponse>();
@@ -66,6 +67,30 @@ namespace Test.E2e
     {
         protected HtmlPage(IPage page) : base(page)
         {
+        }
+
+        public async Task<Dictionary<string, string>> GetMetaTags()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            ILocator metaTagNameLocator = _Page.Locator("//meta[@name]");
+            IReadOnlyList<ILocator> metaNameTags = await metaTagNameLocator.AllAsync();
+            foreach(ILocator metaTag in metaNameTags)
+            {
+                string key = await metaTag.GetAttributeAsync("name");
+                string value = await metaTag.GetAttributeAsync("content");
+                result.Add(key, value);
+            }
+
+            ILocator metaTagPropertyLocator = _Page.Locator("//meta[@property]");
+            IReadOnlyList<ILocator> metaPropertyTags = await metaTagPropertyLocator.AllAsync();
+            foreach(ILocator metaTag in metaPropertyTags)
+            {
+                string key = await metaTag.GetAttributeAsync("property");
+                string value = await metaTag.GetAttributeAsync("content");
+                result.Add(key, value);
+            }
+
+            return result;
         }
     }
 

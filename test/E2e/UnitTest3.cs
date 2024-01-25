@@ -107,6 +107,8 @@ namespace Test.E2e
             //[name='description']
             // await Expect(description).ToHaveAttributeAsync("content", "");
 
+            Dictionary<string, string> metaTags = await aboutPage.GetMetaTags();
+
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
