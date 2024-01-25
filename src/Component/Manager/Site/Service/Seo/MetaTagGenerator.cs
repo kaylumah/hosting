@@ -73,7 +73,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             BuildData buildData = siteMetaData.Build;
             List<string> result = new List<string>
             {
-                CreateKaylumahMetaTag("copyright", buildData.Copyright)
+                CreateKaylumahMetaTag("copyright", buildData.Copyright),
+                CreateKaylumahMetaTag("commit", buildData.GitHash),
+                CreateKaylumahMetaTag("version", buildData.Version),
+                // CreateKaylumahMetaTag("time", buildData.Time),
+                CreateKaylumahMetaTag("site", siteMetaData.Id),
+                CreateKaylumahMetaTag("page", pageMetaData.Id)
             };
 
             if (result.Count > 0)
