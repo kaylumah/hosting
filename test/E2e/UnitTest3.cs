@@ -95,31 +95,16 @@ namespace Test.E2e
             AboutPage aboutPage = new AboutPage(page);
             await aboutPage.NavigateAsync();
 
-            // ILocator metaTagLocator = page.Locator("head > meta");
-            // IReadOnlyList<ILocator> x = await metaTagLocator.AllAsync();
-            // foreach(ILocator a in x)
-            // {
-            //     string attrName = await a.GetAttributeAsync("name");
-            //     string attrName2 = await a.GetAttributeAsync("property");
-            //     string attrName3 = await a.GetAttributeAsync("content");
-            // }
-            
-            //[name='description']
-            // await Expect(description).ToHaveAttributeAsync("content", "");
-
-            Dictionary<string, string> metaTags = await aboutPage.GetMetaTags();
-
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
             string html = await aboutPage.GetContent();
 
-            // Regex regex = new Regex(@"© Kaylumah. All rights reserved.\s*(?<commithash>[\w]{40})");
-            // Match m = regex.Match(html);
-            // Group g = m.Groups["commithash"];
-            // string commitHash = g.Value;
+            Dictionary<string, string> metaTags = await aboutPage.GetMetaTags();
+
             VerifySettings settings = GetVerifySettings();
+            settings.AddScrubber(_ => _.Replace(metaTags["kaylumah:commit"], "longhash"));
             // settings.AddScrubber(_ => _.Replace(commitHash, "longhash"));
             await Verifier.Verify(html, "html", settings);
         }
