@@ -98,13 +98,12 @@ namespace Test.E2e
             _PlaywrightFixture = playwrightFixture;
         }
 
-        [Fact(Skip = "temporarily")]
+        [Fact]
         public async Task Verify_HomePageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
-            Dictionary<string, string> headers = await homePage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Max Hamulyák · Kaylumah");
 
