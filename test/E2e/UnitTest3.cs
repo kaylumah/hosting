@@ -89,11 +89,11 @@ namespace Test.E2e
         }
     }
 
-    public class UnitTest3 : IClassFixture<PlaywrightFixture>
+    public partial class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
-        public UnitTest3(PlaywrightFixture playwrightFixture)
+        public HomePageHtmlTests(PlaywrightFixture playwrightFixture)
         {
             _PlaywrightFixture = playwrightFixture;
         }
@@ -111,6 +111,17 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(homePage);
         }
 
+    }
+
+    public partial class AboutPageHtmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public AboutPageHtmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
+
         [Fact(Skip = "temporarily")]
         public async Task Verify_AboutPageHtml_Contents()
         {
@@ -123,6 +134,17 @@ namespace Test.E2e
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
             await HtmlPageVerifier.Verify(aboutPage);
+        }
+
+    }
+
+    public partial class BlogPageHtmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public BlogPageHtmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
         }
 
         [Fact(Skip = "temporarily")]
@@ -138,6 +160,16 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(blogPage);
         }
 
+    }
+
+    public partial class ArchivePageHtmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public ArchivePageHtmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
         [Fact(Skip = "temporarily")]
         public async Task Verify_ArchivePageHtml_Contents()
         {
@@ -149,6 +181,16 @@ namespace Test.E2e
             title.Should().Be("The complete archive of blog posts · Kaylumah");
 
             await HtmlPageVerifier.Verify(archivePage);
+        }
+    }
+
+    public partial class NotFoundPageHtmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public NotFoundPageHtmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
         }
 
         [Fact(Skip = "temporarily")]
@@ -163,6 +205,16 @@ namespace Test.E2e
 
             await HtmlPageVerifier.Verify(notFoundPage);
         }
+    }
+
+    public partial class BlogPostPageHtmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public BlogPostPageHtmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
 
         [Theory(Skip = "temporarily")]
         [MemberData(nameof(GetBlogPages))]
@@ -174,7 +226,7 @@ namespace Test.E2e
             string testParameter = path
                 .Replace("/", "_")
                 .Replace(".html", "");
-            string methodName = $"{nameof(Test_BlogPages)}_{testParameter}";
+            string methodName = $"{nameof(Verify_BlogPostPageHtml_Contents)}_{testParameter}";
             await HtmlPageVerifier.Verify(blogItemPage, methodName);
         }
 
