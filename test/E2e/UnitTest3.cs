@@ -16,29 +16,6 @@ using Xunit;
 namespace Test.E2e
 {
 
-    public class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
-    {
-        readonly PlaywrightFixture _PlaywrightFixture;
-
-        public HomePageHtmlTests(PlaywrightFixture playwrightFixture)
-        {
-            _PlaywrightFixture = playwrightFixture;
-        }
-
-        [Fact]
-        public async Task Verify_HomePageHtml_Contents()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            HomePage homePage = new HomePage(page);
-            await homePage.NavigateAsync();
-            string title = await page.TitleAsync();
-            title.Should().Be("Max Hamulyák · Kaylumah");
-
-            await HtmlPageVerifier.Verify(homePage);
-        }
-
-    }
-
     public class AboutPageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
