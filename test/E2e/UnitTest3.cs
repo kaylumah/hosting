@@ -99,7 +99,7 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_HomePage()
+        public async Task Verify_HomePageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             HomePage homePage = new HomePage(page);
@@ -112,7 +112,7 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_AboutPage()
+        public async Task Verify_AboutPageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             AboutPage aboutPage = new AboutPage(page);
@@ -126,7 +126,7 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_BlogPage()
+        public async Task Verify_BlogPageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             BlogPage blogPage = new BlogPage(page);
@@ -139,7 +139,7 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_ArchivePage()
+        public async Task Verify_ArchivePageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             ArchivePage archivePage = new ArchivePage(page);
@@ -152,7 +152,7 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_NotFoundPage()
+        public async Task Verify_NotFoundPageHtml_Contents()
         {
             IPage page = await _PlaywrightFixture.GetPage();
             NotFoundPage notFoundPage = new NotFoundPage(page);
@@ -166,7 +166,7 @@ namespace Test.E2e
 
         [Theory(Skip = "temporarily")]
         [MemberData(nameof(GetBlogPages))]
-        public async Task Test_BlogPages(string path)
+        public async Task Verify_BlogPostPageHtml_Contents(string path)
         {
             IPage blogPage = await _PlaywrightFixture.GetPage();
             BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
@@ -181,7 +181,7 @@ namespace Test.E2e
         public static IEnumerable<object[]> GetBlogPages()
         {
             // yield return new object[] { "2023/04/14/csharp-client-for-openapi-revistted.html" };
-            yield return new object[] { "2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" };
+            // yield return new object[] { "2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" };
             // yield return new object[] { "2022/06/07/share-debug-configuration-with-launch-profiles.html" };
             // yield return new object[] { "2022/02/21/working-with-azure-sdk-for-dotnet.html" };
             // yield return new object[] { "2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" };
