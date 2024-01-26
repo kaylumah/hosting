@@ -17,28 +17,6 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class RobotTxtTests : IClassFixture<PlaywrightFixture>
-    {
-        readonly PlaywrightFixture _PlaywrightFixture;
-
-        public RobotTxtTests(PlaywrightFixture playwrightFixture)
-        {
-            _PlaywrightFixture = playwrightFixture;
-        }
-
-        [Fact]
-        public async Task Verify_RobotTxt_Contents()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            RobotsPage robotsPage = new RobotsPage(page);
-            await robotsPage.NavigateAsync();
-            page.Url.Should().EndWith(robotsPage.PagePath);
-
-            string txt = await robotsPage.GetContent();
-            VerifySettings settings = new VerifySettings();
-            await Verifier.Verify(txt, settings);
-        }
-    }
 
     public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
     {

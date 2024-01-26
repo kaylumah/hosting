@@ -1,1 +1,1 @@
-﻿Sitemap: https://kaylumah.nl/sitemap.xml
+﻿Sitemap: https://BaseUrl_1/sitemap.xml
