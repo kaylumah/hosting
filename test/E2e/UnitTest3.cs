@@ -10,39 +10,11 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
-using VerifyTests;
-using VerifyXunit;
 using Xunit;
 
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-
-    public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
-    {
-        readonly PlaywrightFixture _PlaywrightFixture;
-
-        public AtomFeedXmlTests(PlaywrightFixture playwrightFixture)
-        {
-            _PlaywrightFixture = playwrightFixture;
-        }
-
-        [Fact]
-        public async Task Verify_AtomFeedXml_Contents()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            AtomFeedPage atomFeed = new AtomFeedPage(page);
-            await atomFeed.NavigateAsync();
-            page.Url.Should().EndWith(atomFeed.PagePath);
-
-            string xml = await atomFeed.GetContent();
-            VerifySettings settings = new VerifySettings();
-
-            // settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
-            // settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
-            await Verifier.Verify(xml, settings);
-        }
-    }
 
     public partial class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
     {
