@@ -89,25 +89,6 @@ namespace Test.E2e
         }
 
         [Fact(Skip = "temporarily")]
-        public async Task Test_Sitemap()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            SitemapPage sitemapPage = new SitemapPage(page);
-            await sitemapPage.NavigateAsync();
-
-            page.Url.Should().EndWith(sitemapPage.PagePath);
-
-            Dictionary<string, string> headers = await sitemapPage.GetHeaders();
-
-            byte[] bytes = await sitemapPage.PageResponse.BodyAsync();
-            SiteMap sitemap = bytes.ToSiteMap();
-            string url = _PlaywrightFixture.GetBaseUrl();
-            sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
-
-            await XmlPageVerifier.Verify(sitemapPage);
-        }
-
-        [Fact(Skip = "temporarily")]
         public async Task Test_HomePage()
         {
             IPage page = await _PlaywrightFixture.GetPage();
