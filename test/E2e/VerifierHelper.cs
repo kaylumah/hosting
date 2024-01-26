@@ -16,24 +16,6 @@ namespace Test.E2e
         public static partial Regex BaseUrl();
     }
 
-    public static class XmlPageVerifier
-    {
-        public static async Task Verify(XmlPage page, string methodName = null)
-        {
-            string xml = await page.GetContent();
-
-            Regex baseUrlRegex = VerifierHelper.BaseUrl();
-            VerifySettings settings = new VerifySettings();
-            if (methodName != null)
-            {
-                settings.UseMethodName(methodName);
-            }
-            settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
-            settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
-            await Verifier.Verify(xml, settings);
-        }
-    }
-
     public static class HtmlPageVerifier
     {
         public static async Task Verify(HtmlPage page, string methodName = null)

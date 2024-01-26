@@ -63,6 +63,32 @@ namespace Test.E2e
         }
     }
 
+    public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public AtomFeedXmlTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
+
+        [Fact]
+        public async Task Verify_AtomFeedXml_Contents()
+        {
+            IPage page = await _PlaywrightFixture.GetPage();
+            AtomFeedPage atomFeed = new AtomFeedPage(page);
+            await atomFeed.NavigateAsync();
+            page.Url.Should().EndWith(atomFeed.PagePath);
+
+            string xml = await atomFeed.GetContent();
+            VerifySettings settings = new VerifySettings();
+
+            // settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
+            // settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
+            await Verifier.Verify(xml, settings);
+        }
+    }
+
     public class UnitTest3 : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
@@ -70,22 +96,6 @@ namespace Test.E2e
         public UnitTest3(PlaywrightFixture playwrightFixture)
         {
             _PlaywrightFixture = playwrightFixture;
-        }
-
-        [Fact(Skip = "temporarily")]
-        public async Task Test_AtomFeed()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            AtomFeedPage atomFeed = new AtomFeedPage(page);
-            await atomFeed.NavigateAsync();
-            page.Url.Should().EndWith(atomFeed.PagePath);
-            Dictionary<string, string> headers = await atomFeed.GetHeaders();
-
-            byte[] bytes = await atomFeed.PageResponse.BodyAsync();
-            SyndicationFeed feed = bytes.ToSyndicationFeed();
-            feed.Title.Text.Should().Be("Max Hamulyák · Kaylumah");
-
-            await XmlPageVerifier.Verify(atomFeed);
         }
 
         [Fact(Skip = "temporarily")]
