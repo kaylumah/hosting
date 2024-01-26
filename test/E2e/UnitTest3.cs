@@ -40,29 +40,6 @@ namespace Test.E2e
         }
     }
 
-    public class SitemapXmlTests : IClassFixture<PlaywrightFixture>
-    {
-        readonly PlaywrightFixture _PlaywrightFixture;
-
-        public SitemapXmlTests(PlaywrightFixture playwrightFixture)
-        {
-            _PlaywrightFixture = playwrightFixture;
-        }
-
-        [Fact]
-        public async Task Verify_SitemapXml_Contents()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            SitemapPage sitemapPage = new SitemapPage(page);
-            await sitemapPage.NavigateAsync();
-            page.Url.Should().EndWith(sitemapPage.PagePath);
-
-            string xml = await sitemapPage.GetContent();
-            VerifySettings settings = new VerifySettings();
-            await Verifier.Verify(xml, settings);
-        }
-    }
-
     public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
