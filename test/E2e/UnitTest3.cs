@@ -142,7 +142,7 @@ namespace Test.E2e
             _PlaywrightFixture = playwrightFixture;
         }
 
-        [Theory(Skip = "temporarily")]
+        [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_BlogPostPageHtml_Contents(string path)
         {
