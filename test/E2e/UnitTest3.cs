@@ -16,7 +16,7 @@ using Xunit;
 namespace Test.E2e
 {
 
-    public partial class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -39,7 +39,7 @@ namespace Test.E2e
 
     }
 
-    public partial class AboutPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class AboutPageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -64,7 +64,7 @@ namespace Test.E2e
 
     }
 
-    public partial class BlogPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class BlogPageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -88,7 +88,7 @@ namespace Test.E2e
 
     }
 
-    public partial class ArchivePageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class ArchivePageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -110,7 +110,7 @@ namespace Test.E2e
         }
     }
 
-    public partial class NotFoundPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class NotFoundPageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
@@ -133,7 +133,7 @@ namespace Test.E2e
         }
     }
 
-    public partial class BlogPostPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class BlogPostPageHtmlTests : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
 
