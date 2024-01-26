@@ -78,7 +78,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Conf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kaylumah.Ssg.Utilities.Time", "src\Utilities\Time\Kaylumah.Ssg.Utilities.Time.csproj", "{D6644869-E8F7-4280-896E-66BFFF7B1FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Specflow", "test\Specflow\Test.Specflow.csproj", "{FD594C4D-2679-4D5F-82F3-6805CCE68E4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Unit", "test\Unit\Test.Unit.csproj", "{FD594C4D-2679-4D5F-82F3-6805CCE68E4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{C582E646-7AAC-4950-9D8F-FA4D8CA5428C}"
 	ProjectSection(SolutionItems) = preProject

@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="/assets/images/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/images/site.webmanifest" />
+        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+        
+        <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+        
+        <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+        
+        <!-- Common Meta Tags -->
+        <title>How to use Azurite for testing Azure Storage in dotnet?</title>
+        <link rel="canonical" href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+        <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+        <meta name="description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
+        <meta name="copyright" content="© Kaylumah. All rights reserved." />
+        <meta name="keywords" content="csharp, azure, testing" />
+        
+        <!-- OpenGraph Meta Tags -->
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+        <meta property="og:title" content="How to use Azurite for testing Azure Storage in dotnet?" />
+        <meta property="og:url" content="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+        <meta property="og:description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png" />
+        <meta property="article:author" content="Max Hamulyák" />
+        <meta property="article:published_time" content="2022-09-17T18:00:00.0000000+02:00" />
+        <meta property="article:modified_time" content="2022-09-17T18:00:00.0000000+02:00" />
+        <meta property="article:tag" content="csharp" />
+        <meta property="article:tag" content="azure" />
+        <meta property="article:tag" content="testing" />
+        
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="How to use Azurite for testing Azure Storage in dotnet?" />
+        <meta name="twitter:description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png" />
+        <meta name="twitter:site" content="@kaylumah" />
+        <meta name="twitter:creator" content="@kaylumah" />
+        
+        <!-- Kaylumah BuildInfo Meta Tags -->
+        <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+        <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+        <meta property="kaylumah:version" content="1.0.0" />
+        <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+        <meta property="kaylumah:buildNumber" content="[BUILD-Number]" />
+        <meta property="kaylumah:time" content="DateTimeOffset_1" />
+        <meta property="kaylumah:site" content="Guid_1" />
+        <meta property="kaylumah:page" content="Guid_2" />
+        
+        <!-- LdJson Meta Tags -->
+        <script type="application/ld+json">{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "image": "https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
+          "author": {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Max Hamulyák",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
+            "sameAs": [
+              "https://www.linkedin.com/in/maxhamulyak",
+              "https://twitter.com/kaylumah"
+            ],
+            "url": "https://BaseUrl_1/about",
+            "email": "max@kaylumah.nl"
+          },
+          "dateModified": "2022-09-17",
+          "datePublished": "2022-09-17",
+          "headline": "How to use Azurite for testing Azure Storage in dotnet?",
+          "publisher": {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "kaylumah",
+            "sameAs": "https://www.linkedin.com/company/kaylumah",
+            "foundingDate": "2020-01-01",
+            "logo": "https://BaseUrl_1/assets/logo.svg"
+          }
+        }</script>
+        
+        <!-- End Kaylumah SEO tag -->
+        <!-- BEGIN Feed MetaData-->
+        <link
+          type="application/atom+xml"
+          rel="alternate"
+          href="https://BaseUrl_1/feed.xml"
+          title="Max Hamulyák · Kaylumah RSS Feed"
+        />
+        <!-- END Feed MetaData -->
+
+        <!--
+                                                            
+           _  __           _                       _        
+          | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+          | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+          | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+          |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                     |___/                                  
+                                                            
+         You found 🧸                                      
+                                                           
+        -->
+        
+        <script>
+        
+          const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+          const consoleSignatureStyle = `
+          font-size: 16px;
+          background: #4cae50;
+          color: white;
+          text-align: center;
+          padding: 10px 15px;
+          width: 100%;
+          border-radius: 20px;
+        `;
+          console.log(consoleSignatureText, consoleSignatureStyle);
+        </script>
+        
+        <!-- Place your kit's code here -->
+        <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-168549883-1');
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        </noscript>
+    </head>
+    <body class="line-numbers bg-gray-100 fa-colors">
+        <div class="flex flex-col h-screen">
+            <header class="bg-gray-900">
+                <nav class="flex flex-wrap items-center justify-between py-4 px-4">
+                    <div>
+                        <a data-testid="NavLink-Home" href="/" rel="author">
+                            <!-- <img class="block md:hidden h-12 w-auto" src="/assets/logo_small.svg" alt="Kaylumah" /> -->
+                            <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah" />
+                        </a>
+                    </div>
+                    <div class="flex md:hidden">
+                        <button id="hamburger" class="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="toggle hidden md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-gray-600 md:border-none"><a data-testid="NavLink-About" href="/about.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            About
+                        </a><a data-testid="NavLink-Blog" href="/blog.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            Blog
+                        </a></div>
+                </nav>
+                 <script>
+                    document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                        for (let i = 0; i < navToggle.length; i++) {
+                            navToggle.item(i).classList.toggle('hidden');
+                        }
+                    };
+                </script>
+            </header>
+
+            <main class="flex-1 py-4 text-gray-900">
+                <article class="py-16 px-6 sm:px-8">
+    <header>
+        <h1 class="flex flex-col items-center mx-auto">
+            <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">How to use Azurite for testing Azure Storage in dotnet?</span>
+        </h1>
+        <picture class="flex flex-col items-center mx-auto">
+            <source type="image/webp" srcset="/assets/images/posts/20220917/azurite/cover_image.webp">
+            <img src="/assets/images/posts/20220917/azurite/cover_image.png" alt="cover for How to use Azurite for testing Azure Storage in dotnet?" height="640" width="1280" />
+        </picture>
+        <div class="mx-auto mt-1">
+            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Authored by
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        Max Hamulyák
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Posted on
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        <time datetime="2022-09-17">2022/09/17</time>
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Reading time
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        6 minute
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Published in
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                    
+                                        <a href="/archive.html#csharp" title="for the C# programming language" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            C#
+                                        </a>
+                                        
+                                        <a href="/archive.html#azure" title="Microsoft Azure Platform" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Azure
+                                        </a>
+                                        
+                                        <a href="/archive.html#testing" title="for test related matters" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Testing
+                                        </a>
+                                        
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        
+        <hr class="mt-8 border-t-2 w-20 mx-auto" />
+    </header>
+    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+        <h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
+<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
+<p>There are a few ways we can go about testing this:</p>
+<ol>
+<li>Create a mock or fake implementation of every Storage API required.</li>
+<li>Hide the blob implementation behind an internal interface and mock that in your tests.</li>
+<li>Create a real storage account (per developer) in Azure.</li>
+<li>Emulate storage account.</li>
+</ol>
+<p>The argument to go with option 1 / 2 is that you, the developer, are not responsible for testings Azure's internal components. Option 3 has the challenge of cost and test repeatability. Because option three hosts the dependency externally, you need to set up and teardown for anything done in your tests. For example, you cannot create a file with the same name twice. Option 4 has the problem: any emulator does not guarantee to be 100% equal to the real deal.</p>
+<p>While I agree with the argument for the first two options, the point here is to test if we can successfully integrate with Azure (as opposed to asserting their SDK works as expected). You can debate if testing with emulators or Azure is still a unit test. Using EntityFramework's DbContext in a test would warrant the same definition question.</p>
+<blockquote>
+<p><strong>Important</strong>: if you only remember one thing from this post, let it be that every option except the third requires you to test in Azure. All other options are not the actual integration, and your application can behave differently once deployed.</p>
+</blockquote>
+<h2 id="how-can-azurite-help-by-emulating-azure-storage"><a href="#how-can-azurite-help-by-emulating-azure-storage">How can Azurite help by emulating Azure Storage?</a></h2>
+<p>The test solution I picked was using the popular open-source emulator called <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite" class="external">Azurite</a>. The Azurite tool offers a local environment for Azure Blob, Azure Queue and Azure Table services. In the past, we also had Microsofts own Storage Account Emulator, but it appears that development on that has stopped, and the focussed shifted to Azurite.</p>
+<p>There are several ways to run Azurite (i.e. Docker or NPM).</p>
+<pre><code class="language-shell"># install Azurite
+npm install -g azurite
+
+# run Azurite
+azurite --silent --location c:\azurite --debug c:\azurite\debug.log
+</code></pre>
+<p>If we create a demo app and install blob storage via <code>dotnet add package Azure.Storage.Blobs</code>. We can connect with the following snippet:</p>
+<pre><code class="language-csharp">using Azure.Storage.Blobs;
+
+var connectionString = &quot;DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;&quot;;
+var blobServiceClient = new BlobServiceClient(connectionString);
+var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
+</code></pre>
+<p>The snippet works because the connection string we provided is the default connection string for Azurite. It contains the default account known as <code>devstoreaccount1</code> and connects over HTTP. The default connection string also assumes you are running blob, queue and table services. For example, on NPM you could run:</p>
+<pre><code class="language-shell"># Run only Blob
+azurite-blob --silent --location c:\azurite --debug c:\azurite\debug.log
+# Run only Queue
+azurite-queue --silent --location c:\azurite --debug c:\azurite\debug.log
+# Run only Table
+azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
+</code></pre>
+<p>Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external">Azure Pipelines</a>. I, however, am still not entirely happy with it.</p>
+<h2 id="how-to-use-azurite-without-a-connectionstring"><a href="#how-to-use-azurite-without-a-connectionstring">How to use Azurite without a ConnectionString?</a></h2>
+<p>In the post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
+<pre><code class="language-csharp">using Azure.Identity;
+using Azure.Storage.Blobs;
+
+var endpoint = new Uri(&quot;http://127.0.0.1:10000/devstoreaccount1&quot;);
+var credential = new DefaultAzureCredential();
+var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions());
+var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
+</code></pre>
+<p>Based on the default configuration, the above snippet should have worked. However, you get the following error <code>System.ArgumentException: Cannot use TokenCredential without HTTPS.</code></p>
+<p>Azurite has an overload to provide HTTPS support. You can <a href="https://github.com/Azure/Azurite#https-setup" class="external">use a tool</a> called mkcert to generate the required files.</p>
+<pre><code class="language-shell"># Run once
+mkcert 127.0.0.1
+
+# Run over HTTPs
+azurite --silent --location c:\azurite --debug c:\azurite\debug.log --cert 127.0.0.1.pem --key 127.0.0.1-key.pem
+</code></pre>
+<p>Update the endpoint Uri to HTTPS:</p>
+<pre><code class="language-csharp">using Azure.Identity;
+using Azure.Storage.Blobs;
+
+var endpoint = new Uri(&quot;https://127.0.0.1:10000/devstoreaccount1&quot;);
+var credential = new DefaultAzureCredential();
+var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions());
+var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
+</code></pre>
+<p>If we run our test example now, it will fail with the warning that an SSL connection cannot be established. We can solve this with generating a CA certificate from mkcert with <code>mkcert --install</code>. However, even with a valid SSL certificate TokenCredential will still fail. For TokenCredential to work we need to pass <code>--oath basic</code> to Azurite.</p>
+<pre><code class="language-shell">azurite --silent --location c:\azurite --debug c:\azurite\debug.log --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --oauth basic
+</code></pre>
+<h2 id="can-i-use-azurite-https-connection-string-in-cicd-pipelines"><a href="#can-i-use-azurite-https-connection-string-in-cicd-pipelines">Can I use Azurite HTTPS connection string in CICD pipelines?</a></h2>
+<p>Now that we can use TokenCredential, I am happy. The test instance of our BlobServiceClient is almost identical to the production configuration. We have established that it works locally, but how about a CICD environment? I modified the example pipeline to add the mkcert bits.</p>
+<pre><code class="language-yaml">steps:
+  - bash: |
+      choco install mkcert
+      npm install -g azurite
+      mkdir azurite
+      cd azurite
+      mkcert --install
+      mkcert 127.0.0.1
+      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log &amp;
+    displayName: &quot;Install and Run Azurite&quot;
+</code></pre>
+<p>Unfortunately, adding a certificate to the trust store requires a password prompt. On an Azure-hosted agent, this does not work and causes the agent <a href="https://github.com/FiloSottile/mkcert/issues/286" class="external">to be stuck</a>. To me, this could mean one of two things. Either the Azure team does not test over HTTPS, or they have a different set of test tooling. As it turns out, they have a set of helpers to construct the service clients and disable SSL verification. Like this:</p>
+<pre><code class="language-csharp">using Azure.Core.Pipeline;
+using Azure.Identity;
+using Azure.Storage.Blobs;
+
+var endpoint = new Uri(&quot;https://127.0.0.1:10000/devstoreaccount1&quot;);
+var credential = new DefaultAzureCredential();
+var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions()
+{
+    Transport = new HttpClientTransport(new HttpClient(new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    }))
+});
+var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
+</code></pre>
+<p>It can now be used in Azure Pipelines like this (note the lack of mkcert --install)</p>
+<pre><code class="language-yaml">steps:
+  - bash: |
+      choco install mkcert
+      npm install -g azurite
+      mkdir azurite
+      cd azurite
+      mkcert 127.0.0.1
+      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log &amp;
+    displayName: &quot;Install and Run Azurite&quot;
+</code></pre>
+<h2 id="how-to-use-azurite-in-my-project"><a href="#how-to-use-azurite-in-my-project">How to use Azurite in my project?</a></h2>
+<p>The testing helpers have more to it than disabling SSL but are not present on NuGet. So naturally, I raised <a href="https://github.com/Azure/azure-sdk-for-net/issues/30751" class="external">an issue</a> to the SDK team if they have any plans in that direction. Unfortunately, at this point, they have no interest in releasing their internal test tooling. The techniques I mentioned thus far can be used standalone. I, however, felt this was an excellent opportunity to create my first NuGet Package. The package cannot assume how anybody runs Azurite, so I introduced two classes. You can use <code>AzuriteAccountBuilder</code> to configure how things are run, like the account or the ports being used. The <code>AzuriteAccount</code> class provides access to stuff like the connection string. For convenience the package also creates helper methods to create <code>BlobServiceClient</code>, <code>TableServiceClient</code> or <code>QueueServiceClient</code> form an <code>AzuriteAccount</code>.</p>
+<p>My package is designed for use in a test project so let us create a new test project (i.e. <code>dotnet new xunit</code>) and add my package to it <code>dotnet add package Kaylumah.Testing.Azurite --version 1.0.0</code>.
+The most explicit way to create an AzuriteAccount is with the following code:</p>
+<pre><code class="language-csharp">[Fact]
+public async Task Test1()
+{
+    var account = new AzuriteAccountBuilder()
+        .WithProtocol(secure: false)
+        .WithDefaultAccount()
+        .WithDefaultBlobEndpoint()
+        .WithDefaultQueueEndpoint()
+        .WithDefaultTableEndpoint()
+        .Build();
+
+    var blobServiceClient = account.CreateBlobServiceViaConnectionString();
+    await blobServiceClient.GetPropertiesAsync();
+}
+</code></pre>
+<p>The snippet above creates a connection string based on the default settings. That means it should match the connection string when someone runs Azurite without parameters. For convenience, I have also added a helper class that creates this default account for you.</p>
+<pre><code class="language-csharp">[Fact]
+public async Task Test2()
+{
+    var account = AzuriteHelper.CreateDefaultAzuriteAccountBuilder().Build();
+    var blobServiceClient = account.CreateBlobServiceViaSharedKeyCredential();
+    await blobServiceClient.GetPropertiesAsync();
+}
+</code></pre>
+<p>The package offers the same convenience helpers for Queue and Table storage. You can use the connection string, shared key, azure sas key or token credential with the helpers.</p>
+<h2 id="closing-thoughts"><a href="#closing-thoughts">Closing Thoughts</a></h2>
+<p>I started this journey with knowledge about Azurite and the dotnet SDK for Azure. I knew from experience that I no longer wanted to work with managed identity instead of connection strings. I needed a way to have repeatable tests on local and CI/CD environments. The funny thing is that after I had everything working the way I wanted, I could not use the required API I needed. For a moment, I had forgotten Azurite is an emulator, and not all features are supported. So I had to fall back on shared key credentials, which work fine over HTTPS and could already be used in pipelines. Luckily I designed the package to work with a variety of configurations.</p>
+<p>Usually, this is where I post a link to the posts GitHub repo. This time, the source code is the NuGet package on this <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite" class="external">GitHub Repo</a>. In the post itself, I focussed on NPM; if you are looking for how to integrate with Docker containers, you can find an example test <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite/blob/main/test/Unit/AzuriteDockerRunner.cs" class="external">in the GitHub repo</a> As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them. Especially since this is my first NuGet package let me know if it helped you out.</p>
+    </div>
+
+    <footer class="flex flex-col mt-8">
+        
+                <div class="social-share">
+            <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+            <div class="flex justify-center space-x-6">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                        <span class="sr-only">LinkedIn Share</span>
+                        <em class="fab fa-linkedin fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=How%20to%20use%20Azurite%20for%20testing%20Azure%20Storage%20in%20dotnet%3F&url=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        <span class="sr-only">Twitter Share</span>
+                        <em class="fab fa-twitter-square fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                        <span class="sr-only">Facebook Share</span>
+                        <em class="fab fa-facebook fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=How to use Azurite for testing Azure Storage in dotnet?&amp;body=Thought you might like this article https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html">
+                        <span class="sr-only">Email Share</span>
+                        <em class="fas fa-envelope-open-text fa-lg"></em>
+                    </a>
+            </div>
+        </div>
+                
+        
+                <!-- https://giscus.app -->
+                <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+                <script src="https://giscus.app/client.js"
+                    data-repo="kaylumah/kaylumah.github.io"
+                    data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                    data-mapping="number"
+                    data-term="154"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="top"
+                    data-theme="light_high_contrast"
+                    data-lang="en"
+                    data-loading="lazy"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+                
+    </footer>
+   
+</article>
+                <button class="fixed z-50 bottom-4 right-4 w-16 h-16 rounded-full bg-gray-300 text-white block" onclick="topFunction()" id="myBtn" title="Go to top">
+                    <span class="sr-only">Back to top!</span>
+                    <em class="fad fa-angle-double-up fa-lg"></em>
+                </button>
+                <script>
+                    var mybutton = document.getElementById("myBtn");
+                
+                    window.onscroll = function() {scrollFunction()};
+                
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        }
+                        else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+                    function topFunction() {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }
+                </script>
+            </main>
+            <footer class="bg-gray-900">
+                <div class="py-4 px-4">
+                    <div class="flex justify-center space-x-6">
+                        
+                                    <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="https://www.linkedin.com/in/maxhamulyak" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">LinkedIn</span>
+                                        <em class="fab fa-linkedin fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Github" target="_blank" rel=”noopener” href="https://github.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">GitHub</span>
+                                        <em class="fab fa-github-square fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Twitter" target="_blank" rel=”noopener” href="https://twitter.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">Twitter</span>
+                                        <em class="fab fa-twitter-square fa-lg"></em>
+                                    </a>
+                                    
+                    </div>
+                    <div class="pt-2 flex flex-col text-center text-gray-100">
+                        <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                        <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">[BUILD-Number]</a></span>
+                    </div>
+                    <div class="pt-2 flex justify-center space-x-6">
+                        <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
+                            <span class="sr-only">Kaylumah</span>
+                            <em class="fak fa-logo-kaylumah fa-lg"></em>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+    </body>
+</html>

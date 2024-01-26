@@ -32,7 +32,7 @@ if (Test-Path $DistFolder)
 dotnet restore
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test ./test/Specflow/Test.Specflow.csproj --configuration $BuildConfiguration
+dotnet test ./test/Unit/Test.Unit.csproj --configuration $BuildConfiguration
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 & $ReportScript -BuildConfiguration $BuildConfiguration
 

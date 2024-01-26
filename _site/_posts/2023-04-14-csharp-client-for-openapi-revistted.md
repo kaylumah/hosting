@@ -9,7 +9,7 @@ tags:
   - swashbuckle
 commentid: '266'
 ---
-I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called ["Generate C# client for OpenAPI"](https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html). So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born. 
+I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called ["Generate C# client for OpenAPI"](/2021/05/23/generate-csharp-client-for-openapi.html). So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born. 
 
 The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called ["Using OpenApiReference To Generate Open API Client Code"](https://stevetalkscode.co.uk/openapireference-commands). The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.
 

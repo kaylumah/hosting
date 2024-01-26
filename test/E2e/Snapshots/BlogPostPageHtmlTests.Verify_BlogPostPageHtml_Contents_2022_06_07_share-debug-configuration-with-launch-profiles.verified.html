@@ -1,0 +1,669 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="/assets/images/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/images/site.webmanifest" />
+        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+        
+        <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+        
+        <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+        
+        <!-- Common Meta Tags -->
+        <title>Share debug configuration between .NET IDEs with launch profiles</title>
+        <link rel="canonical" href="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
+        <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+        <meta name="description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json" />
+        <meta name="copyright" content="© Kaylumah. All rights reserved." />
+        <meta name="keywords" content="rider, visualstudio, vscode" />
+        
+        <!-- OpenGraph Meta Tags -->
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+        <meta property="og:title" content="Share debug configuration between .NET IDEs with launch profiles" />
+        <meta property="og:url" content="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
+        <meta property="og:description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/cover_image.png" />
+        <meta property="article:author" content="Max Hamulyák" />
+        <meta property="article:published_time" content="2022-06-07T23:30:00.0000000+02:00" />
+        <meta property="article:modified_time" content="2022-06-07T23:30:00.0000000+02:00" />
+        <meta property="article:tag" content="rider" />
+        <meta property="article:tag" content="visualstudio" />
+        <meta property="article:tag" content="vscode" />
+        
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Share debug configuration between .NET IDEs with launch profiles" />
+        <meta name="twitter:description" content="Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/cover_image.png" />
+        <meta name="twitter:site" content="@kaylumah" />
+        <meta name="twitter:creator" content="@kaylumah" />
+        
+        <!-- Kaylumah BuildInfo Meta Tags -->
+        <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+        <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+        <meta property="kaylumah:version" content="1.0.0" />
+        <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+        <meta property="kaylumah:buildNumber" content="[BUILD-Number]" />
+        <meta property="kaylumah:time" content="DateTimeOffset_1" />
+        <meta property="kaylumah:site" content="Guid_1" />
+        <meta property="kaylumah:page" content="Guid_2" />
+        
+        <!-- LdJson Meta Tags -->
+        <script type="application/ld+json">{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "image": "https://BaseUrl_1/assets/images/posts/20220607/launch-settings/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html",
+          "author": {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Max Hamulyák",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
+            "sameAs": [
+              "https://www.linkedin.com/in/maxhamulyak",
+              "https://twitter.com/kaylumah"
+            ],
+            "url": "https://BaseUrl_1/about",
+            "email": "max@kaylumah.nl"
+          },
+          "dateModified": "2022-06-07",
+          "datePublished": "2022-06-07",
+          "headline": "Share debug configuration between .NET IDEs with launch profiles",
+          "publisher": {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "kaylumah",
+            "sameAs": "https://www.linkedin.com/company/kaylumah",
+            "foundingDate": "2020-01-01",
+            "logo": "https://BaseUrl_1/assets/logo.svg"
+          }
+        }</script>
+        
+        <!-- End Kaylumah SEO tag -->
+        <!-- BEGIN Feed MetaData-->
+        <link
+          type="application/atom+xml"
+          rel="alternate"
+          href="https://BaseUrl_1/feed.xml"
+          title="Max Hamulyák · Kaylumah RSS Feed"
+        />
+        <!-- END Feed MetaData -->
+
+        <!--
+                                                            
+           _  __           _                       _        
+          | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+          | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+          | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+          |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                     |___/                                  
+                                                            
+         You found 🧸                                      
+                                                           
+        -->
+        
+        <script>
+        
+          const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+          const consoleSignatureStyle = `
+          font-size: 16px;
+          background: #4cae50;
+          color: white;
+          text-align: center;
+          padding: 10px 15px;
+          width: 100%;
+          border-radius: 20px;
+        `;
+          console.log(consoleSignatureText, consoleSignatureStyle);
+        </script>
+        
+        <!-- Place your kit's code here -->
+        <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-168549883-1');
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        </noscript>
+    </head>
+    <body class="line-numbers bg-gray-100 fa-colors">
+        <div class="flex flex-col h-screen">
+            <header class="bg-gray-900">
+                <nav class="flex flex-wrap items-center justify-between py-4 px-4">
+                    <div>
+                        <a data-testid="NavLink-Home" href="/" rel="author">
+                            <!-- <img class="block md:hidden h-12 w-auto" src="/assets/logo_small.svg" alt="Kaylumah" /> -->
+                            <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah" />
+                        </a>
+                    </div>
+                    <div class="flex md:hidden">
+                        <button id="hamburger" class="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="toggle hidden md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-gray-600 md:border-none"><a data-testid="NavLink-About" href="/about.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            About
+                        </a><a data-testid="NavLink-Blog" href="/blog.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            Blog
+                        </a></div>
+                </nav>
+                 <script>
+                    document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                        for (let i = 0; i < navToggle.length; i++) {
+                            navToggle.item(i).classList.toggle('hidden');
+                        }
+                    };
+                </script>
+            </header>
+
+            <main class="flex-1 py-4 text-gray-900">
+                <article class="py-16 px-6 sm:px-8">
+    <header>
+        <h1 class="flex flex-col items-center mx-auto">
+            <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Share debug configuration between .NET IDEs with launch profiles</span>
+        </h1>
+        <picture class="flex flex-col items-center mx-auto">
+            <source type="image/webp" srcset="/assets/images/posts/20220607/launch-settings/cover_image.webp">
+            <img src="/assets/images/posts/20220607/launch-settings/cover_image.png" alt="cover for Share debug configuration between .NET IDEs with launch profiles" height="640" width="1280" />
+        </picture>
+        <div class="mx-auto mt-1">
+            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Authored by
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        Max Hamulyák
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Posted on
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        <time datetime="2022-06-07">2022/06/07</time>
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Reading time
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        7 minute
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Published in
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                    
+                                        <a href="/archive.html#rider" title="for the JetBrains Rider IDE" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Rider
+                                        </a>
+                                        
+                                        <a href="/archive.html#visualstudio" title="for the Microsoft Visual Studio IDE" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Visual Studio
+                                        </a>
+                                        
+                                        <a href="/archive.html#vscode" title="for the Microsoft VS Code IDE" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            VS Code
+                                        </a>
+                                        
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        
+        <hr class="mt-8 border-t-2 w-20 mx-auto" />
+    </header>
+    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+        <p>Anno 2022, as <code>.NET</code> developers, we are spoilt with multiple options for our development environment. Of course, having a choice sparks the debate that my IDE is better than your IDE. I feel that after <code>bring your own device</code>, we are moving to a <code>bring your own IDE</code> workspace. Given the rise of tooling like <code>VS Code DevContainer</code> and <code>GitHub Codespaces</code>, I think more developers will likely opt for such tooling.</p>
+<blockquote>
+<p>Did you know that most of my blogs are written for use in dev containers and are available in GitHub Codespaces?</p>
+</blockquote>
+<p>Each IDE has its perks but also its quirks. Who am I to tell you that tool X is better than Y. If you can work using the tool you prefer, you can be much more productive than a tool because the company said so. It does bring its challenges. For example, if you change a file in your IDE, I don't want it formatted when I open it in my IDE. My version control system will show more changes to a project than happened. Lucky for us, tools like <code>.editorConfig</code> help us a lot to streamline this process. I switch back and forth a lot between VS Code and Visual Studio. My team was working with <code>Rider</code> for a recent customer project. Keeping settings in sync between two IDEs was hard enough. So it made me wonder, is there an equivalent for <code>.editorConfig</code> but used for debug-configuration. I knew that <code>Visual Studio</code> has the concept of a <code>launchSettings.json</code> file. As I discovered, it is possible to make both <code>Rider</code> and <code>VS Code</code> play nice with <code>launchSettings.json</code>. It is by no means perfect, but at least for me, it solves some of the caveats in a <code>bring your own IDE</code> world.</p>
+<p>If you were wondering, &quot;Max launchSettings.json has been around for years; why are you writing this article?&quot; The answer to that is straightforward. It bugged me a lot that I had to repeat myself. When searching for how to configure my IDE, I came across the <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson" class="external">ASP.NET Fundamentals - Environment</a>. It suggests using the <code>VS Code</code> variant of configuration but does not mention that you can reuse your <code>Visual Studio</code> one. Reading that article prompted me to write down what I learned so that someday someone might benefit from it.</p>
+<h2 id="what-is-launchsettings"><a href="#what-is-launchsettings">What is LaunchSettings?</a></h2>
+<p>Let me begin with a quick recap about <code>launchSettings.json</code>. A launch settings file contains <a href="https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md" class="external">Launch Profiles</a>. A <code>Launch Profile</code> is a kind of configuration that specifies how to run your project. Having these launch profiles allows you to switch between configurations easily. Typical scenarios are switching between Development and Production environments or enabling feature flags. Launch profiles are in the optional <code>Properties\launchSettings.json</code> file. For example, a freshly created console project will not have one, whereas a web API project will define one.</p>
+<p>A launch profile has a couple of properties depending on the project type. I will highlight the ones that are relevant to this post.</p>
+<ul>
+<li><code>commandName</code>: the only required setting which determines how a project is launched. To work in every IDE this settings needs to be <code>Project</code>.</li>
+<li><code>commandLineArgs</code>: a string containing arguments to supply to the application.</li>
+<li><code>environmentVariables</code>: A collection of name/value pairs, each specifying an environment variable and value to set.</li>
+</ul>
+<p>A few important notes:</p>
+<ul>
+<li>Environment values set in launchSettings.json override values set in the system environment.</li>
+<li>The launchSettings.json file is only used on the local development machine.</li>
+<li>The launchSettings.json file shouldn't store secrets</li>
+</ul>
+<h2 id="project-setup"><a href="#project-setup">Project Setup</a></h2>
+<p>For our sample application, we will create a new project using the &quot;Console Template&quot; with <code>dotnet new console</code>. Since it is a console, we must create a <code>Properties\launchSettings.json</code> by hand. At a minimum, the file would look like this.</p>
+<pre><code class="language-json">{
+    &quot;$schema&quot;: &quot;https://json.schemastore.org/launchsettings.json&quot;,
+    &quot;profiles&quot;: {
+        &quot;DemoConsole.V0&quot;: {
+            &quot;commandName&quot;: &quot;Project&quot;
+        }
+    }
+}
+</code></pre>
+<p>Since we are demoing features of <code>launchSettings.json</code>, it will not be a nice demo if we don't populate it.</p>
+<pre><code class="language-json">{
+    &quot;$schema&quot;: &quot;https://json.schemastore.org/launchsettings.json&quot;,
+    &quot;profiles&quot;: {
+        &quot;DemoConsole.V0&quot;: {
+            &quot;commandName&quot;: &quot;Project&quot;,
+            &quot;commandLineArgs&quot;: &quot;&quot;,
+            &quot;environmentVariables&quot;: {
+                &quot;KAYLUMAH_ENVIRONMENT&quot;: &quot;Development&quot;
+            }
+        },
+        &quot;DemoConsole.V1&quot;: {
+            &quot;commandName&quot;: &quot;Project&quot;,
+            &quot;environmentVariables&quot;: {
+                &quot;KAYLUMAH_ENVIRONMENT&quot;: &quot;Production&quot;
+            }
+        },
+        &quot;DemoConsole.V2&quot;: {
+            &quot;commandName&quot;: &quot;Project&quot;,
+            &quot;commandLineArgs&quot;: &quot;--mysetting myvalue&quot;,
+            &quot;environmentVariables&quot;: {
+                &quot;KAYLUMAH_ENVIRONMENT&quot;: &quot;Production&quot;
+            }
+        },
+        &quot;DemoConsole.V3&quot;: {
+            &quot;commandName&quot;: &quot;Project&quot;,
+            &quot;commandLineArgs&quot;: &quot;--mysetting myvalue&quot;,
+            &quot;environmentVariables&quot;: {
+                &quot;KAYLUMAH_ENVIRONMENT&quot;: &quot;Production&quot;,
+                &quot;KAYLUMAH_FROMVARIABLE1&quot;: &quot;$(TargetFramework)&quot;,
+                &quot;KAYLUMAH_FROMVARIABLE2&quot;: &quot;$(MyCustomProp)&quot;
+            }
+        }
+    }
+}
+</code></pre>
+<p>The console app will build an <code>IConfiguration</code> and print it to the console. Since I don't feel like adding all my environment variables, I add only the ones prefixed with <code>KAYLUMAH_</code>, kinda like how .NET automatically includes variables prefixed with <code>DOTNET_</code>.</p>
+<pre><code class="language-csharp">using Microsoft.Extensions.Configuration;
+
+IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+configurationBuilder.AddEnvironmentVariables(&quot;KAYLUMAH_&quot;);
+if (args is { Length: &gt; 0 })
+{
+    configurationBuilder.AddCommandLine(args);
+}
+var configuration = configurationBuilder.Build();
+
+if (configuration is IConfigurationRoot configurationRoot)
+{
+    Console.WriteLine(configurationRoot.GetDebugView());
+}
+
+Console.WriteLine(&quot;Done...&quot;);
+Console.ReadLine();
+</code></pre>
+<p>If we run the project now, the output should be:</p>
+<pre><code class="language-output">ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+
+Done...
+</code></pre>
+<p>We also generate a project from the <code>webapi template</code>. We slightly modify it so it contains a second profile, so it looks like this.</p>
+<pre><code class="language-json">{
+  &quot;$schema&quot;: &quot;https://json.schemastore.org/launchsettings.json&quot;,
+  &quot;iisSettings&quot;: {
+    &quot;windowsAuthentication&quot;: false,
+    &quot;anonymousAuthentication&quot;: true,
+    &quot;iisExpress&quot;: {
+      &quot;applicationUrl&quot;: &quot;http://localhost:33652&quot;,
+      &quot;sslPort&quot;: 44325
+    }
+  },
+  &quot;profiles&quot;: {
+    &quot;DemoApi&quot;: {
+      &quot;commandName&quot;: &quot;Project&quot;,
+      &quot;dotnetRunMessages&quot;: true,
+      &quot;launchBrowser&quot;: true,
+      &quot;launchUrl&quot;: &quot;swagger&quot;,
+      &quot;applicationUrl&quot;: &quot;https://localhost:7238;http://localhost:5200&quot;,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    },
+    &quot;DemoApi.Production&quot;: {
+      &quot;commandName&quot;: &quot;Project&quot;,
+      &quot;dotnetRunMessages&quot;: true,
+      &quot;launchBrowser&quot;: true,
+      &quot;launchUrl&quot;: &quot;swagger&quot;,
+      &quot;applicationUrl&quot;: &quot;https://localhost:7238;http://localhost:5200&quot;,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Production&quot;
+      }
+    },
+    &quot;IIS Express&quot;: {
+      &quot;commandName&quot;: &quot;IISExpress&quot;,
+      &quot;launchBrowser&quot;: true,
+      &quot;launchUrl&quot;: &quot;swagger&quot;,
+      &quot;environmentVariables&quot;: {
+        &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+      }
+    }
+  }
+}
+</code></pre>
+<p>Depending on your chosen profile, you see a <code>Swagger UI</code> dashboard.</p>
+<h2 id="share-debug-configuration-from-microsoft-visual-studio"><a href="#share-debug-configuration-from-microsoft-visual-studio">Share debug configuration from Microsoft Visual Studio</a></h2>
+<p>I could not verify it online, but I think Visual Studio introduced launch settings as part of the first <code>ASP NET Core</code> release. Since launch profiles is a <code>Visual Studio</code> feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from <code>Visual Studio</code> <code>launchSettings</code> can reference <code>MSBuild</code> variables. That is a pretty handy way to provide something dynamic.</p>
+<p>For our console, we see the following selection in Visual Studio:</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
+<p>For our API, we see the following selection in Visual Studio:</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
+<p>As you see, the WebAPI variant shows more than just our launch profiles.</p>
+<p>Another aspect of development configuration is the ability to run more projects simultaneously. We can achieve this in <code>Visual Studio</code> by selecting multiple startup projects.  As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called <a href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022" class="external">SwitchStartUpProject</a>.</p>
+<p>We can quickly provide multiple configurations. We can provide a <code>ProfileName</code> for each project that matches one in our launch settings. It is that simple.</p>
+<pre><code class="language-json">{
+    &quot;Version&quot;: 3,
+    &quot;ListAllProjects&quot;: false,
+    &quot;MultiProjectConfigurations&quot;: {
+        &quot;Demo&quot;: {
+            &quot;Projects&quot;: {
+                &quot;DemoConsole&quot;: {
+                    &quot;ProfileName&quot;: &quot;DemoConsole.V1&quot;
+                },
+                &quot;DemoApi&quot;: {
+                    &quot;ProfileName&quot;: &quot;DemoApi&quot;
+                }
+            },
+            &quot;SolutionConfiguration&quot;: &quot;Release&quot;,
+            &quot;SolutionPlatform&quot;: &quot;x64&quot;
+        }
+    }
+}
+</code></pre>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
+<h2 id="share-debug-configuration-from-jetbrains-rider"><a href="#share-debug-configuration-from-jetbrains-rider">Share debug configuration from JetBrains Rider</a></h2>
+<p>As it turns out, <code>launchSettings</code> has been supported in <code>Rider</code> for a long time. They first introduced it in <a href="https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/" class="external">November 2018</a>. As a matter of fact, to use <code>launchSettings</code> inside <code>Rider</code> you don't need to do a thing. <code>Rider</code> <a href="https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles" class="external">automatically detects</a> if your projects are using <code>launchSettings</code>. Not all features are supported, but using profiles of <code>commandName project</code> are. If you did provide MSBuild variable in <code>launchSettings</code> <code>Rider</code> would correctly pass them along.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
+<p>A thing I like about <code>Rider</code> is that I don't need an additional plugin to support multiple start up projects.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
+<p>It's important to check <code>Store as project file</code>; otherwise, you won't share it with your team. In this particular example, it will look like this:</p>
+<pre><code class="language-xml">&lt;component name=&quot;ProjectRunConfigurationManager&quot;&gt;
+  &lt;configuration default=&quot;false&quot; name=&quot;Console and API&quot; type=&quot;CompoundRunConfigurationType&quot;&gt;
+    &lt;toRun name=&quot;DemoApi: DemoApi.Production&quot; type=&quot;LaunchSettings&quot; /&gt;
+    &lt;toRun name=&quot;DemoConsole: DemoConsole.V3&quot; type=&quot;LaunchSettings&quot; /&gt;
+    &lt;method v=&quot;2&quot; /&gt;
+  &lt;/configuration&gt;
+&lt;/component&gt;
+</code></pre>
+<h2 id="share-debug-configuration-from-microsoft-vs-code"><a href="#share-debug-configuration-from-microsoft-vs-code">Share debug configuration from Microsoft VS Code</a></h2>
+<p>Last but not least is <code>VS Code</code>, the reason I started this article. When you open a .NET project in <code>VS Code</code>, you get prompted to create a <code>launch.json</code> file. A <code>launch.json</code> file is very similar to a <code>launchSettings.json</code>. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default <code>launch.json</code> does not pass any additional configuration to the project. So what would be the logical output of our command?
+The answer might surprise you.</p>
+<p>Given the following configuration in <code>launch.json</code></p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;.NET Core Launch (console)&quot;,
+    &quot;type&quot;: &quot;coreclr&quot;,
+    &quot;request&quot;: &quot;launch&quot;,
+    &quot;preLaunchTask&quot;: &quot;build&quot;,
+    &quot;program&quot;: &quot;${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll&quot;,
+    &quot;args&quot;: [],
+    &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+    &quot;console&quot;: &quot;internalConsole&quot;,
+    &quot;stopAtEntry&quot;: false
+}
+</code></pre>
+<p>The output will be:</p>
+<pre><code class="language-output">ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+
+Done...
+</code></pre>
+<p>That is because you have secretly been using <code>launchSettings.json</code> the whole time. In May 2018, release <a href="https://github.com/OmniSharp/omnisharp-vscode/blob/master/CHANGELOG.md#1150-may-10-2018" class="external">1.15.0</a> of the extension shipped <code>launchSettings.json</code> support. If you don't add <code>launchSettingsProfile</code> to your <code>launch.json</code>, it will use the first profile for a project that is of type <code>&quot;commandName&quot;: &quot;Project&quot;</code>. Ever had unexplained variables in your project? This is likely the reason why. Remember our default profile set an environment variable, and variables from <code>launchSettings.json</code> win from system environment variables. I recommend explicitly specifying <code>launchSettingsProfile</code> to make it clear that a) you are using it and b) if you change the order of profiles, you don't create unexpected changes for other developers.</p>
+<p>Like <code>Rider</code> the support for this feature comes with a few <a href="https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support" class="external">restrictions</a>:</p>
+<ol>
+<li>Only profiles with &quot;commandName&quot;: &quot;Project&quot; are supported.</li>
+<li>Only environmentVariables, applicationUrl and commandLineArgs properties are supported</li>
+<li>Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.</li>
+</ol>
+<p>Since you can provide arguments and environment variables in both <code>launch.json</code> and <code>launchSettings.json</code>, let's look at an example.</p>
+<pre><code class="language-json">{
+    &quot;name&quot;: &quot;.NET Core Launch (console)&quot;,
+    &quot;type&quot;: &quot;coreclr&quot;,
+    &quot;request&quot;: &quot;launch&quot;,
+    &quot;preLaunchTask&quot;: &quot;build&quot;,
+    &quot;program&quot;: &quot;${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll&quot;,
+    &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+    &quot;console&quot;: &quot;internalConsole&quot;,
+    &quot;stopAtEntry&quot;: false,
+    &quot;launchSettingsProfile&quot;: &quot;DemoConsole.V2&quot;,
+    &quot;args&quot;: [
+        &quot;--othersetting&quot;,
+        &quot;vscode&quot;
+    ],
+    &quot;env&quot;: {
+        &quot;KAYLUMAH_ENVIRONMENT&quot;: &quot;Development&quot;,
+        &quot;KAYLUMAH_OTHER&quot;: &quot;From target&quot;
+    }
+}
+</code></pre>
+<pre><code class="language-output">ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+OTHER=From target (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
+othersetting=vscode (CommandLineConfigurationProvider)
+
+Done...
+</code></pre>
+<p>There are a few things that happen:</p>
+<ol>
+<li>Since <code>launch.json</code> specified args the commandLineArgs from <code>launchSettings.json</code> are ignored.</li>
+<li>Since <code>launch.json</code> specified env and <code>launchSettings.json</code> specified <code>environmentVariables</code> both sets get merged.</li>
+<li>Since <code>launch.json</code> will win, the value for <code>KAYLUMAH_ENVIRONMENT</code> is <code>Development</code>.</li>
+</ol>
+<p>The default configuration for our web api looks slightly different because it adds support to open the browser after the project starts.
+Our base URL comes from the <code>launchSettings.json</code>, but the <code>launchUrl</code> gets ignored. You can achieve the same behaviour by updating the generated <code>serverReadyAction</code> with an <code>uriFormat</code>.</p>
+<pre><code class="language-json">{
+    &quot;version&quot;: &quot;0.2.0&quot;,
+    &quot;configurations&quot;: [
+        {
+            &quot;name&quot;: &quot;.NET Core Launch (web)&quot;,
+            &quot;type&quot;: &quot;coreclr&quot;,
+            &quot;request&quot;: &quot;launch&quot;,
+            &quot;preLaunchTask&quot;: &quot;build&quot;,
+            &quot;program&quot;: &quot;${workspaceFolder}/bin/Debug/net6.0/DemoApi.dll&quot;,
+            &quot;args&quot;: [],
+            &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+            &quot;stopAtEntry&quot;: false,
+            &quot;serverReadyAction&quot;: {
+                &quot;action&quot;: &quot;openExternally&quot;,
+                &quot;pattern&quot;: &quot;\\bNow listening on:\\s+(https?://\\S+)&quot;,
+                &quot;uriFormat&quot;: &quot;%s/swagger&quot;
+            },
+            &quot;env&quot;: {
+                &quot;ASPNETCORE_ENVIRONMENT&quot;: &quot;Development&quot;
+            },
+            &quot;sourceFileMap&quot;: {
+                &quot;/Views&quot;: &quot;${workspaceFolder}/Views&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;.NET Core Attach&quot;,
+            &quot;type&quot;: &quot;coreclr&quot;,
+            &quot;request&quot;: &quot;attach&quot;
+        }
+    ]
+}
+</code></pre>
+<p>Of the three IDEs, <code>VS Code</code> has the easiest way to share compound configurations. Just add the following to your <code>launch.json</code>:</p>
+<pre><code class="language-json">&quot;compounds&quot;: [
+    {
+        &quot;name&quot;: &quot;Console + API&quot;,
+        &quot;configurations&quot;: [
+            &quot;Launch WebAPI&quot;,
+            &quot;Launch Console&quot;
+        ]
+    }
+]
+</code></pre>
+<p><img src="https://BaseUrl_1/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
+<h2 id="bonus-use-launch-settings-from-dotnet-cli"><a href="#bonus-use-launch-settings-from-dotnet-cli">Bonus use Launch Settings from Dotnet CLI</a></h2>
+<p>Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.</p>
+<p>As it turns out the CLI also defaults to the first project in <code>Properties\launchSettings.json</code>, so in our case <code>DemoConsole.V0</code>. Just like VS Code did. The following example uses a bit of <code>PowerShell</code> to run the CLI.</p>
+<pre><code class="language-pwsh"># prints the default
+dotnet run
+
+# Sets env var for current session
+$env:KAYLUMAH_COMMANDLINE=&quot;Session ENV var&quot;
+# prints COMMANDLINE + the default
+dotnet run
+</code></pre>
+<p>If we don't want any launch profile just run <code>dotnet run --no-launch-profile</code> and to specify a profile run <code>dotnet run --launch-profile &quot;DemoConsole.V2&quot;</code></p>
+<h2 id="closing-thoughts"><a href="#closing-thoughts">Closing Thoughts</a></h2>
+<p>As we discovered, it's more than likely that you were using launch profiles outside Visual Studio without realising it. I am not sure that not if unspecified, it is a sensible default to take the first one, particularly since someone can change the order of projects. I like that in at least three popular IDEs; we have an easy mechanism for sharing settings.</p>
+<p>In the future, I am also hoping for a shared tool for compound configurations. At the very least, managing compound configurations using existing launch profiles is much easier than duplicating arguments and environment variables for each IDE. One last note is that I discovered that MSBuild variable replacement does not appear to be working from <code>VS Code</code> or the <code>CLI</code>. Not sure if that's a bug or by design, but it's important that not every IDE supports all features of the <code>launchSettings.json</code>. As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.</p>
+<p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/WorkingWithLaunchSettings" class="external">GitHub</a>.</p>
+<p>See you next time, stay healthy and happy coding to all 🧸!</p>
+<h2 id="sources-used"><a href="#sources-used">Sources Used</a></h2>
+<ul>
+<li>https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md</li>
+<li>https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html</li>
+<li>https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support</li>
+<li>https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run</li>
+<li>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson</li>
+<li>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson</li>
+</ul>
+    </div>
+
+    <footer class="flex flex-col mt-8">
+        
+                <div class="social-share">
+            <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+            <div class="flex justify-center space-x-6">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                        <span class="sr-only">LinkedIn Share</span>
+                        <em class="fab fa-linkedin fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Share%20debug%20configuration%20between%20.NET%20IDEs%20with%20launch%20profiles&url=https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        <span class="sr-only">Twitter Share</span>
+                        <em class="fab fa-twitter-square fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                        <span class="sr-only">Facebook Share</span>
+                        <em class="fab fa-facebook fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Share debug configuration between .NET IDEs with launch profiles&amp;body=Thought you might like this article https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html">
+                        <span class="sr-only">Email Share</span>
+                        <em class="fas fa-envelope-open-text fa-lg"></em>
+                    </a>
+            </div>
+        </div>
+                
+        
+                <!-- https://giscus.app -->
+                <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+                <script src="https://giscus.app/client.js"
+                    data-repo="kaylumah/kaylumah.github.io"
+                    data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                    data-mapping="number"
+                    data-term="137"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="top"
+                    data-theme="light_high_contrast"
+                    data-lang="en"
+                    data-loading="lazy"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+                
+    </footer>
+   
+</article>
+                <button class="fixed z-50 bottom-4 right-4 w-16 h-16 rounded-full bg-gray-300 text-white block" onclick="topFunction()" id="myBtn" title="Go to top">
+                    <span class="sr-only">Back to top!</span>
+                    <em class="fad fa-angle-double-up fa-lg"></em>
+                </button>
+                <script>
+                    var mybutton = document.getElementById("myBtn");
+                
+                    window.onscroll = function() {scrollFunction()};
+                
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        }
+                        else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+                    function topFunction() {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }
+                </script>
+            </main>
+            <footer class="bg-gray-900">
+                <div class="py-4 px-4">
+                    <div class="flex justify-center space-x-6">
+                        
+                                    <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="https://www.linkedin.com/in/maxhamulyak" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">LinkedIn</span>
+                                        <em class="fab fa-linkedin fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Github" target="_blank" rel=”noopener” href="https://github.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">GitHub</span>
+                                        <em class="fab fa-github-square fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Twitter" target="_blank" rel=”noopener” href="https://twitter.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">Twitter</span>
+                                        <em class="fab fa-twitter-square fa-lg"></em>
+                                    </a>
+                                    
+                    </div>
+                    <div class="pt-2 flex flex-col text-center text-gray-100">
+                        <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                        <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">[BUILD-Number]</a></span>
+                    </div>
+                    <div class="pt-2 flex justify-center space-x-6">
+                        <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
+                            <span class="sr-only">Kaylumah</span>
+                            <em class="fak fa-logo-kaylumah fa-lg"></em>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+    </body>
+</html>

@@ -176,7 +176,7 @@ public class SystemClockFeeCalculator : IFeeCalculator
 }
 ```
 
-With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, ["Adventures with Mock"](https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html) you can read more about my preferred way of creating mocks.
+With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, ["Adventures with Mock"](/2021/04/11/an-approach-to-writing-mocks.html) you can read more about my preferred way of creating mocks.
 
 ```cs
 public sealed class SystemClockMock : Mock<ISystemClock>
