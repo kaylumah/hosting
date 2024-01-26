@@ -34,23 +34,6 @@ namespace Test.E2e
         }
     }
 
-    public static class TxtPageVerifier
-    {
-        public static async Task Verify(TxtPage page, string methodName = null)
-        {
-            string xml = await page.GetContent();
-
-            Regex baseUrlRegex = VerifierHelper.BaseUrl();
-            VerifySettings settings = new VerifySettings();
-            if (methodName != null)
-            {
-                settings.UseMethodName(methodName);
-            }
-            settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
-            await Verifier.Verify(xml, settings);
-        }
-    }
-
     public static class HtmlPageVerifier
     {
         public static async Task Verify(HtmlPage page, string methodName = null)
