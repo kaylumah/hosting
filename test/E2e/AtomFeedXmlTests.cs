@@ -33,7 +33,7 @@ namespace Test.E2e
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ScrubMatches(regex, "BaseUrl_");
-            // settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
+            settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
             await Verifier.Verify(xml, settings);
         }
     }

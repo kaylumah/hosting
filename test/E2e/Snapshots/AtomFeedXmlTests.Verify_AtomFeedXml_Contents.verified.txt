@@ -4,7 +4,7 @@
   <subtitle type="text"><![CDATA[A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák]]></subtitle>
   <id>https://BaseUrl_1/feed.xml</id>
   <rights type="text"><![CDATA[© Kaylumah. All rights reserved.]]></rights>
-  <updated>2024-01-25T22:50:27+01:00</updated>
+  <updated>DateTimeOffset_1</updated>
   <logo>https://BaseUrl_1/assets/logo_alt.svg</logo>
   <generator>Kaylumah Site Generator</generator>
   <link rel="self" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" />
@@ -14,8 +14,8 @@
     <id>https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI - Revisited]]></title>
     <summary type="text"><![CDATA[A comparison of NSwag.MSBuild and OpenApiReference]]></summary>
-    <published>2023-04-14T00:00:00+02:00</published>
-    <updated>2023-04-14T00:00:00+02:00</updated>
+    <published>DateTimeOffset_2</published>
+    <updated>DateTimeOffset_2</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -182,8 +182,8 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <id>https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html</id>
     <title type="text"><![CDATA[How to use Azurite for testing Azure Storage in dotnet?]]></title>
     <summary type="text"><![CDATA[Learn how to setup the Azure SDK for dotnet with Azurite]]></summary>
-    <published>2022-09-17T18:00:00+02:00</published>
-    <updated>2022-09-17T18:00:00+02:00</updated>
+    <published>DateTimeOffset_3</published>
+    <updated>DateTimeOffset_3</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -340,8 +340,8 @@ public async Task Test2()
     <id>https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html</id>
     <title type="text"><![CDATA[Share debug configuration between .NET IDEs with launch profiles]]></title>
     <summary type="text"><![CDATA[Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json]]></summary>
-    <published>2022-06-07T23:30:00+02:00</published>
-    <updated>2022-06-07T23:30:00+02:00</updated>
+    <published>DateTimeOffset_4</published>
+    <updated>DateTimeOffset_4</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -667,8 +667,8 @@ dotnet run
     <id>https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html</id>
     <title type="text"><![CDATA[Working with Azure SDK for .NET]]></title>
     <summary type="text"><![CDATA[The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios]]></summary>
-    <published>2022-02-21T21:30:00+01:00</published>
-    <updated>2022-02-21T21:30:00+01:00</updated>
+    <published>DateTimeOffset_5</published>
+    <updated>DateTimeOffset_5</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -980,8 +980,8 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
     <id>https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
     <title type="text"><![CDATA[Improve Code Quality with BannedSymbolAnalyzers]]></title>
     <summary type="text"><![CDATA[Learn how a simple Roslyn Analyzer can improve code consistency]]></summary>
-    <published>2022-01-31T21:45:00+01:00</published>
-    <updated>2022-01-31T21:45:00+01:00</updated>
+    <published>DateTimeOffset_6</published>
+    <updated>DateTimeOffset_6</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -1203,8 +1203,8 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
     <id>https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html</id>
     <title type="text"><![CDATA[Validated Strongly Typed IOptions]]></title>
     <summary type="text"><![CDATA[Find configuration errors early with data annotations validation for IOptions in .NET]]></summary>
-    <published>2021-11-29T19:00:00+01:00</published>
-    <updated>2021-11-29T19:00:00+01:00</updated>
+    <published>DateTimeOffset_7</published>
+    <updated>DateTimeOffset_7</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -1712,8 +1712,8 @@ typedOptions.Name.Should().Be(options.Name);
     <id>https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html</id>
     <title type="text"><![CDATA[Capture Logs in Unit Tests]]></title>
     <summary type="text"><![CDATA[A guide to capturing logs in Xunit]]></summary>
-    <published>2021-11-14T20:30:00+01:00</published>
-    <updated>2021-11-14T20:30:00+01:00</updated>
+    <published>DateTimeOffset_8</published>
+    <updated>DateTimeOffset_8</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -2054,8 +2054,8 @@ public async Task Test_Custom_XunitLoggingBuilder()
     <id>https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html</id>
     <title type="text"><![CDATA[Decreasing Solution Build time with Filters]]></title>
     <summary type="text"><![CDATA[How to use solution filters to increase focus and decrease build time]]></summary>
-    <published>2021-07-17T00:00:00+02:00</published>
-    <updated>2021-07-17T00:00:00+02:00</updated>
+    <published>DateTimeOffset_9</published>
+    <updated>DateTimeOffset_9</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -2202,8 +2202,8 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
     <id>https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI]]></title>
     <summary type="text"><![CDATA[A look at using OpenAPI clients in C#]]></summary>
-    <published>2021-05-23T00:00:00+02:00</published>
-    <updated>2021-05-23T00:00:00+02:00</updated>
+    <published>DateTimeOffset_10</published>
+    <updated>DateTimeOffset_10</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -2574,8 +2574,8 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
     <id>https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html</id>
     <title type="text"><![CDATA[Experiment with Moq, an approach to writing mocks]]></title>
     <summary type="text"><![CDATA[An experiment to create reusable mocks in my testing code]]></summary>
-    <published>2021-04-11T00:00:00+02:00</published>
-    <updated>2021-04-11T00:00:00+02:00</updated>
+    <published>DateTimeOffset_11</published>
+    <updated>DateTimeOffset_11</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -3384,8 +3384,8 @@ public async Task Test_ArticleAccess_Returns200OK()
     <id>https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html</id>
     <title type="text"><![CDATA[Set NuGet metadata via MSBuild]]></title>
     <summary type="text"><![CDATA[Discover how to use MSBuild to set your NuGet package's metadata]]></summary>
-    <published>2021-03-27T00:00:00+01:00</published>
-    <updated>2021-03-27T00:00:00+01:00</updated>
+    <published>DateTimeOffset_12</published>
+    <updated>DateTimeOffset_12</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
@@ -3694,8 +3694,8 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
     <id>https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html</id>
     <title type="text"><![CDATA[Using C# code in your git hooks]]></title>
     <summary type="text"><![CDATA[Getting started with C# script in your client-side git hooks]]></summary>
-    <published>2019-09-07T00:00:00+02:00</published>
-    <updated>2021-03-21T00:00:00+01:00</updated>
+    <published>DateTimeOffset_13</published>
+    <updated>DateTimeOffset_14</updated>
     <author>
       <name>Max Hamulyák</name>
       <uri>https://BaseUrl_1/about</uri>
