@@ -10,11 +10,36 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 #pragma warning disable CS3016
 namespace Test.E2e
 {
+    public class RobotTxtTests : IClassFixture<PlaywrightFixture>
+    {
+        readonly PlaywrightFixture _PlaywrightFixture;
+
+        public RobotTxtTests(PlaywrightFixture playwrightFixture)
+        {
+            _PlaywrightFixture = playwrightFixture;
+        }
+
+        [Fact]
+        public async Task Verify_RobotTxt_Contents()
+        {
+            IPage page = await _PlaywrightFixture.GetPage();
+            RobotsPage robotsPage = new RobotsPage(page);
+            await robotsPage.NavigateAsync();
+            page.Url.Should().EndWith(robotsPage.PagePath);
+
+            string txt = await robotsPage.GetContent();
+            VerifySettings settings = new VerifySettings();
+            await Verifier.Verify(txt, settings);
+        }
+    }
+
     public class UnitTest3 : IClassFixture<PlaywrightFixture>
     {
         readonly PlaywrightFixture _PlaywrightFixture;
@@ -57,24 +82,6 @@ namespace Test.E2e
             sitemap.Items.ToList().ElementAt(0).Url.Should().Be(url);
 
             await XmlPageVerifier.Verify(sitemapPage);
-        }
-
-        [Fact(Skip = "temporarily")]
-        public async Task Test_Robots()
-        {
-            IPage page = await _PlaywrightFixture.GetPage();
-            RobotsPage robotsPage = new RobotsPage(page);
-            await robotsPage.NavigateAsync();
-
-            page.Url.Should().EndWith(robotsPage.PagePath);
-
-            Dictionary<string, string> headers = await robotsPage.GetHeaders();
-
-            byte[] bytes = await robotsPage.PageResponse.BodyAsync();
-            UTF8Encoding encoding = new UTF8Encoding(false);
-            string robots = encoding.GetString(bytes);
-
-            await TxtPageVerifier.Verify(robotsPage);
         }
 
         [Fact(Skip = "temporarily")]
