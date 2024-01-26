@@ -1,0 +1,854 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="/assets/images/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/images/site.webmanifest" />
+        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+        
+        <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+        
+        <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+        
+        <!-- Common Meta Tags -->
+        <title>Validated Strongly Typed IOptions</title>
+        <link rel="canonical" href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
+        <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+        <meta name="description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
+        <meta name="copyright" content="© Kaylumah. All rights reserved." />
+        <meta name="keywords" content="csharp, configuration" />
+        
+        <!-- OpenGraph Meta Tags -->
+        <meta property="og:type" content="article" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+        <meta property="og:title" content="Validated Strongly Typed IOptions" />
+        <meta property="og:url" content="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
+        <meta property="og:description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
+        <meta property="article:author" content="Max Hamulyák" />
+        <meta property="article:published_time" content="2021-11-29T19:00:00.0000000+01:00" />
+        <meta property="article:modified_time" content="2021-11-29T19:00:00.0000000+01:00" />
+        <meta property="article:tag" content="csharp" />
+        <meta property="article:tag" content="configuration" />
+        
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Validated Strongly Typed IOptions" />
+        <meta name="twitter:description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
+        <meta name="twitter:site" content="@kaylumah" />
+        <meta name="twitter:creator" content="@kaylumah" />
+        
+        <!-- Kaylumah BuildInfo Meta Tags -->
+        <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+        <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+        <meta property="kaylumah:version" content="1.0.0" />
+        <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+        <meta property="kaylumah:buildNumber" content="[BUILD-Number]" />
+        <meta property="kaylumah:time" content="DateTimeOffset_1" />
+        <meta property="kaylumah:site" content="Guid_1" />
+        <meta property="kaylumah:page" content="Guid_2" />
+        
+        <!-- LdJson Meta Tags -->
+        <script type="application/ld+json">{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "image": "https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png",
+          "mainEntityOfPage": "https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html",
+          "author": {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Max Hamulyák",
+            "image": "https://BaseUrl_1/assets/avatar_background.svg",
+            "sameAs": [
+              "https://www.linkedin.com/in/maxhamulyak",
+              "https://twitter.com/kaylumah"
+            ],
+            "url": "https://BaseUrl_1/about",
+            "email": "max@kaylumah.nl"
+          },
+          "dateModified": "2021-11-29",
+          "datePublished": "2021-11-29",
+          "headline": "Validated Strongly Typed IOptions",
+          "publisher": {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "kaylumah",
+            "sameAs": "https://www.linkedin.com/company/kaylumah",
+            "foundingDate": "2020-01-01",
+            "logo": "https://BaseUrl_1/assets/logo.svg"
+          }
+        }</script>
+        
+        <!-- End Kaylumah SEO tag -->
+        <!-- BEGIN Feed MetaData-->
+        <link
+          type="application/atom+xml"
+          rel="alternate"
+          href="https://BaseUrl_1/feed.xml"
+          title="Max Hamulyák · Kaylumah RSS Feed"
+        />
+        <!-- END Feed MetaData -->
+
+        <!--
+                                                           
+          _  __           _                       _        
+         | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+         | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+         | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+         |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                    |___/                                  
+                                                           
+         © Kaylumah. All rights reserved.                             
+         [COMMIT-HASH]                              
+         1.0.0                               
+         DateTimeOffset_1
+         site: Guid_1
+         page: Guid_2                                  
+                                                           
+         You found 🧸                                      
+                                                           
+                                                           
+        -->
+        
+        <script>
+        
+          const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+          const consoleSignatureStyle = `
+          font-size: 16px;
+          background: #4cae50;
+          color: white;
+          text-align: center;
+          padding: 10px 15px;
+          width: 100%;
+          border-radius: 20px;
+        `;
+          console.log(consoleSignatureText, consoleSignatureStyle);
+        </script>
+        
+        <!-- Place your kit's code here -->
+        <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-168549883-1');
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        </noscript>
+    </head>
+    <body class="line-numbers bg-gray-100 fa-colors">
+        <div class="flex flex-col h-screen">
+            <header class="bg-gray-900">
+                <nav class="flex flex-wrap items-center justify-between py-4 px-4">
+                    <div>
+                        <a data-testid="NavLink-Home" href="/" rel="author">
+                            <!-- <img class="block md:hidden h-12 w-auto" src="/assets/logo_small.svg" alt="Kaylumah" /> -->
+                            <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah" />
+                        </a>
+                    </div>
+                    <div class="flex md:hidden">
+                        <button id="hamburger" class="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="toggle hidden md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-gray-600 md:border-none"><a data-testid="NavLink-About" href="/about.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            About
+                        </a><a data-testid="NavLink-Blog" href="/blog.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            Blog
+                        </a></div>
+                </nav>
+                 <script>
+                    document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                        for (let i = 0; i < navToggle.length; i++) {
+                            navToggle.item(i).classList.toggle('hidden');
+                        }
+                    };
+                </script>
+            </header>
+
+            <main class="flex-1 py-4 text-gray-900">
+                <article class="py-16 px-6 sm:px-8">
+    <header>
+        <h1 class="flex flex-col items-center mx-auto">
+            <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Validated Strongly Typed IOptions</span>
+        </h1>
+        <picture class="flex flex-col items-center mx-auto">
+            <source type="image/webp" srcset="/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.webp">
+            <img src="/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" alt="cover for Validated Strongly Typed IOptions" height="640" width="1280" />
+        </picture>
+        <div class="mx-auto mt-1">
+            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Authored by
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        Max Hamulyák
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Posted on
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        <time datetime="2021-11-29">2021/11/29</time>
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Reading time
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        9 minute
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Published in
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                    
+                                        <a href="/archive.html#csharp" title="for the C# programming language" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            C#
+                                        </a>
+                                        
+                                        <a href="/archive.html#configuration" title="Application configuration" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Configuration
+                                        </a>
+                                        
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        
+        <hr class="mt-8 border-t-2 w-20 mx-auto" />
+    </header>
+    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+        <p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
+<p>As I understand it, the <code>configuration</code> concept in <code>.NET</code> is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the <code>options</code> concept provides access to <code>configuration</code> from our application code. I've attempted to illustrate it with the image below.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
+<h2 id="configuration-in.net"><a href="#configuration-in.net">Configuration in .NET</a></h2>
+<p>Technically the image above is an over-simplification. In reality, you use an <code>IConfigurationBuilder</code> where different providers are provided, and the configuration block in the middle is the merged build-result of the configuration builder. In fact, you get a preconfigured configuration builder every time you use the <code>ASP.NET</code> Web templates. You get a <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/Host.cs#L53" class="external">default HostBuilder</a> that setups an <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostBuilder.cs#L124" class="external">IHost</a>. This default builder also takes care of the <a href="https://github.com/dotnet/runtime/blob/12a8819eee9865eb38bca6c05fdece1053102854/src/libraries/Microsoft.Extensions.Hosting/src/HostingHostBuilderExtensions.cs#L188" class="external">default configuration</a>.</p>
+<p>The default configuration adds in order</p>
+<ul>
+<li>appsettings.json</li>
+<li>appsettings.Environment.json</li>
+<li>user secrets (if the environment is development)</li>
+<li>environment variables</li>
+<li>command-line arguments</li>
+</ul>
+<p>The priority of settings is in the reverse order of adding them to the builder. Passing a setting via the <code>command line</code> will always win from a setting in the <code>appsettings.json</code> file. Fun fact, there are two configurations in <code>ASP.NET</code>. You have the <code>AppConfiguration</code> we just discussed, and you have the <code>HostConfiguration</code>. The <code>HostConfiguration</code> is used to set variables like the <code>DOTNET_ENVIRONMENT</code>, which is used to load the proper <code>appsettings.json</code> and user secrets. Via means of <code>ChainedConfiguration</code> the entire <code>HostConfiguration</code> is also available as part of <code>AppConfiguration</code>.</p>
+<p>Let's look at an example. Take the following JSON configuration:</p>
+<pre><code class="language-json">{
+    &quot;MySample&quot;: {
+        &quot;MyText&quot;: &quot;Hello World!&quot;,
+        &quot;MyCollection&quot;: [
+            {
+                &quot;MyOtherText&quot;: &quot;Goodbye Cruel World!&quot;
+            }
+        ]
+    }
+}
+</code></pre>
+<p>That would result in the following two settings being present in our IConfiguration.</p>
+<ul>
+<li><code>MySample:MyText</code></li>
+<li><code>MySample:MyCollection:0:MyOtherText</code></li>
+</ul>
+<p>With this bit of knowledge, you can override any setting in any provider you can imagine. Visually it would look something like the image below. You can provide sensible defaults in appsettings.json and overwrite values as needed.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/002_configuration_dotnet.svg" width="551" height="490" alt="Microsoft Extensions - IConfiguration - configuration builder resolve order" /></p>
+<blockquote>
+<p>As pointed out by the &quot;The Twelve-Factor App&quot; article linked previously, adding configuration files per environment does not scale. I typically end up with one appsettings.json for the defaults and an appsettings.Production.json that gets transformed in my CICD pipeline.</p>
+</blockquote>
+<p>You can <a href="https://andrewlock.net/exploring-dotnet-6-part-1-looking-inside-configurationmanager-in-dotnet-6/" class="external">read about changes to IConfiguration</a> in <code>.NET6</code> in a post from Andrew Lock. It also contains a different visual representation of configuration, which neatly displays the merging of the different levels.</p>
+<h2 id="options-in.net"><a href="#options-in.net">Options in .NET</a></h2>
+<p>According to the <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0#bind-hierarchical-configuration" class="external">Microsoft Docs</a> the options pattern is the preferred way to read related configuration values. The options pattern comes in three different flavours, <code>IOptions&lt;&gt;</code>, <code>IOptionsSnapshot&lt;&gt;</code> and <code>IOptionsMonitor&lt;&gt;</code>. Probably the most used one is the default <code>IOptions</code> one, with the drawback that you cannot read configuration after your app starts. Others have taken the task upon themself to explain the differences between the interfaces, for example <a href="https://andrewlock.net/creating-singleton-named-options-with-ioptionsmonitor" class="external">Andrew Lock</a> and <a href="https://khalidabuhakmeh.com/aspnet-core-ioptions-configuration" class="external">Khalid Abuhakmeh</a>. For this post, I will keep it simple with the regular <code>IOptions</code>.</p>
+<p>A typical registration of configuration would look like this:</p>
+<pre><code class="language-csharp">public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddDemo(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure&lt;DemoOptions&gt;(configuration.GetSection(DemoOptions.DefaultConfigurationSectionName));
+        return services;
+    }
+}
+</code></pre>
+<blockquote>
+<p>This snippet requires the <code>Microsoft.Extensions.Options.ConfigurationExtensions</code> package to work</p>
+</blockquote>
+<p>Looking at our dependency injection container right after this registration, we see more than just <code>IOptions</code>. We have a total of seven registrations at this point.</p>
+<pre><code class="language-output">ServiceType = 'Microsoft.Extensions.Options.IOptions`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.UnnamedOptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsSnapshot`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitor`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsMonitor`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsFactory`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsFactory`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitorCache`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsCache`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsChangeTokenSource`1[Test.Unit.DemoOptions]' ImplementationType = ''
+ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.DemoOptions]' ImplementationType = ''
+</code></pre>
+<p>The problem with the above approach is that it assumes the configuration exists at a predefined section, which is not very flexible. An alternative approach to register <code>IOptions</code> is the use of an <code>Action&lt;&gt;</code>.</p>
+<pre><code class="language-csharp">public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddExample(this IServiceCollection services, Action&lt;ExampleOptions&gt; configureDelegate)
+    {
+        services.Configure(configureDelegate);
+        return services;
+    }
+}
+</code></pre>
+<p>With this approach, we get a total of six DI registrations.</p>
+<pre><code class="language-output">ServiceType = 'Microsoft.Extensions.Options.IOptions`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.UnnamedOptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsSnapshot`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsManager`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitor`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsMonitor`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsFactory`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsFactory`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IOptionsMonitorCache`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.OptionsCache`1[TOptions]'
+ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.ExampleOptions]' ImplementationType = ''
+</code></pre>
+<p>The only difference is that we do not get the <code>IOptionsChangeTokenSource</code>. To be most flexible, you can combine both techniques like this.</p>
+<pre><code class="language-csharp">public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddExample(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddExample(options =&gt; config.GetSection(ExampleOptions.DefaultConfigurationSectionName).Bind(options));
+        return services;
+    }
+
+    public static IServiceCollection AddExample(this IServiceCollection services, Action&lt;ExampleOptions&gt; configureDelegate)
+    {
+        services.Configure(configureDelegate);
+        return services;
+    }
+}
+</code></pre>
+<h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
+<p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
+<p>In my article <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>As I see it, there are two distinct ways configuration can fail.</p>
+<h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
+<p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>
+<p>When specifying a section by name, I expect that section to exist. Therefore I want my application to not boot with missing configuration sections. The following extension method takes care of that.</p>
+<pre><code class="language-cs">public static IConfigurationSection GetExistingSectionOrThrow(this IConfiguration configuration, string key)
+{
+    var configurationSection = configuration.GetSection(key);
+
+    if (!configurationSection.Exists())
+    {
+        throw configuration switch
+        {
+            IConfigurationRoot configurationIsRoot =&gt; new ArgumentException($&quot;Section with key '{key}' does not exist. Existing values are: {configurationIsRoot.GetDebugView()}&quot;, nameof(key)),
+            IConfigurationSection configurationIsSection =&gt; new ArgumentException($&quot;Section with key '{key}' does not exist at '{configurationIsSection.Path}'. Expected configuration path is '{configurationSection.Path}'&quot;, nameof(key)),
+            _ =&gt; new ArgumentException($&quot;Failed to find configuration at '{configurationSection.Path}'&quot;, nameof(key))
+        };
+    }
+
+    return configurationSection;
+}
+</code></pre>
+<blockquote>
+<p><strong>caution</strong>: configurationIsRoot.GetDebugView() prints all configuration settings and their value, if you have secrets you should add log masking to prevent them from being logged.</p>
+</blockquote>
+<h3 id="dataannotations-validation"><a href="#dataannotations-validation">DataAnnotations Validation</a></h3>
+<p>The second variant is the most likely to occur. That is, settings are present but not valid in the context of the application. I recently browsed the Microsoft Docs after (again) losing time chasing configuration issues when I came across <code>IValidateOptions</code>. I also rediscovered <code>ValidateDataAnnotations</code> on the <code>IOptionsBuilder</code>, which I previously dismissed since it was a different API (<code>AddOptions&lt;&gt;</code>) than the <code>Configure&lt;&gt;</code> APIs. With Resharper by my side, I checked the implementation and discovered that it uses <code>DataAnnotationValidateOptions</code> a class that is a <code>IValidateOptions</code>.</p>
+<p>When consuming an IOptions, there are three hooks we can use. We have <code>IConfigureOptions</code>, <code>IPostConfigureOptions</code> and <code>IValidateOptions</code>. If you head back up to where I printed the dependency injection container, you see that every time you use <code>Configure&lt;&gt;</code>, you get an <code>IConfigureOptions</code>. I illustrated this process below, IOptions makes use of an OptionsFactory. This factory goes through all registered &quot;option services&quot;.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/003_ioptions.svg" width="837" height="1674" alt="Microsoft Extensions - IConfiguration - options factory" /></p>
+<p>You can add any number of implementations of these three interfaces. Implementations of the same interface execute in the order in which you define them. If you register an <code>IPostConfigureOptions</code> or <code>IValidateOptions</code> before the normal <code>IConfigureOptions</code>, it won't run before it. The factory runs through 0 or more <code>IConfigureOptions</code>, 0 or more <code>IPostConfigureOptions</code> and finally 0 or more <code>IValidateOptions</code> and always in that order.</p>
+<p>To demonstrate how this works, consider the following example:</p>
+<pre><code class="language-csharp">public class ConfigureLibraryExampleServiceOptions : IConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IPostConfigureOptions&lt;LibraryExampleServiceOptions&gt;, IValidateOptions&lt;LibraryExampleServiceOptions&gt;
+{
+    private readonly ILogger _logger;
+
+    public ConfigureLibraryExampleServiceOptions(ILogger&lt;ConfigureLibraryExampleServiceOptions&gt; logger)
+    {
+        _logger = logger;
+    }
+    
+    public void Configure(LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation(&quot;ConfigureExampleServiceOptions Configure&quot;);
+    }
+
+    public void PostConfigure(string name, LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation(&quot;ConfigureExampleServiceOptions PostConfigure&quot;);
+    }
+
+    public ValidateOptionsResult Validate(string name, LibraryExampleServiceOptions options)
+    {
+        _logger.LogInformation(&quot;ConfigureExampleServiceOptions ValidateOptionsResult&quot;);
+        return ValidateOptionsResult.Skip;
+    }
+}
+</code></pre>
+<p>You might assume that this validation triggers the moment we resolve an IOptions from the DI container. Unfortunately, this is not the case; it only triggers when using the <code>.Value</code> property.</p>
+<pre><code class="language-csharp">var configuration = new ConfigurationBuilder()
+    .AddInMemoryCollection(new Dictionary&lt;string, string&gt;() {
+        [string.Join(&quot;:&quot;, LibraryExampleServiceOptions.DefaultConfigurationSectionName, nameof(LibraryExampleServiceOptions.BaseUrl))] = &quot;http://example.com&quot;
+    })
+    .Build();
+var serviceProvider = new ServiceCollection()
+    .AddLogging(builder =&gt; builder.AddConsole())
+    .AddExampleLibrary(configuration)
+    .BuildServiceProvider();
+
+var logger = serviceProvider.GetRequiredService&lt;ILogger&lt;Program&gt;&gt;();
+logger.LogInformation(&quot;Before retrieving IOptions&quot;);
+var options = serviceProvider.GetRequiredService&lt;IOptions&lt;LibraryExampleServiceOptions&gt;&gt;();
+logger.LogInformation(&quot;After retrieving IOptions; before IOptions.Value&quot;);
+var optionsValue = options.Value;
+logger.LogInformation(&quot;After IOptions.Value&quot;);
+
+Console.ReadLine();
+</code></pre>
+<p>Which outputs:</p>
+<pre><code class="language-output">info: Program[0]
+      Before retrieving IOptions
+info: Program[0]
+      After retrieving IOptions; before IOptions.Value
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions Configure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions PostConfigure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions ValidateOptionsResult
+info: Program[0]
+      After IOptions.Value
+</code></pre>
+<p>Circling back to validation, I've created an extension method that registers <code>DataAnnotationValidateOptions </code>for us. One thing to note is that <code>IValidateOptions</code> is a named option, whereas the normal <code>IOptions</code> is an unnamed option. Microsoft solved this by providing a &quot;DefaultName&quot; for an options object which is an empty string.</p>
+<pre><code class="language-csharp">public static partial class ServiceCollectionExtensions
+{
+    public static IServiceCollection ConfigureWithValidation&lt;TOptions&gt;(this IServiceCollection services, IConfiguration config) where TOptions : class
+        =&gt; services.ConfigureWithValidation&lt;TOptions&gt;(Options.Options.DefaultName, config);
+    
+    public static IServiceCollection ConfigureWithValidation&lt;TOptions&gt;(this IServiceCollection services, string name, IConfiguration config) where TOptions : class
+    {
+        _ = config ?? throw new ArgumentNullException(nameof(config));
+        services.Configure&lt;TOptions&gt;(name, config);
+        services.AddDataAnnotationValidatedOptions&lt;TOptions&gt;(name);
+        return services;
+    }
+
+    public static IServiceCollection ConfigureWithValidation&lt;TOptions&gt;(this IServiceCollection services, Action&lt;TOptions&gt; configureOptions) where TOptions : class
+        =&gt; services.ConfigureWithValidation&lt;TOptions&gt;(Options.Options.DefaultName, configureOptions);
+
+    public static IServiceCollection ConfigureWithValidation&lt;TOptions&gt;(this IServiceCollection services, string name, Action&lt;TOptions&gt; configureOptions) where TOptions : class
+    {
+        services.Configure(name, configureOptions);
+        services.AddDataAnnotationValidatedOptions&lt;TOptions&gt;(name);
+        return services;
+    }
+
+    private static IServiceCollection AddDataAnnotationValidatedOptions&lt;TOptions&gt;(this IServiceCollection services, string name) where TOptions : class
+    {
+        services.TryAddEnumerable(ServiceDescriptor.Singleton&lt;IValidateOptions&lt;TOptions&gt;&gt;(new DataAnnotationValidateOptions&lt;TOptions&gt;(name)));
+        return services;
+    }
+}
+</code></pre>
+<p>If we put it to the test, our settings object could look like this. In this case, we use the <code>Required</code> and <code>Url</code> attributes. You can use <a href="https://docs.microsoft.com/en-us/dotnet/api/system.componentmodel.dataannotations?view=net-6.0" class="external">any of the attributes</a> provided by default, or create your custom attributes.</p>
+<pre><code class="language-csharp">public class LibraryExampleServiceOptions
+{
+    public const string DefaultConfigurationSectionName = nameof(LibraryExampleServiceOptions);
+
+    [Required, Url]
+    public string? BaseUrl { get;set; }
+}
+</code></pre>
+<blockquote>
+<p>Consider nullability and default values of properties when defining them. In the spirit of the example, you might have a retry-count if it has the value 0; is that because you specified it or forgot to define it? That's why I always define properties as <code>[Required]</code> and <code>Nullable</code>.</p>
+</blockquote>
+<pre><code class="language-output">info: Program[0]
+      Before retrieving IOptions
+info: Program[0]
+      After retrieving IOptions; before IOptions.Value
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions Configure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions PostConfigure
+info: Kaylumah.ValidatedStronglyTypedIOptions.Library.ConfigureLibraryExampleServiceOptions[0]
+      ConfigureExampleServiceOptions ValidateOptionsResult
+Unhandled exception. Microsoft.Extensions.Options.OptionsValidationException: DataAnnotation validation failed for 'LibraryExampleServiceOptions' members: 'BaseUrl' with the error: 'The BaseUrl field is not a valid fully-qualified http, https, or ftp URL.'.
+   at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+   at Program.&lt;Main&gt;$(String[] args) 
+</code></pre>
+<p>I think that is pretty neat. But I am not a big fan of the formatting. I remember the last time I used the <code>Web API</code> template, which resulted in a nicely formatted error. I had to dig in the ASPNET code, and it's the <a href="https://github.com/dotnet/aspnetcore/blob/a450cb69b5e4549f5515cdb057a68771f56cefd7/src/Mvc/Mvc.Core/src/Infrastructure/ModelStateInvalidFilter.cs#L80" class="external">ModelStateInvalidFilter</a> that transforms <a href="https://github.com/dotnet/aspnetcore/blob/d9660d157627af710b71c636fa8cb139616cadba/src/Mvc/Mvc.Abstractions/src/ModelBinding/ModelStateDictionary.cs#L147" class="external">ModelStateDictionary.cs</a> into a ValidationProblemDetails. I've added an example of this to the source repo, with the output shown below.</p>
+<pre><code class="language-json">{
+    &quot;type&quot;: &quot;https://tools.ietf.org/html/rfc7231#section-6.5.1&quot;,
+    &quot;title&quot;: &quot;One or more validation errors occurred.&quot;,
+    &quot;status&quot;: 400,
+    &quot;traceId&quot;: &quot;00-50f5816f844377e66f37688f297dfd29-ab771434a82ee290-00&quot;,
+    &quot;errors&quot;: {
+        &quot;Name&quot;: [&quot;The Name field is required.&quot;],
+        &quot;EmailAddresses[0].Label&quot;: [&quot;The Label field is required.&quot;],
+        &quot;EmailAddresses[0].Address&quot;: [&quot;The Address field is required.&quot;]
+    }
+}
+</code></pre>
+<p>In the example above, I added validation on both the parent and the child DTO. It appears, however, that doing the same with DataAnnotations does not work. To enable the same behaviour for DataAnnotations, we can create custom <code>ValidationAttributes</code>. We begin with defining a special <code>ValidationResult</code> that is a composite of multiple ValidationResults.</p>
+<pre><code class="language-csharp">public class CompositeValidationResult : System.ComponentModel.DataAnnotations.ValidationResult
+{
+    private readonly List&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt; results = new();
+
+    public IEnumerable&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt; Results =&gt; results;
+
+    public CompositeValidationResult(string? errorMessage) : base(errorMessage)
+    {
+    }
+
+    public CompositeValidationResult(string errorMessage, IEnumerable&lt;string&gt;? memberNames) : base(errorMessage, memberNames)
+    {
+    }
+
+    protected CompositeValidationResult(System.ComponentModel.DataAnnotations.ValidationResult validationResult) : base(validationResult)
+    {
+    }
+
+    public void AddResult(System.ComponentModel.DataAnnotations.ValidationResult validationResult)
+    {
+        results.Add(validationResult);
+    }
+}
+</code></pre>
+<p>Next we create a custom <code>ValidationAttribute</code> for objects.</p>
+<pre><code class="language-csharp">[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+public sealed class ValidateObjectAttribute : ValidationAttribute
+{
+    protected override System.ComponentModel.DataAnnotations.ValidationResult IsValid(object? value, ValidationContext validationContext)
+    {
+        if (value != null &amp;&amp; validationContext != null)
+        {
+            var results = new List&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;();
+            var context = new ValidationContext(value, null, null);
+
+            System.ComponentModel.DataAnnotations.Validator.TryValidateObject(value, context, results, true);
+
+            if (results.Count != 0)
+            {
+                var compositeValidationResult = new CompositeValidationResult($&quot;Validation for {validationContext.DisplayName} failed.&quot;, new[] { validationContext.MemberName });
+                results.ForEach(compositeValidationResult.AddResult);
+
+                return compositeValidationResult;
+            }
+        }
+
+        return System.ComponentModel.DataAnnotations.ValidationResult.Success;
+    }
+}
+</code></pre>
+<p>And finally, we need a <code>ValidationAttribute</code> for collections.</p>
+<pre><code class="language-csharp">[AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+public sealed class ValidateCollectionAttribute : ValidationAttribute
+{
+    protected override System.ComponentModel.DataAnnotations.ValidationResult IsValid(object? value, ValidationContext validationContext)
+    {
+        CompositeValidationResult? collectionCompositeValidationResult = null;
+
+        if (value is IEnumerable collection &amp;&amp; validationContext != null)
+        {
+            var index = 0;
+            foreach (var obj in collection)
+            {
+                var results = new List&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;();
+                var context = new ValidationContext(obj, null, null);
+
+                System.ComponentModel.DataAnnotations.Validator.TryValidateObject(obj, context, results, true);
+
+                if (results.Count != 0)
+                {
+                    var compositeValidationResult = new CompositeValidationResult($&quot;Validation for {validationContext.MemberName}[{index}] failed.&quot;, new[] { $&quot;{validationContext.MemberName}[{index}]&quot; });
+                    results.ForEach(compositeValidationResult.AddResult);
+
+                    if (collectionCompositeValidationResult == null)
+                    {
+                        collectionCompositeValidationResult = new CompositeValidationResult($&quot;Validation for {validationContext.MemberName} failed.&quot;, new[] { validationContext.MemberName });
+                    }
+
+                    collectionCompositeValidationResult.AddResult(compositeValidationResult);
+                }
+
+                index++;
+            }
+
+            if (collectionCompositeValidationResult != null)
+            {
+                return collectionCompositeValidationResult;
+            }
+        }
+
+        return System.ComponentModel.DataAnnotations.ValidationResult.Success;
+    }
+}
+</code></pre>
+<p>Our validation would already trigger with just these attributes. But we are also interested in handling our CompositeValidationResult and pretty-printing it.</p>
+<pre><code class="language-csharp">public static class Validator
+{
+    public static ValidationResult[] ValidateReturnValue(object objectToValidate)
+    {
+        var validationResults = new List&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt;();
+
+        if (objectToValidate == null)
+        {
+            validationResults.Add(new System.ComponentModel.DataAnnotations.ValidationResult(&quot;Return value is required.&quot;));
+        }
+        else
+        {
+            var validationContext = new ValidationContext(objectToValidate);
+
+            System.ComponentModel.DataAnnotations.Validator.TryValidateObject(objectToValidate, validationContext, validationResults, true);
+
+            if (validationResults.Count != 0)
+            {
+                var compositeValidationResult = new CompositeValidationResult($&quot;Validation for {validationContext.DisplayName} failed.&quot;, new[] { validationContext.MemberName });
+                validationResults.ForEach(compositeValidationResult.AddResult);
+            }
+        }
+
+        var structuredValidationResults = StructureValidationResults(validationResults);
+        return structuredValidationResults;
+    }
+
+    private static ValidationResult[] StructureValidationResults(IEnumerable&lt;System.ComponentModel.DataAnnotations.ValidationResult&gt; validationResults)
+    {
+        var structuredValidationResults = new List&lt;ValidationResult&gt;();
+        foreach (var validationResult in validationResults)
+        {
+            var structuredValidationResult = new ValidationResult
+            {
+                ErrorMessage = validationResult.ErrorMessage,
+                MemberNames = validationResult.MemberNames.ToArray()
+            };
+
+            if (validationResult is CompositeValidationResult compositeValidationResult)
+            {
+                structuredValidationResult.ValidationResults = StructureValidationResults(compositeValidationResult.Results);
+            }
+
+            structuredValidationResults.Add(structuredValidationResult);
+        }
+
+        return structuredValidationResults.ToArray();
+    }
+}
+</code></pre>
+<p>You can then use it in an <code>IValidateOptions</code> like this</p>
+<pre><code class="language-csharp">internal class CustomValidate : IValidateOptions&lt;NestedParent&gt;
+{
+    public ValidateOptionsResult Validate(string name, NestedParent options)
+    {
+        var validationResults = Kaylumah.ValidatedStronglyTypedIOptions.Utilities.Validation.Validator.ValidateReturnValue(options);
+        if (validationResults.Any())
+        {
+            var builder = new StringBuilder();
+            foreach (var result in validationResults)
+            {
+                var pretty = PrettyPrint(result, string.Empty, true);
+                builder.Append(pretty);
+            }
+            return ValidateOptionsResult.Fail(builder.ToString());
+        }
+
+        return ValidateOptionsResult.Success;
+    }
+
+    private string PrettyPrint(Kaylumah.ValidatedStronglyTypedIOptions.Utilities.Validation.ValidationResult root, string indent, bool last)
+    {
+        // Based on https://stackoverflow.com/a/1649223
+        var sb = new StringBuilder();
+        sb.Append(indent);
+        if (last)
+        {
+            sb.Append(&quot;|-&quot;);
+            indent += &quot;  &quot;;
+        }
+        else
+        {
+            sb.Append(&quot;|-&quot;);
+            indent += &quot;| &quot;;
+        }
+
+        sb.AppendLine(root.ToString());
+
+        if (root.ValidationResults != null)
+        {
+            for (var i = 0; i &lt; root.ValidationResults.Length; i++)
+            {
+                var child = root.ValidationResults[i];
+                var pretty = PrettyPrint(child, indent, i == root.ValidationResults.Length - 1);
+                sb.Append(pretty);
+            }
+        }
+
+        return sb.ToString();
+    }
+}
+</code></pre>
+<p>Which prints</p>
+<pre><code class="language-output">Microsoft.Extensions.Options.OptionsValidationException : |-Children =&gt; Validation for Children failed.
+  |-Children[0] =&gt; Validation for Children[0] failed.
+    |-Name =&gt; The Name field is required.
+
+    Stack Trace:
+       at Microsoft.Extensions.Options.OptionsFactory`1.Create(String name)
+   at Microsoft.Extensions.Options.UnnamedOptionsManager`1.get_Value()
+</code></pre>
+<p>That looks more like it. One thing this approach, unfortunately, cannot solve is that errors occur at runtime. Wherewith <code>IConfiguration</code>, we could get the error at startup; we don't have the same luxury with <code>IOptions</code> since, as demonstrated, <code>Value</code> triggers at runtime. It is, however, a step in the right direction.</p>
+<blockquote>
+<p><strong>Note</strong>: since IOptions&lt;&gt; is an unbound generic you cannot retrieve all instances of it from the DI container to trigger this behaviour at startup</p>
+</blockquote>
+<h2 id="bonus-strongly-typed-options"><a href="#bonus-strongly-typed-options">Bonus: Strongly typed options</a></h2>
+<p>I never liked using <code>IOptions&lt;&gt;</code> all over the place. I've found it especially bothersome in unit tests. I would either need <code>Options.Create</code> or create an <code>IOptions</code> Moq. If you don't rely on reloading configuration (remember <code>IOptions</code> is a Singleton), you can register a typed instance, which I find pretty neat.</p>
+<pre><code class="language-csharp">var serviceProvider = new ServiceCollection()
+            .Configure&lt;StronglyTypedOptions&gt;(builder =&gt; {
+                builder.Name = &quot;TestStronglyTypedOptions&quot;;
+            })
+            .AddSingleton(sp =&gt; sp.GetRequiredService&lt;IOptions&lt;StronglyTypedOptions&gt;&gt;().Value)
+            .BuildServiceProvider();
+var options = serviceProvider.GetRequiredService&lt;IOptions&lt;StronglyTypedOptions&gt;&gt;().Value;
+var typedOptions = serviceProvider.GetRequiredService&lt;StronglyTypedOptions&gt;();
+typedOptions.Name.Should().Be(options.Name);
+</code></pre>
+<h2 id="closing-thoughts"><a href="#closing-thoughts">Closing Thoughts</a></h2>
+<p>Using the options and configuration patterns described in this article makes it a lot less likely to run into configuration errors, or at the very least, it makes it easier to troubleshoot configuration mistakes.</p>
+<p>As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.</p>
+<p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/ValidatedStronglyTypedIOptions" class="external">GitHub</a>.</p>
+<p>See you next time, stay healthy and happy coding to all 🧸!</p>
+<h2 id="resources"><a href="#resources">Resources</a></h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration" class="external">Configuration in .NET</a></li>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0" class="external">Configuration in ASP.NET Core</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/options" class="external">Options pattern in .NET</a></li>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0" class="external">Options pattern in ASP.NET Core</a></li>
+</ul>
+    </div>
+
+    <footer class="flex flex-col mt-8">
+        
+                <div class="social-share">
+            <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+            <div class="flex justify-center space-x-6">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                        <span class="sr-only">LinkedIn Share</span>
+                        <em class="fab fa-linkedin fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Validated%20Strongly%20Typed%20IOptions&url=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        <span class="sr-only">Twitter Share</span>
+                        <em class="fab fa-twitter-square fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                        <span class="sr-only">Facebook Share</span>
+                        <em class="fab fa-facebook fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Validated Strongly Typed IOptions&amp;body=Thought you might like this article https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html">
+                        <span class="sr-only">Email Share</span>
+                        <em class="fas fa-envelope-open-text fa-lg"></em>
+                    </a>
+            </div>
+        </div>
+                
+        
+                <!-- https://giscus.app -->
+                <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+                <script src="https://giscus.app/client.js"
+                    data-repo="kaylumah/kaylumah.github.io"
+                    data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                    data-mapping="number"
+                    data-term="140"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="top"
+                    data-theme="light_high_contrast"
+                    data-lang="en"
+                    data-loading="lazy"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+                
+    </footer>
+   
+</article>
+                <button class="fixed z-50 bottom-4 right-4 w-16 h-16 rounded-full bg-gray-300 text-white block" onclick="topFunction()" id="myBtn" title="Go to top">
+                    <span class="sr-only">Back to top!</span>
+                    <em class="fad fa-angle-double-up fa-lg"></em>
+                </button>
+                <script>
+                    var mybutton = document.getElementById("myBtn");
+                
+                    window.onscroll = function() {scrollFunction()};
+                
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        }
+                        else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+                    function topFunction() {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }
+                </script>
+            </main>
+            <footer class="bg-gray-900">
+                <div class="py-4 px-4">
+                    <div class="flex justify-center space-x-6">
+                        
+                                    <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="https://www.linkedin.com/in/maxhamulyak" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">LinkedIn</span>
+                                        <em class="fab fa-linkedin fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Github" target="_blank" rel=”noopener” href="https://github.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">GitHub</span>
+                                        <em class="fab fa-github-square fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Twitter" target="_blank" rel=”noopener” href="https://twitter.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">Twitter</span>
+                                        <em class="fab fa-twitter-square fa-lg"></em>
+                                    </a>
+                                    
+                    </div>
+                    <div class="pt-2 flex flex-col text-center text-gray-100">
+                        <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                        <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">[BUILD-Number]</a></span>
+                    </div>
+                    <div class="pt-2 flex justify-center space-x-6">
+                        <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
+                            <span class="sr-only">Kaylumah</span>
+                            <em class="fak fa-logo-kaylumah fa-lg"></em>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+    </body>
+</html>

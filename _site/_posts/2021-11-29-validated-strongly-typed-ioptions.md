@@ -132,7 +132,7 @@ public static partial class ServiceCollectionExtensions
 
 Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.
 
-In my article [Generate C# client for OpenAPI](https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html), I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter "not-an-url" as its value, which causes your application to crash and burn.
+In my article [Generate C# client for OpenAPI](/2021/05/23/generate-csharp-client-for-openapi.html), I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter "not-an-url" as its value, which causes your application to crash and burn.
 
 As I see it, there are two distinct ways configuration can fail.
 

@@ -43,7 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                     if (!string.IsNullOrEmpty(x.Uri))
                     {
-                        person.Url = new Uri(x.Uri);
+                        person.Url = new Uri(GlobalFunctions.AbsoluteUrl(x.Uri));
                     }
 
                     if (!string.IsNullOrEmpty(x.Picture))

@@ -9,13 +9,14 @@ using Microsoft.Playwright;
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
 #pragma warning disable CS3003 // Type is not CLS-compliant
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
 namespace Test.E2e
 {
     public abstract class BasePageObject
     {
         public abstract string PagePath { get; }
 
-        readonly IPage _Page;
+        protected readonly IPage _Page;
 
         public IResponse PageResponse { get; private set; }
         public List<IResponse> Responses { get; } = new List<IResponse>();
@@ -44,7 +45,14 @@ namespace Test.E2e
 
         void Page_Response(object sender, IResponse e)
         {
-            if (e.Url.EndsWith(PagePath, StringComparison.Ordinal))
+            bool isRedirect = e.Status == 301;
+            bool isTargetUrl = e.Url.EndsWith(PagePath, StringComparison.Ordinal);
+            bool matchWithoutRedirect = isRedirect == false && isTargetUrl;
+
+            bool matchWithRedirect = e.Request.RedirectedFrom?.Url.EndsWith(PagePath, StringComparison.Ordinal) ?? false;
+
+            bool isPageResponse = matchWithoutRedirect || matchWithRedirect;
+            if (isPageResponse)
             {
                 PageResponse = e;
             }
@@ -66,6 +74,30 @@ namespace Test.E2e
     {
         protected HtmlPage(IPage page) : base(page)
         {
+        }
+
+        public async Task<Dictionary<string, string>> GetMetaTags()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            ILocator metaTagNameLocator = _Page.Locator("//meta[@name]");
+            IReadOnlyList<ILocator> metaNameTags = await metaTagNameLocator.AllAsync();
+            foreach (ILocator metaTag in metaNameTags)
+            {
+                string key = await metaTag.GetAttributeAsync("name");
+                string value = await metaTag.GetAttributeAsync("content");
+                result.TryAdd(key, value);
+            }
+
+            ILocator metaTagPropertyLocator = _Page.Locator("//meta[@property]");
+            IReadOnlyList<ILocator> metaPropertyTags = await metaTagPropertyLocator.AllAsync();
+            foreach (ILocator metaTag in metaPropertyTags)
+            {
+                string key = await metaTag.GetAttributeAsync("property");
+                string value = await metaTag.GetAttributeAsync("content");
+                result.TryAdd(key, value);
+            }
+
+            return result;
         }
     }
 
@@ -145,6 +177,17 @@ namespace Test.E2e
         }
 
         public override string PagePath => "blog.html";
+    }
+
+    public class BlogItemPage : HtmlPage
+    {
+        readonly string _PagePath;
+        public BlogItemPage(string pagePath, IPage page) : base(page)
+        {
+            _PagePath = pagePath;
+        }
+
+        public override string PagePath => _PagePath;
     }
 
 }
