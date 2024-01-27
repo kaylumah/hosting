@@ -13,13 +13,13 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
     {
         [LoggerMessage(
         EventId = 0,
-        Level = LogLevel.Information,
+        Level = LogLevel.Trace,
         Message = "Creating directory `{DirectoryName}`")]
         public partial void CreatingDirectory(string directoryName);
 
         [LoggerMessage(
             EventId = 1,
-            Level = LogLevel.Information,
+            Level = LogLevel.Trace,
             Message = "Creating file `{FileName}`")]
         public partial void CreatingFile(string fileName);
 
