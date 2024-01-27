@@ -56,12 +56,7 @@ namespace Test.Unit
                         fileMetaData.Add(item.Key, item.Value);
                     }
 
-                    defaultMetaDatas.Add(new DefaultMetadata
-                    {
-                        Path = path,
-                        Scope = scope,
-                        Values = fileMetaData
-                    });
+                    defaultMetaDatas.Add(new DefaultMetadata(path, scope, fileMetaData));
                 }
             }
 
