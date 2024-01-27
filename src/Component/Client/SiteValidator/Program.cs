@@ -12,8 +12,8 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 {
     public class MarkupErrors
     {
-        public string ErrorCode { get; set; }
-        public string ErrorReason { get; set; }
+        public string? ErrorCode { get; set; }
+        public string? ErrorReason { get; set; }
     }
 
     interface IFilter
@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
 
         public bool Validate(HtmlDocument document)
         {
-            HtmlNode result = document.DocumentNode.SelectNodes(_Path).SingleOrDefault();
+            HtmlNode? result = document.DocumentNode.SelectNodes(_Path).SingleOrDefault();
             return result != null;
         }
     }
@@ -51,11 +51,11 @@ namespace Kaylumah.Ssg.Client.SiteValidator
                 string[] bannedDirectories = new string[] { "NODE_MODULES", "ASSETS" };
 
                 List<string> assets = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                    .Where(s => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS", StringComparison.InvariantCultureIgnoreCase))
+                    .Where(s => Path.GetDirectoryName(s)!.ToUpper(CultureInfo.InvariantCulture).Contains("ASSETS", StringComparison.InvariantCultureIgnoreCase))
                     .ToList();
 
                 List<string> files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
-                    .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s).ToUpper(CultureInfo.InvariantCulture).Contains(d, StringComparison.InvariantCultureIgnoreCase)))
+                    .Where(s => !bannedDirectories.Any(d => Path.GetDirectoryName(s)!.ToUpper(CultureInfo.InvariantCulture).Contains(d, StringComparison.InvariantCultureIgnoreCase)))
                     .ToList();
 
                 List<string> htmlFiles = files.Where(file => ".html".Equals(Path.GetExtension(file), StringComparison.Ordinal))/*.Take(1)*/.ToList();
