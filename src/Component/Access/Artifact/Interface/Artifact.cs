@@ -10,5 +10,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
     {
         public byte[] Contents { get; set; }
         public string Path { get; set; }
+
+        public Artifact(string path, byte[] contents)
+        {
+            Path = path;
+            Contents = contents;
+        }
     }
 }
