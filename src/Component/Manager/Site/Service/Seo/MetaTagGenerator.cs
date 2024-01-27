@@ -17,7 +17,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
     {
         [LoggerMessage(
             EventId = 0,
-            Level = LogLevel.Information,
+            Level = LogLevel.Trace,
             Message = "Attempting MetaTags `{Path}`")]
         private partial void LogMetaTags(string path);
 
