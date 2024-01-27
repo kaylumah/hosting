@@ -17,14 +17,14 @@ namespace System.Collections.Generic
         public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary.TryGetValue(lowerKey, out object o);
+            dictionary.TryGetValue(lowerKey, out object? o);
             if (o is T t)
             {
                 return t;
             }
 
-            T result = default(T);
-            return result;
+            T? result = default(T);
+            return result!;
         }
 
         public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)

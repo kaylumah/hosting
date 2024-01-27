@@ -9,16 +9,16 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     public class SiteConfiguration
     {
         [DataMember]
-        public string Source { get; set; }
+        public string Source { get; set; } = string.Empty;
         [DataMember]
-        public string Destination { get; set; }
+        public string Destination { get; set; } = string.Empty;
         [DataMember]
-        public string LayoutDirectory { get; set; }
+        public string LayoutDirectory { get; set; } = string.Empty;
         [DataMember]
-        public string PartialsDirectory { get; set; }
+        public string PartialsDirectory { get; set; } = string.Empty;
         [DataMember]
-        public string DataDirectory { get; set; }
+        public string DataDirectory { get; set; } = string.Empty;
         [DataMember]
-        public string AssetDirectory { get; set; }
+        public string AssetDirectory { get; set; } = string.Empty;
     }
 }

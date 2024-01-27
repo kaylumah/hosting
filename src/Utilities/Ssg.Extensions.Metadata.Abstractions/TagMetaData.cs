@@ -11,10 +11,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
     [DebuggerDisplay("TagMetaData '{Name}'")]
     public class TagMetaData
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Icon { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
     }
 
     public class TagMetaDataCollection : KeyedCollection<string, TagMetaData>
@@ -24,7 +24,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
 

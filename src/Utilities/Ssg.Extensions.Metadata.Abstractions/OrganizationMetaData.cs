@@ -12,11 +12,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     [DebuggerDisplay("OrganizationMetaData '{FullName}'")]
     public class OrganizationMetaData
     {
-        public string Id { get; set; }
-        public string FullName { get; set; }
-        public string Linkedin { get; set; }
-        public string Twitter { get; set; }
-        public string Logo { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Linkedin { get; set; } = string.Empty;
+        public string Twitter { get; set; } = string.Empty;
+        public string Logo { get; set; } = string.Empty;
         public DateTimeOffset Founded { get; set; }
     }
 
@@ -27,7 +27,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<string, OrganizationMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<string, OrganizationMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
 

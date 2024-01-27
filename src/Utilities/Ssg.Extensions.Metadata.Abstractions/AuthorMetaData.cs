@@ -11,11 +11,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     [DebuggerDisplay("AuthorMetaData '{FullName}'")]
     public class AuthorMetaData
     {
-        public string Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-        public string Uri { get; set; }
-        public string Picture { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Uri { get; set; } = string.Empty;
+        public string Picture { get; set; } = string.Empty;
         public Links Links { get; set; } = new();
     }
 
@@ -26,7 +26,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<string, AuthorMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<string, AuthorMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
 

@@ -117,7 +117,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                List<string> tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+                List<string>? tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
                 return tags ?? new List<string>();
             }
             set

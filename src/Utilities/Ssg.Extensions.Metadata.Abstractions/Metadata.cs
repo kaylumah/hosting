@@ -7,5 +7,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public T Data { get; set; }
         public string Content { get; set; }
+
+        public Metadata(string content, T data)
+        {
+            Content = content;
+            Data = data;
+        }
     }
 }
