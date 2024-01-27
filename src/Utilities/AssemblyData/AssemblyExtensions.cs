@@ -27,7 +27,7 @@ namespace Kaylumah.Ssg.Utilities
             AssemblyInformationalVersionAttribute informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             Dictionary<string, string> metadataAttributes = assembly
                 .GetAttribtutes<AssemblyMetadataAttribute>()
-                .ToDictionary(a => a.Key, a => a.Value);
+                .ToDictionary(a => a.Key, a => a.Value!);
 
             AssemblyInfo result = new AssemblyInfo(copyrightAttribute.Copyright, informationalVersionAttribute.InformationalVersion, metadataAttributes);
             return result;
