@@ -16,7 +16,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     {
         [LoggerMessage(
                EventId = 0,
-               Level = LogLevel.Information,
+               Level = LogLevel.Trace,
                Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
         private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
         readonly ILogger _Logger;
