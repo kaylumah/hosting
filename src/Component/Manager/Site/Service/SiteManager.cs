@@ -150,11 +150,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             await _ArtifactAccess.Store(new StoreArtifactsRequest
             {
                 Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Clean = false,
-                    Path = request.Configuration.Destination
-                }
+                OutputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false)
             }).ConfigureAwait(false);
         }
 

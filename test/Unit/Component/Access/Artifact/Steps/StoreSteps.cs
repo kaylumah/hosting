@@ -27,7 +27,7 @@ namespace Test.Unit.Component.Access.Artifact.Steps
                 await artifactAccess.Store(new StoreArtifactsRequest()
                 {
                     Artifacts = Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>(),
-                    OutputLocation = new FileSystemOutputLocation() { }
+                    OutputLocation = new FileSystemOutputLocation(string.Empty, false) { }
                 }).ConfigureAwait(false);
             }
 

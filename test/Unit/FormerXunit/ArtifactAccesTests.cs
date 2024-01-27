@@ -34,11 +34,7 @@ namespace Test.Unit.FormerXunit
 
             await sut.Store(new StoreArtifactsRequest
             {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = false
-                },
+                OutputLocation = new FileSystemOutputLocation("dist", false),
                 Artifacts = new Artifact[] {
                     new Artifact()
                     {
@@ -67,11 +63,7 @@ namespace Test.Unit.FormerXunit
 
             await sut.Store(new StoreArtifactsRequest
             {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = false
-                },
+                OutputLocation = new FileSystemOutputLocation("dist", false),
                 Artifacts = new Artifact[] {
                     new Artifact()
                     {
@@ -100,11 +92,7 @@ namespace Test.Unit.FormerXunit
 
             await sut.Store(new StoreArtifactsRequest
             {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = true
-                },
+                OutputLocation = new FileSystemOutputLocation("dist", true),
                 Artifacts = new Artifact[] {
                     new Artifact()
                     {
