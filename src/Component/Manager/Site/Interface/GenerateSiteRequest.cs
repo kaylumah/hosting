@@ -10,5 +10,10 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     {
         [DataMember]
         public SiteConfiguration Configuration { get; set; }
+
+        public GenerateSiteRequest(SiteConfiguration siteConfiguration)
+        {
+            Configuration = siteConfiguration;
+        }
     }
 }

@@ -69,17 +69,15 @@ namespace Test.Unit.FormerXunit
                 })
                 .BuildServiceProvider();
             ISiteManager siteManager = serviceProvider.GetService<ISiteManager>();
-            await siteManager.GenerateSite(new GenerateSiteRequest
+            SiteConfiguration siteConfiguration = new SiteConfiguration
             {
-                Configuration = new SiteConfiguration
-                {
-                    Source = "_site",
-                    LayoutDirectory = "_layouts",
-                    PartialsDirectory = "_includes",
-                    DataDirectory = "_data",
-                    AssetDirectory = "assets",
-                }
-            });
+                Source = "_site",
+                LayoutDirectory = "_layouts",
+                PartialsDirectory = "_includes",
+                DataDirectory = "_data",
+                AssetDirectory = "assets",
+            };
+            await siteManager.GenerateSite(new GenerateSiteRequest(siteConfiguration));
         }
     }
 }

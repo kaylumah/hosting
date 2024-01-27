@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             Stopwatch watch = new Stopwatch();
             Console.WriteLine("Start Site Generation");
             watch.Start();
-            await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = siteConfiguration }).ConfigureAwait(false);
+            await siteManager.GenerateSite(new GenerateSiteRequest(siteConfiguration)).ConfigureAwait(false);
             watch.Stop();
             Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
         }
