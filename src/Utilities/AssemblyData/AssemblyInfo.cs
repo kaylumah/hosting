@@ -10,5 +10,12 @@ namespace Kaylumah.Ssg.Utilities
         public string Copyright { get; set; }
         public string Version { get; set; }
         public Dictionary<string, string> Metadata { get; set; }
+
+        public AssemblyInfo(string copyright, string version, Dictionary<string, string> metaData)
+        {
+            Copyright = copyright;
+            Version = version;
+            Metadata = metaData;
+        }
     }
 }
