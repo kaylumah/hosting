@@ -145,11 +145,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return artifact;
             }));
 
-            await _ArtifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false)
-            }).ConfigureAwait(false);
+            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            Artifact[] artifactArray = artifacts.ToArray();
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
+            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
