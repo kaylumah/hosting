@@ -13,7 +13,6 @@ using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Utilities;
-using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
@@ -29,7 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly IFileProcessor _FileProcessor;
         readonly SiteInfo _SiteInfo;
         readonly SiteMetadataFactory _SiteMetadataFactory;
-        readonly ISystemClock _SystemClock;
+        readonly TimeProvider _TimeProvider;
         readonly IMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
         readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
@@ -41,7 +40,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             ILogger<SiteManager> logger,
             SiteInfo siteInfo,
             SiteMetadataFactory siteMetadataFactory,
-            ISystemClock systemClock,
+            TimeProvider timeProvider,
             IMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
             IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
@@ -55,13 +54,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _FileSystem = fileSystem;
             _Logger = logger;
             _SiteInfo = siteInfo;
-            _SystemClock = systemClock;
+            _TimeProvider = timeProvider;
             _MetadataProvider = metadataProvider;
         }
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            GlobalFunctions.Date.Value = _SystemClock.LocalNow;
+            GlobalFunctions.Date.Value = _TimeProvider.GetLocalNow();
             GlobalFunctions.Url.Value = _SiteInfo.Url;
             GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
@@ -9,7 +10,6 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Kaylumah.Ssg.Utilities.Time;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -42,10 +42,10 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<MetaTagGenerator>();
             services.AddSingleton<SeoGenerator>();
             services.AddSingleton<SiteMapGenerator>();
-            services.AddSystemClock();
             services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();
+            services.AddSingleton<TimeProvider>(TimeProvider.System);
             return services;
         }
     }

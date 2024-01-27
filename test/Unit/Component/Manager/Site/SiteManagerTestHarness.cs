@@ -30,7 +30,6 @@ namespace Test.Unit.Component.Manager.Site
             ArtifactAccessMock artifactAccessMock,
             MockFileSystem mockFileSystem,
             MetadataParserOptions metadataParserOptions,
-            SystemClockMock systemClockMock,
             SiteInfo siteInfo, ValidationContext validationContext)
         {
             _ValidationContext = validationContext;
@@ -50,7 +49,7 @@ namespace Test.Unit.Component.Manager.Site
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
-                    services.AddSingleton(systemClockMock.Object);
+                    // services.AddSingleton(systemClockMock.Object);
                     services.AddSingleton(artifactAccessMock.Object);
                     services.AddSingleton<IFileSystem>(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);

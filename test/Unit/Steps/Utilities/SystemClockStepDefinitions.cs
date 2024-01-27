@@ -10,17 +10,17 @@ namespace Test.Unit.Steps.Utilities
     [Binding]
     public class SystemClockStepDefinitions
     {
-        readonly SystemClockMock _SystemClockMock;
+        // readonly SystemClockMock _SystemClockMock;
 
-        public SystemClockStepDefinitions(SystemClockMock systemClockMock)
-        {
-            _SystemClockMock = systemClockMock;
-        }
+        // public SystemClockStepDefinitions(SystemClockMock systemClockMock)
+        // {
+        //     _SystemClockMock = systemClockMock;
+        // }
 
-        [Given(@"the current date is '(.*)':")]
-        public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
-        {
-            _SystemClockMock.SetupSystemTime(systemDateTime);
-        }
+        // [Given(@"the current date is '(.*)':")]
+        // public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
+        // {
+        //     _SystemClockMock.SetupSystemTime(systemDateTime);
+        // }
     }
 }
