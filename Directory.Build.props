@@ -5,7 +5,8 @@
   <PropertyGroup Label="Runtime Info">
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
+    <Nullable Condition="$(MSBuildProjectName.Contains('.Client'))">enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Label="Code analysis properties">
