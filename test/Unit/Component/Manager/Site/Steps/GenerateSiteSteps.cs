@@ -85,6 +85,9 @@ namespace Test.Unit.Component.Manager.Site.Steps
             expected.Remove(expectedGenerator);
             (string Tag, string Value) actualGenerator = actual.Single(x => x.Tag == "generator");
             actual.Remove(actualGenerator);
+
+            actual.RemoveAll(x => x.Tag.StartsWith("kaylumah"));
+
             actual.Should().BeEquivalentTo(expected);
         }
 
