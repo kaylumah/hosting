@@ -19,7 +19,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
     {
         static void ShowKaylumahLogo()
         {
-            string applicationName = typeof(Program).Namespace;
+            string applicationName = typeof(Program).Namespace!;
             const string message = @"
   _  __           _                       _     
  | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__  
@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         {
             ShowKaylumahLogo();
 
-            string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            string? env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 
             // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -49,15 +49,6 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             configurationBuilder
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    // { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    // { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    // { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    // { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    // { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    // { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
-                })
                 .AddEnvironmentVariables("Kaylumah_");
 
             if (args is { Length: > 0 })
