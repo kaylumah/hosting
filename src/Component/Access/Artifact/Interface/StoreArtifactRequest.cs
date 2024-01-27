@@ -5,8 +5,14 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
 {
     public class StoreArtifactsRequest
     {
+        public OutputLocation OutputLocation { get; set; }
+
         public Artifact[] Artifacts { get; set; }
 
-        public OutputLocation OutputLocation { get; set; }
+        public StoreArtifactsRequest(OutputLocation outputLocation, Artifact[] artifacts)
+        {
+            OutputLocation = outputLocation;
+            Artifacts = artifacts;
+        }
     }
 }

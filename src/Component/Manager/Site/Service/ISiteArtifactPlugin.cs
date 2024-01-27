@@ -27,14 +27,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SiteMap.SiteMap sitemap = _SiteMapGenerator.Create(siteMetaData);
             byte[] bytes = sitemap
                     .SaveAsXml();
-            Artifact siteMapAsArtifact = new Artifact
-            {
-                Contents = bytes,
-                Path = "sitemap.xml"
-            };
-            Artifact[] result = new Artifact[] {
-            siteMapAsArtifact
-        };
+            Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
+            Artifact[] result = [ siteMapAsArtifact ];
             return result;
         }
     }
@@ -53,14 +47,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             System.ServiceModel.Syndication.SyndicationFeed feed = _FeedGenerator.Create(siteMetaData);
             byte[] bytes = feed
                     .SaveAsAtom10();
-            Artifact feedAsArtifact = new Artifact
-            {
-                Contents = bytes,
-                Path = "feed.xml"
-            };
-            Artifact[] result = new Artifact[] {
-            feedAsArtifact
-        };
+            Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
+            Artifact[] result = [ feedAsArtifact ];
             return result;
         }
     }

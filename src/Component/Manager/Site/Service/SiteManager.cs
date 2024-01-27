@@ -119,11 +119,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<Artifact> artifacts = processed.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
-                return new Artifact
-                {
-                    Path = $"{t.MetaData.Uri}",
-                    Contents = Encoding.UTF8.GetBytes(renderResult.Content)
-                };
+                string path = $"{t.MetaData.Uri}";
+                byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
+                return new Artifact(path, bytes);
             }).ToList();
 
             foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
@@ -140,22 +138,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             artifacts.AddRange(assets.Select(asset =>
             {
-                return new Artifact
-                {
-                    Path = asset.FullName.Replace(env, ""),
-                    Contents = _FileSystem.GetFileBytes(asset.FullName)
-                };
+                string assetPath = asset.FullName.Replace(env, "");
+                byte[] bytes = _FileSystem.GetFileBytes(asset.FullName);
+                return new Artifact(assetPath, bytes);
             }));
 
-            await _ArtifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Clean = false,
-                    Path = request.Configuration.Destination
-                }
-            }).ConfigureAwait(false);
+            await _ArtifactAccess.Store(new StoreArtifactsRequest(
+                new FileSystemOutputLocation(request.Configuration.Destination, false),
+                artifacts.ToArray())).ConfigureAwait(false);
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)

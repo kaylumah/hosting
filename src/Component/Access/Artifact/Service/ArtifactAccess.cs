@@ -29,8 +29,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
         public async Task Store(StoreArtifactsRequest request)
         {
             StoreArtifacts();
-            IStoreArtifactsStrategy storeArtifactsStrategy = _StoreArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
-            await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
+            IStoreArtifactsStrategy? storeArtifactsStrategy = _StoreArtifactsStrategies.SingleOrDefault(strategy => strategy.ShouldExecute(request));
+            if (storeArtifactsStrategy != null)
+            {
+                await storeArtifactsStrategy.Execute(request).ConfigureAwait(false);
+            }
         }
     }
 }
