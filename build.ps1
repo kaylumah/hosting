@@ -30,13 +30,32 @@ if (Test-Path $DistFolder)
 }
 
 dotnet restore
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Error "Restore Failure"
+}
+
 dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Error "Build Failure"
+}
+
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
 dotnet test ./test/Unit/Test.Unit.csproj --configuration $BuildConfiguration
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Error "Test Failure"
+}
+
 & $ReportScript -BuildConfiguration $BuildConfiguration
 
 dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Error "Run Failure"
+}
 
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 try
