@@ -73,6 +73,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder =>
             {
+                builder.AddConfiguration(configuration.GetSection("Logging"));
                 builder.AddSimpleConsole(opt =>
                 {
                     opt.IncludeScopes = true;
