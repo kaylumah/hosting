@@ -7,6 +7,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <Nullable Condition="$(MSBuildProjectName.Contains('.Client'))">enable</Nullable>
+    <Nullable Condition="$(MSBuildProjectName.Contains('.Access'))">enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Label="Code analysis properties">
