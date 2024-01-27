@@ -7,5 +7,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
     {
         public bool Clean { get; set; }
         public string Path { get; set; }
+
+        public FileSystemOutputLocation(string path, bool clean)
+        {
+            Path = path;
+            Clean = clean;
+        }
     }
 }

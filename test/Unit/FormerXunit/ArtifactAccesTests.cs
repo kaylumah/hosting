@@ -32,21 +32,9 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest
-            {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = false
-                },
-                Artifacts = new Artifact[] {
-                    new Artifact()
-                    {
-                        Path = "test.txt",
-                        Contents = Encoding.UTF8.GetBytes(string.Empty)
-                    }
-                }
-            });
+            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", false), new Artifact[] {
+                    new Artifact("test.txt", Encoding.UTF8.GetBytes(string.Empty))
+                }));
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(1);
         }
@@ -65,21 +53,10 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest
-            {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = false
-                },
-                Artifacts = new Artifact[] {
-                    new Artifact()
-                    {
-                        Path = Path.Combine("assets", "test.txt"),
-                        Contents = Encoding.UTF8.GetBytes(string.Empty)
-                    }
+            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", false), new Artifact[] {
+                    new Artifact(Path.Combine("assets", "test.txt"), Encoding.UTF8.GetBytes(string.Empty))
                 }
-            });
+            ));
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(2);
         }
@@ -98,21 +75,9 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest
-            {
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Path = "dist",
-                    Clean = true
-                },
-                Artifacts = new Artifact[] {
-                    new Artifact()
-                    {
-                        Path = "test.txt",
-                        Contents = Encoding.UTF8.GetBytes(string.Empty)
-                    }
-                }
-            });
+            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", true), new Artifact[] {
+                    new Artifact("test.txt", Encoding.UTF8.GetBytes(string.Empty))
+                }));
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(1);
         }

@@ -119,11 +119,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<Artifact> artifacts = processed.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
-                return new Artifact
-                {
-                    Path = $"{t.MetaData.Uri}",
-                    Contents = Encoding.UTF8.GetBytes(renderResult.Content)
-                };
+                string artifactPath = $"{t.MetaData.Uri}";
+                byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
+                Artifact artifact = new Artifact(artifactPath, bytes);
+                return artifact;
             }).ToList();
 
             foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
@@ -140,22 +139,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             artifacts.AddRange(assets.Select(asset =>
             {
-                return new Artifact
-                {
-                    Path = asset.FullName.Replace(env, ""),
-                    Contents = _FileSystem.GetFileBytes(asset.FullName)
-                };
+                string assetPath = asset.FullName.Replace(env, "");
+                byte[] assetBytes = _FileSystem.GetFileBytes(asset.FullName);
+                Artifact artifact = new Artifact(assetPath, assetBytes);
+                return artifact;
             }));
 
-            await _ArtifactAccess.Store(new StoreArtifactsRequest
-            {
-                Artifacts = artifacts.ToArray(),
-                OutputLocation = new FileSystemOutputLocation()
-                {
-                    Clean = false,
-                    Path = request.Configuration.Destination
-                }
-            }).ConfigureAwait(false);
+            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            Artifact[] artifactArray = artifacts.ToArray();
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
+            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
