@@ -74,7 +74,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
+                #pragma warning disable
                 return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+                #pragma warning restore
             }
             set
             {

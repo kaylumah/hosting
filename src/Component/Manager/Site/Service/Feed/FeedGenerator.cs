@@ -127,12 +127,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[] posts))
             {
                 return posts
                     .Where(x => x.Feed)
                     .ToList();
             }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return Enumerable.Empty<PageMetaData>();
         }

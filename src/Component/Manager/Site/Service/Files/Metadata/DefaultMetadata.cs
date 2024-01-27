@@ -8,5 +8,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         public string Path { get; set; }
         public string Scope { get; set; }
         public FileMetaData Values { get; set; }
+
+        public DefaultMetadata(string path, string scope, FileMetaData values)
+        {
+            Path = path;
+            Scope = scope;
+            Values = values;
+        }
     }
 }

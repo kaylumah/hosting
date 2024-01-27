@@ -71,7 +71,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             StringBuilder sb = new StringBuilder();
             SiteMetaData siteMetaData = renderData.Site;
             PageMetaData pageMetaData = renderData.Page;
-            BuildData buildData = siteMetaData.Build;
+            BuildData buildData = siteMetaData.Build!;
             List<string> result = new List<string>
             {
                 CreateKaylumahMetaTag("copyright", buildData.Copyright),
@@ -115,7 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             titleElement.OuterXml,
             linkElement.OuterXml,
-            CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
+            CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build!.ShortGitHash}"),
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
             CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))

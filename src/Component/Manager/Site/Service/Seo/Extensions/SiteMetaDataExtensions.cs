@@ -26,12 +26,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                     if (!string.IsNullOrEmpty(x.Links.Linkedin))
                     {
-                        uris.Add(new Uri(x.Links.LinkedinProfileUrl));
+                        uris.Add(new Uri(x.Links.LinkedinProfileUrl!));
                     }
 
                     if (!string.IsNullOrEmpty(x.Links.Twitter))
                     {
-                        uris.Add(new Uri(x.Links.TwitterProfileUrl));
+                        uris.Add(new Uri(x.Links.TwitterProfileUrl!));
                     }
 
                     Person person = new Person()

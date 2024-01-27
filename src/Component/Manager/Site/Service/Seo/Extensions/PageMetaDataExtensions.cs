@@ -30,15 +30,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)));
             }
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person person))
             {
                 blogPost.Author = person;
             }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization organization))
             {
                 blogPost.Publisher = organization;
             }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return blogPost;
         }

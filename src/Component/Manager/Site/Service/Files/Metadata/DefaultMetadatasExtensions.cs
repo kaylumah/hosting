@@ -24,7 +24,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             DefaultMetadata item = metadata
                 .Where(x => x.Path.Equals(path, StringComparison.Ordinal))
-                .SingleOrDefault(predicate);
+                .SingleOrDefault(predicate)!;
             return item;
         }
     }

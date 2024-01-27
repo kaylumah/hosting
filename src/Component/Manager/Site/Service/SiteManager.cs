@@ -159,7 +159,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 try
                 {
-                    File<LayoutMetadata> template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
+                    File<LayoutMetadata>? template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
                     string content = template?.Content ?? "{{ content }}";
                     content = content.Replace("{{ content }}", request.Metadata.Content);
                     Template liquidTemplate = Template.ParseLiquid(content);

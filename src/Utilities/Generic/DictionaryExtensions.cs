@@ -27,10 +27,10 @@ namespace System.Collections.Generic
             return result!;
         }
 
-        public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
+        public static void SetValue(this Dictionary<string, object> dictionary, string key, object? value)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary[lowerKey] = value;
+            dictionary[lowerKey] = value!;
         }
     }
 }
