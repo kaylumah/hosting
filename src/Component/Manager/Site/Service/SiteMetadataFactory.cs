@@ -49,7 +49,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             using IDisposable logScope = _Logger.BeginScope("[EnrichSite]");
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
             SiteMetaData siteInfo = new SiteMetaData()
             {
                 Id = siteGuid.ToString(),
@@ -57,7 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Description = _SiteInfo.Description,
                 Language = _SiteInfo.Lang,
                 Url = _SiteInfo.Url,
-                Author = null,
+                Author = string.Empty,
                 Data = new Dictionary<string, object>(),
                 Tags = new SortedDictionary<string, PageMetaData[]>(),
                 Collections = new SortedDictionary<string, PageMetaData[]>(),

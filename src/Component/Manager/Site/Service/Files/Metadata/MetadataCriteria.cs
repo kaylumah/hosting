@@ -5,12 +5,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class MetadataCriteria
     {
-        public string Scope { get; set; }
-        public string FileName { get; set; }
-        public string Content { get; set; }
-
-        public MetadataCriteria()
-        {
-        }
+        public string Scope { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
     }
 }

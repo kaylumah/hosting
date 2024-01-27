@@ -37,9 +37,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
-            System.Collections.Generic.Dictionary<string, Person> authors = renderData.Site.ToPersons();
-            System.Collections.Generic.Dictionary<string, Organization> organizations = renderData.Site.ToOrganizations();
-            LogLdJson(renderData.Page.Uri, renderData.Page.Type);
+            System.Collections.Generic.Dictionary<string, Person> authors = renderData.Site!.ToPersons();
+            System.Collections.Generic.Dictionary<string, Organization> organizations = renderData.Site!.ToOrganizations();
+            LogLdJson(renderData.Page!.Uri, renderData.Page.Type);
             if (renderData.Page.Type == ContentType.Article)
             {
                 BlogPosting blogPost = renderData.Page.ToBlogPosting(authors, organizations);
@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
             {
-                System.Collections.Generic.List<BlogPosting> posts = renderData.Site.Pages
+                System.Collections.Generic.List<BlogPosting> posts = renderData.Site!.Pages
                     .IsArticle()
                     .IsFeatured()
                     .ByRecentlyPublished()
@@ -60,7 +60,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 return blog.ToString(settings);
             }
 
-            return null;
+            return string.Empty;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     {
         public static Dictionary<string, object> ToDictionary(this File file)
         {
-            Dictionary<string, object> result = new Dictionary<string, object>(file.MetaData);
+            Dictionary<string, object> result = new Dictionary<string, object>(file.MetaData!);
             // result.SetValue(nameof(file.LastModified), file.LastModified);
             result.SetValue(nameof(file.Content), file.Content);
             result.SetValue(nameof(file.Name), file.Name);
@@ -28,7 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file, Guid siteGuid)
         {
             PageMetaData page = file.ToPage();
-            page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
+            page.Id = siteGuid.CreatePageGuid(file.MetaData!.Uri).ToString();
             return page;
         }
 

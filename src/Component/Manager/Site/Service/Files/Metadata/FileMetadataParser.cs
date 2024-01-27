@@ -61,10 +61,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         string RetrieveExtension(string fileName)
         {
             string ext = Path.GetExtension(fileName);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             if (_Options.ExtensionMapping.TryGetValue(ext, out string value))
             {
                 return value;
             }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             return ext;
         }

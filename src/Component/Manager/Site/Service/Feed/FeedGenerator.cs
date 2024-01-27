@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
         {
-            BuildData build = siteMetaData.Build;
+            BuildData build = siteMetaData.Build!;
             string generatorVersion = build.ShortGitHash;
             string copyrightClaim = build.Copyright;
             DateTimeOffset generatedAtBuildTime = build.Time;
@@ -111,11 +111,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         .ToList();
                     itemCategories.ForEach(item.Categories.Add);
                     item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson person))
                     {
                         SyndicationPerson author = person;
                         item.Authors.Add(author);
                     }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
                     result.Add(item);
                 }

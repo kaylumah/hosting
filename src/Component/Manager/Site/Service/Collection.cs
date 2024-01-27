@@ -7,8 +7,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class Collection
 #pragma warning restore CA1711 // Identifiers should not have incorrect suffix
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public bool Output { get; set; }
-        public string TreatAs { get; set; }
+        public string TreatAs { get; set; } = string.Empty;
     }
 }

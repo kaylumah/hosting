@@ -7,14 +7,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public class RenderData
     {
-        public SiteMetaData Site { get; set; }
-        public PageMetaData Page { get; set; }
+        public SiteMetaData? Site { get; set; }
+        public PageMetaData? Page { get; set; }
         public string Content => Page?.Content ?? string.Empty;
-        public string Title => Page?.Title ?? Site?.Title ?? null;
-        public string Description => Page?.Description ?? Site?.Description ?? null;
-        public string Language => Page?.Language ?? Site?.Language ?? null;
-        public string Author => Page?.Author ?? Site?.Author ?? null;
-        public string Url => Page?.Uri ?? Site?.Url ?? null;
+        public string? Title => Page?.Title ?? Site?.Title ?? null;
+        public string? Description => Page?.Description ?? Site?.Description ?? null;
+        public string? Language => Page?.Language ?? Site?.Language ?? null;
+        public string? Author => Page?.Author ?? Site?.Author ?? null;
+        public string? Url => Page?.Uri ?? Site?.Url ?? null;
 
     }
 }

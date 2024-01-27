@@ -8,6 +8,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
     public class LayoutMetadata
     {
         [YamlMember(Alias = "layout")]
-        public string Layout { get; set; }
+        public string Layout { get; set; } = string.Empty;
     }
 }

@@ -19,7 +19,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         public void ApplySeo(RenderData renderData)
         {
-            renderData.Page.LdJson = GenerateLdJson(renderData);
+            renderData.Page!.LdJson = GenerateLdJson(renderData);
             renderData.Page.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
         }
 

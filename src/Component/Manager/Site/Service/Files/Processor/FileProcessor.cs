@@ -89,7 +89,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                         targetFiles = targetFiles
                             .Select(x =>
                             {
-                                x.MetaData.Collection = collection.Name;
+                                x.MetaData!.Collection = collection.Name;
                                 return x;
                             })
                             .ToList();
@@ -106,7 +106,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> result = new List<FileCollection>();
             foreach (string collection in collections)
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 using System.IDisposable logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 string keyName = collection[1..];
                 List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
                 List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
@@ -132,12 +134,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
         }
 
-        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
+        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string? scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 using System.IDisposable logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 Stream fileStream = fileInfo.CreateReadStream();
                 using StreamReader streamReader = new StreamReader(fileStream);
 
@@ -145,14 +149,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(new MetadataCriteria
                 {
                     Content = rawContent,
-                    Scope = scope,
+                    Scope = scope!,
                     FileName = fileInfo.Name
                 });
 
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
 
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
                 IContentPreprocessorStrategy preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
                 if (preprocessor != null)
                 {
                     fileContents = preprocessor.Execute(fileContents);

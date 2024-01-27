@@ -14,7 +14,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
     public class FileFilterCriteria
     {
-        public string RootDirectory { get; set; }
+        public string RootDirectory { get; set; } = string.Empty;
         public string[] DirectoriesToSkip { get; set; } = Array.Empty<string>();
         public string[] FileExtensionsToTarget { get; set; } = Array.Empty<string>();
     }

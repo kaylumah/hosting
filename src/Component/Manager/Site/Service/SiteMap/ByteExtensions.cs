@@ -16,19 +16,19 @@ namespace System
             using XmlReader xmlReader = XmlReader.Create(stream);
             XmlDocument document = new XmlDocument();
             document.Load(xmlReader);
-            XmlNode root = document.DocumentElement?.SelectSingleNode("//*[local-name()='urlset']");
-            XmlNodeList children = root?.SelectNodes("//*[local-name()='url']");
+            XmlNode root = document.DocumentElement?.SelectSingleNode("//*[local-name()='urlset']")!;
+            XmlNodeList children = root?.SelectNodes("//*[local-name()='url']")!;
 
             List<SiteMapNode> nodes = new List<SiteMapNode>();
             foreach (XmlNode child in children)
             {
                 // TODO better solution does not work
                 //                 string location = child.SelectSingleNode("//*[local-name()='loc']")?.InnerText;
-                string location = child.ChildNodes[0]?.InnerText;
-                string lastModified = child.ChildNodes[1]?.InnerText;
+                string? location = child.ChildNodes[0]?.InnerText;
+                string?  lastModified = child.ChildNodes[1]?.InnerText;
                 nodes.Add(new SiteMapNode()
                 {
-                    Url = location,
+                    Url = location!,
 #pragma warning disable
                     LastModified = DateTimeOffset.Parse(lastModified)
                 });

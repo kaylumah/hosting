@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
         public static bool IsHtml(this RenderData renderData)
         {
-            return PageMetaDataExtensions.Html(renderData.Page);
+            return PageMetaDataExtensions.Html(renderData.Page!);
         }
     }
 }

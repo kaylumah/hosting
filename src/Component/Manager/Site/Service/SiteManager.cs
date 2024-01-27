@@ -101,10 +101,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (MetadataRenderRequest renderRequest in requests)
             {
-                IRenderPlugin[] plugins = _RenderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata)).ToArray();
+                IRenderPlugin[] plugins = _RenderPlugins.Where(plugin => plugin.ShouldExecute(renderRequest.Metadata!)).ToArray();
                 foreach (IRenderPlugin plugin in plugins)
                 {
-                    plugin.Apply(renderRequest.Metadata);
+                    plugin.Apply(renderRequest.Metadata!);
                 }
             }
 
@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<Artifact> artifacts = processed.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
-                string path = $"{t.MetaData.Uri}";
+                string path = $"{t.MetaData!.Uri}";
                 byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
                 return new Artifact(path, bytes);
             }).ToList();
@@ -161,7 +161,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 {
                     File<LayoutMetadata>? template = templates.FirstOrDefault(t => t.Name.Equals(request.Template, StringComparison.Ordinal));
                     string content = template?.Content ?? "{{ content }}";
-                    content = content.Replace("{{ content }}", request.Metadata.Content);
+                    content = content.Replace("{{ content }}", request.Metadata!.Content);
                     Template liquidTemplate = Template.ParseLiquid(content);
                     LiquidTemplateContext context = new LiquidTemplateContext()
                     {
@@ -170,7 +170,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     ScriptObject scriptObject = new ScriptObject();
                     scriptObject.Import(request.Metadata);
                     // note: work-around for Build becoming part of Site
-                    scriptObject.Import("build", () => request.Metadata.Site.Build);
+                    scriptObject.Import("build", () => request.Metadata.Site!.Build);
                     context.PushGlobal(scriptObject);
                     scriptObject.Import(typeof(GlobalFunctions));
 

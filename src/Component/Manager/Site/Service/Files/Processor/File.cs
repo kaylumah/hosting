@@ -11,8 +11,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     public class File
     {
         public DateTimeOffset LastModified { get; set; }
-        public FileMetaData MetaData { get; set; }
-        public string Content { get; set; }
-        public string Name { get; set; }
+        public FileMetaData? MetaData { get; set; }
+        public string Content { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
     }
 }
