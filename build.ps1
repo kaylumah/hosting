@@ -49,7 +49,8 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Test Failure"
 }
 
-& $ReportScript -BuildConfiguration $BuildConfiguration
+# Disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591 gets fixed
+# & $ReportScript -BuildConfiguration $BuildConfiguration
 
 dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 if ($LASTEXITCODE -ne 0)
