@@ -1,8 +1,8 @@
 param(
     [Parameter()]
-    [string] $BuildId = 1,
+    [string] $BuildId = (Get-Date).ToString("yyyyMMddhhmmss"),
     [Parameter()]
-    [string] $BuildNumber = (Get-Date).ToString("yyyyMMdd.hhmmss"),
+    [string] $BuildNumber = 2810,
     [Parameter()]
     [switch] $CleanDevDependencies
 )
@@ -35,14 +35,14 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Restore Failure"
 }
 
-dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
+dotnet build --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Build Failure"
 }
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test ./test/Unit/Test.Unit.csproj --configuration $BuildConfiguration
+dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 if ($LASTEXITCODE -ne 0)
 {

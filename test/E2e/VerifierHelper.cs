@@ -25,6 +25,7 @@ namespace Test.E2e
 
             string commitHash = metaTags["kaylumah:commit"];
             string shortCommitHash = commitHash[..7];
+            // string version = metaTags["kaylumah:version"];
             string buildId = metaTags["kaylumah:buildId"];
             string buildNumber = metaTags["kaylumah:buildNumber"];
 
@@ -42,6 +43,7 @@ namespace Test.E2e
             settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
             settings.AddScrubber(_ => _.Replace(buildId, "[BUILD-ID]"));
             settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
+            // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             await Verifier.Verify(html, "html", settings);
         }
     }
