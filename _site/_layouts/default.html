@@ -37,7 +37,7 @@
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
             <main class="flex-1 py-4 text-gray-900">
-                {{ page | to_json }}
+                {{ content }}
                 {% include 'backToTop.html' %}
             </main>
             {% include 'footer.html' %}
