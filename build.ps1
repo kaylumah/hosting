@@ -35,7 +35,7 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Restore Failure"
 }
 
-dotnet build --configuration $BuildConfiguration --no-restore /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
+dotnet build --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Build Failure"
