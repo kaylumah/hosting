@@ -3,6 +3,8 @@
 
 using System;
 using System.Globalization;
+using System.IO.Abstractions.TestingHelpers;
+using Ssg.Extensions.Metadata.Abstractions;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
@@ -28,13 +30,34 @@ namespace Test.Unit.Helpers
                 emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
             }
         }
+        internal sealed class ContentCategoryYamlTypeConverter : IYamlTypeConverter
+        {
+            static readonly Type _ContentCategoryNodeType = typeof(AuthorId);
 
+            public bool Accepts(Type type)
+            {
+                return type == _ContentCategoryNodeType;
+            }
+
+            public object ReadYaml(IParser parser, Type type)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void WriteYaml(IEmitter emitter, object value, Type type)
+            {
+                AuthorId node = (AuthorId)value;
+                string str = node;
+                emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+            }
+        }
         public static ISerializer Create()
         {
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
                 .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
+                .WithTypeConverter(new ContentCategoryYamlTypeConverter())
                 .Build();
             return serializer;
         }
