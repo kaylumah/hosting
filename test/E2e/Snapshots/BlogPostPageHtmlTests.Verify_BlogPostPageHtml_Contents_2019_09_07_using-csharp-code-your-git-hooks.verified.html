@@ -48,7 +48,7 @@
         <!-- Kaylumah BuildInfo Meta Tags -->
         <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
         <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
-        <meta property="kaylumah:version" content="1.0.0" />
+        <meta property="kaylumah:version" content="[BUILD-Version]" />
         <meta property="kaylumah:buildId" content="[BUILD-ID]" />
         <meta property="kaylumah:buildNumber" content="[BUILD-Number]" />
         <meta property="kaylumah:time" content="DateTimeOffset_1" />
@@ -383,7 +383,7 @@ dotnet add reference ../../src/SomeLib/SomeLib.csproj
 cd ../../  
 dotnet build
 </code></pre>
-<p>If we use git commit -m “” one more time, we get the message about aborting the commit again. We now know that every commit will at least compile :-) If for example we remove the namespace ending curly brace from Class1 we get the error <strong>Class1.cs(7,6): error CS1513: }</strong>. If we extend our pre-commit hook even further we can have <a href="https://www.hanselman.com/blog/EditorConfigCodeFormattingFromTheCommandLineWithNETCoresDotnetFormatGlobalTool.aspx" class="external">dotnet-format</a> and dotnet-test running on every commit. If we purposely write a failing test (1 equals 0 or something like that) the build won’t pass.</p>
+<p>If we use git commit -m “” one more time, we get the message about aborting the commit again. We now know that every commit will at least compile :-) If for example we remove the namespace ending curly brace from Class1 we get the error <strong>Class1.cs(7,6): error CS[BUILD-Number]: }</strong>. If we extend our pre-commit hook even further we can have <a href="https://www.hanselman.com/blog/EditorConfigCodeFormattingFromTheCommandLineWithNETCoresDotnetFormatGlobalTool.aspx" class="external">dotnet-format</a> and dotnet-test running on every commit. If we purposely write a failing test (1 equals 0 or something like that) the build won’t pass.</p>
 <pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
 #load &quot;logger.csx&quot;
 #load &quot;git-commands.csx&quot;
