@@ -30,7 +30,7 @@ namespace Test.Unit.Helpers
                 emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
             }
         }
-        internal sealed class ContentCategoryYamlTypeConverter : IYamlTypeConverter
+        internal sealed class AuthorIdYamlTypeConverter : IYamlTypeConverter
         {
             static readonly Type _ContentCategoryNodeType = typeof(AuthorId);
 
@@ -48,7 +48,7 @@ namespace Test.Unit.Helpers
             {
                 AuthorId node = (AuthorId)value;
                 string str = node;
-                emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
             }
         }
         public static ISerializer Create()
@@ -57,7 +57,7 @@ namespace Test.Unit.Helpers
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
                 .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
-                .WithTypeConverter(new ContentCategoryYamlTypeConverter())
+                .WithTypeConverter(new AuthorIdYamlTypeConverter())
                 .Build();
             return serializer;
         }
