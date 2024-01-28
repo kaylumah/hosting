@@ -42,7 +42,7 @@ if ($LASTEXITCODE -ne 0)
 }
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test ./test/Unit/Test.Unit.csproj --configuration $BuildConfiguration
+dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 if ($LASTEXITCODE -ne 0)
 {
