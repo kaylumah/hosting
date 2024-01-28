@@ -12,14 +12,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public static class SiteMetaDataExtensions
     {
-        public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
+        public static Dictionary<AuthorId, Person> ToPersons(this SiteMetaData source)
         {
             if (source.AuthorMetaData == null)
             {
                 return new();
             }
 
-            Dictionary<string, Person> authors = source.AuthorMetaData
+            Dictionary<AuthorId, Person> authors = source.AuthorMetaData
                 .ToDictionary(x => x.Id, x =>
                 {
                     List<Uri> uris = new List<Uri>();
@@ -56,14 +56,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return authors;
         }
 
-        public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
+        public static Dictionary<OrganizationId, Organization> ToOrganizations(this SiteMetaData source)
         {
             if (source.OrganizationMetaData == null)
             {
                 return new();
             }
 #pragma warning disable RS0030
-            Dictionary<string, Organization> organizations = source.OrganizationMetaData
+            Dictionary<OrganizationId, Organization> organizations = source.OrganizationMetaData
                 .ToDictionary(x => x.Id, x =>
                 {
 
