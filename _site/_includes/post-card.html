@@ -32,14 +32,14 @@
     <div class="mt-2 flex items-center">
       <div class="flex-shrink-0">
         <a href="#">
-          <span class="sr-only">{{ site.data.authors[page.author].full_name }}</span>
-          <img class="h-10 w-10 rounded-full" width="40" height="40" src="{{ site.data.authors[page.author].picture }}" alt="profile picture {{ site.data.authors[page.author].full_name }}" />
+          <span class="sr-only">{{ page_author.full_name }}</span>
+          <img class="h-10 w-10 rounded-full" width="40" height="40" src="{{ page_author.picture }}" alt="profile picture {{ page_author.full_name }}" />
         </a>
       </div>
       <div class="ml-3">
         <p class="text-sm font-medium text-gray-900">
           <a href="#" class="hover:underline">
-            {{ site.data.authors[page.author].full_name }}
+            {{ page_author.full_name }}
           </a>
         </p>
         <div class="flex space-x-1 text-sm text-gray-500">
