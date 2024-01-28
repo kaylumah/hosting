@@ -2,25 +2,25 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using Microsoft.Extensions.Time.Testing;
 using TechTalk.SpecFlow;
-using Test.Unit.Utilities;
 
 namespace Test.Unit.Steps.Utilities
 {
     [Binding]
-    public class SystemClockStepDefinitions
+    public class FakeTimeProviderStepDefinitions
     {
-        readonly SystemClockMock _SystemClockMock;
+        readonly FakeTimeProvider _FakeTimeProvider;
 
-        public SystemClockStepDefinitions(SystemClockMock systemClockMock)
+        public FakeTimeProviderStepDefinitions(FakeTimeProvider fakeTimeProvider)
         {
-            _SystemClockMock = systemClockMock;
+            _FakeTimeProvider = fakeTimeProvider;
         }
 
         [Given(@"the current date is '(.*)':")]
         public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
         {
-            _SystemClockMock.SetupSystemTime(systemDateTime);
+            _FakeTimeProvider.SetUtcNow(systemDateTime);
         }
     }
 }

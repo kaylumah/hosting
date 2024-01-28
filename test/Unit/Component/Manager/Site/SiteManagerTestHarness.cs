@@ -13,6 +13,8 @@ using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Time.Testing;
 using TechTalk.SpecFlow.Infrastructure;
 using Test.Unit.Utilities;
 using Test.Utilities;
@@ -29,8 +31,8 @@ namespace Test.Unit.Component.Manager.Site
             ISpecFlowOutputHelper specFlowOutputHelper,
             ArtifactAccessMock artifactAccessMock,
             MockFileSystem mockFileSystem,
+            FakeTimeProvider fakeTimeProvider,
             MetadataParserOptions metadataParserOptions,
-            SystemClockMock systemClockMock,
             SiteInfo siteInfo, ValidationContext validationContext)
         {
             _ValidationContext = validationContext;
@@ -50,7 +52,8 @@ namespace Test.Unit.Component.Manager.Site
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
-                    services.AddSingleton(systemClockMock.Object);
+                    services.RemoveAll<TimeProvider>();
+                    services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
                     services.AddSingleton<IFileSystem>(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);

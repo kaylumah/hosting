@@ -3,6 +3,7 @@
 
 using System.IO.Abstractions.TestingHelpers;
 using BoDi;
+using Microsoft.Extensions.Time.Testing;
 using TechTalk.SpecFlow;
 
 namespace Test.Unit
@@ -22,6 +23,9 @@ namespace Test.Unit
         {
             MockFileSystem mockFileSystem = new MockFileSystem();
             _ObjectContainer.RegisterInstanceAs(mockFileSystem);
+
+            FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
+            _ObjectContainer.RegisterInstanceAs(fakeTimeProvider);
         }
     }
 }
