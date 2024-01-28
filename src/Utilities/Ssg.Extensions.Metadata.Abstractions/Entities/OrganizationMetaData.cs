@@ -11,14 +11,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public readonly struct OrganizationId
     {
-        readonly string _AuthorId;
+        readonly string _OrganizationId;
 
-        public OrganizationId(string authorId)
+        public OrganizationId(string organizationId)
         {
-            _AuthorId = authorId;
+            _OrganizationId = organizationId;
         }
 
-        public static implicit operator string(OrganizationId author) => author._AuthorId;
+        public static implicit operator string(OrganizationId author) => author._OrganizationId;
         public static implicit operator OrganizationId(string value) => new OrganizationId(value);
     }
 
