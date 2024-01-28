@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public static class PageMetaDataExtensions
     {
-        public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<string, Organization> organizations)
+        public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
             BlogPosting blogPost = new BlogPosting
             {
@@ -43,7 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return blogPost;
         }
 
-        public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages, Dictionary<AuthorId, Person> persons, Dictionary<string, Organization> organizations)
+        public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
             return pages.Select(page => page.ToBlogPosting(persons, organizations));
         }

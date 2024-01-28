@@ -56,14 +56,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return authors;
         }
 
-        public static Dictionary<string, Organization> ToOrganizations(this SiteMetaData source)
+        public static Dictionary<OrganizationId, Organization> ToOrganizations(this SiteMetaData source)
         {
             if (source.OrganizationMetaData == null)
             {
                 return new();
             }
 #pragma warning disable RS0030
-            Dictionary<string, Organization> organizations = source.OrganizationMetaData
+            Dictionary<OrganizationId, Organization> organizations = source.OrganizationMetaData
                 .ToDictionary(x => x.Id, x =>
                 {
 

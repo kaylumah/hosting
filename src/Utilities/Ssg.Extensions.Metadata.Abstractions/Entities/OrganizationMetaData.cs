@@ -9,10 +9,23 @@ using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+    public readonly struct OrganizationId
+    {
+        readonly string _AuthorId;
+
+        public OrganizationId(string authorId)
+        {
+            _AuthorId = authorId;
+        }
+
+        public static implicit operator string(OrganizationId author) => author._AuthorId;
+        public static implicit operator OrganizationId(string value) => new OrganizationId(value);
+    }
+
     [DebuggerDisplay("OrganizationMetaData '{FullName}'")]
     public class OrganizationMetaData
     {
-        public string Id { get; set; }
+        public OrganizationId Id { get; set; }
         public string FullName { get; set; }
         public string Linkedin { get; set; }
         public string Twitter { get; set; }
@@ -20,16 +33,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public DateTimeOffset Founded { get; set; }
     }
 
-    public class OrganizationMetaDataCollection : KeyedCollection<string, OrganizationMetaData>
+    public class OrganizationMetaDataCollection : KeyedCollection<OrganizationId, OrganizationMetaData>
     {
-        protected override string GetKeyForItem(OrganizationMetaData item)
+        protected override OrganizationId GetKeyForItem(OrganizationMetaData item)
         {
             return item.Id;
         }
 
-        public new IDictionary<string, OrganizationMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<OrganizationId, OrganizationMetaData> Dictionary => base.Dictionary;
 
-        public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
+        public IEnumerable<OrganizationId> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<OrganizationId>();
 
     }
 }
