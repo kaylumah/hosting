@@ -1,8 +1,8 @@
 param(
     [Parameter()]
-    [string] $BuildId = 1,
+    [string] $BuildId = (Get-Date).ToString("yyyyMMddhhmmss"),
     [Parameter()]
-    [string] $BuildNumber = (Get-Date).ToString("yyyyMMdd.hhmmss"),
+    [string] $BuildNumber = 2810,
     [Parameter()]
     [switch] $CleanDevDependencies
 )
