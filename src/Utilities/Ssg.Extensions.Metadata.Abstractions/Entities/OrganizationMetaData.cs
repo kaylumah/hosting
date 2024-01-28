@@ -18,7 +18,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             _OrganizationId = organizationId;
         }
 
-        public static implicit operator string(OrganizationId author) => author._OrganizationId;
+        public static implicit operator string(OrganizationId organization) => organization._OrganizationId;
         public static implicit operator OrganizationId(string value) => new OrganizationId(value);
     }
 
