@@ -1,5 +1,5 @@
 {%- assign page_url = page.uri | absolute_url | string.replace '/index.html' '/' -%}
-{%- assign page_author = site.data.authors[page.author] -%}
+{%- assign page_author = site.data.authors[page.author | author_id] -%}
 {%- assign page_image = page.image | absolute_url -%}
 <!DOCTYPE html>
 <html lang="{{ language }}">
@@ -37,7 +37,7 @@
         <div class="flex flex-col h-screen">
             {% include 'header.html' %}
             <main class="flex-1 py-4 text-gray-900">
-                {{ content }}
+                {{ page | to_json }}
                 {% include 'backToTop.html' %}
             </main>
             {% include 'footer.html' %}
