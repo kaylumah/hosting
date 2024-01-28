@@ -89,7 +89,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             if (posts.Count > 0)
             {
                 FeedCount(posts.Count);
-                Dictionary<string, SyndicationPerson> persons = siteMetaData.ToPersons();
+                Dictionary<AuthorId, SyndicationPerson> persons = siteMetaData.ToPersons();
                 Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
                 foreach (PageMetaData pageMetaData in posts)
                 {

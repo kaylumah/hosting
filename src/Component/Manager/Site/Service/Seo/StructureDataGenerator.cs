@@ -37,7 +37,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
-            System.Collections.Generic.Dictionary<string, Person> authors = renderData.Site.ToPersons();
+            System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             System.Collections.Generic.Dictionary<string, Organization> organizations = renderData.Site.ToOrganizations();
             LogLdJson(renderData.Page.Uri, renderData.Page.Type);
             if (renderData.Page.Type == ContentType.Article)

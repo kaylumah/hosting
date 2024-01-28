@@ -12,14 +12,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public static class SiteMetaDataExtensions
     {
-        public static Dictionary<string, Person> ToPersons(this SiteMetaData source)
+        public static Dictionary<AuthorId, Person> ToPersons(this SiteMetaData source)
         {
             if (source.AuthorMetaData == null)
             {
                 return new();
             }
 
-            Dictionary<string, Person> authors = source.AuthorMetaData
+            Dictionary<AuthorId, Person> authors = source.AuthorMetaData
                 .ToDictionary(x => x.Id, x =>
                 {
                     List<Uri> uris = new List<Uri>();

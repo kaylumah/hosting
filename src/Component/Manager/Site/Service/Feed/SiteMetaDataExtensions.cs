@@ -23,14 +23,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             return tags;
         }
 
-        public static Dictionary<string, SyndicationPerson> ToPersons(this SiteMetaData source)
+        public static Dictionary<AuthorId, SyndicationPerson> ToPersons(this SiteMetaData source)
         {
             if (source.AuthorMetaData == null)
             {
                 return new();
             }
 
-            Dictionary<string, SyndicationPerson> authors = source.AuthorMetaData
+            Dictionary<AuthorId, SyndicationPerson> authors = source.AuthorMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationPerson()
                     {
                         Name = x.FullName,
