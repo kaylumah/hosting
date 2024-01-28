@@ -51,6 +51,27 @@ namespace Test.Unit.Helpers
                 emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
             }
         }
+        internal sealed class OrganizationIdYamlTypeConverter : IYamlTypeConverter
+        {
+            static readonly Type _ContentCategoryNodeType = typeof(OrganizationId);
+
+            public bool Accepts(Type type)
+            {
+                return type == _ContentCategoryNodeType;
+            }
+
+            public object ReadYaml(IParser parser, Type type)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void WriteYaml(IEmitter emitter, object value, Type type)
+            {
+                OrganizationId node = (OrganizationId)value;
+                string str = node;
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+            }
+        }
         public static ISerializer Create()
         {
             ISerializer serializer = new SerializerBuilder()
@@ -58,6 +79,7 @@ namespace Test.Unit.Helpers
                 .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
                 .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
                 .WithTypeConverter(new AuthorIdYamlTypeConverter())
+                .WithTypeConverter(new OrganizationIdYamlTypeConverter())
                 .Build();
             return serializer;
         }
