@@ -13,6 +13,11 @@ updates:
     interval: "daily"
   ignore:
     - dependency-name: "Moq"
+  groups:
+    system.io:
+      patterns:
+        - "System.IO.Abstractions"
+
   open-pull-requests-limit: 25
 
 - package-ecosystem: "npm"
