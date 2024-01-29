@@ -14,9 +14,9 @@ updates:
   ignore:
     - dependency-name: "Moq"
   groups:
-    system.io:
-      patterns:
-        - "System.IO.Abstractions"
+    - "System.IO.Abstractions":
+        patterns:
+          - "System.IO.Abstractions*"
 
   open-pull-requests-limit: 25
 
