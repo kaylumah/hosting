@@ -15,6 +15,11 @@ updates:
     - dependency-name: "Moq"
   open-pull-requests-limit: 25
 
+- package-ecosystem: "npm"
+  directory: "/_site"
+  schedule:
+    interval: "daily"
+
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
