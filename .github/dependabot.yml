@@ -16,7 +16,8 @@ updates:
   groups:
     - "System.IO.Abstractions":
         patterns:
-          - "System.IO.Abstractions*"
+          - "System.IO.Abstractions"
+          - "System.IO.Abstractions.*"
 
   open-pull-requests-limit: 25
 
