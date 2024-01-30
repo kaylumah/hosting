@@ -5,10 +5,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     static class SiteMapConstants
     {
+#pragma warning disable IDESIGN102 // Avoid inline member initialization.
         public const string SiteMapNamespace = "http://www.sitemaps.org/schemas/sitemap/0.9";
         public const string UrlSetTag = "urlset";
         public const string UrlTag = "url";
         public const string LocationTag = "loc";
         public const string LastModifiedTag = "lastmod";
+#pragma warning restore IDESIGN102 // Avoid inline member initialization.
     }
 }

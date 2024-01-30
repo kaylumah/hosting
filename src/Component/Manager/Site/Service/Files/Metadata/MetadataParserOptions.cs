@@ -7,8 +7,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class MetadataParserOptions
     {
-        public const string Options = "Metadata";
-        public DefaultMetadatas Defaults { get; set; } = new DefaultMetadatas();
-        public Dictionary<string, string> ExtensionMapping { get; set; } = new Dictionary<string, string>();
+        public static readonly string Options;
+
+        static MetadataParserOptions()
+        {
+            Options = "Metadata";
+        }
+
+        public DefaultMetadatas Defaults
+        { get; set; } = new DefaultMetadatas();
+        public Dictionary<string, string> ExtensionMapping
+        { get; set; } = new Dictionary<string, string>();
     }
 }

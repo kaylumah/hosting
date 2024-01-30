@@ -8,7 +8,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public static class RenderDataExtensions
     {
-        public static readonly Func<RenderData, bool> Html = (renderData) => renderData.IsHtml();
+        public static readonly Func<RenderData, bool> Html;
+
+        static RenderDataExtensions()
+        {
+            Html = (renderData) => renderData.IsHtml();
+        }
 
         public static bool IsHtml(this RenderData renderData)
         {
