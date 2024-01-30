@@ -25,12 +25,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
     [DebuggerDisplay("OrganizationMetaData '{FullName}'")]
     public class OrganizationMetaData
     {
-        public OrganizationId Id { get; set; }
-        public string FullName { get; set; }
-        public string Linkedin { get; set; }
-        public string Twitter { get; set; }
-        public string Logo { get; set; }
-        public DateTimeOffset Founded { get; set; }
+        public OrganizationId Id
+        { get; set; }
+        public string FullName
+        { get; set; }
+        public string Linkedin
+        { get; set; }
+        public string Twitter
+        { get; set; }
+        public string Logo
+        { get; set; }
+        public DateTimeOffset Founded
+        { get; set; }
     }
 
     public class OrganizationMetaDataCollection : KeyedCollection<OrganizationId, OrganizationMetaData>
