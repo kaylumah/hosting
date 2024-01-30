@@ -25,7 +25,7 @@ jobs:
         run: |
           Write-Output "PR created by Dependabot"
       - name: Use Node.js v16
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 16
       - name: Setup dotnet

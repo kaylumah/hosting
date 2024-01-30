@@ -11,7 +11,20 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+  ignore:
+    - dependency-name: "Moq"
+  groups:
+    System.IO.Abstractions:
+      patterns:
+        - "System.IO.Abstractions"
+        - "System.IO.Abstractions.*"
+
   open-pull-requests-limit: 25
+
+- package-ecosystem: "npm"
+  directory: "/_site"
+  schedule:
+    interval: "daily"
 
 - package-ecosystem: "github-actions"
   directory: "/"
