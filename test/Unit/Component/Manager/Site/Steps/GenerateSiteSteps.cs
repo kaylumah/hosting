@@ -57,18 +57,17 @@ namespace Test.Unit.Component.Manager.Site.Steps
         {
             async Task Scenario(ISiteManager siteManager)
             {
-                await siteManager.GenerateSite(new GenerateSiteRequest()
+                SiteConfiguration configuration = new SiteConfiguration()
                 {
-                    Configuration = new SiteConfiguration()
-                    {
-                        Source = Constants.Directories.SourceDirectory,
-                        Destination = Constants.Directories.DestinationDirectory,
-                        AssetDirectory = Constants.Directories.AssetDirectory,
-                        DataDirectory = Constants.Directories.DataDirectory,
-                        LayoutDirectory = Constants.Directories.LayoutDirectory,
-                        PartialsDirectory = Constants.Directories.PartialsDirectory
-                    }
-                });
+                    Source = Constants.Directories.SourceDirectory,
+                    Destination = Constants.Directories.DestinationDirectory,
+                    AssetDirectory = Constants.Directories.AssetDirectory,
+                    DataDirectory = Constants.Directories.DataDirectory,
+                    LayoutDirectory = Constants.Directories.LayoutDirectory,
+                    PartialsDirectory = Constants.Directories.PartialsDirectory
+                };
+                GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration);
+                await siteManager.GenerateSite(generateSiteRequest);
             }
 
             await _SiteManagerTestHarness.TestSiteManager(Scenario).ConfigureAwait(false);

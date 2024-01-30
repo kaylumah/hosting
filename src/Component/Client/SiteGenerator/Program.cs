@@ -49,15 +49,6 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             configurationBuilder
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true)
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    // { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    // { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    // { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    // { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    // { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    // { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
-                })
                 .AddEnvironmentVariables("Kaylumah_");
 
             if (args is { Length: > 0 })
@@ -73,7 +64,8 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             IServiceCollection services = new ServiceCollection();
             services.AddLogging(builder =>
             {
-                builder.AddConfiguration(configuration.GetSection("Logging"));
+                IConfigurationSection loggingSection = configuration.GetSection("Logging");
+                builder.AddConfiguration(loggingSection);
                 builder.AddSimpleConsole(opt =>
                 {
                     opt.IncludeScopes = true;
@@ -91,7 +83,8 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             Stopwatch watch = new Stopwatch();
             Console.WriteLine("Start Site Generation");
             watch.Start();
-            await siteManager.GenerateSite(new GenerateSiteRequest { Configuration = siteConfiguration }).ConfigureAwait(false);
+            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(siteConfiguration);
+            await siteManager.GenerateSite(generateSiteRequest).ConfigureAwait(false);
             watch.Stop();
             Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
         }
