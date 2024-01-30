@@ -53,8 +53,8 @@
       - to ignore warning add to NoWarn
       - to keep warning but not fail the build
     -->
-    <NoWarn>$(NoWarn);IDESIGN103;IDESIGN105</NoWarn>
-    <WarningsNotAsErrors>$(WarningsNotAsErrors);</WarningsNotAsErrors>
+    <NoWarn>$(NoWarn);IDESIGN105</NoWarn>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103</WarningsNotAsErrors>
   </PropertyGroup>
   
   <PropertyGroup Label="SonarAnalyzers">
