@@ -21,9 +21,12 @@ namespace Kaylumah.Ssg.Utilities
         };
         #pragma warning restore IDESIGN103
 
-        public static AsyncLocal<DateTimeOffset> Date { get; } = new();
-        public static AsyncLocal<string> Url { get; } = new();
-        public static AsyncLocal<string> BaseUrl { get; } = new();
+        public static AsyncLocal<DateTimeOffset> Date
+        { get; } = new();
+        public static AsyncLocal<string> Url 
+        { get; } = new();
+        public static AsyncLocal<string> BaseUrl 
+        { get; } = new();
         public static DateTimeOffset ToDate(string input)
         {
             IFormatProvider culture = new CultureInfo("en-US", true);

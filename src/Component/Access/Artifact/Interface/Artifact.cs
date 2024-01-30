@@ -8,8 +8,10 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
     [DebuggerDisplay("Artifact '{Path}'")]
     public class Artifact
     {
-        public byte[] Contents { get; set; }
-        public string Path { get; set; }
+        public byte[] Contents
+        { get; set; }
+        public string Path
+        { get; set; }
 
         public Artifact(string path, byte[] contents)
         {

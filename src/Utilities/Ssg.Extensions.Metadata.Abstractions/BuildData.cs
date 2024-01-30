@@ -8,15 +8,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class BuildData
     {
-        public string BuildId { get; set; }
-        public string BuildNumber { get; set; }
-        public string Version { get; set; }
-        public string Copyright { get; set; }
-        public string SourceBaseUri { get; set; }
-        public string SourceBuildUri { get; set; }
-        public string GitHash { get; set; }
-        public string ShortGitHash { get; set; }
-        public DateTimeOffset Time { get; set; }
+        public string BuildId
+        { get; set; }
+        public string BuildNumber
+        { get; set; }
+        public string Version
+        { get; set; }
+        public string Copyright
+        { get; set; }
+        public string SourceBaseUri
+        { get; set; }
+        public string SourceBuildUri
+        { get; set; }
+        public string GitHash
+        { get; set; }
+        public string ShortGitHash
+        { get; set; }
+        public DateTimeOffset Time
+        { get; set; }
 
         public BuildData(AssemblyInfo info, DateTimeOffset buildTime)
         {

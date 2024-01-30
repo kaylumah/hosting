@@ -5,8 +5,10 @@ namespace Kaylumah.Ssg.Access.Artifact.Interface
 {
     public class FileSystemOutputLocation : OutputLocation
     {
-        public bool Clean { get; set; }
-        public string Path { get; set; }
+        public bool Clean
+        { get; set; }
+        public string Path
+        { get; set; }
 
         public FileSystemOutputLocation(string path, bool clean)
         {
