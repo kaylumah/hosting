@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -80,9 +81,10 @@ namespace Kaylumah.Ssg.Utilities
             // https://stackoverflow.com/questions/60929281/number-of-words-by-htmlagilitypack
             char[] delimiter = new char[] { ' ' };
             int kelime = 0;
-            foreach (string text in document.DocumentNode
-                .SelectNodes("//text()")
-                .Select(node => node.InnerText))
+            HtmlNode documentNode = document.DocumentNode;
+            HtmlNodeCollection textNodes = documentNode.SelectNodes("//text()");
+            IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
+            foreach (string text in innerTexts)
             {
                 System.Collections.Generic.IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                     .Where(s => Char.IsLetter(s[0]));

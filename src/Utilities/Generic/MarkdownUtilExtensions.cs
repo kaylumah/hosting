@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using Markdig;
 using Markdig.Helpers;
 using Markdig.Renderers;
@@ -43,7 +44,8 @@ namespace Kaylumah.Ssg.Utilities
 
         void Pipeline_DocumentProcessed(MarkdownDocument document)
         {
-            foreach (MarkdownObject node in document.Descendants())
+            IEnumerable<MarkdownObject> descendants = document.Descendants();
+            foreach (MarkdownObject node in descendants)
             {
                 if (node is Inline)
                 {

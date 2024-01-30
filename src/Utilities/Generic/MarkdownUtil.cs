@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Markdig;
 using Markdig.Renderers;
@@ -60,7 +61,8 @@ namespace Kaylumah.Ssg.Utilities
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
 
             // Process headings to insert an intermediate LinkInline
-            foreach (HeadingBlock headingBlock in doc.Descendants<HeadingBlock>())
+            IEnumerable<HeadingBlock> blocks = doc.Descendants<HeadingBlock>();
+            foreach (HeadingBlock headingBlock in blocks)
             {
                 LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null);
                 ContainerInline previousInline = headingBlock.Inline;
