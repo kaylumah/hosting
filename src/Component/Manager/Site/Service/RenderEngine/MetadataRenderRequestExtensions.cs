@@ -7,8 +7,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public static class MetadataRenderRequestExtensions
     {
-        public static readonly Func<MetadataRenderRequest, bool> Html = (metadataRenderRequest) => metadataRenderRequest.IsHtml();
-
+        public static readonly Func<MetadataRenderRequest, bool> Html;
+        static MetadataRenderRequestExtensions()
+        {
+            Html = (metadataRenderRequest) => metadataRenderRequest.IsHtml();
+        }
         public static bool IsHtml(this MetadataRenderRequest request)
         {
             return RenderDataExtensions.Html(request.Metadata);

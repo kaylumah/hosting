@@ -8,7 +8,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     public class SiteMap
     {
-        public IEnumerable<SiteMapNode> Items { get; set; }
+        public IEnumerable<SiteMapNode> Items
+        { get; set; }
 
         public SiteMapFormatter GetFormatter() => new SiteMapFormatter(this);
 

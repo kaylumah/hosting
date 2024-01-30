@@ -5,6 +5,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public class MetadataRenderResult
     {
-        public string Content { get; set; }
+        public string Content
+        { get; set; }
     }
 }

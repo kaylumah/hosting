@@ -7,7 +7,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {
     public class LayoutMetadata
     {
-        [YamlMember(Alias = "layout")]
-        public string Layout { get; set; }
+        [YamlMember(Alias = "layout")] public string Layout
+        { get; set; }
     }
 }
