@@ -14,12 +14,16 @@ namespace Kaylumah.Ssg.Utilities
 {
     public class GlobalFunctions
     {
-        #pragma warning disable IDESIGN103
-        static readonly JsonSerializerOptions _Options = new JsonSerializerOptions()
+        static readonly JsonSerializerOptions _Options;
+        static GlobalFunctions()
         {
-            WriteIndented = true
-        };
-        #pragma warning restore IDESIGN103
+#pragma warning disable IDESIGN103 // Avoid compound statements.
+            _Options = new JsonSerializerOptions()
+            {
+                WriteIndented = true
+            };
+#pragma warning restore IDESIGN103 // Avoid compound statements.
+        }
 
         public static AsyncLocal<DateTimeOffset> Date
         { get; } = new();

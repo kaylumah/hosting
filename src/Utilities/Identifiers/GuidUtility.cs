@@ -11,6 +11,12 @@ namespace Kaylumah.Ssg.Utilities
     public static class GuidUtility
     {
         // https://gist.github.com/angularsen/92a3ba9d9a94d250accd257f9f5a3d54
+        static GuidUtility()
+        {
+            DnsNamespace = new("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+            UrlNamespace = new("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
+            IsoOidNamespace = new("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+        }
 
         public static Guid Create(Guid namespaceId, string name) => Create(namespaceId, name, 5);
 
@@ -65,17 +71,17 @@ namespace Kaylumah.Ssg.Utilities
         /// <summary>
         /// The namespace for fully-qualified domain names (from RFC 4122, Appendix C).
         /// </summary>
-        public static readonly Guid DnsNamespace = new("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+        public static readonly Guid DnsNamespace;
 
         /// <summary>
         /// The namespace for URLs (from RFC 4122, Appendix C).
         /// </summary>
-        public static readonly Guid UrlNamespace = new("6ba7b811-9dad-11d1-80b4-00c04fd430c8");
+        public static readonly Guid UrlNamespace;
 
         /// <summary>
         /// The namespace for ISO OIDs (from RFC 4122, Appendix C).
         /// </summary>
-        public static readonly Guid IsoOidNamespace = new("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+        public static readonly Guid IsoOidNamespace;
 
         internal static void SwapByteOrder(byte[] guid)
         {

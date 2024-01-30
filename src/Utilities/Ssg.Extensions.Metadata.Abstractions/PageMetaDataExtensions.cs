@@ -10,13 +10,21 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public static class PageMetaDataExtensions
     {
-        public static readonly Func<PageMetaData, bool> Tags = (page) => page.Tags != null && page.Tags.Count > 0;
+        public static readonly Func<PageMetaData, bool> Tags;
 
-        public static readonly Func<PageMetaData, bool> Series = (page) => !string.IsNullOrEmpty(page.Series);
+        public static readonly Func<PageMetaData, bool> Series;
 
-        public static readonly Func<PageMetaData, bool> Html = (page) => page.IsHtml();
+        public static readonly Func<PageMetaData, bool> Html;
 
-        public static readonly Func<PageMetaData, bool> Featured = (page) => page.Featured;
+        public static readonly Func<PageMetaData, bool> Featured;
+
+        static PageMetaDataExtensions()
+        {
+            Tags = (page) => page.Tags != null && page.Tags.Count > 0;
+            Series = (page) => !string.IsNullOrEmpty(page.Series);
+            Html = (page) => page.IsHtml();
+            Featured = (page) => page.Featured;
+        }
 
         public static string GetExtension(this PageMetaData pageMetaData)
         {

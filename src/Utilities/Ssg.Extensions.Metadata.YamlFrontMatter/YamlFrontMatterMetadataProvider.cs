@@ -9,18 +9,19 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
 {
     public class YamlFrontMatterMetadataProvider : IMetadataProvider
     {
-        const string Pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
+        readonly string _Pattern;
 
         readonly IYamlParser _YamlParser;
         public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
         {
             _YamlParser = yamlParser;
+            _Pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
         }
 
         public Metadata<T> Retrieve<T>(string contents)
         {
             string frontMatterData = string.Empty;
-            Match match = Regex.Match(contents, Pattern);
+            Match match = Regex.Match(contents, _Pattern);
             if (match.Success)
             {
                 frontMatterData = match.Groups["yaml"].Value.TrimEnd();
