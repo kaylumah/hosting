@@ -45,10 +45,6 @@ jobs:
         shell: pwsh
         run: |
           dotnet tool restore
-      - name: 'Set timezone'
-        shell: pwsh
-        run: |
-          Set-TimeZone -Id "Europe/Amsterdam"
       - name: 'Generate Website'
         shell: pwsh
         run: |
