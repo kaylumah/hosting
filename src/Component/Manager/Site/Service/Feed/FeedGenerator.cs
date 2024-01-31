@@ -48,36 +48,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             DateTimeOffset generatedAtBuildTime = build.Time;
             LogCreateBlog(generatorVersion);
 
-            SyndicationFeed feed = new SyndicationFeed
-            {
-                Language = siteMetaData.Language,
-                Title = new CDataSyndicationContent(siteMetaData.Title),
-                Description = new CDataSyndicationContent(siteMetaData.Description),
-                Id = GlobalFunctions.AbsoluteUrl("feed.xml"),
-                Copyright = new CDataSyndicationContent(copyrightClaim),
-                LastUpdatedTime = generatedAtBuildTime,
-                ImageUrl = new Uri(GlobalFunctions.AbsoluteUrl("assets/logo_alt.svg")),
-                Generator = "Kaylumah Site Generator"
-            };
+            SyndicationFeed feed = new SyndicationFeed();
+            feed.Language = siteMetaData.Language;
+            feed.Title =  new CDataSyndicationContent(siteMetaData.Title);
+            feed.Description = new CDataSyndicationContent(siteMetaData.Description);
+            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
+            feed.ImageUrl = GlobalFunctions.AbsoluteUri("assets/logo_alt.svg");
+            feed.Generator = "Kaylumah Site Generator";
 
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("feed.xml")))
-            {
-                RelationshipType = "self",
-                MediaType = "application/atom+xml",
-            });
+            SyndicationLink selfLink = BuildLink("feed.xml", "self", "application/atom+xml");
+            feed.Links.Add(selfLink);
 
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("blog.html")))
-            {
-                RelationshipType = "alternate",
-                MediaType = "text/html",
-            });
+            SyndicationLink alternateLink = BuildLink("blog.html", "alternate", "text/html");
+            feed.Links.Add(alternateLink);
 
-            feed.Links.Add(new SyndicationLink(new Uri(GlobalFunctions.AbsoluteUrl("archive.html")))
-            {
-                RelationshipType = "related",
-                MediaType = "text/html",
-            });
+            SyndicationLink relatedLink = BuildLink("archive.html", "related", "text/html");
+            feed.Links.Add(relatedLink);
+
             return feed;
+        }
+
+        SyndicationLink BuildLink(string relativePath, string relationshipType, string mediaType)
+        {
+            Uri absoluteUri = GlobalFunctions.AbsoluteUri(relativePath);
+            SyndicationLink result = new SyndicationLink(absoluteUri);
+            result.RelationshipType = relationshipType;
+            result.MediaType = mediaType;
+            return result;
         }
 
         List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
@@ -94,23 +91,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 foreach (PageMetaData pageMetaData in posts)
                 {
                     string pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
-                    SyndicationItem item = new SyndicationItem
-                    {
-                        Id = pageUrl,
-                        Title = new CDataSyndicationContent(pageMetaData.Title),
-                        Summary = new CDataSyndicationContent(pageMetaData.Description),
-                        Content = new CDataSyndicationContent(new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html)),
-                        PublishDate = pageMetaData.Published,
-                        LastUpdatedTime = pageMetaData.Modified
-                    };
-
+                    SyndicationItem item = new SyndicationItem();
+                    item.Id = pageUrl;
+                    item.Title = new CDataSyndicationContent(pageMetaData.Title);
+                    item.Summary = new CDataSyndicationContent(pageMetaData.Description);
+                    TextSyndicationContent htmlContent = new TextSyndicationContent(pageMetaData.Content, TextSyndicationContentKind.Html);
+                    item.Content = new CDataSyndicationContent(htmlContent);
+                    item.PublishDate = pageMetaData.Published;
+                    item.LastUpdatedTime = pageMetaData.Modified;
+                    
                     List<SyndicationCategory> itemCategories = pageMetaData
                         .Tags
                         .Where(tags.ContainsKey)
                         .Select(tag => tags[tag])
                         .ToList();
                     itemCategories.ForEach(item.Categories.Add);
-                    item.Links.Add(new SyndicationLink(new Uri(pageUrl)));
+                    Uri pageUri = new Uri(pageUrl);
+                    SyndicationLink syndicationLink = new SyndicationLink(pageUri);
+                    item.Links.Add(syndicationLink);
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson person))
                     {
                         SyndicationPerson author = person;
@@ -121,20 +119,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 }
             }
 
-            return result
-                .ToList();
+            return result;
         }
 
         static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
+            IEnumerable<PageMetaData> result;
+
             if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[] posts))
             {
-                return posts
+                result = posts
                     .Where(x => x.Feed)
                     .ToList();
             }
+            else
+            {
+                result = Enumerable.Empty<PageMetaData>();
+            }
 
-            return Enumerable.Empty<PageMetaData>();
+            return result;
         }
     }
 }

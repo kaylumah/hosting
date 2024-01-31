@@ -233,6 +233,13 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
+        public static Uri AbsoluteUri(string source)
+        {
+            string absoluteUrl = AbsoluteUrl(source);
+            Uri result = new Uri(absoluteUrl);
+            return result;
+        }
+
         public static string ToJson(object o)
         {
             string result = JsonSerializer.Serialize(o, _Options);
