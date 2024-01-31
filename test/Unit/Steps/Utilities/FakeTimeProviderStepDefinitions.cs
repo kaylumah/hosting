@@ -20,7 +20,8 @@ namespace Test.Unit.Steps.Utilities
         [Given(@"the current date is '(.*)':")]
         public void GivenTheCurrentDateIs(DateTimeOffset systemDateTime)
         {
-            _FakeTimeProvider.SetUtcNow(systemDateTime);
+            DateTimeOffset utcDate = new DateTimeOffset(systemDateTime.DateTime, TimeSpan.Zero);
+            _FakeTimeProvider.SetUtcNow(utcDate);
         }
     }
 }
