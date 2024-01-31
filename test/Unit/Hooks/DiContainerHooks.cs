@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.IO.Abstractions.TestingHelpers;
 using BoDi;
 using Microsoft.Extensions.Time.Testing;
@@ -25,6 +26,8 @@ namespace Test.Unit
             _ObjectContainer.RegisterInstanceAs(mockFileSystem);
 
             FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
+            fakeTimeProvider.SetLocalTimeZone(timeZoneInfo);
             _ObjectContainer.RegisterInstanceAs(fakeTimeProvider);
         }
     }
