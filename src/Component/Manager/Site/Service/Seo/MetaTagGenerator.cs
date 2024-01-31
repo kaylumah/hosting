@@ -62,7 +62,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 sb.Append(kaylumah);
             }
 
-            return sb.ToString();
+            string result = sb.ToString();
+            return result;
         }
 
         static string ToKaylumahTags(RenderData renderData)
@@ -72,6 +73,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             SiteMetaData siteMetaData = renderData.Site;
             PageMetaData pageMetaData = renderData.Page;
             BuildData buildData = siteMetaData.Build;
+            string formattedTime = buildData.Time.ToString("yyyy-MM-dd HH:mm:ss zzz", CultureInfo.InvariantCulture);
             List<string> result = new List<string>
             {
                 CreateKaylumahMetaTag("copyright", buildData.Copyright),
@@ -79,7 +81,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 CreateKaylumahMetaTag("version", buildData.Version),
                 CreateKaylumahMetaTag("buildId", buildData.BuildId),
                 CreateKaylumahMetaTag("buildNumber", buildData.BuildNumber),
-                CreateKaylumahMetaTag("time", buildData.Time.ToString("yyyy-MM-dd HH:mm:ss zzz", CultureInfo.InvariantCulture)),
+                CreateKaylumahMetaTag("time", formattedTime),
                 CreateKaylumahMetaTag("site", siteMetaData.Id),
                 CreateKaylumahMetaTag("page", pageMetaData.Id)
             };
@@ -93,7 +95,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            return sb.ToString();
+            string sbResult = sb.ToString();
+            return sbResult;
         }
 
         static string ToCommonTags(RenderData renderData)
@@ -110,6 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
             hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
             linkElement.Attributes.Append(hrefAttribute);
+            string formattedTags = string.Join(", ", renderData.Page.Tags);
             StringBuilder sb = new StringBuilder();
             List<string> result = new List<string>()
         {
@@ -118,7 +122,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
             CreateMetaTag("description", renderData.Description),
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-            CreateMetaTag("keywords", string.Join(", ", renderData.Page.Tags))
+            CreateMetaTag("keywords", formattedTags)
         };
             if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
             {
@@ -135,7 +139,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            return sb.ToString();
+            string sbResult = sb.ToString();
+            return sbResult;
         }
 
         static string ToTwitterTags(RenderData renderData)
@@ -151,19 +156,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             if (!string.IsNullOrEmpty(renderData.Page.Image))
             {
-                result.Add(CreateMetaTag("twitter:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
+                string twitterUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Image);
+                string imageTag = CreateMetaTag("twitter:image", twitterUrl);
+                result.Add(imageTag);
             }
 
             if (!string.IsNullOrEmpty(renderData.Page.Organization))
             {
                 OrganizationMetaData organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
-                result.Add(CreateMetaTag("twitter:site", $"@{organization.Twitter}"));
+                string organizationTag = CreateMetaTag("twitter:site", $"@{organization.Twitter}");
+                result.Add(organizationTag);
             }
 
             if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
             {
                 AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-                result.Add(CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}"));
+                string creatorTag = CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}");
+                result.Add(creatorTag);
             }
 
             if (result.Count > 0)
@@ -175,26 +184,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            return sb.ToString();
+            string sbResult = sb.ToString();
+            return sbResult;
         }
 
         static string ToOpenGraphTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
             StringBuilder sb = new StringBuilder();
+            string pageUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
             List<string> result = new List<string>
         {
             CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
             CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
-            CreateOpenGraphMetaTag("og:url", GlobalFunctions.AbsoluteUrl(renderData.Page.Uri)),
+            CreateOpenGraphMetaTag("og:url", pageUrl),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
             if (!string.IsNullOrEmpty(renderData.Page.Image))
             {
-                result.Add(CreateOpenGraphMetaTag("og:image", GlobalFunctions.AbsoluteUrl(renderData.Page.Image)));
+                string imageUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Image);
+                string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
+                result.Add(imageTag);
             }
 
             if (renderData.Page.Type == ContentType.Article)
@@ -202,14 +215,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
                 {
                     AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
-                    result.Add(CreateOpenGraphMetaTag("article:author", author.FullName));
+                    string authorTag = CreateOpenGraphMetaTag("article:author", author.FullName);
+                    result.Add(authorTag);
                 }
 
-                result.Add(CreateOpenGraphMetaTag("article:published_time", GlobalFunctions.DateToXmlschema(renderData.Page.Published)));
-                result.Add(CreateOpenGraphMetaTag("article:modified_time", GlobalFunctions.DateToXmlschema(renderData.Page.Modified)));
+                string formattedPublishTime = GlobalFunctions.DateToXmlschema(renderData.Page.Published);
+                string formattedModifiedTime = GlobalFunctions.DateToXmlschema(renderData.Page.Modified);
+                string publishedTag = CreateOpenGraphMetaTag("article:published_time", formattedPublishTime);
+                string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
+                result.Add(publishedTag);
+                result.Add(modifiedTag);
                 foreach (string tag in renderData.Page.Tags)
                 {
-                    result.Add(CreateOpenGraphMetaTag("article:tag", tag));
+                    string htmlTag = CreateOpenGraphMetaTag("article:tag", tag);
+                    result.Add(htmlTag);
                 }
             }
 
@@ -222,27 +241,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            return sb.ToString();
+            string sbResult = sb.ToString();
+            return sbResult;
         }
 
         static string CreateKaylumahMetaTag(string name, string content)
         {
             string namespacedName = $"kaylumah:{name}";
-            return CreatePropertyMetaTag(namespacedName, content);
+            string result = CreatePropertyMetaTag(namespacedName, content);
+            return result;
         }
         static string CreateOpenGraphMetaTag(string name, string content)
         {
-            return CreatePropertyMetaTag(name, content);
+            string result = CreatePropertyMetaTag(name, content);
+            return result;
         }
 
         static string CreatePropertyMetaTag(string name, string content)
         {
-            return CreateMetaTag("property", name, content);
+            string result = CreateMetaTag("property", name, content);
+            return result;
         }
 
         static string CreateMetaTag(string name, string content)
         {
-            return CreateMetaTag("name", name, content);
+            string result = CreateMetaTag("name", name, content);
+            return result;
         }
 
         static string CreateMetaTag(string idAttributeName, string name, string content)
@@ -255,7 +279,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             XmlAttribute contentAttribute = finalDocument.CreateAttribute("content");
             contentAttribute.Value = content;
             createdElement.Attributes.Append(contentAttribute);
-            return createdElement.OuterXml;
+            string result = createdElement.OuterXml;
+            return result;
         }
     }
 }
