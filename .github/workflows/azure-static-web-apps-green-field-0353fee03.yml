@@ -43,6 +43,7 @@ jobs:
       - name: 'Set timezone'
         shell: pwsh
         run: |
+          Import-Module -Name Microsoft.PowerShell.Management
           Set-TimeZone -Id "Europe/Amsterdam"
       - name: 'Generate Website'
         shell: pwsh
