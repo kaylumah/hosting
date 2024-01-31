@@ -12,18 +12,12 @@ on:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-#     runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: 'For Dependabot'
-        if: github.actor == 'dependabot[bot]'
-        shell: pwsh
-        run: |
-          Write-Output "PR created by Dependabot"
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -107,7 +101,6 @@ jobs:
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
-#     runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
     name: Close Pull Request Job
     steps:
