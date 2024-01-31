@@ -462,3 +462,8 @@ dist/
 LivingDoc.html
 test/html-coverage-report
 userid
+
+# NuGet Packages
+!/nuget/*.nupkg
+# NuGet Symbol Packages
+!/nuget/*.snupkg

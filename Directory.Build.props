@@ -44,19 +44,18 @@
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
-  <!--
   <PropertyGroup Label="IDesignAnalyzers">
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
     <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Client'))">false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Manager'))">false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Engine'))">false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="$(MSBuildProjectName.Contains('.Access'))">false</EnableIDesignAnalyzers>
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
-    <NoWarn>$(NoWarn);IDESIGN100;IDESIGN101;IDESIGN102;IDESIGN104</NoWarn>
+    <!-- 
+      - Analyzers warnings follow the format IDESIGN***
+      - to ignore warning add to NoWarn
+      - to keep warning but not fail the build
+    -->
+    <NoWarn>$(NoWarn);IDESIGN105</NoWarn>
     <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103</WarningsNotAsErrors>
   </PropertyGroup>
-  -->
   
   <PropertyGroup Label="SonarAnalyzers">
     <EnableSonarAnalyzers>false</EnableSonarAnalyzers>
