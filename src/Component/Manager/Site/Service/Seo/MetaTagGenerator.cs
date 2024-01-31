@@ -221,7 +221,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 string formattedPublishTime = GlobalFunctions.DateToXmlschema(renderData.Page.Published);
                 string formattedModifiedTime = GlobalFunctions.DateToXmlschema(renderData.Page.Modified);
-                string publishedTag = CreateOpenGraphMetaTag("article:published_time", formattedModifiedTime);
+                string publishedTag = CreateOpenGraphMetaTag("article:published_time", formattedPublishTime);
                 string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
                 result.Add(publishedTag);
                 result.Add(modifiedTag);
