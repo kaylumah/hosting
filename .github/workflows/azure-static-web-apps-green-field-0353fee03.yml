@@ -77,14 +77,15 @@ jobs:
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: https://kaylumah.nl
-      - name: 'Verify Website'
-        if: github.actor != 'dependabot[bot]'
-        id: verifywebsite
-        shell: pwsh
-        run: |
-          $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
-          $SiteMapOutputAsString = $SiteMapOutput -join ","
-          echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
+      # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
+      # - name: 'Verify Website'
+      #   if: github.actor != 'dependabot[bot]'
+      #   id: verifywebsite
+      #   shell: pwsh
+      #   run: |
+      #     $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
+      #     $SiteMapOutputAsString = $SiteMapOutput -join ","
+      #     echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
       # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
       # - name: Lighthouse
       #   if: github.actor != 'dependabot[bot]'
