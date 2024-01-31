@@ -24,10 +24,10 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "PR created by Dependabot"
-      - name: Use Node.js v16
+      - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
