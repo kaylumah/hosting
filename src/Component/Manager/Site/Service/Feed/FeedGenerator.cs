@@ -53,6 +53,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             feed.Title =  new CDataSyndicationContent(siteMetaData.Title);
             feed.Description = new CDataSyndicationContent(siteMetaData.Description);
             feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
+            feed.Copyright = new CDataSyndicationContent(copyrightClaim);
+            feed.LastUpdatedTime = generatedAtBuildTime;
             feed.ImageUrl = GlobalFunctions.AbsoluteUri("assets/logo_alt.svg");
             feed.Generator = "Kaylumah Site Generator";
 
