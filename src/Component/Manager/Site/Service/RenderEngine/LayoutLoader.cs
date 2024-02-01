@@ -35,7 +35,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
                 Encoding encoding = fileInfo.CreateReadStream().DetermineEncoding();
                 string fileName = fileInfo.Name;
-                using StreamReader streamReader = new StreamReader(fileInfo.CreateReadStream());
+                Stream stream = fileInfo.CreateReadStream();
+                using StreamReader streamReader = new StreamReader(stream);
 
                 string text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                 Metadata<LayoutMetadata> metadata = _MetadataProvider.Retrieve<LayoutMetadata>(text);
@@ -48,22 +49,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
                 if (includeDevelopmentInfo)
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Layout: '{0}' -->", path));
+                    string beginTemplate = string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Layout: '{0}' -->", path);
+                    sb.AppendLine(beginTemplate);
                     sb.Append(content);
                     sb.AppendLine();
-                    sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- END Layout: '{0}' -->", path));
+                    string endTemplate = string.Format(CultureInfo.InvariantCulture, "<!-- END Layout: '{0}' -->", path);
+                    sb.AppendLine(endTemplate);
                     string modifiedContent = sb.ToString();
                     content = modifiedContent;
                 }
 
-                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>
-                {
-                    Encoding = encoding.WebName,
-                    Name = fileName,
-                    Path = path,
-                    Content = content,
-                    Data = metadata.Data
-                };
+                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>();
+                fileWithMeta.Encoding = encoding.WebName;
+                fileWithMeta.Name = fileName;
+                fileWithMeta.Path = path;
+                fileWithMeta.Content = content;
+                fileWithMeta.Data = metadata.Data;
 
                 result.Add(fileWithMeta);
             }
