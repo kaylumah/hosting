@@ -37,7 +37,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             writer.WriteElementString(SiteMapConstants.LocationTag, item.Url);
             if (item.LastModified.HasValue)
             {
-                writer.WriteElementString(SiteMapConstants.LastModifiedTag, item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture));
+                string formatted = item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                writer.WriteElementString(SiteMapConstants.LastModifiedTag, formatted);
             }
         }
 

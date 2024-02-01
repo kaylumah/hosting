@@ -14,7 +14,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(Series));
+                string series = this.GetValue<string>(nameof(Series));
+                return series;
             }
             set
             {
@@ -26,7 +27,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(Layout));
+                string layout = this.GetValue<string>(nameof(Layout));
+                return layout;
             }
             set
             {
@@ -38,7 +40,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(OutputLocation));
+                string outputLocation = this.GetValue<string>(nameof(OutputLocation));
+                return outputLocation;
             }
             set
             {
@@ -50,7 +53,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(Uri));
+                string uri = this.GetValue<string>(nameof(Uri));
+                return uri;
             }
             set
             {
@@ -62,7 +66,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(Collection));
+                string collection = this.GetValue<string>(nameof(Collection));
+                return collection;
             }
             set
             {
@@ -86,7 +91,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<DateTimeOffset?>(nameof(Date));
+                DateTimeOffset? date = this.GetValue<DateTimeOffset?>(nameof(Date));
+                return date;
             }
             set
             {
@@ -98,7 +104,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(PublishedDate));
+                string publishedDate = this.GetValue<string>(nameof(PublishedDate));
+                return publishedDate;
             }
             set
             {
@@ -110,7 +117,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(PublishedTime));
+                string publishTime = this.GetValue<string>(nameof(PublishedTime));
+                return publishTime;
             }
             set
             {
@@ -122,7 +130,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<DateTimeOffset?>(nameof(Published));
+                DateTimeOffset? published = this.GetValue<DateTimeOffset?>(nameof(Published));
+                return published;
             }
             set
             {
@@ -134,7 +143,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(ModifiedDate));
+                string modified = this.GetValue<string>(nameof(ModifiedDate));
+                return modified;
             }
             set
             {
@@ -146,7 +156,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<string>(nameof(ModifiedTime));
+                string time = this.GetValue<string>(nameof(ModifiedTime));
+                return time;
             }
             set
             {
@@ -158,7 +169,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<DateTimeOffset?>(nameof(Modified));
+                DateTimeOffset? modified = this.GetValue<DateTimeOffset?>(nameof(Modified));
+                return modified;
             }
             set
             {

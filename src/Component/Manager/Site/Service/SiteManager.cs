@@ -65,36 +65,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
-            IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(new FileFilterCriteria
-            {
-                RootDirectory = request.Configuration.Source,
-                DirectoriesToSkip = new string[] {
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = request.Configuration.Source;
+            criteria.DirectoriesToSkip = new [] {
                     request.Configuration.LayoutDirectory,
                     request.Configuration.PartialsDirectory,
                     request.Configuration.DataDirectory,
                     request.Configuration.AssetDirectory
-                },
-                FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray()
-            }).ConfigureAwait(false);
+            };
+            criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
+
+            IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
 
             PageMetaData[] pageMetadatas = processed
                 .ToPages(siteGuid);
+            List<PageMetaData> pageList = pageMetadatas.ToList();
             SiteMetaData siteMetadata = _SiteMetadataFactory
-                .EnrichSite(
-                    request.Configuration,
-                    siteGuid,
-                    pageMetadatas.ToList()
-            );
+                .EnrichSite(request.Configuration, siteGuid, pageList);
 
             MetadataRenderRequest[] requests = pageMetadatas
-                .Select(pageMetadata => new MetadataRenderRequest
-                {
-                    Metadata = new RenderData
-                    {
-                        Site = siteMetadata,
-                        Page = pageMetadata
-                    },
-                    Template = pageMetadata.Layout
+                .Select(pageMetadata => {
+                    MetadataRenderRequest result = new MetadataRenderRequest();
+                    RenderData metaData = new RenderData();
+                    metaData.Site = siteMetadata;
+                    metaData.Page = pageMetadata;
+                    result.Metadata = metaData;
+                    result.Template = pageMetadata.Layout;
+                    return result;
                 })
                 .ToArray();
 
@@ -107,12 +104,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }
             }
 
-            DirectoryConfiguration directoryConfig = new DirectoryConfiguration()
-            {
-                SourceDirectory = request.Configuration.Source,
-                LayoutsDirectory = request.Configuration.LayoutDirectory,
-                TemplateDirectory = request.Configuration.PartialsDirectory
-            };
+            DirectoryConfiguration directoryConfig = new DirectoryConfiguration();
+            directoryConfig.SourceDirectory = request.Configuration.Source;
+            directoryConfig.LayoutsDirectory = request.Configuration.LayoutDirectory;
+            directoryConfig.TemplateDirectory = request.Configuration.PartialsDirectory;
             MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
             List<Artifact> artifacts = processed.Select((t, i) =>
@@ -130,19 +125,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 artifacts.AddRange(pluginArtifacts);
             }
 
+            string assetDirectory = Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory);
             IEnumerable<IFileSystemInfo> assets = _FileSystem
-                .GetFiles(Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory), true)
+                .GetFiles(assetDirectory, true)
                 .Where(x => !x.IsDirectory());
 
             string env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
 
-            artifacts.AddRange(assets.Select(asset =>
-            {
+            IEnumerable<Artifact> assetArtifacts = assets.Select(asset => {
                 string assetPath = asset.FullName.Replace(env, "");
                 byte[] assetBytes = _FileSystem.GetFileBytes(asset.FullName);
                 Artifact artifact = new Artifact(assetPath, assetBytes);
                 return artifact;
-            }));
+            });
+            artifacts.AddRange(assetArtifacts);
 
             OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
             Artifact[] artifactArray = artifacts.ToArray();
@@ -154,8 +150,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.
-            List<File<LayoutMetadata>> templates = await new LayoutLoader(_FileSystem, _MetadataProvider).Load(Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory)).ConfigureAwait(false);
-            IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_FileSystem, Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory));
+            string layoutDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory);
+            List<File<LayoutMetadata>> templates = await new LayoutLoader(_FileSystem, _MetadataProvider).Load(layoutDirectory).ConfigureAwait(false);
+            string templateDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory);
+            IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_FileSystem, templateDirectory);
 
             foreach (MetadataRenderRequest request in requests)
             {
@@ -165,10 +163,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     string content = template?.Content ?? "{{ content }}";
                     content = content.Replace("{{ content }}", request.Metadata.Content);
                     Template liquidTemplate = Template.ParseLiquid(content);
-                    LiquidTemplateContext context = new LiquidTemplateContext()
-                    {
-                        TemplateLoader = templateLoader
-                    };
+                    LiquidTemplateContext context = new LiquidTemplateContext();
+                    context.TemplateLoader = templateLoader;
                     ScriptObject scriptObject = new ScriptObject();
                     scriptObject.Import(request.Metadata);
                     // note: work-around for Build becoming part of Site
@@ -182,15 +178,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     // }));
 
                     string renderedContent = await liquidTemplate.RenderAsync(context).ConfigureAwait(false);
-                    renderedResults.Add(new MetadataRenderResult { Content = renderedContent });
+                    MetadataRenderResult metadataRenderResult = new MetadataRenderResult();
+                    metadataRenderResult.Content = renderedContent;
+                    renderedResults.Add(metadataRenderResult);
                 }
                 catch (Exception)
                 {
                     throw;
                 }
             }
-
-            return renderedResults.ToArray();
+            MetadataRenderResult[] results = renderedResults.ToArray();
+            return results;
         }
     }
 

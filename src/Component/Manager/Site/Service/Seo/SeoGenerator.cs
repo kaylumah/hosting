@@ -38,7 +38,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("<!-- LdJson Meta Tags -->");
                 sb.Append(scriptElement.OuterXml);
-                return sb.ToString();
+                string result = sb.ToString();
+                return result;
             }
 
             return string.Empty;

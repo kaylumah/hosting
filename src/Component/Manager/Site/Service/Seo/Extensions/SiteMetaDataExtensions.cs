@@ -14,80 +14,90 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
     {
         public static Dictionary<AuthorId, Person> ToPersons(this SiteMetaData source)
         {
+            Dictionary<AuthorId, Person> result;
+
             if (source.AuthorMetaData == null)
             {
-                return new();
+                result = [];
+            }
+            else
+            {
+                result = source.AuthorMetaData
+                    .ToDictionary(x => x.Id, x =>
+                    {
+                        List<Uri> uris = new List<Uri>();
+
+                        if (!string.IsNullOrEmpty(x.Links.Linkedin))
+                        {
+                            Uri linkedinUri = new Uri(x.Links.LinkedinProfileUrl);
+                            uris.Add(linkedinUri);
+                        }
+
+                        if (!string.IsNullOrEmpty(x.Links.Twitter))
+                        {
+                            Uri twitterUri = new Uri(x.Links.TwitterProfileUrl);
+                            uris.Add(twitterUri);
+                        }
+
+                        Person person = new Person();
+                        person.Name = x.FullName;
+                        person.Email = x.Email;
+                        person.SameAs = new OneOrMany<Uri>(uris);
+
+                        if (!string.IsNullOrEmpty(x.Uri))
+                        {
+                            Uri personUri = GlobalFunctions.AbsoluteUri(x.Uri);
+                            person.Url = personUri;
+                        }
+
+                        if (!string.IsNullOrEmpty(x.Picture))
+                        {
+                            Uri image = GlobalFunctions.AbsoluteUri(x.Picture);
+                            person.Image = new Values<IImageObject, Uri>(image);
+                        }
+
+                        return person;
+                    });
             }
 
-            Dictionary<AuthorId, Person> authors = source.AuthorMetaData
-                .ToDictionary(x => x.Id, x =>
-                {
-                    List<Uri> uris = new List<Uri>();
-
-                    if (!string.IsNullOrEmpty(x.Links.Linkedin))
-                    {
-                        uris.Add(new Uri(x.Links.LinkedinProfileUrl));
-                    }
-
-                    if (!string.IsNullOrEmpty(x.Links.Twitter))
-                    {
-                        uris.Add(new Uri(x.Links.TwitterProfileUrl));
-                    }
-
-                    Person person = new Person()
-                    {
-                        Name = x.FullName,
-                        Email = x.Email,
-                        SameAs = new OneOrMany<Uri>(uris)
-                    };
-
-                    if (!string.IsNullOrEmpty(x.Uri))
-                    {
-                        person.Url = new Uri(GlobalFunctions.AbsoluteUrl(x.Uri));
-                    }
-
-                    if (!string.IsNullOrEmpty(x.Picture))
-                    {
-                        person.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Picture)));
-                    }
-
-                    return person;
-                });
-            return authors;
+            return result;
         }
 
         public static Dictionary<OrganizationId, Organization> ToOrganizations(this SiteMetaData source)
         {
+            Dictionary<OrganizationId, Organization> result;
             if (source.OrganizationMetaData == null)
             {
-                return new();
+                result = [];
             }
+            else
+            {
 #pragma warning disable RS0030
-            Dictionary<OrganizationId, Organization> organizations = source.OrganizationMetaData
-                .ToDictionary(x => x.Id, x =>
-                {
-
-                    List<Uri> uris = new List<Uri>
+                result = source.OrganizationMetaData
+                    .ToDictionary(x => x.Id, x =>
                     {
-                    new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
-                    };
 
-                    Organization organization = new Organization()
-                    {
-                        Name = x.FullName,
-                        FoundingDate = x.Founded.Date,
-                        SameAs = new OneOrMany<Uri>(uris)
-                    };
+                        List<Uri> uris = new List<Uri>
+                        {
+                            new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
+                        };
 
-                    if (!string.IsNullOrEmpty(x.Logo))
-                    {
-                        organization.Logo =
-                            new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(x.Logo)));
-                    }
+                        Organization organization = new Organization();
+                        organization.Name = x.FullName;
+                        organization.FoundingDate = x.Founded.Date;
+                        organization.SameAs = new OneOrMany<Uri>(uris);
 
-                    return organization;
-                });
-            return organizations;
+                        if (!string.IsNullOrEmpty(x.Logo))
+                        {
+                            Uri logoUri = GlobalFunctions.AbsoluteUri(x.Logo);
+                            organization.Logo =
+                                new Values<IImageObject, Uri>(logoUri);
+                        }
+
+                        return organization;
+                    });
+            }
+            return result;
 #pragma warning restore RS0030
         }
     }

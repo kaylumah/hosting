@@ -11,16 +11,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
     {
         public static byte[] SaveAsAtom10(this SyndicationFeed syndicationFeed)
         {
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                Indent = true,
-                Encoding = new System.Text.UTF8Encoding(false)
-            };
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.Encoding = new System.Text.UTF8Encoding(false);
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream, settings);
             syndicationFeed.SaveAsAtom10(writer);
             writer.Close();
-            return stream.ToArray();
+            byte[] result = stream.ToArray();
+            return result;
         }
     }
 }

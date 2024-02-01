@@ -14,20 +14,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
     {
         public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
-            BlogPosting blogPost = new BlogPosting
-            {
-                // Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
-                MainEntityOfPage = new Values<ICreativeWork, Uri>(new Uri(GlobalFunctions.AbsoluteUrl(page.Uri))),
-                Headline = page.Title,
-#pragma warning disable RS0030 // datetime is expected here
-                DatePublished = page.Published.DateTime,
-                DateModified = page.Modified.DateTime
-#pragma warning restore RS0030 // datetime is expected here
-            };
+            BlogPosting blogPost = new BlogPosting();
+            // blogPost.Id = new Uri(GlobalFunctions.AbsoluteUrl(renderData.page.Uri)),
+            Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
+            blogPost.MainEntityOfPage = new Values<ICreativeWork, Uri>(pageUri);
+            blogPost.Headline = page.Title;
+            #pragma warning disable RS0030 // datetime is expected here
+            blogPost.DatePublished = page.Published.DateTime;
+            blogPost.DateModified = page.Modified.DateTime;
 
             if (!string.IsNullOrEmpty(page.Image))
             {
-                blogPost.Image = new Values<IImageObject, Uri>(new Uri(GlobalFunctions.AbsoluteUrl((string)page.Image)));
+                Uri imageUri = GlobalFunctions.AbsoluteUri(page.Image);
+                blogPost.Image = new Values<IImageObject, Uri>(imageUri);
             }
 
             if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person person))
@@ -45,7 +44,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         public static IEnumerable<BlogPosting> ToBlogPostings(this IEnumerable<PageMetaData> pages, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
-            return pages.Select(page => page.ToBlogPosting(persons, organizations));
+            IEnumerable<BlogPosting> result = pages.Select(page => page.ToBlogPosting(persons, organizations));
+            return result;
         }
     }
 }

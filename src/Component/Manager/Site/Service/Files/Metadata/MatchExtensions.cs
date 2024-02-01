@@ -34,7 +34,8 @@ namespace System.Text.RegularExpressions
 
                 if (year != null && year.Success && month != null && month.Success && day != null && day.Success)
                 {
-                    return DateTimeOffset.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
+                    DateTimeOffset result = DateTimeOffset.Parse($"{year.Value}-{month.Value}-{day.Value}", CultureInfo.InvariantCulture);
+                    return result;
                 }
             }
 

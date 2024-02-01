@@ -34,8 +34,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
         public string Load(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
             // unused...
-            using StreamReader reader = new StreamReader(_FileSystem.GetFile(templatePath).CreateReadStream());
-            return reader.ReadToEnd();
+            IFileInfo fileInfo = _FileSystem.GetFile(templatePath);
+            Stream readStream = fileInfo.CreateReadStream();
+            using StreamReader reader = new StreamReader(readStream);
+            string result = reader.ReadToEnd();
+            return result;
         }
 
         public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
@@ -52,10 +55,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             if (includeDevelopmentInfo)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Template: '{0}' -->", templatePath));
+                string beginTemplate = string.Format(CultureInfo.InvariantCulture, "<!-- BEGIN Template: '{0}' -->", templatePath);
+                sb.AppendLine(beginTemplate);
                 sb.Append(templateContent);
                 sb.AppendLine();
-                sb.AppendLine(string.Format(CultureInfo.InvariantCulture, "<!-- END Template: '{0}' -->", templatePath));
+                string endTemplate = string.Format(CultureInfo.InvariantCulture, "<!-- END Template: '{0}' -->", templatePath);
+                sb.AppendLine(endTemplate);
                 string modifiedContent = sb.ToString();
                 return modifiedContent;
             }

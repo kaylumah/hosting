@@ -30,20 +30,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         public string ToLdJson(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
-            JsonSerializerOptions settings = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+            JsonSerializerOptions settings = new JsonSerializerOptions();
+            settings.AllowTrailingCommas = true;
+            settings.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            settings.WriteIndented = true;
+
             System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             System.Collections.Generic.Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
             LogLdJson(renderData.Page.Uri, renderData.Page.Type);
             if (renderData.Page.Type == ContentType.Article)
             {
                 BlogPosting blogPost = renderData.Page.ToBlogPosting(authors, organizations);
-                return blogPost.ToString(settings);
+                string ldjson = blogPost.ToString(settings);
+                return ldjson;
             }
             else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
             {
@@ -53,11 +53,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     .ByRecentlyPublished()
                     .ToBlogPostings(authors, organizations)
                     .ToList();
-                Blog blog = new Blog()
-                {
-                    BlogPost = new OneOrMany<IBlogPosting>(posts)
-                };
-                return blog.ToString(settings);
+                Blog blog = new Blog();
+                blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
+                string ldjson = blog.ToString(settings);
+                return ldjson;
             }
 
             return null;

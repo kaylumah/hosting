@@ -25,7 +25,8 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
     {
         public static IServiceCollection AddSiteManager(this IServiceCollection services, IConfiguration configuration)
         {
-            services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
+            ServiceDescriptor loggerDescriptor = ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>));
+            services.TryAdd(loggerDescriptor);
 
             services.SetupOptions<SiteInfo>(configuration, "Site");
             services.SetupOptions<MetadataParserOptions>(configuration, MetadataParserOptions.Options);

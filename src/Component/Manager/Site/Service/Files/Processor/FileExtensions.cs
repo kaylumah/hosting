@@ -22,7 +22,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file)
         {
             Dictionary<string, object> data = file.ToDictionary();
-            return new PageMetaData(data);
+            PageMetaData result =  new PageMetaData(data);
+            return result;
         }
 
         public static PageMetaData ToPage(this File file, Guid siteGuid)
@@ -34,7 +35,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         public static PageMetaData[] ToPages(this IEnumerable<File> files, Guid siteGuid)
         {
-            return files.Select(x => ToPage(x, siteGuid)).ToArray();
+            PageMetaData[] result = files.Select(x => ToPage(x, siteGuid)).ToArray();
+            return result;
         }
     }
 }

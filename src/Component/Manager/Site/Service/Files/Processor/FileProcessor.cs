@@ -57,25 +57,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
                 .ToList();
 
-            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
-                !info.IsDirectory() && criteria.FileExtensionsToTarget.Contains(Path.GetExtension(info.Name))
-            ).ToList();
+            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info => {
+                bool notDirectory = !info.IsDirectory();
+                string extension = Path.GetExtension(info.Name);
+                bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
+                bool isMatch = notDirectory && includesExtension; 
+                return isMatch;
+            }).ToList();
 
-            List<File> files =
-                await ProcessFiles(
-                    filesWithoutCollections
-                    .Select(x => x.FullName)
-                    .ToArray()
-                ).ConfigureAwait(false);
+            string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
+            List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
 
             result.AddRange(files);
 
-            List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection.Select(x => x.Name).ToArray()).ConfigureAwait(false);
+            string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
+            List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
                 List<File> targetFiles = collection
                     .Files
-                    .Where(file => criteria.FileExtensionsToTarget.Contains(Path.GetExtension(file.Name)))
+                    .Where(file => { 
+                        string extension = Path.GetExtension(file.Name);
+                        bool result = criteria.FileExtensionsToTarget.Contains(extension);
+                        return result;
+                    })
                     .ToList();
                 bool exists = _SiteInfo.Collections.Contains(collection.Name);
                 if (!exists)
@@ -108,14 +113,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 using System.IDisposable logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
                 string keyName = collection[1..];
-                List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(Path.Combine(criteria.RootDirectory, collection)).Where(x => !x.IsDirectory()).ToList();
-                List<File> files = await ProcessFiles(targetFiles.ToArray(), keyName).ConfigureAwait(false);
+                string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
+                List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
+                IFileSystemInfo[] targetFilesArray  = targetFiles.ToArray();
+                List<File> files = await ProcessFiles(targetFilesArray, keyName).ConfigureAwait(false);
 
-                result.Add(new FileCollection
-                {
-                    Name = keyName,
-                    Files = files.ToArray()
-                });
+                FileCollection fileCollection = new FileCollection();
+                fileCollection.Name = keyName;
+                fileCollection.Files = files.ToArray();
+                result.Add(fileCollection);
             }
 
             return result;
@@ -126,10 +132,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
             {
-                fileInfos.Add(_FileSystem.GetFile(file));
+                IFileInfo fileInfo = _FileSystem.GetFile(file);
+                fileInfos.Add(fileInfo);
             }
 
-            return await ProcessFiles(fileInfos.ToArray(), scope: null).ConfigureAwait(false);
+            IFileInfo[] fileInfosArray = fileInfos.ToArray();
+            List<File> result = await ProcessFiles(fileInfosArray, scope: null).ConfigureAwait(false);
+            return result;
         }
 
         async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
@@ -142,12 +151,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 using StreamReader streamReader = new StreamReader(fileStream);
 
                 string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(new MetadataCriteria
-                {
-                    Content = rawContent,
-                    Scope = scope,
-                    FileName = fileInfo.Name
-                });
+                MetadataCriteria criteria = new MetadataCriteria();
+                criteria.Content = rawContent;
+                criteria.Scope = scope;
+                criteria.FileName = fileInfo.Name;
+                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
@@ -158,13 +166,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     fileContents = preprocessor.Execute(fileContents);
                 }
 
-                result.Add(new File
-                {
-                    LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc,
-                    MetaData = fileMeta,
-                    Content = fileContents,
-                    Name = Path.GetFileName(fileMeta.Uri)
-                });
+                File fileResult = new File();
+                fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
+                fileResult.MetaData = fileMeta;
+                fileResult.Content = fileContents;
+                fileResult.Name = Path.GetFileName(fileMeta.Uri);
+                result.Add(fileResult);
             }
 
             return result;
