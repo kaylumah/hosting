@@ -28,7 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             byte[] bytes = sitemap
                     .SaveAsXml();
             Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
-            Artifact[] result = [ siteMapAsArtifact ];
+            Artifact[] result = [siteMapAsArtifact];
             return result;
         }
     }
@@ -48,7 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             byte[] bytes = feed
                     .SaveAsAtom10();
             Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
-            Artifact[] result = [ feedAsArtifact ];
+            Artifact[] result = [feedAsArtifact];
             return result;
         }
     }

@@ -97,6 +97,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         return organization;
                     });
             }
+
             return result;
 #pragma warning restore RS0030
         }

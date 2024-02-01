@@ -18,7 +18,7 @@ namespace Test.Unit.FormerXunit
             result.Copyright.Should().NotBeNull();
             result.Version.Should().NotBeNull();
             result.Metadata.Count.Should().
-            
+
             Be(8);
         }
     }

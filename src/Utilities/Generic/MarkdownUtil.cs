@@ -71,7 +71,7 @@ namespace Kaylumah.Ssg.Utilities
                 headingBlock.Inline = inline;
             }
 
-            System.Collections.Generic.IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
+            IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
             foreach (LinkInline anchor in anchorTags)
             {
                 if (!anchor.IsImage)

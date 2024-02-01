@@ -50,7 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
             SyndicationFeed feed = new SyndicationFeed();
             feed.Language = siteMetaData.Language;
-            feed.Title =  new CDataSyndicationContent(siteMetaData.Title);
+            feed.Title = new CDataSyndicationContent(siteMetaData.Title);
             feed.Description = new CDataSyndicationContent(siteMetaData.Description);
             feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
             feed.Copyright = new CDataSyndicationContent(copyrightClaim);
@@ -101,7 +101,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     item.Content = new CDataSyndicationContent(htmlContent);
                     item.PublishDate = pageMetaData.Published;
                     item.LastUpdatedTime = pageMetaData.Modified;
-                    
+
                     List<SyndicationCategory> itemCategories = pageMetaData
                         .Tags
                         .Where(tags.ContainsKey)

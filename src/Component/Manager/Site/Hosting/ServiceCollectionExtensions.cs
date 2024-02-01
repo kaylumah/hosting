@@ -46,7 +46,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();
-            services.AddSingleton<TimeProvider>(TimeProvider.System);
+            services.AddSingleton(TimeProvider.System);
             return services;
         }
     }

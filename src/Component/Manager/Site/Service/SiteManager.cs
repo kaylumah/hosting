@@ -67,7 +67,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             FileFilterCriteria criteria = new FileFilterCriteria();
             criteria.RootDirectory = request.Configuration.Source;
-            criteria.DirectoriesToSkip = new [] {
+            criteria.DirectoriesToSkip = new[] {
                     request.Configuration.LayoutDirectory,
                     request.Configuration.PartialsDirectory,
                     request.Configuration.DataDirectory,
@@ -84,7 +84,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .EnrichSite(request.Configuration, siteGuid, pageList);
 
             MetadataRenderRequest[] requests = pageMetadatas
-                .Select(pageMetadata => {
+                .Select(pageMetadata =>
+                {
                     MetadataRenderRequest result = new MetadataRenderRequest();
                     RenderData metaData = new RenderData();
                     metaData.Site = siteMetadata;
@@ -132,7 +133,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             string env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
 
-            IEnumerable<Artifact> assetArtifacts = assets.Select(asset => {
+            IEnumerable<Artifact> assetArtifacts = assets.Select(asset =>
+            {
                 string assetPath = asset.FullName.Replace(env, "");
                 byte[] assetBytes = _FileSystem.GetFileBytes(asset.FullName);
                 Artifact artifact = new Artifact(assetPath, assetBytes);
@@ -187,6 +189,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     throw;
                 }
             }
+
             MetadataRenderResult[] results = renderedResults.ToArray();
             return results;
         }

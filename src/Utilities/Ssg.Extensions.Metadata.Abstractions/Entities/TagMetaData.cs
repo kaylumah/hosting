@@ -13,9 +13,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public string Id
         { get; set; }
-        public string Name 
+        public string Name
         { get; set; }
-        public string Description 
+        public string Description
         { get; set; }
         public string Icon
         { get; set; }
