@@ -100,10 +100,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 dataFiles.Remove(tagFile);
                 TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(tagFile);
                 List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
+                IEnumerable<string> otherTags = tagData.Keys.Except(tags);
                 IEnumerable<string> unmatchedTags = tags
                     .Except(tagData.Keys)
-                    .Concat(tagData.Keys.Except(tags));
-                LogMissingTags(string.Join(",", unmatchedTags));
+                    .Concat(otherTags);
+                string unmatchedTagsString = string.Join(",", unmatchedTags);
+                LogMissingTags(unmatchedTagsString);
                 site.TagMetaData.AddRange(tagData);
                 site.Data["tags"] = site.TagMetaData.Dictionary;
             }
@@ -134,7 +136,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             foreach (IFileSystemInfo file in dataFiles)
             {
                 object result = _YamlParser.Parse<object>(file);
-                site.Data[Path.GetFileNameWithoutExtension(file.Name)] = result;
+                string extension = Path.GetFileNameWithoutExtension(file.Name);
+                site.Data[extension] = result;
             }
         }
 
@@ -174,12 +177,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (string collection in collections)
             {
-                site.Collections.Add(collection,
-                    files
-                    .Where(x => x.Collection != null
-                        && x.Collection.Equals(collection, StringComparison.Ordinal))
-                    .ToArray()
-                );
+                PageMetaData[] collectionPages = files
+                    .Where(x => {
+                        bool notEmpty = x.Collection != null;
+                        bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
+                        bool result = notEmpty && isMatch;
+                        return result;
+                    })
+                    .ToArray();
+                site.Collections.Add(collection, collectionPages);
             }
         }
 
@@ -247,7 +253,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             foreach (ContentType type in types)
             {
                 PageMetaData[] typeFiles = pages.Where(x => /*x.Type != null && */ x.Type.Equals(type)).ToArray();
-                site.Types.Add(type.ToString(), typeFiles);
+                string typeName = type.ToString();
+                site.Types.Add(typeName, typeFiles);
             }
         }
     }
