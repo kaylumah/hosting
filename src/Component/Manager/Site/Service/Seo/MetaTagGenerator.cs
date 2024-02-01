@@ -86,7 +86,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 CreateKaylumahMetaTag("page", pageMetaData.Id)
             };
 
-            if (result.Count > 0)
+            if (0 < result.Count)
             {
                 sb.AppendLine("<!-- Kaylumah BuildInfo Meta Tags -->");
                 foreach (string item in result)
@@ -130,7 +130,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 CreateMetaTag("author", author.FullName);
             }
 
-            if (result.Count > 0)
+            if (0 < result.Count)
             {
                 sb.AppendLine("<!-- Common Meta Tags -->");
                 foreach (string item in result)
@@ -175,7 +175,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 result.Add(creatorTag);
             }
 
-            if (result.Count > 0)
+            if (0 < result.Count)
             {
                 sb.AppendLine("<!-- Twitter Meta Tags -->");
                 foreach (string item in result)
@@ -232,7 +232,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
             }
 
-            if (result.Count > 0)
+            if (0 < result.Count)
             {
                 sb.AppendLine("<!-- OpenGraph Meta Tags -->");
                 foreach (string item in result)

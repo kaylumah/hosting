@@ -115,7 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             List<string> result = new List<string>();
             int index;
-            while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
+            while (0 <= (index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)))
             {
                 result.Add(input);
                 input = input[..index];

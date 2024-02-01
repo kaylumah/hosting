@@ -154,7 +154,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .Distinct()
                 .ToList();
 
-            for (int i = collections.Count - 1; i > 0; i--)
+            for (int i = collections.Count - 1; 0 < i; i--)
             {
                 string collection = collections[i];
                 if (_SiteInfo.Collections.Contains(collection))
