@@ -89,7 +89,8 @@ namespace Kaylumah.Ssg.Utilities
                 System.Collections.Generic.IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                     .Where(s => Char.IsLetter(s[0]));
                 int wordCount = words.Count();
-                if (wordCount > 0)
+                // if (wordCount > 0) (swapped for IDESIGN105)
+                if (0 < wordCount)
                 {
                     // Console.WriteLine(String.Join(" ", words));
                     kelime += wordCount;
