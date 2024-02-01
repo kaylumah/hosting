@@ -10,14 +10,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     {
         public static DefaultMetadata DefaultFilter(this DefaultMetadatas metadata, string path)
         {
-            return metadata
+            DefaultMetadata result = metadata
                 .Find(path, item => string.IsNullOrEmpty(item.Scope));
+            return result;
         }
 
         public static DefaultMetadata ScopeFilter(this DefaultMetadatas metadata, string path, string scope)
         {
-            return metadata
+            DefaultMetadata result = metadata
                 .Find(path, item => item.Scope != null && item.Scope.Equals(scope, StringComparison.Ordinal));
+            return result;
         }
 
         public static DefaultMetadata Find(this DefaultMetadatas metadata, string path, Func<DefaultMetadata, bool> predicate)
