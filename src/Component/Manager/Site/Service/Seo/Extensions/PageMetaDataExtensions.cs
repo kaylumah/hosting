@@ -19,7 +19,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             blogPost.MainEntityOfPage = new Values<ICreativeWork, Uri>(pageUri);
             blogPost.Headline = page.Title;
-            #pragma warning disable RS0030 // datetime is expected here
+#pragma warning disable RS0030 // datetime is expected here
             blogPost.DatePublished = page.Published.DateTime;
             blogPost.DateModified = page.Modified.DateTime;
 

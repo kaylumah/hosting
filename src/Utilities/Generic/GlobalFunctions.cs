@@ -28,9 +28,9 @@ namespace Kaylumah.Ssg.Utilities
 
         public static AsyncLocal<DateTimeOffset> Date
         { get; } = new();
-        public static AsyncLocal<string> Url 
+        public static AsyncLocal<string> Url
         { get; } = new();
-        public static AsyncLocal<string> BaseUrl 
+        public static AsyncLocal<string> BaseUrl
         { get; } = new();
         public static DateTimeOffset ToDate(string input)
         {
@@ -86,7 +86,7 @@ namespace Kaylumah.Ssg.Utilities
             IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
             foreach (string text in innerTexts)
             {
-                System.Collections.Generic.IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
+                IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                     .Where(s => Char.IsLetter(s[0]));
                 int wordCount = words.Count();
                 // if (wordCount > 0) (swapped for IDESIGN105)

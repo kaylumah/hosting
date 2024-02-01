@@ -57,11 +57,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
                 .ToList();
 
-            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info => {
+            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
+            {
                 bool notDirectory = !info.IsDirectory();
                 string extension = Path.GetExtension(info.Name);
                 bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
-                bool isMatch = notDirectory && includesExtension; 
+                bool isMatch = notDirectory && includesExtension;
                 return isMatch;
             }).ToList();
 
@@ -76,7 +77,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 List<File> targetFiles = collection
                     .Files
-                    .Where(file => { 
+                    .Where(file =>
+                    {
                         string extension = Path.GetExtension(file.Name);
                         bool result = criteria.FileExtensionsToTarget.Contains(extension);
                         return result;
@@ -115,7 +117,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 string keyName = collection[1..];
                 string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
                 List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
-                IFileSystemInfo[] targetFilesArray  = targetFiles.ToArray();
+                IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
                 List<File> files = await ProcessFiles(targetFilesArray, keyName).ConfigureAwait(false);
 
                 FileCollection fileCollection = new FileCollection();

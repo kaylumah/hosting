@@ -22,7 +22,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file)
         {
             Dictionary<string, object> data = file.ToDictionary();
-            PageMetaData result =  new PageMetaData(data);
+            PageMetaData result = new PageMetaData(data);
             return result;
         }
 

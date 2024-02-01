@@ -168,13 +168,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
             ApplyPublishedDates(fileMetaData, tz);
             ApplyModifiedDates(fileMetaData, tz);
-            #pragma warning disable
+#pragma warning disable
             fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
-            #pragma warning restore
+#pragma warning restore
         }
 
         static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)

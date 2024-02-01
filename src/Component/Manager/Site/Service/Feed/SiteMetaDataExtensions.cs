@@ -18,7 +18,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             {
                 result = new();
             }
-            else {
+            else
+            {
                 result = source.TagMetaData
                     .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
             }
@@ -37,7 +38,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             else
             {
                 result = source.AuthorMetaData
-                    .ToDictionary(x => x.Id, x => {
+                    .ToDictionary(x => x.Id, x =>
+                    {
                         SyndicationPerson syndicationPerson = new SyndicationPerson();
                         syndicationPerson.Name = x.FullName;
                         syndicationPerson.Email = x.Email;

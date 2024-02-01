@@ -27,10 +27,10 @@ namespace System
                 string location = child.ChildNodes[0]?.InnerText;
                 string lastModified = child.ChildNodes[1]?.InnerText;
                 SiteMapNode siteMapNode = new SiteMapNode();
-                siteMapNode.Url = location; 
-                #pragma warning disable
+                siteMapNode.Url = location;
+#pragma warning disable
                 siteMapNode.LastModified = DateTimeOffset.Parse(lastModified);
-                #pragma warning restore;
+#pragma warning restore;
                 nodes.Add(siteMapNode);
             }
 
