@@ -31,7 +31,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             Time = buildTime;
             string version = "1.0.0+LOCALBUILD";
-            if (info.Version.Length > 6)
+            if (6 < info.Version.Length)
             {
                 version = info.Version;
             }

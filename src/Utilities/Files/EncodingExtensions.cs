@@ -11,7 +11,8 @@ namespace Kaylumah.Ssg.Utilities
         public static Encoding DetermineEncoding(this Stream stream)
         {
             using StreamReader reader = new StreamReader(stream, Encoding.Default, detectEncodingFromByteOrderMarks: true);
-            if (reader.Peek() >= 0) // you need this!
+            // if (reader.Peek() >= 0) // you need this! (swapped for IDESIGN105)
+            if (0 <= reader.Peek())
             {
                 reader.Read();
             }

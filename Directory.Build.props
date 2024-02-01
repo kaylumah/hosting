@@ -53,7 +53,7 @@
       - to ignore warning add to NoWarn
       - to keep warning but not fail the build
     -->
-    <NoWarn>$(NoWarn);IDESIGN105</NoWarn>
+    <NoWarn>$(NoWarn);</NoWarn>
     <WarningsNotAsErrors>$(WarningsNotAsErrors);</WarningsNotAsErrors>
   </PropertyGroup>
   

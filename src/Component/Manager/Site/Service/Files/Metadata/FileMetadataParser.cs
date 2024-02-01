@@ -100,7 +100,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             //var index = outputLocation.LastIndexOf(Path.DirectorySeparatorChar);
             string urlSeperator = "/";
             int index = outputLocation.LastIndexOf(urlSeperator, StringComparison.Ordinal);
-            if (index >= 0)
+            if (0 <= index)
             {
                 string input = outputLocation[..index];
                 List<string> filterDirectories = DetermineFilterDirectories(input, urlSeperator);
@@ -115,7 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             List<string> result = new List<string>();
             int index;
-            while ((index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)) >= 0)
+            while (0 <= (index = input.LastIndexOf(urlSeperator, StringComparison.Ordinal)))
             {
                 result.Add(input);
                 input = input[..index];
