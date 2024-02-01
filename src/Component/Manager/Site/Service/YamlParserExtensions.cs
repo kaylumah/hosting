@@ -10,7 +10,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static T Parse<T>(this IYamlParser yamlParser, System.IO.Abstractions.IFileSystemInfo file)
         {
             string raw = file.ReadFile();
-            return yamlParser.Parse<T>(raw);
+            T result = yamlParser.Parse<T>(raw);
+            return result;
         }
     }
 }
