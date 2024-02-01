@@ -10,16 +10,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
     {
         public static byte[] SaveAsXml(this SiteMap siteMap)
         {
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                Indent = true,
-                Encoding = new System.Text.UTF8Encoding(false)
-            };
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.Encoding = new System.Text.UTF8Encoding(false);
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream, settings);
             siteMap.SaveAsXml(writer);
             writer.Close();
-            return stream.ToArray();
+            byte[] result = stream.ToArray();
+            return result;
         }
     }
 }
