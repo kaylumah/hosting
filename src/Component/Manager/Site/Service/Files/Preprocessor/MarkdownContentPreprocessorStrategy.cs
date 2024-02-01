@@ -19,12 +19,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 
         public string Execute(string raw)
         {
-            return MarkdownUtil.Transform(raw);
+            string result = MarkdownUtil.Transform(raw);
+            return result;
         }
 
         public bool ShouldExecute(IFileSystemInfo fileInfo)
         {
-            return _TargetExtensions.Contains(Path.GetExtension(fileInfo.Name));
+            string extension = Path.GetExtension(fileInfo.Name);
+            bool isMatch = _TargetExtensions.Contains(extension);
+            return isMatch;
         }
     }
 }
