@@ -183,9 +183,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 PageMetaData[] collectionPages = files
                     .Where(x => {
                         bool notEmpty = x.Collection != null;
-                        bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
-                        bool result = notEmpty && isMatch;
-                        return result;
+                        if (notEmpty)
+                        {
+                             bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
+                             return isMatch;
+                        }
+                        return false;
                     })
                     .ToArray();
                 site.Collections.Add(collection, collectionPages);
