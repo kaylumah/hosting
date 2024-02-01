@@ -48,7 +48,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
             OverwriteMetaData(fileMetaData, result.Data, "file");
             ApplyDates(fileMetaData);
-            fileMetaData.Remove(nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture));
+            string lowerName = nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
+            fileMetaData.Remove(lowerName);
 
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
@@ -102,7 +103,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             if (index >= 0)
             {
                 string input = outputLocation[..index];
-                paths.AddRange(DetermineFilterDirectories(input, urlSeperator));
+                List<string> filterDirectories = DetermineFilterDirectories(input, urlSeperator);
+                paths.AddRange(filterDirectories);
                 paths = paths.OrderBy(x => x.Length).ToList();
             }
 
@@ -147,7 +149,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 .Replace("/:month", fileDate == null ? string.Empty : $"/{fileDate?.ToString("MM", CultureInfo.InvariantCulture)}")
                 .Replace("/:day", fileDate == null ? string.Empty : $"/{fileDate?.ToString("dd", CultureInfo.InvariantCulture)}");
 
-            result = result.Replace(":name", Path.GetFileNameWithoutExtension(outputFileName))
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(outputFileName);
+            result = result.Replace(":name", fileNameWithoutExtension)
                 .Replace(":ext", outputExtension);
 
             if (result.StartsWith('/'))
@@ -165,11 +168,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
             ApplyPublishedDates(fileMetaData, tz);
             ApplyModifiedDates(fileMetaData, tz);
+            #pragma warning disable
             fileMetaData.Remove(nameof(fileMetaData.PublishedDate).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.PublishedTime).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.ModifiedDate).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.ModifiedTime).ToLower(CultureInfo.InvariantCulture));
             fileMetaData.Remove(nameof(fileMetaData.Date).ToLower(CultureInfo.InvariantCulture));
+            #pragma warning restore
         }
 
         static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
