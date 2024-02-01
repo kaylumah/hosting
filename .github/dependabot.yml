@@ -25,6 +25,12 @@ updates:
   directory: "/_site"
   schedule:
     interval: "daily"
+  groups:
+    tailwind:
+      patterns:
+        - "@tailwindcss/*"
+        - "tailwindcss" 
+  
 
 - package-ecosystem: "github-actions"
   directory: "/"
