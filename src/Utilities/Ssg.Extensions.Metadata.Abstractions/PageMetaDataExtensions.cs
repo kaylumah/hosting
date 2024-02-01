@@ -20,7 +20,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         static PageMetaDataExtensions()
         {
-            Tags = (page) => page.Tags != null && page.Tags.Count > 0;
+            Tags = (page) => page.Tags != null && 0 < page.Tags.Count;
             Series = (page) => !string.IsNullOrEmpty(page.Series);
             Html = (page) => page.IsHtml();
             Featured = (page) => page.Featured;
