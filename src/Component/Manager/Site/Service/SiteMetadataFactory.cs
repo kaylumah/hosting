@@ -90,7 +90,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
                 .Where(file => !file.IsDirectory())
-                .Where(file => { 
+                .Where(file =>
+                {
                     string extension = Path.GetExtension(file.Name);
                     bool result = extensions.Contains(extension);
                     return result;
@@ -181,13 +182,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             foreach (string collection in collections)
             {
                 PageMetaData[] collectionPages = files
-                    .Where(x => {
+                    .Where(x =>
+                    {
                         bool notEmpty = x.Collection != null;
                         if (notEmpty)
                         {
-                             bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
-                             return isMatch;
+                            bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
+                            return isMatch;
                         }
+
                         return false;
                     })
                     .ToArray();
