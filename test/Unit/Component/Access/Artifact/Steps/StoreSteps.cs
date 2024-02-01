@@ -24,7 +24,7 @@ namespace Test.Unit.Component.Access.Artifact.Steps
         {
             async Task TestScenario(IArtifactAccess artifactAccess)
             {
-                await artifactAccess.Store(new StoreArtifactsRequest(new FileSystemOutputLocation(string.Empty, false),  Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>())).ConfigureAwait(false);
+                await artifactAccess.Store(new StoreArtifactsRequest(new FileSystemOutputLocation(string.Empty, false), Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>())).ConfigureAwait(false);
             }
 
             await _ArtifactAccessTestHarness.TestArtifactAccess(TestScenario).ConfigureAwait(false);

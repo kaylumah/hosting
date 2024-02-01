@@ -189,5 +189,4 @@ namespace Test.E2e
 
         public override string PagePath => _PagePath;
     }
-
 }
