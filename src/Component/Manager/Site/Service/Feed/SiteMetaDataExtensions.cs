@@ -13,31 +13,40 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
     {
         public static Dictionary<string, SyndicationCategory> ToCategories(this SiteMetaData source)
         {
+            Dictionary<string, SyndicationCategory> result;
             if (source.TagMetaData == null)
             {
-                return new();
+                result = new();
+            }
+            else {
+                result = source.TagMetaData
+                    .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
             }
 
-            Dictionary<string, SyndicationCategory> tags = source.TagMetaData
-                    .ToDictionary(x => x.Id, x => new SyndicationCategory(x.Name));
-            return tags;
+            return result;
         }
 
         public static Dictionary<AuthorId, SyndicationPerson> ToPersons(this SiteMetaData source)
         {
+            Dictionary<AuthorId, SyndicationPerson> result;
+
             if (source.AuthorMetaData == null)
             {
-                return new();
+                result = new();
+            }
+            else
+            {
+                result = source.AuthorMetaData
+                    .ToDictionary(x => x.Id, x => {
+                        SyndicationPerson syndicationPerson = new SyndicationPerson();
+                        syndicationPerson.Name = x.FullName;
+                        syndicationPerson.Email = x.Email;
+                        syndicationPerson.Uri = GlobalFunctions.AbsoluteUrl(x.Uri);
+                        return syndicationPerson;
+                    });
             }
 
-            Dictionary<AuthorId, SyndicationPerson> authors = source.AuthorMetaData
-                    .ToDictionary(x => x.Id, x => new SyndicationPerson()
-                    {
-                        Name = x.FullName,
-                        Email = x.Email,
-                        Uri = GlobalFunctions.AbsoluteUrl(x.Uri)
-                    });
-            return authors;
+            return result;
         }
     }
 }
