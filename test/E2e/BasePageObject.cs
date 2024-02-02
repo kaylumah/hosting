@@ -26,6 +26,13 @@ namespace Test.E2e
             _Page = page;
         }
 
+        public async Task<byte[]> ScreenshotAsync()
+        {
+            PageScreenshotOptions pageScreenshotOptions = new PageScreenshotOptions();
+            byte[] bytes = await _Page.ScreenshotAsync(pageScreenshotOptions);
+            return bytes;
+        }
+
         public Task<Dictionary<string, string>> GetHeaders()
         {
             return PageResponse.AllHeadersAsync();

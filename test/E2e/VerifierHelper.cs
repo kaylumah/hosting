@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VerifyTests;
@@ -14,6 +15,17 @@ namespace Test.E2e
         //[GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[\w/_-]*\.(html|xml|png|svg))?")]
         [GeneratedRegex(@"(?<before>https://)(?<val>(kaylumah.nl|green-field-0353fee03-[0-9]{3}.westeurope.1.azurestaticapps.net))(?<after>[\w\/\.\-]*)?")]
         public static partial Regex BaseUrl();
+    }
+
+    public static class BasePageVerifier
+    {
+        public static async Task VerifyScreenshot(BasePageObject basePageObject)
+        {
+            byte[] screenshot = await basePageObject.ScreenshotAsync();
+            using MemoryStream stream = new MemoryStream(screenshot);
+            VerifySettings settings = new VerifySettings();
+            await Verifier.Verify(stream, "png", settings);
+        }
     }
 
     public static class HtmlPageVerifier
