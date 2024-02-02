@@ -36,7 +36,7 @@ namespace Test.E2e
             IPage page = await _PlaywrightFixture.GetPage();
             HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
-            
+
             await BasePageVerifier.VerifyScreenshot(homePage);
         }
     }
