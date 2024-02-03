@@ -9,3 +9,6 @@
 # Clean up
 # git rm -rf --cached .
 # git reset --hard HEAD
+
+# ?
+# git add --renormalize . && git commit 
