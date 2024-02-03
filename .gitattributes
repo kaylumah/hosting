@@ -1,17 +1,13 @@
-# Set default behavior to automatically normalize line endings.
-* text=auto
+*          text=auto
 
-# Force batch scripts to always use CRLF line endings so that if a repo is accessed
-# in Windows via a file share from Linux, the scripts will work.
-*.{cmd,[cC][mM][dD]} text eol=crlf
-*.{bat,[bB][aA][tT]} text eol=crlf
+*.cs       text diff=csharp
+*.sln      text eol=crlf
+*.csproj   text eol=crlf
+*.props    text eol=crlf
+*.targets  text eol=crlf
 
-# Force bash scripts to always use LF line endings so that if a repo is accessed
-# in Unix via a file share from Windows, the scripts will work.
-*.sh text eol=lf
+# Clean up
+# git rm -rf --cached . && git reset --hard HEAD
 
-# See also
-# https://git-scm.com/docs/gitattributes
-# https://github.com/alexkaratarakis/gitattributes/blob/master/VisualStudio.gitattributes
-# https://rehansaeed.com/gitattributes-best-practices/
-# https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+# ?
+# git add --renormalize . && git commit 
