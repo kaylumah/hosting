@@ -30,7 +30,7 @@ namespace Test.E2e
             await HtmlPageVerifier.Verify(homePage);
         }
 
-        [Fact]
+        [Fact(Skip = "Wait for proper screenshot compare")]
         public async Task Verify_HomePageHtml_Screenshot()
         {
             IPage page = await _PlaywrightFixture.GetPage();
