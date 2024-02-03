@@ -9,7 +9,6 @@ using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
-#pragma warning disable CS3016
 namespace Test.E2e.SnapshotTests
 {
     public class RobotTxtTests : IClassFixture<DesktopFixture>

@@ -7,7 +7,6 @@ using FluentAssertions;
 using Microsoft.Playwright;
 using Xunit;
 
-#pragma warning disable CS3016
 namespace Test.E2e.SnapshotTests
 {
     public class ArchivePageHtmlTests : IClassFixture<DesktopFixture>

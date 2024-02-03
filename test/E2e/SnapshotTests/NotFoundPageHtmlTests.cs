@@ -12,7 +12,6 @@ using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
 using Xunit;
 
-#pragma warning disable CS3016
 namespace Test.E2e.SnapshotTests
 {
 
