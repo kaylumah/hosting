@@ -28,7 +28,7 @@ namespace Test.E2e
         public async Task<byte[]> ScreenshotAsync()
         {
             PageScreenshotOptions pageScreenshotOptions = new PageScreenshotOptions();
-            pageScreenshotOptions.FullPage = true;
+            pageScreenshotOptions.FullPage = false;
             byte[] bytes = await _Page.ScreenshotAsync(pageScreenshotOptions);
             return bytes;
         }
