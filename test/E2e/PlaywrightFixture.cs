@@ -80,4 +80,14 @@ namespace Test.E2e
             return options;
         }
     }
+
+    public class MobileFixture : PlaywrightFixture
+    {
+        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
+        {
+            const string target = "iPhone 15 Pro Max";
+            BrowserNewContextOptions options = PlaywrightInstance.Devices[target];
+            return options;
+        }
+    }
 }

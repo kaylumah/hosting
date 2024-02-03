@@ -8,13 +8,15 @@ using Xunit;
 
 namespace Test.E2e.SnapshotTests
 {
-    public class HomePageHtmlTests : IClassFixture<DesktopFixture>
+    public class HomePageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
+        readonly MobileFixture _MobileFixture;
 
-        public HomePageHtmlTests(DesktopFixture desktopFixture)
+        public HomePageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
+            _MobileFixture = mobileFixture;
         }
 
         [Fact]
@@ -30,9 +32,19 @@ namespace Test.E2e.SnapshotTests
         }
 
         [Fact(Skip = "Wait for proper screenshot compare")]
-        public async Task Verify_HomePageHtml_Screenshot()
+        public async Task Verify_HomePageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
+            HomePage homePage = new HomePage(page);
+            await homePage.NavigateAsync();
+
+            await BasePageVerifier.VerifyScreenshot(homePage);
+        }
+
+        [Fact(Skip = "Wait for proper screenshot compare")]
+        public async Task Verify_HomePageHtml_MobileScreenshot()
+        {
+            IPage page = await _MobileFixture.GetPage();
             HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
 
