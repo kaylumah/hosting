@@ -497,3 +497,6 @@ dist/
 # generated specflow
 *.feature.cs
 LivingDoc.html
+
+# Verify snapshot testing
+*.received.*
