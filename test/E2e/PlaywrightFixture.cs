@@ -85,7 +85,7 @@ namespace Test.E2e
     {
         protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
         {
-            const string target = "iPhone 15 Pro Max";
+            const string target = "iPhone 14 Pro Max";
             BrowserNewContextOptions options = PlaywrightInstance.Devices[target];
             return options;
         }

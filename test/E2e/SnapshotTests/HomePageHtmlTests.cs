@@ -41,7 +41,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(homePage);
         }
 
-        [Fact(Skip = "Wait for proper screenshot compare")]
+        [Fact]
         public async Task Verify_HomePageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
