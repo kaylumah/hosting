@@ -1,6 +1,6 @@
 *          text=auto
 
-*.cs       text diff=csharp
+*.cs       text eol=crlf diff=csharp
 *.sln      text eol=crlf
 *.csproj   text eol=crlf
 *.props    text eol=crlf
