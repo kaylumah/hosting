@@ -42,13 +42,13 @@ namespace Test.E2e
 
         public async Task<IPage> GetPage()
         {
-            BrowserNewContextOptions contextOptions = ContextOptions();
+            BrowserNewContextOptions contextOptions = GetBrowserNewContextOptions();
             IBrowserContext context = await Browser.NewContextAsync(contextOptions);
             IPage page = await context.NewPageAsync();
             return page;
         }
 
-        public BrowserNewContextOptions ContextOptions()
+        public BrowserNewContextOptions GetBrowserNewContextOptions()
         {
             BrowserNewContextOptions browserNewContextOptions = new BrowserNewContextOptions();
             browserNewContextOptions.BaseURL = GetBaseUrl();
