@@ -482,3 +482,14 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+###################################
+# Custom .gitignore modifications #
+###################################
+
+# generated website
+dist/
+
+# generated specflow
+*.feature.cs
+LivingDoc.html
