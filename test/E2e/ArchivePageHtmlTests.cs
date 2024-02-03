@@ -10,18 +10,18 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class ArchivePageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class ArchivePageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public ArchivePageHtmlTests(PlaywrightFixture playwrightFixture)
+        public ArchivePageHtmlTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
         [Fact]
         public async Task Verify_ArchivePageHtml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             ArchivePage archivePage = new ArchivePage(page);
             await archivePage.NavigateAsync();
             Dictionary<string, string> headers = await archivePage.GetHeaders();

@@ -12,19 +12,19 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class RobotTxtTests : IClassFixture<PlaywrightFixture>
+    public class RobotTxtTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public RobotTxtTests(PlaywrightFixture playwrightFixture)
+        public RobotTxtTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
 
         [Fact]
         public async Task Verify_RobotTxt_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             RobotsPage robotsPage = new RobotsPage(page);
             await robotsPage.NavigateAsync();
             page.Url.Should().EndWith(robotsPage.PagePath);

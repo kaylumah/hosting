@@ -12,19 +12,19 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
+    public class AtomFeedXmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public AtomFeedXmlTests(PlaywrightFixture playwrightFixture)
+        public AtomFeedXmlTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
 
         [Fact]
         public async Task Verify_AtomFeedXml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             AtomFeedPage atomFeed = new AtomFeedPage(page);
             await atomFeed.NavigateAsync();
             page.Url.Should().EndWith(atomFeed.PagePath);

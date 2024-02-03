@@ -16,19 +16,19 @@ using Xunit;
 namespace Test.E2e
 {
 
-    public class NotFoundPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class NotFoundPageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public NotFoundPageHtmlTests(PlaywrightFixture playwrightFixture)
+        public NotFoundPageHtmlTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
 
         [Fact]
         public async Task Verify_NotFoundPageHtml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             NotFoundPage notFoundPage = new NotFoundPage(page);
             await notFoundPage.NavigateAsync();
             Dictionary<string, string> headers = await notFoundPage.GetHeaders();

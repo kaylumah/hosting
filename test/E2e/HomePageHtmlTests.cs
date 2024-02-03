@@ -9,19 +9,19 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class HomePageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class HomePageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public HomePageHtmlTests(PlaywrightFixture playwrightFixture)
+        public HomePageHtmlTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
 
         [Fact]
         public async Task Verify_HomePageHtml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
             string title = await page.TitleAsync();
@@ -33,7 +33,7 @@ namespace Test.E2e
         [Fact(Skip = "Wait for proper screenshot compare")]
         public async Task Verify_HomePageHtml_Screenshot()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             HomePage homePage = new HomePage(page);
             await homePage.NavigateAsync();
 

@@ -12,19 +12,19 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e
 {
-    public class SitemapXmlTests : IClassFixture<PlaywrightFixture>
+    public class SitemapXmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public SitemapXmlTests(PlaywrightFixture playwrightFixture)
+        public SitemapXmlTests(DesktopFixture playwrightFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = playwrightFixture;
         }
 
         [Fact]
         public async Task Verify_SitemapXml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             SitemapPage sitemapPage = new SitemapPage(page);
             await sitemapPage.NavigateAsync();
             page.Url.Should().EndWith(sitemapPage.PagePath);
