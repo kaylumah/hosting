@@ -487,6 +487,10 @@ $RECYCLE.BIN/
 # Custom .gitignore modifications #
 ###################################
 
+# NuGet Packages (Local feed)
+!/nuget/*.nupkg
+!/nuget/*.snupkg
+
 # generated website
 dist/
 
