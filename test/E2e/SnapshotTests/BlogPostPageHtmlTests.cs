@@ -7,7 +7,7 @@ using Microsoft.Playwright;
 using Xunit;
 
 #pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
     public class BlogPostPageHtmlTests : IClassFixture<DesktopFixture>
     {
