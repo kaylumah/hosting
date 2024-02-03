@@ -15,9 +15,9 @@ namespace Test.E2e.SnapshotTests
     {
         readonly DesktopFixture _DesktopFixture;
 
-        public AtomFeedXmlTests(DesktopFixture playwrightFixture)
+        public AtomFeedXmlTests(DesktopFixture desktopFixture)
         {
-            _DesktopFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Fact]

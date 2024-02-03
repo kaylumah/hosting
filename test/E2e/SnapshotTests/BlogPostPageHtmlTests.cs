@@ -13,9 +13,9 @@ namespace Test.E2e.SnapshotTests
     {
         readonly DesktopFixture _DesktopFixture;
 
-        public BlogPostPageHtmlTests(DesktopFixture playwrightFixture)
+        public BlogPostPageHtmlTests(DesktopFixture desktopFixture)
         {
-            _DesktopFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Theory]
