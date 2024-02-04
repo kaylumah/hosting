@@ -23,11 +23,14 @@ namespace Test.Unit.Entities
             result.Email = author.Email;
             result.Uri = author.Uri;
             result.Picture = author.Picture;
-            result.Links.Devto = author.Id;
-            result.Links.Github = author.Id;
-            result.Links.Linkedin = author.Id;
-            result.Links.Medium = author.Id;
-            result.Links.Twitter = author.Id;
+            result.Links = new Links()
+            {
+                Devto = author.Id,
+                Github = author.Id,
+                Linkedin = author.Id,
+                Medium = author.Id,
+                Twitter = author.Id
+            };
             return result;
         }
 
