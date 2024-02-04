@@ -17,7 +17,7 @@ namespace System.Collections.Generic
         public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary.TryGetValue(lowerKey, out object o);
+            dictionary.TryGetValue(lowerKey, out object? o);
             if (o is T t)
             {
                 return t;
