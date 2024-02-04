@@ -27,14 +27,17 @@ namespace System
                 {
                     // TODO better solution does not work
                     //                 string location = child.SelectSingleNode("//*[local-name()='loc']")?.InnerText;
-                    string location = child.ChildNodes[0]?.InnerText;
-                    string lastModified = child.ChildNodes[1]?.InnerText;
-                    SiteMapNode siteMapNode = new SiteMapNode();
-                    siteMapNode.Url = location;
+                    string? location = child.ChildNodes[0]?.InnerText;
+                    string? lastModified = child.ChildNodes[1]?.InnerText;
+                    if (location != null)
+                    {
+                        SiteMapNode siteMapNode = new SiteMapNode();
+                        siteMapNode.Url = location;
 #pragma warning disable
-                    siteMapNode.LastModified = DateTimeOffset.Parse(lastModified);
+                        siteMapNode.LastModified = DateTimeOffset.Parse(lastModified);
 #pragma warning restore;
                     nodes.Add(siteMapNode);
+                    }
                 }
             }
 
