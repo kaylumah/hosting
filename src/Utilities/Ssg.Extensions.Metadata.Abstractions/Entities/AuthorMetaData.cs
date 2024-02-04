@@ -36,6 +36,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
         public Links Links
         { get; set; } = new();
+
+        public AuthorMetaData(AuthorId id, string fullName, string email, string uri, string picture)
+        {
+            Id = id;
+            FullName = fullName;
+            Email = email;
+            Uri = uri;
+            Picture = picture;
+        }
     }
 
     public class AuthorMetaDataCollection : KeyedCollection<AuthorId, AuthorMetaData>
