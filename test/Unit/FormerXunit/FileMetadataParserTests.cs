@@ -146,9 +146,9 @@ namespace Test.Unit.FormerXunit
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
             FileMetaData data = new FileMetaData
-                    {
-                        OutputLocation = "test/:name:ext"
-                    };
+            {
+                OutputLocation = "test/:name:ext"
+            };
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
                 .Returns(new Metadata<FileMetaData>(null, data));

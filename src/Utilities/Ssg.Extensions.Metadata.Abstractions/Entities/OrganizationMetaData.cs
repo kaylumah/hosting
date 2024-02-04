@@ -45,7 +45,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Linkedin = linkedin;
             Twitter = twitter;
             Logo = logo;
-            Founded = founded; 
+            Founded = founded;
         }
     }
 
