@@ -17,22 +17,13 @@ namespace Test.Unit.Entities
 
         public static AuthorMetaData ToAuthorMetadata(this Author author)
         {
-            return new AuthorMetaData()
-            {
-                Id = author.Id,
-                FullName = author.Name,
-                Email = author.Email,
-                Uri = author.Uri,
-                Picture = author.Picture,
-                Links = new Links()
-                {
-                    Devto = author.Id,
-                    Github = author.Id,
-                    Linkedin = author.Id,
-                    Medium = author.Id,
-                    Twitter = author.Id
-                }
-            };
+            AuthorMetaData result = new AuthorMetaData(author.Id, author.Name, author.Email, author.Uri, author.Picture);
+            result.Links.Devto = author.Id;
+            result.Links.Github = author.Id;
+            result.Links.Linkedin = author.Id;
+            result.Links.Medium = author.Id;
+            result.Links.Twitter = author.Id;
+            return result;
         }
 
         public static IEnumerable<OrganizationMetaData> ToOrganizationMetadata(this IEnumerable<Organization> organizations)
@@ -42,11 +33,9 @@ namespace Test.Unit.Entities
 
         public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
         {
-            return new OrganizationMetaData()
-            {
-                Id = organization.Id,
-                FullName = organization.Name
-            };
+#pragma warning disable RS0030 // Do not use banned APIs
+            return new OrganizationMetaData(organization.Id, organization.Name, null, null, null, System.DateTimeOffset.Now);
+#pragma warning restore RS0030 // Do not use banned APIs
         }
 
         public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
@@ -56,11 +45,7 @@ namespace Test.Unit.Entities
 
         public static TagMetaData ToTagMetadata(this Tag tag)
         {
-            return new TagMetaData()
-            {
-                Id = tag.Id,
-                Name = tag.Id
-            };
+            return new TagMetaData(tag.Id, tag.Id, null, null);
         }
     }
 }

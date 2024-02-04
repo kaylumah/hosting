@@ -22,7 +22,7 @@ namespace Test.Unit.FormerXunit
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData> { });
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
@@ -60,7 +60,7 @@ namespace Test.Unit.FormerXunit
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData> { });
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -100,7 +100,7 @@ namespace Test.Unit.FormerXunit
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData> { });
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -145,16 +145,13 @@ namespace Test.Unit.FormerXunit
                 }
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
-
-            metadataProviderMock
-                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData>
-                {
-                    Data = new FileMetaData
+            FileMetaData data = new FileMetaData
                     {
                         OutputLocation = "test/:name:ext"
-                    }
-                });
+                    };
+            metadataProviderMock
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, data));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -203,15 +200,13 @@ namespace Test.Unit.FormerXunit
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
+            FileMetaData meta = new FileMetaData()
+            {
+                OutputLocation = "test/:name:ext"
+            };
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData>
-                {
-                    Data = new FileMetaData
-                    {
-                        OutputLocation = "test/:name:ext"
-                    }
-                });
+                .Returns(new Metadata<FileMetaData>(null, meta));
 
             LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -259,15 +254,14 @@ namespace Test.Unit.FormerXunit
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
+            FileMetaData data = new FileMetaData
+            {
+                OutputLocation = "posts/2021/:name:ext"
+            };
+
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<FileMetaData>
-                {
-                    Data = new FileMetaData
-                    {
-                        OutputLocation = "posts/2021/:name:ext"
-                    }
-                });
+                .Returns(new Metadata<FileMetaData>(null, data));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);

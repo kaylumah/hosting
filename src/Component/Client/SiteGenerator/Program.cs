@@ -19,7 +19,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
     {
         static void ShowKaylumahLogo()
         {
-            string applicationName = typeof(Program).Namespace;
+            string applicationName = typeof(Program).Namespace!;
             const string message = @"
   _  __           _                       _     
  | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__  
@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
         {
             ShowKaylumahLogo();
 
-            string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+            string env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")!;
 
             // https://github.com/dotnet/aspnetcore/blob/c925f99cddac0df90ed0bc4a07ecda6b054a0b02/src/DefaultBuilder/src/WebHost.cs#L169
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
