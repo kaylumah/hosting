@@ -1,34 +1,28 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Syndication;
-using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Playwright;
 using Xunit;
 
-#pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
 
-    public class NotFoundPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class NotFoundPageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public NotFoundPageHtmlTests(PlaywrightFixture playwrightFixture)
+        public NotFoundPageHtmlTests(DesktopFixture desktopFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Fact]
         public async Task Verify_NotFoundPageHtml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             NotFoundPage notFoundPage = new NotFoundPage(page);
             await notFoundPage.NavigateAsync();
             Dictionary<string, string> headers = await notFoundPage.GetHeaders();

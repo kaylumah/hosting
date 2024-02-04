@@ -7,22 +7,21 @@ using FluentAssertions;
 using Microsoft.Playwright;
 using Xunit;
 
-#pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
-    public class AboutPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class AboutPageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public AboutPageHtmlTests(PlaywrightFixture playwrightFixture)
+        public AboutPageHtmlTests(DesktopFixture desktopFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Fact]
         public async Task Verify_AboutPageHtml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             AboutPage aboutPage = new AboutPage(page);
             await aboutPage.NavigateAsync();
 

@@ -7,22 +7,22 @@ using Microsoft.Playwright;
 using Xunit;
 
 #pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
-    public class BlogPostPageHtmlTests : IClassFixture<PlaywrightFixture>
+    public class BlogPostPageHtmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public BlogPostPageHtmlTests(PlaywrightFixture playwrightFixture)
+        public BlogPostPageHtmlTests(DesktopFixture desktopFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_BlogPostPageHtml_Contents(string path)
         {
-            IPage blogPage = await _PlaywrightFixture.GetPage();
+            IPage blogPage = await _DesktopFixture.GetPage();
             BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
             await blogItemPage.NavigateAsync();
             string testParameter = path

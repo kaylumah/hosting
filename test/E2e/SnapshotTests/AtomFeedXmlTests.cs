@@ -9,22 +9,21 @@ using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
-#pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
-    public class AtomFeedXmlTests : IClassFixture<PlaywrightFixture>
+    public class AtomFeedXmlTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public AtomFeedXmlTests(PlaywrightFixture playwrightFixture)
+        public AtomFeedXmlTests(DesktopFixture desktopFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Fact]
         public async Task Verify_AtomFeedXml_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             AtomFeedPage atomFeed = new AtomFeedPage(page);
             await atomFeed.NavigateAsync();
             page.Url.Should().EndWith(atomFeed.PagePath);

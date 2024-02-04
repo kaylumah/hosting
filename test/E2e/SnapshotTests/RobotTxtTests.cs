@@ -9,22 +9,21 @@ using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
-#pragma warning disable CS3016
-namespace Test.E2e
+namespace Test.E2e.SnapshotTests
 {
-    public class RobotTxtTests : IClassFixture<PlaywrightFixture>
+    public class RobotTxtTests : IClassFixture<DesktopFixture>
     {
-        readonly PlaywrightFixture _PlaywrightFixture;
+        readonly DesktopFixture _DesktopFixture;
 
-        public RobotTxtTests(PlaywrightFixture playwrightFixture)
+        public RobotTxtTests(DesktopFixture desktopFixture)
         {
-            _PlaywrightFixture = playwrightFixture;
+            _DesktopFixture = desktopFixture;
         }
 
         [Fact]
         public async Task Verify_RobotTxt_Contents()
         {
-            IPage page = await _PlaywrightFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             RobotsPage robotsPage = new RobotsPage(page);
             await robotsPage.NavigateAsync();
             page.Url.Should().EndWith(robotsPage.PagePath);
