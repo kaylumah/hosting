@@ -29,13 +29,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         if (!string.IsNullOrEmpty(x.Links.Linkedin))
                         {
-                            Uri linkedinUri = new Uri(x.Links.LinkedinProfileUrl);
+                            Uri linkedinUri = new Uri(x.Links.LinkedinProfileUrl!);
                             uris.Add(linkedinUri);
                         }
 
                         if (!string.IsNullOrEmpty(x.Links.Twitter))
                         {
-                            Uri twitterUri = new Uri(x.Links.TwitterProfileUrl);
+                            Uri twitterUri = new Uri(x.Links.TwitterProfileUrl!);
                             uris.Add(twitterUri);
                         }
 

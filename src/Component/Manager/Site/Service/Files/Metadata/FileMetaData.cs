@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    public class FileMetaData : Dictionary<string, object>
+    public class FileMetaData : Dictionary<string, object?>
     {
 
         public string Series
@@ -79,7 +79,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                return this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+                List<object?> result = this.GetValue<List<object?>>(nameof(Tags));
+                IEnumerable<string?> strings = result.Cast<string?>();
+                List<string> asList = strings
+                    .Where(x => x != null)
+                    .Select(x => x!)
+                    .ToList();
+                return asList;
             }
             set
             {

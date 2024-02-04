@@ -48,7 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 
                 if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
                 {
-                    node.Url = GlobalFunctions.Url.Value;
+                    node.Url = GlobalFunctions.Url.Value!;
                 }
 
                 siteMapNodes.Add(node);

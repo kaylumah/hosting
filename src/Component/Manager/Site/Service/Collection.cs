@@ -8,10 +8,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 #pragma warning restore CA1711 // Identifiers should not have incorrect suffix
     {
         public string Name
-        { get; set; }
+        { get; set; } = null!;
         public bool Output
         { get; set; }
         public string TreatAs
-        { get; set; }
+        { get; set; } = null!;
     }
 }

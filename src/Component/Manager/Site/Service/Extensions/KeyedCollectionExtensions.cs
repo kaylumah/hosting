@@ -10,6 +10,7 @@ namespace System.Collections.ObjectModel
     public static class KeyedCollectionExtensions
     {
         public static void AddRange<TKey, TItem>(this KeyedCollection<TKey, TItem> source, IEnumerable<TItem> items)
+        where TKey : notnull
         {
             _ = items ?? throw new ArgumentNullException(nameof(items));
 

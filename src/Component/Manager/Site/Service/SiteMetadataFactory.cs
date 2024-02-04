@@ -48,15 +48,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
-            using IDisposable logScope = _Logger.BeginScope("[EnrichSite]");
+            using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
+            BuildData buildData = EnrichSiteWithAssemblyData();
             SiteMetaData siteInfo = new SiteMetaData(siteId,
                 _SiteInfo.Title,
                 _SiteInfo.Description,
                 _SiteInfo.Lang,
-                null,
+                string.Empty,
                 _SiteInfo.Url,
-                null);
+                buildData);
 
             siteInfo.Data = new Dictionary<string, object>();
             siteInfo.Tags = new SortedDictionary<string, PageMetaData[]>();
@@ -64,7 +65,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteInfo.Types = new SortedDictionary<string, PageMetaData[]>();
             siteInfo.Series = new SortedDictionary<string, PageMetaData[]>();
             siteInfo.Years = new SortedDictionary<int, PageMetaData[]>();
-            EnrichSiteWithAssemblyData(siteInfo);
             siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
@@ -75,13 +75,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return siteInfo;
         }
-        void EnrichSiteWithAssemblyData(SiteMetaData site)
+        BuildData EnrichSiteWithAssemblyData()
         {
             LogEnrichSiteWith("AssemblyData");
             AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
-            site.Build = buildMetadata;
+            return buildMetadata;
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
@@ -100,7 +100,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 })
                 .ToList();
 
-            IFileSystemInfo tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
+            IFileSystemInfo? tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
             if (tagFile != null)
             {
                 dataFiles.Remove(tagFile);
@@ -116,7 +116,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Data["tags"] = site.TagMetaData.Dictionary;
             }
 
-            IFileSystemInfo authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
+            IFileSystemInfo? authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
             if (authorFile != null)
             {
                 dataFiles.Remove(authorFile);
@@ -125,7 +125,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Data["authors"] = site.AuthorMetaData.Dictionary;
             }
 
-            IFileSystemInfo organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
+            IFileSystemInfo? organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
             if (organizationFile != null)
             {
                 dataFiles.Remove(organizationFile);
@@ -189,7 +189,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                         bool notEmpty = x.Collection != null;
                         if (notEmpty)
                         {
-                            bool isMatch = x.Collection.Equals(collection, StringComparison.Ordinal);
+                            bool isMatch = x.Collection!.Equals(collection, StringComparison.Ordinal);
                             return isMatch;
                         }
 

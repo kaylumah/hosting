@@ -11,8 +11,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 #pragma warning restore CA1711 // Identifiers should not have incorrect suffix
     {
         public string Name
-        { get; set; }
+        { get; set; } = null!;
         public File[] Files
-        { get; set; }
+        { get; set; } = null!;
     }
 }

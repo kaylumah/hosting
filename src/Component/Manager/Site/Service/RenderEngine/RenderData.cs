@@ -12,11 +12,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
         public PageMetaData Page
         { get; set; }
         public string Content => Page?.Content ?? string.Empty;
-        public string Title => Page?.Title ?? Site?.Title ?? null;
-        public string Description => Page?.Description ?? Site?.Description ?? null;
-        public string Language => Page?.Language ?? Site?.Language ?? null;
-        public string Author => Page?.Author ?? Site?.Author ?? null;
-        public string Url => Page?.Uri ?? Site?.Url ?? null;
+        public string Title => Page?.Title ?? Site?.Title ?? string.Empty;
+        public string Description => Page?.Description ?? Site?.Description ?? string.Empty;
+        public string Language => Page?.Language ?? Site?.Language ?? string.Empty;
+        public string Author => Page?.Author ?? Site?.Author ?? string.Empty;
+        public string Url => Page?.Uri ?? Site?.Url ?? string.Empty;
 
         public RenderData(SiteMetaData siteMetaData, PageMetaData pageMetaData)
         {

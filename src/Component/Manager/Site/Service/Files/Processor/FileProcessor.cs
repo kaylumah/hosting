@@ -113,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> result = new List<FileCollection>();
             foreach (string collection in collections)
             {
-                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
+                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
                 string keyName = collection[1..];
                 string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
                 List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
@@ -143,26 +143,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
+        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string? scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
                 Stream fileStream = fileInfo.CreateReadStream();
                 using StreamReader streamReader = new StreamReader(fileStream);
 
                 string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                 MetadataCriteria criteria = new MetadataCriteria();
                 criteria.Content = rawContent;
-                criteria.Scope = scope;
+                if (scope != null)
+                {
+                    criteria.Scope = scope;
+                }
+
                 criteria.FileName = fileInfo.Name;
                 global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
 
-                IContentPreprocessorStrategy preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
                 if (preprocessor != null)
                 {
                     fileContents = preprocessor.Execute(fileContents);
