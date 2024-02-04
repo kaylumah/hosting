@@ -23,6 +23,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             Site = siteMetaData;
             Page = pageMetaData;
         }
-
     }
 }
