@@ -51,7 +51,7 @@ namespace Kaylumah.Ssg.Utilities
                 {
                     if (node is LinkInline linkInlineNode)
                     {
-                        string uri = linkInlineNode.Url;
+                        string uri = linkInlineNode.Url!;
                         if (!uri.StartsWith("https://kaylumah.nl", StringComparison.Ordinal))
                         {
                             linkInlineNode.GetAttributes().AddClass("img-fluid");
