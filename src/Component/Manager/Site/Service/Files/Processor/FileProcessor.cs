@@ -113,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> result = new List<FileCollection>();
             foreach (string collection in collections)
             {
-                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
+                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
                 string keyName = collection[1..];
                 string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
                 List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
