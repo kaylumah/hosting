@@ -15,7 +15,7 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
-        public static IEnumerable<T> GetAttribtutes<T>(this Assembly assembly)
+        public static IEnumerable<T> GetAttributes<T>(this Assembly assembly)
         {
             IEnumerable<T> result = assembly.GetCustomAttributes(typeof(T)).Cast<T>();
             return result;
@@ -26,8 +26,8 @@ namespace Kaylumah.Ssg.Utilities
             AssemblyCopyrightAttribute copyrightAttribute = assembly.GetAttribute<AssemblyCopyrightAttribute>();
             AssemblyInformationalVersionAttribute informationalVersionAttribute = assembly.GetAttribute<AssemblyInformationalVersionAttribute>();
             Dictionary<string, string> metadataAttributes = assembly
-                .GetAttribtutes<AssemblyMetadataAttribute>()
-                .ToDictionary(a => a.Key, a => a.Value);
+                .GetAttributes<AssemblyMetadataAttribute>()
+                .ToDictionary(a => a.Key, a => a.Value!);
 
             AssemblyInfo result = new AssemblyInfo(copyrightAttribute.Copyright, informationalVersionAttribute.InformationalVersion, metadataAttributes);
             return result;
