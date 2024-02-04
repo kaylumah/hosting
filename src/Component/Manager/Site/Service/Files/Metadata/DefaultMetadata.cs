@@ -6,10 +6,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     public class DefaultMetadata
     {
         public string Path
-        { get; set; }
+        { get; set; } = null!;
         public string Scope
-        { get; set; }
+        { get; set; } = null!;
         public FileMetaData Values
-        { get; set; }
+        { get; set; } = null!;
     }
 }

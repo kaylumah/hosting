@@ -6,10 +6,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
     public class DirectoryConfiguration
     {
         public string SourceDirectory
-        { get; set; }
+        { get; set; } = null!;
         public string LayoutsDirectory
-        { get; set; }
+        { get; set; } = null!;
         public string TemplateDirectory
-        { get; set; }
+        { get; set; } = null!;
     }
 }

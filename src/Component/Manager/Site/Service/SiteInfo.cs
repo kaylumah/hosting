@@ -8,15 +8,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public class SiteInfo
     {
         public string Lang
-        { get; set; }
+        { get; set; } = null!;
         public string BaseUrl
-        { get; set; }
+        { get; set; } = null!;
         public string Url
-        { get; set; }
+        { get; set; } = null!;
         public string Title
-        { get; set; }
+        { get; set; } = null!;
         public string Description
-        { get; set; }
+        { get; set; } = null!;
         public Collections Collections
         { get; set; } = new Collections();
         public HashSet<string> SupportedFileExtensions
