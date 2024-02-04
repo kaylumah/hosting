@@ -64,8 +64,8 @@ namespace Kaylumah.Ssg.Utilities
             IEnumerable<HeadingBlock> blocks = doc.Descendants<HeadingBlock>();
             foreach (HeadingBlock headingBlock in blocks)
             {
-                LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null);
-                ContainerInline previousInline = headingBlock.Inline;
+                LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null!);
+                ContainerInline previousInline = headingBlock.Inline!;
                 headingBlock.Inline = null;
                 inline.AppendChild(previousInline);
                 headingBlock.Inline = inline;
@@ -74,9 +74,9 @@ namespace Kaylumah.Ssg.Utilities
             IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
             foreach (LinkInline anchor in anchorTags)
             {
+                string anchorUrl = anchor.Url!;
                 if (!anchor.IsImage)
                 {
-                    string anchorUrl = anchor.Url;
                     bool isRelative = anchorUrl.StartsWith('/');
                     if (isRelative)
                     {
@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Utilities
                         anchor.Url = anchorUrl;
                     }
 
-                    if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value, StringComparison.Ordinal))
+                    if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal))
                     {
                         anchor.GetAttributes().AddClass("external");
                     }
@@ -93,7 +93,7 @@ namespace Kaylumah.Ssg.Utilities
                 // TODO disable pending Medium response...
                 if (anchor.IsImage)
                 {
-                    if (anchor.Url.StartsWith("/assets", StringComparison.Ordinal))
+                    if (anchorUrl.StartsWith("/assets", StringComparison.Ordinal))
                     {
                         anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
                     }
