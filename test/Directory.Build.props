@@ -10,6 +10,7 @@
   <PropertyGroup>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
 </Project>
