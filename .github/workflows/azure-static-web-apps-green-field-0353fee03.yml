@@ -84,6 +84,7 @@ jobs:
           name: verify-test-results
           path: |
             **/*.received.*
+            **/*.verified.*
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
       # - name: 'Verify Website'
       #   if: github.actor != 'dependabot[bot]'
