@@ -49,13 +49,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
             using IDisposable logScope = _Logger.BeginScope("[EnrichSite]");
-            SiteMetaData siteInfo = new SiteMetaData();
-            siteInfo.Id = siteGuid.ToString();
-            siteInfo.Title = _SiteInfo.Title;
-            siteInfo.Description = _SiteInfo.Description;
-            siteInfo.Language = _SiteInfo.Lang;
-            siteInfo.Url = _SiteInfo.Url;
-            siteInfo.Author = null;
+            string siteId = siteGuid.ToString();
+            SiteMetaData siteInfo = new SiteMetaData(siteId,
+                _SiteInfo.Title,
+                _SiteInfo.Description,
+                _SiteInfo.Lang,
+                null,
+                _SiteInfo.Url,
+                null);
+
             siteInfo.Data = new Dictionary<string, object>();
             siteInfo.Tags = new SortedDictionary<string, PageMetaData[]>();
             siteInfo.Collections = new SortedDictionary<string, PageMetaData[]>();
