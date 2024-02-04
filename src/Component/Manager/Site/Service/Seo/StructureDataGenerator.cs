@@ -59,7 +59,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 return ldjson;
             }
 
-            return null;
+            string result = string.Empty;
+            return result;
         }
     }
 }

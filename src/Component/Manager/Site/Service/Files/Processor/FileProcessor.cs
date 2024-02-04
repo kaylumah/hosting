@@ -143,19 +143,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string scope)
+        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string? scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                using System.IDisposable logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
                 Stream fileStream = fileInfo.CreateReadStream();
                 using StreamReader streamReader = new StreamReader(fileStream);
 
                 string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
                 MetadataCriteria criteria = new MetadataCriteria();
                 criteria.Content = rawContent;
-                criteria.Scope = scope;
+                if (scope != null)
+                {
+                    criteria.Scope = scope;
+                }
+
                 criteria.FileName = fileInfo.Name;
                 global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 

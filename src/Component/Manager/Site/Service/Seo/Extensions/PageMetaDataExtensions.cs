@@ -29,12 +29,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Image = new Values<IImageObject, Uri>(imageUri);
             }
 
-            if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person person))
+            if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person? person))
             {
                 blogPost.Author = person;
             }
 
-            if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization organization))
+            if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization? organization))
             {
                 blogPost.Publisher = organization;
             }

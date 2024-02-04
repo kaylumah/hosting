@@ -14,6 +14,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         public double? Priority
         { get; set; }
         public string Url
-        { get; set; }
+        { get; set; } = null!;
     }
 }

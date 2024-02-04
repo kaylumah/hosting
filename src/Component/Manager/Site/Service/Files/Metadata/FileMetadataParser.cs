@@ -220,12 +220,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             if (source != null)
             {
-                foreach (KeyValuePair<string, object> entry in source)
+                foreach (KeyValuePair<string, object?> entry in source)
                 {
 #pragma warning disable CA1854
                     if (target.ContainsKey(entry.Key))
                     {
-                        LogDataOverwriting(entry.Key, (string)entry.Value, (string)target[entry.Key], reason);
+                        LogDataOverwriting(entry.Key, (string)entry.Value!, (string)target[entry.Key]!, reason);
                     }
 
                     target[entry.Key] = entry.Value;

@@ -111,7 +111,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                     Uri pageUri = new Uri(pageUrl);
                     SyndicationLink syndicationLink = new SyndicationLink(pageUri);
                     item.Links.Add(syndicationLink);
-                    if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson person))
+                    if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson? person))
                     {
                         SyndicationPerson author = person;
                         item.Authors.Add(author);
@@ -128,7 +128,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         {
             IEnumerable<PageMetaData> result;
 
-            if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[] posts))
+            if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[]? posts))
             {
                 result = posts
                     .Where(x => x.Feed)
