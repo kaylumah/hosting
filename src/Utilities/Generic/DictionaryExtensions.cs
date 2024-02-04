@@ -7,17 +7,18 @@ namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
     {
-        public static bool GetBoolValue(this Dictionary<string, object> dictionary, string key)
+        public static bool GetBoolValue(this Dictionary<string, object?> dictionary, string key)
         {
             string stringValue = dictionary.GetValue<string>(key);
             bool result = bool.Parse(stringValue);
             return result;
         }
 
-        public static T GetValue<T>(this Dictionary<string, object> dictionary, string key)
+        public static T GetValue<T>(this Dictionary<string, object?> dictionary, string key)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary.TryGetValue(lowerKey, out object? o);
+            bool exists = dictionary.TryGetValue(lowerKey, out object? o);
+
             if (o is T t)
             {
                 return t;
@@ -27,7 +28,7 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public static void SetValue(this Dictionary<string, object> dictionary, string key, object value)
+        public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
             dictionary[lowerKey] = value;

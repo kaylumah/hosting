@@ -9,7 +9,7 @@ using System.Linq;
 namespace Ssg.Extensions.Metadata.Abstractions
 {
     [DebuggerDisplay("PageMetaData '{Uri}'")]
-    public class PageMetaData : Dictionary<string, object>
+    public class PageMetaData : Dictionary<string, object?>
     {
         public string Id
         {
@@ -143,7 +143,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public DateTimeOffset Published => this.GetValue<DateTimeOffset>(nameof(Published));
         public DateTimeOffset Modified => this.GetValue<DateTimeOffset>(nameof(Modified));
 
-        public PageMetaData(Dictionary<string, object> internalData) : base(internalData)
+        public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
     }
