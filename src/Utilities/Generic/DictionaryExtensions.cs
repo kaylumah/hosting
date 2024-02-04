@@ -23,7 +23,7 @@ namespace System.Collections.Generic
                 return t;
             }
 
-            T result = default(T);
+            T result = default!;
             return result;
         }
 
