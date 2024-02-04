@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Kaylumah.Ssg.Manager.Site.Interface
 {
+#pragma warning disable CS8618
     [DataContract]
     public class SiteConfiguration
     {

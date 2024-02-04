@@ -30,13 +30,7 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
             }
 
             T data = _YamlParser.Parse<T>(frontMatterData);
-#pragma warning disable IDESIGN103
-            Metadata<T> result = new Metadata<T>()
-            {
-                Content = contents,
-                Data = data
-            };
-#pragma warning restore IDESIGN103
+            Metadata<T> result = new Metadata<T>(contents, data);
             return result;
         }
     }

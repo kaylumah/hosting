@@ -17,22 +17,21 @@ namespace Test.Unit.Entities
 
         public static AuthorMetaData ToAuthorMetadata(this Author author)
         {
-            return new AuthorMetaData()
+            AuthorMetaData result = new AuthorMetaData();
+            result.Id = author.Id;
+            result.FullName = author.Name;
+            result.Email = author.Email;
+            result.Uri = author.Uri;
+            result.Picture = author.Picture;
+            result.Links = new Links()
             {
-                Id = author.Id,
-                FullName = author.Name,
-                Email = author.Email,
-                Uri = author.Uri,
-                Picture = author.Picture,
-                Links = new Links()
-                {
-                    Devto = author.Id,
-                    Github = author.Id,
-                    Linkedin = author.Id,
-                    Medium = author.Id,
-                    Twitter = author.Id
-                }
+                Devto = author.Id,
+                Github = author.Id,
+                Linkedin = author.Id,
+                Medium = author.Id,
+                Twitter = author.Id
             };
+            return result;
         }
 
         public static IEnumerable<OrganizationMetaData> ToOrganizationMetadata(this IEnumerable<Organization> organizations)
@@ -42,11 +41,10 @@ namespace Test.Unit.Entities
 
         public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
         {
-            return new OrganizationMetaData()
-            {
-                Id = organization.Id,
-                FullName = organization.Name
-            };
+            OrganizationMetaData result = new OrganizationMetaData();
+            result.Id = organization.Id;
+            result.FullName = organization.Name;
+            return result;
         }
 
         public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
@@ -56,11 +54,10 @@ namespace Test.Unit.Entities
 
         public static TagMetaData ToTagMetadata(this Tag tag)
         {
-            return new TagMetaData()
-            {
-                Id = tag.Id,
-                Name = tag.Id
-            };
+            TagMetaData result = new TagMetaData();
+            result.Id = tag.Id;
+            result.Name = tag.Id;
+            return result;
         }
     }
 }

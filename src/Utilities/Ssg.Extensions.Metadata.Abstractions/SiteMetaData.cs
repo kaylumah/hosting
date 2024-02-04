@@ -7,12 +7,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class SiteMetaData
     {
-        public TagMetaDataCollection TagMetaData
-        { get; set; } = new();
-        public AuthorMetaDataCollection AuthorMetaData
-        { get; set; } = new();
-        public OrganizationMetaDataCollection OrganizationMetaData
-        { get; set; } = new();
         public BuildData Build
         { get; set; }
         public string Id
@@ -28,25 +22,43 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Url
         { get; set; }
 
+        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            Language = language;
+            Author = author;
+            Url = url;
+            Build = buildData;
+        }
+
         public Dictionary<string, object> Data
-        { get; set; }
+        { get; set; } = new();
+
+        public TagMetaDataCollection TagMetaData
+        { get; set; } = new();
+        public AuthorMetaDataCollection AuthorMetaData
+        { get; set; } = new();
+        public OrganizationMetaDataCollection OrganizationMetaData
+        { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Collections
-        { get; set; }
+        { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Tags
-        { get; set; }
+        { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Series
-        { get; set; }
+        { get; set; } = new();
 
         public SortedDictionary<int, PageMetaData[]> Years
-        { get; set; }
+        { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Types
-        { get; set; }
+        { get; set; } = new();
 
         public List<PageMetaData> Pages
-        { get; set; }
+        { get; set; } = new();
     }
 }

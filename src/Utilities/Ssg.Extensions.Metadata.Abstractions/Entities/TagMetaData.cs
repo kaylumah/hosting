@@ -12,13 +12,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class TagMetaData
     {
         public string Id
-        { get; set; }
+        { get; set; } = null!;
         public string Name
-        { get; set; }
+        { get; set; } = null!;
         public string Description
-        { get; set; }
+        { get; set; } = null!;
         public string Icon
-        { get; set; }
+        { get; set; } = null!;
     }
 
     public class TagMetaDataCollection : KeyedCollection<string, TagMetaData>
@@ -28,7 +28,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
 

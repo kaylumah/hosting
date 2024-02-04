@@ -7,5 +7,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
     {
         public string Content
         { get; set; }
+
+        public MetadataRenderResult(string content)
+        {
+            Content = content;
+        }
     }
 }

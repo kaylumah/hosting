@@ -176,8 +176,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     // }));
 
                     string renderedContent = await liquidTemplate.RenderAsync(context).ConfigureAwait(false);
-                    MetadataRenderResult metadataRenderResult = new MetadataRenderResult();
-                    metadataRenderResult.Content = renderedContent;
+                    MetadataRenderResult metadataRenderResult = new MetadataRenderResult(renderedContent);
                     renderedResults.Add(metadataRenderResult);
                 }
                 catch (Exception)

@@ -25,15 +25,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class AuthorMetaData
     {
         public AuthorId Id
-        { get; set; }
+        { get; set; } = null!;
         public string FullName
-        { get; set; }
+        { get; set; } = null!;
         public string Email
-        { get; set; }
+        { get; set; } = null!;
         public string Uri
-        { get; set; }
+        { get; set; } = null!;
         public string Picture
-        { get; set; }
+        { get; set; } = null!;
         public Links Links
         { get; set; } = new();
     }
@@ -45,7 +45,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<AuthorId, AuthorMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<AuthorId, AuthorMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<AuthorId> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<AuthorId>();
 

@@ -26,15 +26,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class OrganizationMetaData
     {
         public OrganizationId Id
-        { get; set; }
+        { get; set; } = null!;
         public string FullName
-        { get; set; }
+        { get; set; } = null!;
         public string Linkedin
-        { get; set; }
+        { get; set; } = null!;
         public string Twitter
-        { get; set; }
+        { get; set; } = null!;
         public string Logo
-        { get; set; }
+        { get; set; } = null!;
         public DateTimeOffset Founded
         { get; set; }
     }
@@ -46,7 +46,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<OrganizationId, OrganizationMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<OrganizationId, OrganizationMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<OrganizationId> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<OrganizationId>();
 
