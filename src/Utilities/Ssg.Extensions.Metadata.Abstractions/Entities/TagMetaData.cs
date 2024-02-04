@@ -28,7 +28,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<string, TagMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<string> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<string>();
 

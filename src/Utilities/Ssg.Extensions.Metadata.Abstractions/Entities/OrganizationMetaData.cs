@@ -46,7 +46,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<OrganizationId, OrganizationMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<OrganizationId, OrganizationMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<OrganizationId> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<OrganizationId>();
 

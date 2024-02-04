@@ -45,7 +45,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return item.Id;
         }
 
-        public new IDictionary<AuthorId, AuthorMetaData> Dictionary => base.Dictionary;
+        public new IDictionary<AuthorId, AuthorMetaData> Dictionary => base.Dictionary!;
 
         public IEnumerable<AuthorId> Keys => base.Dictionary?.Keys ?? Enumerable.Empty<AuthorId>();
 
