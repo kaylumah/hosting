@@ -9,5 +9,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
         { get; set; }
         public string Template
         { get; set; }
+
+        public MetadataRenderRequest(RenderData metaData, string template)
+        {
+            Metadata = metaData;
+            Template = template;
+        }
     }
 }
