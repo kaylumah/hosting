@@ -37,6 +37,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
         public DateTimeOffset Founded
         { get; set; }
+
+        public OrganizationMetaData(OrganizationId id, string fullName, string linkedin, string twitter, string logo, DateTimeOffset founded)
+        {
+            Id = id;
+            FullName = fullName;
+            Linkedin = linkedin;
+            Twitter = twitter;
+            Logo = logo;
+            Founded = founded; 
+        }
     }
 
     public class OrganizationMetaDataCollection : KeyedCollection<OrganizationId, OrganizationMetaData>
