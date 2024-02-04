@@ -36,7 +36,7 @@ namespace System
 #pragma warning disable
                         siteMapNode.LastModified = DateTimeOffset.Parse(lastModified);
 #pragma warning restore;
-                    nodes.Add(siteMapNode);
+                        nodes.Add(siteMapNode);
                     }
                 }
             }
