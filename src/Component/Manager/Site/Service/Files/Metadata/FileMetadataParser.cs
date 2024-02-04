@@ -62,7 +62,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         string RetrieveExtension(string fileName)
         {
             string ext = Path.GetExtension(fileName);
-            if (_Options.ExtensionMapping.TryGetValue(ext, out string value))
+            if (_Options.ExtensionMapping.TryGetValue(ext, out string? value))
             {
                 return value;
             }
@@ -75,7 +75,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
             {
-                DefaultMetadata defaultMeta = _Options.Defaults.DefaultFilter(filter);
+                DefaultMetadata? defaultMeta = _Options.Defaults.DefaultFilter(filter);
                 if (defaultMeta != null)
                 {
                     OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
@@ -83,7 +83,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 
                 if (!string.IsNullOrEmpty(scope))
                 {
-                    DefaultMetadata scopedMeta = _Options.Defaults.ScopeFilter(filter, scope);
+                    DefaultMetadata? scopedMeta = _Options.Defaults.ScopeFilter(filter, scope);
                     if (scopedMeta != null)
                     {
                         OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");
