@@ -25,26 +25,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class AuthorMetaData
     {
         public AuthorId Id
-        { get; set; }
+        { get; set; } = null!;
         public string FullName
-        { get; set; }
+        { get; set; } = null!;
         public string Email
-        { get; set; }
+        { get; set; } = null!;
         public string Uri
-        { get; set; }
+        { get; set; } = null!;
         public string Picture
-        { get; set; }
+        { get; set; } = null!;
         public Links Links
         { get; set; } = new();
-
-        public AuthorMetaData(AuthorId id, string fullName, string email, string uri, string picture)
-        {
-            Id = id;
-            FullName = fullName;
-            Email = email;
-            Uri = uri;
-            Picture = picture;
-        }
     }
 
     public class AuthorMetaDataCollection : KeyedCollection<AuthorId, AuthorMetaData>

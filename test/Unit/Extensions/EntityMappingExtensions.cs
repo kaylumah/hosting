@@ -17,7 +17,12 @@ namespace Test.Unit.Entities
 
         public static AuthorMetaData ToAuthorMetadata(this Author author)
         {
-            AuthorMetaData result = new AuthorMetaData(author.Id, author.Name, author.Email, author.Uri, author.Picture);
+            AuthorMetaData result = new AuthorMetaData();
+            result.Id = author.Id;
+            result.FullName = author.Name;
+            result.Email = author.Email;
+            result.Uri = author.Uri;
+            result.Picture = author.Picture;
             result.Links.Devto = author.Id;
             result.Links.Github = author.Id;
             result.Links.Linkedin = author.Id;
@@ -33,9 +38,10 @@ namespace Test.Unit.Entities
 
         public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
         {
-#pragma warning disable RS0030 // Do not use banned APIs
-            return new OrganizationMetaData(organization.Id, organization.Name, null, null, null, System.DateTimeOffset.Now);
-#pragma warning restore RS0030 // Do not use banned APIs
+            OrganizationMetaData result = new OrganizationMetaData();
+            result.Id = organization.Id;
+            result.FullName = organization.Name;
+            return result;
         }
 
         public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
@@ -45,7 +51,10 @@ namespace Test.Unit.Entities
 
         public static TagMetaData ToTagMetadata(this Tag tag)
         {
-            return new TagMetaData(tag.Id, tag.Id, null, null);
+            TagMetaData result = new TagMetaData();
+            result.Id = tag.Id;
+            result.Name = tag.Id;
+            return result;
         }
     }
 }

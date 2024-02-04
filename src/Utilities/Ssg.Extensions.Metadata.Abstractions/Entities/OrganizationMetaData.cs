@@ -26,27 +26,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class OrganizationMetaData
     {
         public OrganizationId Id
-        { get; set; }
+        { get; set; } = null!;
         public string FullName
-        { get; set; }
+        { get; set; } = null!;
         public string Linkedin
-        { get; set; }
+        { get; set; } = null!;
         public string Twitter
-        { get; set; }
+        { get; set; } = null!;
         public string Logo
-        { get; set; }
+        { get; set; } = null!;
         public DateTimeOffset Founded
         { get; set; }
-
-        public OrganizationMetaData(OrganizationId id, string fullName, string linkedin, string twitter, string logo, DateTimeOffset founded)
-        {
-            Id = id;
-            FullName = fullName;
-            Linkedin = linkedin;
-            Twitter = twitter;
-            Logo = logo;
-            Founded = founded;
-        }
     }
 
     public class OrganizationMetaDataCollection : KeyedCollection<OrganizationId, OrganizationMetaData>
