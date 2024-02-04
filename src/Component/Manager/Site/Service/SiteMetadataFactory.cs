@@ -48,15 +48,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
         {
-            using IDisposable logScope = _Logger.BeginScope("[EnrichSite]");
+            using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
+            BuildData buildData = EnrichSiteWithAssemblyData();
             SiteMetaData siteInfo = new SiteMetaData(siteId,
                 _SiteInfo.Title,
                 _SiteInfo.Description,
                 _SiteInfo.Lang,
-                null,
+                string.Empty,
                 _SiteInfo.Url,
-                null);
+                buildData);
 
             siteInfo.Data = new Dictionary<string, object>();
             siteInfo.Tags = new SortedDictionary<string, PageMetaData[]>();
@@ -64,7 +65,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteInfo.Types = new SortedDictionary<string, PageMetaData[]>();
             siteInfo.Series = new SortedDictionary<string, PageMetaData[]>();
             siteInfo.Years = new SortedDictionary<int, PageMetaData[]>();
-            EnrichSiteWithAssemblyData(siteInfo);
             siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
@@ -75,13 +75,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             return siteInfo;
         }
-        void EnrichSiteWithAssemblyData(SiteMetaData site)
+        BuildData EnrichSiteWithAssemblyData()
         {
             LogEnrichSiteWith("AssemblyData");
             AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
-            site.Build = buildMetadata;
+            return buildMetadata;
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
