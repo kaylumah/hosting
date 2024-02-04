@@ -39,7 +39,7 @@ namespace Kaylumah.Ssg.Access.Artifact.Service
                 foreach (Interface.Artifact artifact in request.Artifacts)
                 {
                     string filePath = Path.Combine(fileSystemOutputLocation.Path, artifact.Path);
-                    string directory = Path.GetDirectoryName(filePath);
+                    string directory = Path.GetDirectoryName(filePath)!;
 
                     if (!Directory.Exists(directory))
                     {
