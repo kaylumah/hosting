@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using YamlDotNet.Core.Tokens;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
@@ -19,6 +20,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
         public string Icon
         { get; set; }
+
+        public TagMetaData(string id, string name, string description, string icon)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Icon = icon;
+        }
     }
 
     public class TagMetaDataCollection : KeyedCollection<string, TagMetaData>
