@@ -22,6 +22,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Url
         { get; set; }
 
+        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            Language = language;
+            Author = author;
+            Url = url;
+            Build = buildData;
+        }
+
         public Dictionary<string, object> Data
         { get; set; } = new();
 
