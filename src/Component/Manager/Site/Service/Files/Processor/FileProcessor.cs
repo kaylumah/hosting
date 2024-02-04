@@ -162,7 +162,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
 
-                IContentPreprocessorStrategy preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
                 if (preprocessor != null)
                 {
                     fileContents = preprocessor.Execute(fileContents);
