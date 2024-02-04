@@ -77,6 +77,13 @@ jobs:
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: https://kaylumah.nl
+      - name: Upload Test Results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: verify-test-results
+          path: |
+            **/*.received.*
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
       # - name: 'Verify Website'
       #   if: github.actor != 'dependabot[bot]'
