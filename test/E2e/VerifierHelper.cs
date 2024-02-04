@@ -48,14 +48,17 @@ namespace Test.E2e
                 settings.UseMethodName(methodName);
             }
 
+            Regex buildNumberRegex = new Regex($"(?<before>(content=\"[0-9.]*|>))(?<val>{buildNumber})(?<after>(\"|<))");
+
             settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             settings.AddScrubber(_ => _.Replace(shortCommitHash, "[SHORT-COMMIT-HASH]"));
             settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
             settings.AddScrubber(_ => _.Replace(buildId, "[BUILD-ID]"));
-            settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
+            // settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
+            settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
             await Verifier.Verify(html, "html", settings);
         }
     }
