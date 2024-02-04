@@ -59,13 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
                     content = modifiedContent;
                 }
 
-                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>();
-                fileWithMeta.Encoding = encoding.WebName;
-                fileWithMeta.Name = fileName;
-                fileWithMeta.Path = path;
-                fileWithMeta.Content = content;
-                fileWithMeta.Data = metadata.Data;
-
+                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>(path, content, metadata.Data, encoding.WebName);
                 result.Add(fileWithMeta);
             }
 

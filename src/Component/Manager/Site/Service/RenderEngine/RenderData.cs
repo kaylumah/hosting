@@ -18,5 +18,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
         public string Author => Page?.Author ?? Site?.Author ?? null;
         public string Url => Page?.Uri ?? Site?.Url ?? null;
 
+        public RenderData(SiteMetaData siteMetaData, PageMetaData pageMetaData)
+        {
+            Site = siteMetaData;
+            Page = pageMetaData;
+        }
     }
 }

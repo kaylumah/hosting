@@ -86,12 +86,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             MetadataRenderRequest[] requests = pageMetadatas
                 .Select(pageMetadata =>
                 {
-                    MetadataRenderRequest result = new MetadataRenderRequest();
-                    RenderData metaData = new RenderData();
-                    metaData.Site = siteMetadata;
-                    metaData.Page = pageMetadata;
-                    result.Metadata = metaData;
-                    result.Template = pageMetadata.Layout;
+                    RenderData metaData = new RenderData(siteMetadata, pageMetadata);
+                    MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
                     return result;
                 })
                 .ToArray();
