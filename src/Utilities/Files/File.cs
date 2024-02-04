@@ -7,13 +7,26 @@ namespace Kaylumah.Ssg.Utilities
     {
         public string Encoding
         { get; set; }
-        public string Name
-        { get; set; }
+        public string Name => GetFileName();
         public string Path
         { get; set; }
         public string Content
         { get; set; }
         public TMetadata Data
         { get; set; }
+
+        public File(string path, string content, TMetadata metadata, string encoding)
+        {
+            Path = path;
+            Content = content;
+            Data = metadata;
+            Encoding = encoding;
+        }
+
+        internal string GetFileName()
+        {
+            string fileName = System.IO.Path.GetFileName(Path);
+            return fileName;
+        }
     }
 }
