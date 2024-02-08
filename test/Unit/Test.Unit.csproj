@@ -17,7 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SpecFlow.xUnit" />
-    <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" />
+    <!-- <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" /> -->
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Moq" />
