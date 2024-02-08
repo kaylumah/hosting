@@ -3,7 +3,7 @@
 
 using System.IO;
 using System.IO.Abstractions.TestingHelpers;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Test.Unit.Utilities;
 
 namespace Test.Unit.Steps.Utilities

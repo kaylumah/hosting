@@ -15,7 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Time.Testing;
-using TechTalk.SpecFlow.Infrastructure;
+using Reqnroll;
+using Reqnroll.Infrastructure;
 using Test.Unit.Utilities;
 using Test.Utilities;
 
@@ -28,7 +29,7 @@ namespace Test.Unit.Component.Manager.Site
         readonly ValidationContext _ValidationContext;
 
         public SiteManagerTestHarness(
-            ISpecFlowOutputHelper specFlowOutputHelper,
+            IReqnrollOutputHelper reqnrollOutputHelper,
             ArtifactAccessMock artifactAccessMock,
             MockFileSystem mockFileSystem,
             FakeTimeProvider fakeTimeProvider,
@@ -47,7 +48,7 @@ namespace Test.Unit.Component.Manager.Site
                 })
                 .Register(services =>
                 {
-                    services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(specFlowOutputHelper));
+                    services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(reqnrollOutputHelper));
                 })
                 .Register((services, configuration) =>
                 {

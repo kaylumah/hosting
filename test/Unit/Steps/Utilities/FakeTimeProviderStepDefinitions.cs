@@ -3,7 +3,7 @@
 
 using System;
 using Microsoft.Extensions.Time.Testing;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Test.Unit.Steps.Utilities
 {

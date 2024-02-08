@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using FluentAssertions;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Test.Unit.Steps
 {

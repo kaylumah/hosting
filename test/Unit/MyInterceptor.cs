@@ -5,17 +5,18 @@ using System;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
-using TechTalk.SpecFlow.Infrastructure;
+using Reqnroll;
+using Reqnroll.Infrastructure;
 
 namespace Test.Unit
 {
     public sealed class MyInterceptor : IAsyncInterceptor
     {
-        readonly ISpecFlowOutputHelper _SpecFlowOutputHelper;
+        readonly IReqnrollOutputHelper _ReqnrollOutputHelper;
 
-        public MyInterceptor(ISpecFlowOutputHelper specFlowOutputHelper)
+        public MyInterceptor(IReqnrollOutputHelper reqnrollOutputHelper)
         {
-            _SpecFlowOutputHelper = specFlowOutputHelper;
+            _ReqnrollOutputHelper = reqnrollOutputHelper;
         }
 
         public void InterceptAsynchronous(IInvocation invocation)
@@ -74,11 +75,11 @@ namespace Test.Unit
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             string test = invocation.Method.DeclaringType?.FullName + "." + invocation.Method.Name;
-            _SpecFlowOutputHelper.WriteLine(test);
+            _ReqnrollOutputHelper.WriteLine(test);
             if (invocation.Arguments is { Length: > 0 })
             {
                 object first = invocation.Arguments[0];
-                _SpecFlowOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
+                _ReqnrollOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
             }
             // var validationResults = _validator.ValidateOperation(invocation.Method, invocation.Arguments);
             // if (validationResults.Length > 0)

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+using Reqnroll;
+using Reqnroll.Assist;
 using Test.Unit.Entities;
 
 namespace Test.Unit

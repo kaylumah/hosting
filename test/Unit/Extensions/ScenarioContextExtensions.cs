@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Tracing;
+using Reqnroll;
+using Reqnroll.Tracing;
 
 namespace Test.Unit.Extensions
 {

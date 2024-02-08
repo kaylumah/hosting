@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
-using TechTalk.SpecFlow.Assist.ValueRetrievers;
+using Reqnroll;
+using Reqnroll.Assist;
+using Reqnroll.Assist.ValueRetrievers;
 
 namespace Test.Unit
 {
