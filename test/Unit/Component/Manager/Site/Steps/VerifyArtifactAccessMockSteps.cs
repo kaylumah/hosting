@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Threading.Tasks;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Test.Unit.Extensions;
 using Test.Unit.Utilities;
 using VerifyXunit;

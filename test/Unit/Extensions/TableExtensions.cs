@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using Test.Unit.Helpers;
 
-namespace TechTalk.SpecFlow
+namespace Reqnroll
 {
     public static class TableExtensions
     {

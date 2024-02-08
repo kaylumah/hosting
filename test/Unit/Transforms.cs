@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+using Reqnroll;
+using Reqnroll.Assist;
 using Test.Unit.Entities;
 
 namespace Test.Unit
@@ -14,11 +14,12 @@ namespace Test.Unit
     [Binding]
     public class Transforms
     {
-        [StepArgumentTransformation]
-        public static string ToNullableString(string value)
-        {
-            return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
-        }
+        // Broken in Specflow to Reqnroll migration
+        //[StepArgumentTransformation]
+        //public static string ToNullableString(string value)
+        //{
+        //    return Constants.NullIndicator.Equals(value, System.StringComparison.Ordinal) ? null : value;
+        //}
 
         [StepArgumentTransformation]
         public List<string> TransformToListOfString(string commaSeparatedList)

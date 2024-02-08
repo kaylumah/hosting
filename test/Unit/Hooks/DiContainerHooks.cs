@@ -4,7 +4,7 @@
 using System.IO.Abstractions.TestingHelpers;
 using BoDi;
 using Microsoft.Extensions.Time.Testing;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Test.Unit
 {

@@ -2,8 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using TechTalk.SpecFlow;
-using TechTalk.SpecFlow.Assist;
+using Reqnroll;
+using Reqnroll.Assist;
 using Test.Unit.Entities;
 
 namespace Test.Unit

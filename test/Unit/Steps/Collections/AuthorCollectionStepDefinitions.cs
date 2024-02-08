@@ -4,7 +4,7 @@
 using System.Collections.ObjectModel;
 using System.IO.Abstractions.TestingHelpers;
 using Ssg.Extensions.Metadata.Abstractions;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Test.Unit.Entities;
 
 namespace Test.Unit.Steps.Collections

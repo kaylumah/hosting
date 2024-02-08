@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Test.Unit.Component.Access.Artifact.Steps
 {
