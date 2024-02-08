@@ -14,6 +14,7 @@ namespace Test.Unit
     [Binding]
     public class Transforms
     {
+        // Broken in Specflow to Reqnroll migration
         //[StepArgumentTransformation]
         //public static string ToNullableString(string value)
         //{
