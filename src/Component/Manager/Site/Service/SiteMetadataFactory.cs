@@ -213,12 +213,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Tags");
 
-            List<string> tags = pages
-                .HasTag()
-                .IsArticle()
-                .SelectMany(x => x.Tags)
-                .Distinct()
-                .ToList();
+            List<string> tags = GetTags(pages);
             foreach (string tag in tags)
             {
                 PageMetaData[] tagFiles = pages
