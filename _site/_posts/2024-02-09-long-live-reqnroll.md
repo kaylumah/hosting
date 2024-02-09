@@ -6,6 +6,10 @@ description: SpecFlow rebooted; please welcome Reqnroll!
 tags:
   - csharp
   - testing
+  - bdd
+  - reqnroll
+  - cucumber
+  - gherkin
 # publishedtime: '21:45'
 commentid: '555' 
 ---
