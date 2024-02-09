@@ -27,7 +27,11 @@ else
 $ConversionToolPath = "$ConversionToolBasePath/bin/cwebp"
 $Quality = 80
 
-$Images = Get-ChildItem -Recurse -Path "../../_site/assets/images/posts" -Filter cover_image.png
+$ScriptRoot = $PSScriptRoot
+$RepoRoot = Split-Path $ScriptRoot -Parent
+
+$Images = Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter cover_image.png
+$Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images" -Filter social_preview.png
 foreach ($image in $Images)
 {
     $ConvertedImageName = $image.BaseName + ".webp"
