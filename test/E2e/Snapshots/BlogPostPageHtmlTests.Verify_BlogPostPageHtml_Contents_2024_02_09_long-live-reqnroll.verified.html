@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="icon" href="/assets/images/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+        <link rel="manifest" href="/assets/images/site.webmanifest" />
+        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+        
+        <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+        
+        <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+        
+        <!-- Common Meta Tags -->
+        <title>Specflow has died; long live Reqnroll!</title>
+        <link rel="canonical" href="https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" />
+        <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+        <meta name="description" content="SpecFlow rebooted; please welcome Reqnroll!" />
+        <meta name="copyright" content="© Kaylumah. All rights reserved." />
+        <meta name="keywords" content="csharp, testing, reqnroll" />
+        
+        <!-- OpenGraph Meta Tags -->
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en" />
+        <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+        <meta property="og:title" content="Specflow has died; long live Reqnroll!" />
+        <meta property="og:url" content="https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" />
+        <meta property="og:description" content="SpecFlow rebooted; please welcome Reqnroll!" />
+        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20240209/reqnroll/cover_image.png" />
+        
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Specflow has died; long live Reqnroll!" />
+        <meta name="twitter:description" content="SpecFlow rebooted; please welcome Reqnroll!" />
+        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20240209/reqnroll/cover_image.png" />
+        <meta name="twitter:site" content="@kaylumah" />
+        <meta name="twitter:creator" content="@kaylumah" />
+        
+        <!-- Kaylumah BuildInfo Meta Tags -->
+        <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+        <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+        <meta property="kaylumah:version" content="1.0.0.BuildNumber_1" />
+        <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+        <meta property="kaylumah:buildNumber" content="BuildNumber_1" />
+        <meta property="kaylumah:time" content="DateTimeOffset_1" />
+        <meta property="kaylumah:site" content="Guid_1" />
+        <meta property="kaylumah:page" content="Guid_2" />
+        
+        
+        
+        <!-- End Kaylumah SEO tag -->
+        <!-- BEGIN Feed MetaData-->
+        <link
+          type="application/atom+xml"
+          rel="alternate"
+          href="https://BaseUrl_1/feed.xml"
+          title="Max Hamulyák · Kaylumah RSS Feed"
+        />
+        <!-- END Feed MetaData -->
+
+        <!--
+                                                            
+           _  __           _                       _        
+          | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+          | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+          | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+          |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                     |___/                                  
+                                                            
+         You found 🧸                                      
+                                                           
+        -->
+        
+        <script>
+        
+          const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+          const consoleSignatureStyle = `
+          font-size: 16px;
+          background: #4cae50;
+          color: white;
+          text-align: center;
+          padding: 10px 15px;
+          width: 100%;
+          border-radius: 20px;
+        `;
+          console.log(consoleSignatureText, consoleSignatureStyle);
+        </script>
+        
+        <!-- Place your kit's code here -->
+        <script data-search-pseudo-elements defer src="https://kit.fontawesome.com/61d3312dd9.js" crossorigin="anonymous"></script>
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-168549883-1');
+        </script>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" media="print" onload="this.media='all'" />
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto&display=swap" />
+        </noscript>
+    </head>
+    <body class="line-numbers bg-gray-100 fa-colors">
+        <div class="flex flex-col h-screen">
+            <header class="bg-gray-900">
+                <nav class="flex flex-wrap items-center justify-between py-4 px-4">
+                    <div>
+                        <a data-testid="NavLink-Home" href="/" rel="author">
+                            <!-- <img class="block md:hidden h-12 w-auto" src="/assets/logo_small.svg" alt="Kaylumah" /> -->
+                            <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah" />
+                        </a>
+                    </div>
+                    <div class="flex md:hidden">
+                        <button id="hamburger" class="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="toggle hidden md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-gray-600 md:border-none"><a data-testid="NavLink-About" href="/about.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            About
+                        </a><a data-testid="NavLink-Blog" href="/blog.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
+                            Blog
+                        </a></div>
+                </nav>
+                 <script>
+                    document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                        for (let i = 0; i < navToggle.length; i++) {
+                            navToggle.item(i).classList.toggle('hidden');
+                        }
+                    };
+                </script>
+            </header>
+
+            <main class="flex-1 py-4 text-gray-900">
+                <article class="py-16 px-6 sm:px-8">
+    <header>
+        <h1 class="flex flex-col items-center mx-auto">
+            <span class="text-gray-900 font-semibold tracking-wide uppercase">Announcement</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Specflow has died; long live Reqnroll!</span>
+        </h1>
+        <picture class="flex flex-col items-center mx-auto">
+            <source type="image/webp" srcset="/assets/images/posts/20240209/reqnroll/cover_image.webp">
+            <img src="/assets/images/posts/20240209/reqnroll/cover_image.png" alt="cover for Specflow has died; long live Reqnroll!" height="640" width="1280" />
+        </picture>
+        <div class="mx-auto mt-1">
+            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Authored by
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        Max Hamulyák
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Posted on
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        <time datetime="2024-02-09">2024/02/09</time>
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Reading time
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                        2 minute
+                    </dd>
+                </div>
+                <div class="flex flex-col p-6 text-center">
+                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
+                        Published in
+                    </dt>
+                    <dd class="order-1 text-xl font-extrabold">
+                    
+                                        <a href="/archive.html#csharp" title="for the C# programming language" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            C#
+                                        </a>
+                                        
+                                        <a href="/archive.html#testing" title="for test related matters" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Testing
+                                        </a>
+                                        
+                                        <a href="/archive.html#reqnroll" title="Cucumber runner for .NET" class="text-gray-800">
+                                            <!-- <span class="text-gray-600">#</span> -->
+                                            Reqnroll
+                                        </a>
+                                        
+                    </dd>
+                </div>
+            </dl>
+        </div>
+        
+        <hr class="mt-8 border-t-2 w-20 mx-auto" />
+    </header>
+    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+        <p>Today's post is a short one. My goal is to spread awareness inside the .NET community that on 2024-02-08 at 14:56:14Z, Specflow was <a href="https://github.com/SpecFlowOSS/SpecFlow/issues/2719#issuecomment-1934292742" class="external">pronounced dead</a>. The statement was made by none other than Gáspár Nagy, the original creator of Specflow.</p>
+<p>For those who don't know, Specflow is (or I suppose was) the official Cucumber implementation for .NET, which has been open-source all the way since 2009. With Cucumber, you write tests using the Gherkin language. This allows for human readable tests and many more incredible advantages. One of the last things I did at my previous company was give a dev talk on all things Specflow and my experiences using it.</p>
+<p><img src="https://BaseUrl_1/assets/images/posts/20240209/reqnroll/ilionx_devdays_2023_specflow.jpeg" width="2560" height="1707" alt="Dev Days 2023 - ilionx - Specflow Presentation" /></p>
+<p>Somewhere in the past, Specflow was sold, and unfortunately, for the past two years, the project has seen no activity. Gáspár has made the decision <a href="https://reqnroll.net/news/2024/02/from-specflow-to-reqnroll-why-and-how/" class="external">to fork and revive</a> it under the name of Reqnroll(pronounced as [reknroʊl]). He has done a lot of grunt work, and now it is up to him and the community to keep it alive.</p>
+<p>A <a href="https://docs.reqnroll.net/latest/guides/migrating-from-specflow.html" class="external">migration guide</a> was published, and it is as simple as changing a package and changing a few namespaces. I think the migration took me about 15 minutes, and it was done. There is even a package published for backwards compatibility, so even fewer changes are required.</p>
+<p>Most of the tests for the blog and static website generator you are reading this article on were written using Specflow (and now rewritten!). I was planning out a bunch of articles on this topic, but with a new job and everything, time got away from me.
+I'd like to personally thank Gáspár for the effort to first revive Specflow and now for the process of starting the fork and a brand new community. I hope the efforts will not be in vain and we can make the project successful. I will make it a priority that upcoming content will make use of Reqnroll! Not only because I love this way of writing tests but also to show that Gáspár has my full support moving forward!</p>
+    </div>
+
+    <footer class="flex flex-col mt-8">
+        
+                <div class="social-share">
+            <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
+            <div class="flex justify-center space-x-6">
+                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                        <span class="sr-only">LinkedIn Share</span>
+                        <em class="fab fa-linkedin fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Specflow%20has%20died%3B%20long%20live%20Reqnroll%21&url=https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                        <span class="sr-only">Twitter Share</span>
+                        <em class="fab fa-twitter-square fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
+                        <span class="sr-only">Facebook Share</span>
+                        <em class="fab fa-facebook fa-lg"></em>
+                    </a>
+                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Specflow has died; long live Reqnroll!&amp;body=Thought you might like this article https://BaseUrl_1/2024/02/09/long-live-reqnroll.html">
+                        <span class="sr-only">Email Share</span>
+                        <em class="fas fa-envelope-open-text fa-lg"></em>
+                    </a>
+            </div>
+        </div>
+                
+        
+                <!-- https://giscus.app -->
+                <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+                <script src="https://giscus.app/client.js"
+                    data-repo="kaylumah/kaylumah.github.io"
+                    data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                    data-mapping="number"
+                    data-term="555"
+                    data-reactions-enabled="1"
+                    data-emit-metadata="0"
+                    data-input-position="top"
+                    data-theme="light_high_contrast"
+                    data-lang="en"
+                    data-loading="lazy"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+                
+    </footer>
+   
+</article>
+                <!--
+                <button class="fixed z-50 bottom-4 right-4 w-16 h-16 rounded-full bg-gray-300 text-white block" onclick="topFunction()" id="myBtn" title="Go to top">
+                    <span class="sr-only">Back to top!</span>
+                    <em class="fad fa-angle-double-up fa-lg"></em>
+                </button>
+                <script>
+                    var mybutton = document.getElementById("myBtn");
+                
+                    window.onscroll = function() {scrollFunction()};
+                
+                    function scrollFunction() {
+                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                            mybutton.style.display = "block";
+                        }
+                        else {
+                            mybutton.style.display = "none";
+                        }
+                    }
+                    function topFunction() {
+                        document.body.scrollTop = 0;
+                        document.documentElement.scrollTop = 0;
+                    }
+                </script>
+                -->
+            </main>
+            <footer class="bg-gray-900">
+                <div class="py-4 px-4">
+                    <div class="flex justify-center space-x-6">
+                        
+                                    <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="https://www.linkedin.com/in/maxhamulyak" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">LinkedIn</span>
+                                        <em class="fab fa-linkedin fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Github" target="_blank" rel=”noopener” href="https://github.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">GitHub</span>
+                                        <em class="fab fa-github-square fa-lg"></em>
+                                    </a>
+                                    
+                        
+                                    <a data-testid="FooterLink-Twitter" target="_blank" rel=”noopener” href="https://twitter.com/kaylumah" class="text-gray-100 hover:text-gray-400">
+                                        <span class="sr-only">Twitter</span>
+                                        <em class="fab fa-twitter-square fa-lg"></em>
+                                    </a>
+                                    
+                    </div>
+                    <div class="pt-2 flex flex-col text-center text-gray-100">
+                        <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                        <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">BuildNumber_1</a></span>
+                    </div>
+                    <div class="pt-2 flex justify-center space-x-6">
+                        <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
+                            <span class="sr-only">Kaylumah</span>
+                            <em class="fak fa-logo-kaylumah fa-lg"></em>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        
+    </body>
+</html>
