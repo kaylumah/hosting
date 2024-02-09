@@ -12,7 +12,7 @@ namespace VerifyTests
 {
     public static class VerifySettingsExtensions
     {
-        
+
         public static VerifySettings ReplaceMatches(this VerifySettings verifySettings, Regex regex, string replacementPrefix = "Val_")
         {
             string[] groupNames = regex.GetGroupNames();
@@ -39,7 +39,7 @@ namespace VerifyTests
                         (hasBeforeGroup ? m.Groups[beforeGroupName].Value : string.Empty) +
                         m.Groups[valGroupName].Value +
                         (hasAfterGroup ? m.Groups[afterGroupName].Value : string.Empty));
-                        foreach (IGrouping<string, Match> uniqueValueMatch in groupedMatches)
+                foreach (IGrouping<string, Match> uniqueValueMatch in groupedMatches)
                 {
                     Match match = uniqueValueMatch.First();
                     result = result.Replace(
