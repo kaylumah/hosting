@@ -41,6 +41,7 @@
 - id: reqnroll
   name: Reqnroll
   description: Cucumber runner for .NET
+  icon:
 - id: rider
   name: Rider
   description: for the JetBrains Rider IDE
