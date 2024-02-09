@@ -59,12 +59,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Data = new Dictionary<string, object>();
-            siteInfo.Tags = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Collections = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Types = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Series = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Years = new SortedDictionary<int, PageMetaData[]>();
             siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
@@ -82,6 +76,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
             return buildMetadata;
+        }
+
+        List<string> GetTags(List<PageMetaData> pages)
+        {
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+            IEnumerable<PageMetaData> taggedAnnouncements = pagesWithTags.IsAnnouncement();
+
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> tagsFromAnnouncements = taggedAnnouncements.SelectMany(article => article.Tags);
+            IEnumerable<string> allTags = tagsFromArticles.Union(tagsFromAnnouncements);
+            IEnumerable<string> uniqueTags = allTags.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
@@ -105,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(tagFile);
                 TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(tagFile);
-                List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
+                List<string> tags = GetTags(pages);
                 IEnumerable<string> otherTags = tagData.Keys.Except(tags);
                 IEnumerable<string> unmatchedTags = tags
                     .Except(tagData.Keys)
@@ -204,12 +212,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Tags");
 
-            List<string> tags = pages
-                .HasTag()
-                .IsArticle()
-                .SelectMany(x => x.Tags)
-                .Distinct()
-                .ToList();
+            List<string> tags = GetTags(pages);
             foreach (string tag in tags)
             {
                 PageMetaData[] tagFiles = pages
