@@ -2,7 +2,7 @@
 type: 'Announcement'
 title: Specflow has died; long live Reqnroll!
 description: SpecFlow rebooted; please welcome Reqnroll!
-# image: /assets/images/social_preview.png
+image: /assets/images/posts/20240209/reqnroll/cover_image.png
 tags:
   - csharp
   - testing
@@ -17,7 +17,7 @@ Today's post is a short one. My goal is to spread awareness inside the .NET comm
 
 For those who don't know, Specflow is (or I suppose was) the official Cucumber implementation for .NET, which has been open-source all the way since 2009. With Cucumber, you write tests using the Gherkin language. This allows for human readable tests and many more incredible advantages. One of the last things I did at my previous company was give a dev talk on all things Specflow and my experiences using it.
 
-![Dev Days 2023 - ilionx - Specflow Presentation](/assets/images/posts/20240209/ilionx_devdays_2023_specflow.jpeg){width=2560 height=1707}
+![Dev Days 2023 - ilionx - Specflow Presentation](/assets/images/posts/20240209/reqnroll/ilionx_devdays_2023_specflow.jpeg){width=2560 height=1707}
 
 Somewhere in the past, Specflow was sold, and unfortunately, for the past two years, the project has seen no activity. Gáspár has made the decision [to fork and revive](https://reqnroll.net/news/2024/02/from-specflow-to-reqnroll-why-and-how/) it under the name of Reqnroll(pronounced as [reknroʊl]). He has done a lot of grunt work, and now it is up to him and the community to keep it alive.
 
