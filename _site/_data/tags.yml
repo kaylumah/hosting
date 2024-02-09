@@ -38,6 +38,9 @@
   name: OpenAPI
   description: for the OpenAPI Specification (formerly Swagger Specification)
   icon: /assets/icons/simpleicons/openapiinitiative.svg
+- id: reqnroll
+  name: Reqnroll
+  description: Cucumber runner for .NET
 - id: rider
   name: Rider
   description: for the JetBrains Rider IDE
