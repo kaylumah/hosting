@@ -78,6 +78,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return buildMetadata;
         }
 
+        List<string> GetTags(List<PageMetaData> pages)
+        {
+            List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
+            return tags;
+        }
+
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
         {
             LogEnrichSiteWith("Data");
@@ -99,7 +105,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 dataFiles.Remove(tagFile);
                 TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(tagFile);
-                List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
+                List<string> tags = GetTags(pages);
                 IEnumerable<string> otherTags = tagData.Keys.Except(tags);
                 IEnumerable<string> unmatchedTags = tags
                     .Except(tagData.Keys)
