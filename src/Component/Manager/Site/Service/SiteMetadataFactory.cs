@@ -59,12 +59,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Data = new Dictionary<string, object>();
-            siteInfo.Tags = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Collections = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Types = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Series = new SortedDictionary<string, PageMetaData[]>();
-            siteInfo.Years = new SortedDictionary<int, PageMetaData[]>();
             siteInfo.Pages = pages.ToList();
             EnrichSiteWithData(siteInfo, pages, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
