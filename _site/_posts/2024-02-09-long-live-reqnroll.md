@@ -2,7 +2,7 @@
 type: 'Announcement'
 title: Specflow has died; long live Reqnroll!
 description: SpecFlow rebooted; please welcome Reqnroll!
-image: /assets/images/social_preview.png
+# image: /assets/images/social_preview.png
 tags:
   - csharp
   - testing
