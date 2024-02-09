@@ -82,6 +82,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
             return tags;
+
+            /*
+                List<string> tags = pages
+                    .HasTag()
+                    .IsArticle()
+                    .SelectMany(x => x.Tags)
+                    .Distinct()
+                    .ToList();
+            */
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
