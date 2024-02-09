@@ -4,9 +4,7 @@ title: Specflow has died; long live Reqnroll!
 # image: /assets/images/posts/20230414/openapi/cover_image.png
 tags:
   - csharp
-  - nswag
-  - openapi
-  - swashbuckle
+  - testing
 commentid: '555' 
 ---
 Today's post is a short one. My goal is to spread awareness inside the .NET community that on 2024-02-08 at 14:56:14Z, Specflow was [pronounced dead](https://github.com/SpecFlowOSS/SpecFlow/issues/2719#issuecomment-1934292742). The statement was made by none other than Gáspár Nagy, the original creator of Specflow.
