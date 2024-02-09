@@ -15,6 +15,9 @@ namespace Test.E2e
         //[GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[\w/_-]*\.(html|xml|png|svg))?")]
         [GeneratedRegex(@"(?<before>https://)(?<val>(kaylumah.nl|green-field-0353fee03-[0-9]{3}.westeurope.1.azurestaticapps.net))(?<after>[\w\/\.\-]*)?")]
         public static partial Regex BaseUrl();
+
+        [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 ]*)(?<after> ago<)")]
+        public static partial Regex TimeAgo();
     }
 
     public static class BasePageVerifier
@@ -59,6 +62,7 @@ namespace Test.E2e
             // settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
+            settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
             await Verifier.Verify(html, "html", settings);
         }
     }
