@@ -80,17 +80,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<string> GetTags(List<PageMetaData> pages)
         {
-            List<string> tags = pages.SelectMany(x => x.Tags).Distinct().ToList();
-            return tags;
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+            IEnumerable<PageMetaData> taggedAnnouncements = pagesWithTags.IsAnnouncement();
 
-            /*
-                List<string> tags = pages
-                    .HasTag()
-                    .IsArticle()
-                    .SelectMany(x => x.Tags)
-                    .Distinct()
-                    .ToList();
-            */
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> tagsFromAnnouncements = taggedAnnouncements.SelectMany(article => article.Tags);
+            IEnumerable<string> allTags = tagsFromArticles.Union(tagsFromAnnouncements);
+            IEnumerable<string> uniqueTags = allTags.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)

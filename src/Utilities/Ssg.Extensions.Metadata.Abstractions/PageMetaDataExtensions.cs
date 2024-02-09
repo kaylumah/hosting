@@ -87,6 +87,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        public static IEnumerable<PageMetaData> IsAnnouncement(this IEnumerable<PageMetaData> source)
+        {
+            IEnumerable<PageMetaData> result = source.FromContentType(ContentType.Announcement);
+            return result;
+        }
+
         public static IEnumerable<PageMetaData> IsFeatured(this IEnumerable<PageMetaData> source)
         {
             IEnumerable<PageMetaData> result = source.Where(Featured);
