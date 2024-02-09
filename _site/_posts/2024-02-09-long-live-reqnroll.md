@@ -1,4 +1,5 @@
 ---
+type: 'Announcement'
 title: Specflow has died; long live Reqnroll!
 description: SpecFlow rebooted; please welcome Reqnroll!
 # image: /assets/images/posts/20230414/openapi/cover_image.png
