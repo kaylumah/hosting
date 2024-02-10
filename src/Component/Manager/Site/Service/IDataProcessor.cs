@@ -38,7 +38,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public interface IKnownFileProcessor : IDataProcessor
     {
+        string KnownFileName
+        { get; }
 
+        bool IDataProcessor.IsApplicable(IFileSystemInfo file)
+        {
+            string fileName = file.Name;
+            bool fileNameMatches = fileName.Equals(KnownFileName, StringComparison.Ordinal);
+            return fileNameMatches;
+        }
     }
 
     public partial class TagFileProcessor : IKnownFileProcessor
@@ -51,6 +59,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         readonly ILogger _Logger;
         readonly IYamlParser _YamlParser;
+
+        public string KnownFileName => Constants.KnownFiles.Tags;
 
         public TagFileProcessor(ILogger logger, IYamlParser yamlParser)
         {
@@ -71,13 +81,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteMetaData.TagMetaData.AddRange(tagData);
             siteMetaData.Data["tags"] = siteMetaData.TagMetaData.Dictionary;
         }
-
-        public bool IsApplicable(IFileSystemInfo file)
-        {
-            string fileName = file.Name;
-            bool fileNameMatches = fileName.Equals(Constants.KnownFiles.Tags, StringComparison.Ordinal);
-            return fileNameMatches;
-        }
     }
 
     public class OrganizationFileProcessor : IKnownFileProcessor
@@ -89,18 +92,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _YamlParser = yamlParser;
         }
 
+        public string KnownFileName => Constants.KnownFiles.Organizations;
+
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
             OrganizationMetaDataCollection organizationData = _YamlParser.Parse<OrganizationMetaDataCollection>(file);
             siteMetaData.OrganizationMetaData.AddRange(organizationData);
             siteMetaData.Data["organizations"] = siteMetaData.OrganizationMetaData.Dictionary;
-        }
-
-        public bool IsApplicable(IFileSystemInfo file)
-        {
-            string fileName = file.Name;
-            bool fileNameMatches = fileName.Equals(Constants.KnownFiles.Organizations, StringComparison.Ordinal);
-            return fileNameMatches;
         }
     }
 
@@ -113,18 +111,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _YamlParser = yamlParser;
         }
 
+        public string KnownFileName => Constants.KnownFiles.Authors;
+
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
             AuthorMetaDataCollection authorData = _YamlParser.Parse<AuthorMetaDataCollection>(file);
             siteMetaData.AuthorMetaData.AddRange(authorData);
             siteMetaData.Data["authors"] = siteMetaData.AuthorMetaData.Dictionary;
-        }
-
-        public bool IsApplicable(IFileSystemInfo file)
-        {
-            string fileName = file.Name;
-            bool fileNameMatches = fileName.Equals(Constants.KnownFiles.Authors, StringComparison.Ordinal);
-            return fileNameMatches;
         }
     }
 }
