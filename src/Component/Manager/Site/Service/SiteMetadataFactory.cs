@@ -20,12 +20,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public partial class SiteMetadataFactory
     {
         [LoggerMessage(
-            EventId = 1,
-            Level = LogLevel.Warning,
-            Message = "TagFile is missing `{Tags}`")]
-        private partial void LogMissingTags(string tags);
-
-        [LoggerMessage(
             EventId = 0,
             Level = LogLevel.Trace,
             Message = "Enrich Site with `{EnrichmentCategory}`")]
@@ -81,15 +75,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<string> GetTags(List<PageMetaData> pages)
         {
-            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
-            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
-            IEnumerable<PageMetaData> taggedAnnouncements = pagesWithTags.IsAnnouncement();
-
-            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            IEnumerable<string> tagsFromAnnouncements = taggedAnnouncements.SelectMany(article => article.Tags);
-            IEnumerable<string> allTags = tagsFromArticles.Union(tagsFromAnnouncements);
-            IEnumerable<string> uniqueTags = allTags.Distinct();
-            List<string> result = uniqueTags.ToList();
+            List<string> result = pages.GetTags();
             return result;
         }
 
@@ -109,41 +95,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 })
                 .ToList();
 
-            IFileSystemInfo? tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Tags, StringComparison.Ordinal));
-            if (tagFile != null)
+            List<IDataProcessor> knownFileProcessors =
+            [
+                new TagFileProcessor(_Logger, _YamlParser),
+                new OrganizationFileProcessor(_YamlParser),
+                new AuthorFileProcessor(_YamlParser)
+            ];
+
+            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
             {
-                dataFiles.Remove(tagFile);
-                TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(tagFile);
-                List<string> tags = GetTags(pages);
-                IEnumerable<string> otherTags = tagData.Keys.Except(tags);
-                IEnumerable<string> unmatchedTags = tags
-                    .Except(tagData.Keys)
-                    .Concat(otherTags);
-                string unmatchedTagsString = string.Join(",", unmatchedTags);
-                LogMissingTags(unmatchedTagsString);
-                site.TagMetaData.AddRange(tagData);
-                site.Data["tags"] = site.TagMetaData.Dictionary;
+                IDataProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
             }
 
-            IFileSystemInfo? authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Authors, StringComparison.Ordinal));
-            if (authorFile != null)
-            {
-                dataFiles.Remove(authorFile);
-                AuthorMetaDataCollection authorData = _YamlParser.Parse<AuthorMetaDataCollection>(authorFile);
-                site.AuthorMetaData.AddRange(authorData);
-                site.Data["authors"] = site.AuthorMetaData.Dictionary;
-            }
-
-            IFileSystemInfo? organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Organizations, StringComparison.Ordinal));
-            if (organizationFile != null)
-            {
-                dataFiles.Remove(organizationFile);
-                OrganizationMetaDataCollection organizationData = _YamlParser.Parse<OrganizationMetaDataCollection>(organizationFile);
-                site.OrganizationMetaData.AddRange(organizationData);
-                site.Data["organizations"] = site.OrganizationMetaData.Dictionary;
-            }
-
-            EnrichSiteWithData(site, dataFiles);
+            // EnrichSiteWithData(site, dataFiles);
         }
 
         void EnrichSiteWithData(SiteMetaData site, List<IFileSystemInfo> dataFiles)
