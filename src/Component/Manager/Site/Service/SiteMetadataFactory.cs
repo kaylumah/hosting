@@ -55,7 +55,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 buildData);
 
             siteInfo.Pages = pages.ToList();
-            EnrichSiteWithData(siteInfo, pages, siteConfiguration);
+            EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
@@ -79,7 +79,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        void EnrichSiteWithData(SiteMetaData site, List<PageMetaData> pages, SiteConfiguration siteConfiguration)
+        void EnrichSiteWithData(SiteMetaData site, SiteConfiguration siteConfiguration)
         {
             LogEnrichSiteWith("Data");
 
