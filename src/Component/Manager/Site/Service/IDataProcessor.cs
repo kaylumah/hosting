@@ -36,7 +36,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         void Execute(SiteMetaData siteMetaData, IFileSystemInfo file);
     }
 
-    public partial class TagFileProcessor : IDataProcessor
+    public interface IKnownFileProcessor : IDataProcessor
+    {
+
+    }
+
+    public partial class TagFileProcessor : IKnownFileProcessor
     {
         [LoggerMessage(
             EventId = 1,
@@ -75,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    public class OrganizationFileProcessor : IDataProcessor
+    public class OrganizationFileProcessor : IKnownFileProcessor
     {
         readonly IYamlParser _YamlParser;
 
@@ -99,7 +104,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    public class AuthorFileProcessor : IDataProcessor
+    public class AuthorFileProcessor : IKnownFileProcessor
     {
         readonly IYamlParser _YamlParser;
 

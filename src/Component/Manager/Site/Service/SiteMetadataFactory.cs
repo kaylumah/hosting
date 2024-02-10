@@ -95,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 })
                 .ToList();
 
-            List<IDataProcessor> knownFileProcessors =
+            List<IKnownFileProcessor> knownFileProcessors =
             [
                 new TagFileProcessor(_Logger, _YamlParser),
                 new OrganizationFileProcessor(_YamlParser),
