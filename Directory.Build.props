@@ -44,9 +44,14 @@
     <BannedSymbolsFullPath>$(MSBuildThisFileDirectory)BannedSymbols.txt</BannedSymbolsFullPath>
   </PropertyGroup>
 
+
+  <PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == ''">
+    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
   <PropertyGroup Label="IDesignAnalyzers">
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj' AND '$(ContinuousIntegrationBuild)' == 'false'">true</EnableIDesignAnalyzers>
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
     <!-- 
       - Analyzers warnings follow the format IDESIGN***
