@@ -19,12 +19,5 @@ namespace Test.Unit
             public static string PostDirectory = "_posts";
             public static string PageDirectory = "_pages";
         }
-
-        public static class Files
-        {
-            public static string Authors = "authors.yml";
-            public static string Organizations = "organizations.yml";
-            public static string Tags = "tags.yml";
-        }
     }
 }

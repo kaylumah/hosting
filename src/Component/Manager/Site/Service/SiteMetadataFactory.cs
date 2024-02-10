@@ -16,10 +16,6 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    static class KnownFiles
-    {
-        internal const string Tags = "tags.yml";
-    }
 
     public partial class SiteMetadataFactory
     {
