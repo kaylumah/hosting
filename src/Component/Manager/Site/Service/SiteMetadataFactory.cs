@@ -109,7 +109,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 })
                 .ToList();
 
-            IFileSystemInfo? tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals("tags.yml", StringComparison.Ordinal));
+            IFileSystemInfo? tagFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Tags, StringComparison.Ordinal));
             if (tagFile != null)
             {
                 dataFiles.Remove(tagFile);
@@ -125,7 +125,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Data["tags"] = site.TagMetaData.Dictionary;
             }
 
-            IFileSystemInfo? authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals("authors.yml", StringComparison.Ordinal));
+            IFileSystemInfo? authorFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Authors, StringComparison.Ordinal));
             if (authorFile != null)
             {
                 dataFiles.Remove(authorFile);
@@ -134,7 +134,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 site.Data["authors"] = site.AuthorMetaData.Dictionary;
             }
 
-            IFileSystemInfo? organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals("organizations.yml", StringComparison.Ordinal));
+            IFileSystemInfo? organizationFile = dataFiles.SingleOrDefault(x => x.Name.Equals(Constants.KnownFiles.Organizations, StringComparison.Ordinal));
             if (organizationFile != null)
             {
                 dataFiles.Remove(organizationFile);
