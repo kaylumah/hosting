@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using Microsoft.Extensions.Logging;
@@ -46,6 +47,38 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string fileName = file.Name;
             bool fileNameMatches = fileName.Equals(KnownFileName, StringComparison.Ordinal);
             return fileNameMatches;
+        }
+    }
+
+    public interface IKnownExtensionProcessor : IDataProcessor
+    {
+        string KnownExtension
+        { get; }
+
+        bool IDataProcessor.IsApplicable(IFileSystemInfo file)
+        {
+            string extension = file.Extension;
+            bool extensionMatches = extension.Equals(KnownExtension, StringComparison.Ordinal);
+            return extensionMatches;
+        }
+    }
+
+    public class YamlFileProcessor : IKnownExtensionProcessor
+    {
+        readonly IYamlParser _YamlParser;
+
+        public YamlFileProcessor(IYamlParser yamlParser)
+        {
+            _YamlParser = yamlParser;
+        }
+
+        public string KnownExtension => ".yml";
+
+        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        {
+            object result = _YamlParser.Parse<object>(file);
+            string fileName = Path.GetFileNameWithoutExtension(file.Name);
+            siteMetaData.Data[fileName] = result;
         }
     }
 

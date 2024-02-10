@@ -104,20 +104,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (IFileSystemInfo fileSystemInfo in dataFiles)
             {
-                IDataProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
                 strategy?.Execute(site, fileSystemInfo);
             }
 
-            // EnrichSiteWithData(site, dataFiles);
-        }
+            List<IKnownExtensionProcessor> knownExtensionProcessors =
+            [
+                new YamlFileProcessor(_YamlParser)
+            ];
 
-        void EnrichSiteWithData(SiteMetaData site, List<IFileSystemInfo> dataFiles)
-        {
-            foreach (IFileSystemInfo file in dataFiles)
+            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
             {
-                object result = _YamlParser.Parse<object>(file);
-                string extension = Path.GetFileNameWithoutExtension(file.Name);
-                site.Data[extension] = result;
+                IKnownExtensionProcessor? strategy = knownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
             }
         }
 
