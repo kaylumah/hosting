@@ -6,6 +6,7 @@ using System.IO.Abstractions.TestingHelpers;
 using Ssg.Extensions.Metadata.Abstractions;
 using Reqnroll;
 using Test.Unit.Entities;
+using Kaylumah.Ssg.Manager.Site.Service;
 
 namespace Test.Unit.Steps.Collections
 {
@@ -27,7 +28,7 @@ namespace Test.Unit.Steps.Collections
             _TagCollection.AddRange(tagCollection);
             TagMetaDataCollection tagMetaDataCollection = new TagMetaDataCollection();
             tagMetaDataCollection.AddRange(_TagCollection.ToTagMetadata());
-            _FileSystem.AddYamlDataFile(Constants.Files.Tags, tagMetaDataCollection);
+            _FileSystem.AddYamlDataFile(Kaylumah.Ssg.Manager.Site.Service.Constants.KnownFiles.Tags, tagMetaDataCollection);
         }
     }
 }
