@@ -102,7 +102,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 new AuthorFileProcessor(_YamlParser)
             ];
 
-            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
+            List<string> knownFileNames = knownFileProcessors.Select(x => x.KnownFileName).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            dataFiles = dataFiles.Except(knownFiles).ToList();
+
+            foreach (IFileSystemInfo fileSystemInfo in knownFiles)
             {
                 IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
                 strategy?.Execute(site, fileSystemInfo);
