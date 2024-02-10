@@ -45,13 +45,13 @@
   </PropertyGroup>
 
 
-  <PropertyGroup Label="CI" Condition="'$(ContinuousIntegrationBuild)' == ''">
-    <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+  <PropertyGroup Label="ContinuousIntegrationBuild" Condition="'$(CI)' == ''">
+    <CI>false</CI>
   </PropertyGroup>
 
   <PropertyGroup Label="IDesignAnalyzers">
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj' AND '$(ContinuousIntegrationBuild)' == 'false'">true</EnableIDesignAnalyzers>
+    <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj' AND '$(CI)' == 'false'">true</EnableIDesignAnalyzers>
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
     <!-- 
       - Analyzers warnings follow the format IDESIGN***
