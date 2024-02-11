@@ -12,6 +12,7 @@ $SiteMapUrl = "$BaseUrl/sitemap.xml"
 $SiteMapUrlsScript = "$ScriptRoot/Get-SiteMapUrls.ps1"
 $SiteMapUrls = & $SiteMapUrlsScript -SiteMapUrl $SiteMapUrl
 
+# https://blogs.bing.com/webmaster/may-2022/Spring-cleaning-Removed-Bing-anonymous-sitemap-submission
 # https://www.bing.com/indexnow
 $Body = @{
     "host" = $BaseUrl;
@@ -24,4 +25,5 @@ $Headers = @{
 Invoke-WebRequest -Method 'Post' -Uri "https://www.bing.com/indexnow" -Body ($Body | ConvertTo-Json) -Headers $Headers
 
 # https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap#addsitemap
-Invoke-WebRequest -Method 'GET' -Uri "https://www.google.com/ping?sitemap=$SiteMapUrl"
+# Invoke-WebRequest -Method 'GET' -Uri "https://www.google.com/ping?sitemap=$SiteMapUrl"
+# https://developers.google.com/search/blog/2023/06/sitemaps-lastmod-ping
