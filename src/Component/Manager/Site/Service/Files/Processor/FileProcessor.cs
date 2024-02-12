@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
@@ -161,7 +162,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 }
 
                 criteria.FileName = fileInfo.Name;
-                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
+                Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 
                 FileMetaData fileMeta = response.Data;
                 string fileContents = response.Content;
