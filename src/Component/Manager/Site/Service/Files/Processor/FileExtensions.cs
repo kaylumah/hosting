@@ -23,6 +23,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             Dictionary<string, object?> data = file.ToDictionary();
             PageMetaData result = new PageMetaData(data);
+
+            // Make proper type?
+
+            ContentType? contentType = result.Type;
+
             return result;
         }
 
