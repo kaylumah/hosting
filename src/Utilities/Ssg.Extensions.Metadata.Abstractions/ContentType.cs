@@ -5,7 +5,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public enum ContentType
     {
-        Announcement,
         Article,
         Page
     }

@@ -18,7 +18,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             EventId = 0,
             Level = LogLevel.Trace,
             Message = "Attempting LdJson `{Path}` and `{Type:g}`")]
-        private partial void LogLdJson(string path, ContentType type);
+        private partial void LogLdJson(string path, ContentType? type);
 
         readonly ILogger _Logger;
 
