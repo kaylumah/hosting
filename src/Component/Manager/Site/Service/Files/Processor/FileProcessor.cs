@@ -173,6 +173,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 }
 
                 File fileResult = new File();
+                // TODO reconsider
                 fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
                 fileResult.MetaData = fileMeta;
                 fileResult.Content = fileContents;
