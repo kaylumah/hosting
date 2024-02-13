@@ -58,6 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             EnrichSiteWithCollections(siteInfo, pages);
             EnrichSiteWithTags(siteInfo, pages);
             EnrichSiteWithYears(siteInfo, pages);
+            EnrichSiteWithTypes(siteInfo, pages);
             EnrichSiteWithSeries(siteInfo, pages);
 
             return siteInfo;
@@ -219,6 +220,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .OrderBy(x => x.Uri)
                     .ToArray();
                 site.Series.Add(serie, seriesFiles);
+            }
+        }
+
+        void EnrichSiteWithTypes(SiteMetaData site, List<PageMetaData> pages)
+        {
+            LogEnrichSiteWith("Types");
+
+            ContentType[] blockedTypes = new ContentType[] { ContentType.Page };
+            IEnumerable<ContentType> types = pages
+                .Where(x => !blockedTypes.Contains(x.Type))
+                .Select(x => x.Type)
+                .Distinct();
+            foreach (ContentType type in types)
+            {
+                PageMetaData[] typeFiles = pages.Where(x => /*x.Type != null && */ x.Type.Equals(type)).ToArray();
+                string typeName = type.ToString();
+                site.Types.Add(typeName, typeFiles);
             }
         }
     }
