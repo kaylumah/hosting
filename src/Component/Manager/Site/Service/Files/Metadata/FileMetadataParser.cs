@@ -37,27 +37,36 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 result.Data = new FileMetaData();
             }
 
-            if (string.IsNullOrEmpty(result.Data.OutputLocation))
+            FileMetaData finalData = ApplyDefaults(criteria, result.Data);
+            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
+            result.Data = finalData;
+
+            return result;   
+        }
+
+        FileMetaData ApplyDefaults(MetadataCriteria criteria, FileMetaData fileData)
+        {
+            if (string.IsNullOrEmpty(fileData.OutputLocation))
             {
-                result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
+                // Ensure fallback for OutputLocation
+                fileData.OutputLocation = "/:year/:month/:day/:name:ext";
             }
 
-            string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
+            string outputLocation = DetermineOutputLocation(criteria.FileName, fileData);
             List<string> paths = DetermineFilters(outputLocation);
 
             // TODO: consider how extensions will work for default (i.e. static files don't need applying all defaults)
             FileMetaData fileMetaData = RetrieveDefaultMetadataForScope(paths, criteria.Scope);
-            OverwriteMetaData(fileMetaData, result.Data, "file");
+            OverwriteMetaData(fileMetaData, fileData, "file");
             ApplyDates(fileMetaData);
+
             string lowerName = nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
             fileMetaData.Remove(lowerName);
 
-            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-            result.Data = fileMetaData;
+            fileMetaData.Uri = outputLocation;
 
-            result.Data.Uri = outputLocation;
+            return fileMetaData;
 
-            return result;
         }
 
         string RetrieveExtension(string fileName)
