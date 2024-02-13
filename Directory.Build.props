@@ -51,7 +51,7 @@
 
   <PropertyGroup Label="IDesignAnalyzers">
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
-    <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers>
+    <!-- <EnableIDesignAnalyzers Condition="'$(MSBuildProjectExtension)'=='.csproj'">true</EnableIDesignAnalyzers> -->
     <UsingAnalyzerFullPath>$(MSBuildThisFileDirectory)UsingAnalyzer.txt</UsingAnalyzerFullPath>
     <!-- 
       - Analyzers warnings follow the format IDESIGN***
