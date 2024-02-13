@@ -26,7 +26,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             // Make proper type?
             string contentTypeRaw = data.GetValue<string>(nameof(PageMetaData.Type));
             bool parsed = Enum.TryParse(contentTypeRaw, out ContentType contentTypeResult);
-    
+
             PageMetaData result = new PageMetaData(data);
             return result;
         }
