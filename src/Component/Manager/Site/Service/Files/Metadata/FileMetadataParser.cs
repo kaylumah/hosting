@@ -43,18 +43,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
 
             string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
-            List<string> paths = DetermineFilters(outputLocation);
+            string outputExtension = RetrieveExtension(outputLocation);
+            string[] renderExtensions = [".html"];
+            bool isMatch = renderExtensions.Contains(outputExtension);
 
-            // TODO: consider how extensions will work for default (i.e. static files don't need applying all defaults)
-            FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
-            OverwriteMetaData(fileMetaData, result.Data, "file");
-            ApplyDates(fileMetaData);
-            string lowerName = nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
-            fileMetaData.Remove(lowerName);
+            if (isMatch)
+            {
+                List<string> paths = DetermineFilters(outputLocation);
+                FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
+                OverwriteMetaData(fileMetaData, result.Data, "file");
+                ApplyDates(fileMetaData);
 
-            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-            result.Data = fileMetaData;
+                // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
+                result.Data = fileMetaData;
+            }
 
+            string lowerName = nameof(result.Data.OutputLocation).ToLower(CultureInfo.InvariantCulture);
+            result.Data.Remove(lowerName);
             result.Data.Uri = outputLocation;
 
             return result;
