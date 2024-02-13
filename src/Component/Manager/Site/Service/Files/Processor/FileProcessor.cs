@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
                 List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
                 IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-                List<File> files = await ProcessFiles(targetFilesArray, keyName).ConfigureAwait(false);
+                List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
 
                 FileCollection fileCollection = new FileCollection();
                 fileCollection.Name = keyName;
@@ -140,11 +140,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
-            List<File> result = await ProcessFiles(fileInfosArray, scope: null).ConfigureAwait(false);
+            List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string? scope)
+        async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
