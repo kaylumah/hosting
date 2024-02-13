@@ -149,40 +149,46 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
-                Stream fileStream = fileInfo.CreateReadStream();
-                using StreamReader streamReader = new StreamReader(fileStream);
-
-                string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                MetadataCriteria criteria = new MetadataCriteria();
-                criteria.Content = rawContent;
-                if (scope != null)
-                {
-                    criteria.Scope = scope;
-                }
-
-                criteria.FileName = fileInfo.Name;
-                Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
-
-                FileMetaData fileMeta = response.Data;
-                string fileContents = response.Content;
-
-                IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
-                if (preprocessor != null)
-                {
-                    fileContents = preprocessor.Execute(fileContents);
-                }
-
-                File fileResult = new File();
-                // TODO reconsider
-                fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
-                fileResult.MetaData = fileMeta;
-                fileResult.Content = fileContents;
-                fileResult.Name = Path.GetFileName(fileMeta.Uri);
+                File fileResult = await ProcessFileInScope(fileInfo, scope);
                 result.Add(fileResult);
             }
 
             return result;
+        }
+
+        async Task<File> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        {
+            using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
+            Stream fileStream = fileInfo.CreateReadStream();
+            using StreamReader streamReader = new StreamReader(fileStream);
+
+            string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            MetadataCriteria criteria = new MetadataCriteria();
+            criteria.Content = rawContent;
+            if (scope != null)
+            {
+                criteria.Scope = scope;
+            }
+
+            criteria.FileName = fileInfo.Name;
+            Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
+
+            FileMetaData fileMeta = response.Data;
+            string fileContents = response.Content;
+
+            IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+            if (preprocessor != null)
+            {
+                fileContents = preprocessor.Execute(fileContents);
+            }
+
+            File fileResult = new File();
+            // TODO reconsider
+            fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
+            fileResult.MetaData = fileMeta;
+            fileResult.Content = fileContents;
+            fileResult.Name = Path.GetFileName(fileMeta.Uri);
+            return fileResult;
         }
     }
 }
