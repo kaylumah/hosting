@@ -109,27 +109,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
-        {
-            List<FileCollection> result = new List<FileCollection>();
-            foreach (string collection in collections)
-            {
-                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
-                string keyName = collection[1..];
-                string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
-                List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
-                IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-                List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
-
-                FileCollection fileCollection = new FileCollection();
-                fileCollection.Name = keyName;
-                fileCollection.Files = files.ToArray();
-                result.Add(fileCollection);
-            }
-
-            return result;
-        }
-
         async Task<List<File>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
@@ -142,6 +121,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
             List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
+        }
+
+        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] directories)
+        {
+            List<FileCollection> result = new List<FileCollection>();
+            foreach (string directory in directories)
+            {
+                FileCollection fileCollection = await ProcessDirectory(criteria, directory);
+                result.Add(fileCollection);
+            }
+
+            return result;
+        }
+
+        async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, string directory)
+        {
+            using System.IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
+            string keyName = directory[1..];
+            string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
+            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
+            IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
+            List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
+
+            FileCollection fileCollection = new FileCollection();
+            fileCollection.Name = keyName;
+            fileCollection.Files = files.ToArray();
+            return fileCollection;
         }
 
         async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
