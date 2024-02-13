@@ -46,7 +46,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             List<string> paths = DetermineFilters(outputLocation);
 
             // TODO: consider how extensions will work for default (i.e. static files don't need applying all defaults)
-            FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
+            FileMetaData fileMetaData = RetrieveDefaultMetadataForScope(paths, criteria.Scope);
             OverwriteMetaData(fileMetaData, result.Data, "file");
             ApplyDates(fileMetaData);
             string lowerName = nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
@@ -71,7 +71,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return ext;
         }
 
-        FileMetaData ApplyDefaults(List<string> filters, string scope)
+        FileMetaData RetrieveDefaultMetadataForScope(List<string> filters, string scope)
         {
             FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
