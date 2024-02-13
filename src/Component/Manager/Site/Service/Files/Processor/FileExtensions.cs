@@ -23,9 +23,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             Dictionary<string, object?> data = file.ToDictionary();
 
-            // Make proper type?
-            string contentTypeRaw = data.GetValue<string>(nameof(PageMetaData.Type));
-            bool parsed = Enum.TryParse(contentTypeRaw, out ContentType contentTypeResult);
+            // TODO: consider proper specialization types
+            // string contentTypeRaw = data.GetValue<string>(nameof(PageMetaData.Type));
+            // bool parsed = Enum.TryParse(contentTypeRaw, out ContentType contentTypeResult);
 
             PageMetaData result = new PageMetaData(data);
             return result;
