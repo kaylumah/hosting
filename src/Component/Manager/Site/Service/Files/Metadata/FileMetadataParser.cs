@@ -37,14 +37,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 result.Data = new FileMetaData();
             }
 
-            FileMetaData finalData = ApplyDefaults(criteria, result.Data);
-            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-            result.Data = finalData;
+            ApplyDefaults(criteria, result.Data);
 
-            return result;   
+            return result;
         }
 
-        FileMetaData ApplyDefaults(MetadataCriteria criteria, FileMetaData fileData)
+        void ApplyDefaults(MetadataCriteria criteria, FileMetaData fileData)
         {
             if (string.IsNullOrEmpty(fileData.OutputLocation))
             {
@@ -53,20 +51,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
 
             string outputLocation = DetermineOutputLocation(criteria.FileName, fileData);
-            List<string> paths = DetermineFilters(outputLocation);
 
-            // TODO: consider how extensions will work for default (i.e. static files don't need applying all defaults)
-            FileMetaData fileMetaData = RetrieveDefaultMetadataForScope(paths, criteria.Scope);
-            OverwriteMetaData(fileMetaData, fileData, "file");
-            ApplyDates(fileMetaData);
+            string outputExtension = RetrieveExtension(outputLocation);
+            string[] renderedExtensions = [".html"];
+            bool isRenderMatch = true; // renderedExtensions.Contains(outputExtension);
 
-            string lowerName = nameof(fileMetaData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
-            fileMetaData.Remove(lowerName);
+            // static files don't need applying all defaults
+            if (isRenderMatch)
+            {
+                List<string> paths = DetermineFilters(outputLocation);
+                FileMetaData fileMetaData = RetrieveDefaultMetadataForScope(paths, criteria.Scope);
+                OverwriteMetaData(fileMetaData, fileData, "file");
+                ApplyDates(fileMetaData);
 
-            fileMetaData.Uri = outputLocation;
+                // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
+                fileData = fileMetaData;
+            }
 
-            return fileMetaData;
-
+            string lowerName = nameof(fileData.OutputLocation).ToLower(CultureInfo.InvariantCulture);
+            fileData.Remove(lowerName);
+            fileData.Uri = outputLocation;
         }
 
         string RetrieveExtension(string fileName)
