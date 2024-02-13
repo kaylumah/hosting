@@ -45,6 +45,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
             List<string> paths = DetermineFilters(outputLocation);
 
+            // TODO: consider how extensions will work for default (i.e. static files don't need applying all defaults)
             FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
             OverwriteMetaData(fileMetaData, result.Data, "file");
             ApplyDates(fileMetaData);

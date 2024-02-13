@@ -10,6 +10,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
@@ -108,27 +109,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] collections)
-        {
-            List<FileCollection> result = new List<FileCollection>();
-            foreach (string collection in collections)
-            {
-                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessDirectories '{collection}']");
-                string keyName = collection[1..];
-                string collectionDirectory = Path.Combine(criteria.RootDirectory, collection);
-                List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
-                IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-                List<File> files = await ProcessFiles(targetFilesArray, keyName).ConfigureAwait(false);
-
-                FileCollection fileCollection = new FileCollection();
-                fileCollection.Name = keyName;
-                fileCollection.Files = files.ToArray();
-                result.Add(fileCollection);
-            }
-
-            return result;
-        }
-
         async Task<List<File>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
@@ -139,48 +119,82 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
-            List<File> result = await ProcessFiles(fileInfosArray, scope: null).ConfigureAwait(false);
+            List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(IFileSystemInfo[] files, string? scope)
+        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, string[] directories)
+        {
+            List<FileCollection> result = new List<FileCollection>();
+            foreach (string directory in directories)
+            {
+                FileCollection fileCollection = await ProcessDirectory(criteria, directory);
+                result.Add(fileCollection);
+            }
+
+            return result;
+        }
+
+        async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, string directory)
+        {
+            using System.IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
+            string keyName = directory[1..];
+            string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
+            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
+            IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
+            List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
+
+            FileCollection fileCollection = new FileCollection();
+            fileCollection.Name = keyName;
+            fileCollection.Files = files.ToArray();
+            return fileCollection;
+        }
+
+        async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
         {
             List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                using System.IDisposable? logScope = _Logger.BeginScope($"[ProcessFiles '{fileInfo.Name}']");
-                Stream fileStream = fileInfo.CreateReadStream();
-                using StreamReader streamReader = new StreamReader(fileStream);
-
-                string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                MetadataCriteria criteria = new MetadataCriteria();
-                criteria.Content = rawContent;
-                if (scope != null)
-                {
-                    criteria.Scope = scope;
-                }
-
-                criteria.FileName = fileInfo.Name;
-                global::Ssg.Extensions.Metadata.Abstractions.Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
-
-                FileMetaData fileMeta = response.Data;
-                string fileContents = response.Content;
-
-                IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
-                if (preprocessor != null)
-                {
-                    fileContents = preprocessor.Execute(fileContents);
-                }
-
-                File fileResult = new File();
-                fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
-                fileResult.MetaData = fileMeta;
-                fileResult.Content = fileContents;
-                fileResult.Name = Path.GetFileName(fileMeta.Uri);
+                File fileResult = await ProcessFileInScope(fileInfo, scope);
                 result.Add(fileResult);
             }
 
             return result;
+        }
+
+        async Task<File> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        {
+            using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
+            Stream fileStream = fileInfo.CreateReadStream();
+            using StreamReader streamReader = new StreamReader(fileStream);
+
+            string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            MetadataCriteria criteria = new MetadataCriteria();
+            criteria.Content = rawContent;
+            if (scope != null)
+            {
+                criteria.Scope = scope;
+            }
+
+            criteria.FileName = fileInfo.Name;
+            Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
+
+            FileMetaData fileMeta = response.Data;
+            string fileContents = response.Content;
+
+            IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+            if (preprocessor != null)
+            {
+                fileContents = preprocessor.Execute(fileContents);
+            }
+
+            File fileResult = new File();
+
+            fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
+            fileResult.MetaData = fileMeta;
+            fileResult.Content = fileContents;
+            fileResult.Name = Path.GetFileName(fileMeta.Uri);
+            return fileResult;
         }
     }
 }

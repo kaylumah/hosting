@@ -227,7 +227,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Types");
 
-            ContentType[] blockedTypes = new ContentType[] { ContentType.Unknown, ContentType.Page };
+            ContentType[] blockedTypes = new ContentType[] { ContentType.Page };
             IEnumerable<ContentType> types = pages
                 .Where(x => !blockedTypes.Contains(x.Type))
                 .Select(x => x.Type)

@@ -19,12 +19,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
             IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
-            IEnumerable<PageMetaData> taggedAnnouncements = pagesWithTags.IsAnnouncement();
 
             IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            IEnumerable<string> tagsFromAnnouncements = taggedAnnouncements.SelectMany(article => article.Tags);
-            IEnumerable<string> allTags = tagsFromArticles.Union(tagsFromAnnouncements);
-            IEnumerable<string> uniqueTags = allTags.Distinct();
+            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
             List<string> result = uniqueTags.ToList();
             return result;
         }
