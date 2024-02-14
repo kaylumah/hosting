@@ -10,7 +10,9 @@ updates:
 - package-ecosystem: "nuget"
   directory: "/"
   schedule:
-    interval: "daily"
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Amsterdam"
   assignees:
     - "kaylumah"
   ignore:
@@ -26,7 +28,9 @@ updates:
 - package-ecosystem: "npm"
   directory: "/_site"
   schedule:
-    interval: "daily"
+      interval: "weekly"
+      time: "09:00"
+      timezone: "Europe/Amsterdam"
   assignees:
     - "kaylumah"
   groups:
@@ -41,7 +45,9 @@ updates:
   assignees:
     - "kaylumah"
   schedule:
-    interval: "weekly"
+      interval: "weekly"
+      time: "09:00"
+      timezone: "Europe/Amsterdam"
 
 # https://docs.github.com/en/enterprise-server@3.9/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
 # - package-ecosystem: "" # See documentation for possible values
