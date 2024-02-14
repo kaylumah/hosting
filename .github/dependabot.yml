@@ -11,6 +11,8 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+  assignees:
+    - "kaylumah"
   ignore:
     - dependency-name: "Moq"
   # groups:
@@ -25,6 +27,8 @@ updates:
   directory: "/_site"
   schedule:
     interval: "daily"
+  assignees:
+    - "kaylumah"
   groups:
     tailwind:
       patterns:
@@ -34,6 +38,8 @@ updates:
 
 - package-ecosystem: "github-actions"
   directory: "/"
+  assignees:
+    - "kaylumah"
   schedule:
     interval: "weekly"
 
