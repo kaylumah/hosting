@@ -10,13 +10,15 @@ using Xunit;
 namespace Test.E2e.SnapshotTests
 {
 
-    public class NotFoundPageHtmlTests : IClassFixture<DesktopFixture>
+    public class NotFoundPageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
+        readonly MobileFixture _MobileFixture;
 
-        public NotFoundPageHtmlTests(DesktopFixture desktopFixture)
+        public NotFoundPageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
+            _MobileFixture = mobileFixture;
         }
 
         [Fact]

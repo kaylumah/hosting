@@ -9,15 +9,16 @@ using Xunit;
 
 namespace Test.E2e.SnapshotTests
 {
-    public class BlogPageHtmlTests : IClassFixture<DesktopFixture>
+    public class BlogPageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
+        readonly MobileFixture _MobileFixture;
 
-        public BlogPageHtmlTests(DesktopFixture desktopFixture)
+        public BlogPageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
+            _MobileFixture = mobileFixture;
         }
-
         [Fact]
         public async Task Verify_BlogPageHtml_Contents()
         {
