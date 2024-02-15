@@ -33,5 +33,25 @@ namespace Test.E2e.SnapshotTests
 
             await HtmlPageVerifier.Verify(aboutPage);
         }
+
+        [Fact]
+        public async Task Verify_AboutPageHtml_DesktopScreenshot()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            AboutPage aboutPage = new AboutPage(page);
+            await aboutPage.NavigateAsync();
+
+            await BasePageVerifier.VerifyScreenshot(aboutPage);
+        }
+
+        [Fact]
+        public async Task Verify_AboutPageHtml_MobileScreenshot()
+        {
+            IPage page = await _MobileFixture.GetPage();
+            AboutPage aboutPage = new AboutPage(page);
+            await aboutPage.NavigateAsync();
+
+            await BasePageVerifier.VerifyScreenshot(aboutPage);
+        }
     }
 }
