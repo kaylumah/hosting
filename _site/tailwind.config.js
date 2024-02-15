@@ -6,8 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         architect: "'Architects Daughter', cursive",
-        roboto: "'Roboto', sans-serif",
-        // faduotone: "'Font Awesome 5 Duotone'"
+        roboto: "'Roboto', sans-serif"
       },
       colors: {
         brand: {
