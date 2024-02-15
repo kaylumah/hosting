@@ -7,7 +7,9 @@ h4 a,
 h5 a,
 h6 a 
 {
+    /*
     @apply before:content-['\f292'] before:font-faduotone before:font-black before:pl-1 before:absolute before:hidden
+    */
 }
 
 h2 a svg, 
@@ -20,18 +22,22 @@ h6 a svg
 }
 
 a.external {
+  /*
   @apply after:content-['\f08e'] after:font-faduotone after:font-black after:pl-0.5 after:absolute after:hidden
+  */
 }
 
 a.external svg {
   @apply ml-1;
 }
 
+/*
 .fa-colors
 {
   --fa-secondary-opacity: 1.0;
   --fa-primary-color: #4cae50;
   --fa-secondary-color: #55557b;
 }
+*/
 
 @tailwind utilities;
