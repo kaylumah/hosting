@@ -7,7 +7,7 @@ h4 a,
 h5 a,
 h6 a 
 {   
-    @apply before:content-['0023'] before:font-black before:pl-1 before:absolute before:hidden
+    @apply before:content-['\0023'] before:font-black before:pl-1 before:absolute before:hidden
     /*
     @apply before:content-['\f292'] before:font-faduotone before:font-black before:pl-1 before:absolute before:hidden
     */
