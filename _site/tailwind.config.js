@@ -4,11 +4,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontFamily: {
-        architect: "'Architects Daughter', cursive",
-        roboto: "'Roboto', sans-serif",
-        faduotone: "'Font Awesome 5 Duotone'"
-      },
       colors: {
         brand: {
           green: '#4cae50',
