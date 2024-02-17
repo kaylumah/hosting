@@ -34,51 +34,12 @@ modifieddate: '2021-08-07'
       const anchor = document.createElement('a');
       anchor.href = "#" + word.id;
       anchor.text = word.text;
-
-
-      //li.innerText = word.text;
-      // li.style.fontSize = `${word.size}px`;
+      anchor.classList = "text-3xl text-cyan-500";
       li.appendChild(anchor);
       container.appendChild(li);
-      // const span = document.createElement('span');
-      // span.innerText = word.text;
-      // span.style.fontSize = `${word.size}px`;
-      // span.style.color = randomColor();
-      // container.appendChild(span);
     });  
     </script>
 
-
-    <!-- https://tailwindflex.com/@charlotte-dupont/tag-cloud-with-javascript -->
-    <!--
-    <div id="word-cloud" class="flex justify-center items-center gap-4 flex-wrap p-10"></div>
-    <script>
-    var words = [
-      {% for tag in site.tags %}
-      { text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
-      {% endfor %}
-    ];
-
-    var container = document.getElementById('word-cloud');
-
-    words.forEach(word => {
-      const span = document.createElement('span');
-      span.innerText = word.text;
-      span.style.fontSize = `${word.size}px`;
-      span.style.color = randomColor();
-      container.appendChild(span);
-    });
-
-    function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
-    </script>
-    -->
     <!--    
     <div class="flex flex-wrap items-center gap-4">
         {% for tag in site.tags %}
