@@ -6,13 +6,22 @@
 *.props    text eol=crlf
 *.targets  text eol=crlf
 
+# These are explicitly windows files and should use crlf
+*.bat      text eol=crlf
+*.cmd      text eol=crlf
+*.ps1      text eol=crlf
+
+# Run following command to cleanup
+# git rm -rf --cached . && git reset --hard HEAD
+# git add --renormalize . && git commit 
+
+# Based on
+# https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+# https://github.com/gitattributes/gitattributes/blob/master/Common.gitattributes
+# https://github.com/gitattributes/gitattributes/blob/master/CSharp.gitattributes
+# https://github.com/gitattributes/gitattributes/blob/master/Global/VisualStudio.gitattributes
+
 *.verified.txt text eol=lf working-tree-encoding=UTF-8
 *.verified.xml text eol=lf working-tree-encoding=UTF-8
 *.verified.json text eol=lf working-tree-encoding=UTF-8
 *.verified.html text eol=lf working-tree-encoding=UTF-8
-
-# Clean up
-# git rm -rf --cached . && git reset --hard HEAD
-
-# ?
-# git add --renormalize . && git commit 
