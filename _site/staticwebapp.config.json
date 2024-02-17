@@ -17,6 +17,11 @@
       "statusCode": 301
     },
     {
+      "route": "/about.html",
+      "redirect": "/",
+      "statusCode": 307
+    },
+    {
       "route": "/archive",
       "redirect": "/archive.html",
       "statusCode": 301
