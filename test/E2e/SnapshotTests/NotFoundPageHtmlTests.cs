@@ -21,7 +21,7 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_NotFoundPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
