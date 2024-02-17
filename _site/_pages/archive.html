@@ -17,7 +17,47 @@ modifieddate: '2021-08-07'
   <hr class="mt-3 border-t-2 w-20 mx-auto" />
 </div>
 <div class="py-6 px-6 sm:px-8">
-        
+    <!--  -->
+    <!-- https://tailwindflex.com/@charlotte-dupont/tag-cloud-with-javascript -->
+    <div id="word-cloud" class="flex justify-center items-center gap-4 flex-wrap p-10"></div>
+    <script>
+    var words = [
+      { text: 'con', size: 40 },
+      { text: 'ipsum', size: 14 },
+      { text: 'dolor', size: 15 },
+      { text: 'amet', size: 30 },
+      { text: 'Lorem', size: 40 },
+      { text: 'amet', size: 30 },
+      { text: 'sit', size: 25 },
+      { text: 'amet', size: 30 },
+      { text: 'Lorem', size: 40 },
+      { text: 'amet', size: 30 },
+      { text: 'consectetur', size: 18 },
+      { text: 'adipiscing', size: 30 },
+      { text: 'usa', size: 56 },
+      { text: 'elit', size: 22 }
+    ];
+
+    var container = document.getElementById('word-cloud');
+
+    words.forEach(word => {
+      const span = document.createElement('span');
+      span.innerText = word.text;
+      span.style.fontSize = `${word.size}px`;
+      span.style.color = randomColor();
+      container.appendChild(span);
+    });
+
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    </script>
+    <!--    
     <div class="flex flex-wrap items-center gap-4">
         {% for tag in site.tags %}
         <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
@@ -44,6 +84,8 @@ modifieddate: '2021-08-07'
         </span>
         {% endfor %}
     </div>
+  -->
+
     <!-- BEGIN articles per tag -->
     {% assign article_group = site.tags %}
     {% include 'article-overview.html' %}
