@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Playwright;
@@ -32,7 +33,7 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(blogPage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_BlogPageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -42,7 +43,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(blogPage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_BlogPageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();

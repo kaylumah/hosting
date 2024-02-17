@@ -32,7 +32,7 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(archivePage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_ArchivePageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -42,7 +42,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(archivePage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_ArchivePageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
