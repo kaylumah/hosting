@@ -20,7 +20,7 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        [Fact]
+        [Fact(Skip = "About is redirected")]
         public async Task Verify_AboutPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
