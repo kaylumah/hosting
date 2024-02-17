@@ -19,7 +19,7 @@
     {
       "route": "/about.html",
       "redirect": "/",
-      "statusCode": 307
+      "statusCode": 302
     },
     {
       "route": "/archive",
