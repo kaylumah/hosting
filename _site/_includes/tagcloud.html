@@ -5,9 +5,11 @@ var words = [
   {% for tag in site.tags %}
   { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
   {% endfor %}
+  /*
   {% for year in site.years %}
   { id: '{{year.key}}', text: '{{year.key}}', size: {{ year.value.size }} },
   {% endfor %}
+  */
 ];
 
 var container = document.getElementById('word-cloud');
