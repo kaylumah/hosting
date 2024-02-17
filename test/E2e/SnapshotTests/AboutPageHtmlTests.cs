@@ -20,7 +20,7 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        [Fact]
+        [Fact(Skip = "About is redirected")]
         public async Task Verify_AboutPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -28,8 +28,8 @@ namespace Test.E2e.SnapshotTests
             await aboutPage.NavigateAsync();
 
             Dictionary<string, string> headers = await aboutPage.GetHeaders();
-            string title = await page.TitleAsync();
-            title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+            // string title = await page.TitleAsync();
+            // title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
             await HtmlPageVerifier.Verify(aboutPage);
         }
