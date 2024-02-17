@@ -26,6 +26,9 @@ modifieddate: '2021-08-07'
       {% for tag in site.tags %}
       { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
       {% endfor %}
+      {% for year in site.years %}
+      { id: '{{year.key}}', text: '{{year.key}}', size: {{ year.value.size }} },
+      {% endfor %}
     ];
 
     var container = document.getElementById('word-cloud');
@@ -39,35 +42,6 @@ modifieddate: '2021-08-07'
       container.appendChild(li);
     });  
     </script>
-
-    <!--    
-    <div class="flex flex-wrap items-center gap-4">
-        {% for tag in site.tags %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ tag.key }}">{{ site.data.tags[tag.key].name }} ({{ tag.value.size }})</a>
-        </span>
-        {% endfor %}
-        {% for type in site.types %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ type.key | html.url_encode }}">{{ type.key }} ({{ type.value.size }})</a>
-        </span>
-        {% endfor %}
-        {% for year in site.years %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ year.key | html.url_encode }}">{{ year.key }} ({{ year.value.size }})</a>
-        </span>
-        {% endfor %}
-    </div>
-  -->
 
     <!-- BEGIN articles per tag -->
     {% assign article_group = site.tags %}
