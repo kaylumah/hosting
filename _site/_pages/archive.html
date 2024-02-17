@@ -1,7 +1,7 @@
 ---
 layout: 'default.html'
 title: 'The complete archive of blog posts · Kaylumah'
-description: "The vault of all articles I wrote for Kaylumah ordered by tag, type and year."
+description: "The vault of all articles I wrote for Kaylumah ordered by tag and year."
 modifieddate: '2021-08-07'
 ---
 <div class="text-center">
@@ -9,49 +9,22 @@ modifieddate: '2021-08-07'
     The Kaylumah Archives
   </h1>
   <p class="mt-3 max-w-2xl mx-auto text-xl italic sm:mt-4">
-    All articles I wrote grouped by tag, type and year.
+    All articles I wrote grouped by tag and year.
   </p>
   <p class="mt-1 max-w-2xl mx-auto text-xl italic">
     Recent articles can be found on the <span class="font-semibold"><a href="{{ 'blog.html' | relative_url }}">blog</a></span>.
   </p>
   <hr class="mt-3 border-t-2 w-20 mx-auto" />
+  <div class="mt-1 max-w-2xl mx-auto">
+    {% include 'tagcloud.html' %}
+  </div>
+  <hr class="mt-3 border-t-2 w-20 mx-auto" />
 </div>
 <div class="py-6 px-6 sm:px-8">
-        
-    <div class="flex flex-wrap items-center gap-4">
-        {% for tag in site.tags %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ tag.key }}">{{ site.data.tags[tag.key].name }} ({{ tag.value.size }})</a>
-        </span>
-        {% endfor %}
-        {% for type in site.types %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ type.key | html.url_encode }}">{{ type.key }} ({{ type.value.size }})</a>
-        </span>
-        {% endfor %}
-        {% for year in site.years %}
-        <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
-            <svg class="-ml-1 mr-1.5 h-2 w-2 text-green-400" fill="currentColor" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" />
-            </svg>  
-            <a href="#{{ year.key | html.url_encode }}">{{ year.key }} ({{ year.value.size }})</a>
-        </span>
-        {% endfor %}
-    </div>
     <!-- BEGIN articles per tag -->
     {% assign article_group = site.tags %}
     {% include 'article-overview.html' %}
-    <!-- END articles per tag -->
-    <!-- BEGIN articles per type -->
-    {% assign article_group = site.types %}
-    {% include 'article-overview.html' %}
-    <!-- END articles per type -->        
+    <!-- END articles per tag -->      
     <!-- BEGIN articles per year -->
     {% assign article_group = site.years %}
     {% include 'article-overview.html' %}
