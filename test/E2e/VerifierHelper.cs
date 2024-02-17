@@ -1,15 +1,31 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VerifyTests;
 using VerifyXunit;
+using Xunit;
 
 namespace Test.E2e
 {
+    public class ScreenshotFactAttribute : FactAttribute
+    {
+        public ScreenshotFactAttribute() : base()
+        {
+            bool success = bool.TryParse(Environment.GetEnvironmentVariable("CI"), out bool ci);
+            bool skipTest = success && ci;
+            if (skipTest)
+            {
+                Skip = "Screenshots are disabled on CI";
+            }
+        }
+    }
+
     public static partial class VerifierHelper
     {
         //[GeneratedRegex(@"(?<before>https://)(?<val>[a-zA-Z0-9\-\.]*(.net|.nl))(?<after>\/[\w/_-]*\.(html|xml|png|svg))?")]
@@ -22,6 +38,9 @@ namespace Test.E2e
 
     public static class BasePageVerifier
     {
+        [ModuleInitializer]
+        public static void Init() => VerifyImageHash.Initialize();
+
         public static async Task VerifyScreenshot(BasePageObject basePageObject)
         {
             byte[] screenshot = await basePageObject.ScreenshotAsync();

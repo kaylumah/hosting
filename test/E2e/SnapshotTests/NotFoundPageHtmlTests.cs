@@ -21,7 +21,7 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [Fact]
         public async Task Verify_NotFoundPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -34,7 +34,7 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(notFoundPage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [ScreenshotFact]
         public async Task Verify_NotFoundPageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -44,7 +44,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(notFoundPage);
         }
 
-        [Fact(Skip = "screenshots keep failing")]
+        [ScreenshotFact]
         public async Task Verify_NotFoundPageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
