@@ -22,22 +22,6 @@ modifieddate: '2021-08-07'
     <div id="word-cloud" class="flex justify-center items-center gap-4 flex-wrap p-10"></div>
     <script>
     var words = [
-      /*
-      { text: 'con', size: 40 },
-      { text: 'ipsum', size: 14 },
-      { text: 'dolor', size: 15 },
-      { text: 'amet', size: 30 },
-      { text: 'Lorem', size: 40 },
-      { text: 'amet', size: 30 },
-      { text: 'sit', size: 25 },
-      { text: 'amet', size: 30 },
-      { text: 'Lorem', size: 40 },
-      { text: 'amet', size: 30 },
-      { text: 'consectetur', size: 18 },
-      { text: 'adipiscing', size: 30 },
-      { text: 'usa', size: 56 },
-      { text: 'elit', size: 22 }
-      */
       {% for tag in site.tags %}
       { text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
       {% endfor %}
