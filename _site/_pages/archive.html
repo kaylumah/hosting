@@ -34,8 +34,20 @@ modifieddate: '2021-08-07'
       const li = document.createElement('li');
       const anchor = document.createElement('a');
       anchor.href = "#" + word.id;
-      anchor.text = word.text;
-      anchor.classList = "text-3xl text-cyan-500";
+      anchor.text = `${word.text} (${word.size})`;
+      const x = word.size;
+      switch(true)
+      {
+        case (x < 2):
+          anchor.classList = "text-md text-blue-500";
+          break;
+        case (x < 4):
+          anchor.classList = "text-lg text-blue-500";
+          break;
+        default:
+          break;
+      }
+
       li.appendChild(anchor);
       container.appendChild(li);
     });  
