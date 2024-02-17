@@ -1,0 +1,42 @@
+<ul id="word-cloud" class="flex justify-center flex-wrap max-w-xl align-center gap-2 leading-8">
+</ul>
+<script>
+var words = [
+  {% for tag in site.tags %}
+  { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
+  {% endfor %}
+  {% for year in site.years %}
+  { id: '{{year.key}}', text: '{{year.key}}', size: {{ year.value.size }} },
+  {% endfor %}
+];
+
+var container = document.getElementById('word-cloud');
+words.forEach(word => {
+  const li = document.createElement('li');
+  const anchor = document.createElement('a');
+  anchor.href = "#" + word.id;
+  anchor.text = `${word.text} (${word.size})`;
+  const x = word.size;
+  switch(true)
+  {
+    case (x < 2):
+      anchor.classList = "text-md text-blue-500";
+      break;
+    case (x < 4):
+      anchor.classList = "text-lg text-blue-500";
+      break;
+    case (x < 6):
+      anchor.classList = "text-xl text-blue-500";
+      break;
+    case (x < 8):
+      anchor.classList = "text-2xl text-blue-500";
+      break;
+    default:
+      anchor.classList = "text-3xl text-blue-500";
+      break;
+  }
+
+  li.appendChild(anchor);
+  container.appendChild(li);
+});  
+</script>
