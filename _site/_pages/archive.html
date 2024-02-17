@@ -38,6 +38,9 @@ modifieddate: '2021-08-07'
       { text: 'usa', size: 56 },
       { text: 'elit', size: 22 }
       */
+      {% for tag in site.tags %}
+      { text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
+      {% endfor %}
     ];
 
     var container = document.getElementById('word-cloud');
