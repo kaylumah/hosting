@@ -32,7 +32,7 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(blogPage);
         }
 
-        [Fact]
+        [ScreenshotFact]
         public async Task Verify_BlogPageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -42,7 +42,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(blogPage);
         }
 
-        [Fact]
+        [ScreenshotFact]
         public async Task Verify_BlogPageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
