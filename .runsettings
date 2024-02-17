@@ -6,7 +6,7 @@
     <!-- Configurations that affect the Test Framework -->
     <RunConfiguration>
         <EnvironmentVariables>
-          <!-- <PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-587.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL> -->
+          <!-- <PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-588.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL> -->
         </EnvironmentVariables>
     </RunConfiguration>
 
