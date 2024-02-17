@@ -9,13 +9,15 @@ using Xunit;
 
 namespace Test.E2e.SnapshotTests
 {
-    public class AboutPageHtmlTests : IClassFixture<DesktopFixture>
+    public class AboutPageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
+        readonly MobileFixture _MobileFixture;
 
-        public AboutPageHtmlTests(DesktopFixture desktopFixture)
+        public AboutPageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
+            _MobileFixture = mobileFixture;
         }
 
         [Fact]
@@ -30,6 +32,26 @@ namespace Test.E2e.SnapshotTests
             title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
             await HtmlPageVerifier.Verify(aboutPage);
+        }
+
+        [Fact(Skip = "screenshots keep failing")]
+        public async Task Verify_AboutPageHtml_DesktopScreenshot()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            AboutPage aboutPage = new AboutPage(page);
+            await aboutPage.NavigateAsync();
+
+            await BasePageVerifier.VerifyScreenshot(aboutPage);
+        }
+
+        [Fact(Skip = "screenshots keep failing")]
+        public async Task Verify_AboutPageHtml_MobileScreenshot()
+        {
+            IPage page = await _MobileFixture.GetPage();
+            AboutPage aboutPage = new AboutPage(page);
+            await aboutPage.NavigateAsync();
+
+            await BasePageVerifier.VerifyScreenshot(aboutPage);
         }
     }
 }

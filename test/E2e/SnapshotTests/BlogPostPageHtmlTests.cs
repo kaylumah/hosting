@@ -9,13 +9,15 @@ using Xunit;
 #pragma warning disable CS3016
 namespace Test.E2e.SnapshotTests
 {
-    public class BlogPostPageHtmlTests : IClassFixture<DesktopFixture>
+    public class BlogPostPageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
+        readonly MobileFixture _MobileFixture;
 
-        public BlogPostPageHtmlTests(DesktopFixture desktopFixture)
+        public BlogPostPageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
+            _MobileFixture = mobileFixture;
         }
 
         [Theory]
