@@ -21,7 +21,7 @@ namespace Test.E2e
             bool skipTest = success && ci;
             if (skipTest)
             {
-                Skip = "Screenshots are disabled on CI"; 
+                Skip = "Screenshots are disabled on CI";
             }
         }
     }
