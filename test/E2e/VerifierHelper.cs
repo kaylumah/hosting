@@ -23,8 +23,8 @@ namespace Test.E2e
 
     public static class BasePageVerifier
     {
-            [ModuleInitializer]
-            public static void Init() => VerifyImageHash.Initialize();
+        [ModuleInitializer]
+        public static void Init() => VerifyImageHash.Initialize();
 
         public static async Task VerifyScreenshot(BasePageObject basePageObject)
         {
