@@ -34,7 +34,8 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(aboutPage);
         }
 
-        [ScreenshotFact]
+        // [ScreenshotFact]
+        [Fact(Skip = "About is redirected")]
         public async Task Verify_AboutPageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -44,7 +45,8 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(aboutPage);
         }
 
-        [ScreenshotFact]
+        // [ScreenshotFact]
+        [Fact(Skip = "About is redirected")]
         public async Task Verify_AboutPageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
