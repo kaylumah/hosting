@@ -49,7 +49,7 @@ namespace Test.Unit.Extensions
             pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
             pageDictionary.SetValue("PublishedDate", article.Created.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
             pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-            pageDictionary.SetValue(nameof(PageMetaData.Type), ContentType.Article.ToString());
+            pageDictionary.SetValue(nameof(PageMetaData.Type), "Article");
             pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
             pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
