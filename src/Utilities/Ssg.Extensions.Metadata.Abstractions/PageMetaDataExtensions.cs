@@ -76,7 +76,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static bool IsContentType(this PageMetaData page, string contentType)
         {
-            bool result = page.Type.Equals(contentType, StringComparison.OrdinalIgnoreCase);
+            bool result = page.Type != null && page.Type.Equals(contentType, StringComparison.OrdinalIgnoreCase);
             return result;
         }
 
