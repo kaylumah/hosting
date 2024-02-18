@@ -139,11 +139,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public DateTimeOffset Published => this.GetValue<DateTimeOffset>(nameof(Published));
+        public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => this.GetValue<DateTimeOffset>(nameof(Modified));
 
         public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
+        }
+
+        protected virtual DateTimeOffset GetPublishedDate()
+        {
+            DateTimeOffset result = this.GetValue<DateTimeOffset>(nameof(Published));
+            return result;
         }
     }
 }
