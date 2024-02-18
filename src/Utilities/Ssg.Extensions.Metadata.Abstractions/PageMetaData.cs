@@ -126,13 +126,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public ContentType Type
+        public string Type
         {
             get
             {
-                string contentType = this.GetValue<string>(nameof(Type));
-                bool parsed = Enum.TryParse(contentType, out ContentType contentTypeResult);
-                ContentType result = parsed ? contentTypeResult : ContentType.Page;
+                string result = this.GetValue<string>(nameof(Type));
                 return result;
             }
             set

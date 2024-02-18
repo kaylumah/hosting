@@ -195,7 +195,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string pageUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
             List<string> result = new List<string>
         {
-            CreateOpenGraphMetaTag("og:type", renderData.Page.Type == ContentType.Article ? "article" : "website"),
+            CreateOpenGraphMetaTag("og:type", renderData.Page.IsArticle() ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
             CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
@@ -210,7 +210,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 result.Add(imageTag);
             }
 
-            if (renderData.Page.Type == ContentType.Article)
+            if (renderData.Page.IsArticle())
             {
                 if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
                 {

@@ -74,16 +74,27 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> FromContentType(this IEnumerable<PageMetaData> source, ContentType contentType)
+        public static bool IsContentType(this PageMetaData page, string contentType)
         {
-            IEnumerable<PageMetaData> result = source
-                    .Where(page => contentType.Equals(page.Type));
+            bool result = page.Type.Equals(contentType, StringComparison.OrdinalIgnoreCase);
+            return result;
+        }
+
+        public static bool IsArticle(this PageMetaData page)
+        {
+            bool result = page.IsContentType("Article");
+            return result;
+        }
+
+        public static bool IsPage(this PageMetaData page)
+        {
+            bool result = page.IsContentType("Page");
             return result;
         }
 
         public static IEnumerable<PageMetaData> IsArticle(this IEnumerable<PageMetaData> source)
         {
-            IEnumerable<PageMetaData> result = source.FromContentType(ContentType.Article);
+            IEnumerable<PageMetaData> result = source.Where(IsArticle);
             return result;
         }
 
