@@ -17,8 +17,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         [LoggerMessage(
             EventId = 0,
             Level = LogLevel.Trace,
-            Message = "Attempting LdJson `{Path}` and `{Type:g}`")]
-        private partial void LogLdJson(string path, ContentType type);
+            Message = "Attempting LdJson `{Path}` and `{Type}`")]
+        private partial void LogLdJson(string path, string type);
 
         readonly ILogger _Logger;
 
@@ -39,13 +39,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             System.Collections.Generic.Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
             LogLdJson(renderData.Page.Uri, renderData.Page.Type);
-            if (renderData.Page.Type == ContentType.Article)
+            if (renderData.Page.IsArticle())
             {
                 BlogPosting blogPost = renderData.Page.ToBlogPosting(authors, organizations);
                 string ldjson = blogPost.ToString(settings);
                 return ldjson;
             }
-            else if (renderData.Page.Type == ContentType.Page && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
+            else if (renderData.Page.IsPage() && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
             {
                 System.Collections.Generic.List<BlogPosting> posts = renderData.Site.Pages
                     .IsArticle()
