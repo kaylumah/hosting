@@ -76,7 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-
+            // Change how mapping is done...
             PageMetaData[] pageMetadatas = processed
                 .ToPages(siteGuid);
             List<PageMetaData> pageList = pageMetadatas.ToList();
