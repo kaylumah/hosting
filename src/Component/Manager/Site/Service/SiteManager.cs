@@ -164,7 +164,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     Template liquidTemplate = Template.ParseLiquid(content);
                     LiquidTemplateContext context = new LiquidTemplateContext();
 
-                    context.MemberRenamer = member => {
+                    context.MemberRenamer = member =>
+                    {
                         // alternative for the lowercase dictionary
                         string result = member.Name.ToLower(CultureInfo.InvariantCulture);
                         return result;
