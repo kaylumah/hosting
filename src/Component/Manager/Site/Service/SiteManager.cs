@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -162,6 +163,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     content = content.Replace("{{ content }}", request.Metadata.Content);
                     Template liquidTemplate = Template.ParseLiquid(content);
                     LiquidTemplateContext context = new LiquidTemplateContext();
+
+                    context.MemberRenamer = member => {
+                        // alternative for the lowercase dictionary
+                        string result = member.Name.ToLower(CultureInfo.InvariantCulture);
+                        return result;
+                    };
                     context.TemplateLoader = templateLoader;
                     ScriptObject scriptObject = new ScriptObject();
                     scriptObject.Import(request.Metadata);
