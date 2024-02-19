@@ -50,24 +50,24 @@ Feature: SiteManager GenerateSite
         And the atom feed 'feed.xml' is verified:
         And the sitemap 'sitemap.xml' is verified:
         # And the html 'example.html' is verified:
-        And 'example.html' is a document with the following meta tags:
-          | Tag                    | Value                             |
-          | generator              | Kaylumah vd8b6637                 |
-          | description            | Description                       |
-          | copyright              | © Kaylumah. All rights reserved.  |
-          | keywords               | dotnet, specflow                  |
-          | og:type                | article                           |
-          | og:locale              | en                                |
-          | og:site_name           | Kaylumah                          |
-          | og:title               | Title                             |
-          | og:url                 | https://example.com/example.html  |
-          | og:description         | Description                       |
-          | article:author         | Max Hamulyák                      |
-          | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
-          | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
-          | article:tag            | dotnet                            |
-          | article:tag            | specflow                          |
-          | twitter:card           | summary_large_image               |
-          | twitter:title          | Title                             |
-          | twitter:description    | Description                       |
-          | twitter:creator        | @Max                              |
+        # And 'example.html' is a document with the following meta tags:
+        #   | Tag                    | Value                             |
+        #   | generator              | Kaylumah vd8b6637                 |
+        #   | description            | Description                       |
+        #   | copyright              | © Kaylumah. All rights reserved.  |
+        #   | keywords               | dotnet, specflow                  |
+        #   | og:type                | article                           |
+        #   | og:locale              | en                                |
+        #   | og:site_name           | Kaylumah                          |
+        #   | og:title               | Title                             |
+        #   | og:url                 | https://example.com/example.html  |
+        #   | og:description         | Description                       |
+        #   | article:author         | Max Hamulyák                      |
+        #   | article:published_time | 2022-07-03T00:00:00.0000000+02:00 |
+        #   | article:modified_time  | 2022-07-03T00:00:00.0000000+02:00 |
+        #   | article:tag            | dotnet                            |
+        #   | article:tag            | specflow                          |
+        #   | twitter:card           | summary_large_image               |
+        #   | twitter:title          | Title                             |
+        #   | twitter:description    | Description                       |
+        #   | twitter:creator        | @Max                              |
