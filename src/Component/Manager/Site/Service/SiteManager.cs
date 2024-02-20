@@ -77,10 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            // Change how mapping is done...
-            PageMetaData[] pageMetadatas = processed
-                .ToPages(siteGuid);
-            List<PageMetaData> pageList = pageMetadatas.ToList();
+            List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
             SiteMetaData siteMetadata = _SiteMetadataFactory
                 .EnrichSite(request.Configuration, siteGuid, pageList);
 
@@ -143,6 +140,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Artifact[] artifactArray = artifacts.ToArray();
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        {
+            // Change how mapping is done...
+            PageMetaData[] pageMetadatas = files.ToPages(siteGuid);
+            List<PageMetaData> pageList = pageMetadatas.ToList();
+            return pageList;
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
