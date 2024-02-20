@@ -147,6 +147,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<PageMetaData> result = new List<PageMetaData>();
             foreach (Files.Processor.File file in files)
             {
+                string? type = file.MetaData.GetValue<string?>("type");
+                // handle "Page" as existing mapping
+                // handle <null> as existing mapping
+                // handle "Article" as existing mapping
+
                 // Change how mapping is done...
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
                 result.Add(pageMetaData);
