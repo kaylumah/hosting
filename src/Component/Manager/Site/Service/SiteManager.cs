@@ -144,10 +144,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
         {
-            // Change how mapping is done...
-            PageMetaData[] pageMetadatas = files.ToPages(siteGuid);
-            List<PageMetaData> pageList = pageMetadatas.ToList();
-            return pageList;
+            List<PageMetaData> result = new List<PageMetaData>();
+            foreach (Files.Processor.File file in files)
+            {
+                // Change how mapping is done...
+                PageMetaData pageMetaData = file.ToPage(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            return result;
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
