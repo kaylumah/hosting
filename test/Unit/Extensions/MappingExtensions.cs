@@ -18,7 +18,8 @@ namespace Test.Unit.Extensions
         public static File ToFile(this PageMetaData pageMetaData)
         {
             FileMetaData fileMetaData = new FileMetaData();
-            foreach (KeyValuePair<string, object> item in pageMetaData)
+            Dictionary<string, object> data = pageMetaData;
+            foreach (KeyValuePair<string, object> item in data)
             {
                 fileMetaData.Add(item.Key, item.Value);
             }

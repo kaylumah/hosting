@@ -9,68 +9,68 @@ using System.Linq;
 namespace Ssg.Extensions.Metadata.Abstractions
 {
     [DebuggerDisplay("PageMetaData '{Uri}'")]
-    public class PageMetaData : Dictionary<string, object?>
+    public class PageMetaData/* : Dictionary<string, object?> */
     {
         public string Id
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Id));
+                string result = _InternalData.GetValue<string>(nameof(Id));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Id), value);
+                _InternalData.SetValue(nameof(Id), value);
             }
         }
-        public string Title => this.GetValue<string>(nameof(Title));
-        public string Description => this.GetValue<string>(nameof(Description));
-        public string Language => this.GetValue<string>(nameof(Language));
-        public string Author => this.GetValue<string>(nameof(Author));
-        public string Organization => this.GetValue<string>(nameof(Organization));
-        public bool SocialShare => this.GetBoolValue(nameof(SocialShare));
-        public bool Sitemap => this.GetBoolValue(nameof(Sitemap));
-        public bool Feed => this.GetBoolValue(nameof(Feed));
-        public bool Featured => this.GetBoolValue(nameof(Featured));
+        public string Title => _InternalData.GetValue<string>(nameof(Title));
+        public string Description => _InternalData.GetValue<string>(nameof(Description));
+        public string Language => _InternalData.GetValue<string>(nameof(Language));
+        public string Author => _InternalData.GetValue<string>(nameof(Author));
+        public string Organization => _InternalData.GetValue<string>(nameof(Organization));
+        public bool SocialShare => _InternalData.GetBoolValue(nameof(SocialShare));
+        public bool Sitemap => _InternalData.GetBoolValue(nameof(Sitemap));
+        public bool Feed => _InternalData.GetBoolValue(nameof(Feed));
+        public bool Featured => _InternalData.GetBoolValue(nameof(Featured));
         public string LdJson
         {
             get
             {
-                string result = this.GetValue<string>(nameof(LdJson));
+                string result = _InternalData.GetValue<string>(nameof(LdJson));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(LdJson), value);
+                _InternalData.SetValue(nameof(LdJson), value);
             }
         }
         public string MetaTags
         {
             get
             {
-                string result = this.GetValue<string>(nameof(MetaTags));
+                string result = _InternalData.GetValue<string>(nameof(MetaTags));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(MetaTags), value);
+                _InternalData.SetValue(nameof(MetaTags), value);
             }
         }
-        public string Layout => this.GetValue<string>(nameof(Layout));
-        public string Uri => this.GetValue<string>(nameof(Uri));
-        public string Image => this.GetValue<string>(nameof(Image));
-        public string CommentId => this.GetValue<string>(nameof(CommentId));
+        public string Layout => _InternalData.GetValue<string>(nameof(Layout));
+        public string Uri => _InternalData.GetValue<string>(nameof(Uri));
+        public string Image => _InternalData.GetValue<string>(nameof(Image));
+        public string CommentId => _InternalData.GetValue<string>(nameof(CommentId));
 
         public string Name
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Name));
+                string result = _InternalData.GetValue<string>(nameof(Name));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Name), value);
+                _InternalData.SetValue(nameof(Name), value);
             }
         }
 
@@ -78,12 +78,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Content));
+                string result = _InternalData.GetValue<string>(nameof(Content));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Content), value);
+                _InternalData.SetValue(nameof(Content), value);
             }
         }
 
@@ -91,12 +91,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Collection));
+                string result = _InternalData.GetValue<string>(nameof(Collection));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Collection), value);
+                _InternalData.SetValue(nameof(Collection), value);
             }
         }
 
@@ -104,12 +104,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Series));
+                string result = _InternalData.GetValue<string>(nameof(Series));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Series), value);
+                _InternalData.SetValue(nameof(Series), value);
             }
         }
 
@@ -117,12 +117,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                List<string>? tags = this.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
+                List<string>? tags = _InternalData.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
                 return tags ?? new List<string>();
             }
             set
             {
-                this.SetValue(nameof(Tags), value);
+                _InternalData.SetValue(nameof(Tags), value);
             }
         }
 
@@ -130,20 +130,31 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = this.GetValue<string>(nameof(Type));
+                string result = _InternalData.GetValue<string>(nameof(Type));
                 return result;
             }
             set
             {
-                this.SetValue(nameof(Type), value);
+                _InternalData.SetValue(nameof(Type), value);
             }
         }
 
-        public DateTimeOffset Published => this.GetValue<DateTimeOffset>(nameof(Published));
-        public DateTimeOffset Modified => this.GetValue<DateTimeOffset>(nameof(Modified));
+        public DateTimeOffset Published => GetPublishedDate();
+        public DateTimeOffset Modified => _InternalData.GetValue<DateTimeOffset>(nameof(Modified));
 
-        public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
+        readonly Dictionary<string, object?> _InternalData;
+
+        public PageMetaData(Dictionary<string, object?> internalData)/* : base(internalData) */
         {
+            _InternalData = internalData;
         }
+
+        protected virtual DateTimeOffset GetPublishedDate()
+        {
+            DateTimeOffset result = _InternalData.GetValue<DateTimeOffset>(nameof(Published));
+            return result;
+        }
+
+        public static implicit operator Dictionary<string, object?>(PageMetaData page) => page._InternalData;
     }
 }

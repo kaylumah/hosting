@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -76,14 +77,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-
-            PageMetaData[] pageMetadatas = processed
-                .ToPages(siteGuid);
-            List<PageMetaData> pageList = pageMetadatas.ToList();
+            List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
             SiteMetaData siteMetadata = _SiteMetadataFactory
                 .EnrichSite(request.Configuration, siteGuid, pageList);
 
-            MetadataRenderRequest[] requests = pageMetadatas
+            MetadataRenderRequest[] requests = pageList
                 .Select(pageMetadata =>
                 {
                     RenderData metaData = new RenderData(siteMetadata, pageMetadata);
@@ -144,6 +142,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
         }
 
+        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        {
+            List<PageMetaData> result = new List<PageMetaData>();
+            foreach (Files.Processor.File file in files)
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                // handle "Page" as existing mapping
+                // handle <null> as existing mapping
+                // handle "Article" as existing mapping
+
+                // Change how mapping is done...
+                PageMetaData pageMetaData = file.ToPage(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            return result;
+        }
+
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
@@ -162,6 +178,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     content = content.Replace("{{ content }}", request.Metadata.Content);
                     Template liquidTemplate = Template.ParseLiquid(content);
                     LiquidTemplateContext context = new LiquidTemplateContext();
+
+                    context.MemberRenamer = member =>
+                    {
+                        // alternative for the lowercase dictionary
+                        string result = member.Name.ToLower(CultureInfo.InvariantCulture);
+                        return result;
+                    };
                     context.TemplateLoader = templateLoader;
                     ScriptObject scriptObject = new ScriptObject();
                     scriptObject.Import(request.Metadata);
