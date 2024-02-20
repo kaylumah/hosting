@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SiteMetaData siteMetadata = _SiteMetadataFactory
                 .EnrichSite(request.Configuration, siteGuid, pageList);
 
-            MetadataRenderRequest[] requests = pageMetadatas
+            MetadataRenderRequest[] requests = pageList
                 .Select(pageMetadata =>
                 {
                     RenderData metaData = new RenderData(siteMetadata, pageMetadata);
