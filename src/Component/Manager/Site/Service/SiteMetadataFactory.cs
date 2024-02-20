@@ -53,7 +53,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Pages = pages.ToList();
+            siteInfo.Pages = pages;
             EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo, pages);
             EnrichSiteWithTags(siteInfo, pages);
