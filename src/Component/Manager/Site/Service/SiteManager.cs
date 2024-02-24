@@ -77,11 +77,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            IEnumerable<IGrouping<string?, Files.Processor.File>> filesGroupedByType = processed.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type;
-            });
             List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
             SiteMetaData siteMetadata = _SiteMetadataFactory
                 .EnrichSite(request.Configuration, siteGuid, pageList);
@@ -150,6 +145,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
         {
             List<PageMetaData> result = new List<PageMetaData>();
+
+            IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                return type ?? "unknown";
+            });
+            Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
+                .ToDictionary(group => group.Key, group => group.ToList());
+
             foreach (Files.Processor.File file in files)
             {
                 string? type = file.MetaData.GetValue<string?>("type");
