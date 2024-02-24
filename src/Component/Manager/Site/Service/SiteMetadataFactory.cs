@@ -54,7 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Pages = ToPageMetadata(files, siteGuid);
+            siteInfo.Items = ToPageMetadata(files, siteGuid);
             EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
@@ -64,7 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteInfo;
         }
 
-        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        List<BasePage> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
         {
             IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
             {
@@ -95,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 regularFiles.AddRange(announcements);
             }
 
-            List<PageMetaData> result = new List<PageMetaData>();
+            List<BasePage> result = new List<BasePage>();
 
             if (hasArticles && articles != null)
             {
@@ -179,7 +179,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Collections");
 
-            List<PageMetaData> files = site.Pages;
+            List<PageMetaData> files = site.GetPages().ToList();
 
             List<string> collections = files
                 .Where(x => x.Collection != null)
@@ -234,7 +234,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Tags");
 
-            List<PageMetaData> pages = site.Pages;
+            List<PageMetaData> pages = site.GetPages().ToList();
 
             List<string> tags = GetTags(pages);
             foreach (string tag in tags)
@@ -249,7 +249,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         void EnrichSiteWithYears(SiteMetaData site)
         {
             LogEnrichSiteWith("Years");
-            List<PageMetaData> pages = site.Pages;
+            List<PageMetaData> pages = site.GetPages().ToList();
             IEnumerable<int> years = pages
                 .IsArticle()
                 .Select(x => x.Published.Year)

@@ -29,7 +29,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         {
             LogGenerateSiteMap();
 
-            List<PageMetaData> pages = siteMetaData.Pages
+            List<PageMetaData> pages = siteMetaData.GetPages()
                             .Where(file =>
                             {
                                 string extension = Path.GetExtension(file.Name);
