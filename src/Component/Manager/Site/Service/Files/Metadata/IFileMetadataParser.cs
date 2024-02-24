@@ -8,6 +8,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     public interface IFileMetadataParser
     {
         // rename Metadata to FileResponse?
-        Metadata<Frontmatter> Parse(MetadataCriteria criteria);
+        Metadata<FileMetaData> Parse(MetadataCriteria criteria);
     }
 }

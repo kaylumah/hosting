@@ -29,12 +29,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             _Options = options;
         }
 
-        public Metadata<Frontmatter> Parse(MetadataCriteria criteria)
+        public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
         {
-            Metadata<Frontmatter> result = _MetadataProvider.Retrieve<Frontmatter>(criteria.Content);
+            Metadata<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
             if (result.Data == null)
             {
-                result.Data = new Frontmatter();
+                result.Data = new FileMetaData();
             }
 
             if (string.IsNullOrEmpty(result.Data.OutputLocation))
@@ -50,7 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             if (isMatch)
             {
                 List<string> paths = DetermineFilters(outputLocation);
-                Frontmatter fileMetaData = ApplyDefaults(paths, criteria.Scope);
+                FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
                 OverwriteMetaData(fileMetaData, result.Data, "file");
                 ApplyDates(fileMetaData);
 
@@ -76,9 +76,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return ext;
         }
 
-        Frontmatter ApplyDefaults(List<string> filters, string scope)
+        FileMetaData ApplyDefaults(List<string> filters, string scope)
         {
-            Frontmatter fileMetaData = new Frontmatter();
+            FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
             {
                 DefaultMetadata? defaultMeta = _Options.Defaults.DefaultFilter(filter);
@@ -135,7 +135,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return result;
         }
 
-        string DetermineOutputLocation(string fileName, Frontmatter metaData)
+        string DetermineOutputLocation(string fileName, FileMetaData metaData)
         {
             string permalink = metaData.OutputLocation;
             string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
@@ -169,7 +169,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             //metaData.Remove(nameof(metaData.Permalink).ToLower(CultureInfo.InvariantCulture));
         }
 
-        static void ApplyDates(Frontmatter fileMetaData)
+        static void ApplyDates(FileMetaData fileMetaData)
         {
             TimeZoneInfo tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Amsterdam");
             ApplyPublishedDates(fileMetaData, tz);
@@ -183,7 +183,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 #pragma warning restore
         }
 
-        static void ApplyPublishedDates(Frontmatter fileMetaData, TimeZoneInfo timeZone)
+        static void ApplyPublishedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
         {
             if (fileMetaData.Date != null && string.IsNullOrEmpty(fileMetaData.PublishedDate))
             {
@@ -200,7 +200,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        static void ApplyModifiedDates(Frontmatter fileMetaData, TimeZoneInfo timeZone)
+        static void ApplyModifiedDates(FileMetaData fileMetaData, TimeZoneInfo timeZone)
         {
             if (!string.IsNullOrEmpty(fileMetaData.PublishedDate) && string.IsNullOrEmpty(fileMetaData.ModifiedDate))
             {
@@ -222,7 +222,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        void OverwriteMetaData(Frontmatter target, Frontmatter source, string reason)
+        void OverwriteMetaData(FileMetaData target, FileMetaData source, string reason)
         {
             if (source != null)
             {

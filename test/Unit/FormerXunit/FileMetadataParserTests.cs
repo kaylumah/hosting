@@ -21,8 +21,8 @@ namespace Test.Unit.FormerXunit
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, null));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
@@ -33,7 +33,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();
@@ -52,15 +52,15 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
-                        Values = new Frontmatter {}
+                        Values = new FileMetaData {}
                     }
                 }
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, null));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -71,7 +71,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();
@@ -90,7 +90,7 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     }
@@ -99,8 +99,8 @@ namespace Test.Unit.FormerXunit
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, null));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, null));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -111,7 +111,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();
@@ -132,26 +132,26 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Collection = "test"
                         }
                     }
                 }
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
-            Frontmatter data = new Frontmatter
+            FileMetaData data = new FileMetaData
             {
                 OutputLocation = "test/:name:ext"
             };
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, data));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, data));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -162,7 +162,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();
@@ -185,13 +185,13 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Layout = "other.html",
                             Collection = "test"
                         }
@@ -200,13 +200,13 @@ namespace Test.Unit.FormerXunit
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
-            Frontmatter meta = new Frontmatter()
+            FileMetaData meta = new FileMetaData()
             {
                 OutputLocation = "test/:name:ext"
             };
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, meta));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, meta));
 
             LoggerMock<FileMetadataParser> loggerMock = new LoggerMock<FileMetadataParser>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -217,7 +217,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();
@@ -240,13 +240,13 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
-                        Values = new Frontmatter {
+                        Values = new FileMetaData {
                             Collection = "test"
                         }
                     }
@@ -254,14 +254,14 @@ namespace Test.Unit.FormerXunit
             };
             Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
 
-            Frontmatter data = new Frontmatter
+            FileMetaData data = new FileMetaData
             {
                 OutputLocation = "posts/2021/:name:ext"
             };
 
             metadataProviderMock
-                .Setup(x => x.Retrieve<Frontmatter>(It.Is<string>(p => p.Equals(string.Empty))))
-                .Returns(new Metadata<Frontmatter>(null, data));
+                .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
+                .Returns(new Metadata<FileMetaData>(null, data));
 
             Mock<ILogger<FileMetadataParser>> loggerMock = new Mock<ILogger<FileMetadataParser>>();
             FileMetadataParser sut = new FileMetadataParser(loggerMock.Object, metadataProviderMock.Object, options);
@@ -272,7 +272,7 @@ namespace Test.Unit.FormerXunit
             };
 
             // Act
-            Metadata<Frontmatter> result = sut.Parse(criteria);
+            Metadata<FileMetaData> result = sut.Parse(criteria);
 
             // Assert
             result.Should().NotBeNull();

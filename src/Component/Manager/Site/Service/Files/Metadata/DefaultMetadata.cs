@@ -9,7 +9,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         { get; set; } = null!;
         public string Scope
         { get; set; } = null!;
-        public Frontmatter Values
+        public FileMetaData Values
         { get; set; } = null!;
     }
 }

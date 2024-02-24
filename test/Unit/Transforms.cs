@@ -51,7 +51,7 @@ namespace Test.Unit
                 foreach (IGrouping<string, (string Scope, string Path, string Key, string Value)> pathGroup in groupedByPath)
                 {
                     string path = pathGroup.Key;
-                    Frontmatter fileMetaData = new Frontmatter();
+                    FileMetaData fileMetaData = new FileMetaData();
                     foreach ((string Scope, string Path, string Key, string Value) item in pathGroup)
                     {
                         fileMetaData.Add(item.Key, item.Value);

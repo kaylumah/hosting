@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     {
         public DateTimeOffset LastModified
         { get; set; }
-        public Frontmatter MetaData
+        public FileMetaData MetaData
         { get; set; } = null!;
         public string Content
         { get; set; } = null!;
