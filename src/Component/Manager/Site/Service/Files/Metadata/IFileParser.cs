@@ -5,7 +5,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    public interface IFileMetadataParser
+    public interface IFileParser
     {
         // rename Metadata to FileResponse?
         Metadata<FileMetaData> Parse(MetadataCriteria criteria);

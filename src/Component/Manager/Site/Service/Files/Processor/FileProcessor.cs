@@ -25,7 +25,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         readonly IFileSystem _FileSystem;
         readonly ILogger _Logger;
         readonly IEnumerable<IContentPreprocessorStrategy> _PreprocessorStrategies;
-        readonly IFileMetadataParser _FileMetaDataProcessor;
+        readonly IFileParser _FileMetaDataProcessor;
         readonly SiteInfo _SiteInfo;
 
         public FileProcessor(
@@ -33,7 +33,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             ILogger<FileProcessor> logger,
             IEnumerable<IContentPreprocessorStrategy> preprocessorStrategies,
             SiteInfo options,
-            IFileMetadataParser fileMetadataParser)
+            IFileParser fileMetadataParser)
         {
             _SiteInfo = options;
             _PreprocessorStrategies = preprocessorStrategies;
