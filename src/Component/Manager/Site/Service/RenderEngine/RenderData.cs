@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
     {
         public SiteMetaData Site
         { get; set; }
-        public PageMetaData Page
+        public BasePage Page
         { get; set; }
         public string Content => GetContent();
         public string Title => GetTitle();
@@ -33,26 +33,46 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
         string GetTitle()
         {
-            string title = Page?.Title ?? Site?.Title ?? string.Empty;
-            return title;
+            if (Page is PageMetaData pageMetaData)
+            {
+                string title = pageMetaData?.Title ?? Site?.Title ?? string.Empty;
+                return title;
+            }
+
+            return string.Empty;
         }
 
         string GetDescription()
         {
-            string description = Page?.Description ?? Site?.Description ?? string.Empty;
-            return description;
+            if (Page is PageMetaData pageMetaData)
+            {
+                string description = pageMetaData?.Description ?? Site?.Description ?? string.Empty;
+                return description;
+            }
+
+            return string.Empty;
         }
 
         string GetLanguage()
         {
-            string language = Page?.Language ?? Site?.Language ?? string.Empty;
-            return language;
+            if (Page is PageMetaData pageMetaData)
+            {
+                string language = pageMetaData?.Language ?? Site?.Language ?? string.Empty;
+                return language;
+            }
+
+            return string.Empty;
         }
 
         string GetAuthor()
         {
-            string author = Page?.Author ?? Site?.Author ?? string.Empty;
-            return author;
+            if (Page is PageMetaData pageMetaData)
+            {
+                string author = pageMetaData?.Author ?? Site?.Author ?? string.Empty;
+                return author;
+            }
+
+            return string.Empty;
         }
 
         string GetUrl()
@@ -73,7 +93,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
         public static bool IsHtml(this RenderData renderData)
         {
-            bool result = PageMetaDataExtensions.Html(renderData.Page);
+            bool result = PageMetaDataExtensions.Html((PageMetaData)renderData.Page);
             return result;
         }
     }

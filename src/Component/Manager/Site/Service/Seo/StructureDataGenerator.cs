@@ -40,26 +40,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             System.Collections.Generic.Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
 
-            PageMetaData pageMetaData = renderData.Page;
-            LogLdJson(pageMetaData.Uri, pageMetaData.Type);
-            if (pageMetaData.IsArticle())
+            if (renderData.Page is PageMetaData pageMetaData)
             {
-                BlogPosting blogPost = pageMetaData.ToBlogPosting(authors, organizations);
-                string ldjson = blogPost.ToString(settings);
-                return ldjson;
-            }
-            else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
-            {
-                System.Collections.Generic.List<BlogPosting> posts = renderData.Site.GetArticles()
-                    .IsFeatured()
-                    .ByRecentlyPublished()
-                    .ToBlogPostings(authors, organizations)
-                    .ToList();
+                LogLdJson(pageMetaData.Uri, pageMetaData.Type);
+                if (pageMetaData.IsArticle())
+                {
+                    BlogPosting blogPost = pageMetaData.ToBlogPosting(authors, organizations);
+                    string ldjson = blogPost.ToString(settings);
+                    return ldjson;
+                }
+                else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
+                {
+                    System.Collections.Generic.List<BlogPosting> posts = renderData.Site.GetArticles()
+                        .IsFeatured()
+                        .ByRecentlyPublished()
+                        .ToBlogPostings(authors, organizations)
+                        .ToList();
 
-                Blog blog = new Blog();
-                blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
-                string ldjson = blog.ToString(settings);
-                return ldjson;
+                    Blog blog = new Blog();
+                    blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
+                    string ldjson = blog.ToString(settings);
+                    return ldjson;
+                }
             }
 
             string result = string.Empty;
