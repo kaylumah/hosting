@@ -102,7 +102,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 // TODO: treat special
                 foreach (Files.Processor.File file in articles)
                 {
-                    PageMetaData pageMetaData = file.ToPage(siteGuid);
+                    PageMetaData pageMetaData = file.ToArticle(siteGuid);
                     result.Add(pageMetaData);
                 }
             }
