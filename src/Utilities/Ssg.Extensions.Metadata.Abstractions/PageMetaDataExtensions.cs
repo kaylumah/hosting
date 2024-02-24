@@ -12,7 +12,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public static readonly Func<PageMetaData, bool> Tags;
 
-        public static readonly Func<PageMetaData, bool> Series;
+        public static readonly Func<Article, bool> Series;
 
         public static readonly Func<PageMetaData, bool> Html;
 
@@ -60,15 +60,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> HasSeries(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<Article> HasSeries(this IEnumerable<Article> source)
         {
-            IEnumerable<PageMetaData> result = source.Where(Series);
+            IEnumerable<Article> result = source.Where(Series);
             return result;
         }
 
-        public static IEnumerable<PageMetaData> FromSeries(this IEnumerable<PageMetaData> source, string series)
+        public static IEnumerable<Article> FromSeries(this IEnumerable<Article> source, string series)
         {
-            IEnumerable<PageMetaData> result = source
+            IEnumerable<Article> result = source
                     .HasSeries()
                     .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
             return result;

@@ -97,19 +97,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public string Series
-        {
-            get
-            {
-                string result = _InternalData.GetValue<string>(nameof(Series));
-                return result;
-            }
-            set
-            {
-                _InternalData.SetValue(nameof(Series), value);
-            }
-        }
-
         public List<string> Tags
         {
             get
@@ -165,6 +152,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public bool Feed => _InternalData.GetBoolValue(nameof(Feed));
         public bool Featured => _InternalData.GetBoolValue(nameof(Featured));
         public string CommentId => _InternalData.GetValue<string>(nameof(CommentId));
+
+        public string Series
+        {
+            get
+            {
+                string result = _InternalData.GetValue<string>(nameof(Series));
+                return result;
+            }
+            set
+            {
+                _InternalData.SetValue(nameof(Series), value);
+            }
+        }
 
         public Article(Dictionary<string, object?> internalData) : base(internalData)
         {

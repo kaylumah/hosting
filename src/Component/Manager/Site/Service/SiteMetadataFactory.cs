@@ -264,7 +264,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         void EnrichSiteWithSeries(SiteMetaData site)
         {
             LogEnrichSiteWith("Series");
-            List<PageMetaData> pages = site.Pages;
+            List<Article> pages = site.GetArticles().ToList();
 
             IEnumerable<string> series = pages
                 .HasSeries()
