@@ -52,6 +52,7 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {}
                     }
                 }
@@ -90,6 +91,7 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Layout = "default.html"
                         }
@@ -132,12 +134,14 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Collection = "test"
                         }
@@ -185,12 +189,14 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Layout = "other.html",
                             Collection = "test"
@@ -240,12 +246,14 @@ namespace Test.Unit.FormerXunit
                 Defaults = new DefaultMetadatas {
                     new DefaultMetadata {
                         Path = string.Empty,
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Layout = "default.html"
                         }
                     },
                     new DefaultMetadata {
                         Path = "test",
+                        Extensions = [ ".html" ],
                         Values = new FileMetaData {
                             Collection = "test"
                         }
