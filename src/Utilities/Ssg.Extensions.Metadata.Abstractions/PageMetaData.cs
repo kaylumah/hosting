@@ -112,9 +112,28 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
 
-    [DebuggerDisplay("PageMetaData '{Uri}'")]
-    public class PageMetaData
+    public abstract class BasePage
     {
+        public static implicit operator Dictionary<string, object?>(BasePage page) => page._InternalData;
+#pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
+        protected readonly Dictionary<string, object?> _InternalData;
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
+#pragma warning restore CA1051 // Do not declare visible instance fields
+
+        public BasePage(Dictionary<string, object?> internalData)
+        {
+            _InternalData = internalData;
+        }
+    }
+
+    [DebuggerDisplay("PageMetaData '{Uri}'")]
+    public class PageMetaData : BasePage
+    {
+        public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
+        {
+        }
+
         public string Id
         {
             get
@@ -230,24 +249,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => _InternalData.GetValue<DateTimeOffset>(nameof(Modified));
 
-#pragma warning disable CA1051 // Do not declare visible instance fields
-#pragma warning disable CS3008 // Identifier is not CLS-compliant
-        protected readonly Dictionary<string, object?> _InternalData;
-#pragma warning restore CS3008 // Identifier is not CLS-compliant
-#pragma warning restore CA1051 // Do not declare visible instance fields
-
-        public PageMetaData(Dictionary<string, object?> internalData)
-        {
-            _InternalData = internalData;
-        }
-
         protected virtual DateTimeOffset GetPublishedDate()
         {
             DateTimeOffset result = _InternalData.GetValue<DateTimeOffset>(nameof(Published));
             return result;
         }
-
-        public static implicit operator Dictionary<string, object?>(PageMetaData page) => page._InternalData;
     }
 
     public class Article : PageMetaData
