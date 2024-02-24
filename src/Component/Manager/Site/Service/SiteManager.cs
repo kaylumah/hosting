@@ -72,7 +72,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     request.Configuration.LayoutDirectory,
                     request.Configuration.PartialsDirectory,
                     request.Configuration.DataDirectory,
-                    request.Configuration.AssetDirectory
+                    // request.Configuration.AssetDirectory
             };
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
@@ -82,12 +82,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
-            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+            // Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
 
             List<Artifact> artifacts = [
                 .. renderedArtifacts,
                 .. generatedArtifacts,
-                .. assetArtifacts
+                // .. assetArtifacts
             ];
 
             OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
