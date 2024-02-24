@@ -78,17 +78,34 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
             List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
-            SiteMetaData siteMetadata = _SiteMetadataFactory
-                .EnrichSite(request.Configuration, siteGuid, pageList);
+            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageList);
 
-            MetadataRenderRequest[] requests = pageList
-                .Select(pageMetadata =>
-                {
-                    RenderData metaData = new RenderData(siteMetadata, pageMetadata);
-                    MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
-                    return result;
-                })
-                .ToArray();
+            Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
+            Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
+            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+
+            List<Artifact> artifacts = [
+                .. renderedArtifacts,
+                .. generatedArtifacts,
+                .. assetArtifacts
+            ];
+
+            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            Artifact[] artifactArray = artifacts.ToArray();
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
+            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        async Task<Artifact[]> GetRenderedArtifacts(GenerateSiteRequest request, SiteMetaData siteMetadata)
+        {
+            MetadataRenderRequest[] requests = siteMetadata.Pages
+                            .Select(pageMetadata =>
+                            {
+                                RenderData metaData = new RenderData(siteMetadata, pageMetadata);
+                                MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
+                                return result;
+                            })
+                            .ToArray();
 
             foreach (MetadataRenderRequest renderRequest in requests)
             {
@@ -105,24 +122,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             directoryConfig.TemplateDirectory = request.Configuration.PartialsDirectory;
             MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
-            List<Artifact> artifacts = requests.Select((t, i) =>
+            Artifact[] artifacts = requests.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
                 string artifactPath = $"{t.Metadata.Page.Uri}";
                 byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
                 Artifact artifact = new Artifact(artifactPath, bytes);
                 return artifact;
-            }).ToList();
-
-            Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
-            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
-            artifacts.AddRange(generatedArtifacts);
-            artifacts.AddRange(assetArtifacts);
-
-            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
-            Artifact[] artifactArray = artifacts.ToArray();
-            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
-            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+            }).ToArray();
+            return artifacts;
         }
 
         Artifact[] GetGeneratedArtifacts(SiteMetaData siteMetadata)
