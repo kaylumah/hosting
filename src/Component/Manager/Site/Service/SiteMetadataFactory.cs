@@ -66,8 +66,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
         {
-            List<PageMetaData> result = new List<PageMetaData>();
-
             IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
             {
                 string? type = file.MetaData.GetValue<string?>("type");
@@ -77,18 +75,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .ToDictionary(group => group.Key, group => group.ToList());
 
             bool hasArticles = data.TryGetValue("Article", out List<Files.Processor.File>? articles);
-            // Static
-            // Page
-            // Announcement
+            bool hasPages = data.TryGetValue("Page", out List<Files.Processor.File>? pages);
+            bool hasStatics = data.TryGetValue("Static", out List<Files.Processor.File>? statics);
+            bool hasAnnouncements = data.TryGetValue("Announcement", out List<Files.Processor.File>? announcements);
 
-            foreach (Files.Processor.File file in files)
+            List<Files.Processor.File> regularFiles = new List<Files.Processor.File>();
+            if (hasPages && pages != null)
             {
-                string? type = file.MetaData.GetValue<string?>("type");
-                // handle "Page" as existing mapping
-                // handle <null> as existing mapping
-                // handle "Article" as existing mapping
+                regularFiles.AddRange(pages);
+            }
 
-                // Change how mapping is done...
+            if (hasStatics && statics != null)
+            {
+                regularFiles.AddRange(statics);
+            }
+
+            if (hasAnnouncements && announcements != null)
+            {
+                regularFiles.AddRange(announcements);
+            }
+
+            List<PageMetaData> result = new List<PageMetaData>();
+            foreach (Files.Processor.File file in regularFiles)
+            {
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
                 result.Add(pageMetaData);
             }
