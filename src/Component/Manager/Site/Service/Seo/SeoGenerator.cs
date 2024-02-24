@@ -4,6 +4,7 @@
 using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
+using Ssg.Extensions.Metadata.Abstractions;
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public partial class SeoGenerator
@@ -19,8 +20,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         public void ApplySeo(RenderData renderData)
         {
-            renderData.Page.LdJson = GenerateLdJson(renderData);
-            renderData.Page.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
+            PageMetaData pageMetaData = renderData.Page;
+
+            pageMetaData.LdJson = GenerateLdJson(renderData);
+            pageMetaData.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
         }
 
         string GenerateLdJson(RenderData renderData)
