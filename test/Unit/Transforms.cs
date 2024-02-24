@@ -62,7 +62,7 @@ namespace Test.Unit
                         Path = path,
                         Scope = scope,
                         Values = fileMetaData,
-                        Extensions = [ ".html" ]
+                        Extensions = [".html"]
                     });
                 }
             }
