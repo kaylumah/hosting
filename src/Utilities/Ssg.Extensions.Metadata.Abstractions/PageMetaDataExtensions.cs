@@ -16,7 +16,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static readonly Func<PageMetaData, bool> Html;
 
-        public static readonly Func<PageMetaData, bool> Featured;
+        public static readonly Func<Article, bool> Featured;
 
         static PageMetaDataExtensions()
         {
@@ -98,9 +98,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> IsFeatured(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<Article> IsFeatured(this IEnumerable<Article> source)
         {
-            IEnumerable<PageMetaData> result = source.Where(Featured);
+            IEnumerable<Article> result = source.Where(Featured);
             return result;
         }
 

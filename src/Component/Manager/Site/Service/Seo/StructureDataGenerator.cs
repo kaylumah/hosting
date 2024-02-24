@@ -9,6 +9,7 @@ using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
+using Article = Ssg.Extensions.Metadata.Abstractions.Article;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
@@ -47,12 +48,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page.IsPage() && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
             {
-                System.Collections.Generic.List<BlogPosting> posts = renderData.Site.Pages
-                    .IsArticle()
+                System.Collections.Generic.List<BlogPosting> posts = renderData.Site.GetArticles()
                     .IsFeatured()
                     .ByRecentlyPublished()
                     .ToBlogPostings(authors, organizations)
                     .ToList();
+
                 Blog blog = new Blog();
                 blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
                 string ldjson = blog.ToString(settings);

@@ -28,10 +28,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Language => _InternalData.GetValue<string>(nameof(Language));
         public string Author => _InternalData.GetValue<string>(nameof(Author));
         public string Organization => _InternalData.GetValue<string>(nameof(Organization));
-        public bool SocialShare => _InternalData.GetBoolValue(nameof(SocialShare));
         public bool Sitemap => _InternalData.GetBoolValue(nameof(Sitemap));
-        public bool Feed => _InternalData.GetBoolValue(nameof(Feed));
-        public bool Featured => _InternalData.GetBoolValue(nameof(Featured));
+
         public string LdJson
         {
             get
@@ -59,7 +57,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Layout => _InternalData.GetValue<string>(nameof(Layout));
         public string Uri => _InternalData.GetValue<string>(nameof(Uri));
         public string Image => _InternalData.GetValue<string>(nameof(Image));
-        public string CommentId => _InternalData.GetValue<string>(nameof(CommentId));
 
         public string Name
         {
@@ -142,7 +139,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => _InternalData.GetValue<DateTimeOffset>(nameof(Modified));
 
-        readonly Dictionary<string, object?> _InternalData;
+#pragma warning disable CA1051 // Do not declare visible instance fields
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
+        protected readonly Dictionary<string, object?> _InternalData;
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
         public PageMetaData(Dictionary<string, object?> internalData)
         {
@@ -160,6 +161,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class Article : PageMetaData
     {
+        public bool SocialShare => _InternalData.GetBoolValue(nameof(SocialShare));
+        public bool Feed => _InternalData.GetBoolValue(nameof(Feed));
+        public bool Featured => _InternalData.GetBoolValue(nameof(Featured));
+        public string CommentId => _InternalData.GetValue<string>(nameof(CommentId));
+
         public Article(Dictionary<string, object?> internalData) : base(internalData)
         {
         }

@@ -126,20 +126,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
-            IEnumerable<PageMetaData> result;
+            IEnumerable<Article> articles = siteMetaData.GetArticles();
+            IEnumerable<Article> feed = articles
+                .Where(x => x.Feed);
 
-            if (siteMetaData.Collections.TryGetValue("posts", out PageMetaData[]? posts))
-            {
-                result = posts
-                    .Where(x => x.Feed)
-                    .ToList();
-            }
-            else
-            {
-                result = Enumerable.Empty<PageMetaData>();
-            }
-
-            return result;
+            return feed;
         }
     }
 }
