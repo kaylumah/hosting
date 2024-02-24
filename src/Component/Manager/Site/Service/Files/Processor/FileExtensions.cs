@@ -26,6 +26,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
+        internal static Article ToArticle(this File file)
+        {
+            Dictionary<string, object?> data = file.ToDictionary();
+            Article result = new Article(data);
+            return result;
+        }
+
         internal static string ToPageId(this File file, Guid siteGuid)
         {
             Guid pageGuid = file.ToPageGuid(siteGuid);
@@ -42,6 +49,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file, Guid siteGuid)
         {
             PageMetaData page = file.ToPage();
+            page.Id = file.ToPageId(siteGuid);
+            return page;
+        }
+
+        public static Article ToArticle(this File file, Guid siteGuid)
+        {
+            Article page = file.ToArticle();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }
