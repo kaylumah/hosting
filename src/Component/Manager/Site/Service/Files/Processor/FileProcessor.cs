@@ -189,10 +189,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             File fileResult = new File();
-
             fileResult.MetaData = fileMeta;
             fileResult.Content = fileContents;
-            fileResult.Name = Path.GetFileName(fileMeta.Uri);
             return fileResult;
         }
     }

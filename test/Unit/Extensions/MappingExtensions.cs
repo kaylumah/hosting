@@ -26,7 +26,6 @@ namespace Test.Unit.Extensions
 
             File file = new File()
             {
-                Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
                 Content = string.Empty,
                 MetaData = fileMetaData
             };

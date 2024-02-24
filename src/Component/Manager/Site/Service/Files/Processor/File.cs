@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
@@ -14,7 +15,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         { get; set; } = null!;
         public string Content
         { get; set; } = null!;
-        public string Name
-        { get; set; } = null!;
+        public string Name => GetName();
+
+        string GetName()
+        {
+            string fileName = Path.GetFileName(MetaData.Uri);
+            return fileName;
+        }
     }
 }
