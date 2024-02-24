@@ -39,14 +39,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             System.Collections.Generic.Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
-            LogLdJson(renderData.Page.Uri, renderData.Page.Type);
-            if (renderData.Page.IsArticle())
+
+            PageMetaData pageMetaData = renderData.Page;
+            LogLdJson(pageMetaData.Uri, pageMetaData.Type);
+            if (pageMetaData.IsArticle())
             {
-                BlogPosting blogPost = renderData.Page.ToBlogPosting(authors, organizations);
+                BlogPosting blogPost = pageMetaData.ToBlogPosting(authors, organizations);
                 string ldjson = blogPost.ToString(settings);
                 return ldjson;
             }
-            else if (renderData.Page.IsPage() && "blog.html".Equals(renderData.Page.Uri, StringComparison.Ordinal))
+            else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
             {
                 System.Collections.Generic.List<BlogPosting> posts = renderData.Site.GetArticles()
                     .IsFeatured()
