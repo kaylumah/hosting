@@ -125,6 +125,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             _InternalData = internalData;
         }
+
+        public string Content
+        {
+            get
+            {
+                string result = _InternalData.GetValue<string>(nameof(Content));
+                return result;
+            }
+            set
+            {
+                _InternalData.SetValue(nameof(Content), value);
+            }
+        }
     }
 
     [DebuggerDisplay("PageMetaData '{Uri}'")]
@@ -191,19 +204,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             set
             {
                 _InternalData.SetValue(nameof(Name), value);
-            }
-        }
-
-        public string Content
-        {
-            get
-            {
-                string result = _InternalData.GetValue<string>(nameof(Content));
-                return result;
-            }
-            set
-            {
-                _InternalData.SetValue(nameof(Content), value);
             }
         }
 
