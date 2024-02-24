@@ -85,11 +85,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 regularFiles.AddRange(pages);
             }
 
-            if (hasStatics && statics != null)
-            {
-                regularFiles.AddRange(statics);
-            }
-
             if (hasAnnouncements && announcements != null)
             {
                 regularFiles.AddRange(announcements);
@@ -101,7 +96,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 foreach (Files.Processor.File file in articles)
                 {
-                    PageMetaData pageMetaData = file.ToArticle(siteGuid);
+                    Article pageMetaData = file.ToArticle(siteGuid);
+                    result.Add(pageMetaData);
+                }
+            }
+
+            if (hasStatics && statics != null)
+            {
+                foreach (Files.Processor.File file in statics)
+                {
+                    Dictionary<string, object?> fileAsData = file.ToDictionary();
+                    StaticContent pageMetaData = new StaticContent(fileAsData);
                     result.Add(pageMetaData);
                 }
             }

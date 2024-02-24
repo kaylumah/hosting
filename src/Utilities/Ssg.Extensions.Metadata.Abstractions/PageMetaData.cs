@@ -78,6 +78,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
 
+    public class StaticContent : BasePage
+    {
+        public StaticContent(Dictionary<string, object?> internalData) : base(internalData)
+        {
+        }
+    }
+
     public class PageMetaData : BasePage
     {
         public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
