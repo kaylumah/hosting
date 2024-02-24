@@ -77,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
+            List<Files.Processor.File> pageList = processed.ToList();
             SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageList);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
@@ -165,33 +165,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             });
             Artifact[] artifacts = assetArtifacts.ToArray();
             return artifacts;
-        }
-
-        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
-        {
-            List<PageMetaData> result = new List<PageMetaData>();
-
-            IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type ?? "unknown";
-            });
-            Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
-                .ToDictionary(group => group.Key, group => group.ToList());
-
-            foreach (Files.Processor.File file in files)
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                // handle "Page" as existing mapping
-                // handle <null> as existing mapping
-                // handle "Article" as existing mapping
-
-                // Change how mapping is done...
-                PageMetaData pageMetaData = file.ToPage(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            return result;
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
