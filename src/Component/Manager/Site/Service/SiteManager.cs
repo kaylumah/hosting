@@ -120,12 +120,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 artifacts.AddRange(pluginArtifacts);
             }
 
-            string assetDirectory = Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory);
+            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+            artifacts.AddRange(assetArtifacts);
+
+            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            Artifact[] artifactArray = artifacts.ToArray();
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
+            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        Artifact[] GetAssetFolderArtifacts(SiteConfiguration siteConfiguration)
+        {
+            string assetDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.AssetDirectory);
             IEnumerable<IFileSystemInfo> assets = _FileSystem
                 .GetFiles(assetDirectory, true)
                 .Where(x => !x.IsDirectory());
 
-            string env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
+            string env = Path.Combine(Environment.CurrentDirectory, siteConfiguration.Source) + Path.DirectorySeparatorChar;
 
             IEnumerable<Artifact> assetArtifacts = assets.Select(asset =>
             {
@@ -134,12 +145,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Artifact artifact = new Artifact(assetPath, assetBytes);
                 return artifact;
             });
-            artifacts.AddRange(assetArtifacts);
-
-            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
-            Artifact[] artifactArray = artifacts.ToArray();
-            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
-            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+            Artifact[] artifacts = assetArtifacts.ToArray();
+            return artifacts;
         }
 
         List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
