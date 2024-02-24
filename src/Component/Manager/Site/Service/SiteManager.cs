@@ -148,9 +148,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             foreach (Files.Processor.File file in files)
             {
                 string? type = file.MetaData.GetValue<string?>("type");
-                // handle "Page" as existing mapping
-                // handle <null> as existing mapping
-                // handle "Article" as existing mapping
+                bool isEmpty = string.IsNullOrEmpty(type);
+                if (isEmpty)
+                {
+                    continue;
+                }
+
+                bool isPage = "Page".Equals(type, StringComparison.OrdinalIgnoreCase);
+                bool isArticle = "Article".Equals(type, StringComparison.OrdinalIgnoreCase);
 
                 // Change how mapping is done...
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
