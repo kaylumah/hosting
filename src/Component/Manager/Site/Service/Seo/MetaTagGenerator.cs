@@ -31,7 +31,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         public string ToMetaTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
-            LogMetaTags(renderData.Page.Uri);
+            PageMetaData pageMetaData = renderData.Page;
+            LogMetaTags(pageMetaData.Uri);
 
             StringBuilder sb = new StringBuilder();
 
@@ -102,6 +103,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         static string ToCommonTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
+            PageMetaData pageMetaData = renderData.Page;
             XmlDocument finalDocument = new XmlDocument();
             XmlElement titleElement = finalDocument.CreateElement("title");
             titleElement.InnerText = renderData.Title;
@@ -111,9 +113,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             relAttribute.Value = "canonical";
             linkElement.Attributes.Append(relAttribute);
             XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
-            hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
+            hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
             linkElement.Attributes.Append(hrefAttribute);
-            string formattedTags = string.Join(", ", renderData.Page.Tags);
+            string formattedTags = string.Join(", ", pageMetaData.Tags);
             StringBuilder sb = new StringBuilder();
             List<string> result = new List<string>()
         {
@@ -124,9 +126,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateMetaTag("copyright", renderData.Site.Build.Copyright),
             CreateMetaTag("keywords", formattedTags)
         };
-            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+            if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
             {
-                AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
                 CreateMetaTag("author", author.FullName);
             }
 
@@ -146,31 +148,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         static string ToTwitterTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
+            PageMetaData pageMetaData = renderData.Page;
             StringBuilder sb = new StringBuilder();
             List<string> result = new List<string>
         {
             CreateMetaTag("twitter:card", "summary_large_image"),
-            CreateMetaTag("twitter:title", renderData.Page.Title),
+            CreateMetaTag("twitter:title", pageMetaData.Title),
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
-            if (!string.IsNullOrEmpty(renderData.Page.Image))
+            if (!string.IsNullOrEmpty(pageMetaData.Image))
             {
-                string twitterUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Image);
+                string twitterUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Image);
                 string imageTag = CreateMetaTag("twitter:image", twitterUrl);
                 result.Add(imageTag);
             }
 
-            if (!string.IsNullOrEmpty(renderData.Page.Organization))
+            if (!string.IsNullOrEmpty(pageMetaData.Organization))
             {
-                OrganizationMetaData organization = renderData.Site.OrganizationMetaData[renderData.Page.Organization];
+                OrganizationMetaData organization = renderData.Site.OrganizationMetaData[pageMetaData.Organization];
                 string organizationTag = CreateMetaTag("twitter:site", $"@{organization.Twitter}");
                 result.Add(organizationTag);
             }
 
-            if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+            if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
             {
-                AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
                 string creatorTag = CreateMetaTag("twitter:creator", $"@{author.Links.Twitter}");
                 result.Add(creatorTag);
             }
@@ -191,41 +194,42 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         static string ToOpenGraphTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
+            PageMetaData pageMetaData = renderData.Page;
             StringBuilder sb = new StringBuilder();
-            string pageUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Uri);
+            string pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
             List<string> result = new List<string>
         {
-            CreateOpenGraphMetaTag("og:type", renderData.Page.IsArticle() ? "article" : "website"),
+            CreateOpenGraphMetaTag("og:type", pageMetaData.IsArticle() ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
-            CreateOpenGraphMetaTag("og:title", renderData.Page.Title),
+            CreateOpenGraphMetaTag("og:title", pageMetaData.Title),
             CreateOpenGraphMetaTag("og:url", pageUrl),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
-            if (!string.IsNullOrEmpty(renderData.Page.Image))
+            if (!string.IsNullOrEmpty(pageMetaData.Image))
             {
-                string imageUrl = GlobalFunctions.AbsoluteUrl(renderData.Page.Image);
+                string imageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Image);
                 string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
                 result.Add(imageTag);
             }
 
-            if (renderData.Page.IsArticle())
+            if (pageMetaData.IsArticle())
             {
-                if (!string.IsNullOrEmpty(renderData.Page.Author) && renderData.Site.AuthorMetaData.Contains(renderData.Page.Author))
+                if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                 {
-                    AuthorMetaData author = renderData.Site.AuthorMetaData[renderData.Page.Author];
+                    AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
                     string authorTag = CreateOpenGraphMetaTag("article:author", author.FullName);
                     result.Add(authorTag);
                 }
 
-                string formattedPublishTime = GlobalFunctions.DateToXmlschema(renderData.Page.Published);
-                string formattedModifiedTime = GlobalFunctions.DateToXmlschema(renderData.Page.Modified);
+                string formattedPublishTime = GlobalFunctions.DateToXmlschema(pageMetaData.Published);
+                string formattedModifiedTime = GlobalFunctions.DateToXmlschema(pageMetaData.Modified);
                 string publishedTag = CreateOpenGraphMetaTag("article:published_time", formattedPublishTime);
                 string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
                 result.Add(publishedTag);
                 result.Add(modifiedTag);
-                foreach (string tag in renderData.Page.Tags)
+                foreach (string tag in pageMetaData.Tags)
                 {
                     string htmlTag = CreateOpenGraphMetaTag("article:tag", tag);
                     result.Add(htmlTag);
