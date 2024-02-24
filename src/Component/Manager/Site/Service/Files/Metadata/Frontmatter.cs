@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    public class FileMetaData : Dictionary<string, object?>
+    public class Frontmatter : Dictionary<string, object?>
     {
 
         public string Series

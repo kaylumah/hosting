@@ -17,7 +17,7 @@ namespace Test.Unit.Extensions
     {
         public static File ToFile(this PageMetaData pageMetaData)
         {
-            FileMetaData fileMetaData = new FileMetaData();
+            Frontmatter fileMetaData = new Frontmatter();
             Dictionary<string, object> data = pageMetaData;
             foreach (KeyValuePair<string, object> item in data)
             {
