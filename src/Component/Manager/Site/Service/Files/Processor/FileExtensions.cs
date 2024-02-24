@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
@@ -29,7 +30,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file, Guid siteGuid)
         {
             PageMetaData page = file.ToPage();
-            page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
+            Guid pageGuid = file.ToPageGuid(siteGuid);
+            page.Id = pageGuid.ToString();
             return page;
         }
 
@@ -37,6 +39,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             PageMetaData[] result = files.Select(x => ToPage(x, siteGuid)).ToArray();
             return result;
+        }
+
+        public static Guid ToPageGuid(this File file, Guid siteGuid)
+        {
+            FileMetaData fileMetadata = file.MetaData;
+            string uri = fileMetadata.Uri;
+            Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
+            return pageGuid;
         }
     }
 }
