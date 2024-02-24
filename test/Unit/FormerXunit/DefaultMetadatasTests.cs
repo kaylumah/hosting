@@ -12,10 +12,10 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public void TestKey()
         {
-            DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "" };
-            DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "" };
-            DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts" };
-            DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts" };
+            DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "", Extensions = [ ".html" ] };
+            DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "", Extensions = [ ".html" ] };
+            DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts", Extensions = [ ".html" ] };
+            DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts", Extensions = [ ".html" ] };
 
             DefaultMetadatas data = new DefaultMetadatas
             {
@@ -25,10 +25,10 @@ namespace Test.Unit.FormerXunit
                 itemPathWithNameScope
             };
 
-            data[""].Should().NotBeNull();
-            data["."].Should().NotBeNull();
-            data[".posts"].Should().NotBeNull();
-            data["2019.posts"].Should().NotBeNull();
+            data[".html"].Should().NotBeNull();
+            data["..html"].Should().NotBeNull();
+            data[".posts.html"].Should().NotBeNull();
+            data["2019.posts.html"].Should().NotBeNull();
         }
     }
 }
