@@ -99,7 +99,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (hasArticles && articles != null)
             {
-                // TODO: treat special
                 foreach (Files.Processor.File file in articles)
                 {
                     PageMetaData pageMetaData = file.ToArticle(siteGuid);
