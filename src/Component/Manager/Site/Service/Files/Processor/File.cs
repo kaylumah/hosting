@@ -12,10 +12,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     public class File
     {
         public FileMetaData MetaData
-        { get; set; } = null!;
+        { get; set; }
         public string Content
-        { get; set; } = null!;
+        { get; set; }
         public string Name => GetName();
+
+        public File(FileMetaData metaData, string content)
+        {
+            MetaData = metaData;
+            Content = content;
+        }
 
         string GetName()
         {
