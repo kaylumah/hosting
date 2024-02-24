@@ -105,10 +105,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             directoryConfig.TemplateDirectory = request.Configuration.PartialsDirectory;
             MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
-            List<Artifact> artifacts = processed.Select((t, i) =>
+            List<Artifact> artifacts = requests.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
-                string artifactPath = $"{t.MetaData.Uri}";
+                string artifactPath = $"{t.Metadata.Page.Uri}";
                 byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
                 Artifact artifact = new Artifact(artifactPath, bytes);
                 return artifact;
