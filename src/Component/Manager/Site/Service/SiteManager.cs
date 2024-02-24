@@ -77,23 +77,35 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            IEnumerable<IGrouping<string?, Files.Processor.File>> filesGroupedByType = processed.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type;
-            });
-            List<PageMetaData> pageList = ToPageMetadata(processed, siteGuid);
-            SiteMetaData siteMetadata = _SiteMetadataFactory
-                .EnrichSite(request.Configuration, siteGuid, pageList);
+            List<Files.Processor.File> pageList = processed.ToList();
+            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageList);
 
-            MetadataRenderRequest[] requests = pageList
-                .Select(pageMetadata =>
-                {
-                    RenderData metaData = new RenderData(siteMetadata, pageMetadata);
-                    MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
-                    return result;
-                })
-                .ToArray();
+            Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
+            Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
+            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+
+            List<Artifact> artifacts = [
+                .. renderedArtifacts,
+                .. generatedArtifacts,
+                .. assetArtifacts
+            ];
+
+            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            Artifact[] artifactArray = artifacts.ToArray();
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
+            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        async Task<Artifact[]> GetRenderedArtifacts(GenerateSiteRequest request, SiteMetaData siteMetadata)
+        {
+            MetadataRenderRequest[] requests = siteMetadata.Pages
+                            .Select(pageMetadata =>
+                            {
+                                RenderData metaData = new RenderData(siteMetadata, pageMetadata);
+                                MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
+                                return result;
+                            })
+                            .ToArray();
 
             foreach (MetadataRenderRequest renderRequest in requests)
             {
@@ -110,14 +122,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             directoryConfig.TemplateDirectory = request.Configuration.PartialsDirectory;
             MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
 
-            List<Artifact> artifacts = processed.Select((t, i) =>
+            Artifact[] artifacts = requests.Select((t, i) =>
             {
                 MetadataRenderResult renderResult = renderResults[i];
-                string artifactPath = $"{t.MetaData.Uri}";
+                string artifactPath = $"{t.Metadata.Page.Uri}";
                 byte[] bytes = Encoding.UTF8.GetBytes(renderResult.Content);
                 Artifact artifact = new Artifact(artifactPath, bytes);
                 return artifact;
-            }).ToList();
+            }).ToArray();
+            return artifacts;
+        }
+
+        Artifact[] GetGeneratedArtifacts(SiteMetaData siteMetadata)
+        {
+            List<Artifact> artifacts = new List<Artifact>();
 
             foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
             {
@@ -125,12 +143,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 artifacts.AddRange(pluginArtifacts);
             }
 
-            string assetDirectory = Path.Combine(request.Configuration.Source, request.Configuration.AssetDirectory);
+            Artifact[] result = artifacts.ToArray();
+            return result;
+        }
+
+        Artifact[] GetAssetFolderArtifacts(SiteConfiguration siteConfiguration)
+        {
+            string assetDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.AssetDirectory);
             IEnumerable<IFileSystemInfo> assets = _FileSystem
                 .GetFiles(assetDirectory, true)
                 .Where(x => !x.IsDirectory());
 
-            string env = Path.Combine(Environment.CurrentDirectory, request.Configuration.Source) + Path.DirectorySeparatorChar;
+            string env = Path.Combine(Environment.CurrentDirectory, siteConfiguration.Source) + Path.DirectorySeparatorChar;
 
             IEnumerable<Artifact> assetArtifacts = assets.Select(asset =>
             {
@@ -139,30 +163,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Artifact artifact = new Artifact(assetPath, assetBytes);
                 return artifact;
             });
-            artifacts.AddRange(assetArtifacts);
-
-            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
-            Artifact[] artifactArray = artifacts.ToArray();
-            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
-            await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
-        }
-
-        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
-        {
-            List<PageMetaData> result = new List<PageMetaData>();
-            foreach (Files.Processor.File file in files)
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                // handle "Page" as existing mapping
-                // handle <null> as existing mapping
-                // handle "Article" as existing mapping
-
-                // Change how mapping is done...
-                PageMetaData pageMetaData = file.ToPage(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            return result;
+            Artifact[] artifacts = assetArtifacts.ToArray();
+            return artifacts;
         }
 
         async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)

@@ -8,6 +8,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
 using Kaylumah.Ssg.Manager.Site.Interface;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
@@ -40,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _Logger = logger;
         }
 
-        public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<PageMetaData> pages)
+        public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<Files.Processor.File> files)
         {
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
@@ -53,15 +54,43 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Pages = pages;
+            siteInfo.Pages = ToPageMetadata(files, siteGuid);
             EnrichSiteWithData(siteInfo, siteConfiguration);
-            EnrichSiteWithCollections(siteInfo, pages);
-            EnrichSiteWithTags(siteInfo, pages);
-            EnrichSiteWithYears(siteInfo, pages);
-            EnrichSiteWithSeries(siteInfo, pages);
+            EnrichSiteWithCollections(siteInfo);
+            EnrichSiteWithTags(siteInfo);
+            EnrichSiteWithYears(siteInfo);
+            EnrichSiteWithSeries(siteInfo);
 
             return siteInfo;
         }
+
+        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        {
+            List<PageMetaData> result = new List<PageMetaData>();
+
+            IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                return type ?? "unknown";
+            });
+            Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
+                .ToDictionary(group => group.Key, group => group.ToList());
+
+            foreach (Files.Processor.File file in files)
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                // handle "Page" as existing mapping
+                // handle <null> as existing mapping
+                // handle "Article" as existing mapping
+
+                // Change how mapping is done...
+                PageMetaData pageMetaData = file.ToPage(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            return result;
+        }
+
         BuildData EnrichSiteWithAssemblyData()
         {
             LogEnrichSiteWith("AssemblyData");
@@ -122,9 +151,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithCollections(SiteMetaData site, List<PageMetaData> files)
+        void EnrichSiteWithCollections(SiteMetaData site)
         {
             LogEnrichSiteWith("Collections");
+
+            List<PageMetaData> files = site.Pages;
 
             List<string> collections = files
                 .Where(x => x.Collection != null)
@@ -175,9 +206,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithTags(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithTags(SiteMetaData site)
         {
             LogEnrichSiteWith("Tags");
+
+            List<PageMetaData> pages = site.Pages;
 
             List<string> tags = GetTags(pages);
             foreach (string tag in tags)
@@ -189,9 +222,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithYears(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithYears(SiteMetaData site)
         {
             LogEnrichSiteWith("Years");
+            List<PageMetaData> pages = site.Pages;
             IEnumerable<int> years = pages
                 .IsArticle()
                 .Select(x => x.Published.Year)
@@ -203,9 +237,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithSeries(SiteMetaData site, List<PageMetaData> pages)
+        void EnrichSiteWithSeries(SiteMetaData site)
         {
             LogEnrichSiteWith("Series");
+            List<PageMetaData> pages = site.Pages;
 
             IEnumerable<string> series = pages
                 .HasSeries()
