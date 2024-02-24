@@ -9,7 +9,7 @@ using System.Linq;
 namespace Ssg.Extensions.Metadata.Abstractions
 {
     [DebuggerDisplay("PageMetaData '{Uri}'")]
-    public class PageMetaData/* : Dictionary<string, object?> */
+    public class PageMetaData
     {
         public string Id
         {
@@ -144,7 +144,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         readonly Dictionary<string, object?> _InternalData;
 
-        public PageMetaData(Dictionary<string, object?> internalData)/* : base(internalData) */
+        public PageMetaData(Dictionary<string, object?> internalData)
         {
             _InternalData = internalData;
         }
