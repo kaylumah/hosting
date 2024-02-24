@@ -33,12 +33,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return page;
         }
 
-        public static PageMetaData[] ToPages(this IEnumerable<File> files, Guid siteGuid)
-        {
-            PageMetaData[] result = files.Select(x => ToPage(x, siteGuid)).ToArray();
-            return result;
-        }
-
         internal static string ToPageId(this File file, Guid siteGuid)
         {
             Guid pageGuid = file.ToPageGuid(siteGuid);

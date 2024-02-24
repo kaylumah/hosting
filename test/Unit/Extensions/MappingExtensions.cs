@@ -60,8 +60,13 @@ namespace Test.Unit.Extensions
 
         public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
         {
-            PageMetaData[] pages = files.ToPages(siteGuid);
-            return pages.ToArticles();
+            List<PageMetaData> pageMetas = new List<PageMetaData>();
+            foreach (File file in files)
+            {
+                pageMetas.Add(file.ToPage(siteGuid));
+            }
+
+            return pageMetas.ToArticles();
         }
 
         public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
