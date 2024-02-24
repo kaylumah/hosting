@@ -11,12 +11,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
     {
         protected override string GetKeyForItem(DefaultMetadata item)
         {
+            string extJoined = string.Join('|', item.Extensions);
+            string extKey = extJoined.Replace(".", string.Empty);
+
             if (item.Scope != null)
             {
-                return $"{item.Path}.{item.Scope}";
+                return $"{item.Path}.{item.Scope}.{extKey}";
             }
 
-            return item.Path;
+            return $"{item.Path}.{extKey}";
         }
 
         public DefaultMetadata? DefaultFilter(string extension, string path)
