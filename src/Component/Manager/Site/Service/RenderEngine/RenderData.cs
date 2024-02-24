@@ -11,17 +11,53 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
         { get; set; }
         public PageMetaData Page
         { get; set; }
-        public string Content => Page?.Content ?? string.Empty;
-        public string Title => Page?.Title ?? Site?.Title ?? string.Empty;
-        public string Description => Page?.Description ?? Site?.Description ?? string.Empty;
-        public string Language => Page?.Language ?? Site?.Language ?? string.Empty;
-        public string Author => Page?.Author ?? Site?.Author ?? string.Empty;
-        public string Url => Page?.Uri ?? Site?.Url ?? string.Empty;
+        public string Content => GetContent();
+        public string Title => GetTitle();
+        public string Description => GetDescription();
+        public string Language => GetLanguage();
+        public string Author => GetAuthor();
+        public string Url => GetUrl();
 
         public RenderData(SiteMetaData siteMetaData, PageMetaData pageMetaData)
         {
             Site = siteMetaData;
             Page = pageMetaData;
+        }
+
+        string GetContent()
+        {
+            string content = Page?.Content ?? string.Empty;
+            return content;
+        }
+
+        string GetTitle()
+        {
+            string title = Page?.Title ?? Site?.Title ?? string.Empty;
+            return title;
+        }
+
+        string GetDescription()
+        {
+            string description = Page?.Description ?? Site?.Description ?? string.Empty;
+            return description;
+        }
+
+        string GetLanguage()
+        {
+            string language = Page?.Language ?? Site?.Language ?? string.Empty;
+            return language;
+        }
+
+        string GetAuthor()
+        {
+            string author = Page?.Author ?? Site?.Author ?? string.Empty;
+            return author;
+        }
+
+        string GetUrl()
+        {
+            string uri = Page?.Uri ?? Site?.Url ?? string.Empty;
+            return uri;
         }
     }
 }
