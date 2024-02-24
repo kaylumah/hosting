@@ -29,9 +29,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             _Options = options;
         }
 
-        public Metadata<FileMetaData> Parse(MetadataCriteria criteria)
+        public ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
         {
-            Metadata<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
+            ParsedFile<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
             if (result.Data == null)
             {
                 result.Data = new FileMetaData();

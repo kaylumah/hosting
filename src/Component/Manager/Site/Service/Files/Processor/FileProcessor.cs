@@ -177,7 +177,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             criteria.FileName = fileInfo.Name;
-            Metadata<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
+            ParsedFile<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 
             FileMetaData fileMeta = response.Data;
             string fileContents = response.Content;
