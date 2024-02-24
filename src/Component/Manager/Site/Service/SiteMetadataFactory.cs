@@ -54,7 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Pages = ToPageMetadata(files, siteGuid);
+            siteInfo.Items = ToPageMetadata(files, siteGuid);
             EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
@@ -64,10 +64,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteInfo;
         }
 
-        List<PageMetaData> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        List<BasePage> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
         {
-            List<PageMetaData> result = new List<PageMetaData>();
-
             IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
             {
                 string? type = file.MetaData.GetValue<string?>("type");
@@ -76,14 +74,45 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
                 .ToDictionary(group => group.Key, group => group.ToList());
 
-            foreach (Files.Processor.File file in files)
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                // handle "Page" as existing mapping
-                // handle <null> as existing mapping
-                // handle "Article" as existing mapping
+            bool hasArticles = data.TryGetValue("Article", out List<Files.Processor.File>? articles);
+            bool hasPages = data.TryGetValue("Page", out List<Files.Processor.File>? pages);
+            bool hasStatics = data.TryGetValue("Static", out List<Files.Processor.File>? statics);
+            bool hasAnnouncements = data.TryGetValue("Announcement", out List<Files.Processor.File>? announcements);
 
-                // Change how mapping is done...
+            List<Files.Processor.File> regularFiles = new List<Files.Processor.File>();
+            if (hasPages && pages != null)
+            {
+                regularFiles.AddRange(pages);
+            }
+
+            if (hasAnnouncements && announcements != null)
+            {
+                regularFiles.AddRange(announcements);
+            }
+
+            List<BasePage> result = new List<BasePage>();
+
+            if (hasArticles && articles != null)
+            {
+                foreach (Files.Processor.File file in articles)
+                {
+                    Article pageMetaData = file.ToArticle(siteGuid);
+                    result.Add(pageMetaData);
+                }
+            }
+
+            if (hasStatics && statics != null)
+            {
+                foreach (Files.Processor.File file in statics)
+                {
+                    Dictionary<string, object?> fileAsData = file.ToDictionary();
+                    StaticContent pageMetaData = new StaticContent(fileAsData);
+                    result.Add(pageMetaData);
+                }
+            }
+
+            foreach (Files.Processor.File file in regularFiles)
+            {
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
                 result.Add(pageMetaData);
             }
@@ -155,7 +184,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Collections");
 
-            List<PageMetaData> files = site.Pages;
+            List<PageMetaData> files = site.GetPages().ToList();
 
             List<string> collections = files
                 .Where(x => x.Collection != null)
@@ -210,7 +239,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Tags");
 
-            List<PageMetaData> pages = site.Pages;
+            List<PageMetaData> pages = site.GetPages().ToList();
 
             List<string> tags = GetTags(pages);
             foreach (string tag in tags)
@@ -225,7 +254,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         void EnrichSiteWithYears(SiteMetaData site)
         {
             LogEnrichSiteWith("Years");
-            List<PageMetaData> pages = site.Pages;
+            List<PageMetaData> pages = site.GetPages().ToList();
             IEnumerable<int> years = pages
                 .IsArticle()
                 .Select(x => x.Published.Year)
@@ -240,7 +269,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         void EnrichSiteWithSeries(SiteMetaData site)
         {
             LogEnrichSiteWith("Series");
-            List<PageMetaData> pages = site.Pages;
+            List<Article> pages = site.GetArticles().ToList();
 
             IEnumerable<string> series = pages
                 .HasSeries()

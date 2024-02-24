@@ -33,7 +33,7 @@ namespace Test.Unit.Extensions
             return pageMetaData.Select(ToFile);
         }
 
-        public static PageMetaData ToPageMetaData(this Article article)
+        public static PageMetaData ToPageMetaData(this Entities.Article article)
         {
             List<object> tags = article.Tags.Cast<object>().ToList();
             Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
@@ -46,32 +46,37 @@ namespace Test.Unit.Extensions
             pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
             pageDictionary.SetValue(nameof(PageMetaData.Type), "Article");
             pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
-            pageDictionary.SetValue(nameof(PageMetaData.Feed), "true");
+            pageDictionary.SetValue(nameof(Ssg.Extensions.Metadata.Abstractions.Article.Feed), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
             pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
             return new PageMetaData(pageDictionary);
         }
 
-        public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Article> article)
+        public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Entities.Article> article)
         {
             return article.Select(ToPageMetaData);
         }
 
-        public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
         {
-            PageMetaData[] pages = files.ToPages(siteGuid);
-            return pages.ToArticles();
+            List<PageMetaData> pageMetas = new List<PageMetaData>();
+            foreach (File file in files)
+            {
+                pageMetas.Add(file.ToPage(siteGuid));
+            }
+
+            return pageMetas.ToArticles();
         }
 
-        public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
         {
             return pageMetaData.Select(ToArticle);
         }
 
-        public static Article ToArticle(this PageMetaData pageMetaData)
+        public static Entities.Article ToArticle(this PageMetaData pageMetaData)
         {
-            return new Article()
+            return new Entities.Article()
             {
                 Uri = pageMetaData.Uri,
                 Title = pageMetaData.Title,

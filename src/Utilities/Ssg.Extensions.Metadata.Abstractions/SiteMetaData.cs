@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
@@ -47,7 +48,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public SortedDictionary<string, PageMetaData[]> Types
         { get; set; } = new();
 
-        public List<PageMetaData> Pages
+        public List<BasePage> Items
         { get; set; } = new();
 
         public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData)
@@ -59,6 +60,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Author = author;
             Url = url;
             Build = buildData;
+        }
+
+        public IEnumerable<PageMetaData> GetPages()
+        {
+            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
+            return pages;
+        }
+
+        public IEnumerable<Article> GetArticles()
+        {
+            IEnumerable<Article> articles = Items.OfType<Article>();
+            return articles;
         }
     }
 }

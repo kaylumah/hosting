@@ -20,10 +20,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         public void ApplySeo(RenderData renderData)
         {
-            PageMetaData pageMetaData = renderData.Page;
-
-            pageMetaData.LdJson = GenerateLdJson(renderData);
-            pageMetaData.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
+            if (renderData.Page is PageMetaData pageMetaData)
+            {
+                pageMetaData.LdJson = GenerateLdJson(renderData);
+                pageMetaData.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
+            }
         }
 
         string GenerateLdJson(RenderData renderData)

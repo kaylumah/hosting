@@ -98,11 +98,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         async Task<Artifact[]> GetRenderedArtifacts(GenerateSiteRequest request, SiteMetaData siteMetadata)
         {
-            MetadataRenderRequest[] requests = siteMetadata.Pages
-                            .Select(pageMetadata =>
+            MetadataRenderRequest[] requests = siteMetadata.Items
+                            .Select(basePage =>
                             {
-                                RenderData metaData = new RenderData(siteMetadata, pageMetadata);
-                                MetadataRenderRequest result = new MetadataRenderRequest(metaData, pageMetadata.Layout);
+                                RenderData metaData = new RenderData(siteMetadata, basePage);
+                                string? template = basePage is PageMetaData page ? page.Layout : string.Empty;
+                                MetadataRenderRequest result = new MetadataRenderRequest(metaData, template);
                                 return result;
                             })
                             .ToArray();

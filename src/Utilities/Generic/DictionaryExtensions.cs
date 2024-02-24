@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Globalization;
+using System.Linq;
 
 namespace System.Collections.Generic
 {
@@ -11,6 +12,14 @@ namespace System.Collections.Generic
         {
             string stringValue = dictionary.GetValue<string>(key);
             bool result = bool.Parse(stringValue);
+            return result;
+        }
+
+        public static List<string> GetStringValues(this Dictionary<string, object?> dictionary, string key)
+        {
+            List<object>? internalList = dictionary.GetValue<List<object>>(key);
+            List<string>? asStrings = internalList?.Cast<string>()?.ToList();
+            List<string> result = asStrings ?? [];
             return result;
         }
 
