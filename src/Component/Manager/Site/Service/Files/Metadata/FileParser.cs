@@ -52,7 +52,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
             result.Data = fileMetaData;
-            
 
             string lowerName = nameof(result.Data.OutputLocation).ToLower(CultureInfo.InvariantCulture);
             result.Data.Remove(lowerName);

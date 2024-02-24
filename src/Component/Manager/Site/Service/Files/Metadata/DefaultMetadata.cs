@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         public string Scope
         { get; set; } = null!;
         public string[] Extensions
-        { get;set; } = null!;
+        { get; set; } = null!;
         public FileMetaData Values
         { get; set; } = null!;
     }
