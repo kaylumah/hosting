@@ -114,19 +114,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return artifact;
             }).ToList();
 
-            foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
-            {
-                Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
-                artifacts.AddRange(pluginArtifacts);
-            }
-
+            Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
             Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+            artifacts.AddRange(generatedArtifacts);
             artifacts.AddRange(assetArtifacts);
 
             OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
             Artifact[] artifactArray = artifacts.ToArray();
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        Artifact[] GetGeneratedArtifacts(SiteMetaData siteMetadata)
+        {
+            List<Artifact> artifacts = new List<Artifact>();
+
+            foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
+            {
+                Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
+                artifacts.AddRange(pluginArtifacts);
+            }
+
+            Artifact[] result = artifacts.ToArray();
+            return result;
         }
 
         Artifact[] GetAssetFolderArtifacts(SiteConfiguration siteConfiguration)
