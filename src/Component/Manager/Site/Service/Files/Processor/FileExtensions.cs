@@ -29,7 +29,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static PageMetaData ToPage(this File file, Guid siteGuid)
         {
             PageMetaData page = file.ToPage();
-            page.Id = siteGuid.CreatePageGuid(file.MetaData.Uri).ToString();
+            page.Id = file.ToPageId(siteGuid);
             return page;
         }
 
@@ -37,6 +37,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             PageMetaData[] result = files.Select(x => ToPage(x, siteGuid)).ToArray();
             return result;
+        }
+
+        internal static string ToPageId(this File file, Guid siteGuid)
+        {
+            Guid pageGuid = file.ToPageGuid(siteGuid);
+            string id = pageGuid.ToString();
+            return id;
+        }
+
+        internal static Guid ToPageGuid(this File file, Guid siteGuid)
+        {
+            Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
+            return pageGuid;
         }
     }
 }

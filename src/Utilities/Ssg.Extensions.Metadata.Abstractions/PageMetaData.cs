@@ -157,4 +157,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static implicit operator Dictionary<string, object?>(PageMetaData page) => page._InternalData;
     }
+
+    public class Article : PageMetaData
+    {
+        public Article(Dictionary<string, object?> internalData) : base(internalData)
+        {
+        }
+    }
 }

@@ -33,7 +33,7 @@ namespace Test.Unit.Extensions
             return pageMetaData.Select(ToFile);
         }
 
-        public static PageMetaData ToPageMetaData(this Article article)
+        public static PageMetaData ToPageMetaData(this Entities.Article article)
         {
             List<object> tags = article.Tags.Cast<object>().ToList();
             Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
@@ -53,25 +53,25 @@ namespace Test.Unit.Extensions
             return new PageMetaData(pageDictionary);
         }
 
-        public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Article> article)
+        public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Entities.Article> article)
         {
             return article.Select(ToPageMetaData);
         }
 
-        public static IEnumerable<Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
         {
             PageMetaData[] pages = files.ToPages(siteGuid);
             return pages.ToArticles();
         }
 
-        public static IEnumerable<Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
         {
             return pageMetaData.Select(ToArticle);
         }
 
-        public static Article ToArticle(this PageMetaData pageMetaData)
+        public static Entities.Article ToArticle(this PageMetaData pageMetaData)
         {
-            return new Article()
+            return new Entities.Article()
             {
                 Uri = pageMetaData.Uri,
                 Title = pageMetaData.Title,
