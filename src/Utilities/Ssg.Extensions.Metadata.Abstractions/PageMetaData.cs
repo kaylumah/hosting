@@ -115,29 +115,54 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public abstract class BasePage
     {
         public static implicit operator Dictionary<string, object?>(BasePage page) => page._InternalData;
-#pragma warning disable CA1051 // Do not declare visible instance fields
-#pragma warning disable CS3008 // Identifier is not CLS-compliant
-        protected readonly Dictionary<string, object?> _InternalData;
-#pragma warning restore CS3008 // Identifier is not CLS-compliant
-#pragma warning restore CA1051 // Do not declare visible instance fields
+        readonly Dictionary<string, object?> _InternalData;
 
         public BasePage(Dictionary<string, object?> internalData)
         {
             _InternalData = internalData;
         }
 
-        public string Uri => _InternalData.GetValue<string>(nameof(Uri));
+        protected string GetString(string key)
+        {
+            string result = _InternalData.GetValue<string>(key);
+            return result;
+        }
+
+        protected bool GetBoolValue(string key)
+        {
+            bool result = _InternalData.GetBoolValue(key);
+            return result;
+        }
+
+        protected DateTimeOffset GetDateTimeOffsetValue(string key)
+        {
+            DateTimeOffset result = _InternalData.GetValue<DateTimeOffset>(key);
+            return result;
+        }
+
+        protected List<string> GetStringValues(string key)
+        {
+            List<string> result = _InternalData.GetStringValues(key);
+            return result;
+        }
+
+        protected void SetValue(string key, object? value)
+        {
+            _InternalData.SetValue(key, value);
+        }
+
+        public string Uri => GetString(nameof(Uri));
 
         public string Content
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Content));
+                string result = GetString(nameof(Content));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Content), value);
+                SetValue(nameof(Content), value);
             }
         }
 
@@ -145,12 +170,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Type));
+                string result = GetString(nameof(Type));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Type), value);
+                SetValue(nameof(Type), value);
             }
         }
     }
@@ -166,58 +191,58 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Id));
+                string result = GetString(nameof(Id));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Id), value);
+                SetValue(nameof(Id), value);
             }
         }
-        public string Title => _InternalData.GetValue<string>(nameof(Title));
-        public string Description => _InternalData.GetValue<string>(nameof(Description));
-        public string Language => _InternalData.GetValue<string>(nameof(Language));
-        public string Author => _InternalData.GetValue<string>(nameof(Author));
-        public string Organization => _InternalData.GetValue<string>(nameof(Organization));
-        public bool Sitemap => _InternalData.GetBoolValue(nameof(Sitemap));
+        public string Title => GetString(nameof(Title));
+        public string Description => GetString(nameof(Description));
+        public string Language => GetString(nameof(Language));
+        public string Author => GetString(nameof(Author));
+        public string Organization => GetString(nameof(Organization));
+        public bool Sitemap => GetBoolValue(nameof(Sitemap));
 
         public string LdJson
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(LdJson));
+                string result = GetString(nameof(LdJson));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(LdJson), value);
+                SetValue(nameof(LdJson), value);
             }
         }
         public string MetaTags
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(MetaTags));
+                string result = GetString(nameof(MetaTags));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(MetaTags), value);
+                SetValue(nameof(MetaTags), value);
             }
         }
-        public string Layout => _InternalData.GetValue<string>(nameof(Layout));
-        public string Image => _InternalData.GetValue<string>(nameof(Image));
+        public string Layout => GetString(nameof(Layout));
+        public string Image => GetString(nameof(Image));
 
         public string Name
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Name));
+                string result = GetString(nameof(Name));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Name), value);
+                SetValue(nameof(Name), value);
             }
         }
 
@@ -225,12 +250,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Collection));
+                string result = GetString(nameof(Collection));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Collection), value);
+                SetValue(nameof(Collection), value);
             }
         }
 
@@ -238,42 +263,42 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                List<string>? tags = _InternalData.GetValue<List<object>>(nameof(Tags))?.Cast<string>().ToList();
-                return tags ?? new List<string>();
+                List<string>? tags = GetStringValues(nameof(Tags));
+                return tags;
             }
             set
             {
-                _InternalData.SetValue(nameof(Tags), value);
+                SetValue(nameof(Tags), value);
             }
         }
 
         public DateTimeOffset Published => GetPublishedDate();
-        public DateTimeOffset Modified => _InternalData.GetValue<DateTimeOffset>(nameof(Modified));
+        public DateTimeOffset Modified => GetDateTimeOffsetValue(nameof(Modified));
 
         protected virtual DateTimeOffset GetPublishedDate()
         {
-            DateTimeOffset result = _InternalData.GetValue<DateTimeOffset>(nameof(Published));
+            DateTimeOffset result = GetDateTimeOffsetValue(nameof(Published));
             return result;
         }
     }
 
     public class Article : PageMetaData
     {
-        public bool SocialShare => _InternalData.GetBoolValue(nameof(SocialShare));
-        public bool Feed => _InternalData.GetBoolValue(nameof(Feed));
-        public bool Featured => _InternalData.GetBoolValue(nameof(Featured));
-        public string CommentId => _InternalData.GetValue<string>(nameof(CommentId));
+        public bool SocialShare => GetBoolValue(nameof(SocialShare));
+        public bool Feed => GetBoolValue(nameof(Feed));
+        public bool Featured => GetBoolValue(nameof(Featured));
+        public string CommentId => GetString(nameof(CommentId));
 
         public string Series
         {
             get
             {
-                string result = _InternalData.GetValue<string>(nameof(Series));
+                string result = GetString(nameof(Series));
                 return result;
             }
             set
             {
-                _InternalData.SetValue(nameof(Series), value);
+                SetValue(nameof(Series), value);
             }
         }
 
