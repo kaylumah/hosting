@@ -190,7 +190,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             File fileResult = new File();
 
-            fileResult.LastModified = fileMeta.Modified ?? fileMeta.Date ?? fileInfo.LastWriteTimeUtc;
             fileResult.MetaData = fileMeta;
             fileResult.Content = fileContents;
             fileResult.Name = Path.GetFileName(fileMeta.Uri);
