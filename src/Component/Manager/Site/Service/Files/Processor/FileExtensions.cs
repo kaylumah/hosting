@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     public static class FileExtensions
     {
-        public static Dictionary<string, object?> ToDictionary(this File file)
+        internal static Dictionary<string, object?> ToDictionary(this File file)
         {
             Dictionary<string, object?> result = new Dictionary<string, object?>(file.MetaData);
             // result.SetValue(nameof(file.LastModified), file.LastModified);
@@ -19,18 +19,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        public static PageMetaData ToPage(this File file)
+        internal static PageMetaData ToPage(this File file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
             PageMetaData result = new PageMetaData(data);
             return result;
-        }
-
-        public static PageMetaData ToPage(this File file, Guid siteGuid)
-        {
-            PageMetaData page = file.ToPage();
-            page.Id = file.ToPageId(siteGuid);
-            return page;
         }
 
         internal static string ToPageId(this File file, Guid siteGuid)
@@ -44,6 +37,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
             return pageGuid;
+        }
+
+        public static PageMetaData ToPage(this File file, Guid siteGuid)
+        {
+            PageMetaData page = file.ToPage();
+            page.Id = file.ToPageId(siteGuid);
+            return page;
         }
     }
 }
