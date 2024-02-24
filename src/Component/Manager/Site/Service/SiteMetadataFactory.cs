@@ -96,6 +96,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             List<PageMetaData> result = new List<PageMetaData>();
+
+            if (hasArticles && articles != null)
+            {
+                // TODO: treat special
+                foreach (Files.Processor.File file in articles)
+                {
+                    PageMetaData pageMetaData = file.ToPage(siteGuid);
+                    result.Add(pageMetaData);
+                }
+            }
+
             foreach (Files.Processor.File file in regularFiles)
             {
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
