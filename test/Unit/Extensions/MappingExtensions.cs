@@ -28,7 +28,6 @@ namespace Test.Unit.Extensions
             {
                 Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
                 Content = string.Empty,
-                LastModified = default,
                 MetaData = fileMetaData
             };
             return file;

@@ -10,8 +10,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     [DebuggerDisplay("File (Name={Name})")]
     public class File
     {
-        public DateTimeOffset LastModified
-        { get; set; }
         public FileMetaData MetaData
         { get; set; } = null!;
         public string Content
