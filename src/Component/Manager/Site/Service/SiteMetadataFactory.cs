@@ -76,6 +76,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
                 .ToDictionary(group => group.Key, group => group.ToList());
 
+            bool hasArticles = data.TryGetValue("Article", out List<Files.Processor.File>? articles);
+            // Static
+            // Page
+            // Announcement
+
             foreach (Files.Processor.File file in files)
             {
                 string? type = file.MetaData.GetValue<string?>("type");
