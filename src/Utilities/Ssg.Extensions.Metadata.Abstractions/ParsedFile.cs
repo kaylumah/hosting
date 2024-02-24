@@ -3,14 +3,14 @@
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class Metadata<T>
+    public class ParsedFile<T>
     {
         public T Data
         { get; set; }
         public string Content
         { get; set; }
 
-        public Metadata(string content, T data)
+        public ParsedFile(string content, T data)
         {
             Content = content;
             Data = data;

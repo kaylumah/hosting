@@ -18,7 +18,7 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
             _Pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
         }
 
-        public Metadata<T> Retrieve<T>(string contents)
+        public ParsedFile<T> Retrieve<T>(string contents)
         {
             string frontMatterData = string.Empty;
             Match match = Regex.Match(contents, _Pattern);
@@ -30,7 +30,7 @@ namespace Ssg.Extensions.Metadata.YamlFrontMatter
             }
 
             T data = _YamlParser.Parse<T>(frontMatterData);
-            Metadata<T> result = new Metadata<T>(contents, data);
+            ParsedFile<T> result = new ParsedFile<T>(contents, data);
             return result;
         }
     }

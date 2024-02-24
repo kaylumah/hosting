@@ -39,7 +39,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
                 using StreamReader streamReader = new StreamReader(stream);
 
                 string text = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                Metadata<LayoutMetadata> metadata = _MetadataProvider.Retrieve<LayoutMetadata>(text);
+                ParsedFile<LayoutMetadata> metadata = _MetadataProvider.Retrieve<LayoutMetadata>(text);
                 string content = metadata.Content;
 
                 bool templateIsHtml = ".html".Equals(fileInfo.Extension, StringComparison.OrdinalIgnoreCase);

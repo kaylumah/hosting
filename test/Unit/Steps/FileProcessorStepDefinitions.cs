@@ -28,7 +28,7 @@ namespace Test.Unit.Steps
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
-            FileMetadataParser metadataParser = new FileMetadataParser(NullLogger<FileMetadataParser>.Instance,
+            FileParser metadataParser = new FileParser(NullLogger<FileParser>.Instance,
                 new YamlFrontMatterMetadataProvider(new YamlParser()),
                 metadataParserOptions);
             _FileProcessor = new FileProcessor(mockFileSystem,
