@@ -24,13 +24,7 @@ namespace Test.Unit.Extensions
                 fileMetaData.Add(item.Key, item.Value);
             }
 
-            File file = new File()
-            {
-                Name = (string)fileMetaData.GetValueOrDefault("uri", string.Empty),
-                Content = string.Empty,
-                LastModified = default,
-                MetaData = fileMetaData
-            };
+            File file = new File(fileMetaData, string.Empty);
             return file;
         }
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
@@ -10,13 +11,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     [DebuggerDisplay("File (Name={Name})")]
     public class File
     {
-        public DateTimeOffset LastModified
-        { get; set; }
         public FileMetaData MetaData
-        { get; set; } = null!;
+        { get; set; }
         public string Content
-        { get; set; } = null!;
-        public string Name
-        { get; set; } = null!;
+        { get; set; }
+        public string Name => GetName();
+
+        public File(FileMetaData metaData, string content)
+        {
+            MetaData = metaData;
+            Content = content;
+        }
+
+        string GetName()
+        {
+            string fileName = Path.GetFileName(MetaData.Uri);
+            return fileName;
+        }
     }
 }
