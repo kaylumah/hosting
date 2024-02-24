@@ -44,19 +44,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 
             string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
             string outputExtension = RetrieveExtension(outputLocation);
-            string[] renderExtensions = [".html"];
-            bool isMatch = renderExtensions.Contains(outputExtension);
 
-            if (isMatch)
-            {
-                List<string> paths = DetermineFilters(outputLocation);
-                FileMetaData fileMetaData = ApplyDefaults(paths, criteria.Scope);
-                OverwriteMetaData(fileMetaData, result.Data, "file");
-                ApplyDates(fileMetaData);
+            List<string> paths = DetermineFilters(outputLocation);
+            FileMetaData fileMetaData = ApplyDefaults(paths, outputExtension, criteria.Scope);
+            OverwriteMetaData(fileMetaData, result.Data, "file");
+            ApplyDates(fileMetaData);
 
-                // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-                result.Data = fileMetaData;
-            }
+            // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
+            result.Data = fileMetaData;
+            
 
             string lowerName = nameof(result.Data.OutputLocation).ToLower(CultureInfo.InvariantCulture);
             result.Data.Remove(lowerName);
@@ -76,12 +72,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             return ext;
         }
 
-        FileMetaData ApplyDefaults(List<string> filters, string scope)
+        FileMetaData ApplyDefaults(List<string> filters, string extension, string? scope)
         {
             FileMetaData fileMetaData = new FileMetaData();
             foreach (string filter in filters)
             {
-                DefaultMetadata? defaultMeta = _Options.Defaults.DefaultFilter(filter);
+                DefaultMetadata? defaultMeta = _Options.Defaults.DefaultFilter(extension, filter);
                 if (defaultMeta != null)
                 {
                     OverwriteMetaData(fileMetaData, defaultMeta.Values, $"default:{filter}");
@@ -89,7 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 
                 if (!string.IsNullOrEmpty(scope))
                 {
-                    DefaultMetadata? scopedMeta = _Options.Defaults.ScopeFilter(filter, scope);
+                    DefaultMetadata? scopedMeta = _Options.Defaults.ScopeFilter(extension, filter, scope);
                     if (scopedMeta != null)
                     {
                         OverwriteMetaData(fileMetaData, scopedMeta.Values, $"{scope}:{filter}");

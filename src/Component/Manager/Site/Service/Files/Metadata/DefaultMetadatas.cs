@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
@@ -15,6 +17,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
 
             return item.Path;
+        }
+
+        public DefaultMetadata? DefaultFilter(string extension, string path)
+        {
+            DefaultMetadata? result = Find(extension, path, item => string.IsNullOrEmpty(item.Scope));
+            return result;
+        }
+
+        public DefaultMetadata? ScopeFilter(string extension, string path, string scope)
+        {
+            DefaultMetadata? result = Find(extension, path, item => item.Scope != null && item.Scope.Equals(scope, StringComparison.Ordinal));
+            return result;
+        }
+
+        DefaultMetadata? Find(string extension, string path, Func<DefaultMetadata, bool> predicate)
+        {
+            DefaultMetadata? item = this
+                .Where(x => x.Extensions.Contains(extension))
+                .Where(x => x.Path.Equals(path, StringComparison.Ordinal))
+                .SingleOrDefault(predicate);
+            return item;
         }
     }
 }
