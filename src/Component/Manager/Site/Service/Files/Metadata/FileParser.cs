@@ -12,7 +12,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
-    public partial class FileMetadataParser : IFileParser
+    public partial class FileParser : IFileParser
     {
         [LoggerMessage(
                EventId = 0,
@@ -22,7 +22,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         readonly ILogger _Logger;
         readonly IMetadataProvider _MetadataProvider;
         readonly MetadataParserOptions _Options;
-        public FileMetadataParser(ILogger<FileMetadataParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
+        public FileParser(ILogger<FileParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
         {
             _Logger = logger;
             _MetadataProvider = metadataProvider;
