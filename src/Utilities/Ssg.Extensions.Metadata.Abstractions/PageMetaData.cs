@@ -126,6 +126,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             _InternalData = internalData;
         }
 
+        public string Uri => _InternalData.GetValue<string>(nameof(Uri));
+
         public string Content
         {
             get
@@ -191,7 +193,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
         public string Layout => _InternalData.GetValue<string>(nameof(Layout));
-        public string Uri => _InternalData.GetValue<string>(nameof(Uri));
         public string Image => _InternalData.GetValue<string>(nameof(Image));
 
         public string Name
