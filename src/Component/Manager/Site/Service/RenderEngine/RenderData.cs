@@ -93,8 +93,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
         public static bool IsHtml(this RenderData renderData)
         {
-            bool result = PageMetaDataExtensions.Html((PageMetaData)renderData.Page);
-            return result;
+            if (renderData.Page is PageMetaData pageMetaData)
+            {
+                bool result = PageMetaDataExtensions.Html((PageMetaData)renderData.Page);
+                return result;
+            }
+
+            return false;
         }
     }
 }
