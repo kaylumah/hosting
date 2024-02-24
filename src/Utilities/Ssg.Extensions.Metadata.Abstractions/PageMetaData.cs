@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+    [DebuggerDisplay("PageMetaData '{Uri}'")]
     public abstract class BasePage
     {
         public static implicit operator Dictionary<string, object?>(BasePage page) => page._InternalData;
@@ -77,7 +78,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
 
-    [DebuggerDisplay("PageMetaData '{Uri}'")]
     public class PageMetaData : BasePage
     {
         public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
