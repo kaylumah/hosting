@@ -21,7 +21,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             internal const string AssetDirectory = "assets";
             internal const string DataDirectory = "_data";
             internal const string LayoutDirectory = "_layouts";
-            internal const string PartialsDirectory = "_partials";
+            internal const string PartialsDirectory = "_includes";
             internal const string PostDirectory = "_posts";
             internal const string PageDirectory = "_pages";
 
