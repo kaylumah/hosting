@@ -168,7 +168,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             Stream fileStream = fileInfo.CreateReadStream();
             using StreamReader streamReader = new StreamReader(fileStream);
             string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            Encoding encoding = fileStream.DetermineEncoding();
             MetadataCriteria criteria = new MetadataCriteria();
             criteria.Content = rawContent;
             if (scope != null)
@@ -188,6 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
+            Encoding encoding = fileStream.DetermineEncoding();
             byte[] fileBytes = encoding.GetBytes(fileContents);
             File fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
