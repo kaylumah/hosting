@@ -8,8 +8,5 @@ namespace Kaylumah.Ssg.Manager.Site.Interface
     [DataContract]
     public class GenerateSiteRequest
     {
-        public GenerateSiteRequest()
-        {
-        }
     }
 }
