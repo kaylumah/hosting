@@ -140,7 +140,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             using System.IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
             string keyName = directory[1..];
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
-            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
+            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory, true).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
             List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
 
