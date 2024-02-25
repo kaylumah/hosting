@@ -165,33 +165,38 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             string extension = fileInfo.Extension;
-            string[] binaryExtensions = [ ".png" ];
+            string[] binaryExtensions = [".png"];
             bool treatAsBinary = binaryExtensions.Contains(extension);
+
             Stream fileStream = fileInfo.CreateReadStream();
-            using StreamReader streamReader = new StreamReader(fileStream);
 
-            string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            MetadataCriteria criteria = new MetadataCriteria();
-            criteria.Content = rawContent;
-            if (scope != null)
+            if (treatAsBinary == false)
             {
-                criteria.Scope = scope;
+                using StreamReader streamReader = new StreamReader(fileStream);
+
+                string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                MetadataCriteria criteria = new MetadataCriteria();
+                criteria.Content = rawContent;
+                if (scope != null)
+                {
+                    criteria.Scope = scope;
+                }
+
+                criteria.FileName = fileInfo.Name;
+                ParsedFile<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
+
+                FileMetaData fileMeta = response.Data;
+                string fileContents = response.Content;
+
+                IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+                if (preprocessor != null)
+                {
+                    fileContents = preprocessor.Execute(fileContents);
+                }
+
+                File fileResult = new TextFile(fileMeta, fileContents);
+                return fileResult;
             }
-
-            criteria.FileName = fileInfo.Name;
-            ParsedFile<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
-
-            FileMetaData fileMeta = response.Data;
-            string fileContents = response.Content;
-
-            IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
-            if (preprocessor != null)
-            {
-                fileContents = preprocessor.Execute(fileContents);
-            }
-
-            File fileResult = new TextFile(fileMeta, fileContents);
-            return fileResult;
         }
     }
 }
