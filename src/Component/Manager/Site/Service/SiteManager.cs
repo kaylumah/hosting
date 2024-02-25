@@ -151,7 +151,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         Artifact[] GetAssetFolderArtifacts()
         {
-            string assetDirectory = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.AssetDirectory);
+            string assetDirectory = Constants.Directories.SourceAssetsDirectory;
             IEnumerable<IFileSystemInfo> assets = _FileSystem
                 .GetFiles(assetDirectory, true)
                 .Where(x => !x.IsDirectory());
@@ -173,9 +173,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.
-            string layoutDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory);
+            string layoutDirectory = Constants.Directories.SourceLayoutsDirectory;
             List<File<LayoutMetadata>> templates = await new LayoutLoader(_FileSystem, _MetadataProvider).Load(layoutDirectory).ConfigureAwait(false);
-            string templateDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory);
+            string templateDirectory = Constants.Directories.SourcePartialsDirectory;
             IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_FileSystem, templateDirectory);
 
             foreach (MetadataRenderRequest request in requests)

@@ -140,7 +140,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             LogEnrichSiteWith("Data");
 
-            string dataDirectory = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory);
+            string dataDirectory = Constants.Directories.DataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
                 .Where(file => !file.IsDirectory())

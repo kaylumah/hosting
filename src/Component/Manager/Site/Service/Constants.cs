@@ -27,11 +27,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             internal static readonly string SourcePagesDirectory;
             internal static readonly string SourcePostsDirectory;
+            internal static readonly string SourceAssetsDirectory;
+            internal static readonly string SourceLayoutsDirectory;
+            internal static readonly string SourcePartialsDirectory;
+            internal static readonly string SourceDataDirectory;
 
             static Directories()
             {
                 SourcePagesDirectory = Path.Combine(SourceDirectory, PageDirectory);
                 SourcePostsDirectory = Path.Combine(SourceDirectory, PostDirectory);
+                SourceAssetsDirectory = Path.Combine(SourceDirectory, AssetDirectory);
+                SourceLayoutsDirectory = Path.Combine(SourceDirectory, LayoutDirectory);
+                SourcePartialsDirectory = Path.Combine(SourceDirectory, PartialsDirectory);
+                SourceDataDirectory = Path.Combine(SourceDirectory, DataDirectory);
             }
         }
     }
