@@ -42,7 +42,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             EncodingName = encodingName;
             Encoding encoding = Encoding.GetEncoding(encodingName);
             Content = encoding.GetString(bytes);
-
         }
     }
 }
