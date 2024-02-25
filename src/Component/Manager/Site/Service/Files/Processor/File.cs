@@ -15,11 +15,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public FileMetaData MetaData
         { get; set; }
 
+        public byte[] Bytes
+        { get;set; }
+
         public string Name => GetName();
 
-        public File(FileMetaData metadata)
+        public File(FileMetaData metadata, byte[] bytes)
         {
             MetaData = metadata;
+            Bytes = bytes;
         }
 
         string GetName()
@@ -31,17 +35,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
     public class TextFile : File
     {
-        public string Content
-        { get; set; }
+        public string Content => GetContent();
 
         public string EncodingName
         { get; }
 
-        public TextFile(FileMetaData metaData, byte[] bytes, string encodingName) : base(metaData)
+        public TextFile(FileMetaData metaData, byte[] bytes, string encodingName) : base(metaData, bytes)
         {
             EncodingName = encodingName;
-            Encoding encoding = Encoding.GetEncoding(encodingName);
-            Content = encoding.GetString(bytes);
+        }
+
+        string GetContent()
+        {
+            Encoding encoding = Encoding.GetEncoding(EncodingName);
+            string content = encoding.GetString(Bytes);
+            return content;
         }
     }
 }
