@@ -66,7 +66,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
                     LayoutDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.LayoutDirectory,
                     PartialsDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PartialsDirectory
                 };
-                GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration);
+                GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
                 await siteManager.GenerateSite(generateSiteRequest);
             }
 

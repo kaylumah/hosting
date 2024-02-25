@@ -77,7 +77,7 @@ namespace Test.Unit.FormerXunit
                 DataDirectory = "_data",
                 AssetDirectory = "assets",
             };
-            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration1);
+            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
             await siteManager.GenerateSite(generateSiteRequest);
         }
     }

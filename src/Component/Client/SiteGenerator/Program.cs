@@ -78,12 +78,10 @@ namespace Kaylumah.Ssg.Client.SiteGenerator
             ServiceProvider serviceProvider = services.BuildServiceProvider();
             ISiteManager siteManager = serviceProvider.GetRequiredService<ISiteManager>();
 
-            SiteConfiguration siteConfiguration = new SiteConfiguration();
-            configuration.GetSection(nameof(SiteConfiguration)).Bind(siteConfiguration);
             Stopwatch watch = new Stopwatch();
             Console.WriteLine("Start Site Generation");
             watch.Start();
-            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(siteConfiguration);
+            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
             await siteManager.GenerateSite(generateSiteRequest).ConfigureAwait(false);
             watch.Stop();
             Console.WriteLine($"Completed Site Generation in {watch.ElapsedMilliseconds} ms");
