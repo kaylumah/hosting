@@ -29,4 +29,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileName;
         }
     }
+
+    public class TextFile : File
+    {
+        public TextFile(FileMetaData metaData, string content) : base(metaData, content)
+        {
+        }
+    }
 }

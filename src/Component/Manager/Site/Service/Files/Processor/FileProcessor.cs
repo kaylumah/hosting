@@ -188,7 +188,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            File fileResult = new File(fileMeta, fileContents);
+            File fileResult = new TextFile(fileMeta, fileContents);
             return fileResult;
         }
     }
