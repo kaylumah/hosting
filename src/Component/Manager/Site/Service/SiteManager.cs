@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
@@ -77,8 +76,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             };
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
-            IEnumerable<File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            List<File> pageList = processed.ToList();
+            IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
+            List<Files.Processor.File> pageList = processed.ToList();
             SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
