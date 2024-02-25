@@ -189,7 +189,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             byte[] fileBytes = encoding.GetBytes(fileContents);
-            File fileResult = new TextFile(fileMeta, fileContents, encoding.WebName);
+            File fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
         }
     }

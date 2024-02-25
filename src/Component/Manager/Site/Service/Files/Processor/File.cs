@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
@@ -33,13 +34,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public string Content
         { get; set; }
 
-        public string Encoding
+        public string EncodingName
         { get; }
 
-        public TextFile(FileMetaData metaData, string content, string encoding) : base(metaData)
+        public TextFile(FileMetaData metaData, byte[] bytes, string encodingName) : base(metaData)
         {
-            Content = content;
-            Encoding = encoding;
+            EncodingName = encodingName;
+            Encoding encoding = Encoding.GetEncoding(encodingName);
+            Content = encoding.GetString(bytes);
+            
         }
     }
 }
