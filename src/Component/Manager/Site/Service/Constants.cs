@@ -1,6 +1,8 @@
 // Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO;
+
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
     static class Constants
@@ -21,7 +23,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             internal const string LayoutDirectory = "_layouts";
             internal const string PartialsDirectory = "_partials";
             internal const string PostDirectory = "_posts";
-            internal const string PageDirectory = "_pages";
+            const string PageDirectory = "_pages";
+
+            internal static readonly string SourcePagesDirectory;
+
+            static Directories()
+            {
+                SourcePagesDirectory = Path.Combine(SourceDirectory, PageDirectory);
+            }
         }
     }
 }

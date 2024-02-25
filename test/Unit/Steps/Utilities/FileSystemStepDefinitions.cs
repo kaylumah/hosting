@@ -56,7 +56,7 @@ namespace Test.Unit.Steps.Utilities
         [Given("'(.*)' is an empty page:")]
         public void GivenIsAnEmptyPage(string fileName)
         {
-            string pageDirectory = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PageDirectory, fileName);
+            string pageDirectory = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePagesDirectory, fileName);
             _MockFileSystem.AddFile(pageDirectory, MockFileDataFactory.EmptyFile());
         }
 
