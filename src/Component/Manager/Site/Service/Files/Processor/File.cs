@@ -33,9 +33,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public string Content
         { get; set; }
 
-        public TextFile(FileMetaData metaData, string content) : base(metaData)
+        public string Encoding
+        { get; }
+
+        public TextFile(FileMetaData metaData, string content, string encoding) : base(metaData)
         {
             Content = content;
+            Encoding = encoding;
         }
     }
 }

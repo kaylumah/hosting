@@ -166,8 +166,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
             using StreamReader streamReader = new StreamReader(fileStream);
-
             string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+            System.Text.Encoding encoding = fileStream.DetermineEncoding();
             MetadataCriteria criteria = new MetadataCriteria();
             criteria.Content = rawContent;
             if (scope != null)
@@ -187,7 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            File fileResult = new TextFile(fileMeta, fileContents);
+            File fileResult = new TextFile(fileMeta, fileContents, encoding.WebName);
             return fileResult;
         }
     }

@@ -24,7 +24,7 @@ namespace Test.Unit.Extensions
                 fileMetaData.Add(item.Key, item.Value);
             }
 
-            File file = new TextFile(fileMetaData, string.Empty);
+            File file = new TextFile(fileMetaData, string.Empty, string.Empty);
             return file;
         }
 
