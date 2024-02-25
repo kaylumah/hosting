@@ -42,9 +42,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             _FileMetaDataProcessor = fileMetadataParser;
         }
 
-        public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
+        public async Task<IEnumerable<TextFile>> Process(FileFilterCriteria criteria)
         {
-            List<File> result = new List<File>();
+            List<TextFile> result = new List<TextFile>();
 
             List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
 
@@ -68,7 +68,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }).ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
+            List<TextFile> files = await ProcessFiles(fileNames).ConfigureAwait(false);
 
             result.AddRange(files);
 
@@ -76,7 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
-                List<File> targetFiles = collection
+                List<TextFile> targetFiles = collection
                     .Files
                     .Where(file =>
                     {
@@ -109,7 +109,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(string[] files)
+        async Task<List<TextFile>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
-            List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
+            List<TextFile> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
 
@@ -142,7 +142,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-            List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
+            List<TextFile> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
 
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
@@ -150,19 +150,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileCollection;
         }
 
-        async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
+        async Task<List<TextFile>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
         {
-            List<File> result = new List<File>();
+            List<TextFile> result = new List<TextFile>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                File fileResult = await ProcessFileInScope(fileInfo, scope);
+                TextFile fileResult = await ProcessFileInScope(fileInfo, scope);
                 result.Add(fileResult);
             }
 
             return result;
         }
 
-        async Task<File> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        async Task<TextFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
@@ -188,7 +188,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            File fileResult = new File(fileMeta, fileContents);
+            TextFile fileResult = new TextFile(fileMeta, fileContents);
             return fileResult;
         }
     }

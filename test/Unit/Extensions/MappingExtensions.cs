@@ -9,13 +9,13 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Ssg.Extensions.Metadata.Abstractions;
 using Test.Unit.Entities;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Extensions
 {
     public static partial class MappingExtensions
     {
-        public static File ToFile(this PageMetaData pageMetaData)
+        public static TextFile ToFile(this PageMetaData pageMetaData)
         {
             FileMetaData fileMetaData = new FileMetaData();
             Dictionary<string, object> data = pageMetaData;
@@ -24,11 +24,11 @@ namespace Test.Unit.Extensions
                 fileMetaData.Add(item.Key, item.Value);
             }
 
-            File file = new File(fileMetaData, string.Empty);
+            TextFile file = new TextFile(fileMetaData, string.Empty);
             return file;
         }
 
-        public static IEnumerable<File> ToFile(this IEnumerable<PageMetaData> pageMetaData)
+        public static IEnumerable<TextFile> ToFile(this IEnumerable<PageMetaData> pageMetaData)
         {
             return pageMetaData.Select(ToFile);
         }
@@ -58,10 +58,10 @@ namespace Test.Unit.Extensions
             return article.Select(ToPageMetaData);
         }
 
-        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<TextFile> files, Guid siteGuid = default)
         {
             List<PageMetaData> pageMetas = new List<PageMetaData>();
-            foreach (File file in files)
+            foreach (TextFile file in files)
             {
                 pageMetas.Add(file.ToPage(siteGuid));
             }

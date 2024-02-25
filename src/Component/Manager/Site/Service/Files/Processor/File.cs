@@ -9,7 +9,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     [DebuggerDisplay("File (Name={Name})")]
-    public class File
+    public class TextFile
     {
         public FileMetaData MetaData
         { get; set; }
@@ -17,7 +17,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         { get; set; }
         public string Name => GetName();
 
-        public File(FileMetaData metaData, string content)
+        public TextFile(FileMetaData metaData, string content)
         {
             MetaData = metaData;
             Content = content;

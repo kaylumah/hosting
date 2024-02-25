@@ -16,7 +16,7 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Reqnroll;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Steps
 {
@@ -24,7 +24,7 @@ namespace Test.Unit.Steps
     public class FileProcessorStepDefinitions
     {
         readonly IFileProcessor _FileProcessor;
-        readonly List<File> _Files = new();
+        readonly List<TextFile> _Files = new();
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
@@ -40,7 +40,7 @@ namespace Test.Unit.Steps
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
         {
-            IEnumerable<File> result = await _FileProcessor.Process(criteria);
+            IEnumerable<TextFile> result = await _FileProcessor.Process(criteria);
             _Files.AddRange(result);
         }
 

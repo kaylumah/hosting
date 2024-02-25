@@ -7,7 +7,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Moq;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Utilities
 {
@@ -28,7 +28,7 @@ namespace Test.Unit.Utilities
                 .Callback((FileFilterCriteria criteria) => { })
                 .ReturnsAsync((FileFilterCriteria criteria) =>
                 {
-                    List<File> result = new List<File>();
+                    List<TextFile> result = new List<TextFile>();
 
                     if (_Articles.Any())
                     {
