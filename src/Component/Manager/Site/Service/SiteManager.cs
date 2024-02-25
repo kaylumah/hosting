@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<File> pageList = processed.ToList();
             SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
 
-            Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
+            Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
             Artifact[] assetArtifacts = GetAssetFolderArtifacts();
 
@@ -97,7 +97,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
         }
 
-        async Task<Artifact[]> GetRenderedArtifacts(GenerateSiteRequest request, SiteMetaData siteMetadata)
+        async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
         {
             MetadataRenderRequest[] requests = siteMetadata.Items
                             .Select(basePage =>
