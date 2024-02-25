@@ -9,18 +9,16 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     [DebuggerDisplay("File (Name={Name})")]
-    public class File
+    public abstract class File
     {
         public FileMetaData MetaData
         { get; set; }
-        public string Content
-        { get; set; }
+
         public string Name => GetName();
 
-        public File(FileMetaData metaData, string content)
+        public File(FileMetaData metadata)
         {
-            MetaData = metaData;
-            Content = content;
+            MetaData = metadata;
         }
 
         string GetName()
@@ -32,8 +30,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
     public class TextFile : File
     {
-        public TextFile(FileMetaData metaData, string content) : base(metaData, content)
+        public string Content
+        { get; set; }
+
+        public TextFile(FileMetaData metaData, string content) : base(metaData)
         {
+            Content = content;
         }
     }
 }

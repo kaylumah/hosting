@@ -69,7 +69,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
             List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
-
             result.AddRange(files);
 
             string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();

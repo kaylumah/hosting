@@ -7,7 +7,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Moq;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Utilities
 {
