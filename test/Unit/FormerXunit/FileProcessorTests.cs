@@ -18,6 +18,7 @@ using Moq;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Xunit;
+using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
 
 namespace Test.Unit.FormerXunit
 {
@@ -62,7 +63,7 @@ namespace Test.Unit.FormerXunit
                 }
             );
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -70,7 +71,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            TextFile testFile = result.Single(x => x.Name.Equals("test.html"));
+            File testFile = result.Single(x => x.Name.Equals("test.html"));
         }
 
         [Fact]
@@ -85,7 +86,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -93,7 +94,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            TextFile testFile = result.Single(x => x.Name.Equals("test.txt"));
+            File testFile = result.Single(x => x.Name.Equals("test.txt"));
             //testFile.MetaData.Collection.Should().Be("subdir");
         }
 
@@ -113,7 +114,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -122,10 +123,10 @@ namespace Test.Unit.FormerXunit
             result.Should().NotBeEmpty();
             result.Count().Should().Be(4);
 
-            TextFile fileA = result.Single(x => x.Name.Equals("a.txt"));
-            TextFile fileB = result.Single(x => x.Name.Equals("b.txt"));
-            TextFile fileC = result.Single(x => x.Name.Equals("c.txt"));
-            TextFile fileD = result.Single(x => x.Name.Equals("d.txt"));
+            File fileA = result.Single(x => x.Name.Equals("a.txt"));
+            File fileB = result.Single(x => x.Name.Equals("b.txt"));
+            File fileC = result.Single(x => x.Name.Equals("c.txt"));
+            File fileD = result.Single(x => x.Name.Equals("d.txt"));
 
             fileA.MetaData.Count.Should().Be(1);
             fileB.MetaData.Count.Should().Be(1);
@@ -143,7 +144,7 @@ namespace Test.Unit.FormerXunit
                 new Dictionary<string, MockFileData> { });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
                 FileExtensionsToTarget = new string[] { }
@@ -163,7 +164,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -185,7 +186,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<TextFile> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<File> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },

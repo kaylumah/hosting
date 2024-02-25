@@ -9,7 +9,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     public interface IFileProcessor
     {
-        Task<IEnumerable<TextFile>> Process(FileFilterCriteria criteria);
+        Task<IEnumerable<File>> Process(FileFilterCriteria criteria);
     }
 
     public class FileFilterCriteria

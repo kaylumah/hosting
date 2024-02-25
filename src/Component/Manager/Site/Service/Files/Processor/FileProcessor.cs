@@ -42,9 +42,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             _FileMetaDataProcessor = fileMetadataParser;
         }
 
-        public async Task<IEnumerable<TextFile>> Process(FileFilterCriteria criteria)
+        public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
         {
-            List<TextFile> result = new List<TextFile>();
+            List<File> result = new List<File>();
 
             List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
 
@@ -76,7 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
-                List<TextFile> targetFiles = collection
+                List<File> targetFiles = collection
                     .Files
                     .Where(file =>
                     {

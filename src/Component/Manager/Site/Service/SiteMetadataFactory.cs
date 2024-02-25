@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _Logger = logger;
         }
 
-        public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<TextFile> files)
+        public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<Files.Processor.File> files)
         {
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
@@ -54,7 +54,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Items = ToPageMetadata(files, siteGuid);
+            List<TextFile> textFiles = files.OfType<TextFile>().ToList();
+            siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);

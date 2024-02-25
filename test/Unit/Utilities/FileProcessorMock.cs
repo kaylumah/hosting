@@ -28,7 +28,7 @@ namespace Test.Unit.Utilities
                 .Callback((FileFilterCriteria criteria) => { })
                 .ReturnsAsync((FileFilterCriteria criteria) =>
                 {
-                    List<TextFile> result = new List<TextFile>();
+                    List<File> result = new List<File>();
 
                     if (_Articles.Any())
                     {
