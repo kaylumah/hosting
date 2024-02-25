@@ -30,10 +30,10 @@ namespace Test.Unit.FormerXunit
             Mock<IArtifactAccess> artifactAccessMock = new Mock<IArtifactAccess>();
             MockFileSystem fileSystemMock = new MockFileSystem();
             fileSystemMock.Directory.CreateDirectory("_site");
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_includes"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_data"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceLayoutsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePartialsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceAssetsDirectory);
 
             Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
@@ -44,14 +44,6 @@ namespace Test.Unit.FormerXunit
             configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
             {
                 ["Metadata:ExtensionMapping"] = null
-            });
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
-                    { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
             });
 
             IConfigurationRoot configuration = configurationBuilder.Build();
@@ -69,15 +61,7 @@ namespace Test.Unit.FormerXunit
                 })
                 .BuildServiceProvider();
             ISiteManager siteManager = serviceProvider.GetService<ISiteManager>();
-            SiteConfiguration configuration1 = new SiteConfiguration
-            {
-                Source = "_site",
-                LayoutDirectory = "_layouts",
-                PartialsDirectory = "_includes",
-                DataDirectory = "_data",
-                AssetDirectory = "assets",
-            };
-            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration1);
+            GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
             await siteManager.GenerateSite(generateSiteRequest);
         }
     }
