@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
@@ -166,7 +167,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
             using StreamReader streamReader = new StreamReader(fileStream);
-
             string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             MetadataCriteria criteria = new MetadataCriteria();
             criteria.Content = rawContent;
@@ -187,7 +187,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            File fileResult = new TextFile(fileMeta, fileContents);
+            Encoding encoding = fileStream.DetermineEncoding();
+            byte[] fileBytes = encoding.GetBytes(fileContents);
+            File fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
         }
     }
