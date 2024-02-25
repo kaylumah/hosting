@@ -197,6 +197,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 File fileResult = new TextFile(fileMeta, fileContents);
                 return fileResult;
             }
+
+            FileMetaData binaryFileMeta = new FileMetaData();
+            byte[] fileBytes = fileStream.ToByteArray();
+            File binaryResult = new BinaryFile(binaryFileMeta, fileBytes);
+            return binaryResult;
         }
     }
 }

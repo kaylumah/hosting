@@ -28,6 +28,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         }
     }
 
+    public class BinaryFile : File
+    {
+        public byte[] Bytes
+        { get; set; }
+
+        public BinaryFile(FileMetaData metadata, byte[] bytes) : base(metadata)
+        {
+            Bytes = bytes;
+        }
+    }
+
     public class TextFile : File
     {
         public string Content
