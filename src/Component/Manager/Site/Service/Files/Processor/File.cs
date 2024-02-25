@@ -16,7 +16,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         { get; set; }
 
         public byte[] Bytes
-        { get;set; }
+        { get; set; }
 
         public string Name => GetName();
 
