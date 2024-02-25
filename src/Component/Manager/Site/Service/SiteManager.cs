@@ -122,7 +122,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             directoryConfig.SourceDirectory = Constants.Directories.SourceDirectory;
             directoryConfig.LayoutsDirectory = Constants.Directories.LayoutDirectory;
             directoryConfig.TemplateDirectory = Constants.Directories.PartialsDirectory;
-            MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
+            MetadataRenderResult[] renderResults = await Render(requests).ConfigureAwait(false);
 
             Artifact[] artifacts = requests.Select((t, i) =>
             {
@@ -169,7 +169,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return artifacts;
         }
 
-        async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
+        async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.
