@@ -165,6 +165,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             string extension = fileInfo.Extension;
+            string[] binaryExtensions = [ ".png" ];
+            bool treatAsBinary = binaryExtensions.Contains(extension);
             Stream fileStream = fileInfo.CreateReadStream();
             using StreamReader streamReader = new StreamReader(fileStream);
 
