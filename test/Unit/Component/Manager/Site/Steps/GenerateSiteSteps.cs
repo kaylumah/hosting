@@ -47,7 +47,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
             {
                 Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
                 MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-                string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+                string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PostDirectory, article.Uri);
                 _MockFileSystem.AddFile(postFileName, mockFile);
             }
         }
@@ -59,12 +59,12 @@ namespace Test.Unit.Component.Manager.Site.Steps
             {
                 SiteConfiguration configuration = new SiteConfiguration()
                 {
-                    Source = Constants.Directories.SourceDirectory,
-                    Destination = Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Constants.Directories.AssetDirectory,
-                    DataDirectory = Constants.Directories.DataDirectory,
-                    LayoutDirectory = Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Constants.Directories.PartialsDirectory
+                    Source = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory,
+                    Destination = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DestinationDirectory,
+                    AssetDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.AssetDirectory,
+                    DataDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DataDirectory,
+                    LayoutDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.LayoutDirectory,
+                    PartialsDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PartialsDirectory
                 };
                 GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration);
                 await siteManager.GenerateSite(generateSiteRequest);

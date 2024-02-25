@@ -21,42 +21,42 @@ namespace Test.Unit.Steps.Utilities
         [Given("'(.*)' is a data file with the following contents:")]
         public void GivenIsADataFileWithTheFollowingContents(string fileName, string contents)
         {
-            string dataFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.DataDirectory, fileName);
+            string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DataDirectory, fileName);
             _MockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is a layout file with the following contents:")]
         public void GivenIsALayoutFileWithTheFollowingContents(string fileName, string contents)
         {
-            string layoutFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.LayoutDirectory, fileName);
+            string layoutFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.LayoutDirectory, fileName);
             _MockFileSystem.AddFile(layoutFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is an asset file with the following contents:")]
         public void GivenIsAnAssetFileWithTheFollowingContents(string fileName, string contents)
         {
-            string assetFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.AssetDirectory, fileName);
+            string assetFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.AssetDirectory, fileName);
             _MockFileSystem.AddFile(assetFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is a post with the following contents:")]
         public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
         {
-            string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, fileName);
+            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PostDirectory, fileName);
             _MockFileSystem.AddFile(postFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is an empty post:")]
         public void GivenIsAnEmptyPost(string fileName)
         {
-            string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, fileName);
+            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PostDirectory, fileName);
             _MockFileSystem.AddFile(postFileName, MockFileDataFactory.EmptyFile());
         }
 
         [Given("'(.*)' is an empty page:")]
         public void GivenIsAnEmptyPage(string fileName)
         {
-            string pageDirectory = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PageDirectory, fileName);
+            string pageDirectory = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PageDirectory, fileName);
             _MockFileSystem.AddFile(pageDirectory, MockFileDataFactory.EmptyFile());
         }
 
@@ -64,7 +64,7 @@ namespace Test.Unit.Steps.Utilities
         public void GivenIsAnEmptyFile(string fileName)
         {
             string normalizedFileName = fileName.Replace('/', Path.DirectorySeparatorChar);
-            string filePath = Path.Combine(Constants.Directories.SourceDirectory, normalizedFileName);
+            string filePath = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, normalizedFileName);
             _MockFileSystem.AddFile(filePath, MockFileDataFactory.EmptyFile());
         }
     }

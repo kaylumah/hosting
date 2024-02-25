@@ -11,5 +11,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             internal const string Organizations = "organizations.yml";
             internal const string Tags = "tags.yml";
         }
+
+        internal static class Directories
+        {
+            internal const string SourceDirectory = "_site";
+            internal const string DestinationDirectory = "dist";
+            internal const string AssetDirectory = "assets";
+            internal const string DataDirectory = "_data";
+            internal const string LayoutDirectory = "_layouts";
+            internal const string PartialsDirectory = "_partials";
+            internal const string PostDirectory = "_posts";
+            internal const string PageDirectory = "_pages";
+        }
     }
 }
