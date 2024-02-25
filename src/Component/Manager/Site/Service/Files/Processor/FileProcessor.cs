@@ -138,7 +138,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, string directory)
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
-            string keyName = directory[1..];
+            string keyName = directory.StartsWith('_') ? directory[1..] : directory;
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory, true).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
