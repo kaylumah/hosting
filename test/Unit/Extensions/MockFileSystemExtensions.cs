@@ -15,7 +15,7 @@ namespace System.IO.Abstractions.TestingHelpers
         {
             YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
             string yamlContents = serializer.Serialize(data);
-            string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DataDirectory, fileName);
+            string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory, fileName);
             mockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(yamlContents));
         }
     }
