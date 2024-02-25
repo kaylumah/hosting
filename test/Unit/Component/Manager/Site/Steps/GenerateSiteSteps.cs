@@ -57,15 +57,6 @@ namespace Test.Unit.Component.Manager.Site.Steps
         {
             async Task Scenario(ISiteManager siteManager)
             {
-                SiteConfiguration configuration = new SiteConfiguration()
-                {
-                    Source = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory,
-                    Destination = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.AssetDirectory,
-                    DataDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DataDirectory,
-                    LayoutDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PartialsDirectory
-                };
                 GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
                 await siteManager.GenerateSite(generateSiteRequest);
             }

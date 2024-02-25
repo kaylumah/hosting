@@ -45,14 +45,6 @@ namespace Test.Unit.FormerXunit
             {
                 ["Metadata:ExtensionMapping"] = null
             });
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string> {
-                    { $"{nameof(SiteConfiguration)}:Source", "_site" },
-                    { $"{nameof(SiteConfiguration)}:Destination", "dist" },
-                    { $"{nameof(SiteConfiguration)}:LayoutDirectory", "_layouts" },
-                    { $"{nameof(SiteConfiguration)}:PartialsDirectory", "_includes" },
-                    { $"{nameof(SiteConfiguration)}:DataDirectory", "_data" },
-                    { $"{nameof(SiteConfiguration)}:AssetDirectory", "assets" }
-            });
 
             IConfigurationRoot configuration = configurationBuilder.Build();
             ServiceProvider serviceProvider = new ServiceCollection()
@@ -69,14 +61,6 @@ namespace Test.Unit.FormerXunit
                 })
                 .BuildServiceProvider();
             ISiteManager siteManager = serviceProvider.GetService<ISiteManager>();
-            SiteConfiguration configuration1 = new SiteConfiguration
-            {
-                Source = "_site",
-                LayoutDirectory = "_layouts",
-                PartialsDirectory = "_includes",
-                DataDirectory = "_data",
-                AssetDirectory = "assets",
-            };
             GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
             await siteManager.GenerateSite(generateSiteRequest);
         }
