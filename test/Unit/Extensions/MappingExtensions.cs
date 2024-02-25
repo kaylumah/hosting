@@ -24,7 +24,7 @@ namespace Test.Unit.Extensions
                 fileMetaData.Add(item.Key, item.Value);
             }
 
-            File file = new File(fileMetaData, string.Empty);
+            File file = new TextFile(fileMetaData, string.Empty);
             return file;
         }
 
@@ -61,7 +61,8 @@ namespace Test.Unit.Extensions
         public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
         {
             List<PageMetaData> pageMetas = new List<PageMetaData>();
-            foreach (File file in files)
+            IEnumerable<TextFile> textFiles = files.OfType<TextFile>();
+            foreach (TextFile file in textFiles)
             {
                 pageMetas.Add(file.ToPage(siteGuid));
             }

@@ -16,7 +16,7 @@ using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Reqnroll;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;
-using File = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File;
+using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Steps
 {

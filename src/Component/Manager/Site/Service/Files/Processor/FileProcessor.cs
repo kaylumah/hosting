@@ -69,7 +69,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
             List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
-
             result.AddRange(files);
 
             string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
@@ -188,7 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            File fileResult = new File(fileMeta, fileContents);
+            File fileResult = new TextFile(fileMeta, fileContents);
             return fileResult;
         }
     }

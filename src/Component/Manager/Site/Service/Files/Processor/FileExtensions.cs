@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     public static class FileExtensions
     {
-        internal static Dictionary<string, object?> ToDictionary(this File file)
+        internal static Dictionary<string, object?> ToDictionary(this TextFile file)
         {
             Dictionary<string, object?> result = new Dictionary<string, object?>(file.MetaData);
             // result.SetValue(nameof(file.LastModified), file.LastModified);
@@ -19,41 +19,41 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static PageMetaData ToPage(this File file)
+        internal static PageMetaData ToPage(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
             PageMetaData result = new PageMetaData(data);
             return result;
         }
 
-        internal static Article ToArticle(this File file)
+        internal static Article ToArticle(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
             Article result = new Article(data);
             return result;
         }
 
-        internal static string ToPageId(this File file, Guid siteGuid)
+        internal static string ToPageId(this TextFile file, Guid siteGuid)
         {
             Guid pageGuid = file.ToPageGuid(siteGuid);
             string id = pageGuid.ToString();
             return id;
         }
 
-        internal static Guid ToPageGuid(this File file, Guid siteGuid)
+        internal static Guid ToPageGuid(this TextFile file, Guid siteGuid)
         {
             Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
             return pageGuid;
         }
 
-        public static PageMetaData ToPage(this File file, Guid siteGuid)
+        public static PageMetaData ToPage(this TextFile file, Guid siteGuid)
         {
             PageMetaData page = file.ToPage();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }
 
-        public static Article ToArticle(this File file, Guid siteGuid)
+        public static Article ToArticle(this TextFile file, Guid siteGuid)
         {
             Article page = file.ToArticle();
             page.Id = file.ToPageId(siteGuid);

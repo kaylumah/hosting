@@ -54,7 +54,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
 
-            siteInfo.Items = ToPageMetadata(files, siteGuid);
+            List<TextFile> textFiles = files.OfType<TextFile>().ToList();
+            siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo, siteConfiguration);
             EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
@@ -64,22 +65,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteInfo;
         }
 
-        List<BasePage> ToPageMetadata(IEnumerable<Files.Processor.File> files, Guid siteGuid)
+        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
         {
-            IEnumerable<IGrouping<string, Files.Processor.File>> filesGroupedByType = files.GroupBy(file =>
+            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
             {
                 string? type = file.MetaData.GetValue<string?>("type");
                 return type ?? "unknown";
             });
-            Dictionary<string, List<Files.Processor.File>> data = filesGroupedByType
+            Dictionary<string, List<TextFile>> data = filesGroupedByType
                 .ToDictionary(group => group.Key, group => group.ToList());
 
-            bool hasArticles = data.TryGetValue("Article", out List<Files.Processor.File>? articles);
-            bool hasPages = data.TryGetValue("Page", out List<Files.Processor.File>? pages);
-            bool hasStatics = data.TryGetValue("Static", out List<Files.Processor.File>? statics);
-            bool hasAnnouncements = data.TryGetValue("Announcement", out List<Files.Processor.File>? announcements);
+            bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
+            bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
+            bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
+            bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
 
-            List<Files.Processor.File> regularFiles = new List<Files.Processor.File>();
+            List<TextFile> regularFiles = new List<TextFile>();
             if (hasPages && pages != null)
             {
                 regularFiles.AddRange(pages);
@@ -94,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (hasArticles && articles != null)
             {
-                foreach (Files.Processor.File file in articles)
+                foreach (TextFile file in articles)
                 {
                     Article pageMetaData = file.ToArticle(siteGuid);
                     result.Add(pageMetaData);
@@ -103,7 +104,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (hasStatics && statics != null)
             {
-                foreach (Files.Processor.File file in statics)
+                foreach (TextFile file in statics)
                 {
                     Dictionary<string, object?> fileAsData = file.ToDictionary();
                     StaticContent pageMetaData = new StaticContent(fileAsData);
@@ -111,7 +112,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }
             }
 
-            foreach (Files.Processor.File file in regularFiles)
+            foreach (TextFile file in regularFiles)
             {
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
                 result.Add(pageMetaData);
