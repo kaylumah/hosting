@@ -68,22 +68,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
             FileFilterCriteria criteria = new FileFilterCriteria();
-            criteria.RootDirectory = request.Configuration.Source;
+            criteria.RootDirectory = Constants.Directories.SourceDirectory;
             criteria.DirectoriesToSkip = new[] {
-                    request.Configuration.LayoutDirectory,
-                    request.Configuration.PartialsDirectory,
-                    request.Configuration.DataDirectory,
-                    request.Configuration.AssetDirectory
+                    Constants.Directories.LayoutDirectory,
+                    Constants.Directories.PartialsDirectory,
+                    Constants.Directories.DataDirectory,
+                    Constants.Directories.AssetDirectory
             };
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
             IEnumerable<File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
             List<File> pageList = processed.ToList();
-            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(request.Configuration, siteGuid, pageList);
+            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
 
-            Artifact[] renderedArtifacts = await GetRenderedArtifacts(request, siteMetadata);
+            Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
-            Artifact[] assetArtifacts = GetAssetFolderArtifacts(request.Configuration);
+            Artifact[] assetArtifacts = GetAssetFolderArtifacts();
 
             List<Artifact> artifacts = [
                 .. renderedArtifacts,
@@ -91,13 +91,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .. assetArtifacts
             ];
 
-            OutputLocation outputLocation = new FileSystemOutputLocation(request.Configuration.Destination, false);
+            OutputLocation outputLocation = new FileSystemOutputLocation(Constants.Directories.DestinationDirectory, false);
             Artifact[] artifactArray = artifacts.ToArray();
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
         }
 
-        async Task<Artifact[]> GetRenderedArtifacts(GenerateSiteRequest request, SiteMetaData siteMetadata)
+        async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
         {
             MetadataRenderRequest[] requests = siteMetadata.Items
                             .Select(basePage =>
@@ -119,10 +119,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             DirectoryConfiguration directoryConfig = new DirectoryConfiguration();
-            directoryConfig.SourceDirectory = request.Configuration.Source;
-            directoryConfig.LayoutsDirectory = request.Configuration.LayoutDirectory;
-            directoryConfig.TemplateDirectory = request.Configuration.PartialsDirectory;
-            MetadataRenderResult[] renderResults = await Render(directoryConfig, requests).ConfigureAwait(false);
+            directoryConfig.SourceDirectory = Constants.Directories.SourceDirectory;
+            directoryConfig.LayoutsDirectory = Constants.Directories.LayoutDirectory;
+            directoryConfig.TemplateDirectory = Constants.Directories.PartialsDirectory;
+            MetadataRenderResult[] renderResults = await Render(requests).ConfigureAwait(false);
 
             Artifact[] artifacts = requests.Select((t, i) =>
             {
@@ -149,14 +149,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        Artifact[] GetAssetFolderArtifacts(SiteConfiguration siteConfiguration)
+        Artifact[] GetAssetFolderArtifacts()
         {
-            string assetDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.AssetDirectory);
+            string assetDirectory = Constants.Directories.SourceAssetsDirectory;
             IEnumerable<IFileSystemInfo> assets = _FileSystem
                 .GetFiles(assetDirectory, true)
                 .Where(x => !x.IsDirectory());
 
-            string env = Path.Combine(Environment.CurrentDirectory, siteConfiguration.Source) + Path.DirectorySeparatorChar;
+            string env = Path.Combine(Environment.CurrentDirectory, Constants.Directories.SourceDirectory) + Path.DirectorySeparatorChar;
 
             IEnumerable<Artifact> assetArtifacts = assets.Select(asset =>
             {
@@ -169,13 +169,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return artifacts;
         }
 
-        async Task<MetadataRenderResult[]> Render(DirectoryConfiguration directoryConfiguration, MetadataRenderRequest[] requests)
+        async Task<MetadataRenderResult[]> Render(MetadataRenderRequest[] requests)
         {
             List<MetadataRenderResult> renderedResults = new List<MetadataRenderResult>();
             // TODO apply better solution for access to directories.
-            string layoutDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.LayoutsDirectory);
+            string layoutDirectory = Constants.Directories.SourceLayoutsDirectory;
             List<File<LayoutMetadata>> templates = await new LayoutLoader(_FileSystem, _MetadataProvider).Load(layoutDirectory).ConfigureAwait(false);
-            string templateDirectory = Path.Combine(directoryConfiguration.SourceDirectory, directoryConfiguration.TemplateDirectory);
+            string templateDirectory = Constants.Directories.SourcePartialsDirectory;
             IncludeFromFileSystemTemplateLoader templateLoader = new IncludeFromFileSystemTemplateLoader(_FileSystem, templateDirectory);
 
             foreach (MetadataRenderRequest request in requests)

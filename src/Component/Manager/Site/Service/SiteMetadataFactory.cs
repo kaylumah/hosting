@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _Logger = logger;
         }
 
-        public SiteMetaData EnrichSite(SiteConfiguration siteConfiguration, Guid siteGuid, List<Files.Processor.File> files)
+        public SiteMetaData EnrichSite(Guid siteGuid, List<Files.Processor.File> files)
         {
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
@@ -56,7 +56,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             List<TextFile> textFiles = files.OfType<TextFile>().ToList();
             siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
-            EnrichSiteWithData(siteInfo, siteConfiguration);
+            EnrichSiteWithData(siteInfo);
             EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
             EnrichSiteWithYears(siteInfo);
@@ -136,11 +136,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        void EnrichSiteWithData(SiteMetaData site, SiteConfiguration siteConfiguration)
+        void EnrichSiteWithData(SiteMetaData site)
         {
             LogEnrichSiteWith("Data");
 
-            string dataDirectory = Path.Combine(siteConfiguration.Source, siteConfiguration.DataDirectory);
+            string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
                 .Where(file => !file.IsDirectory())

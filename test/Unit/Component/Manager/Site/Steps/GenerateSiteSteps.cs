@@ -47,7 +47,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
             {
                 Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
                 MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
-                string postFileName = Path.Combine(Constants.Directories.SourceDirectory, Constants.Directories.PostDirectory, article.Uri);
+                string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, article.Uri);
                 _MockFileSystem.AddFile(postFileName, mockFile);
             }
         }
@@ -57,16 +57,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
         {
             async Task Scenario(ISiteManager siteManager)
             {
-                SiteConfiguration configuration = new SiteConfiguration()
-                {
-                    Source = Constants.Directories.SourceDirectory,
-                    Destination = Constants.Directories.DestinationDirectory,
-                    AssetDirectory = Constants.Directories.AssetDirectory,
-                    DataDirectory = Constants.Directories.DataDirectory,
-                    LayoutDirectory = Constants.Directories.LayoutDirectory,
-                    PartialsDirectory = Constants.Directories.PartialsDirectory
-                };
-                GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest(configuration);
+                GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
                 await siteManager.GenerateSite(generateSiteRequest);
             }
 
