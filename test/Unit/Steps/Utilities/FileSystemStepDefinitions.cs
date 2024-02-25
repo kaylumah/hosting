@@ -42,14 +42,14 @@ namespace Test.Unit.Steps.Utilities
         [Given("'(.*)' is a post with the following contents:")]
         public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
         {
-            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PostDirectory, fileName);
+            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, fileName);
             _MockFileSystem.AddFile(postFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is an empty post:")]
         public void GivenIsAnEmptyPost(string fileName)
         {
-            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.PostDirectory, fileName);
+            string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, fileName);
             _MockFileSystem.AddFile(postFileName, MockFileDataFactory.EmptyFile());
         }
 
