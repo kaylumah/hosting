@@ -68,8 +68,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }).ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<TextFile> files = await ProcessFiles(fileNames).ConfigureAwait(false);
-
+            List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
             result.AddRange(files);
 
             string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
@@ -109,7 +108,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<TextFile>> ProcessFiles(string[] files)
+        async Task<List<File>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
@@ -119,7 +118,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
-            List<TextFile> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
+            List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
 
@@ -142,7 +141,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-            List<TextFile> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
+            List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
 
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
@@ -150,19 +149,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileCollection;
         }
 
-        async Task<List<TextFile>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
+        async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
         {
-            List<TextFile> result = new List<TextFile>();
+            List<File> result = new List<File>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                TextFile fileResult = await ProcessFileInScope(fileInfo, scope);
+                File fileResult = await ProcessFileInScope(fileInfo, scope);
                 result.Add(fileResult);
             }
 
             return result;
         }
 
-        async Task<TextFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        async Task<File> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
@@ -188,7 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 fileContents = preprocessor.Execute(fileContents);
             }
 
-            TextFile fileResult = new TextFile(fileMeta, fileContents);
+            File fileResult = new TextFile(fileMeta, fileContents);
             return fileResult;
         }
     }
