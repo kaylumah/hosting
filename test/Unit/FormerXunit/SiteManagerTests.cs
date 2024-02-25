@@ -30,10 +30,10 @@ namespace Test.Unit.FormerXunit
             Mock<IArtifactAccess> artifactAccessMock = new Mock<IArtifactAccess>();
             MockFileSystem fileSystemMock = new MockFileSystem();
             fileSystemMock.Directory.CreateDirectory("_site");
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_layouts"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_includes"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "_data"));
-            fileSystemMock.Directory.CreateDirectory(Path.Combine("_site", "assets"));
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceLayoutsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePartialsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory);
+            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceAssetsDirectory);
 
             Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();

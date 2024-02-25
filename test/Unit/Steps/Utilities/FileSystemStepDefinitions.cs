@@ -21,21 +21,21 @@ namespace Test.Unit.Steps.Utilities
         [Given("'(.*)' is a data file with the following contents:")]
         public void GivenIsADataFileWithTheFollowingContents(string fileName, string contents)
         {
-            string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.DataDirectory, fileName);
+            string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory, fileName);
             _MockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is a layout file with the following contents:")]
         public void GivenIsALayoutFileWithTheFollowingContents(string fileName, string contents)
         {
-            string layoutFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.LayoutDirectory, fileName);
+            string layoutFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceLayoutsDirectory, fileName);
             _MockFileSystem.AddFile(layoutFileName, MockFileDataFactory.PlainFile(contents));
         }
 
         [Given("'(.*)' is an asset file with the following contents:")]
         public void GivenIsAnAssetFileWithTheFollowingContents(string fileName, string contents)
         {
-            string assetFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.AssetDirectory, fileName);
+            string assetFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceAssetsDirectory, fileName);
             _MockFileSystem.AddFile(assetFileName, MockFileDataFactory.PlainFile(contents));
         }
 
