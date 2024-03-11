@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@azure/static-web-apps-cli": "1.1.6",
+    "@azure/static-web-apps-cli": "1.1.7",
     "@tailwindcss/line-clamp": "0.4.4",
     "@tailwindcss/typography": "0.5.10",
     "tailwindcss": "3.4.1"
