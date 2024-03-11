@@ -76,8 +76,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             };
             criteria.FileExtensionsToTarget = _SiteInfo.SupportedFileExtensions.ToArray();
 
-            IEnumerable<Files.Processor.File> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
-            List<Files.Processor.File> pageList = processed.ToList();
+            IEnumerable<BinaryFile> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
+            List<BinaryFile> pageList = processed.ToList();
             SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);

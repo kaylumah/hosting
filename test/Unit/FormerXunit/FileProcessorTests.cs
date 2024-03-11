@@ -62,7 +62,7 @@ namespace Test.Unit.FormerXunit
                 }
             );
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -70,7 +70,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File testFile = result.Single(x => x.Name.Equals("test.html"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.html"));
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -93,7 +93,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File testFile = result.Single(x => x.Name.Equals("test.txt"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt"));
             //testFile.MetaData.Collection.Should().Be("subdir");
         }
 
@@ -113,7 +113,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -122,10 +122,10 @@ namespace Test.Unit.FormerXunit
             result.Should().NotBeEmpty();
             result.Count().Should().Be(4);
 
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileA = result.Single(x => x.Name.Equals("a.txt"));
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileB = result.Single(x => x.Name.Equals("b.txt"));
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileC = result.Single(x => x.Name.Equals("c.txt"));
-            Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File fileD = result.Single(x => x.Name.Equals("d.txt"));
+            BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt"));
+            BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt"));
+            BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt"));
+            BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt"));
 
             fileA.MetaData.Count.Should().Be(1);
             fileB.MetaData.Count.Should().Be(1);
@@ -143,7 +143,7 @@ namespace Test.Unit.FormerXunit
                 new Dictionary<string, MockFileData> { });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
                 FileExtensionsToTarget = new string[] { }
@@ -163,7 +163,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
@@ -185,7 +185,7 @@ namespace Test.Unit.FormerXunit
         });
             FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
-            IEnumerable<Kaylumah.Ssg.Manager.Site.Service.Files.Processor.File> result = await sut.Process(new FileFilterCriteria
+            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },

@@ -43,9 +43,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             _FileMetaDataProcessor = fileMetadataParser;
         }
 
-        public async Task<IEnumerable<File>> Process(FileFilterCriteria criteria)
+        public async Task<IEnumerable<BinaryFile>> Process(FileFilterCriteria criteria)
         {
-            List<File> result = new List<File>();
+            List<BinaryFile> result = new List<BinaryFile>();
 
             List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
 
@@ -69,14 +69,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }).ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<File> files = await ProcessFiles(fileNames).ConfigureAwait(false);
+            List<BinaryFile> files = await ProcessFiles(fileNames).ConfigureAwait(false);
             result.AddRange(files);
 
             string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
             List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
-                List<File> targetFiles = collection
+                List<BinaryFile> targetFiles = collection
                     .Files
                     .Where(file =>
                     {
@@ -109,7 +109,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<File>> ProcessFiles(string[] files)
+        async Task<List<BinaryFile>> ProcessFiles(string[] files)
         {
             List<IFileInfo> fileInfos = new List<IFileInfo>();
             foreach (string file in files)
@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             IFileInfo[] fileInfosArray = fileInfos.ToArray();
-            List<File> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
+            List<BinaryFile> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
 
@@ -142,7 +142,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-            List<File> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
+            List<BinaryFile> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
 
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
@@ -150,19 +150,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileCollection;
         }
 
-        async Task<List<File>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
+        async Task<List<BinaryFile>> ProcessFilesInScope(IFileSystemInfo[] files, string? scope)
         {
-            List<File> result = new List<File>();
+            List<BinaryFile> result = new List<BinaryFile>();
             foreach (IFileSystemInfo fileInfo in files)
             {
-                File fileResult = await ProcessFileInScope(fileInfo, scope);
+                BinaryFile fileResult = await ProcessFileInScope(fileInfo, scope);
                 result.Add(fileResult);
             }
 
             return result;
         }
 
-        async Task<File> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        async Task<BinaryFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
         {
             using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
@@ -189,7 +189,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             Encoding encoding = fileStream.DetermineEncoding();
             byte[] fileBytes = encoding.GetBytes(fileContents);
-            File fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
+            BinaryFile fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
         }
     }

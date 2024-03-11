@@ -10,7 +10,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     [DebuggerDisplay("File (Name={Name})")]
-    public abstract class File
+    public abstract class BinaryFile
     {
         public FileMetaData MetaData
         { get; set; }
@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         public string Name => GetName();
 
-        public File(FileMetaData metadata, byte[] bytes)
+        public BinaryFile(FileMetaData metadata, byte[] bytes)
         {
             MetaData = metadata;
             Bytes = bytes;
@@ -33,7 +33,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         }
     }
 
-    public class TextFile : File
+    public class TextFile : BinaryFile
     {
         public string Content => GetContent();
 

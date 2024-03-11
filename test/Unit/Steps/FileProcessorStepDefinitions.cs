@@ -24,7 +24,7 @@ namespace Test.Unit.Steps
     public class FileProcessorStepDefinitions
     {
         readonly IFileProcessor _FileProcessor;
-        readonly List<File> _Files = new();
+        readonly List<BinaryFile> _Files = new();
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
@@ -40,7 +40,7 @@ namespace Test.Unit.Steps
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)
         {
-            IEnumerable<File> result = await _FileProcessor.Process(criteria);
+            IEnumerable<BinaryFile> result = await _FileProcessor.Process(criteria);
             _Files.AddRange(result);
         }
 

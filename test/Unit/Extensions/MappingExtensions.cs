@@ -13,7 +13,7 @@ namespace Test.Unit.Extensions
 {
     public static partial class MappingExtensions
     {
-        public static File ToFile(this PageMetaData pageMetaData)
+        public static BinaryFile ToFile(this PageMetaData pageMetaData)
         {
             FileMetaData fileMetaData = new FileMetaData();
             Dictionary<string, object> data = pageMetaData;
@@ -22,11 +22,11 @@ namespace Test.Unit.Extensions
                 fileMetaData.Add(item.Key, item.Value);
             }
 
-            File file = new TextFile(fileMetaData, [], string.Empty);
+            BinaryFile file = new TextFile(fileMetaData, [], string.Empty);
             return file;
         }
 
-        public static IEnumerable<File> ToFile(this IEnumerable<PageMetaData> pageMetaData)
+        public static IEnumerable<BinaryFile> ToFile(this IEnumerable<PageMetaData> pageMetaData)
         {
             return pageMetaData.Select(ToFile);
         }
@@ -56,7 +56,7 @@ namespace Test.Unit.Extensions
             return article.Select(ToPageMetaData);
         }
 
-        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<File> files, Guid siteGuid = default)
+        public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<BinaryFile> files, Guid siteGuid = default)
         {
             List<PageMetaData> pageMetas = new List<PageMetaData>();
             IEnumerable<TextFile> textFiles = files.OfType<TextFile>();

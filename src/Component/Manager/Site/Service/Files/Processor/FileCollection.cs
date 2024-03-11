@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
     {
         public string Name
         { get; set; } = null!;
-        public File[] Files
+        public BinaryFile[] Files
         { get; set; } = null!;
     }
 }
