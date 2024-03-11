@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _Logger = logger;
         }
 
-        public SiteMetaData EnrichSite(Guid siteGuid, List<Files.Processor.File> files)
+        public SiteMetaData EnrichSite(Guid siteGuid, List<Files.Processor.BinaryFile> files)
         {
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
