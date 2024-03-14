@@ -18,6 +18,9 @@ updates:
   ignore:
     - dependency-name: "Moq"
   groups:
+    Microsoft.Extensions:
+      patterns:
+        - "Microsoft.Extensions.*"
     System.IO.Abstractions:
       patterns:
         - "System.IO.Abstractions"
