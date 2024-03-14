@@ -17,11 +17,11 @@ updates:
     - "kaylumah"
   ignore:
     - dependency-name: "Moq"
-  # groups:
-  #   System.IO.Abstractions:
-  #     patterns:
-  #       - "System.IO.Abstractions"
-  #       - "System.IO.Abstractions.*"
+  groups:
+    System.IO.Abstractions:
+      patterns:
+        - "System.IO.Abstractions"
+        - "System.IO.Abstractions.*"
 
   open-pull-requests-limit: 25
 
