@@ -27,7 +27,7 @@
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="5.9.1" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.20.0.85982" />
-    <PackageVersion Include="System.IO.Abstractions" Version="20.0.15" />
+    <PackageVersion Include="System.IO.Abstractions" Version="20.0.28" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.2" />
     <PackageVersion Include="Verify.ImageHash" Version="2.1.0" />
