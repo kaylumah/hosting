@@ -30,7 +30,7 @@
     <PackageVersion Include="System.IO.Abstractions" Version="20.0.28" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
-    <PackageVersion Include="Verify.ImageHash" Version="2.1.0" />
+    <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
     <PackageVersion Include="YamlDotNet" Version="15.1.2" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.1" />
