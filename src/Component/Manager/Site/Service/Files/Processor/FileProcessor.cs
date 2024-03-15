@@ -178,7 +178,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             criteria.FileName = fileInfo.Name;
             ParsedFile<FileMetaData> response = _FileMetaDataProcessor.Parse(criteria);
 
-            FileMetaData fileMeta = response.Data;
+            FileMetaData fileMeta = response.FrontMatter;
             string fileContents = response.Content;
 
             IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));

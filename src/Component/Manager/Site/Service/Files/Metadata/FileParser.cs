@@ -32,30 +32,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         public ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
         {
             ParsedFile<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
-            if (result.Data == null)
+            if (result.FrontMatter == null)
             {
-                result.Data = new FileMetaData();
+                result.FrontMatter = new FileMetaData();
             }
 
-            if (string.IsNullOrEmpty(result.Data.OutputLocation))
+            if (string.IsNullOrEmpty(result.FrontMatter.OutputLocation))
             {
-                result.Data.OutputLocation = "/:year/:month/:day/:name:ext";
+                result.FrontMatter.OutputLocation = "/:year/:month/:day/:name:ext";
             }
 
-            string outputLocation = DetermineOutputLocation(criteria.FileName, result.Data);
+            string outputLocation = DetermineOutputLocation(criteria.FileName, result.FrontMatter);
             string outputExtension = RetrieveExtension(outputLocation);
 
             List<string> paths = DetermineFilters(outputLocation);
             FileMetaData fileMetaData = ApplyDefaults(paths, outputExtension, criteria.Scope);
-            OverwriteMetaData(fileMetaData, result.Data, "file");
+            OverwriteMetaData(fileMetaData, result.FrontMatter, "file");
             ApplyDates(fileMetaData);
 
             // we now have applied all the defaults that match this document and combined it with the retrieved data, store it.
-            result.Data = fileMetaData;
+            result.FrontMatter = fileMetaData;
 
-            string lowerName = nameof(result.Data.OutputLocation).ToLower(CultureInfo.InvariantCulture);
-            result.Data.Remove(lowerName);
-            result.Data.Uri = outputLocation;
+            string lowerName = nameof(result.FrontMatter.OutputLocation).ToLower(CultureInfo.InvariantCulture);
+            result.FrontMatter.Remove(lowerName);
+            result.FrontMatter.Uri = outputLocation;
 
             return result;
         }
