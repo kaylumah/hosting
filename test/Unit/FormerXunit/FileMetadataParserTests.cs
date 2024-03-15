@@ -18,7 +18,7 @@ namespace Test.Unit.FormerXunit
         {
             // Arange
             MetadataParserOptions optionsMock = new MetadataParserOptions();
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -57,7 +57,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -98,7 +98,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
 
             metadataProviderMock
                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
@@ -148,7 +148,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
             FileMetaData data = new FileMetaData
             {
                 OutputLocation = "test/:name:ext"
@@ -204,7 +204,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
 
             FileMetaData meta = new FileMetaData()
             {
@@ -260,7 +260,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            Mock<IMetadataProvider> metadataProviderMock = new Mock<IMetadataProvider>();
+            Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
 
             FileMetaData data = new FileMetaData
             {

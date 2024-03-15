@@ -7,7 +7,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Ssg.Extensions.Metadata.YamlFrontMatter
 {
-    public partial class YamlFrontMatterMetadataProvider : IMetadataProvider
+    public partial class YamlFrontMatterMetadataProvider : IFrontMatterMetadataProvider
     {
         [GeneratedRegex(@"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)")]
         private static partial Regex SplitContentFromFrontMatter();

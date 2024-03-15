@@ -20,9 +20,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                Message = "Overwriting '{Key}' with '{NewValue}' instead of {OldValue} because '{Reason}'")]
         private partial void LogDataOverwriting(string key, string newValue, string oldValue, string reason);
         readonly ILogger _Logger;
-        readonly IMetadataProvider _MetadataProvider;
+        readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly MetadataParserOptions _Options;
-        public FileParser(ILogger<FileParser> logger, IMetadataProvider metadataProvider, MetadataParserOptions options)
+        public FileParser(ILogger<FileParser> logger, IFrontMatterMetadataProvider metadataProvider, MetadataParserOptions options)
         {
             _Logger = logger;
             _MetadataProvider = metadataProvider;
