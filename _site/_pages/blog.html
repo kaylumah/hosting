@@ -1,6 +1,15 @@
 ---
 layout: 'default.v2.html'
 ---
+<div class="flex flex-col items-center gap-1">
+    <h1 class="text-2xl font-extrabold">From the blog</h1>
+    <p class="">
+        Welcome to the blog! Here you can find anything I post.
+    </p>
+    <p>
+        The full list of articles can be found in the <span class="font-semibold"><a href="{{ 'archive.html' | relative_url }}">archives</a></span>.
+    </p>
+</div>
 <div class="flex flex-col gap-4 laptop:flex-row">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
@@ -32,7 +41,7 @@ layout: 'default.v2.html'
         <div class="bg-slate-50 p-6 flex flex-col items-center">
             <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}"
                 alt="Kaylumah Hero" />
-            <h2 class="text-xl">Max Hamulyák</h2>
+            <h2 class="text-xl font-semibold">Max Hamulyák</h2>
             <span>aka Kaylumah</span>
         </div>
         <div class="bg-slate-50 p-6">
