@@ -28,14 +28,12 @@ namespace Test.Unit.Steps
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
-            FileParser metadataParser = new FileParser(NullLogger<FileParser>.Instance,
-                new YamlFrontMatterMetadataProvider(new YamlParser()),
-                metadataParserOptions);
             _FileProcessor = new FileProcessor(mockFileSystem,
                 NullLogger<FileProcessor>.Instance,
                 Enumerable.Empty<IContentPreprocessorStrategy>(),
                 siteInfo,
-                metadataParser);
+                new YamlFrontMatterMetadataProvider(new YamlParser()),
+                metadataParserOptions);
         }
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)

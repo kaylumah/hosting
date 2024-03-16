@@ -32,7 +32,6 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.SetupOptions<MetadataParserOptions>(configuration, MetadataParserOptions.Options);
 
             services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
-            services.AddSingleton<IFileParser, FileParser>();
             services.AddSingleton<IFileProcessor, FileProcessor>();
             services.AddSingleton<IFrontMatterMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
