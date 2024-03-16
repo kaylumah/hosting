@@ -8,7 +8,7 @@ using Xunit;
 #pragma warning disable
 namespace Test.E2e.SnapshotTests
 {
-    public class TempPageHtmlTests : 
+    public class TempPageHtmlTests :
         IClassFixture<MobileBreakpoint>,
         IClassFixture<TabletBreakpoint>,
         IClassFixture<LaptopBreakpoint>,
@@ -81,7 +81,8 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize() { 
+            result.ScreenSize = new ScreenSize()
+            {
                 Width = 640 - 1,
                 Height = 1200
             };
@@ -95,7 +96,8 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize() { 
+            result.ScreenSize = new ScreenSize()
+            {
                 Width = 1024 - 1,
                 Height = 1200
             };
@@ -109,7 +111,8 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize() { 
+            result.ScreenSize = new ScreenSize()
+            {
                 Width = 1280 - 1,
                 Height = 1200
             };
@@ -123,7 +126,8 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize() { 
+            result.ScreenSize = new ScreenSize()
+            {
                 Width = 1280 + 1,
                 Height = 1200
             };
