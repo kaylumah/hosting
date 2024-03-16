@@ -17,7 +17,7 @@ namespace Test.E2e.SnapshotTests
 
         public void Test1()
         {
-
+            _MobileFixture.
         }
     }
 
