@@ -33,7 +33,11 @@ namespace Test.E2e.SnapshotTests
     {
         protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
         {
+            var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
+            result.ScreenSize = new ScreenSize() { 
+                Width = 640 - 1
+            };
             return result;
         }
     }
