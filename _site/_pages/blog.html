@@ -5,14 +5,28 @@ layout: 'default.v2.html'
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
         {% for post in posts %}
-        <li class="bg-slate-50 p-6">
-            {{ post.title }}
+        <li class="bg-slate-50 p-4">
+            <a href="{{ post.uri }}" class="flex flex-col gap-1">
+                <h2 class="text-xl font-semibold">{{ post.title }}</h2>
+                <p>{{ post.description }}</p>
+            </a>
+            <!--
+            {{ post.published | date_to_pattern 'yyyy/MM/dd' }}
+            {{ post.content | reading_time }} read
+            {% for tag in post.tags %}
+            <a data-testid="BlogPostTag" href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}"
+                class="text-gray-500">
+                {{ site.data.tags[tag].name }}
+            </a>
+            {% endfor %}
+            -->
         </li>
         {% endfor %}
     </ul>
     <div class="flex-none flex flex-col gap-4">
         <div class="bg-slate-50 p-6 mx-auto flex flex-col">
-            <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}" alt="Kaylumah Hero" />
+            <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}"
+                alt="Kaylumah Hero" />
             <span>Max Hamulyák</span>
             <span>aka Kaylumah</span>
         </div>
