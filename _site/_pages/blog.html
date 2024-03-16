@@ -29,7 +29,7 @@
     <main class="mt-16 relative">
         <div class="flex flex-col md:flex-row">
             {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-            <ul class="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
                 {% for post in posts %}
                 <li class="bg-slate-50 p-6">hi</li>
                 {% endfor %}
