@@ -36,7 +36,8 @@ namespace Test.E2e.SnapshotTests
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize() { 
-                Width = 640 - 1
+                Width = 640 - 1,
+                Height = 1200
             };
             return result;
         }
