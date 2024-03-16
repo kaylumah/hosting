@@ -1,6 +1,8 @@
 // Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
@@ -8,129 +10,29 @@ using Xunit;
 #pragma warning disable
 namespace Test.E2e.SnapshotTests
 {
-    public class TempPageHtmlTests :
-        IClassFixture<MobileBreakpoint>,
-        IClassFixture<TabletBreakpoint>,
-        IClassFixture<LaptopBreakpoint>,
-        IClassFixture<DesktopBreakpoint>
+    public class TempPageHtmlTests
     {
-        readonly MobileBreakpoint _MobileFixture;
-        readonly TabletBreakpoint _TabletFixture;
-        readonly LaptopBreakpoint _LaptopFixture;
-        readonly DesktopBreakpoint _DesktopFixture;
-
-        public TempPageHtmlTests(MobileBreakpoint mobileFixture,
-            TabletBreakpoint tabletFixture,
-            LaptopBreakpoint laptopFixture,
-            DesktopBreakpoint desktopFixture)
+        [Theory]
+        [MemberData(nameof(Data))]
+        public async Task TestX(string device)
         {
-            _MobileFixture = mobileFixture;
-            _TabletFixture = tabletFixture;
-            _LaptopFixture = laptopFixture;
-            _DesktopFixture = desktopFixture;
+            var playwright = await Playwright.CreateAsync();
+            var browser = await playwright.Chromium.LaunchAsync();
+            var contextOptions = playwright.Devices[device];
+            contextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL");
+            var context = await browser.NewContextAsync(contextOptions);
+            var page = await context.NewPageAsync();
+            await page.GotoAsync("blog.html");
+            var bytes = await page.ScreenshotAsync();
+            await File.WriteAllBytesAsync($"Output/{device}.png", bytes);
         }
 
-        [Fact]
-        public async Task Test1()
+        public static IEnumerable<object[]> Data()
         {
-            IPage page = await _MobileFixture.GetPage();
-            BlogPage blogPage = new BlogPage(page);
-            await blogPage.NavigateAsync();
-
-            byte[] bytes = await blogPage.ScreenshotAsync();
-            await File.WriteAllBytesAsync("Output/Mobile.png", bytes);
-        }
-
-        [Fact]
-        public async Task Test2()
-        {
-            IPage page = await _TabletFixture.GetPage();
-            BlogPage blogPage = new BlogPage(page);
-            await blogPage.NavigateAsync();
-
-            byte[] bytes = await blogPage.ScreenshotAsync();
-            await File.WriteAllBytesAsync("Output/Tablet.png", bytes);
-        }
-
-        [Fact]
-        public async Task Test3()
-        {
-            IPage page = await _LaptopFixture.GetPage();
-            BlogPage blogPage = new BlogPage(page);
-            await blogPage.NavigateAsync();
-
-            byte[] bytes = await blogPage.ScreenshotAsync();
-            await File.WriteAllBytesAsync("Output/Laptop.png", bytes);
-        }
-
-        [Fact]
-        public async Task Test4()
-        {
-            IPage page = await _DesktopFixture.GetPage();
-            BlogPage blogPage = new BlogPage(page);
-            await blogPage.NavigateAsync();
-
-            byte[] bytes = await blogPage.ScreenshotAsync();
-            await File.WriteAllBytesAsync("Output/Desktop.png", bytes);
-        }
-    }
-
-    public class MobileBreakpoint : PlaywrightFixture
-    {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
-        {
-            var devices = PlaywrightInstance.Devices;
-            BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ViewportSize = new ViewportSize()
-            {
-                Width = 640 - 100,
-                Height = 1200
-            };
-            return result;
-        }
-    }
-
-    public class TabletBreakpoint : PlaywrightFixture
-    {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
-        {
-            var devices = PlaywrightInstance.Devices;
-            BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ViewportSize = new ViewportSize()
-            {
-                Width = 1024 - 100,
-                Height = 1200
-            };
-            return result;
-        }
-    }
-
-    public class LaptopBreakpoint : PlaywrightFixture
-    {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
-        {
-            var devices = PlaywrightInstance.Devices;
-            BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ViewportSize = new ViewportSize()
-            {
-                Width = 1280 - 100,
-                Height = 1200
-            };
-            return result;
-        }
-    }
-
-    public class DesktopBreakpoint : PlaywrightFixture
-    {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
-        {
-            var devices = PlaywrightInstance.Devices;
-            BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ViewportSize = new ViewportSize()
-            {
-                Width = 1280 + 100,
-                Height = 1200
-            };
+            List<object[]> result = new List<object[]>();
+            result.Add(new object[] {
+                "iPhone 14 Pro Max"
+            });
             return result;
         }
     }
