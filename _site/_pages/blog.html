@@ -26,12 +26,15 @@ layout: 'default.v2.html'
         <li class="bg-slate-50 p-4">
             <a href="{{ post.uri }}" class="flex flex-col gap-1">
                 <h2 class="text-xl font-semibold">{{ post.title }}</h2>
-                <p class="text-base">{{ post.description }}</p>
-                <span class="flex flex-row gap-1">
-                    {% for tag in post.tags %}
-                    <span class="text-sm">{{ site.data.tags[tag].name }}</span> 
-                    {% endfor %}
-                </span>
+                <p class="flex-1 text-base">{{ post.description }}</p>
+                <div class="flex-none">
+                    <span>Published <time datetime="{{ post.published | date_to_xmlschema }}">{{ post.published | date_to_ago }}</time> by </span>
+                    <span class="flex flex-row gap-1">
+                        {% for tag in post.tags %}
+                        <span class="text-sm">{{ site.data.tags[tag].name }}</span> 
+                        {% endfor %}
+                    </span>
+                </div>
             </a>
             <!--
             {{ post.published | date_to_pattern 'yyyy/MM/dd' }}
