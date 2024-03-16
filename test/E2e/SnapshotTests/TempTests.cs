@@ -30,9 +30,15 @@ namespace Test.E2e.SnapshotTests
         public static IEnumerable<object[]> Data()
         {
             List<object[]> result = new List<object[]>();
-            result.Add(new object[] {
-                "iPhone 14 Pro Max"
-            });
+            result.Add(new object[] {"iPad Mini"});
+            result.Add(new object[] {"iPad (gen 7)"});
+            result.Add(new object[] {"iPad Pro 11"});
+            result.Add(new object[] {"iPhone 14"});
+            result.Add(new object[] {"iPhone 14 Plus"});
+            result.Add(new object[] {"iPhone 14 Pro"});
+            result.Add(new object[] {"iPhone 14 Pro Max"});
+            result.Add(new object[] {"Desktop Chrome"});
+            result.Add(new object[] {"Desktop Chrome HiDPI"});
             return result;
         }
     }
