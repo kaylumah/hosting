@@ -1,56 +1,23 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                screens: {
-                    'tablet': '640px',
-                    // => @media (min-width: 640px) { ... }
-
-                    'laptop': '1024px',
-                    // => @media (min-width: 1024px) { ... }
-
-                    'desktop': '1280px',
-                    // => @media (min-width: 1280px) { ... }
-                },
-            }
-        }
-    </script>
-</head>
-
-<body>
-    <header class="sticky top-0 z-40 bg-slate-500">
-        TODO
-    </header>
-    <main>
-        <div class="flex flex-col gap-4 laptop:flex-row ">
-            {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-            <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
-                {% for post in posts %}
-                <li class="bg-slate-50 p-6">
-                    {{ post.title }}
-                </li>
-                {% endfor %}
-            </ul>
-            <div class="flex-none flex flex-col gap-4">
-                <div class="bg-slate-50 p-6 mx-auto flex flex-col">
-                    <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}" alt="Kaylumah Hero" />
-                    <span>Max Hamulyák</span>
-                    <span>aka Kaylumah</span>
-                </div>
-                <div class="bg-slate-50 p-6">
-                    <h1>Recent</h1>
-                </div>
-            </div>
+---
+layout: 'default.V2.html'
+---
+<div class="flex flex-col gap-4 laptop:flex-row ">
+    {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
+    <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
+        {% for post in posts %}
+        <li class="bg-slate-50 p-6">
+            {{ post.title }}
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="flex-none flex flex-col gap-4">
+        <div class="bg-slate-50 p-6 mx-auto flex flex-col">
+            <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}" alt="Kaylumah Hero" />
+            <span>Max Hamulyák</span>
+            <span>aka Kaylumah</span>
         </div>
-    </main>
-    <footer>
-        TODO
-    </footer>
-</body>
-
-</html>
+        <div class="bg-slate-50 p-6">
+            <h1>Recent</h1>
+        </div>
+    </div>
+</div>
