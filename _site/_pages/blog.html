@@ -27,7 +27,7 @@
         TODO
     </header>
     <main class="mt-16 relative">
-        <div class="flex flex-col laptop:flex-row">
+        <div class="flex flex-col gap-4 laptop:flex-row ">
             {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
             <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
                 {% for post in posts %}
@@ -35,7 +35,12 @@
                 {% endfor %}
             </ul>
             <div class="flex-none">
-                <h1>Hello Sidebar</h1>
+                <div>
+                    <h1>Author</h1>
+                </div>
+                <div>
+                    <h1>Recent</h1>
+                </div>
             </div>
         </div>
     </main>
