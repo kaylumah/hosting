@@ -191,7 +191,7 @@ namespace Test.Unit.FormerXunit
         }
 
         [Fact]
-        public void O()
+        public void Test_FilemetadataParser_EmptyFileWithoutConfigOnlyGetsDefaultValues()
         {
             MockFileSystem mockFileSystem = new MockFileSystem();
             ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
@@ -208,6 +208,11 @@ namespace Test.Unit.FormerXunit
                 FileName = "file.html"
             };
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
+            result.Should().NotBeNull();
+            result.FrontMatter.Should().NotBeNull();
+            result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
+            result.FrontMatter.Uri.Should().NotBeNull();
+            result.FrontMatter.Uri.Should().Be("file.html");
         }
 
         //         [Fact]
