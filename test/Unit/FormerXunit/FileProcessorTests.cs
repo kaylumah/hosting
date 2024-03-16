@@ -53,15 +53,12 @@ namespace Test.Unit.FormerXunit
             { $"{Root}/test.md", EmptyFile() }
         });
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock,
-                new MetadataParserOptions()
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions()
                 {
                     ExtensionMapping = new Dictionary<string, string> {
                         { ".md", ".html" }
                     }
-                }
-            );
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+                });
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -83,8 +80,7 @@ namespace Test.Unit.FormerXunit
         {
             { $"{Root}/_subdir/test.txt", EmptyFile() }
         });
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -111,8 +107,7 @@ namespace Test.Unit.FormerXunit
             { $"{Root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
             { $"{Root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
         });
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -141,8 +136,7 @@ namespace Test.Unit.FormerXunit
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(
                 new Dictionary<string, MockFileData> { });
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -161,8 +155,7 @@ namespace Test.Unit.FormerXunit
         {
             { $"{Root}/index.html", EmptyFile() }
         });
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -183,8 +176,7 @@ namespace Test.Unit.FormerXunit
             { $"{Root}/index.html", EmptyFile() },
             { $"{Root}/other.png", EmptyFile() }
         });
-            FileParser fileMetadataParserMock = new FileParser(new Mock<ILogger<FileParser>>().Object, metadataProviderMock, new MetadataParserOptions());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, fileMetadataParserMock);
+            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
