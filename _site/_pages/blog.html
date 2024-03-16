@@ -31,7 +31,9 @@
             {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
             <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
                 {% for post in posts %}
-                <li class="bg-slate-50 p-6">hi</li>
+                <li class="bg-slate-50 p-6">
+                    {{ post.title }}
+                </li>
                 {% endfor %}
             </ul>
             <div class="flex-none flex flex-col gap-4">
