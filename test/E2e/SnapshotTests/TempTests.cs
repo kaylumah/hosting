@@ -8,11 +8,11 @@ using Xunit;
 #pragma warning disable
 namespace Test.E2e.SnapshotTests
 {
-    public class TempPageHtmlTests : IClassFixture<MobileFixture2>
+    public class TempPageHtmlTests : IClassFixture<MobileBreakpoint>
     {
-        readonly MobileFixture2 _MobileFixture;
+        readonly MobileBreakpoint _MobileFixture;
 
-        public TempPageHtmlTests(MobileFixture2 mobileFixture)
+        public TempPageHtmlTests(MobileBreakpoint mobileFixture)
         {
             _MobileFixture = mobileFixture;
         }
@@ -29,7 +29,7 @@ namespace Test.E2e.SnapshotTests
         }
     }
 
-    public class MobileFixture2 : PlaywrightFixture
+    public class MobileBreakpoint : PlaywrightFixture
     {
         protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
         {
