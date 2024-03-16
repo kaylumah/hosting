@@ -83,7 +83,7 @@ namespace Test.E2e.SnapshotTests
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize()
             {
-                Width = 640 - 1,
+                Width = 640 - 100,
                 Height = 1200
             };
             return result;
@@ -98,7 +98,7 @@ namespace Test.E2e.SnapshotTests
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize()
             {
-                Width = 1024 - 1,
+                Width = 1024 - 100,
                 Height = 1200
             };
             return result;
@@ -113,7 +113,7 @@ namespace Test.E2e.SnapshotTests
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize()
             {
-                Width = 1280 - 1,
+                Width = 1280 - 100,
                 Height = 1200
             };
             return result;
@@ -128,7 +128,7 @@ namespace Test.E2e.SnapshotTests
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize()
             {
-                Width = 1280 + 1,
+                Width = 1280 + 100,
                 Height = 1200
             };
             return result;
