@@ -1,6 +1,8 @@
 // Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Xunit;
 
@@ -15,9 +17,15 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        public void Test1()
+        [Fact]
+        public async Task Test1()
         {
-            _MobileFixture.
+            IPage page = await _MobileFixture.GetPage();
+            BlogPage blogPage = new BlogPage(page);
+            await blogPage.NavigateAsync();
+
+            byte[] bytes = await blogPage.ScreenshotAsync();
+            await File.WriteAllBytesAsync("Output/Mobile.png", bytes);
         }
     }
 
