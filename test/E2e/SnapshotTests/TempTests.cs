@@ -8,15 +8,17 @@ using Xunit;
 #pragma warning disable
 namespace Test.E2e.SnapshotTests
 {
-    public class TempPageHtmlTests : IClassFixture<MobileBreakpoint>, IClassFixture<TabletBreakpoint>
+    public class TempPageHtmlTests : IClassFixture<MobileBreakpoint>, IClassFixture<TabletBreakpoint>, IClassFixture<LaptopBreakpoint>
     {
         readonly MobileBreakpoint _MobileFixture;
         readonly TabletBreakpoint _TabletFixture;
+        readonly LaptopBreakpoint _LaptopFixture;
 
-        public TempPageHtmlTests(MobileBreakpoint mobileFixture, TabletBreakpoint tabletFixture)
+        public TempPageHtmlTests(MobileBreakpoint mobileFixture, TabletBreakpoint tabletFixture, LaptopBreakpoint laptopFixture)
         {
             _MobileFixture = mobileFixture;
             _TabletFixture = tabletFixture;
+            _LaptopFixture = laptopFixture;
         }
 
         [Fact]
@@ -39,6 +41,17 @@ namespace Test.E2e.SnapshotTests
 
             byte[] bytes = await blogPage.ScreenshotAsync();
             await File.WriteAllBytesAsync("Output/Tablet.png", bytes);
+        }
+
+        [Fact]
+        public async Task Test3()
+        {
+            IPage page = await _LaptopFixture.GetPage();
+            BlogPage blogPage = new BlogPage(page);
+            await blogPage.NavigateAsync();
+
+            byte[] bytes = await blogPage.ScreenshotAsync();
+            await File.WriteAllBytesAsync("Output/Laptop.png", bytes);
         }
     }
 
@@ -64,6 +77,20 @@ namespace Test.E2e.SnapshotTests
             BrowserNewContextOptions result = new BrowserNewContextOptions();
             result.ScreenSize = new ScreenSize() { 
                 Width = 1024 - 1,
+                Height = 1200
+            };
+            return result;
+        }
+    }
+
+    public class LaptopBreakpoint : PlaywrightFixture
+    {
+        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
+        {
+            var devices = PlaywrightInstance.Devices;
+            BrowserNewContextOptions result = new BrowserNewContextOptions();
+            result.ScreenSize = new ScreenSize() { 
+                Width = 1280 - 1,
                 Height = 1200
             };
             return result;
