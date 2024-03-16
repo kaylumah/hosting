@@ -149,7 +149,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, string directory)
         {
-            using System.IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
+            using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directory}']");
             string keyName = directory[1..];
             string collectionDirectory = Path.Combine(criteria.RootDirectory, directory);
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
@@ -176,7 +176,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         async Task<BinaryFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
         {
-            using System.IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
+            using IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
             using StreamReader streamReader = new StreamReader(fileStream);
             string rawContent = await streamReader.ReadToEndAsync().ConfigureAwait(false);
@@ -204,7 +204,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             BinaryFile fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
         }
-    
+
         internal ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
         {
             ParsedFile<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);

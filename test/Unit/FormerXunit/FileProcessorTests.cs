@@ -54,11 +54,11 @@ namespace Test.Unit.FormerXunit
         });
             YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions()
-                {
-                    ExtensionMapping = new Dictionary<string, string> {
+            {
+                ExtensionMapping = new Dictionary<string, string> {
                         { ".md", ".html" }
                     }
-                });
+            });
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
