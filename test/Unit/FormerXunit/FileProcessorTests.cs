@@ -244,7 +244,7 @@ namespace Test.Unit.FormerXunit
         //         public void Test_FilemetadataParser_EmptyFileWithConfigThatIsEmptyOnlyGetsDefaultValues()
         //         {
         //             // Arange
-        //             MetadataParserOptions options = new MetadataParserOptions
+        //             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
         //             {
         //                 Defaults = new DefaultMetadatas {
         //                     new DefaultMetadata {
@@ -305,7 +305,7 @@ namespace Test.Unit.FormerXunit
         //         public void Test_FilemetadataParser_EmptyFileWithConfigTGetsDefaultValuesAndConfiguration()
         //         {
         //             // Arange
-        //             MetadataParserOptions options = new MetadataParserOptions
+        //             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
         //             {
         //                 Defaults = new DefaultMetadatas {
         //                     new DefaultMetadata {
