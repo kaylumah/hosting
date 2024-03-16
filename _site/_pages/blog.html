@@ -6,10 +6,12 @@ layout: 'default.v2.html'
     <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
         {% for post in posts %}
         <li class="bg-slate-50 p-4">
+            <!--
             <a href="{{ post.uri }}" class="flex flex-col gap-1">
                 <h2 class="text-xl font-semibold">{{ post.title }}</h2>
                 <p>{{ post.description }}</p>
             </a>
+            -->
             <!--
             {{ post.published | date_to_pattern 'yyyy/MM/dd' }}
             {{ post.content | reading_time }} read
