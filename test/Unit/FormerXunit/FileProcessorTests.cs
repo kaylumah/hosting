@@ -272,11 +272,6 @@ namespace Test.Unit.FormerXunit
         //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
 
         //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("file.html");
         //         }
 
         [Fact]
@@ -299,9 +294,11 @@ namespace Test.Unit.FormerXunit
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.FrontMatter.Should().NotBeNull();
-            result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
+            result.FrontMatter.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
             result.FrontMatter.Uri.Should().NotBeNull();
             result.FrontMatter.Uri.Should().Be("file.html");
+            result.FrontMatter.Layout.Should().NotBeNull();
+            result.FrontMatter.Layout.Should().Be("default.html");
         }
 
         //         [Fact]
@@ -338,13 +335,7 @@ namespace Test.Unit.FormerXunit
         //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
 
         //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("file.html");
-        //             result.FrontMatter.Layout.Should().NotBeNull();
-        //             result.FrontMatter.Layout.Should().Be("default.html");
+
         //         }
 
         [Fact]
@@ -367,9 +358,13 @@ namespace Test.Unit.FormerXunit
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.FrontMatter.Should().NotBeNull();
-            result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
+            result.FrontMatter.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
             result.FrontMatter.Uri.Should().NotBeNull();
-            result.FrontMatter.Uri.Should().Be("file.html");
+            result.FrontMatter.Uri.Should().Be("test/file.html");
+            result.FrontMatter.Layout.Should().NotBeNull();
+            result.FrontMatter.Layout.Should().Be("default.html");
+            result.FrontMatter.Collection.Should().NotBeNull();
+            result.FrontMatter.Collection.Should().Be("test");
         }
 
         //         [Fact]
@@ -416,15 +411,7 @@ namespace Test.Unit.FormerXunit
         //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
 
         //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("test/file.html");
-        //             result.FrontMatter.Layout.Should().NotBeNull();
-        //             result.FrontMatter.Layout.Should().Be("default.html");
-        //             result.FrontMatter.Collection.Should().NotBeNull();
-        //             result.FrontMatter.Collection.Should().Be("test");
+
         //         }
 
         [Fact]
@@ -447,9 +434,13 @@ namespace Test.Unit.FormerXunit
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.FrontMatter.Should().NotBeNull();
-            result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
+            result.FrontMatter.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
             result.FrontMatter.Uri.Should().NotBeNull();
-            result.FrontMatter.Uri.Should().Be("file.html");
+            result.FrontMatter.Uri.Should().Be("test/file.html");
+            result.FrontMatter.Layout.Should().NotBeNull();
+            result.FrontMatter.Layout.Should().Be("other.html");
+            result.FrontMatter.Collection.Should().NotBeNull();
+            result.FrontMatter.Collection.Should().Be("test");
         }
 
         //         [Fact]
@@ -498,15 +489,7 @@ namespace Test.Unit.FormerXunit
         //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
 
         //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("test/file.html");
-        //             result.FrontMatter.Layout.Should().NotBeNull();
-        //             result.FrontMatter.Layout.Should().Be("other.html");
-        //             result.FrontMatter.Collection.Should().NotBeNull();
-        //             result.FrontMatter.Collection.Should().Be("test");
+
         //         }
 
         [Fact]
@@ -529,9 +512,11 @@ namespace Test.Unit.FormerXunit
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
             result.Should().NotBeNull();
             result.FrontMatter.Should().NotBeNull();
-            result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
+            result.FrontMatter.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
             result.FrontMatter.Uri.Should().NotBeNull();
-            result.FrontMatter.Uri.Should().Be("file.html");
+            result.FrontMatter.Uri.Should().Be("posts/2021/file.html");
+            result.FrontMatter.Layout.Should().NotBeNull();
+            result.FrontMatter.Layout.Should().Be("default.html");
         }
 
         //         [Fact]
@@ -580,13 +565,7 @@ namespace Test.Unit.FormerXunit
         //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
 
         //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("posts/2021/file.html");
-        //             result.FrontMatter.Layout.Should().NotBeNull();
-        //             result.FrontMatter.Layout.Should().Be("default.html");
+
         //         }
 
         static string CreateFrontMatter(Dictionary<string, object> data = null)
