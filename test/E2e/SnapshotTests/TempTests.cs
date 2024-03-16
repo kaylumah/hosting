@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 using Xunit;
-
+#pragma warning disable
 namespace Test.E2e.SnapshotTests
 {
     public class TempPageHtmlTests : IClassFixture<MobileFixture2>
