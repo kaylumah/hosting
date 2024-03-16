@@ -7,21 +7,21 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Ssg.Extensions.Metadata.YamlFrontMatter
 {
-    public class YamlFrontMatterMetadataProvider : IMetadataProvider
+    public partial class YamlFrontMatterMetadataProvider : IFrontMatterMetadataProvider
     {
-        readonly string _Pattern;
+        [GeneratedRegex(@"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)")]
+        private static partial Regex SplitContentFromFrontMatter();
 
         readonly IYamlParser _YamlParser;
         public YamlFrontMatterMetadataProvider(IYamlParser yamlParser)
         {
             _YamlParser = yamlParser;
-            _Pattern = @"\A(---\s*\n.*?\n?)(?<yaml>[\s\S]*?)(---)";
         }
 
         public ParsedFile<T> Retrieve<T>(string contents)
         {
             string frontMatterData = string.Empty;
-            Match match = Regex.Match(contents, _Pattern);
+            Match match = SplitContentFromFrontMatter().Match(contents);
             if (match.Success)
             {
                 frontMatterData = match.Groups["yaml"].Value.TrimEnd();

@@ -3,7 +3,7 @@
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public interface IMetadataProvider
+    public interface IFrontMatterMetadataProvider
     {
         ParsedFile<T> Retrieve<T>(string contents);
     }

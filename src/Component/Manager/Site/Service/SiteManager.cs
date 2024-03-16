@@ -30,7 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly SiteInfo _SiteInfo;
         readonly SiteMetadataFactory _SiteMetadataFactory;
         readonly TimeProvider _TimeProvider;
-        readonly IMetadataProvider _MetadataProvider;
+        readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
         readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
 
@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SiteInfo siteInfo,
             SiteMetadataFactory siteMetadataFactory,
             TimeProvider timeProvider,
-            IMetadataProvider metadataProvider,
+            IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
             IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
             )

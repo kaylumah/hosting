@@ -5,7 +5,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class ParsedFile<T>
     {
-        public T Data
+        public T FrontMatter
         { get; set; }
         public string Content
         { get; set; }
@@ -13,7 +13,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public ParsedFile(string content, T data)
         {
             Content = content;
-            Data = data;
+            FrontMatter = data;
         }
     }
 }

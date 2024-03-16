@@ -17,8 +17,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
     public class LayoutLoader
     {
         readonly IFileSystem _FileSystem;
-        readonly IMetadataProvider _MetadataProvider;
-        public LayoutLoader(IFileSystem fileSystem, IMetadataProvider metadataProvider)
+        readonly IFrontMatterMetadataProvider _MetadataProvider;
+        public LayoutLoader(IFileSystem fileSystem, IFrontMatterMetadataProvider metadataProvider)
         {
             _FileSystem = fileSystem;
             _MetadataProvider = metadataProvider;
@@ -59,7 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
                     content = modifiedContent;
                 }
 
-                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>(path, content, metadata.Data, encoding.WebName);
+                File<LayoutMetadata> fileWithMeta = new File<LayoutMetadata>(path, content, metadata.FrontMatter, encoding.WebName);
                 result.Add(fileWithMeta);
             }
 
