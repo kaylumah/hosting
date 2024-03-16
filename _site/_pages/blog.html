@@ -1,7 +1,7 @@
 ---
 layout: 'default.v2.html'
 ---
-<div class="flex flex-col gap-4 laptop:flex-row ">
+<div class="flex flex-col gap-4 laptop:flex-row">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-6">
         {% for post in posts %}
