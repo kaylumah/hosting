@@ -10,8 +10,13 @@
     <header class="sticky top-0 z-40 bg-slate-500">
         TODO
     </header>
-    <main>
-        Content Here
+    <main class="mt-16 relative">
+        {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
+        <ul class="mx-auto grid grid-cols-1">
+            {% for post in posts %}
+            <li class="bg-slate-50 p-6">hi</li>
+            {% endfor %}
+        </ul>
     </main>
     <footer>
         TODO
