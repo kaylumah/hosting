@@ -66,7 +66,7 @@ namespace Test.E2e.SnapshotTests
         [Fact]
         public async Task Test4()
         {
-            IPage page = await _LaptopFixture.GetPage();
+            IPage page = await _DesktopFixture.GetPage();
             BlogPage blogPage = new BlogPage(page);
             await blogPage.NavigateAsync();
 
