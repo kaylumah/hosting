@@ -216,36 +216,6 @@ namespace Test.Unit.FormerXunit
         }
 
         //         [Fact]
-        //         public void Test_FilemetadataParser_EmptyFileWithoutConfigOnlyGetsDefaultValues()
-        //         {
-        //             // Arange
-        //             MetadataParserOptions optionsMock = new MetadataParserOptions();
-        //             Mock<IFrontMatterMetadataProvider> metadataProviderMock = new Mock<IFrontMatterMetadataProvider>();
-
-        //             metadataProviderMock
-        //                 .Setup(x => x.Retrieve<FileMetaData>(It.Is<string>(p => p.Equals(string.Empty))))
-        //                 .Returns(new ParsedFile<FileMetaData>(null, null));
-
-        //             LoggerMock<FileParser> loggerMock = new LoggerMock<FileParser>();
-        //             FileParser sut = new FileParser(loggerMock.Object, metadataProviderMock.Object, optionsMock);
-        //             MetadataCriteria criteria = new MetadataCriteria
-        //             {
-        //                 Content = string.Empty,
-        //                 FileName = "file.html"
-        //             };
-
-        //             // Act
-        //             ParsedFile<FileMetaData> result = sut.Parse(criteria);
-
-        //             // Assert
-        //             result.Should().NotBeNull();
-        //             result.FrontMatter.Should().NotBeNull();
-        //             result.FrontMatter.Count.Should().Be(1, "Only URI is added by default");
-        //             result.FrontMatter.Uri.Should().NotBeNull();
-        //             result.FrontMatter.Uri.Should().Be("file.html");
-        //         }
-
-        //         [Fact]
         //         public void Test_FilemetadataParser_EmptyFileWithConfigThatIsEmptyOnlyGetsDefaultValues()
         //         {
         //             // Arange
