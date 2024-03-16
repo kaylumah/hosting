@@ -81,7 +81,7 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize()
+            result.ViewportSize = new ViewportSize()
             {
                 Width = 640 - 100,
                 Height = 1200
@@ -96,7 +96,7 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize()
+            result.ViewportSize = new ViewportSize()
             {
                 Width = 1024 - 100,
                 Height = 1200
@@ -111,7 +111,7 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize()
+            result.ViewportSize = new ViewportSize()
             {
                 Width = 1280 - 100,
                 Height = 1200
@@ -126,7 +126,7 @@ namespace Test.E2e.SnapshotTests
         {
             var devices = PlaywrightInstance.Devices;
             BrowserNewContextOptions result = new BrowserNewContextOptions();
-            result.ScreenSize = new ScreenSize()
+            result.ViewportSize = new ViewportSize()
             {
                 Width = 1280 + 100,
                 Height = 1200
