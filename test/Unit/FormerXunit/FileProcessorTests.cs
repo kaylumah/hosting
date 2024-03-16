@@ -414,8 +414,8 @@ namespace Test.Unit.FormerXunit
 
             MetadataCriteria criteria = new MetadataCriteria()
             {
-                Content = string.Empty,
-                FileName = "file.html"
+                Content = "---\r\noutputlocation: posts/2021/:name:ext---",
+                FileName = "posts/2021/file.html"
             };
             ParsedFile<FileMetaData> result = sut.Parse(criteria);
             result.Should().NotBeNull();
