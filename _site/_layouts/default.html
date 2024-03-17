@@ -12,24 +12,7 @@
     <link rel="manifest" href="{{ '/assets/images/site.webmanifest' | relative_url }}" />
     <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' | relative_url }}" color="DarkGreen" />
 
-    <!-- <link href="/compiled.css?v={{ build.shortgithash }}" rel="stylesheet" /> -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                screens: {
-                    'tablet': '640px',
-                    // => @media (min-width: 640px) { ... }
-
-                    'laptop': '1024px',
-                    // => @media (min-width: 1024px) { ... }
-
-                    'desktop': '1280px',
-                    // => @media (min-width: 1280px) { ... }
-                },
-            }
-        }
-    </script>
+    <link href="/compiled.css?v={{ build.shortgithash }}" rel="stylesheet" />
 
     {% include 'seo.html' %}
     {% include 'feed.html' %}
