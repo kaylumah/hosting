@@ -76,22 +76,25 @@ modifieddate: '2021-08-07'
     return arr[t.length][s.length];
   };
 
+  const cleanUp = (s) => {
+    let url = new URL(s);
+    let path = url.pathname;
+    return path;
+  };
+
   const closest = (currentUrl, urls) => {
+    console.log('determining closest match', currentUrl, urls);
     let dict = {};
     for (let url of urls)
     {
-      url = url
-        .replace("https://kaylumah.nl", "http://localhost:4280")
-        .replace("http://localhost:4280/", "")
-        .replace(".html", "")
       let distance = levenshteinDistance(currentUrl, url);
       dict[url] = distance;
     }
     var items = Object.keys(dict).map((key) => { return [key, dict[key]] });
     items.sort((first, second) => { return first[1] - second[1] });
     var keys = items.map((e) => { return e[0] });
-    console.log(keys);
-    console.log(items);
+    console.log('keys', keys);
+    console.log('items', items);
     return keys;
   }
 
@@ -101,12 +104,18 @@ modifieddate: '2021-08-07'
     const xhr = new XMLHttpRequest();
     xhr.onload = () => { 
       const xml = xhr.responseXML;
-      const urls = Array.from(xml.querySelectorAll('urlset > url > loc')).map((el) => el.textContent);
-      console.log(urls);
-      var matches = closest(window.location.href, urls);
+      const siteMapUrls = Array.from(xml.querySelectorAll('urlset > url > loc')).map((el) => { 
+        const textContent = el.textContent;
+        const result = cleanUp(textContent);
+        return result;
+      });
+      const requestedUrl = cleanUp(window.location.href);
+      /*
+      var matches = closest(requestedUrl, siteMapUrls);
       const url = new URL(matches[0]);
       console.log(url);
       div.innerHTML = `<a href="${url.href}">${url.pathname}</a>`;
+      */
     }
     xhr.open('GET', `${window.location.protocol}//${window.location.host}/sitemap.xml`);
     xhr.send();
