@@ -1,197 +1,204 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <link rel="icon" href="/assets/images/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
-        <link rel="manifest" href="/assets/images/site.webmanifest" />
-        <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
-        
-        <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
-        
-        <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
-        
-        <!-- Common Meta Tags -->
-        <title>Generate C# client for OpenAPI</title>
-        <link rel="canonical" href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
-        <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
-        <meta name="description" content="A look at using OpenAPI clients in C#" />
-        <meta name="copyright" content="© Kaylumah. All rights reserved." />
-        <meta name="keywords" content="csharp, nswag, openapi, swashbuckle" />
-        
-        <!-- OpenGraph Meta Tags -->
-        <meta property="og:type" content="article" />
-        <meta property="og:locale" content="en" />
-        <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
-        <meta property="og:title" content="Generate C# client for OpenAPI" />
-        <meta property="og:url" content="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
-        <meta property="og:description" content="A look at using OpenAPI clients in C#" />
-        <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png" />
-        <meta property="article:author" content="Max Hamulyák" />
-        <meta property="article:published_time" content="2021-05-23T00:00:00.0000000+02:00" />
-        <meta property="article:modified_time" content="2021-05-23T00:00:00.0000000+02:00" />
-        <meta property="article:tag" content="csharp" />
-        <meta property="article:tag" content="nswag" />
-        <meta property="article:tag" content="openapi" />
-        <meta property="article:tag" content="swashbuckle" />
-        
-        <!-- Twitter Meta Tags -->
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Generate C# client for OpenAPI" />
-        <meta name="twitter:description" content="A look at using OpenAPI clients in C#" />
-        <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png" />
-        <meta name="twitter:site" content="@kaylumah" />
-        <meta name="twitter:creator" content="@kaylumah" />
-        
-        <!-- Kaylumah BuildInfo Meta Tags -->
-        <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
-        <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
-        <meta property="kaylumah:version" content="1.0.0.BuildNumber_1" />
-        <meta property="kaylumah:buildId" content="[BUILD-ID]" />
-        <meta property="kaylumah:buildNumber" content="BuildNumber_1" />
-        <meta property="kaylumah:time" content="DateTimeOffset_1" />
-        <meta property="kaylumah:site" content="Guid_1" />
-        <meta property="kaylumah:page" content="Guid_2" />
-        
-        <!-- LdJson Meta Tags -->
-        <script type="application/ld+json">{
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          "image": "https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png",
-          "mainEntityOfPage": "https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html",
-          "author": {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "Max Hamulyák",
-            "image": "https://BaseUrl_1/assets/avatar_background.svg",
-            "sameAs": [
-              "https://www.linkedin.com/in/maxhamulyak",
-              "https://twitter.com/kaylumah"
-            ],
-            "url": "https://BaseUrl_1/about",
-            "email": "max@kaylumah.nl"
-          },
-          "dateModified": "2021-05-23",
-          "datePublished": "2021-05-23",
-          "headline": "Generate C# client for OpenAPI",
-          "publisher": {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "kaylumah",
-            "sameAs": "https://www.linkedin.com/company/kaylumah",
-            "foundingDate": "2020-01-01",
-            "logo": "https://BaseUrl_1/assets/logo.svg"
-          }
-        }</script>
-        
-        <!-- End Kaylumah SEO tag -->
-        <!-- BEGIN Feed MetaData-->
-        <link
-          type="application/atom+xml"
-          rel="alternate"
-          href="https://BaseUrl_1/feed.xml"
-          title="Max Hamulyák · Kaylumah RSS Feed"
-        />
-        <!-- END Feed MetaData -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!--
-                                                            
-           _  __           _                       _        
-          | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
-          | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
-          | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
-          |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
-                     |___/                                  
-                                                            
-         You found 🧸                                      
-                                                           
-        -->
-        
-        <script>
-        
-          const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
-          const consoleSignatureStyle = `
-          font-size: 16px;
-          background: #4cae50;
-          color: white;
-          text-align: center;
-          padding: 10px 15px;
-          width: 100%;
-          border-radius: 20px;
-        `;
-          console.log(consoleSignatureText, consoleSignatureStyle);
-        </script>
-        
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'UA-168549883-1');
-        </script>
+    <link rel="icon" href="/assets/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+    <link rel="manifest" href="/assets/images/site.webmanifest" />
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
 
-        <link href="https://mastodon.nl/@kaylumah" rel="me">
-    </head>
-    <body class="line-numbers bg-gray-100 fa-colors">
-        <div class="flex flex-col h-screen">
-            <header class="bg-gray-900">
-                <nav class="flex flex-wrap items-center justify-between py-4 px-4">
-                    <div>
-                        <a data-testid="NavLink-Home" href="/" rel="author">
-                            <!-- <img class="block md:hidden h-12 w-auto" src="/assets/logo_small.svg" alt="Kaylumah" /> -->
-                            <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah" />
-                        </a>
-                    </div>
-                    <div class="flex md:hidden">
-                        <button id="hamburger" class="inline-flex items-center justify-center p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
-                            <span class="sr-only">Open main menu</span>
-                            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="toggle hidden md:flex w-full md:w-auto text-right text-bold mt-5 md:mt-0 border-t-2 border-gray-600 md:border-none"><a data-testid="NavLink-Blog" href="/blog.html" class="block md:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 md:border-none">
-                            Blog
-                        </a></div>
-                </nav>
-                 <script>
-                    document.getElementById('hamburger').onclick = function toggleMenu() {
+    <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+
+    <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+    
+    <!-- Common Meta Tags -->
+    <title>Generate C# client for OpenAPI</title>
+    <link rel="canonical" href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
+    <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+    <meta name="description" content="A look at using OpenAPI clients in C#" />
+    <meta name="copyright" content="© Kaylumah. All rights reserved." />
+    <meta name="keywords" content="csharp, nswag, openapi, swashbuckle" />
+    
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+    <meta property="og:title" content="Generate C# client for OpenAPI" />
+    <meta property="og:url" content="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
+    <meta property="og:description" content="A look at using OpenAPI clients in C#" />
+    <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png" />
+    <meta property="article:author" content="Max Hamulyák" />
+    <meta property="article:published_time" content="2021-05-23T00:00:00.0000000+02:00" />
+    <meta property="article:modified_time" content="2021-05-23T00:00:00.0000000+02:00" />
+    <meta property="article:tag" content="csharp" />
+    <meta property="article:tag" content="nswag" />
+    <meta property="article:tag" content="openapi" />
+    <meta property="article:tag" content="swashbuckle" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Generate C# client for OpenAPI" />
+    <meta name="twitter:description" content="A look at using OpenAPI clients in C#" />
+    <meta name="twitter:image" content="https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png" />
+    <meta name="twitter:site" content="@kaylumah" />
+    <meta name="twitter:creator" content="@kaylumah" />
+    
+    <!-- Kaylumah BuildInfo Meta Tags -->
+    <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+    <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+    <meta property="kaylumah:version" content="1.0.0.BuildNumber_1" />
+    <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+    <meta property="kaylumah:buildNumber" content="BuildNumber_1" />
+    <meta property="kaylumah:time" content="DateTimeOffset_1" />
+    <meta property="kaylumah:site" content="Guid_1" />
+    <meta property="kaylumah:page" content="Guid_2" />
+    
+    <!-- LdJson Meta Tags -->
+    <script type="application/ld+json">{
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "image": "https://BaseUrl_1/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png",
+      "mainEntityOfPage": "https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html",
+      "author": {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Max Hamulyák",
+        "image": "https://BaseUrl_1/assets/avatar_background.svg",
+        "sameAs": [
+          "https://www.linkedin.com/in/maxhamulyak",
+          "https://twitter.com/kaylumah"
+        ],
+        "url": "https://BaseUrl_1/about",
+        "email": "max@kaylumah.nl"
+      },
+      "dateModified": "2021-05-23",
+      "datePublished": "2021-05-23",
+      "headline": "Generate C# client for OpenAPI",
+      "publisher": {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "kaylumah",
+        "sameAs": "https://www.linkedin.com/company/kaylumah",
+        "foundingDate": "2020-01-01",
+        "logo": "https://BaseUrl_1/assets/logo.svg"
+      }
+    }</script>
+    
+    <!-- End Kaylumah SEO tag -->
+    <!-- BEGIN Feed MetaData-->
+    <link
+      type="application/atom+xml"
+      rel="alternate"
+      href="https://BaseUrl_1/feed.xml"
+      title="Max Hamulyák · Kaylumah RSS Feed"
+    />
+    <!-- END Feed MetaData -->
+    <!--
+                                                        
+       _  __           _                       _        
+      | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+      | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+      | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+      |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                 |___/                                  
+                                                        
+     You found 🧸                                      
+                                                       
+    -->
+    
+    <script>
+    
+      const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+      const consoleSignatureStyle = `
+      font-size: 16px;
+      background: #4cae50;
+      color: white;
+      text-align: center;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 20px;
+    `;
+      console.log(consoleSignatureText, consoleSignatureStyle);
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-168549883-1');
+    </script>
+    <link href="https://mastodon.nl/@kaylumah" rel="me">
+</head>
+
+<body class="bg-gray-100 antialiased">
+    <div class="flex flex-col h-screen">
+        <header class="bg-gray-900">
+            <nav class="flex flex-wrap items-center justify-between p-4">
+                <a data-testid="NavLink-Home" href="/" rel="home">
+                    <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80"
+                        src="/assets/logo.svg" alt="Kaylumah" />
+                </a>
+                <button id="hamburger"
+                    class="tablet:hidden p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <ul
+                    class="toggle hidden tablet:flex w-full tablet:w-auto text-right text-bold mt-5 tablet:mt-0 border-t-2 border-gray-600 tablet:border-none">
+                    
+                                        <li>
+                                            <a data-testid="NavLink-Blog" href="/blog.html"
+                                                class="block tablet:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 tablet:border-none">
+                                                Blog
+                                            </a>
+                                        </li>
+                                        
+                </ul>
+            </nav>
+            <script>
+                document.getElementById('hamburger').onclick = function toggleMenu() {
                     const navToggle = document.getElementsByClassName('toggle');
-                        for (let i = 0; i < navToggle.length; i++) {
-                            navToggle.item(i).classList.toggle('hidden');
-                        }
-                    };
-                </script>
-            </header>
-
-            <main class="flex-1 py-4 text-gray-900">
-                <article class="py-16 px-6 sm:px-8">
+                    for (let i = 0; i < navToggle.length; i++) {
+                        navToggle.item(i).classList.toggle('hidden');
+                    }
+                };
+            </script>
+        </header>
+        <main class="flex-1 p-4 text-gray-900">
+            <article class="py-16 px-6 tablet:px-8">
     <header>
         <h1 class="flex flex-col items-center mx-auto">
             <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
-            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">Generate C# client for OpenAPI</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 tablet:text-4xl">Generate C# client for OpenAPI</span>
         </h1>
         <picture class="flex flex-col items-center mx-auto">
             <source type="image/webp" srcset="/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.webp">
             <img src="/assets/images/posts/20210523/generate-csharp-client-for-openapi/cover_image.png" alt="cover for Generate C# client for OpenAPI" height="640" width="1280" />
         </picture>
         <div class="mx-auto mt-1">
-            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+            <dl class="rounded-lg tablet:grid tablet:grid-cols-4">
                 <div class="flex flex-col p-6 text-center">
                     <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Authored by
                     </dt>
                     <dd class="order-1 text-xl font-extrabold">
-                        Max Hamulyák
+                        
                     </dd>
                 </div>
                 <div class="flex flex-col p-6 text-center">
@@ -243,7 +250,7 @@
         
         <hr class="mt-8 border-t-2 w-20 mx-auto" />
     </header>
-    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+    <div class="mt-8 mx-auto max-w-prose laptop:max-w-7xl prose laptop:prose-lg desktop:prose-xl">
         <blockquote>
 <p><strong>note</strong>: on 2023-04-14 I published a revised version of this article which you can find here <a href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html">&quot;Generate C# client for OpenAPI - Revisited&quot;</a> it compares an alternative to the way described in this article. Including an update to <code>net7.0</code>, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)</p>
 </blockquote>
@@ -631,7 +638,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
                 <!-- https://giscus.app -->
                 <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
                 <script src="https://giscus.app/client.js"
-                    data-repo="kaylumah/kaylumah.github.io"
+                    data-repo="kaylumah/hosting"
                     data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
                     data-mapping="number"
                     data-term="143"
@@ -648,70 +655,14 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
     </footer>
    
 </article>
-                <!--
-                <button class="fixed z-50 bottom-4 right-4 w-16 h-16 rounded-full bg-gray-300 text-white block" onclick="topFunction()" id="myBtn" title="Go to top">
-                    <span class="sr-only">Back to top!</span>
-                    <em class="fad fa-angle-double-up fa-lg"></em>
-                </button>
-                <script>
-                    var mybutton = document.getElementById("myBtn");
-                
-                    window.onscroll = function() {scrollFunction()};
-                
-                    function scrollFunction() {
-                        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                            mybutton.style.display = "block";
-                        }
-                        else {
-                            mybutton.style.display = "none";
-                        }
-                    }
-                    function topFunction() {
-                        document.body.scrollTop = 0;
-                        document.documentElement.scrollTop = 0;
-                    }
-                </script>
-                -->
-            </main>
-            <footer class="bg-gray-900">
-                <div class="py-4 px-4">
-                    <!--
-                    <div class="flex justify-center space-x-6">
-                        
-                                    <a data-testid="FooterLink-Linkedin" target="_blank" rel=”noopener” href="https://www.linkedin.com/in/maxhamulyak" class="text-gray-100 hover:text-gray-400">
-                                        <span class="sr-only">LinkedIn</span>
-                                        <em class="fab fa-linkedin fa-lg"></em>
-                                    </a>
-                                    
-                        
-                                    <a data-testid="FooterLink-Github" target="_blank" rel=”noopener” href="https://github.com/kaylumah" class="text-gray-100 hover:text-gray-400">
-                                        <span class="sr-only">GitHub</span>
-                                        <em class="fab fa-github-square fa-lg"></em>
-                                    </a>
-                                    
-                        
-                                    <a data-testid="FooterLink-Twitter" target="_blank" rel=”noopener” href="https://twitter.com/kaylumah" class="text-gray-100 hover:text-gray-400">
-                                        <span class="sr-only">Twitter</span>
-                                        <em class="fab fa-twitter-square fa-lg"></em>
-                                    </a>
-                                    
-                    </div>
-                    -->
-                    <div class="flex flex-col text-center text-gray-100">
-                        <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
-                        <!-- <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">BuildNumber_1</a></span> -->
-                    </div>
-                    <!--
-                    <div class="pt-2 flex justify-center space-x-6">
-                        <a data-testid="FooterLink-Home" href="/" class="text-gray-100 hover:text-gray-400">
-                            <span class="sr-only">Kaylumah</span>
-                            <em class="fak fa-logo-kaylumah fa-lg"></em>
-                        </a>
-                    </div>
-                    -->
-                </div>
-            </footer>
-        </div>
-        
-    </body>
+        </main>
+        <footer class="bg-gray-900 p-4">
+            <div class="flex flex-col text-center text-gray-100">
+                <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                <!-- <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">BuildNumber_1</a></span> -->
+            </div>
+        </footer>
+    </div>
+</body>
+
 </html>
