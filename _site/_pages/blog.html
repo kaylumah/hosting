@@ -30,9 +30,9 @@ modifieddate: '2021-08-07'
 <div class="mt-4"></div>
 <div class="flex flex-col gap-8 laptop:flex-row">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-    <ul class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
+    <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
         {% for post in posts %}
-        <li class="bg-slate-50 p-4 flex flex-col gap-4">
+        <li data-tags="{{ post.tags | array.join " " }}" class="bg-slate-50 p-4 flex flex-col gap-4">
             <a href="{{ post.uri }}" class="flex-1 flex flex-col gap-2">
                 <h2 class="text-xl font-semibold">{{ post.title }}</h2>
                 <p class="flex-1 text-base">{{ post.description }}</p>
@@ -102,7 +102,19 @@ modifieddate: '2021-08-07'
     </div>
 </div>
 <script>
-    console.log("fired!");
     const urlParams = new URLSearchParams(window.location.search);
-    console.log('params', urlParams);
+    let tag = urlParams.get('tag');
+    if (tag)
+    {
+        let blogPostList = document.getElementById("blogPosts");
+        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+        blogPosts.forEach(blogPost => {
+            const attrs = blogPost.getAttribute("data-tags");
+            let include = attrs.includes(tag);
+            if (include == false)
+            {
+                blogPost.classList.toggle('hidden');
+            }
+        });
+    }
 </script>
