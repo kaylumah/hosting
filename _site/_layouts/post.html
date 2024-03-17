@@ -2,11 +2,11 @@
 layout: 'default.v2.html'
 ---
 <div class="flex flex-col gap-8 laptop:flex-row">
-    <article class="">
+    <article class="flex-auto">
         <header>
             <h1 class="">{{ page.title }}</h1>
         </header>
-        <div class="">
+        <div class="prose max-w-prose">
             {{ content }}
         </div>
         <footer>
@@ -22,8 +22,48 @@ layout: 'default.v2.html'
         </footer>
     </article>
     <div class="flex-none flex flex-col gap-4">
-        <div class="bg-slate-50 p-6 h-250">
-            <h1>Recent</h1>
+        <div class="bg-slate-50 p-6">
+            <ul id="word-cloud" class="flex justify-center flex-wrap align-center gap-2 leading-8">
+            </ul>
+            <script>
+            var words = [
+              {% for tag in site.tags %}
+              { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
+              {% endfor %}
+              /*
+              {% for year in site.years %}
+              { id: '{{year.key}}', text: '{{year.key}}', size: {{ year.value.size }} },
+              {% endfor %}
+              */
+            ];
+            
+            var container = document.getElementById('word-cloud');
+            words.forEach(word => {
+              const li = document.createElement('li');
+              const anchor = document.createElement('a');
+              anchor.href = "#" + word.id;
+              anchor.text = `${word.text} (${word.size})`;
+              const x = word.size;
+              switch(true)
+              {
+                case (x < 2):
+                  anchor.classList = "text-md text-gray-500";
+                  break;
+                case (x < 4):
+                  anchor.classList = "text-lg text-blue-500";
+                  break;
+                case (x < 6):
+                  anchor.classList = "text-xl text-red-500";
+                  break;
+                default:
+                  anchor.classList = "text-2xl text-green-500";
+                  break;
+              }
+            
+              li.appendChild(anchor);
+              container.appendChild(li);
+            });  
+            </script>
         </div>
     </div>
 </div>
