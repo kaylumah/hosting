@@ -41,10 +41,10 @@ modifieddate: '2021-08-07'
             <h2 class="text-xl font-semibold">Max Hamulyák</h2>
             <span>aka Kaylumah</span>
         </div>
-        <div class="bg-slate-50 w-full laptop:w-64 p-6 flex flex-col items-center">
+        <div class="bg-slate-50 w-full laptop:w-64 p-6 flex flex-col items-center gap-2">
             <h2 class="text-xl font-semibold">Popular posts</h2>
             {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-            <ul>
+            <ul class="flex flex-col gap-2">
                 {% for post in posts %}
                 {% if post.featured == true %}
                 <li>
