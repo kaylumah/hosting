@@ -18,7 +18,7 @@ modifieddate: '2021-08-07'
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
     <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3 gap-4">
         {% for post in posts %}
-        <li data-tags="{{ post.tags | array.join " " }}" class="bg-slate-50 p-4 flex flex-col gap-4 max-h-64">
+        <li data-tags="{{ post.tags | array.join " " }}" class="bg-slate-50 border-2 p-4 flex flex-col gap-4 max-h-64">
             <a href="{{ post.uri }}" class="flex-1 flex flex-col gap-2">
                 <h2 class="text-xl font-semibold">{{ post.title }}</h2>
                 <p class="flex-1 text-base">{{ post.description }}</p>
