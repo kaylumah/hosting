@@ -90,12 +90,10 @@ modifieddate: '2021-08-07'
       let distance = levenshteinDistance(currentUrl, url);
       dict[url] = distance;
     }
-    var items = Object.keys(dict).map((key) => { return [key, dict[key]] });
+    let items = Object.keys(dict).map((key) => { return [key, dict[key]] });
     items.sort((first, second) => { return first[1] - second[1] });
-    var keys = items.map((e) => { return e[0] });
-    console.log('keys', keys);
-    console.log('items', items);
-    return keys;
+    var result = items.map((e) => { return e[0] });
+    return result;
   }
 
   const div = document.getElementById('four-oh-four-suggestion');
@@ -111,6 +109,7 @@ modifieddate: '2021-08-07'
       });
       const requestedUrl = cleanUp(window.location.href);
       const results = closest(requestedUrl, siteMapUrls);
+      console.log("the best matches are", results);
       /*
       
       const url = new URL(matches[0]);
