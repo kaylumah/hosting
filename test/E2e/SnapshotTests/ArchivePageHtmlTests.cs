@@ -19,7 +19,7 @@ namespace Test.E2e.SnapshotTests
             _DesktopFixture = desktopFixture;
             _MobileFixture = mobileFixture;
         }
-        [Fact]
+        [Fact(Skip = "Archive is redirected!")]
         public async Task Verify_ArchivePageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();

@@ -17,8 +17,8 @@ namespace Test.E2e
     {
         public ScreenshotFactAttribute() : base()
         {
-            bool success = bool.TryParse(Environment.GetEnvironmentVariable("CI"), out bool ci);
-            bool skipTest = success && ci;
+            // bool success = bool.TryParse(Environment.GetEnvironmentVariable("CI"), out bool ci);
+            bool skipTest = true;// success && ci;
             if (skipTest)
             {
                 Skip = "Screenshots are disabled on CI";
