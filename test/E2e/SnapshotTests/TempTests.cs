@@ -12,7 +12,7 @@ namespace Test.E2e.SnapshotTests
 {
     public class TempPageHtmlTests
     {
-        [Theory]
+        [Theory(Skip = "used to test layout changes!")]
         [MemberData(nameof(Data))]
         public async Task TestX(string device)
         {
