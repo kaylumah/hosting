@@ -47,7 +47,9 @@ modifieddate: '2021-08-07'
             <ul>
                 {% for post in posts %}
                 {% if post.featured == true %}
-                <li>{{ post.title }}</li>
+                <li>
+                    <a href="{{ post.uri }}">{{ post.title }}</a>
+                </li>
                 {% endif %}
                 {% endfor %}
             </ul>
