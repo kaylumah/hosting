@@ -75,7 +75,7 @@ modifieddate: '2021-08-07'
             words.forEach(word => {
               const li = document.createElement('li');
               const anchor = document.createElement('a');
-              anchor.href = "#" + word.id;
+              anchor.href = "/blog.html?tag=" + word.id;
               anchor.text = `${word.text} (${word.size})`;
               const x = word.size;
               switch(true)
