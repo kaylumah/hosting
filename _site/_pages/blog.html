@@ -1,5 +1,5 @@
 ---
-layout: 'collection.html'
+layout: 'default.html'
 title: 'Articles from the blog by Max Hamulyák · Kaylumah'
 description: "Welcome to Kaylumah's blog. I blog about things I found helpful in my life as a software engineer."
 tags:
@@ -7,53 +7,108 @@ tags:
     - "Blog"
 modifieddate: '2021-08-07'
 ---
-<div class="text-center">
-  <h1 class="text-3xl tracking-tight font-extrabold sm:text-4xl">
-    From the blog
-  </h1>
-  <p class="mt-3 max-w-2xl mx-auto text-xl italic sm:mt-4">
-    Welcome to the blog! Here you can find anything I post.
-  </p>
-  <p class="mt-1 max-w-2xl mx-auto text-xl italic">
-    The full list of articles can be found in the <span class="font-semibold"><a href="{{ 'archive.html' | relative_url }}">archives</a></span>.
-  </p>
-  <p class="mt-1 max-w-2xl mx-auto text-xl italic">
-    You can stay up to date by subscribing below.
-  </p>
-  <div class="mt-1 flex justify-center space-x-6">
-    <a target="_blank" rel=”noopener” href="/feed.xml" class="text-gray-900 hover:text-gray-400">
-        <!-- https://heroicons.com -->
-        <span class="sr-only">RSS Feed</span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 19.5v-.75a7.5 7.5 0 0 0-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-        </svg>        
-    </a>
-  </div>
-  <hr class="mt-4 border-t-2 w-20 mx-auto" />
+<div class="flex flex-col items-center gap-1">
+    <h1 class="text-2xl font-extrabold">From the blog</h1>
+    <p class="">
+        Welcome to the blog! Here you can find anything I post.
+    </p>
 </div>
-
-<div class="mt-9" data-testid="FeaturedBlogPosts">
-  <h2 class="text-2xl tracking-tight font-extrabold text-gray-900">
-        Featured posts
-  </h2>
-  <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+<div class="mt-4"></div>
+<div class="flex flex-col gap-8 laptop:flex-row">
     {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-    {% for post in posts %}
-      {% if post.featured == true %}
-        {% include 'post-card.html' %}
-      {% endif %}
-    {% endfor %}
-  </div>
+    <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
+        {% for post in posts %}
+        <li data-tags="{{ post.tags | array.join " " }}" class="bg-slate-50 border-2 p-4 flex flex-col gap-4">
+            <a href="{{ post.uri }}" class="flex-1 flex flex-col gap-2">
+                <h2 class="text-xl font-semibold">{{ post.title }}</h2>
+                <p class="flex-1 text-base">{{ post.description }}</p>
+            </a>
+            <div class="flex flex-col gap-1 text-sm">
+                <span>Published <time datetime="{{ post.published | date_to_xmlschema }}">{{ post.published | date_to_ago }}</time> by <span>{{ site.data.authors[post.author | author_id].fullname }}</span></span>
+                <span class="flex flex-row gap-1">
+                    {% for tag in post.tags %}
+                    <span>{{ site.data.tags[tag].name }}</span>
+                    {% endfor %}
+                </span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="flex-none flex flex-col items-center gap-4 ">
+        <div class="bg-slate-50 border-2 w-full laptop:w-64 p-6 flex flex-col items-center">
+            <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}"
+                alt="Kaylumah Hero" />
+            <h2 class="text-xl font-semibold">Max Hamulyák</h2>
+            <span>aka Kaylumah</span>
+        </div>
+        <div class="bg-slate-50 border-2 w-full laptop:w-64 p-6 flex flex-col items-center gap-2">
+            <h2 class="text-xl font-semibold">Popular posts</h2>
+            {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
+            <ul class="flex flex-col gap-2">
+                {% for post in posts %}
+                {% if post.featured == true %}
+                <li>
+                    <a href="{{ post.uri }}">{{ post.title }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="bg-slate-50 border-2 w-full laptop:w-64 p-6 flex flex-col items-center gap-2">
+            <h2 class="text-xl font-semibold">Tags</h2>
+            <ul id="word-cloud" class="flex justify-center flex-wrap align-center gap-2 leading-8">
+            </ul>
+            <script>
+            var words = [
+              {% for tag in site.tags %}
+              { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
+              {% endfor %}
+            ];
+            
+            var container = document.getElementById('word-cloud');
+            words.forEach(word => {
+              const li = document.createElement('li');
+              const anchor = document.createElement('a');
+              anchor.href = "/blog.html?tag=" + word.id;
+              anchor.text = `${word.text} (${word.size})`;
+              const x = word.size;
+              switch(true)
+              {
+                case (x < 2):
+                  anchor.classList = "text-md"//; text-gray-500";
+                  break;
+                case (x < 4):
+                  anchor.classList = "text-lg"//; text-blue-500";
+                  break;
+                case (x < 6):
+                  anchor.classList = "text-xl"//; text-red-500";
+                  break;
+                default:
+                  anchor.classList = "text-2xl"//; text-green-500";
+                  break;
+              }
+            
+              li.appendChild(anchor);
+              container.appendChild(li);
+            });  
+            </script>
+        </div>
+    </div>
 </div>
-
-<div class="mt-9" data-testid="RecentBlogPosts">
-  <h2 class="text-2xl tracking-tight font-extrabold text-gray-900">
-        Recent posts
-  </h2>
-  <div class="mt-3 max-w-none mx-auto grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-    {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
-    {% for post in posts %}
-      {% include 'post-card.html' %}
-    {% endfor %}
-  </div>
-</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let tag = urlParams.get('tag');
+    if (tag)
+    {
+        let blogPostList = document.getElementById("blogPosts");
+        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+        blogPosts.forEach(blogPost => {
+            const attrs = blogPost.getAttribute("data-tags");
+            let include = attrs.includes(tag);
+            if (include == false)
+            {
+                blogPost.classList.toggle('hidden');
+            }
+        });
+    }
+</script>

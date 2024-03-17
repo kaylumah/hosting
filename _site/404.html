@@ -4,14 +4,14 @@ title: "Page not found · Kaylumah"
 description: "Unfortunately the page you are looking for was not found"
 modifieddate: '2021-08-07'
 ---
-<div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl w-full mx-auto px-4 tablet:px-6 lg:px-8">
   <div class="flex-shrink-0 pt-16">
     <img class="mx-auto h-24 w-auto" src="{{ '/assets/logo_small.svg' | relative_url }}" alt="Kaylumah 404" />
   </div>
-  <div class="max-w-xl mx-auto py-16 sm:py-24">
+  <div class="max-w-xl mx-auto py-16 tablet:py-24">
     <div class="text-center">
       <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">404 error</p>
-      <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">This page does not exist.</h1>
+      <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight tablet:text-5xl">This page does not exist.</h1>
       <p class="mt-2 text-lg text-gray-500">The page you are looking for could not be found.</p>
     </div>
     <div class="mt-12">
@@ -51,3 +51,73 @@ modifieddate: '2021-08-07'
     </div>
   </div>
 </div>
+<div id="four-oh-four-suggestion">
+
+</div>
+<script type="text/javascript">
+  // https://ben.balter.com/2022/06/30/helpful-404s-for-jekyll-and-github-pages/
+  const levenshteinDistance = (s, t) => {
+    if (!s.length) return t.length;
+    if (!t.length) return s.length;
+    const arr = [];
+    for (let i = 0; i <= t.length; i++) {
+      arr[i] = [i];
+      for (let j = 1; j <= s.length; j++) {
+        arr[i][j] =
+          i === 0
+            ? j
+            : Math.min(
+                arr[i - 1][j] + 1,
+                arr[i][j - 1] + 1,
+                arr[i - 1][j - 1] + (s[j - 1] === t[i - 1] ? 0 : 1)
+              );
+      }
+    }
+    return arr[t.length][s.length];
+  };
+
+  const cleanUp = (s) => {
+    let url = new URL(s);
+    let path = url.pathname;
+    return path;
+  };
+
+  const closest = (currentUrl, urls) => {
+    console.log('determining closest match', currentUrl, urls);
+    let dict = {};
+    for (let url of urls)
+    {
+      let distance = levenshteinDistance(currentUrl, url);
+      dict[url] = distance;
+    }
+    let items = Object.keys(dict).map((key) => { return [key, dict[key]] });
+    items.sort((first, second) => { return first[1] - second[1] });
+    console.log('scores', items);
+    var result = items.map((e) => { return e[0] });
+    return result;
+  }
+
+  const div = document.getElementById('four-oh-four-suggestion');
+  if (div)
+  {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => { 
+      const xml = xhr.responseXML;
+      const siteMapUrls = Array.from(xml.querySelectorAll('urlset > url > loc')).map((el) => { 
+        const textContent = el.textContent;
+        const result = cleanUp(textContent);
+        return result;
+      });
+      const requestedUrl = cleanUp(window.location.href);
+      const results = closest(requestedUrl, siteMapUrls);
+      /*
+      
+      const url = new URL(matches[0]);
+      console.log(url);
+      div.innerHTML = `<a href="${url.href}">${url.pathname}</a>`;
+      */
+    }
+    xhr.open('GET', `${window.location.protocol}//${window.location.host}/sitemap.xml`);
+    xhr.send();
+  }
+</script>

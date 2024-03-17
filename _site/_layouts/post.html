@@ -1,18 +1,18 @@
 ---
 layout: 'default.html'
 ---
-<article class="py-16 px-6 sm:px-8">
+<article class="py-16 px-6 tablet:px-8">
     <header>
         <h1 class="flex flex-col items-center mx-auto">
             <span class="text-gray-900 font-semibold tracking-wide uppercase">{{ page.type }}</span>
-            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">{{ page.title }}</span>
+            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 tablet:text-4xl">{{ page.title }}</span>
         </h1>
         <picture class="flex flex-col items-center mx-auto">
             <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
             <img src="{{ page.image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
         </picture>
         <div class="mx-auto mt-1">
-            <dl class="rounded-lg sm:grid sm:grid-cols-4">
+            <dl class="rounded-lg tablet:grid tablet:grid-cols-4">
                 <div class="flex flex-col p-6 text-center">
                     <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
                         Authored by
@@ -54,7 +54,7 @@ layout: 'default.html'
         </div>
         {% if page.series %}
         <div class="mx-auto mt-1">
-            <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+            <div class="px-4 py-5 border-b border-gray-200 tablet:px-6">
                 <span class="text-xl font-extrabold">{{ page.series }} (series)</span>
             </div>
             <div class="divide-y divide-gray-200">
@@ -62,7 +62,7 @@ layout: 'default.html'
                 {% for part in site.series[page.series] %}
                 <div>
                 <a href="{{ part.url | absolute_url }}" class="block hover:bg-gray-50 {% if part.url == page.url %} bg-gray-300 {% endif %}">
-                    <div class="px-4 py-4 sm:px-6">
+                    <div class="px-4 py-4 tablet:px-6">
                         <div class="text-sm font-medium text-gray-600 truncate">
                         {{ part.title }}
                         </div> 
@@ -73,7 +73,7 @@ layout: 'default.html'
                 {% else %}
                 <div>
                 <a href="{{ page.url | absolute_url }}" class="block hover:bg-gray-50">
-                    <div class="px-4 py-4 sm:px-6">
+                    <div class="px-4 py-4 tablet:px-6">
                         <div class="text-sm font-medium text-gray-600 truncate">
                         Keep an eye on the blog for the next part of this series!
                         </div> 
@@ -86,7 +86,7 @@ layout: 'default.html'
         {% endif %}
         <hr class="mt-8 border-t-2 w-20 mx-auto" />
     </header>
-    <div class="mt-8 mx-auto max-w-prose md:max-w-7xl prose md:prose-lg lg:prose-xl">
+    <div class="mt-8 mx-auto max-w-prose laptop:max-w-7xl prose laptop:prose-lg desktop:prose-xl">
         {{ content }}
     </div>
 
@@ -100,7 +100,7 @@ layout: 'default.html'
         <!-- https://giscus.app -->
         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
         <script src="https://giscus.app/client.js"
-            data-repo="kaylumah/kaylumah.github.io"
+            data-repo="kaylumah/hosting"
             data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
             data-mapping="number"
             data-term="{{page.commentid}}"
