@@ -28,7 +28,7 @@ layout: 'default.html'
                 <dt>Published in</dt>
                 <dd class="flex  flex-row gap-2">
                     {% for tag in page.tags %}
-                    <a href="/blog.html?tag={{ tag }}" title="{{ site.data.tags[tag].description }}"">{{ site.data.tags[tag].name }}</a>
+                    <a class="p-1" href="/blog.html?tag={{ tag }}" title="{{ site.data.tags[tag].description }}"">{{ site.data.tags[tag].name }}</a>
                     {% endfor %}
                 </dd>
             </div>
