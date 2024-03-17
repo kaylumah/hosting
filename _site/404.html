@@ -110,8 +110,9 @@ modifieddate: '2021-08-07'
         return result;
       });
       const requestedUrl = cleanUp(window.location.href);
+      const results = closest(requestedUrl, siteMapUrls);
       /*
-      var matches = closest(requestedUrl, siteMapUrls);
+      
       const url = new URL(matches[0]);
       console.log(url);
       div.innerHTML = `<a href="${url.href}">${url.pathname}</a>`;
