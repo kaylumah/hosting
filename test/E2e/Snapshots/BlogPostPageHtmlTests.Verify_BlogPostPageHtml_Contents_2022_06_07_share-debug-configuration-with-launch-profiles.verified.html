@@ -181,7 +181,7 @@
         </header>
         <main class="flex-1 p-4 text-gray-900">
             <article class="py-16 px-6 tablet:px-8">
-    <header>
+    <header class="flex flex-col items-center">
         <h1 class="flex flex-col items-center mx-auto">
             <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
             <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 tablet:text-4xl">Share debug configuration between .NET IDEs with launch profiles</span>
@@ -190,57 +190,32 @@
             <source type="image/webp" srcset="/assets/images/posts/20220607/launch-settings/cover_image.webp">
             <img src="/assets/images/posts/20220607/launch-settings/cover_image.png" alt="cover for Share debug configuration between .NET IDEs with launch profiles" height="640" width="1280" />
         </picture>
-        <div class="mx-auto mt-1">
-            <dl class="rounded-lg tablet:grid tablet:grid-cols-4">
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Authored by
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Posted on
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        <time datetime="2022-06-07">2022/06/07</time>
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Reading time
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        7 minute
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Published in
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
+        <dl class="flex flex-col tablet:flex-row gap-4">
+            <div class="flex flex-col items-center gap-1">
+                <dt>Authored by</dt>
+                <dd>Max Hamulyák</dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Posted on</dt>
+                <dd><time datetime="2022-06-07">2022/06/07</time></dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Reading time</dt>
+                <dd>7 minute</dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Published in</dt>
+                <dd class="flex  flex-row gap-2">
                     
-                                        <a href="/archive.html#rider" title="for the JetBrains Rider IDE" class="text-gray-800">
-                                            <!-- <span class="text-gray-600">#</span> -->
-                                            Rider
-                                        </a>
+                                        <a class="p-1" href="/blog.html?tag=rider" title="for the JetBrains Rider IDE"">Rider</a>
                                         
-                                        <a href="/archive.html#visualstudio" title="for the Microsoft Visual Studio IDE" class="text-gray-800">
-                                            <!-- <span class="text-gray-600">#</span> -->
-                                            Visual Studio
-                                        </a>
+                                        <a class="p-1" href="/blog.html?tag=visualstudio" title="for the Microsoft Visual Studio IDE"">Visual Studio</a>
                                         
-                                        <a href="/archive.html#vscode" title="for the Microsoft VS Code IDE" class="text-gray-800">
-                                            <!-- <span class="text-gray-600">#</span> -->
-                                            VS Code
-                                        </a>
+                                        <a class="p-1" href="/blog.html?tag=vscode" title="for the Microsoft VS Code IDE"">VS Code</a>
                                         
-                    </dd>
-                </div>
-            </dl>
-        </div>
+                </dd>
+            </div>
+        </dl>
         
         <hr class="mt-8 border-t-2 w-20 mx-auto" />
     </header>

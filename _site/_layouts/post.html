@@ -2,7 +2,7 @@
 layout: 'default.html'
 ---
 <article class="py-16 px-6 tablet:px-8">
-    <header>
+    <header class="flex flex-col items-center">
         <h1 class="flex flex-col items-center mx-auto">
             <span class="text-gray-900 font-semibold tracking-wide uppercase">{{ page.type }}</span>
             <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 tablet:text-4xl">{{ page.title }}</span>
@@ -11,47 +11,28 @@ layout: 'default.html'
             <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
             <img src="{{ page.image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
         </picture>
-        <div class="mx-auto mt-1">
-            <dl class="rounded-lg tablet:grid tablet:grid-cols-4">
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Authored by
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        {{ page_author.fullname }}
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Posted on
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        <time datetime="{{ page.published | date_to_pattern 'yyyy-MM-dd' }}">{{ page.published | date_to_pattern 'yyyy/MM/dd' }}</time>
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Reading time
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
-                        {{ page.content | reading_time }}
-                    </dd>
-                </div>
-                <div class="flex flex-col p-6 text-center">
-                    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-800">
-                        Published in
-                    </dt>
-                    <dd class="order-1 text-xl font-extrabold">
+        <dl class="flex flex-col tablet:flex-row gap-4">
+            <div class="flex flex-col items-center gap-1">
+                <dt>Authored by</dt>
+                <dd>{{ site.data.authors[page.author | author_id].fullname }}</dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Posted on</dt>
+                <dd><time datetime="{{ page.published | date_to_pattern 'yyyy-MM-dd' }}">{{ page.published | date_to_pattern 'yyyy/MM/dd' }}</time></dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Reading time</dt>
+                <dd>{{ page.content | reading_time }}</dd>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+                <dt>Published in</dt>
+                <dd class="flex  flex-row gap-2">
                     {% for tag in page.tags %}
-                    <a href="/archive.html#{{ tag }}" title="{{ site.data.tags[tag].description }}" class="text-gray-800">
-                        <!-- <span class="text-gray-600">#</span> -->
-                        {{ site.data.tags[tag].name }}
-                    </a>
+                    <a class="p-1" href="/blog.html?tag={{ tag }}" title="{{ site.data.tags[tag].description }}"">{{ site.data.tags[tag].name }}</a>
                     {% endfor %}
-                    </dd>
-                </div>
-            </dl>
-        </div>
+                </dd>
+            </div>
+        </dl>
         {% if page.series %}
         <div class="mx-auto mt-1">
             <div class="px-4 py-5 border-b border-gray-200 tablet:px-6">
