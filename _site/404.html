@@ -92,6 +92,7 @@ modifieddate: '2021-08-07'
     }
     let items = Object.keys(dict).map((key) => { return [key, dict[key]] });
     items.sort((first, second) => { return first[1] - second[1] });
+    console.log('scores', items);
     var result = items.map((e) => { return e[0] });
     return result;
   }
