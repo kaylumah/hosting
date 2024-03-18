@@ -14,6 +14,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
     {
         public static BlogPosting ToBlogPosting(this PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
+            // https://schema.org/BlogPosting
             BlogPosting blogPost = new BlogPosting();
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             blogPost.MainEntityOfPage = new Values<ICreativeWork, Uri>(pageUri);
