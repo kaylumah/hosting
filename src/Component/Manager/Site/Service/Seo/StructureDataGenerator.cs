@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
+using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -58,6 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         .ToList();
 
                     // https://schema.org/Blog
+                    Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
                     Blog blog = new Blog();
                     blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
                     string ldjson = blog.ToString(settings);
