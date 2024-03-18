@@ -168,15 +168,6 @@ namespace Test.E2e
         public override string PagePath => "404.html";
     }
 
-    public class ArchivePage : HtmlPage
-    {
-        public ArchivePage(IPage page) : base(page)
-        {
-        }
-
-        public override string PagePath => "archive.html";
-    }
-
     public class BlogPage : HtmlPage
     {
         public BlogPage(IPage page) : base(page)

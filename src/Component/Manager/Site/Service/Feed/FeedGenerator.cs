@@ -64,9 +64,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             SyndicationLink alternateLink = BuildLink("blog.html", "alternate", "text/html");
             feed.Links.Add(alternateLink);
 
-            SyndicationLink relatedLink = BuildLink("archive.html", "related", "text/html");
-            feed.Links.Add(relatedLink);
-
             return feed;
         }
 
