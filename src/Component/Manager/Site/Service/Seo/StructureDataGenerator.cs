@@ -61,6 +61,36 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     // https://schema.org/Blog
                     Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
                     Blog blog = new Blog();
+                    // blog.DiscussionUrl
+                    // blog.Thumbnail
+                    // blog.ThumbnailUrl
+                    // blog.Text
+                    // blog.About
+                    // blog.AlternateName
+                    // blog.AlternativeHeadline
+                    // blog.Audience
+                    // blog.Author
+                    // blog.CopyrightHolder
+                    // blog.CopyrightYear
+                    // blog.CountryOfOrigin
+                    // blog.Creator
+                    // blog.DateCreated
+                    // blog.DateModified
+                    // blog.DatePublished
+                    // blog.Description
+                    // blog.Encoding?
+                    // blog.Headline
+                    // blog.Id
+                    // blog.Image
+                    // blog.InLanguage
+                    // blog.Keywords
+                    // blog.LocationCreated
+                    // blog.MainEntityOfPage
+                    // blog.Name
+                    // blog.Publication
+                    // blog.TimeRequired
+                    // blog.Url
+                    // blog.Version
                     blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
                     string ldjson = blog.ToString(settings);
                     return ldjson;
