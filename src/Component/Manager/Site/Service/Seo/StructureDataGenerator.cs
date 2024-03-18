@@ -57,6 +57,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         .ToBlogPostings(authors, organizations)
                         .ToList();
 
+                    // https://schema.org/Blog
                     Blog blog = new Blog();
                     blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
                     string ldjson = blog.ToString(settings);
