@@ -26,7 +26,7 @@
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="8.3.0" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="5.9.1" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.21.0.86780" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.22.0.87781" />
     <PackageVersion Include="System.IO.Abstractions" Version="21.0.2" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
