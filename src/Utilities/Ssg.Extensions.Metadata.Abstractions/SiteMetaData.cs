@@ -45,8 +45,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public SortedDictionary<int, PageMetaData[]> Years
         { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Types
-        { get; set; } = new();
+        // public SortedDictionary<string, PageMetaData[]> Types
+        // { get; set; } = new();
 
         public List<BasePage> Items
         { get; set; } = new();
