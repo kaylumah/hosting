@@ -5,7 +5,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public class MyObjectConversions
+    public class ObjectConversions
     {
         public static AuthorId AuthorId(string author)
         {
