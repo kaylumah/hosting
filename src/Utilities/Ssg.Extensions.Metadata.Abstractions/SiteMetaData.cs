@@ -73,5 +73,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> articles = Items.OfType<Article>();
             return articles;
         }
+
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
+        public IEnumerable<Article> GetRecentArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            return articles;
+        }
     }
 }
