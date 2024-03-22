@@ -60,7 +60,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
             // EnrichSiteWithYears(siteInfo);
-            EnrichSiteWithSeries(siteInfo);
+            // EnrichSiteWithSeries(siteInfo);
 
             return siteInfo;
         }
@@ -267,24 +267,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         //     }
         // }
 
-        void EnrichSiteWithSeries(SiteMetaData site)
-        {
-            LogEnrichSiteWith("Series");
-            List<Article> pages = site.GetArticles().ToList();
+        // void EnrichSiteWithSeries(SiteMetaData site)
+        // {
+        //     LogEnrichSiteWith("Series");
+        //     List<Article> pages = site.GetArticles().ToList();
 
-            IEnumerable<string> series = pages
-                .HasSeries()
-                .Select(x => x.Series)
-                .Distinct();
+        //     IEnumerable<string> series = pages
+        //         .HasSeries()
+        //         .Select(x => x.Series)
+        //         .Distinct();
 
-            foreach (string serie in series)
-            {
-                PageMetaData[] seriesFiles = pages
-                    .FromSeries(serie)
-                    .OrderBy(x => x.Uri)
-                    .ToArray();
-                site.Series.Add(serie, seriesFiles);
-            }
-        }
+        //     foreach (string serie in series)
+        //     {
+        //         PageMetaData[] seriesFiles = pages
+        //             .FromSeries(serie)
+        //             .OrderBy(x => x.Uri)
+        //             .ToArray();
+        //         site.Series.Add(serie, seriesFiles);
+        //     }
+        // }
     }
 }
