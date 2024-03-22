@@ -33,8 +33,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public OrganizationMetaDataCollection OrganizationMetaData
         { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Collections
-        { get; set; } = new();
+        // public SortedDictionary<string, PageMetaData[]> Collections
+        // { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Tags
         { get; set; } = new();
