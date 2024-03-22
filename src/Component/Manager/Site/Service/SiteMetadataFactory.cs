@@ -58,7 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo);
             // EnrichSiteWithCollections(siteInfo);
-            // EnrichSiteWithTags(siteInfo);
+            EnrichSiteWithTags(siteInfo);
             // EnrichSiteWithYears(siteInfo);
             // EnrichSiteWithSeries(siteInfo);
 
@@ -236,21 +236,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         //     }
         // }
 
-        // void EnrichSiteWithTags(SiteMetaData site)
-        // {
-        //     LogEnrichSiteWith("Tags");
+        void EnrichSiteWithTags(SiteMetaData site)
+        {
+            LogEnrichSiteWith("Tags");
 
-        //     List<PageMetaData> pages = site.GetPages().ToList();
+            List<PageMetaData> pages = site.GetPages().ToList();
 
-        //     List<string> tags = GetTags(pages);
-        //     foreach (string tag in tags)
-        //     {
-        //         PageMetaData[] tagFiles = pages
-        //             .FromTag(tag)
-        //             .ToArray();
-        //         site.Tags.Add(tag, tagFiles);
-        //     }
-        // }
+            List<string> tags = GetTags(pages);
+            foreach (string tag in tags)
+            {
+                PageMetaData[] tagFiles = pages
+                    .FromTag(tag)
+                    .ToArray();
+                site.Tags.Add(tag, tagFiles);
+            }
+        }
 
         // void EnrichSiteWithYears(SiteMetaData site)
         // {
