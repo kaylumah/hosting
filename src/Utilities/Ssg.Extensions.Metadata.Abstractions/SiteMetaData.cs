@@ -76,11 +76,21 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
-        public IEnumerable<Article> GetRecentArticles()
+        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
             IEnumerable<Article> sortedByPublished = articles.OrderByDescending(article => article.Published);
             return sortedByPublished;
+        }
+
+        IEnumerable<Article> GetFeaturedArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> featuredArticles = articles.Where(article => article.Featured);
+            IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.OrderByDescending(article => article.Published);
+            return featuredAndSortedByPublished;
         }
     }
 }
