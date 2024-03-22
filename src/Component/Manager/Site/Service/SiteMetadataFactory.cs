@@ -57,10 +57,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<TextFile> textFiles = files.OfType<TextFile>().ToList();
             siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo);
-            EnrichSiteWithCollections(siteInfo);
+            // EnrichSiteWithCollections(siteInfo);
             EnrichSiteWithTags(siteInfo);
-            EnrichSiteWithYears(siteInfo);
-            EnrichSiteWithSeries(siteInfo);
+            // EnrichSiteWithYears(siteInfo);
+            // EnrichSiteWithSeries(siteInfo);
 
             return siteInfo;
         }
@@ -181,60 +181,60 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithCollections(SiteMetaData site)
-        {
-            LogEnrichSiteWith("Collections");
+        // void EnrichSiteWithCollections(SiteMetaData site)
+        // {
+        //     LogEnrichSiteWith("Collections");
 
-            List<PageMetaData> files = site.GetPages().ToList();
+        //     List<PageMetaData> files = site.GetPages().ToList();
 
-            List<string> collections = files
-                .Where(x => x.Collection != null)
-                .Select(x => x.Collection)
-                .Distinct()
-                .ToList();
+        //     List<string> collections = files
+        //         .Where(x => x.Collection != null)
+        //         .Select(x => x.Collection)
+        //         .Distinct()
+        //         .ToList();
 
-            for (int i = collections.Count - 1; 0 < i; i--)
-            {
-                string collection = collections[i];
-                if (_SiteInfo.Collections.Contains(collection))
-                {
-                    Collection collectionSettings = _SiteInfo.Collections[collection];
-                    if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
-                    {
-                        if (_SiteInfo.Collections.Contains(collectionSettings.TreatAs))
-                        {
-                            // todo log
-                            IEnumerable<PageMetaData> collectionFiles = files
-                                .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
-                            foreach (PageMetaData file in collectionFiles)
-                            {
-                                file.Collection = collectionSettings.TreatAs;
-                            }
+        //     for (int i = collections.Count - 1; 0 < i; i--)
+        //     {
+        //         string collection = collections[i];
+        //         if (_SiteInfo.Collections.Contains(collection))
+        //         {
+        //             Collection collectionSettings = _SiteInfo.Collections[collection];
+        //             if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
+        //             {
+        //                 if (_SiteInfo.Collections.Contains(collectionSettings.TreatAs))
+        //                 {
+        //                     // todo log
+        //                     IEnumerable<PageMetaData> collectionFiles = files
+        //                         .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
+        //                     foreach (PageMetaData file in collectionFiles)
+        //                     {
+        //                         file.Collection = collectionSettings.TreatAs;
+        //                     }
 
-                            collections.RemoveAt(i);
-                        }
-                    }
-                }
-            }
+        //                     collections.RemoveAt(i);
+        //                 }
+        //             }
+        //         }
+        //     }
 
-            foreach (string collection in collections)
-            {
-                PageMetaData[] collectionPages = files
-                    .Where(x =>
-                    {
-                        bool notEmpty = x.Collection != null;
-                        if (notEmpty)
-                        {
-                            bool isMatch = x.Collection!.Equals(collection, StringComparison.Ordinal);
-                            return isMatch;
-                        }
+        //     foreach (string collection in collections)
+        //     {
+        //         PageMetaData[] collectionPages = files
+        //             .Where(x =>
+        //             {
+        //                 bool notEmpty = x.Collection != null;
+        //                 if (notEmpty)
+        //                 {
+        //                     bool isMatch = x.Collection!.Equals(collection, StringComparison.Ordinal);
+        //                     return isMatch;
+        //                 }
 
-                        return false;
-                    })
-                    .ToArray();
-                site.Collections.Add(collection, collectionPages);
-            }
-        }
+        //                 return false;
+        //             })
+        //             .ToArray();
+        //         site.Collections.Add(collection, collectionPages);
+        //     }
+        // }
 
         void EnrichSiteWithTags(SiteMetaData site)
         {
@@ -252,39 +252,39 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
         }
 
-        void EnrichSiteWithYears(SiteMetaData site)
-        {
-            LogEnrichSiteWith("Years");
-            List<PageMetaData> pages = site.GetPages().ToList();
-            IEnumerable<int> years = pages
-                .IsArticle()
-                .Select(x => x.Published.Year)
-                .Distinct();
-            foreach (int year in years)
-            {
-                PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
-                site.Years.Add(year, yearFiles);
-            }
-        }
+        // void EnrichSiteWithYears(SiteMetaData site)
+        // {
+        //     LogEnrichSiteWith("Years");
+        //     List<PageMetaData> pages = site.GetPages().ToList();
+        //     IEnumerable<int> years = pages
+        //         .IsArticle()
+        //         .Select(x => x.Published.Year)
+        //         .Distinct();
+        //     foreach (int year in years)
+        //     {
+        //         PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
+        //         site.Years.Add(year, yearFiles);
+        //     }
+        // }
 
-        void EnrichSiteWithSeries(SiteMetaData site)
-        {
-            LogEnrichSiteWith("Series");
-            List<Article> pages = site.GetArticles().ToList();
+        // void EnrichSiteWithSeries(SiteMetaData site)
+        // {
+        //     LogEnrichSiteWith("Series");
+        //     List<Article> pages = site.GetArticles().ToList();
 
-            IEnumerable<string> series = pages
-                .HasSeries()
-                .Select(x => x.Series)
-                .Distinct();
+        //     IEnumerable<string> series = pages
+        //         .HasSeries()
+        //         .Select(x => x.Series)
+        //         .Distinct();
 
-            foreach (string serie in series)
-            {
-                PageMetaData[] seriesFiles = pages
-                    .FromSeries(serie)
-                    .OrderBy(x => x.Uri)
-                    .ToArray();
-                site.Series.Add(serie, seriesFiles);
-            }
-        }
+        //     foreach (string serie in series)
+        //     {
+        //         PageMetaData[] seriesFiles = pages
+        //             .FromSeries(serie)
+        //             .OrderBy(x => x.Uri)
+        //             .ToArray();
+        //         site.Series.Add(serie, seriesFiles);
+        //     }
+        // }
     }
 }

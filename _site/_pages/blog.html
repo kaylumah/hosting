@@ -15,7 +15,7 @@ modifieddate: '2021-08-07'
 </div>
 <div class="mt-4"></div>
 <div class="flex flex-col gap-8 laptop:flex-row">
-    {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
+    {% assign posts = site.recentarticles %}
     <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
         {% for post in posts %}
         <li data-tags="{{ post.tags | array.join " " }}" class="bg-slate-50 border-2 p-4 flex flex-col gap-4">
@@ -43,14 +43,12 @@ modifieddate: '2021-08-07'
         </div>
         <div class="bg-slate-50 border-2 w-full laptop:w-64 p-6 flex flex-col items-center gap-2">
             <h2 class="text-xl font-semibold">Popular posts</h2>
-            {% assign posts = site.collections['posts'] | array.sort "published" | array.reverse %}
+            {% assign featuredarticles = site.featuredarticles %}
             <ul class="flex flex-col gap-2">
-                {% for post in posts %}
-                {% if post.featured == true %}
+                {% for post in featuredarticles %}
                 <li>
                     <a href="{{ post.uri }}">{{ post.title }}</a>
                 </li>
-                {% endif %}
                 {% endfor %}
             </ul>
         </div>

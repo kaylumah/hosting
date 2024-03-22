@@ -33,20 +33,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public OrganizationMetaDataCollection OrganizationMetaData
         { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Collections
-        { get; set; } = new();
+        // public SortedDictionary<string, PageMetaData[]> Collections
+        // { get; set; } = new();
 
         public SortedDictionary<string, PageMetaData[]> Tags
         { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Series
-        { get; set; } = new();
+        // public SortedDictionary<string, PageMetaData[]> Series
+        // { get; set; } = new();
 
-        public SortedDictionary<int, PageMetaData[]> Years
-        { get; set; } = new();
+        // public SortedDictionary<int, PageMetaData[]> Years
+        // { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Types
-        { get; set; } = new();
+        // public SortedDictionary<string, PageMetaData[]> Types
+        // { get; set; } = new();
 
         public List<BasePage> Items
         { get; set; } = new();
@@ -72,6 +72,25 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             IEnumerable<Article> articles = Items.OfType<Article>();
             return articles;
+        }
+
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
+        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        IEnumerable<Article> GetRecentArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> sortedByPublished = articles.OrderByDescending(article => article.Published);
+            return sortedByPublished;
+        }
+
+        IEnumerable<Article> GetFeaturedArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> featuredArticles = articles.Where(article => article.Featured);
+            IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.OrderByDescending(article => article.Published);
+            return featuredAndSortedByPublished;
         }
     }
 }

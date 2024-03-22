@@ -200,7 +200,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     scriptObject.Import("build", () => request.Metadata.Site.Build);
                     context.PushGlobal(scriptObject);
                     scriptObject.Import(typeof(GlobalFunctions));
-                    scriptObject.Import(typeof(MyObjectConversions));
+                    scriptObject.Import(typeof(ObjectConversions));
 
                     // scriptObject.Import("seo", new Func<TemplateContext, string>(templateContext => {
                     //     return "<strong>{{ build.git_hash }}</strong>";
@@ -218,14 +218,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             MetadataRenderResult[] results = renderedResults.ToArray();
             return results;
-        }
-    }
-
-    public class MyObjectConversions
-    {
-        public static AuthorId AuthorId(string author)
-        {
-            return author;
         }
     }
 }
