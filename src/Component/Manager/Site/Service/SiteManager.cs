@@ -220,12 +220,4 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return results;
         }
     }
-
-    public class MyObjectConversions
-    {
-        public static AuthorId AuthorId(string author)
-        {
-            return author;
-        }
-    }
 }
