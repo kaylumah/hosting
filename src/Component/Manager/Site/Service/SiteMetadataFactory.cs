@@ -130,12 +130,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return buildMetadata;
         }
 
-        List<string> GetTags(List<PageMetaData> pages)
-        {
-            List<string> result = pages.GetTags();
-            return result;
-        }
-
         void EnrichSiteWithData(SiteMetaData site)
         {
             LogEnrichSiteWith("Data");
@@ -242,7 +236,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             List<PageMetaData> pages = site.GetPages().ToList();
 
-            List<string> tags = GetTags(pages);
+            List<string> tags = site.GetTags();
             foreach (string tag in tags)
             {
                 PageMetaData[] tagFiles = pages

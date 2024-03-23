@@ -92,5 +92,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.OrderByDescending(article => article.Published);
             return featuredAndSortedByPublished;
         }
+
+        public List<string> GetTags()
+        {
+            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
+        }
     }
 }
