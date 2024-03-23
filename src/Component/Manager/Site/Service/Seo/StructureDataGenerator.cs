@@ -57,15 +57,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         .IsFeatured()
                         .ByRecentlyPublished()
                         .ToList();
-                    List<BlogPosting> posts = new List<BlogPosting>();
-                    foreach (PageMetaData article in articles)
-                    {
-                        BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
-                        posts.Add(blogPosting);
-                    }
 
-                    Blog blog = new Blog();
-                    blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
+                    Blog blog = ToBlog(pageMetaData, articles, authors, organizations);
                     string ldjson = blog.ToString(settings);
                     return ldjson;
                 }
@@ -75,7 +68,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return result;
         }
 
-        BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
+        Blog ToBlog(PageMetaData page, List<PageMetaData> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
+            List<BlogPosting> posts = new List<BlogPosting>();
+            foreach (PageMetaData article in articles)
+            {
+                BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
+                posts.Add(blogPosting);
+            }
+
+            Blog blog = new Blog();
+            blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
+            return blog;
+        }
+
+        BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
@@ -93,7 +101,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Image = new Values<IImageObject, Uri>(imageUri);
             }
 
-            if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person? person))
+            if (!string.IsNullOrEmpty(page.Author) && authors.TryGetValue(page.Author, out Person? person))
             {
                 blogPost.Author = person;
             }
