@@ -39,17 +39,7 @@ modifieddate: '2021-08-07'
             {% include 'tiles/hero.html' %}
         </li>
         <li class="w-full laptop:w-64">
-            <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
-                <h2 class="text-xl font-semibold">Popular posts</h2>
-                {% assign featuredarticles = site.featuredarticles %}
-                <ul class="flex flex-col gap-2">
-                    {% for post in featuredarticles %}
-                    <li>
-                        <a href="{{ post.uri }}">{{ post.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% include 'tiles/featured.html' %}
         </li>
         <li class="w-full laptop:w-64">
             <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
