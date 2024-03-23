@@ -17,6 +17,26 @@ layout: 'default.html'
         <main class="prose prose-xl">
             {{ content }}
         </main>
+        <footer>
+            {% if page.commentid %}
+            <!-- https://giscus.app -->
+            <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+            <script src="https://giscus.app/client.js"
+                data-repo="kaylumah/hosting"
+                data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                data-mapping="number"
+                data-term="{{page.commentid}}"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="light_high_contrast"
+                data-lang="en"
+                data-loading="lazy"
+                crossorigin="anonymous"
+                async>
+            </script>
+            {% endif %}
+        </footer>
     </article>
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
