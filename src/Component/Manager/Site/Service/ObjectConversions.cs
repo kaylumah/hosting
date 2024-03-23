@@ -15,10 +15,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return author;
         }
 
-        public static IEnumerable<Article> ArticlesForTag(SiteMetaData site)
+        public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
-            IEnumerable<Article> result = Enumerable.Empty<Article>();
+            ArgumentNullException.ThrowIfNull(tag);
+
+            bool tagExists = site.Tags.TryGetValue(tag, out PageMetaData[]? resultForTag);
+            IEnumerable<Article> result;
+            if (tagExists && resultForTag != null)
+            {
+                IEnumerable<Article> asArticles = resultForTag.OfType<Article>();
+                result = asArticles.ByRecentlyPublished();
+                if (take != null)
+                {
+                    result = result.Take(take.Value);
+                }
+            }
+            else
+            {
+                result = Enumerable.Empty<Article>();
+            }
+
             return result;
         }
     }
