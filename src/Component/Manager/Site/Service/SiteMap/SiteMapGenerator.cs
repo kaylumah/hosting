@@ -30,12 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             LogGenerateSiteMap();
 
             List<PageMetaData> pages = siteMetaData.GetPages()
-                            .Where(file =>
-                            {
-                                string extension = Path.GetExtension(file.Name);
-                                bool isHtml = ".html".Equals(extension, StringComparison.Ordinal);
-                                return isHtml;
-                            })
+                            .Where(file => file.IsHtml())
                             .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                             .ToList();
 
