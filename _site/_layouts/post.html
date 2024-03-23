@@ -2,9 +2,9 @@
 layout: 'default.html'
 ---
 <div class="flex flex-col gap-8 laptop:flex-row">
-    <div id="blogContents">
+    <article id="blogContents" class="flex-1 prose">
         {{ content }}
-    </div>
+    </article>
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
             {% include 'tiles/hero.html' %}
