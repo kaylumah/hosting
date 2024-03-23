@@ -80,6 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             Blog blog = new Blog();
+            blog.Url = pageUri;
             blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
             return blog;
         }
