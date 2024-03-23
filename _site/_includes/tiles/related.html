@@ -1,8 +1,7 @@
 <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
-    <h2 class="text-xl font-semibold">Popular posts</h2>
-    {% assign featuredarticles = site.featuredarticles %}
+    <h2 class="text-xl font-semibold">{{ related_article_category_title }}</h2>
     <ul class="flex flex-col gap-2">
-        {% for post in featuredarticles %}
+        {% for post in related_articles %}
         <li>
             <a href="{{ post.uri }}">{{ post.title }}</a>
         </li>
