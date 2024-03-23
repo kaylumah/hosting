@@ -9,5 +9,10 @@ layout: 'default.html'
         <li class="w-full laptop:w-64">
             {% include 'tiles/hero.html' %}
         </li>
+        <li class="w-full laptop:w-64">
+            {% assign related_article_category_title = "Popular posts" %}
+            {% assign related_articles = site.featuredarticles %}
+            {% include 'tiles/related.html' %}
+        </li>
     </ul>
 </div>
