@@ -243,6 +243,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        public static bool IsUrl(this PageMetaData pageMetaData, string url)
+        {
+            bool result = url.Equals(pageMetaData.Name, StringComparison.Ordinal);
+            return result;
+        }
+
         public static bool IsHtml(this PageMetaData pageMetaData)
         {
             bool result = pageMetaData.IsExtension(".html");
