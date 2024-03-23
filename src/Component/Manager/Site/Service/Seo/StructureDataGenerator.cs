@@ -2,10 +2,12 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
+using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -37,25 +39,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             settings.WriteIndented = true;
 
-            System.Collections.Generic.Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
-            System.Collections.Generic.Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
+            Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
+            Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
 
             if (renderData.Page is PageMetaData pageMetaData)
             {
                 LogLdJson(pageMetaData.Uri, pageMetaData.Type);
                 if (pageMetaData.IsArticle())
                 {
-                    BlogPosting blogPost = pageMetaData.ToBlogPosting(authors, organizations);
+                    BlogPosting blogPost = ToBlogPosting(pageMetaData, authors, organizations);
                     string ldjson = blogPost.ToString(settings);
                     return ldjson;
                 }
                 else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
                 {
-                    System.Collections.Generic.List<BlogPosting> posts = renderData.Site.GetArticles()
+                    List<PageMetaData> articles = renderData.Site.GetArticles()
                         .IsFeatured()
                         .ByRecentlyPublished()
-                        .ToBlogPostings(authors, organizations)
                         .ToList();
+                    List<BlogPosting> posts = new List<BlogPosting>();
+                    foreach (PageMetaData article in articles)
+                    {
+                        BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
+                        posts.Add(blogPosting);
+                    }
 
                     Blog blog = new Blog();
                     blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
@@ -66,6 +73,35 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             string result = string.Empty;
             return result;
+        }
+
+        BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
+        {
+            BlogPosting blogPost = new BlogPosting();
+            Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
+            blogPost.MainEntityOfPage = new Values<ICreativeWork, Uri>(pageUri);
+            blogPost.Headline = page.Title;
+#pragma warning disable RS0030 // datetime is expected here
+            blogPost.DatePublished = page.Published.DateTime;
+            blogPost.DateModified = page.Modified.DateTime;
+
+            if (!string.IsNullOrEmpty(page.Image))
+            {
+                Uri imageUri = GlobalFunctions.AbsoluteUri(page.Image);
+                blogPost.Image = new Values<IImageObject, Uri>(imageUri);
+            }
+
+            if (!string.IsNullOrEmpty(page.Author) && persons.TryGetValue(page.Author, out Person? person))
+            {
+                blogPost.Author = person;
+            }
+
+            if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization? organization))
+            {
+                blogPost.Publisher = organization;
+            }
+
+            return blogPost;
         }
     }
 }
