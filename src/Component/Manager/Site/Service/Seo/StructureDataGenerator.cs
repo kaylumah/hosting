@@ -77,9 +77,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> persons, Dictionary<OrganizationId, Organization> organizations)
         {
-            BlogPosting blogPost = new BlogPosting();
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
-            blogPost.MainEntityOfPage = new Values<ICreativeWork, Uri>(pageUri);
+            BlogPosting blogPost = new BlogPosting();
+            blogPost.MainEntityOfPage = pageUri;
             blogPost.Headline = page.Title;
 
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
