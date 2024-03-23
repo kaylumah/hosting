@@ -32,6 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         public string ToLdJson(RenderData renderData)
         {
+            // Check https://search.google.com/test/rich-results to validate LDJson
             ArgumentNullException.ThrowIfNull(renderData);
             JsonSerializerOptions settings = new JsonSerializerOptions();
             settings.AllowTrailingCommas = true;
