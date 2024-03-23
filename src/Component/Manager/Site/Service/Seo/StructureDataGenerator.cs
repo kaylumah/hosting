@@ -88,6 +88,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
+            blogPost.Url = pageUri;
             blogPost.MainEntityOfPage = pageUri;
             blogPost.Headline = page.Title;
 
