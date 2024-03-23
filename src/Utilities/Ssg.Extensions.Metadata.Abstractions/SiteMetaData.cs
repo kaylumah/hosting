@@ -36,9 +36,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         // public SortedDictionary<string, PageMetaData[]> Collections
         // { get; set; } = new();
 
-        public SortedDictionary<string, PageMetaData[]> Tags
-        { get; set; } = new();
-
         // public SortedDictionary<string, PageMetaData[]> Series
         // { get; set; } = new();
 
@@ -74,9 +71,23 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
+        public List<string> GetTags()
+        {
+            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
+        }
+
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
 
         IEnumerable<Article> GetRecentArticles()
         {
@@ -91,6 +102,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> featuredArticles = articles.Where(article => article.Featured);
             IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.OrderByDescending(article => article.Published);
             return featuredAndSortedByPublished;
+        }
+
+        SortedDictionary<string, PageMetaData[]> GetPagesByTag()
+        {
+            SortedDictionary<string, PageMetaData[]> result = new();
+
+            List<PageMetaData> pages = GetPages().ToList();
+            List<string> tags = GetTags();
+
+            foreach (string tag in tags)
+            {
+                PageMetaData[] tagFiles = pages
+                    .FromTag(tag)
+                    .ToArray();
+                result.Add(tag, tagFiles);
+            }
+
+            return result;
         }
     }
 }

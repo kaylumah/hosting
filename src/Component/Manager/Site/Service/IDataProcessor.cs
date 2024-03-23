@@ -13,20 +13,6 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public static class Extensions
-    {
-        public static List<string> GetTags(this IEnumerable<PageMetaData> pages)
-        {
-            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
-            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
-
-            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
-            List<string> result = uniqueTags.ToList();
-            return result;
-        }
-    }
-
     public interface IDataProcessor
     {
         bool IsApplicable(IFileSystemInfo file);
@@ -101,7 +87,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
             TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(file);
-            List<string> tags = siteMetaData.GetPages().GetTags();
+            List<string> tags = siteMetaData.GetTags();
             IEnumerable<string> otherTags = tagData.Keys.Except(tags);
             IEnumerable<string> unmatchedTags = tags
                 .Except(tagData.Keys)
