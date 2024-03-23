@@ -98,6 +98,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 #pragma warning restore RS0030
 
             blogPost.Headline = page.Title;
+            blogPost.Description = page.Description;
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
 
