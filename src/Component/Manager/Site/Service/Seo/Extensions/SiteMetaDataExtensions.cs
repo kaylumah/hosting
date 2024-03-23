@@ -72,7 +72,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else
             {
-#pragma warning disable RS0030
                 result = source.OrganizationMetaData
                     .ToDictionary(x => x.Id, x =>
                     {
@@ -84,7 +83,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         Organization organization = new Organization();
                         organization.Name = x.FullName;
+#pragma warning disable RS0030 // not time based
                         organization.FoundingDate = x.Founded.Date;
+#pragma warning restore RS0030
                         organization.SameAs = new OneOrMany<Uri>(uris);
 
                         if (!string.IsNullOrEmpty(x.Logo))
@@ -99,7 +100,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             return result;
-#pragma warning restore RS0030
+
         }
     }
 }
