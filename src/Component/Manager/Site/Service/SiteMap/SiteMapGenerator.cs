@@ -31,7 +31,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 
             List<PageMetaData> pages = siteMetaData.GetPages()
                             .Where(file => file.IsHtml())
-                            .Where(file => {
+                            .Where(file =>
+                            {
                                 bool is404 = file.IsUrl("404.html");
                                 bool result = is404 == false;
                                 return result;
