@@ -54,10 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 }
                 else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
                 {
-                    List<PageMetaData> articles = renderData.Site.GetArticles()
-                        .IsFeatured()
-                        .ByRecentlyPublished()
-                        .ToList();
+                    List<Article> articles = renderData.Site.FeaturedArticles.ToList();
 
                     Blog blog = ToBlog(pageMetaData, articles, authors, organizations);
                     string ldjson = blog.ToString(settings);
@@ -69,7 +66,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return result;
         }
 
-        Blog ToBlog(PageMetaData page, List<PageMetaData> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        Blog ToBlog(PageMetaData page, List<Article> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             List<BlogPosting> posts = new List<BlogPosting>();

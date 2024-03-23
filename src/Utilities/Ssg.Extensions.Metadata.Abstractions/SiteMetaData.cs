@@ -92,7 +92,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
-            IEnumerable<Article> sortedByPublished = articles.OrderByDescending(article => article.Published);
+            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
             return sortedByPublished;
         }
 

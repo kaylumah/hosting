@@ -79,7 +79,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
             List<PageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)
-                .ByRecentlyPublished()
                 .ToList();
             List<SyndicationItem> result = new List<SyndicationItem>();
             if (0 < posts.Count)
@@ -123,9 +122,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
-            IEnumerable<Article> articles = siteMetaData.GetArticles();
-            IEnumerable<Article> feed = articles
-                .Where(x => x.Feed);
+            IEnumerable<Article> articles = siteMetaData.RecentArticles;
+            IEnumerable<Article> feed = articles.Where(x => x.Feed);
 
             return feed;
         }
