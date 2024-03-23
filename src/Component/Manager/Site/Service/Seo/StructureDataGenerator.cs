@@ -88,15 +88,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
-            blogPost.Url = pageUri;
+
             blogPost.MainEntityOfPage = pageUri;
-            blogPost.Headline = page.Title;
+            blogPost.Url = pageUri;
 
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
             blogPost.DatePublished = page.Published;
             blogPost.DateModified = page.Modified;
 #pragma warning restore RS0030
 
+            blogPost.Headline = page.Title;
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
 
