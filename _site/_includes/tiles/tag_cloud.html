@@ -1,0 +1,39 @@
+<div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
+    <h2 class="text-xl font-semibold">Tags</h2>
+    <ul id="word-cloud" class="flex justify-center flex-wrap align-center gap-2 leading-8">
+    </ul>
+    <script>
+    var words = [
+      {% for tag in site.tags %}
+      { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
+      {% endfor %}
+    ];
+    
+    var container = document.getElementById('word-cloud');
+    words.forEach(word => {
+      const li = document.createElement('li');
+      const anchor = document.createElement('a');
+      anchor.href = "/blog.html?tag=" + word.id;
+      anchor.text = `${word.text} (${word.size})`;
+      const x = word.size;
+      switch(true)
+      {
+        case (x < 2):
+          anchor.classList = "text-md"//; text-gray-500";
+          break;
+        case (x < 4):
+          anchor.classList = "text-lg"//; text-blue-500";
+          break;
+        case (x < 6):
+          anchor.classList = "text-xl"//; text-red-500";
+          break;
+        default:
+          anchor.classList = "text-2xl"//; text-green-500";
+          break;
+      }
+    
+      li.appendChild(anchor);
+      container.appendChild(li);
+    });  
+    </script>
+</div>

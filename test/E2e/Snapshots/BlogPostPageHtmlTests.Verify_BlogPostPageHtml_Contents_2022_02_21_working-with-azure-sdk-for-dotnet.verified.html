@@ -181,45 +181,29 @@
             </script>
         </header>
         <main class="flex-1 p-4 text-gray-900">
-            <article class="py-16 px-6 tablet:px-8">
-    <header class="flex flex-col items-center">
-        <h1 class="flex flex-col items-center mx-auto">
-            <span class="text-gray-900 font-semibold tracking-wide uppercase">Article</span>
-            <span class="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 tablet:text-4xl">Working with Azure SDK for .NET</span>
-        </h1>
-        <picture class="flex flex-col items-center mx-auto">
-            <source type="image/webp" srcset="/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp">
-            <img src="/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png" alt="cover for Working with Azure SDK for .NET" height="640" width="1280" />
-        </picture>
-        <dl class="flex flex-col tablet:flex-row gap-4">
-            <div class="flex flex-col items-center gap-1">
-                <dt>Authored by</dt>
-                <dd>Max Hamulyák</dd>
+            <div class="flex flex-col gap-8 laptop:flex-row">
+    <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
+        <header class="prose laptop:mx-auto">
+            <picture class="hidden">
+                <source type="image/webp" srcset="/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.webp">
+                <img src="/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png" alt="cover for Working with Azure SDK for .NET" height="640" width="1280" />
+            </picture>
+            <h1>Working with Azure SDK for .NET</h1>
+            <div class="flex flex-row gap-4">
+                <time datetime="2022-02-21">2022/02/21</time>
+                <span>Max Hamulyák</span>
+                <span>8 minute</span>
             </div>
-            <div class="flex flex-col items-center gap-1">
-                <dt>Posted on</dt>
-                <dd><time datetime="2022-02-21">2022/02/21</time></dd>
-            </div>
-            <div class="flex flex-col items-center gap-1">
-                <dt>Reading time</dt>
-                <dd>8 minute</dd>
-            </div>
-            <div class="flex flex-col items-center gap-1">
-                <dt>Published in</dt>
-                <dd class="flex  flex-row gap-2">
-                    
-                                        <a class="p-1" href="/blog.html?tag=csharp" title="for the C# programming language"">C#</a>
-                                        
-                                        <a class="p-1" href="/blog.html?tag=azure" title="Microsoft Azure Platform"">Azure</a>
-                                        
-                </dd>
-            </div>
-        </dl>
-        
-        <hr class="mt-8 border-t-2 w-20 mx-auto" />
-    </header>
-    <div class="mt-8 mx-auto max-w-prose laptop:max-w-7xl prose laptop:prose-lg desktop:prose-xl">
-        <p>February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08" class="external">small contribution</a> to the <code>Azure SDK for .NET</code>. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.</p>
+            <span class="flex flex-row gap-4">
+                
+                                <a href="/blog.html?tag=csharp" title="for the C# programming language">C#</a>
+                                
+                                <a href="/blog.html?tag=azure" title="Microsoft Azure Platform">Azure</a>
+                                
+            </span>
+        </header>
+        <main class="prose laptop:mx-auto">
+            <p>February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08" class="external">small contribution</a> to the <code>Azure SDK for .NET</code>. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.</p>
 <h2 id="which-azure-sdk-should-i-use"><a href="#which-azure-sdk-should-i-use">Which Azure SDK should I use?</a></h2>
 <p>Since <a href="https://devblogs.microsoft.com/azure-sdk/state-of-the-azure-sdk-2021/" class="external">July 2019</a>, Microsoft has made a design effort to unify the SDKs for the different services. There are shared concepts between the libraries like authentication and diagnostics. The libraries follow the pattern <code>Azure.{service}.{library}</code>.
 My contribution was to the ServiceBus SDK, so today's article focus is the service bus. Almost everything described is transferable to the other SDKs; only a few bits are ServiceBus specific. The NuGet package we need is the <code>Azure.Messaging.Service</code> package.</p>
@@ -517,55 +501,139 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 <li><a href="https://devblogs.microsoft.com/azure-sdk/best-practices-for-using-azure-sdk-with-asp-net-core" class="external">Best practices Azure SDK</a></li>
 <li><a href="https://docs.microsoft.com/en-gb/cli/azure/use-cli-effectively" class="external">Best practices Azure CLI</a></li>
 </ul>
-    </div>
-
-    <footer class="flex flex-col mt-8">
-        
-                <!--
-                <div class="social-share">
-            <span class="mx-auto">Enjoying my content? Consider sharing and help me grow my audience :)</span>
-            <div class="flex justify-center space-x-6">
-                    <a target="_blank" rel=”noopener” title="Share link to post via LinkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" onclick="window.open(this.href, 'width=550,height=435');return false;">
-                        <span class="sr-only">LinkedIn Share</span>
-                        <em class="fab fa-linkedin fa-lg"></em>
-                    </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Twitter" href="https://twitter.com/intent/tweet?text=Working%20with%20Azure%20SDK%20for%20.NET&url=https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                        <span class="sr-only">Twitter Share</span>
-                        <em class="fab fa-twitter-square fa-lg"></em>
-                    </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Facebook" href="https://facebook.com/sharer.php?u=https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" onclick="window.open(this.href, 'facebook-share', 'width=550,height=435');return false;">
-                        <span class="sr-only">Facebook Share</span>
-                        <em class="fab fa-facebook fa-lg"></em>
-                    </a>
-                    <a target="_blank" rel=”noopener” title="Share link to post via Email" href="mailto:?subject=Working with Azure SDK for .NET&amp;body=Thought you might like this article https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">
-                        <span class="sr-only">Email Share</span>
-                        <em class="fas fa-envelope-open-text fa-lg"></em>
-                    </a>
+        </main>
+        <footer class="">
+            
+                        <!-- https://giscus.app -->
+                        <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+                        <script src="https://giscus.app/client.js"
+                            data-repo="kaylumah/hosting"
+                            data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
+                            data-mapping="number"
+                            data-term="138"
+                            data-reactions-enabled="1"
+                            data-emit-metadata="0"
+                            data-input-position="top"
+                            data-theme="light_high_contrast"
+                            data-lang="en"
+                            data-loading="lazy"
+                            crossorigin="anonymous"
+                            async>
+                        </script>
+                        
+        </footer>
+    </article>
+    <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
+        <li class="w-full laptop:w-64">
+            <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
+                <img class="rounded-full h-32 w-32" src="/assets/avatar_background.svg" alt="Kaylumah Hero" />
+                <h2 class="text-xl font-semibold">Max Hamulyák</h2>
+                <span>aka Kaylumah</span>
             </div>
-        </div>
-                -->
+        </li>
+        <li class="w-full laptop:w-64">
+            
+            
+            
+            <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
+                <h2 class="text-xl font-semibold">Popular posts</h2>
+                <ul class="flex flex-col gap-2">
+                    
+                            <li>
+                                <a href="/2021/04/11/an-approach-to-writing-mocks.html">Experiment with Moq, an approach to writing mocks</a>
+                            </li>
+                            
+                            <li>
+                                <a href="/2019/09/07/using-csharp-code-your-git-hooks.html">Using C# code in your git hooks</a>
+                            </li>
+                            
+                </ul>
+            </div>
+
+        </li>
+        <li class="w-full laptop:w-64">
+            
+            
+            
+        </li>
+        <li class="w-full laptop:w-64">
+            <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
+                <h2 class="text-xl font-semibold">Tags</h2>
+                <ul id="word-cloud" class="flex justify-center flex-wrap align-center gap-2 leading-8">
+                </ul>
+                <script>
+                var words = [
+                  
+                        { id: 'azure', text: 'Azure', size: 2 },
+                        
+                        { id: 'code-quality', text: 'Code Quality', size: 1 },
+                        
+                        { id: 'configuration', text: 'Configuration', size: 1 },
+                        
+                        { id: 'csharp', text: 'C#', size: 9 },
+                        
+                        { id: 'git', text: 'Git', size: 1 },
+                        
+                        { id: 'moq', text: 'Moq', size: 1 },
+                        
+                        { id: 'msbuild', text: 'MSBuild', size: 2 },
+                        
+                        { id: 'nswag', text: 'NSwag', size: 2 },
+                        
+                        { id: 'nuget', text: 'NuGet', size: 1 },
+                        
+                        { id: 'openapi', text: 'OpenAPI', size: 2 },
+                        
+                        { id: 'reqnroll', text: 'Reqnroll', size: 1 },
+                        
+                        { id: 'rider', text: 'Rider', size: 1 },
+                        
+                        { id: 'swashbuckle', text: 'Swashbuckle', size: 2 },
+                        
+                        { id: 'testing', text: 'Testing', size: 4 },
+                        
+                        { id: 'visualstudio', text: 'Visual Studio', size: 1 },
+                        
+                        { id: 'visualstudio2019', text: 'Visual Studio 2019', size: 1 },
+                        
+                        { id: 'vscode', text: 'VS Code', size: 1 },
+                        
+                        { id: 'xunit', text: 'Xunit', size: 2 },
+                        
+                ];
                 
-        
-                <!-- https://giscus.app -->
-                <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
-                <script src="https://giscus.app/client.js"
-                    data-repo="kaylumah/hosting"
-                    data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU="
-                    data-mapping="number"
-                    data-term="138"
-                    data-reactions-enabled="1"
-                    data-emit-metadata="0"
-                    data-input-position="top"
-                    data-theme="light_high_contrast"
-                    data-lang="en"
-                    data-loading="lazy"
-                    crossorigin="anonymous"
-                    async>
+                var container = document.getElementById('word-cloud');
+                words.forEach(word => {
+                  const li = document.createElement('li');
+                  const anchor = document.createElement('a');
+                  anchor.href = "/blog.html?tag=" + word.id;
+                  anchor.text = `${word.text} (${word.size})`;
+                  const x = word.size;
+                  switch(true)
+                  {
+                    case (x < 2):
+                      anchor.classList = "text-md"//; text-gray-500";
+                      break;
+                    case (x < 4):
+                      anchor.classList = "text-lg"//; text-blue-500";
+                      break;
+                    case (x < 6):
+                      anchor.classList = "text-xl"//; text-red-500";
+                      break;
+                    default:
+                      anchor.classList = "text-2xl"//; text-green-500";
+                      break;
+                  }
+                
+                  li.appendChild(anchor);
+                  container.appendChild(li);
+                });  
                 </script>
-                
-    </footer>
-   
-</article>
+            </div>
+        </li>
+    </ul>
+</div>
+
         </main>
         <footer class="bg-gray-900 p-4">
             <div class="flex flex-col text-center text-gray-100">
