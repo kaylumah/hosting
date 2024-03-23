@@ -36,12 +36,7 @@ modifieddate: '2021-08-07'
     </ul>
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
-            <div class="bg-slate-50 border-2 p-6 flex flex-col items-center">
-                <img class="rounded-full h-32 w-32" src="{{ 'assets/avatar_background.svg'| relative_url }}"
-                    alt="Kaylumah Hero" />
-                <h2 class="text-xl font-semibold">Max Hamulyák</h2>
-                <span>aka Kaylumah</span>
-            </div>
+            {% include 'tiles/hero.html' %}
         </li>
         <li class="w-full laptop:w-64">
             <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
