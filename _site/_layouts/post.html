@@ -58,5 +58,8 @@ layout: 'default.html'
             {% assign related_articles = site | articles_for_tag "fake_csharp" 3 %}
             {% include 'tiles/related.html' %}
         </li>
+        <li class="w-full laptop:w-64">
+            {% include 'tiles/tag_cloud.html' %}
+        </li>
     </ul>
 </div>
