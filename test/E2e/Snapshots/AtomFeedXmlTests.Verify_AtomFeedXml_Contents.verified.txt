@@ -17,7 +17,6 @@
     <updated>DateTimeOffset_2</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" />
@@ -39,7 +38,6 @@ I'd like to personally thank Gáspár for the effort to first revive Specflow an
     <updated>DateTimeOffset_3</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html" />
@@ -207,7 +205,6 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
     <updated>DateTimeOffset_4</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
@@ -365,7 +362,6 @@ public async Task Test2()
     <updated>DateTimeOffset_5</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
@@ -692,7 +688,6 @@ dotnet run
     <updated>DateTimeOffset_6</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
@@ -1005,7 +1000,6 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
     <updated>DateTimeOffset_7</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
@@ -1228,7 +1222,6 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
     <updated>DateTimeOffset_8</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
@@ -1737,7 +1730,6 @@ typedOptions.Name.Should().Be(options.Name);
     <updated>DateTimeOffset_9</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html" />
@@ -2079,7 +2071,6 @@ public async Task Test_Custom_XunitLoggingBuilder()
     <updated>DateTimeOffset_10</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
@@ -2227,7 +2218,6 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
     <updated>DateTimeOffset_11</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
@@ -2599,7 +2589,6 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
     <updated>DateTimeOffset_12</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html" />
@@ -3409,7 +3398,6 @@ public async Task Test_ArticleAccess_Returns200OK()
     <updated>DateTimeOffset_13</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html" />
@@ -3719,7 +3707,6 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
     <updated>DateTimeOffset_15</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://BaseUrl_1/about</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html" />
