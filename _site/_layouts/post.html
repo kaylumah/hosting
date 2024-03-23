@@ -8,6 +8,10 @@ layout: 'default.html'
     </picture> -->
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
         <header class="prose">
+            <picture class="hidden">
+                <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
+                <img src="{{ page.image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
+            </picture>
             <h1>{{ page.title }}</h1>
             <div class="flex flex-row gap-8">
                 <time datetime="{{ page.published | date_to_pattern 'yyyy-MM-dd' }}">{{ page.published | date_to_pattern 'yyyy/MM/dd' }}</time>
