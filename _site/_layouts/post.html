@@ -11,7 +11,7 @@ layout: 'default.html'
                 <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
                 <img src="{{ page.image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
             </picture> -->
-            <div>
+            <div class="flex flex-row gap-2 prose prose-xl">
                 <time datetime="{{ page.published | date_to_pattern 'yyyy-MM-dd' }}">{{ page.published | date_to_pattern 'yyyy/MM/dd' }}</time>
                 <span>{{ site.data.authors[page.author | author_id].fullname }}</span>
             </div>
