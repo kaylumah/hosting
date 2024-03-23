@@ -313,9 +313,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<Article> ByRecentlyPublished(this IEnumerable<Article> source)
         {
-            IOrderedEnumerable<PageMetaData> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<Article> result = source.OrderByDescending(x => x.Published);
             return result;
         }
     }

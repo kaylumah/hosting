@@ -43,7 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         SyndicationPerson syndicationPerson = new SyndicationPerson();
                         syndicationPerson.Name = x.FullName;
                         syndicationPerson.Email = x.Email;
-                        syndicationPerson.Uri = GlobalFunctions.AbsoluteUrl(x.Uri);
+                        // syndicationPerson.Uri = GlobalFunctions.AbsoluteUrl(x.Uri);
                         return syndicationPerson;
                     });
             }

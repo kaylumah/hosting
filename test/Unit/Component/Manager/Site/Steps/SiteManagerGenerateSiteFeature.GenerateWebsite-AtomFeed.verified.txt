@@ -17,7 +17,6 @@
     <updated>2022-07-03T00:00:00+02:00</updated>
     <author>
       <name>Max Hamulyák</name>
-      <uri>https://example.com/https://kaylumah.nl</uri>
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://example.com/example.html" />
