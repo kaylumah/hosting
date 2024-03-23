@@ -3,7 +3,9 @@ layout: 'default.html'
 ---
 <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6">
-        {{ content }}
+        <main class="prose prose-xl">
+            {{ content }}
+        </main>
     </article>
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
