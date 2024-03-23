@@ -45,7 +45,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 node.Url = GlobalFunctions.AbsoluteUrl(page.Uri);
                 node.LastModified = page.Modified;
 
-                if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
+                bool isIndex = page.IsUrl("index.html");
+                if (isIndex)
                 {
                     node.Url = GlobalFunctions.Url.Value!;
                 }
