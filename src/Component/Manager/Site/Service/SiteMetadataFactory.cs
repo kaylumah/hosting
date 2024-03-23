@@ -7,7 +7,6 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
-using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
@@ -58,7 +57,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo);
             // EnrichSiteWithCollections(siteInfo);
-            EnrichSiteWithTags(siteInfo);
             // EnrichSiteWithYears(siteInfo);
             // EnrichSiteWithSeries(siteInfo);
 
@@ -229,22 +227,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         //         site.Collections.Add(collection, collectionPages);
         //     }
         // }
-
-        void EnrichSiteWithTags(SiteMetaData site)
-        {
-            LogEnrichSiteWith("Tags");
-
-            List<PageMetaData> pages = site.GetPages().ToList();
-
-            List<string> tags = site.GetTags();
-            foreach (string tag in tags)
-            {
-                PageMetaData[] tagFiles = pages
-                    .FromTag(tag)
-                    .ToArray();
-                site.Tags.Add(tag, tagFiles);
-            }
-        }
 
         // void EnrichSiteWithYears(SiteMetaData site)
         // {
