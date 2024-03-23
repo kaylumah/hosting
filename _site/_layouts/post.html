@@ -5,6 +5,9 @@ layout: 'default.html'
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-16">
         <header class="prose prose-xl">
             <h1>{{ page.title }}</h1>
+            <div>
+                <div><time datetime="{{ page.published | date_to_pattern 'yyyy-MM-dd' }}">{{ page.published | date_to_pattern 'yyyy/MM/dd' }}</time></div>
+            </div>
         </header>
         <main class="prose prose-xl">
             {{ content }}
