@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
