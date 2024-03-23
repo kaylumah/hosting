@@ -3,7 +3,7 @@
     <ul class="flex flex-col gap-2">
         {% for post in related_articles %}
         <li>
-            <a href="{{ post.uri }}">{{ post.title }}</a>
+            <a href="/{{ post.uri }}">{{ post.title }}</a>
         </li>
         {% endfor %}
     </ul>
