@@ -245,7 +245,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static bool IsUrl(this PageMetaData pageMetaData, string url)
         {
-            bool result = url.Equals(pageMetaData.Name, StringComparison.Ordinal);
+            bool result = url.Equals(pageMetaData.Uri, StringComparison.Ordinal);
             return result;
         }
 
