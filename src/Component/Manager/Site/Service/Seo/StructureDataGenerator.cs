@@ -96,6 +96,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blogPost.DateModified = page.Modified;
 #pragma warning restore RS0030
 
+            string keywords = string.Join(',', page.Tags);
+            blogPost.Keywords = keywords;
+
             if (!string.IsNullOrEmpty(page.Image))
             {
                 Uri imageUri = GlobalFunctions.AbsoluteUri(page.Image);
