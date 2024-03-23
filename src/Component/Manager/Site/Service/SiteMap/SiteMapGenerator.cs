@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
@@ -30,13 +28,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             LogGenerateSiteMap();
 
             List<PageMetaData> pages = siteMetaData.GetPages()
+                            .Where(file => file.IsHtml())
                             .Where(file =>
                             {
-                                string extension = Path.GetExtension(file.Name);
-                                bool isHtml = ".html".Equals(extension, StringComparison.Ordinal);
-                                return isHtml;
+                                bool is404 = file.IsUrl("404.html");
+                                bool result = is404 == false;
+                                return result;
                             })
-                            .Where(file => !"404.html".Equals(file.Name, StringComparison.Ordinal))
                             .ToList();
 
             List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
@@ -46,7 +44,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 node.Url = GlobalFunctions.AbsoluteUrl(page.Uri);
                 node.LastModified = page.Modified;
 
-                if (page.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase))
+                bool isIndex = page.IsUrl("index.html");
+                if (isIndex)
                 {
                     node.Url = GlobalFunctions.Url.Value!;
                 }
