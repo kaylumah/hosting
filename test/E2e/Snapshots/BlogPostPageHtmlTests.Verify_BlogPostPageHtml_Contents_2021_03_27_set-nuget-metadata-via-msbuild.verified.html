@@ -183,7 +183,7 @@
         <main class="flex-1 p-4 text-gray-900">
             <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
-        <header class="prose tablet:prose-lg laptop:prose-xl">
+        <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20210327/nuget-metadata/cover_image.webp">
                 <img src="/assets/images/posts/20210327/nuget-metadata/cover_image.png" alt="cover for Set NuGet metadata via MSBuild" height="640" width="1280" />
@@ -202,7 +202,7 @@
                                 
             </span>
         </header>
-        <main class="prose tablet:prose-lg laptop:prose-xl">
+        <main class="prose laptop:mx-auto">
             <p>For .NET, the standard mechanism for sharing packages is NuGet. A <code>.nupkg</code> file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata (<a href="https://docs.microsoft.com/en-us/nuget/what-is-nuget" class="external">source</a>). This blog post will show you how data in this manifest can be controlled by using MSBuild.</p>
 <p>For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the <a href="https://github.com/dotnet/runtime" class="external">&quot;Microsoft.Extensions packages&quot;</a>. The sky is the limit.</p>
 <h2 id="setup"><a href="#setup">Setup</a></h2>
@@ -499,7 +499,7 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
 <li><a href="https://cezarypiatek.github.io/post/setting-assembly-and-package-metadata/" class="external">Setting assembly and nuget package metadata in .NET Core</a></li>
 </ul>
         </main>
-        <footer class="max-w-prose">
+        <footer class="">
             
                         <!-- https://giscus.app -->
                         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->

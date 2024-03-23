@@ -183,7 +183,7 @@
         <main class="flex-1 p-4 text-gray-900">
             <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
-        <header class="prose tablet:prose-lg laptop:prose-xl">
+        <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.webp">
                 <img src="/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" alt="cover for Validated Strongly Typed IOptions" height="640" width="1280" />
@@ -202,7 +202,7 @@
                                 
             </span>
         </header>
-        <main class="prose tablet:prose-lg laptop:prose-xl">
+        <main class="prose laptop:mx-auto">
             <p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
 <p>As I understand it, the <code>configuration</code> concept in <code>.NET</code> is the combination of different configuration sources, called configuration providers, resulting in a single combined configuration. In contrast, the <code>options</code> concept provides access to <code>configuration</code> from our application code. I've attempted to illustrate it with the image below.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/001_configuration_sources.svg" width="1040" height="920" alt="Microsoft Extensions - IConfiguration - Different configuration sources" /></p>
@@ -698,7 +698,7 @@ typedOptions.Name.Should().Be(options.Name);
 <li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0" class="external">Options pattern in ASP.NET Core</a></li>
 </ul>
         </main>
-        <footer class="max-w-prose">
+        <footer class="">
             
                         <!-- https://giscus.app -->
                         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->

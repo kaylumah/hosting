@@ -185,7 +185,7 @@
         <main class="flex-1 p-4 text-gray-900">
             <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
-        <header class="prose tablet:prose-lg laptop:prose-xl">
+        <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20230414/openapi/cover_image.webp">
                 <img src="/assets/images/posts/20230414/openapi/cover_image.png" alt="cover for Generate C# client for OpenAPI - Revisited" height="640" width="1280" />
@@ -208,7 +208,7 @@
                                 
             </span>
         </header>
-        <main class="prose tablet:prose-lg laptop:prose-xl">
+        <main class="prose laptop:mx-auto">
             <p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
 <p>The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called <a href="https://stevetalkscode.co.uk/openapireference-commands" class="external">&quot;Using OpenApiReference To Generate Open API Client Code&quot;</a>. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.</p>
 <h2 id="safe-openapi-specification-on-build"><a href="#safe-openapi-specification-on-build">Safe OpenAPI specification on build</a></h2>
@@ -361,7 +361,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
 <li><a href="https://devblogs.microsoft.com/dotnet/generating-http-api-clients-using-visual-studio-connected-services/" class="external">Visual Studio Connected Services</a></li>
 </ul>
         </main>
-        <footer class="max-w-prose">
+        <footer class="">
             
                         <!-- https://giscus.app -->
                         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->

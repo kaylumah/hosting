@@ -184,7 +184,7 @@
         <main class="flex-1 p-4 text-gray-900">
             <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
-        <header class="prose tablet:prose-lg laptop:prose-xl">
+        <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20220917/azurite/cover_image.webp">
                 <img src="/assets/images/posts/20220917/azurite/cover_image.png" alt="cover for How to use Azurite for testing Azure Storage in dotnet?" height="640" width="1280" />
@@ -205,7 +205,7 @@
                                 
             </span>
         </header>
-        <main class="prose tablet:prose-lg laptop:prose-xl">
+        <main class="prose laptop:mx-auto">
             <h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
 <p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
 <p>There are a few ways we can go about testing this:</p>
@@ -349,7 +349,7 @@ public async Task Test2()
 <p>I started this journey with knowledge about Azurite and the dotnet SDK for Azure. I knew from experience that I no longer wanted to work with managed identity instead of connection strings. I needed a way to have repeatable tests on local and CI/CD environments. The funny thing is that after I had everything working the way I wanted, I could not use the required API I needed. For a moment, I had forgotten Azurite is an emulator, and not all features are supported. So I had to fall back on shared key credentials, which work fine over HTTPS and could already be used in pipelines. Luckily I designed the package to work with a variety of configurations.</p>
 <p>Usually, this is where I post a link to the posts GitHub repo. This time, the source code is the NuGet package on this <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite" class="external">GitHub Repo</a>. In the post itself, I focussed on NPM; if you are looking for how to integrate with Docker containers, you can find an example test <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite/blob/main/test/Unit/AzuriteDockerRunner.cs" class="external">in the GitHub repo</a> As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them. Especially since this is my first NuGet package let me know if it helped you out.</p>
         </main>
-        <footer class="max-w-prose">
+        <footer class="">
             
                         <!-- https://giscus.app -->
                         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->

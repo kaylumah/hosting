@@ -184,7 +184,7 @@
         <main class="flex-1 p-4 text-gray-900">
             <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
-        <header class="prose tablet:prose-lg laptop:prose-xl">
+        <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.webp">
                 <img src="/assets/images/posts/20211114/capture-logs-in-unit-tests/cover_image.png" alt="cover for Capture Logs in Unit Tests" height="640" width="1280" />
@@ -205,7 +205,7 @@
                                 
             </span>
         </header>
-        <main class="prose tablet:prose-lg laptop:prose-xl">
+        <main class="prose laptop:mx-auto">
             <p>In application code, we are used to writing log statements primarily for diagnostic purposes. For instance, we use logs to capture unexpected error flows. Therefore it is not uncommon to want to capture the log output in our unit tests. You have three distinctive options to handle log output in unit tests, as far as I can tell.</p>
 <h2 id="scenario"><a href="#scenario">Scenario</a></h2>
 <p>Our test scenario is a service or system under test (SUT) that takes a string input and returns it without modification. We rely on <code>Microsoft Extensions</code> for our logging purposes. As the test framework, we will be using <code>Xunit</code>.</p>
@@ -533,7 +533,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
 <p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/CaptureLogsInUnitTests" class="external">GitHub</a>.</p>
 <p>See you next time, stay healthy and happy coding to all 🧸!</p>
         </main>
-        <footer class="max-w-prose">
+        <footer class="">
             
                         <!-- https://giscus.app -->
                         <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
