@@ -44,17 +44,15 @@
     });
   }
 
-  // Assume consent is 'denied' as a placeholder
-  window.setGtagConsentStatus("default", "denied");
-
   let currentStatus = window.getCookieConsent();
   let cookiesAllowed = currentStatus == "granted";
 
   if (cookiesAllowed) {
-    // change back to console.log
-    alert("cookies already approved");
+    console.log("cookies already approved");
+    window.setGtagConsentStatus("default", "granted");
   } else {
-    alert("assume cookies are denied");
+    console.log("assume cookies are denied");
+    window.setGtagConsentStatus("default", "denied");
   }
 </script>
 <!-- Google tag (gtag.js) -->
