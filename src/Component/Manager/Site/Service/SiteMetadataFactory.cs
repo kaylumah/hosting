@@ -125,6 +125,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (hasCollections && collection != null)
             {
+                IEnumerable<Article> articlePages = result.OfType<Article>();
+                IEnumerable<Article> orderedArticlePages = articlePages.ByRecentlyPublished();
+                // Article mostRecent = orderedArticlePages.First();
+                // Article oldest = orderedArticlePages.Last();
+
                 foreach(TextFile file in collection)
                 {
                     // Some parts are regular page data
