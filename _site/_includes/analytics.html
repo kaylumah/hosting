@@ -22,6 +22,7 @@
           const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
           return consent;
       } catch (error) {
+          console.log("failed to retrieve consent", error);
           return "unknown";
       }
   };
