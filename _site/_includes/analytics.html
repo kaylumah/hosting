@@ -65,19 +65,3 @@
   gtag('js', new Date());
   gtag('config', 'UA-168549883-1');
 </script>
-
-<script>
-
-  window.handleCookieConsentGranted = function() {
-    console.log("handle consent!");
-    window.setCookieConsent("granted");
-    window.setGtagConsentStatus("update", "granted");
-    // TODO hide the banner
-  }
-
-  window.handleCookieConsentDenied = function() {
-    console.log("handle denied!");
-    // consider if we wish to deny
-  }
-
-</script>
