@@ -1,5 +1,5 @@
 ---
-title: Improve Code Quality with BannedSymbolAnalyzers
+title: Improve Code Quality with Banned Symbol Analyzers
 description: Learn how a simple Roslyn Analyzer can improve code consistency
 image: /assets/images/posts/20220131/improve-code-quality-with-bannedsymbolanalyzers/cover_image.png
 tags:

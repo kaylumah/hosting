@@ -71,7 +71,7 @@ public static partial class ServiceCollectionExtensions
 }
 ```
 
-> This snippet requires the `Microsoft.Extensions.Options.ConfigurationExtensions` package to work
+> This snippet requires the `Microsoft Extensions Options ConfigurationExtensions` package to work
 
 Looking at our dependency injection container right after this registration, we see more than just `IOptions`. We have a total of seven registrations at this point.
 

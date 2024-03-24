@@ -225,7 +225,7 @@ $ dotnet sln add src/Kaylumah.Logging.Extensions.Abstractions/Kaylumah.Logging.E
 
 Project `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj` added to the solution.
 </code></pre>
-<p>I chose <code>Kaylumah.Logging.Extensions.Abstractions</code> to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like <code>https://nuget.org</code>. That is not this article's scope, as publishing the default template with only the empty <code>Class1.cs</code> file would not benefit anyone by sharing it.</p>
+<p>I chose &quot;Kaylumah.Logging.Extensions.Abstractions&quot; to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like <code>https://nuget.org</code>. That is not this article's scope, as publishing the default template with only the empty <code>Class1.cs</code> file would not benefit anyone by sharing it.</p>
 <h2 id="why-do-we-even-need-metadata-in-our-packages"><a href="#why-do-we-even-need-metadata-in-our-packages">Why do we even need metadata in our packages?</a></h2>
 <p>Before showing you how I set metadata, I like to show you what happens without specifying any metadata. You can run the command <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-pack#description" class="external"><code>dotnet pack</code></a> for a single project or an entire solution. If you do it for the solution, only projects that are <code>&lt;IsPackable&gt;true&lt;/IsPackable&gt;</code> generate a package. The class library we created uses the <code>Microsoft.NET.Sdk</code> and is packable by default.</p>
 <pre><code class="language-shell">$ dotnet pack
@@ -238,11 +238,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Kaylumah.Logging.Extensions.Abstractions -&gt; C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 </code></pre>
-<p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
+<p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect &quot;Kaylumah Logging Extensions Abstractions 1.0.0 nupkg&quot;? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></p>
-<p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
+<p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for &quot;Kaylumah.Logging.*.nupkg&quot;. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></p>
-<p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains <code>Kaylumah.Logging.Extensions.Abstractions.nuspec</code>, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
+<p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains the &quot;Kaylumah Logging .nuspec&quot;, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd&quot;&gt;
   &lt;metadata&gt;
@@ -347,7 +347,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 </code></pre>
 <p>Unlike the <code>Copyright</code> tag do not remove the <code>Company</code> tag from the <code>.csproj</code> file. The result, this time, is a little different.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></p>
-<p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection.AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
+<p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
 <blockquote>
 <p>Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, <code>Company</code> and <code>Copyright</code> are likely to be the same for every project. The <code>Authors</code> and <code>PackageTags</code> could be project-specific; heck, even <code>Description</code> could be reused if so desired. One thing for sure is that <code>Id</code> can not be recycled since every package requires a unique Id.</p>
 </blockquote>
@@ -373,7 +373,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></p>
 <p>In case you are wondering where did <code>$(MSBuildThisFileDirectory)</code> come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019" class="external">Microsoft Docs</a> on the topic.</p>
 <h3 id="bonus-chapter"><a href="#bonus-chapter">Bonus Chapter</a></h3>
-<p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.</p>
+<p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code (Under repository in the nuspec).</p>
 <table>
 <thead>
 <tr>
@@ -384,24 +384,24 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 </thead>
 <tbody>
 <tr>
-<td>Repository/Url</td>
+<td>Url</td>
 <td>RepositoryUrl</td>
-<td>URL where sourcecode is located i.e. <code>https://github.com/NuGet/NuGet.Client.git</code></td>
+<td>URL where sourcecode is located</td>
 </tr>
 <tr>
-<td>Repository/Type</td>
+<td>Type</td>
 <td>RepositoryType</td>
 <td>The repository type i.e. <code>git</code></td>
 </tr>
 <tr>
-<td>Repository/Branch</td>
+<td>Branch</td>
 <td>RepositoryBranch</td>
-<td>Optional repository branch info i.e. <code>main</code></td>
+<td>Optional repository branch</td>
 </tr>
 <tr>
-<td>Repository/Commit</td>
+<td>Commit</td>
 <td>RepositoryCommit</td>
-<td>Optional commit information i.e. <code>0e4d1b598f350b3dc675018d539114d1328189ef</code></td>
+<td>Optional commit information</td>
 </tr>
 </tbody>
 </table>

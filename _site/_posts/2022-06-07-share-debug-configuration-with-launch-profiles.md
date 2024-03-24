@@ -383,10 +383,10 @@ See you next time, stay healthy and happy coding to all 🧸!
 
 ## Sources Used
 
-- https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md
-- https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html
-- https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support
-- https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run
-- https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson
-- https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson
+- [Project system - Launch Profiles](https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md)
+- [JetBrains - Launch Profiles](https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html)
+- [OmniSharp - LaunchProfiles](https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support)
+- [Dotnet CLI - Run command](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run)
+- [Launchsettings - environment variables](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson)
+- [Launchsettings.json file](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson)
 
