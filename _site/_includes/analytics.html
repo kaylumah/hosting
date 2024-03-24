@@ -10,11 +10,9 @@
   };
 
   window.setCookieConsent = function(status) {
-    // get dates for cookie expiration
     let today = new Date();
-    let oneYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-    console.log("cookie-policy-date", oneYear);
-    document.cookie = `cookie-consent=${status}; expires=${oneYear}; path=/`;
+    let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+    document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
   }
 
 </script>
