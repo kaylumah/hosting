@@ -255,7 +255,7 @@
   }
 }
 </code></pre>
-<p>I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of <code>codeGenerators/openApiToCSharpClient/jsonLibrary</code> to <code>SystemTextJson</code>. If you do not do this, you must install the <code>Newtonsoft.Json</code> package, or the generated code will not compile.</p>
+<p>I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of <code>codeGenerators openApiToCSharpClient jsonLibrary</code> to <code>SystemTextJson</code>. If you do not do this, you must install the <code>Newtonsoft.Json</code> package, or the generated code will not compile.</p>
 <h2 id="using-openapi-reference"><a href="#using-openapi-reference">Using OpenAPI Reference</a></h2>
 <h3 id="using-openapi-reference-from-visual-studio"><a href="#using-openapi-reference-from-visual-studio">Using OpenAPI reference from Visual Studio</a></h3>
 <p>I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.</p>
@@ -299,7 +299,7 @@
 </code></pre>
 <p>Yeah, that is right, it is similar but not the same as if done via Visual Studio.</p>
 <ul>
-<li>The package <code>Microsoft.Extensions.ApiDescription.Client</code> is missing.</li>
+<li>The package <code>Microsoft Extensions ApiDescription Client</code> is missing.</li>
 <li>The version for NewtonSoft is different.</li>
 <li>The CodeGenerator is not specified, and it defaults to <code>NSwagCSharp</code>.
 I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of <code>NSwag.ApiDescription.Client</code>, with the installed version it is just a preview build.</li>

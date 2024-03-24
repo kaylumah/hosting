@@ -91,7 +91,7 @@ I'd like to personally thank Gáspár for the effort to first revive Specflow an
   }
 }
 </code></pre>
-<p>I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of <code>codeGenerators/openApiToCSharpClient/jsonLibrary</code> to <code>SystemTextJson</code>. If you do not do this, you must install the <code>Newtonsoft.Json</code> package, or the generated code will not compile.</p>
+<p>I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of <code>codeGenerators openApiToCSharpClient jsonLibrary</code> to <code>SystemTextJson</code>. If you do not do this, you must install the <code>Newtonsoft.Json</code> package, or the generated code will not compile.</p>
 <h2 id="using-openapi-reference"><a href="#using-openapi-reference">Using OpenAPI Reference</a></h2>
 <h3 id="using-openapi-reference-from-visual-studio"><a href="#using-openapi-reference-from-visual-studio">Using OpenAPI reference from Visual Studio</a></h3>
 <p>I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.</p>
@@ -135,7 +135,7 @@ I'd like to personally thank Gáspár for the effort to first revive Specflow an
 </code></pre>
 <p>Yeah, that is right, it is similar but not the same as if done via Visual Studio.</p>
 <ul>
-<li>The package <code>Microsoft.Extensions.ApiDescription.Client</code> is missing.</li>
+<li>The package <code>Microsoft Extensions ApiDescription Client</code> is missing.</li>
 <li>The version for NewtonSoft is different.</li>
 <li>The CodeGenerator is not specified, and it defaults to <code>NSwagCSharp</code>.
 I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of <code>NSwag.ApiDescription.Client</code>, with the installed version it is just a preview build.</li>
@@ -672,12 +672,12 @@ dotnet run
 <p>See you next time, stay healthy and happy coding to all 🧸!</p>
 <h2 id="sources-used"><a href="#sources-used">Sources Used</a></h2>
 <ul>
-<li>https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md</li>
-<li>https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html</li>
-<li>https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support</li>
-<li>https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run</li>
-<li>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson</li>
-<li>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson</li>
+<li><a href="https://github.com/dotnet/project-system/blob/main/docs/launch-profiles.md" class="external">Project system - Launch Profiles</a></li>
+<li><a href="https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html" class="external">JetBrains - Launch Profiles</a></li>
+<li><a href="https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#launchsettingsjson-support" class="external">OmniSharp - LaunchProfiles</a></li>
+<li><a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-run" class="external">Dotnet CLI - Run command</a></li>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#environment-variables-set-in-generated-launchsettingsjson" class="external">Launchsettings - environment variables</a></li>
+<li><a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-6.0#development-and-launchsettingsjson" class="external">Launchsettings.json file</a></li>
 </ul>]]></content>
   </entry>
   <entry>
@@ -994,7 +994,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
   </entry>
   <entry>
     <id>https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
-    <title type="text"><![CDATA[Improve Code Quality with BannedSymbolAnalyzers]]></title>
+    <title type="text"><![CDATA[Improve Code Quality with Banned Symbol Analyzers]]></title>
     <summary type="text"><![CDATA[Learn how a simple Roslyn Analyzer can improve code consistency]]></summary>
     <published>DateTimeOffset_7</published>
     <updated>DateTimeOffset_7</updated>
@@ -1277,7 +1277,7 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
 }
 </code></pre>
 <blockquote>
-<p>This snippet requires the <code>Microsoft.Extensions.Options.ConfigurationExtensions</code> package to work</p>
+<p>This snippet requires the <code>Microsoft Extensions Options ConfigurationExtensions</code> package to work</p>
 </blockquote>
 <p>Looking at our dependency injection container right after this registration, we see more than just <code>IOptions</code>. We have a total of seven registrations at this point.</p>
 <pre><code class="language-output">ServiceType = 'Microsoft.Extensions.Options.IOptions`1[TOptions]' ImplementationType = 'Microsoft.Extensions.Options.UnnamedOptionsManager`1[TOptions]'
@@ -2334,7 +2334,7 @@ namespace Kaylumah.GenerateCSharpClientForOpenAPI.Client.ApiClient
 </tr>
 </tbody>
 </table>
-<p>If you look closely at your build log, you see the following line <code>Executing file 'nswag.json' with variables ''...</code>. So how do we pass variables to NSwag? Update the statement to <code>$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration)</code> . Here we define a variable named Configuration and assign it the MSBuild value for $(Configuration). If we build our project, the logline reads <code>Executing file 'nswag.json' with variables 'Configuration=Debug'...</code>. You also have the option to supply default values in your NSwag configuration. This way, you don't see it as part of your build log, but it helps omit parts from the command.</p>
+<p>If you look closely at your build log, you see the following line <code>Executing file 'nswag.json' with variables ''...</code>. So how do we pass variables to NSwag? Update the statement to &quot;$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration)&quot; . Here we define a variable named Configuration and assign it the MSBuild value for $(Configuration). If we build our project, the logline reads <code>Executing file 'nswag.json' with variables 'Configuration=Debug'...</code>. You also have the option to supply default values in your NSwag configuration. This way, you don't see it as part of your build log, but it helps omit parts from the command.</p>
 <table>
 <thead>
 <tr>
@@ -2502,7 +2502,7 @@ dotnet add package Newtonsoft.Json
 <p>Like before, we also need a webapi project.</p>
 <pre><code class="language-sh">dotnet new webapi --framework netcoreapp3.1 --output src/Apis/Swashbuckle/WeatherForecastApi --name Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi
 </code></pre>
-<p>Of course, we could launch the API project and browse to <code>https://localhost:5001/swagger/index.html</code> and download the specification from there. But I will opt for automating the process with a <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore#swashbuckleaspnetcorecli" class="external">CLI</a> provided as a dotnet tool by Swashbuckle.</p>
+<p>Of course, we could launch the API project and browse to <code>https://localhost:5001/swagger</code> and download the specification from there. But I will opt for automating the process with a <a href="https://github.com/domaindrivendev/Swashbuckle.AspNetCore#swashbuckleaspnetcorecli" class="external">CLI</a> provided as a dotnet tool by Swashbuckle.</p>
 <p>Since we are using netcoreapp3.1 we can make use of a local tool manifest.</p>
 <pre><code class="language-sh">dotnet new tool-manifest
 dotnet tool install --version 6.1.4 Swashbuckle.AspNetCore.Cli
@@ -3425,7 +3425,7 @@ $ dotnet sln add src/Kaylumah.Logging.Extensions.Abstractions/Kaylumah.Logging.E
 
 Project `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj` added to the solution.
 </code></pre>
-<p>I chose <code>Kaylumah.Logging.Extensions.Abstractions</code> to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like <code>https://nuget.org</code>. That is not this article's scope, as publishing the default template with only the empty <code>Class1.cs</code> file would not benefit anyone by sharing it.</p>
+<p>I chose &quot;Kaylumah.Logging.Extensions.Abstractions&quot; to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like <code>https://nuget.org</code>. That is not this article's scope, as publishing the default template with only the empty <code>Class1.cs</code> file would not benefit anyone by sharing it.</p>
 <h2 id="why-do-we-even-need-metadata-in-our-packages"><a href="#why-do-we-even-need-metadata-in-our-packages">Why do we even need metadata in our packages?</a></h2>
 <p>Before showing you how I set metadata, I like to show you what happens without specifying any metadata. You can run the command <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-pack#description" class="external"><code>dotnet pack</code></a> for a single project or an entire solution. If you do it for the solution, only projects that are <code>&lt;IsPackable&gt;true&lt;/IsPackable&gt;</code> generate a package. The class library we created uses the <code>Microsoft.NET.Sdk</code> and is packable by default.</p>
 <pre><code class="language-shell">$ dotnet pack
@@ -3438,11 +3438,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Kaylumah.Logging.Extensions.Abstractions -&gt; C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 </code></pre>
-<p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
+<p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect &quot;Kaylumah Logging Extensions Abstractions 1.0.0 nupkg&quot;? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></p>
-<p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for <code>Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg</code>. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
+<p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for &quot;Kaylumah.Logging.*.nupkg&quot;. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></p>
-<p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains <code>Kaylumah.Logging.Extensions.Abstractions.nuspec</code>, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
+<p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains the &quot;Kaylumah Logging .nuspec&quot;, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd&quot;&gt;
   &lt;metadata&gt;
@@ -3547,7 +3547,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 </code></pre>
 <p>Unlike the <code>Copyright</code> tag do not remove the <code>Company</code> tag from the <code>.csproj</code> file. The result, this time, is a little different.</p>
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></p>
-<p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection.AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
+<p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
 <blockquote>
 <p>Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, <code>Company</code> and <code>Copyright</code> are likely to be the same for every project. The <code>Authors</code> and <code>PackageTags</code> could be project-specific; heck, even <code>Description</code> could be reused if so desired. One thing for sure is that <code>Id</code> can not be recycled since every package requires a unique Id.</p>
 </blockquote>
@@ -3573,7 +3573,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 <p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></p>
 <p>In case you are wondering where did <code>$(MSBuildThisFileDirectory)</code> come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019" class="external">Microsoft Docs</a> on the topic.</p>
 <h3 id="bonus-chapter"><a href="#bonus-chapter">Bonus Chapter</a></h3>
-<p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.</p>
+<p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code (Under repository in the nuspec).</p>
 <table>
 <thead>
 <tr>
@@ -3584,24 +3584,24 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 </thead>
 <tbody>
 <tr>
-<td>Repository/Url</td>
+<td>Url</td>
 <td>RepositoryUrl</td>
-<td>URL where sourcecode is located i.e. <code>https://github.com/NuGet/NuGet.Client.git</code></td>
+<td>URL where sourcecode is located</td>
 </tr>
 <tr>
-<td>Repository/Type</td>
+<td>Type</td>
 <td>RepositoryType</td>
 <td>The repository type i.e. <code>git</code></td>
 </tr>
 <tr>
-<td>Repository/Branch</td>
+<td>Branch</td>
 <td>RepositoryBranch</td>
-<td>Optional repository branch info i.e. <code>main</code></td>
+<td>Optional repository branch</td>
 </tr>
 <tr>
-<td>Repository/Commit</td>
+<td>Commit</td>
 <td>RepositoryCommit</td>
-<td>Optional commit information i.e. <code>0e4d1b598f350b3dc675018d539114d1328189ef</code></td>
+<td>Optional commit information</td>
 </tr>
 </tbody>
 </table>
