@@ -115,7 +115,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 Article pageMetaData = file.ToArticle(siteGuid);
                 result.Add(pageMetaData);
             }
- 
+
             foreach (TextFile file in staticFiles)
             {
                 Dictionary<string, object?> fileAsData = file.ToDictionary();
@@ -130,7 +130,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 // Article mostRecent = orderedArticlePages.First();
                 // Article oldest = orderedArticlePages.Last();
 
-                foreach(TextFile file in collection)
+                foreach (TextFile file in collection)
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
