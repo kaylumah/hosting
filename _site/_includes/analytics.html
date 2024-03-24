@@ -43,6 +43,16 @@
 
   // Assume consent is 'denied' as a placeholder
   window.setGtagStatus("default", "denied");
+
+  let currentStatus = window.getCookieConsent();
+  let cookiesAllowed = currentStatus == "granted";
+
+  if (cookiesAllowed) {
+    // change back to console.log
+    alert("cookies already approved");
+  } else {
+    alert("assume cookies are denied");
+  }
 </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1">
@@ -57,25 +67,14 @@
 
 <script>
 
-
   window.handleCookieConsentGranted = function() {
     console.log("handle consent!");
-    
+    window.setCookieConsent("granted");
+    window.setGtagStatus("update", "granted");
   }
 
   window.handleCookieConsentDenied = function() {
     console.log("handle denied!");
-    document.cookie = "cookie-consent=denied; path=/";
-  }
-
-  let currentStatus = window.getCookieConsent();
-  let cookiesAllowed = currentStatus == "granted";
-
-  if (cookiesAllowed) {
-    // change back to console.log
-    alert("cookies already approved");
-  } else {
-    alert("assume cookies are denied");
   }
 
 </script>
