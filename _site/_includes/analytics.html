@@ -23,7 +23,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
 
-  window.setGtagStatus = function(mode, status) {
+  window.setGtagConsentStatus = function(mode, status) {
 
     if (mode != "update" && mode != "default") {
       throw new Error(`Mode ${mode} is not supported!`);
@@ -42,7 +42,7 @@
   }
 
   // Assume consent is 'denied' as a placeholder
-  window.setGtagStatus("default", "denied");
+  window.setGtagConsentStatus("default", "denied");
 
   let currentStatus = window.getCookieConsent();
   let cookiesAllowed = currentStatus == "granted";
@@ -70,7 +70,7 @@
   window.handleCookieConsentGranted = function() {
     console.log("handle consent!");
     window.setCookieConsent("granted");
-    window.setGtagStatus("update", "granted");
+    window.setGtagConsentStatus("update", "granted");
     // TODO hide the banner
   }
 
