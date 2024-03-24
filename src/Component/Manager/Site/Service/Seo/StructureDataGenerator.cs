@@ -52,7 +52,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     string ldjson = blogPost.ToString(settings);
                     return ldjson;
                 }
-                else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
+                else if (pageMetaData.IsCollection() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
                 {
                     List<Article> articles = renderData.Site.FeaturedArticles.ToList();
 
@@ -78,6 +78,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Blog blog = new Blog();
             blog.Url = pageUri;
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            blog.DatePublished = page.Published;
+            blog.DateModified = page.Modified;
+#pragma warning restore RS0030
             blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
             return blog;
         }

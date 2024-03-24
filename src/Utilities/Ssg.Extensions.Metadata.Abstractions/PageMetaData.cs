@@ -177,11 +177,60 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         public DateTimeOffset Published => GetPublishedDate();
-        public DateTimeOffset Modified => GetDateTimeOffsetValue(nameof(Modified));
+        public DateTimeOffset Modified => GetModifiedDate();
 
         protected virtual DateTimeOffset GetPublishedDate()
         {
             DateTimeOffset result = GetDateTimeOffsetValue(nameof(Published));
+            return result;
+        }
+
+        protected virtual DateTimeOffset GetModifiedDate()
+        {
+            DateTimeOffset result = GetDateTimeOffsetValue(nameof(Modified));
+            return result;
+        }
+    }
+
+    public class CollectionPage : PageMetaData
+    {
+        readonly IEnumerable<Article> _Articles;
+
+        public CollectionPage(PageMetaData internalData, IEnumerable<Article> articles) : base(internalData)
+        {
+            _Articles = articles.ByRecentlyPublished();
+        }
+
+        protected override DateTimeOffset GetPublishedDate()
+        {
+            Article? firstPublishedArticle = _Articles.LastOrDefault();
+            DateTimeOffset result;
+            if (firstPublishedArticle != null)
+            {
+                result = firstPublishedArticle.Published;
+            }
+            else
+            {
+                result = base.GetPublishedDate();
+            }
+
+            return result;
+        }
+
+        protected override DateTimeOffset GetModifiedDate()
+        {
+            Article? lastPublishedArticle = _Articles.FirstOrDefault();
+            DateTimeOffset result;
+            if (lastPublishedArticle != null)
+            {
+                result = lastPublishedArticle.Published;
+            }
+            else
+            {
+                // note: if there are no articles use Published date for both fields in collection
+                result = base.GetPublishedDate();
+            }
+
             return result;
         }
     }
@@ -298,6 +347,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static bool IsPage(this PageMetaData page)
         {
             bool result = page.IsContentType("Page");
+            return result;
+        }
+
+        public static bool IsCollection(this PageMetaData page)
+        {
+            bool result = page.IsContentType("Collection");
             return result;
         }
 

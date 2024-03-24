@@ -53,8 +53,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 siteMapNodes.Add(node);
             }
 
+            IEnumerable<SiteMapNode> orderedNodes = siteMapNodes.OrderBy(node => node.Url);
+            List<SiteMapNode> result = orderedNodes.ToList();
+
             SiteMap siteMap = new SiteMap();
-            siteMap.Items = siteMapNodes;
+            siteMap.Items = result;
             return siteMap;
         }
     }
