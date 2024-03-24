@@ -200,6 +200,39 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             _Articles = articles.ByRecentlyPublished();
         }
+
+        protected override DateTimeOffset GetPublishedDate()
+        {
+            Article? firstPublishedArticle = _Articles.LastOrDefault();
+            DateTimeOffset result;
+            if (firstPublishedArticle != null)
+            {
+                result = firstPublishedArticle.Published;
+            }
+            else
+            {
+                result = base.GetPublishedDate();
+            }
+
+            return result;
+        }
+
+        protected override DateTimeOffset GetModifiedDate()
+        {
+            Article? lastPublishedArticle = _Articles.FirstOrDefault();
+            DateTimeOffset result;
+            if (lastPublishedArticle != null)
+            {
+                result = lastPublishedArticle.Published;
+            }
+            else
+            {
+                // note: if there are no articles use Published date for both fields in collection
+                result = base.GetPublishedDate();
+            }
+
+            return result;
+        }
     }
 
     public class Article : PageMetaData
