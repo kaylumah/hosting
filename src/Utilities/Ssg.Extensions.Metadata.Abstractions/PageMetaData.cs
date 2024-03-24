@@ -194,9 +194,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class CollectionPage : PageMetaData
     {
+        readonly IEnumerable<Article> _Articles;
+
         public CollectionPage(PageMetaData internalData, IEnumerable<Article> articles) : base(internalData)
         {
-            IEnumerable<Article> orderedArticlePages = articles.ByRecentlyPublished();
+            _Articles = articles.ByRecentlyPublished();
         }
     }
 
