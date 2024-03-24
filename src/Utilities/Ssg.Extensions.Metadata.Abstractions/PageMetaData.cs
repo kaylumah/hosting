@@ -177,11 +177,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         public DateTimeOffset Published => GetPublishedDate();
-        public DateTimeOffset Modified => GetDateTimeOffsetValue(nameof(Modified));
+        public DateTimeOffset Modified => GetModifiedDate();
 
         protected virtual DateTimeOffset GetPublishedDate()
         {
             DateTimeOffset result = GetDateTimeOffsetValue(nameof(Published));
+            return result;
+        }
+
+        protected virtual DateTimeOffset GetModifiedDate()
+        {
+            DateTimeOffset result = GetDateTimeOffsetValue(nameof(Modified));
             return result;
         }
     }
