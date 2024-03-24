@@ -10,6 +10,11 @@
   };
 
   window.setCookieConsent = function(status) {
+
+    if (status != "denied" && status != "granted") {
+      throw new Error(`Status ${status} is not supported!`);
+    }
+
     let today = new Date();
     let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
     document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
