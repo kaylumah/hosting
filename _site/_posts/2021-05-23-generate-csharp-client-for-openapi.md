@@ -127,7 +127,7 @@ I encourage you to take a look at the documentation to see all configuration opt
 | [CSharpGeneratorBaseSettings](https://github.com/RicoSuter/NSwag/wiki/CSharpGeneratorBaseSettings) | Base settings for all C# code generators. |
 | [CSharpClientGeneratorSettings](https://github.com/RicoSuter/NSwag/wiki/CSharpClientGeneratorSettings) | Settings for C# clients. |
 
-If you look closely at your build log, you see the following line `Executing file 'nswag.json' with variables ''...`. So how do we pass variables to NSwag? Update the statement to `$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration)` . Here we define a variable named Configuration and assign it the MSBuild value for $(Configuration). If we build our project, the logline reads `Executing file 'nswag.json' with variables 'Configuration=Debug'...`. You also have the option to supply default values in your NSwag configuration. This way, you don't see it as part of your build log, but it helps omit parts from the command.
+If you look closely at your build log, you see the following line `Executing file 'nswag.json' with variables ''...`. So how do we pass variables to NSwag? Update the statement to "$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration)" . Here we define a variable named Configuration and assign it the MSBuild value for $(Configuration). If we build our project, the logline reads `Executing file 'nswag.json' with variables 'Configuration=Debug'...`. You also have the option to supply default values in your NSwag configuration. This way, you don't see it as part of your build log, but it helps omit parts from the command.
 
 | Property | Description |
 | - | - |
@@ -305,7 +305,7 @@ Like before, we also need a webapi project.
 dotnet new webapi --framework netcoreapp3.1 --output src/Apis/Swashbuckle/WeatherForecastApi --name Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi
 ```
 
-Of course, we could launch the API project and browse to `https://localhost:5001/swagger/index.html` and download the specification from there. But I will opt for automating the process with a [CLI](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#swashbuckleaspnetcorecli) provided as a dotnet tool by Swashbuckle.
+Of course, we could launch the API project and browse to `https://localhost:5001/swagger` and download the specification from there. But I will opt for automating the process with a [CLI](https://github.com/domaindrivendev/Swashbuckle.AspNetCore#swashbuckleaspnetcorecli) provided as a dotnet tool by Swashbuckle.
 
 Since we are using netcoreapp3.1 we can make use of a local tool manifest.
 

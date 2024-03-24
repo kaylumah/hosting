@@ -35,7 +35,7 @@ $ dotnet sln add src/Kaylumah.Logging.Extensions.Abstractions/Kaylumah.Logging.E
 Project `src\Kaylumah.Logging.Extensions.Abstractions\Kaylumah.Logging.Extensions.Abstractions.csproj` added to the solution.
 ```
 
-I chose `Kaylumah.Logging.Extensions.Abstractions` to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like `https://nuget.org`. That is not this article's scope, as publishing the default template with only the empty `Class1.cs` file would not benefit anyone by sharing it.
+I chose "Kaylumah.Logging.Extensions.Abstractions" to keep inline and in style with the extension packages Microsoft provides. By default, the namespace of the assembly sets the unique package identifier. Of course, this only matters when publishing the package to a NuGet source like `https://nuget.org`. That is not this article's scope, as publishing the default template with only the empty `Class1.cs` file would not benefit anyone by sharing it.
 
 ## Why do we even need metadata in our packages?
 
@@ -53,15 +53,15 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 ```
 
-This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`? My prefered way is the [NuGet Package Explorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer), which is unfortunately only available on Windows.
+This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect "Kaylumah Logging Extensions Abstractions 1.0.0 nupkg"? My prefered way is the [NuGet Package Explorer](https://github.com/NuGetPackageExplorer/NuGetPackageExplorer), which is unfortunately only available on Windows.
 
 ![Without Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png){width=4500 height=4000}
 
-There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading [the package](https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13) from nuget.org and view it like we just did for `Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg`. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.
+There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading [the package](https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13) from nuget.org and view it like we just did for "Kaylumah.Logging.*.nupkg". Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.
 
 ![Microsoft Extensions Logging Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png){width=4500 height=6000}
 
-Now that is what I call metadata. Remember that `.nupkg` files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from `.nupkg` to `.zip` and then extracting it. It contains `Kaylumah.Logging.Extensions.Abstractions.nuspec`, which is the manifest I was talking about in the introduction. At the moment, it looks like this:
+Now that is what I call metadata. Remember that `.nupkg` files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from `.nupkg` to `.zip` and then extracting it. It contains the "Kaylumah Logging .nuspec", which is the manifest I was talking about in the introduction. At the moment, it looks like this:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -200,7 +200,7 @@ Unlike the `Copyright` tag do not remove the `Company` tag from the `.csproj` fi
 
 ![Using BuildProps NuGet Package Explorer V2](/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png){width=4500 height=4000}
 
-It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why if we would read the `System.Reflection.AssemblyCopyrightAttribute` the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [msbuild comand line reference](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
+It appears that I have two different values for `Company`; this happens because `Directory.Build.props` gets imported before your project, and `Directory.Build.targets` gets imported after. The latest registration wins. That is why if we would read the `System.Reflection AssemblyCopyrightAttribute` the value for `Company` is "Kaylumah", but when we set `Copyright`, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (`dotnet build -pp:fullproject.xml`). See [msbuild comand line reference](https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019) for an explanation.
 
 > Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, `Company` and `Copyright` are likely to be the same for every project. The `Authors` and `PackageTags` could be project-specific; heck, even `Description` could be reused if so desired. One thing for sure is that `Id` can not be recycled since every package requires a unique Id.
 
@@ -231,14 +231,14 @@ In case you are wondering where did `$(MSBuildThisFileDirectory)` come from, it 
 
 ### Bonus Chapter
 
-I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code.
+I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code (Under repository in the nuspec).
 
 | NuSpec | MSBuild | Description |
 | - | - | - |
-| Repository/Url | RepositoryUrl | URL where sourcecode is located i.e. `https://github.com/NuGet/NuGet.Client.git` |
-| Repository/Type | RepositoryType | The repository type i.e. `git` |
-| Repository/Branch | RepositoryBranch | Optional repository branch info i.e. `main` |
-| Repository/Commit | RepositoryCommit | Optional commit information i.e. `0e4d1b598f350b3dc675018d539114d1328189ef` |
+| Url | RepositoryUrl | URL where sourcecode is located |
+| Type | RepositoryType | The repository type i.e. `git` |
+| Branch | RepositoryBranch | Optional repository branch |
+| Commit | RepositoryCommit | Optional commit information |
 
 Before I explain this, I am getting a bit tired of running `dotnet pack` every time. Lucky for me, there is a way to generate a package on build. Update the `.csproj` file to look like this:
 

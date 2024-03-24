@@ -70,7 +70,7 @@ You can uncomment `$(NSwagExe_Net70) new` to generate a fresh nswag.json, the co
 }
 ```
 
-I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of `codeGenerators/openApiToCSharpClient/jsonLibrary` to `SystemTextJson`. If you do not do this, you must install the `Newtonsoft.Json` package, or the generated code will not compile.
+I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of `codeGenerators openApiToCSharpClient jsonLibrary` to `SystemTextJson`. If you do not do this, you must install the `Newtonsoft.Json` package, or the generated code will not compile.
 
 ## Using OpenAPI Reference
 
@@ -133,7 +133,7 @@ The result looks like this:
 ```
 
 Yeah, that is right, it is similar but not the same as if done via Visual Studio. 
-- The package `Microsoft.Extensions.ApiDescription.Client` is missing.
+- The package `Microsoft Extensions ApiDescription Client` is missing.
 - The version for NewtonSoft is different.
 - The CodeGenerator is not specified, and it defaults to `NSwagCSharp`.
 I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of `NSwag.ApiDescription.Client`, with the installed version it is just a preview build.
