@@ -7,3 +7,32 @@
 
   gtag('config', 'UA-168549883-1');
 </script>
+
+<script>
+  window.handleCookieConsentGranted = function() {
+    console.log("handle consent!");
+  }
+
+  window.handleCookieConsentDenied = function() {
+    console.log("handle denied!");
+  }
+
+  window.getCookieConsent = function() {
+      try {
+          const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
+          return consent;
+      } catch (error) {
+          return "unknown";
+      }
+  };
+
+  let currentStatus = window.getCookieConsent();
+  let cookiesAllowed = currentStatus == "granted";
+
+  if (cookiesAllowed) {
+    console.log("cookies already approved");
+  } else {
+    console.log("assume cookies are denied");
+  }
+
+</script>
