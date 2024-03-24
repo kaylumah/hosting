@@ -134,7 +134,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
-                    result.Add(pageMetaData);
+
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData);
+                    result.Add(collectionPage);
                 }
             }
 

@@ -186,6 +186,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
 
+    public class CollectionPage : PageMetaData
+    {
+        public CollectionPage(PageMetaData internalData) : base(internalData)
+        {
+        }
+    }
+
     public class Article : PageMetaData
     {
         public bool SocialShare => GetBoolValue(nameof(SocialShare));
