@@ -78,6 +78,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Blog blog = new Blog();
             blog.Url = pageUri;
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            blog.DatePublished = page.Published;
+            blog.DateModified = page.Modified;
+#pragma warning restore RS0030
             blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
             return blog;
         }
