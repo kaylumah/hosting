@@ -73,6 +73,17 @@
                 <!-- <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="{{ build.sourcebaseuri }}/{{ build.githash }}">{{ build.shortgithash }}</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="{{ build.sourcebuilduri }}/{{ build.buildid }}">{{ build.buildnumber }}</a></span> -->
             </div>
         </footer>
+        <div class="fixed bottom-0 p-6 w-full flex justify-center z-[2000]">
+            <div class="bg-white bg-opacity-95 text-xs rounded-md fade w-[450px] show">
+                <div class="p-4 flex items-center justify-between px-6 rounded border border-green-700">
+                    <p>
+                        By using XYZ, you agree to our
+                        <a class="underline font-bold" href="#" target="_blank">Cookies Policy.</a>
+                    </p>
+                    <button  type="button" class="px-5 py-3 rounded-lg text-white bg-green-700 hover:bg-green-800 ml-1.5 min-w-max">Accept</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
