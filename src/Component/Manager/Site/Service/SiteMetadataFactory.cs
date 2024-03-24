@@ -126,16 +126,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (hasCollections && collection != null)
             {
                 IEnumerable<Article> articlePages = result.OfType<Article>();
-                IEnumerable<Article> orderedArticlePages = articlePages.ByRecentlyPublished();
-                // Article mostRecent = orderedArticlePages.First();
-                // Article oldest = orderedArticlePages.Last();
 
                 foreach (TextFile file in collection)
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
 
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData);
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, articlePages);
                     result.Add(collectionPage);
                 }
             }
