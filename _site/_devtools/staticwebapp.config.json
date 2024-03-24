@@ -37,6 +37,11 @@
       "statusCode": 301
     },
     {
+      "route": "/privacy",
+      "redirect": "/privacy.html",
+      "statusCode": 301
+    },
+    {
       "route": "/feed",
       "redirect": "/feed.xml"
     },
