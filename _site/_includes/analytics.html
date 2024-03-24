@@ -19,10 +19,12 @@
 
   window.handleCookieConsentGranted = function() {
     console.log("handle consent!");
+    document.cookie = "cookie-consent=granted; expires=" + oneYear + "; path=/";
   }
 
   window.handleCookieConsentDenied = function() {
     console.log("handle denied!");
+    document.cookie = "cookie-consent=denied; path=/";
   }
 
   window.getCookieConsent = function() {
