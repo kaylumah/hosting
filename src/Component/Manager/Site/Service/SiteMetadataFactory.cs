@@ -77,6 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
             bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
             bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
+            bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
 
             List<TextFile> regularFiles = new List<TextFile>();
             if (hasPages && pages != null)
