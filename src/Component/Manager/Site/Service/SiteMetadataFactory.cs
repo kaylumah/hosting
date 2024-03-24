@@ -80,6 +80,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
 
             List<TextFile> regularFiles = new List<TextFile>();
+            List<TextFile> articleFiles = new List<TextFile>();
+            List<TextFile> staticFiles = new List<TextFile>();
             if (hasPages && pages != null)
             {
                 regularFiles.AddRange(pages);
@@ -90,31 +92,45 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 regularFiles.AddRange(announcements);
             }
 
-            List<BasePage> result = new List<BasePage>();
-
             if (hasArticles && articles != null)
             {
-                foreach (TextFile file in articles)
-                {
-                    Article pageMetaData = file.ToArticle(siteGuid);
-                    result.Add(pageMetaData);
-                }
+                articleFiles.AddRange(articles);
             }
 
             if (hasStatics && statics != null)
             {
-                foreach (TextFile file in statics)
-                {
-                    Dictionary<string, object?> fileAsData = file.ToDictionary();
-                    StaticContent pageMetaData = new StaticContent(fileAsData);
-                    result.Add(pageMetaData);
-                }
+                staticFiles.AddRange(statics);
             }
+
+            List<BasePage> result = new List<BasePage>();
 
             foreach (TextFile file in regularFiles)
             {
                 PageMetaData pageMetaData = file.ToPage(siteGuid);
                 result.Add(pageMetaData);
+            }
+
+            foreach (TextFile file in articleFiles)
+            {
+                Article pageMetaData = file.ToArticle(siteGuid);
+                result.Add(pageMetaData);
+            }
+ 
+            foreach (TextFile file in staticFiles)
+            {
+                Dictionary<string, object?> fileAsData = file.ToDictionary();
+                StaticContent pageMetaData = new StaticContent(fileAsData);
+                result.Add(pageMetaData);
+            }
+
+            if (hasCollections && collection != null)
+            {
+                foreach(TextFile file in collection)
+                {
+                    // Some parts are regular page data
+                    PageMetaData pageMetaData = file.ToPage(siteGuid);
+                    result.Add(pageMetaData);
+                }
             }
 
             return result;
