@@ -8,6 +8,15 @@
           return "unknown";
       }
   };
+
+  window.setCookieConsent = function(status) {
+    // get dates for cookie expiration
+    let today = new Date();
+    let oneYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+    console.log("cookie-policy-date", oneYear);
+    document.cookie = `cookie-consent=${status}; expires=${oneYear}; path=/`;
+  }
+
 </script>
 <script>
   // Define dataLayer and the gtag function.
@@ -48,13 +57,10 @@
 
 <script>
 
-  // get dates for cookie expiration
-  let today = new Date();
-  let oneYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-  console.log("cookie-policy-date", oneYear);
+
   window.handleCookieConsentGranted = function() {
     console.log("handle consent!");
-    document.cookie = "cookie-consent=granted; expires=" + oneYear + "; path=/";
+    
   }
 
   window.handleCookieConsentDenied = function() {
