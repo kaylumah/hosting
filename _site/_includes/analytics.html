@@ -14,37 +14,24 @@
     }
 
     gtag('consent', mode, {
-      // 'ad_storage': status,
-      // 'ad_user_data': status,
-      // 'ad_personalization': status,
+      'ad_storage': status,
+      'ad_user_data': status,
+      'ad_personalization': status,
       'analytics_storage': status
     });
   }
 
   // Assume consent is 'denied' as a placeholder
-  // setGtagStatus("default", "denied");
-  window.setGtagStatus("default", "granted");
+  window.setGtagStatus("default", "denied");
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1">
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
+  gtag('js', new Date());
   gtag('config', 'UA-168549883-1');
 </script>
 
@@ -87,4 +74,4 @@
     alert("assume cookies are denied");
   }
 
-</script> -->
+</script>
