@@ -309,6 +309,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        public static bool IsCollection(this PageMetaData page)
+        {
+            bool result = page.IsContentType("Collection");
+            return result;
+        }
+
         public static IEnumerable<PageMetaData> IsArticle(this IEnumerable<PageMetaData> source)
         {
             IEnumerable<PageMetaData> result = source.Where(IsArticle);

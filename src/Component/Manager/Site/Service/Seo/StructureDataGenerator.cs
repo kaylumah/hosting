@@ -52,7 +52,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     string ldjson = blogPost.ToString(settings);
                     return ldjson;
                 }
-                else if (pageMetaData.IsPage() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
+                else if (pageMetaData.IsCollection() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
                 {
                     List<Article> articles = renderData.Site.FeaturedArticles.ToList();
 
