@@ -9,6 +9,14 @@
 </script>
 
 <script>
+
+  // get dates for cookie expiration
+  let today = new Date();
+  let oneYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+  console.log("cookie-policy-date", oneYear);
+
+
+
   window.handleCookieConsentGranted = function() {
     console.log("handle consent!");
   }
@@ -31,9 +39,10 @@
   let cookiesAllowed = currentStatus == "granted";
 
   if (cookiesAllowed) {
-    console.log("cookies already approved");
+    // change back to console.log
+    alert("cookies already approved");
   } else {
-    console.log("assume cookies are denied");
+    alert("assume cookies are denied");
   }
 
 </script>
