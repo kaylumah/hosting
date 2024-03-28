@@ -15,7 +15,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    [Obsolete("do not use SiteMetadataFactory anymore")]
+    // [Obsolete("do not use SiteMetadataFactory anymore")]
     public partial class SiteMetadataFactory
     {
         [LoggerMessage(
