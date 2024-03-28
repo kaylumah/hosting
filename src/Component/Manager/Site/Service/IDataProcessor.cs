@@ -64,19 +64,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    public interface IDataProcessor
+    public interface IDataFileProcessor
     {
         bool IsApplicable(IFileSystemInfo file);
 
         void Execute(SiteMetaData siteMetaData, IFileSystemInfo file);
     }
 
-    public interface IKnownFileProcessor : IDataProcessor
+    public interface IKnownFileProcessor : IDataFileProcessor
     {
         string KnownFileName
         { get; }
 
-        bool IDataProcessor.IsApplicable(IFileSystemInfo file)
+        bool IDataFileProcessor.IsApplicable(IFileSystemInfo file)
         {
             string fileName = file.Name;
             bool fileNameMatches = fileName.Equals(KnownFileName, StringComparison.Ordinal);
@@ -84,12 +84,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
-    public interface IKnownExtensionProcessor : IDataProcessor
+    public interface IKnownExtensionProcessor : IDataFileProcessor
     {
         string KnownExtension
         { get; }
 
-        bool IDataProcessor.IsApplicable(IFileSystemInfo file)
+        bool IDataFileProcessor.IsApplicable(IFileSystemInfo file)
         {
             string extension = file.Extension;
             bool extensionMatches = extension.Equals(KnownExtension, StringComparison.Ordinal);
