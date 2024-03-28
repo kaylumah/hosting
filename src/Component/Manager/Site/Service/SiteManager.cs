@@ -30,7 +30,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly ILogger _Logger;
         readonly IFileProcessor _FileProcessor;
         readonly SiteInfo _SiteInfo;
-        readonly SiteMetadataFactory _SiteMetadataFactory;
         readonly TimeProvider _TimeProvider;
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
@@ -43,7 +42,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFileSystem fileSystem,
             ILogger<SiteManager> logger,
             SiteInfo siteInfo,
-            SiteMetadataFactory siteMetadataFactory,
             TimeProvider timeProvider,
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
@@ -53,7 +51,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _RenderPlugins = renderPlugins.ToArray();
             _SiteArtifactPlugins = siteArtifactPlugins.ToArray();
-            _SiteMetadataFactory = siteMetadataFactory;
             _FileProcessor = fileProcessor;
             _ArtifactAccess = artifactAccess;
             _FileSystem = fileSystem;

@@ -36,7 +36,6 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IFrontMatterMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
             services.AddSingleton<ISiteManager, SiteManager>();
-            services.AddSingleton<SiteMetadataFactory>();
             services.AddSingleton<FeedGenerator>();
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();
