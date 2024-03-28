@@ -99,6 +99,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             siteMetadata.Items = pages;
             EnrichSiteWithYears(siteMetadata);
             EnrichSiteWithSeries(siteMetadata);
+            EnrichSiteWithCollections(siteMetadata);
             EnrichSiteWithData(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
@@ -324,6 +325,60 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
             return buildMetadata;
+        }
+
+        void EnrichSiteWithCollections(SiteMetaData site)
+        {
+
+            List<PageMetaData> files = site.GetPages().ToList();
+
+            List<string> collections = files
+                .Where(x => x.Collection != null)
+                .Select(x => x.Collection)
+                .Distinct()
+                .ToList();
+
+            for (int i = collections.Count - 1; 0 < i; i--)
+            {
+                string collection = collections[i];
+                if (_SiteInfo.Collections.Contains(collection))
+                {
+                    Collection collectionSettings = _SiteInfo.Collections[collection];
+                    if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
+                    {
+                        if (_SiteInfo.Collections.Contains(collectionSettings.TreatAs))
+                        {
+                            // todo log
+                            IEnumerable<PageMetaData> collectionFiles = files
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
+                            foreach (PageMetaData file in collectionFiles)
+                            {
+                                file.Collection = collectionSettings.TreatAs;
+                            }
+
+                            collections.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
+            foreach (string collection in collections)
+            {
+                PageMetaData[] collectionPages = files
+                    .Where(x =>
+                    {
+                        bool notEmpty = x.Collection != null;
+                        if (notEmpty)
+                        {
+                            bool isMatch = x.Collection!.Equals(collection, StringComparison.Ordinal);
+                            return isMatch;
+                        }
+
+                        return false;
+                    })
+                    .ToArray();
+                // site.Collections.Add(collection, collectionPages);
+            }
         }
 
         void EnrichSiteWithYears(SiteMetaData site)
