@@ -97,6 +97,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
             siteMetadata.Items = pages;
+            EnrichSiteWithSeries(siteMetadata);
             EnrichSiteWithData(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
@@ -239,14 +240,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return results;
         }
 
-        BuildData EnrichSiteWithAssemblyData()
-        {
-            AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-            DateTimeOffset localNow = _TimeProvider.GetLocalNow();
-            BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
-            return buildMetadata;
-        }
-
         List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
         {
             IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
@@ -322,6 +315,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             return result;
+        }
+
+        BuildData EnrichSiteWithAssemblyData()
+        {
+            AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
+            DateTimeOffset localNow = _TimeProvider.GetLocalNow();
+            BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
+            return buildMetadata;
+        }
+
+        void EnrichSiteWithSeries(SiteMetaData site)
+        {
+            List<Article> pages = site.GetArticles().ToList();
+
+            IEnumerable<string> series = pages
+                .HasSeries()
+                .Select(x => x.Series)
+                .Distinct();
+
+            foreach (string serie in series)
+            {
+                PageMetaData[] seriesFiles = pages
+                    .FromSeries(serie)
+                    .OrderBy(x => x.Uri)
+                    .ToArray();
+                // site.Series.Add(serie, seriesFiles);
+            }
         }
 
         void EnrichSiteWithData(SiteMetaData site)
