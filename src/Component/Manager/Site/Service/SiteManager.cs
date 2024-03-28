@@ -97,7 +97,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
             siteMetadata.Items = pages;
-            EnrichSiteWithData(siteMetadata);
+            _DataProcessor.EnrichSiteWithData(siteMetadata);
             EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
@@ -416,49 +416,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .OrderBy(x => x.Uri)
                     .ToArray();
                 // site.Series.Add(serie, seriesFiles);
-            }
-        }
-
-        void EnrichSiteWithData(SiteMetaData site)
-        {
-            string dataDirectory = Constants.Directories.SourceDataDirectory;
-            string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
-            List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
-                .Where(file => !file.IsDirectory())
-                .Where(file =>
-                {
-                    string extension = Path.GetExtension(file.Name);
-                    bool result = extensions.Contains(extension);
-                    return result;
-                })
-                .ToList();
-
-            List<IKnownFileProcessor> knownFileProcessors =
-            [
-                new TagFileProcessor(_Logger, _YamlParser),
-                new OrganizationFileProcessor(_YamlParser),
-                new AuthorFileProcessor(_YamlParser)
-            ];
-
-            List<string> knownFileNames = knownFileProcessors.Select(x => x.KnownFileName).ToList();
-            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
-            dataFiles = dataFiles.Except(knownFiles).ToList();
-
-            foreach (IFileSystemInfo fileSystemInfo in knownFiles)
-            {
-                IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
-                strategy?.Execute(site, fileSystemInfo);
-            }
-
-            List<IKnownExtensionProcessor> knownExtensionProcessors =
-            [
-                new YamlFileProcessor(_YamlParser)
-            ];
-
-            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
-            {
-                IKnownExtensionProcessor? strategy = knownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
-                strategy?.Execute(site, fileSystemInfo);
             }
         }
     }

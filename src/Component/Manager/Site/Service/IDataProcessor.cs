@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -15,7 +16,60 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class DataProcessor
     {
+        readonly SiteInfo _SiteInfo;
+        readonly IFileSystem _FileSystem;
+        readonly ILogger _Logger;
+        readonly IYamlParser _YamlParser;
+        public DataProcessor(SiteInfo siteInfo, IFileSystem fileSystem, ILogger<DataProcessor> logger, IYamlParser yamlParser)
+        {
+            _SiteInfo = siteInfo;
+            _FileSystem = fileSystem;
+            _Logger = logger;
+            _YamlParser = yamlParser;
+        }
 
+        public void EnrichSiteWithData(SiteMetaData site)
+        {
+            string dataDirectory = Constants.Directories.SourceDataDirectory;
+            string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
+            List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
+                .Where(file =>
+                {
+                    string extension = Path.GetExtension(file.Name);
+                    bool result = extensions.Contains(extension);
+                    return result;
+                })
+                .ToList();
+
+            List<IKnownFileProcessor> knownFileProcessors =
+            [
+                new TagFileProcessor(_Logger, _YamlParser),
+                new OrganizationFileProcessor(_YamlParser),
+                new AuthorFileProcessor(_YamlParser)
+            ];
+
+            List<string> knownFileNames = knownFileProcessors.Select(x => x.KnownFileName).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            dataFiles = dataFiles.Except(knownFiles).ToList();
+
+            foreach (IFileSystemInfo fileSystemInfo in knownFiles)
+            {
+                IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
+            }
+
+            List<IKnownExtensionProcessor> knownExtensionProcessors =
+            [
+                new YamlFileProcessor(_YamlParser)
+            ];
+
+            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
+            {
+                IKnownExtensionProcessor? strategy = knownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
+            }
+        }
     }
 
     public interface IDataProcessor
