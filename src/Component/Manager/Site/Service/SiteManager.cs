@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
@@ -17,6 +18,7 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
+using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -28,11 +30,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly ILogger _Logger;
         readonly IFileProcessor _FileProcessor;
         readonly SiteInfo _SiteInfo;
-        readonly SiteMetadataFactory _SiteMetadataFactory;
         readonly TimeProvider _TimeProvider;
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
         readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
+        readonly IYamlParser _YamlParser;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -40,16 +42,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFileSystem fileSystem,
             ILogger<SiteManager> logger,
             SiteInfo siteInfo,
-            SiteMetadataFactory siteMetadataFactory,
             TimeProvider timeProvider,
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
-            IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins
+            IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins,
+            IYamlParser yamlParser
             )
         {
             _RenderPlugins = renderPlugins.ToArray();
             _SiteArtifactPlugins = siteArtifactPlugins.ToArray();
-            _SiteMetadataFactory = siteMetadataFactory;
             _FileProcessor = fileProcessor;
             _ArtifactAccess = artifactAccess;
             _FileSystem = fileSystem;
@@ -57,6 +58,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _SiteInfo = siteInfo;
             _TimeProvider = timeProvider;
             _MetadataProvider = metadataProvider;
+            _YamlParser = yamlParser;
         }
 
         public async Task GenerateSite(GenerateSiteRequest request)
@@ -78,7 +80,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             IEnumerable<BinaryFile> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
             List<BinaryFile> pageList = processed.ToList();
-            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
+
+            List<TextFile> textFiles = pageList.OfType<TextFile>().ToList();
+            List<BasePage> pages = ToPageMetadata(textFiles, siteGuid);
+            BuildData buildData = EnrichSiteWithAssemblyData();
+
+            string siteId = siteGuid.ToString();
+            SiteMetaData siteMetadata = new SiteMetaData(siteId,
+                _SiteInfo.Title,
+                _SiteInfo.Description,
+                _SiteInfo.Lang,
+                string.Empty,
+                _SiteInfo.Url,
+                buildData);
+            siteMetadata.Items = pages;
+            EnrichSiteWithData(siteMetadata);
+            EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
@@ -218,6 +235,228 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             MetadataRenderResult[] results = renderedResults.ToArray();
             return results;
+        }
+
+        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
+        {
+            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                return type ?? "unknown";
+            });
+            Dictionary<string, List<TextFile>> data = filesGroupedByType
+                .ToDictionary(group => group.Key, group => group.ToList());
+
+            bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
+            bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
+            bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
+            bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
+            bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
+
+            List<TextFile> regularFiles = new List<TextFile>();
+            List<TextFile> articleFiles = new List<TextFile>();
+            List<TextFile> staticFiles = new List<TextFile>();
+            if (hasPages && pages != null)
+            {
+                regularFiles.AddRange(pages);
+            }
+
+            if (hasAnnouncements && announcements != null)
+            {
+                regularFiles.AddRange(announcements);
+            }
+
+            if (hasArticles && articles != null)
+            {
+                articleFiles.AddRange(articles);
+            }
+
+            if (hasStatics && statics != null)
+            {
+                staticFiles.AddRange(statics);
+            }
+
+            List<BasePage> result = new List<BasePage>();
+
+            foreach (TextFile file in regularFiles)
+            {
+                PageMetaData pageMetaData = file.ToPage(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            foreach (TextFile file in articleFiles)
+            {
+                Article pageMetaData = file.ToArticle(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            foreach (TextFile file in staticFiles)
+            {
+                Dictionary<string, object?> fileAsData = file.ToDictionary();
+                StaticContent pageMetaData = new StaticContent(fileAsData);
+                result.Add(pageMetaData);
+            }
+
+            if (hasCollections && collection != null)
+            {
+                IEnumerable<Article> articlePages = result.OfType<Article>();
+
+                foreach (TextFile file in collection)
+                {
+                    // Some parts are regular page data
+                    PageMetaData pageMetaData = file.ToPage(siteGuid);
+
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, articlePages);
+                    result.Add(collectionPage);
+                }
+            }
+
+            return result;
+        }
+
+        BuildData EnrichSiteWithAssemblyData()
+        {
+            AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
+            DateTimeOffset localNow = _TimeProvider.GetLocalNow();
+            BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
+            return buildMetadata;
+        }
+
+        void EnrichSite(SiteMetaData site)
+        {
+            EnrichSiteWithYears(site);
+            EnrichSiteWithSeries(site);
+            EnrichSiteWithCollections(site);
+        }
+
+        void EnrichSiteWithCollections(SiteMetaData site)
+        {
+
+            List<PageMetaData> files = site.GetPages().ToList();
+
+            List<string> collections = files
+                .Where(x => x.Collection != null)
+                .Select(x => x.Collection)
+                .Distinct()
+                .ToList();
+
+            for (int i = collections.Count - 1; 0 < i; i--)
+            {
+                string collection = collections[i];
+                if (_SiteInfo.Collections.Contains(collection))
+                {
+                    Collection collectionSettings = _SiteInfo.Collections[collection];
+                    if (!string.IsNullOrEmpty(collectionSettings.TreatAs))
+                    {
+                        if (_SiteInfo.Collections.Contains(collectionSettings.TreatAs))
+                        {
+                            // todo log
+                            IEnumerable<PageMetaData> collectionFiles = files
+                                .Where(x => x.Collection != null && x.Collection.Equals(collection, StringComparison.Ordinal));
+                            foreach (PageMetaData file in collectionFiles)
+                            {
+                                file.Collection = collectionSettings.TreatAs;
+                            }
+
+                            collections.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
+            foreach (string collection in collections)
+            {
+                PageMetaData[] collectionPages = files
+                    .Where(x =>
+                    {
+                        bool notEmpty = x.Collection != null;
+                        if (notEmpty)
+                        {
+                            bool isMatch = x.Collection!.Equals(collection, StringComparison.Ordinal);
+                            return isMatch;
+                        }
+
+                        return false;
+                    })
+                    .ToArray();
+                // site.Collections.Add(collection, collectionPages);
+            }
+        }
+
+        void EnrichSiteWithYears(SiteMetaData site)
+        {
+            List<PageMetaData> pages = site.GetPages().ToList();
+            IEnumerable<int> years = pages
+                .IsArticle()
+                .Select(x => x.Published.Year)
+                .Distinct();
+            foreach (int year in years)
+            {
+                PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
+                // site.Years.Add(year, yearFiles);
+            }
+        }
+
+        void EnrichSiteWithSeries(SiteMetaData site)
+        {
+            List<Article> pages = site.GetArticles().ToList();
+
+            IEnumerable<string> series = pages
+                .HasSeries()
+                .Select(x => x.Series)
+                .Distinct();
+
+            foreach (string serie in series)
+            {
+                PageMetaData[] seriesFiles = pages
+                    .FromSeries(serie)
+                    .OrderBy(x => x.Uri)
+                    .ToArray();
+                // site.Series.Add(serie, seriesFiles);
+            }
+        }
+
+        void EnrichSiteWithData(SiteMetaData site)
+        {
+            string dataDirectory = Constants.Directories.SourceDataDirectory;
+            string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
+            List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
+                .Where(file =>
+                {
+                    string extension = Path.GetExtension(file.Name);
+                    bool result = extensions.Contains(extension);
+                    return result;
+                })
+                .ToList();
+
+            List<IKnownFileProcessor> knownFileProcessors =
+            [
+                new TagFileProcessor(_Logger, _YamlParser),
+                new OrganizationFileProcessor(_YamlParser),
+                new AuthorFileProcessor(_YamlParser)
+            ];
+
+            List<string> knownFileNames = knownFileProcessors.Select(x => x.KnownFileName).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            dataFiles = dataFiles.Except(knownFiles).ToList();
+
+            foreach (IFileSystemInfo fileSystemInfo in knownFiles)
+            {
+                IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
+            }
+
+            List<IKnownExtensionProcessor> knownExtensionProcessors =
+            [
+                new YamlFileProcessor(_YamlParser)
+            ];
+
+            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
+            {
+                IKnownExtensionProcessor? strategy = knownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(site, fileSystemInfo);
+            }
         }
     }
 }
