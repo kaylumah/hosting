@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public SiteMetaData EnrichSite(Guid siteGuid, List<BinaryFile> files)
         {
+            Debug.Assert(files != null);
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
             // BuildData buildData = EnrichSiteWithAssemblyData();
