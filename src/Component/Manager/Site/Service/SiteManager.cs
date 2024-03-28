@@ -35,6 +35,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly IRenderPlugin[] _RenderPlugins;
         readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
         readonly IYamlParser _YamlParser;
+        readonly DataProcessor _DataProcessor;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -46,7 +47,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
             IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins,
-            IYamlParser yamlParser
+            IYamlParser yamlParser,
+            DataProcessor dataProcessor
             )
         {
             _RenderPlugins = renderPlugins.ToArray();
@@ -59,6 +61,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _TimeProvider = timeProvider;
             _MetadataProvider = metadataProvider;
             _YamlParser = yamlParser;
+            _DataProcessor = dataProcessor;
         }
 
         public async Task GenerateSite(GenerateSiteRequest request)

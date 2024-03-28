@@ -13,6 +13,11 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+    public class DataProcessor
+    {
+
+    }
+
     public interface IDataProcessor
     {
         bool IsApplicable(IFileSystemInfo file);
