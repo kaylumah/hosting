@@ -97,10 +97,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
             siteMetadata.Items = pages;
-            EnrichSiteWithYears(siteMetadata);
-            EnrichSiteWithSeries(siteMetadata);
-            EnrichSiteWithCollections(siteMetadata);
             EnrichSiteWithData(siteMetadata);
+            EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
@@ -325,6 +323,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
             return buildMetadata;
+        }
+
+        void EnrichSite(SiteMetaData site)
+        {
+            EnrichSiteWithYears(site);
+            EnrichSiteWithSeries(site);
+            EnrichSiteWithCollections(site);
         }
 
         void EnrichSiteWithCollections(SiteMetaData site)
