@@ -36,7 +36,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IFrontMatterMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
             services.AddSingleton<ISiteManager, SiteManager>();
-            services.AddSingleton<SiteMetadataFactory>();
+            services.AddSingleton<DataProcessor>();
             services.AddSingleton<FeedGenerator>();
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();
@@ -45,6 +45,10 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();
             services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();
+            services.AddSingleton<IKnownFileProcessor, TagFileProcessor>();
+            services.AddSingleton<IKnownFileProcessor, OrganizationFileProcessor>();
+            services.AddSingleton<IKnownFileProcessor, AuthorFileProcessor>();
+            services.AddSingleton<IKnownExtensionProcessor, YamlFileProcessor>();
             services.AddSingleton(TimeProvider.System);
             return services;
         }
