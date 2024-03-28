@@ -44,109 +44,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             using IDisposable? logScope = _Logger.BeginScope("[EnrichSite]");
             string siteId = siteGuid.ToString();
-            BuildData buildData = EnrichSiteWithAssemblyData();
+            // BuildData buildData = EnrichSiteWithAssemblyData();
             SiteMetaData siteInfo = new SiteMetaData(siteId,
                 _SiteInfo.Title,
                 _SiteInfo.Description,
                 _SiteInfo.Lang,
                 string.Empty,
                 _SiteInfo.Url,
-                buildData);
+                null!);
 
-            List<TextFile> textFiles = files.OfType<TextFile>().ToList();
-            siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
+            // List<TextFile> textFiles = files.OfType<TextFile>().ToList();
+            // siteInfo.Items = ToPageMetadata(textFiles, siteGuid);
             EnrichSiteWithData(siteInfo);
             // EnrichSiteWithCollections(siteInfo);
             // EnrichSiteWithYears(siteInfo);
             // EnrichSiteWithSeries(siteInfo);
 
             return siteInfo;
-        }
-
-        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
-        {
-            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type ?? "unknown";
-            });
-            Dictionary<string, List<TextFile>> data = filesGroupedByType
-                .ToDictionary(group => group.Key, group => group.ToList());
-
-            bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
-            bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
-            bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
-            bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
-            bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
-
-            List<TextFile> regularFiles = new List<TextFile>();
-            List<TextFile> articleFiles = new List<TextFile>();
-            List<TextFile> staticFiles = new List<TextFile>();
-            if (hasPages && pages != null)
-            {
-                regularFiles.AddRange(pages);
-            }
-
-            if (hasAnnouncements && announcements != null)
-            {
-                regularFiles.AddRange(announcements);
-            }
-
-            if (hasArticles && articles != null)
-            {
-                articleFiles.AddRange(articles);
-            }
-
-            if (hasStatics && statics != null)
-            {
-                staticFiles.AddRange(statics);
-            }
-
-            List<BasePage> result = new List<BasePage>();
-
-            foreach (TextFile file in regularFiles)
-            {
-                PageMetaData pageMetaData = file.ToPage(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            foreach (TextFile file in articleFiles)
-            {
-                Article pageMetaData = file.ToArticle(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            foreach (TextFile file in staticFiles)
-            {
-                Dictionary<string, object?> fileAsData = file.ToDictionary();
-                StaticContent pageMetaData = new StaticContent(fileAsData);
-                result.Add(pageMetaData);
-            }
-
-            if (hasCollections && collection != null)
-            {
-                IEnumerable<Article> articlePages = result.OfType<Article>();
-
-                foreach (TextFile file in collection)
-                {
-                    // Some parts are regular page data
-                    PageMetaData pageMetaData = file.ToPage(siteGuid);
-
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData, articlePages);
-                    result.Add(collectionPage);
-                }
-            }
-
-            return result;
-        }
-
-        BuildData EnrichSiteWithAssemblyData()
-        {
-            LogEnrichSiteWith("AssemblyData");
-            AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
-            DateTimeOffset localNow = _TimeProvider.GetLocalNow();
-            BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
-            return buildMetadata;
         }
 
         void EnrichSiteWithData(SiteMetaData site)

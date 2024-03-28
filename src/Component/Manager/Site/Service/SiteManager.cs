@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
@@ -78,7 +79,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             IEnumerable<BinaryFile> processed = await _FileProcessor.Process(criteria).ConfigureAwait(false);
             List<BinaryFile> pageList = processed.ToList();
-            SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
+
+            List<TextFile> textFiles = pageList.OfType<TextFile>().ToList();
+            List<BasePage> pages = ToPageMetadata(textFiles, siteGuid);
+            BuildData buildData = EnrichSiteWithAssemblyData();
+
+            string siteId = siteGuid.ToString();
+            SiteMetaData siteMetadata = new SiteMetaData(siteId,
+                _SiteInfo.Title,
+                _SiteInfo.Description,
+                _SiteInfo.Lang,
+                string.Empty,
+                _SiteInfo.Url,
+                buildData);
+            siteMetadata.Items = pages;
+            // SiteMetaData siteMetadata = _SiteMetadataFactory.EnrichSite(siteGuid, pageList);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
@@ -218,6 +233,91 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             MetadataRenderResult[] results = renderedResults.ToArray();
             return results;
+        }
+
+        BuildData EnrichSiteWithAssemblyData()
+        {
+            AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
+            DateTimeOffset localNow = _TimeProvider.GetLocalNow();
+            BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
+            return buildMetadata;
+        }
+
+        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
+        {
+            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                return type ?? "unknown";
+            });
+            Dictionary<string, List<TextFile>> data = filesGroupedByType
+                .ToDictionary(group => group.Key, group => group.ToList());
+
+            bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
+            bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
+            bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
+            bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
+            bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
+
+            List<TextFile> regularFiles = new List<TextFile>();
+            List<TextFile> articleFiles = new List<TextFile>();
+            List<TextFile> staticFiles = new List<TextFile>();
+            if (hasPages && pages != null)
+            {
+                regularFiles.AddRange(pages);
+            }
+
+            if (hasAnnouncements && announcements != null)
+            {
+                regularFiles.AddRange(announcements);
+            }
+
+            if (hasArticles && articles != null)
+            {
+                articleFiles.AddRange(articles);
+            }
+
+            if (hasStatics && statics != null)
+            {
+                staticFiles.AddRange(statics);
+            }
+
+            List<BasePage> result = new List<BasePage>();
+
+            foreach (TextFile file in regularFiles)
+            {
+                PageMetaData pageMetaData = file.ToPage(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            foreach (TextFile file in articleFiles)
+            {
+                Article pageMetaData = file.ToArticle(siteGuid);
+                result.Add(pageMetaData);
+            }
+
+            foreach (TextFile file in staticFiles)
+            {
+                Dictionary<string, object?> fileAsData = file.ToDictionary();
+                StaticContent pageMetaData = new StaticContent(fileAsData);
+                result.Add(pageMetaData);
+            }
+
+            if (hasCollections && collection != null)
+            {
+                IEnumerable<Article> articlePages = result.OfType<Article>();
+
+                foreach (TextFile file in collection)
+                {
+                    // Some parts are regular page data
+                    PageMetaData pageMetaData = file.ToPage(siteGuid);
+
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, articlePages);
+                    result.Add(collectionPage);
+                }
+            }
+
+            return result;
         }
     }
 }
