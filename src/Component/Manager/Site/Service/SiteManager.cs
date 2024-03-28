@@ -34,7 +34,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
         readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
-        readonly IYamlParser _YamlParser;
         readonly DataProcessor _DataProcessor;
 
         public SiteManager(
@@ -47,7 +46,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
             IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins,
-            IYamlParser yamlParser,
             DataProcessor dataProcessor
             )
         {
@@ -60,7 +58,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _SiteInfo = siteInfo;
             _TimeProvider = timeProvider;
             _MetadataProvider = metadataProvider;
-            _YamlParser = yamlParser;
             _DataProcessor = dataProcessor;
         }
 
