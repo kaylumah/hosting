@@ -20,12 +20,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly IFileSystem _FileSystem;
         readonly ILogger _Logger;
         readonly IYamlParser _YamlParser;
-        public DataProcessor(SiteInfo siteInfo, IFileSystem fileSystem, ILogger<DataProcessor> logger, IYamlParser yamlParser)
+        readonly IEnumerable<IKnownFileProcessor> _KnownFileProcessors;
+        readonly IEnumerable<IKnownExtensionProcessor> _KnownExtensionProcessors;
+        public DataProcessor(SiteInfo siteInfo, IFileSystem fileSystem, ILogger<DataProcessor> logger, IYamlParser yamlParser, IEnumerable<IKnownFileProcessor> knownFileProcessors, IEnumerable<IKnownExtensionProcessor> knownExtensionProcessors)
         {
             _SiteInfo = siteInfo;
             _FileSystem = fileSystem;
             _Logger = logger;
             _YamlParser = yamlParser;
+            _KnownFileProcessors = knownFileProcessors;
+            _KnownExtensionProcessors = knownExtensionProcessors;
         }
 
         public void EnrichSiteWithData(SiteMetaData site)
@@ -42,31 +46,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 })
                 .ToList();
 
-            List<IKnownFileProcessor> knownFileProcessors =
-            [
-                new TagFileProcessor(_Logger, _YamlParser),
-                new OrganizationFileProcessor(_YamlParser),
-                new AuthorFileProcessor(_YamlParser)
-            ];
-
-            List<string> knownFileNames = knownFileProcessors.Select(x => x.KnownFileName).ToList();
+            List<string> knownFileNames = _KnownFileProcessors.Select(x => x.KnownFileName).ToList();
             List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
             dataFiles = dataFiles.Except(knownFiles).ToList();
 
             foreach (IFileSystemInfo fileSystemInfo in knownFiles)
             {
-                IKnownFileProcessor? strategy = knownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                IKnownFileProcessor? strategy = _KnownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
                 strategy?.Execute(site, fileSystemInfo);
             }
 
-            List<IKnownExtensionProcessor> knownExtensionProcessors =
-            [
-                new YamlFileProcessor(_YamlParser)
-            ];
-
             foreach (IFileSystemInfo fileSystemInfo in dataFiles)
             {
-                IKnownExtensionProcessor? strategy = knownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                IKnownExtensionProcessor? strategy = _KnownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
                 strategy?.Execute(site, fileSystemInfo);
             }
         }
@@ -137,7 +129,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownFileName => Constants.KnownFiles.Tags;
 
-        public TagFileProcessor(ILogger logger, IYamlParser yamlParser)
+        public TagFileProcessor(ILogger<TagFileProcessor> logger, IYamlParser yamlParser)
         {
             _Logger = logger;
             _YamlParser = yamlParser;
