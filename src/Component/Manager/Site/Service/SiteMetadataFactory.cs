@@ -120,21 +120,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         //     }
         // }
 
-        // void EnrichSiteWithYears(SiteMetaData site)
-        // {
-        //     LogEnrichSiteWith("Years");
-        //     List<PageMetaData> pages = site.GetPages().ToList();
-        //     IEnumerable<int> years = pages
-        //         .IsArticle()
-        //         .Select(x => x.Published.Year)
-        //         .Distinct();
-        //     foreach (int year in years)
-        //     {
-        //         PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
-        //         site.Years.Add(year, yearFiles);
-        //     }
-        // }
-
-        
     }
 }

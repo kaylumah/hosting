@@ -97,6 +97,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Url,
                 buildData);
             siteMetadata.Items = pages;
+            EnrichSiteWithYears(siteMetadata);
             EnrichSiteWithSeries(siteMetadata);
             EnrichSiteWithData(siteMetadata);
 
@@ -323,6 +324,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             DateTimeOffset localNow = _TimeProvider.GetLocalNow();
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
             return buildMetadata;
+        }
+
+        void EnrichSiteWithYears(SiteMetaData site)
+        {
+            List<PageMetaData> pages = site.GetPages().ToList();
+            IEnumerable<int> years = pages
+                .IsArticle()
+                .Select(x => x.Published.Year)
+                .Distinct();
+            foreach (int year in years)
+            {
+                PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
+                // site.Years.Add(year, yearFiles);
+            }
         }
 
         void EnrichSiteWithSeries(SiteMetaData site)
