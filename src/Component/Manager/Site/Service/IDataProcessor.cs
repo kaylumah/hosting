@@ -66,8 +66,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public interface IDataFileProcessor
     {
-        bool IsApplicable(IFileSystemInfo file);
-
         void Execute(SiteMetaData siteMetaData, IFileSystemInfo file);
     }
 
@@ -76,7 +74,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         string KnownFileName
         { get; }
 
-        bool IDataFileProcessor.IsApplicable(IFileSystemInfo file)
+        bool IsApplicable(IFileSystemInfo file)
         {
             string fileName = file.Name;
             bool fileNameMatches = fileName.Equals(KnownFileName, StringComparison.Ordinal);
@@ -89,7 +87,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         string KnownExtension
         { get; }
 
-        bool IDataFileProcessor.IsApplicable(IFileSystemInfo file)
+        bool IsApplicable(IFileSystemInfo file)
         {
             string extension = file.Extension;
             bool extensionMatches = extension.Equals(KnownExtension, StringComparison.Ordinal);
