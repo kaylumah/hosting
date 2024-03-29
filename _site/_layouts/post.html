@@ -4,8 +4,7 @@ layout: 'default.html'
 <div class="flex flex-col gap-8 laptop:flex-row">
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
         <header class="prose laptop:mx-auto">
-            <!-- <picture class="hidden"> -->
-            <picture>
+            <picture class="hidden">
                 <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
                 <img src="{{ page.image }}" alt="cover for {{ page.title }}" height="640" width="1280" />
             </picture>
