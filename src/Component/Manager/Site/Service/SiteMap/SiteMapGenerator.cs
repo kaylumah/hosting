@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Utilities;
@@ -41,7 +42,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             foreach (PageMetaData page in pages)
             {
                 SiteMapNode node = new SiteMapNode();
-                node.Url = GlobalFunctions.AbsoluteUrl(page.Uri);
+                Uri siteMapUri = GlobalFunctions.AbsoluteUri(page.Uri);
+                node.Url = siteMapUri.ToString();
                 node.LastModified = page.Modified;
 
                 bool isIndex = page.IsUrl("index.html");
