@@ -47,12 +47,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             string copyrightClaim = build.Copyright;
             DateTimeOffset generatedAtBuildTime = build.Time;
             LogCreateBlog(generatorVersion);
-
+            Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
             SyndicationFeed feed = new SyndicationFeed();
             feed.Language = siteMetaData.Language;
             feed.Title = new CDataSyndicationContent(siteMetaData.Title);
             feed.Description = new CDataSyndicationContent(siteMetaData.Description);
-            feed.Id = GlobalFunctions.AbsoluteUrl("feed.xml");
+            feed.Id = feedUri.ToString();
             feed.Copyright = new CDataSyndicationContent(copyrightClaim);
             feed.LastUpdatedTime = generatedAtBuildTime;
             feed.ImageUrl = GlobalFunctions.AbsoluteUri("assets/logo_alt.svg");
@@ -88,7 +88,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
                 foreach (PageMetaData pageMetaData in posts)
                 {
-                    string pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
+                    Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                    string pageUrl = pageUri.ToString();
                     SyndicationItem item = new SyndicationItem();
                     item.Id = pageUrl;
                     item.Title = new CDataSyndicationContent(pageMetaData.Title);
@@ -104,7 +105,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                         .Select(tag => tags[tag])
                         .ToList();
                     itemCategories.ForEach(item.Categories.Add);
-                    Uri pageUri = new Uri(pageUrl);
                     SyndicationLink syndicationLink = new SyndicationLink(pageUri);
                     item.Links.Add(syndicationLink);
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && persons.TryGetValue(pageMetaData.Author, out SyndicationPerson? person))

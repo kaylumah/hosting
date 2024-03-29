@@ -119,7 +119,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 relAttribute.Value = "canonical";
                 linkElement.Attributes.Append(relAttribute);
                 XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
-                hrefAttribute.Value = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
+                Uri uri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                hrefAttribute.Value = uri.ToString();
                 linkElement.Attributes.Append(hrefAttribute);
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
@@ -167,8 +168,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 if (!string.IsNullOrEmpty(pageMetaData.Image))
                 {
-                    string twitterUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Image);
-                    string imageTag = CreateMetaTag("twitter:image", twitterUrl);
+                    Uri twitterUri = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    string url = twitterUri.ToString();
+                    string imageTag = CreateMetaTag("twitter:image", url);
                     result.Add(imageTag);
                 }
 
@@ -206,7 +208,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             StringBuilder sb = new StringBuilder();
             if (renderData.Page is PageMetaData pageMetaData)
             {
-                string pageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Uri);
+                Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                string pageUrl = pageUri.ToString();
                 List<string> result = new List<string>
         {
             CreateOpenGraphMetaTag("og:type", pageMetaData.IsArticle() ? "article" : "website"),
@@ -219,7 +222,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 if (!string.IsNullOrEmpty(pageMetaData.Image))
                 {
-                    string imageUrl = GlobalFunctions.AbsoluteUrl(pageMetaData.Image);
+                    Uri image = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    string imageUrl = image.ToString();
                     string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
                     result.Add(imageTag);
                 }
