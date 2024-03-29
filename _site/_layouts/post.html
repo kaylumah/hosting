@@ -5,8 +5,8 @@ layout: 'default.html'
     <article id="blogContents" class="flex-1 bg-slate-50 border-2 p-6 flex flex-col gap-8">
         <header class="prose laptop:mx-auto">
             <picture class="hidden">
-                <source type="image/webp" srcset="{{ page.image | file_name_without_extension | relative_url }}.webp">
-                <img src="{{ page.image | relative_url }}" alt="cover for {{ page.title }}" height="640" width="1280" />
+                <source type="image/webp" srcset="{{ page.image | file_name_without_extension }}.webp">
+                <img src="{{ page.image }}" alt="cover for {{ page.title }}" height="640" width="1280" />
             </picture>
             <h1>{{ page.title }}</h1>
             <div class="flex flex-row gap-4">
