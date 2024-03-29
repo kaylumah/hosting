@@ -201,7 +201,8 @@ namespace Kaylumah.Ssg.Utilities
             string filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
             return filePathWithoutExt;
         }
-        public static string RelativeUrl(string source)
+
+        static string RelativeUrl(string source)
         {
             if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
             {
@@ -212,7 +213,7 @@ namespace Kaylumah.Ssg.Utilities
             return source;
         }
 
-        public static string AbsoluteUrl(string source)
+        static string AbsoluteUrl(string source)
         {
             string resolvedSource = RelativeUrl(source);
             char webSeperator = '/';
