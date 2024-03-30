@@ -71,23 +71,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
-        public List<string> GetTags()
-        {
-            IEnumerable<PageMetaData> pages = GetPages();
-            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
-            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
-
-            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
-            List<string> result = uniqueTags.ToList();
-            return result;
-        }
-
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
-
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
 
         IEnumerable<Article> GetRecentArticles()
         {
@@ -103,6 +89,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
             return featuredAndSortedByPublished;
         }
+
+        public List<string> GetTags()
+        {
+            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
+        }
+
+        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
 
         SortedDictionary<string, PageMetaData[]> GetPagesByTag()
         {
