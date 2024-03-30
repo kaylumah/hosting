@@ -15,6 +15,34 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return author;
         }
 
+        public static IEnumerable<object> TagCloud(SiteMetaData site)
+        {
+            SortedDictionary<string, PageMetaData[]> tags = site.Tags;
+            TagMetaDataCollection tagMetaData = site.TagMetaData;
+            List<object> result = new List<object>();
+            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
+            {
+                string tag = item.Key;
+                string displayName = item.Key;
+                PageMetaData[] items = item.Value;
+                bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
+                if (success && tagData != null)
+                {
+                    displayName = tagData.Name;
+                }
+
+                object resultForTag = new
+                {
+                    Id = tag,
+                    DisplayName = displayName,
+                    Size = items.Length
+                };
+                result.Add(resultForTag);
+            }
+
+            return result;
+        }
+
         public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);

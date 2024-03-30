@@ -136,7 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
             TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(file);
-            List<string> tags = siteMetaData.GetTags();
+            IEnumerable<string> tags = siteMetaData.GetTags();
             IEnumerable<string> otherTags = tagData.Keys.Except(tags);
             IEnumerable<string> unmatchedTags = tags
                 .Except(tagData.Keys)
