@@ -20,11 +20,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
-            bool tagExists = site.Tags.TryGetValue(tag, out PageMetaData[]? resultForTag);
+            bool tagExists = site.Tags.TryGetValue(tag, out PageView? resultForTag);
             IEnumerable<Article> result;
             if (tagExists && resultForTag != null)
             {
-                IEnumerable<Article> asArticles = resultForTag.OfType<Article>();
+                PageMetaData[] pageMetas = resultForTag.Pages;
+                IEnumerable<Article> asArticles = pageMetas.OfType<Article>();
                 result = asArticles.ByRecentlyPublished();
                 if (take != null)
                 {

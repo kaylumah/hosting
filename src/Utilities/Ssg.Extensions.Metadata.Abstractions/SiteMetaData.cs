@@ -99,11 +99,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
+        public PageViewCollection Tags => GetPagesByTag();
 
-        SortedDictionary<string, PageMetaData[]> GetPagesByTag()
+        PageViewCollection GetPagesByTag()
         {
-            SortedDictionary<string, PageMetaData[]> result = new();
+            // SortedDictionary<string, PageMetaData[]> result = new();
+            PageViewCollection pageViews = new PageViewCollection();
 
             List<Article> pages = GetArticles().ToList();
             IEnumerable<string> tags = GetTags();
@@ -113,10 +114,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 PageMetaData[] tagFiles = pages
                     .FromTag(tag)
                     .ToArray();
-                result.Add(tag, tagFiles);
+                // result.Add(tag, tagFiles);
+                bool success = TagMetaData.TryGetValue(tag, out TagMetaData? tagData);
+                string displayName;
+                if (success && tagData != null)
+                {
+                    displayName = tagData.Name;
+                }
+                else
+                {
+                    displayName = tag;
+                }
+
+                PageView pageView = new PageView(tag, displayName, tagFiles);
+                pageViews.Add(pageView);
             }
 
-            return result;
+            return pageViews;
+            // return result;
         }
     }
 }

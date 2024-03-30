@@ -3,19 +3,15 @@
     <ul id="word-cloud" class="flex justify-center flex-wrap align-center gap-2 leading-8">
     </ul>
     <script>
-    var words = [
-      {% for tag in site.tags %}
-      { id: '{{tag.key}}', text: '{{site.data.tags[tag.key].name}}', size: {{ tag.value.size }} },
-      {% endfor %}
-    ];
+    var words = {{ site.tags | to_json }};
     
     var container = document.getElementById('word-cloud');
     words.forEach(word => {
       const li = document.createElement('li');
       const anchor = document.createElement('a');
-      anchor.href = "/blog.html?tag=" + word.id;
-      anchor.text = `${word.text} (${word.size})`;
-      const x = word.size;
+      anchor.href = "/blog.html?tag=" + word.Id;
+      anchor.text = `${word.DisplayName} (${word.Size})`;
+      const x = word.Size;
       switch(true)
       {
         case (x < 2):
