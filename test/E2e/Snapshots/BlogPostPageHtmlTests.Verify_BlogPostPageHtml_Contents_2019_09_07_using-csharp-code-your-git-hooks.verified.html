@@ -642,52 +642,105 @@ public static Config GetConfig()
                 </ul>
                 <script>
                 var words = [
-                  
-                        { id: 'azure', text: 'Azure', size: 2 },
-                        
-                        { id: 'code-quality', text: 'Code Quality', size: 1 },
-                        
-                        { id: 'configuration', text: 'Configuration', size: 1 },
-                        
-                        { id: 'csharp', text: 'C#', size: 9 },
-                        
-                        { id: 'git', text: 'Git', size: 1 },
-                        
-                        { id: 'moq', text: 'Moq', size: 1 },
-                        
-                        { id: 'msbuild', text: 'MSBuild', size: 2 },
-                        
-                        { id: 'nswag', text: 'NSwag', size: 2 },
-                        
-                        { id: 'nuget', text: 'NuGet', size: 1 },
-                        
-                        { id: 'openapi', text: 'OpenAPI', size: 2 },
-                        
-                        { id: 'reqnroll', text: 'Reqnroll', size: 1 },
-                        
-                        { id: 'rider', text: 'Rider', size: 1 },
-                        
-                        { id: 'swashbuckle', text: 'Swashbuckle', size: 2 },
-                        
-                        { id: 'testing', text: 'Testing', size: 4 },
-                        
-                        { id: 'visualstudio', text: 'Visual Studio', size: 1 },
-                        
-                        { id: 'visualstudio2019', text: 'Visual Studio 2019', size: 1 },
-                        
-                        { id: 'vscode', text: 'VS Code', size: 1 },
-                        
-                        { id: 'xunit', text: 'Xunit', size: 2 },
-                        
-                ];
+              {
+                "Id": "azure",
+                "DisplayName": "Azure",
+                "Size": 2
+              },
+              {
+                "Id": "code-quality",
+                "DisplayName": "Code Quality",
+                "Size": 1
+              },
+              {
+                "Id": "configuration",
+                "DisplayName": "Configuration",
+                "Size": 1
+              },
+              {
+                "Id": "csharp",
+                "DisplayName": "C#",
+                "Size": 9
+              },
+              {
+                "Id": "git",
+                "DisplayName": "Git",
+                "Size": 1
+              },
+              {
+                "Id": "moq",
+                "DisplayName": "Moq",
+                "Size": 1
+              },
+              {
+                "Id": "msbuild",
+                "DisplayName": "MSBuild",
+                "Size": 2
+              },
+              {
+                "Id": "nswag",
+                "DisplayName": "NSwag",
+                "Size": 2
+              },
+              {
+                "Id": "nuget",
+                "DisplayName": "NuGet",
+                "Size": 1
+              },
+              {
+                "Id": "openapi",
+                "DisplayName": "OpenAPI",
+                "Size": 2
+              },
+              {
+                "Id": "reqnroll",
+                "DisplayName": "Reqnroll",
+                "Size": 1
+              },
+              {
+                "Id": "rider",
+                "DisplayName": "Rider",
+                "Size": 1
+              },
+              {
+                "Id": "swashbuckle",
+                "DisplayName": "Swashbuckle",
+                "Size": 2
+              },
+              {
+                "Id": "testing",
+                "DisplayName": "Testing",
+                "Size": 4
+              },
+              {
+                "Id": "visualstudio",
+                "DisplayName": "Visual Studio",
+                "Size": 1
+              },
+              {
+                "Id": "visualstudio2019",
+                "DisplayName": "Visual Studio 2019",
+                "Size": 1
+              },
+              {
+                "Id": "vscode",
+                "DisplayName": "VS Code",
+                "Size": 1
+              },
+              {
+                "Id": "xunit",
+                "DisplayName": "Xunit",
+                "Size": 2
+              }
+            ];
                 
                 var container = document.getElementById('word-cloud');
                 words.forEach(word => {
                   const li = document.createElement('li');
                   const anchor = document.createElement('a');
-                  anchor.href = "/blog.html?tag=" + word.id;
-                  anchor.text = `${word.text} (${word.size})`;
-                  const x = word.size;
+                  anchor.href = "/blog.html?tag=" + word.Id;
+                  anchor.text = `${word.DisplayName} (${word.Size})`;
+                  const x = word.Size;
                   switch(true)
                   {
                     case (x < 2):
