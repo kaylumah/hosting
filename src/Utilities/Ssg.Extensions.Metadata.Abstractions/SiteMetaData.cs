@@ -95,7 +95,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> articles = GetArticles();
             IEnumerable<PageMetaData> taggedArticles = articles.HasTag();
             IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            HashSet<string> result = new HashSet<string>(tagsFromArticles);
+            HashSet<string> uniqueTags = new HashSet<string>(tagsFromArticles);
+            IEnumerable<string> result = uniqueTags.Order();
             return result;
         }
 
