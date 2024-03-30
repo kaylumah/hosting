@@ -90,15 +90,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        public List<string> GetTags()
+        public IEnumerable<string> GetTags()
         {
-            IEnumerable<PageMetaData> pages = GetPages();
-            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
-            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
-
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<PageMetaData> taggedArticles = articles.HasTag();
             IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
-            List<string> result = uniqueTags.ToList();
+            HashSet<string> result = new HashSet<string>(tagsFromArticles);
             return result;
         }
 
@@ -109,7 +106,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             SortedDictionary<string, PageMetaData[]> result = new();
 
             List<PageMetaData> pages = GetPages().ToList();
-            List<string> tags = GetTags();
+            IEnumerable<string> tags = GetTags();
 
             foreach (string tag in tags)
             {
