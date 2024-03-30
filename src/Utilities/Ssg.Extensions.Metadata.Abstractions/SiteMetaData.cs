@@ -105,7 +105,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             SortedDictionary<string, PageMetaData[]> result = new();
 
-            List<PageMetaData> pages = GetPages().ToList();
+            List<Article> pages = GetArticles().ToList();
             IEnumerable<string> tags = GetTags();
 
             foreach (string tag in tags)
