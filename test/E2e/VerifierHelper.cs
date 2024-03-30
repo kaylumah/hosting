@@ -34,6 +34,9 @@ namespace Test.E2e
 
         [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 ]*)(?<after> ago<)")]
         public static partial Regex TimeAgo();
+
+        [GeneratedRegex(@"(?<before>var words = \[)(?<val>(.|\n)*)(?<after>];)")]
+        public static partial Regex TagCloud();
     }
 
     public static class BasePageVerifier
@@ -82,6 +85,7 @@ namespace Test.E2e
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
             settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
+            settings.ReplaceMatches(VerifierHelper.TagCloud(), string.Empty);
             await Verifier.Verify(html, "html", settings);
         }
     }
