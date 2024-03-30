@@ -71,9 +71,23 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
+        public List<string> GetTags()
+        {
+            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PageMetaData> pagesWithTags = pages.HasTag();
+            IEnumerable<PageMetaData> taggedArticles = pagesWithTags.IsArticle();
+
+            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
+            IEnumerable<string> uniqueTags = tagsFromArticles.Distinct();
+            List<string> result = uniqueTags.ToList();
+            return result;
+        }
+
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
 
         IEnumerable<Article> GetRecentArticles()
         {
@@ -90,49 +104,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        public IEnumerable<string> GetTags()
+        SortedDictionary<string, PageMetaData[]> GetPagesByTag()
         {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<PageMetaData> taggedArticles = articles.HasTag();
-            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            HashSet<string> uniqueTags = new HashSet<string>(tagsFromArticles);
-            IEnumerable<string> result = uniqueTags.Order();
-            return result;
-        }
+            SortedDictionary<string, PageMetaData[]> result = new();
 
-        public PageViewCollection Tags => GetPagesByTag();
-
-        PageViewCollection GetPagesByTag()
-        {
-            // SortedDictionary<string, PageMetaData[]> result = new();
-            PageViewCollection pageViews = new PageViewCollection();
-
-            List<Article> pages = GetArticles().ToList();
-            IEnumerable<string> tags = GetTags();
+            List<PageMetaData> pages = GetPages().ToList();
+            List<string> tags = GetTags();
 
             foreach (string tag in tags)
             {
                 PageMetaData[] tagFiles = pages
                     .FromTag(tag)
                     .ToArray();
-                // result.Add(tag, tagFiles);
-                bool success = TagMetaData.TryGetValue(tag, out TagMetaData? tagData);
-                string displayName;
-                if (success && tagData != null)
-                {
-                    displayName = tagData.Name;
-                }
-                else
-                {
-                    displayName = tag;
-                }
-
-                PageView pageView = new PageView(tag, displayName, tagFiles);
-                pageViews.Add(pageView);
+                result.Add(tag, tagFiles);
             }
 
-            return pageViews;
-            // return result;
+            return result;
         }
     }
 }

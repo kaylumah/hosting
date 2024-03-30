@@ -17,18 +17,30 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static IEnumerable<object> TagCloud(SiteMetaData site)
         {
-            PageViewCollection pageViews = site.Tags;
-            IEnumerable<object> y = pageViews.Select(pageView =>
+            SortedDictionary<string, PageMetaData[]> tags = site.Tags;
+            TagMetaDataCollection tagMetaData = site.TagMetaData;
+            List<object> result = new List<object>();
+            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
-                object x = new
+                string tag = item.Key;
+                string displayName = item.Key;
+                PageMetaData[] items = item.Value;
+                bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
+                if (success && tagData != null)
                 {
-                    Id = pageView.Id,
-                    DisplayName = pageView.DisplayName,
-                    Size = pageView.Size
+                    displayName = tagData.Name;
+                }
+
+                object resultForTag = new
+                {
+                    Id = tag,
+                    DisplayName = displayName,
+                    Size = items.Length
                 };
-                return x;
-            });
-            return y;
+                result.Add(resultForTag);
+            }
+
+            return result;
         }
 
         public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
@@ -36,12 +48,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
-            bool tagExists = site.Tags.TryGetValue(tag, out PageView? resultForTag);
+            bool tagExists = site.Tags.TryGetValue(tag, out PageMetaData[]? resultForTag);
             IEnumerable<Article> result;
             if (tagExists && resultForTag != null)
             {
-                PageMetaData[] pageMetas = resultForTag.Pages;
-                IEnumerable<Article> asArticles = pageMetas.OfType<Article>();
+                IEnumerable<Article> asArticles = resultForTag.OfType<Article>();
                 result = asArticles.ByRecentlyPublished();
                 if (take != null)
                 {
