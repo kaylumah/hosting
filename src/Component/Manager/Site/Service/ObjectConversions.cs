@@ -15,6 +15,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return author;
         }
 
+        public static IEnumerable<object> TagCloud(SiteMetaData site)
+        {
+            PageViewCollection pageViews = site.Tags;
+            IEnumerable<object> y = pageViews.Select(pageView =>
+            {
+                object x = new
+                {
+                    Id = pageView.Id,
+                    DisplayName = pageView.DisplayName,
+                    Size = pageView.Size
+                };
+                return x;
+            });
+            return y;
+        }
+
         public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
