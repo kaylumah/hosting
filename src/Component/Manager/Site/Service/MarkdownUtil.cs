@@ -39,6 +39,7 @@ namespace Kaylumah.Ssg.Utilities
                 .Use<MarkdownExtensionEnsureAbsoluteLink>()
                 .Use<MarkdownExtensionEnsureExternalLink>()
                 .Use<MarkdownExtensionClickableHeaderLink>()
+                .Use<MarkdownExtensionUsePictures>()
                 .Build();
             return pipeline;
         }
