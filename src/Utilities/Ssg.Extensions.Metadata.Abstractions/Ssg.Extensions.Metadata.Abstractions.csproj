@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Generic\Kaylumah.Ssg.Utilities.Generic.csproj" />
     <ProjectReference Include="..\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
   </ItemGroup>
 </Project>
