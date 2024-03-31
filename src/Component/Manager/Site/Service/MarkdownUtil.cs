@@ -69,12 +69,13 @@ namespace Kaylumah.Ssg.Utilities
             }
 
             // Render the doc
-            StringWriter writer = new StringWriter();
-            HtmlRenderer renderer = new HtmlRenderer(writer);
-            pipeline.Setup(renderer);
-            renderer.Render(doc);
-
-            string result = writer.ToString().Trim();
+            // StringWriter writer = new StringWriter();
+            // HtmlRenderer renderer = new HtmlRenderer(writer);
+            // pipeline.Setup(renderer);
+            // renderer.Render(doc);
+            // string result = writer.ToString().Trim();
+            string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string result = intermediateResult.Trim();
             return result;
         }
     }
