@@ -4,7 +4,6 @@
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Scriban" />
-    <PackageReference Include="HtmlAgilityPack" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Files\Kaylumah.Ssg.Utilities.Files.csproj" />

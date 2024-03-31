@@ -2,14 +2,11 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Xml;
-using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -37,70 +34,6 @@ namespace Kaylumah.Ssg.Utilities
             IFormatProvider culture = new CultureInfo("en-US", true);
             DateTimeOffset result = DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
             return result;
-        }
-
-        public static string ReadingTime(string content)
-        {
-            // http://www.craigabbott.co.uk/blog/how-to-calculate-reading-time-like-medium
-            //https://stackoverflow.com/questions/12787449/html-agility-pack-removing-unwanted-tags-without-removing-content
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(content);
-
-            // document.DocumentNode.Descendants()
-            //     .Where(n => n.Name == "pre")
-            //     .ToList()
-            //     .ForEach(n => n.Remove());
-
-            // var acceptableTags = new string[] {};
-            // var nodes = new Queue<HtmlNode>(document.DocumentNode.SelectNodes("./*|./text()"));
-            // while (nodes.Count > 0)
-            // {
-            //     var node = nodes.Dequeue();
-            //     var parentNode = node.ParentNode;
-
-            //     if (!acceptableTags.Contains(node.Name) && node.Name != "#text")
-            //     {
-            //         var childNodes = node.SelectNodes("./*|./text()");
-
-            //         if (childNodes != null)
-            //         {
-            //             foreach (var child in childNodes)
-            //             {
-            //                 nodes.Enqueue(child);
-            //                 parentNode.InsertBefore(child, node);
-            //             }
-            //         }
-
-            //         parentNode.RemoveChild(node);
-
-            //     }
-            // }
-
-            // var text = document.DocumentNode.InnerHtml;
-
-            // https://stackoverflow.com/questions/60929281/number-of-words-by-htmlagilitypack
-            char[] delimiter = new char[] { ' ' };
-            int kelime = 0;
-            HtmlNode documentNode = document.DocumentNode;
-            HtmlNodeCollection textNodes = documentNode.SelectNodes("//text()");
-            IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
-            foreach (string text in innerTexts)
-            {
-                IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(s => Char.IsLetter(s[0]));
-                int wordCount = words.Count();
-                // if (wordCount > 0) (swapped for IDESIGN105)
-                if (0 < wordCount)
-                {
-                    // Console.WriteLine(String.Join(" ", words));
-                    kelime += wordCount;
-                }
-            }
-
-            double wordsPerMinute = 265;
-            double numberOfWords = kelime;//text.Split(' ').Length;
-            int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
-            return $"{minutes} minute";
         }
 
         public static string DateToAgo(DateTimeOffset date)
