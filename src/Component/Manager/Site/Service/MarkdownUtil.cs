@@ -37,6 +37,7 @@ namespace Kaylumah.Ssg.Utilities
                 .UsePipeTables() // support for tables
                 .UseGenericAttributes() // support for inline attributes (like width, height)
                 .Use<MarkdownExtensionEnsureAbsoluteLink>()
+                .Use<MarkdownExtensionEnsureExternalLink>()
                 .Use<MarkdownExtensionClickableHeaderLink>()
                 .Build();
             return pipeline;
