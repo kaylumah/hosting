@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
@@ -41,7 +42,7 @@ namespace Kaylumah.Ssg.Utilities
                 return false;
             }
 
-            bool notAbsolute = parsedResult.IsAbsoluteUri;
+            bool notAbsolute = parsedResult.IsAbsoluteUri == false;
             if (notAbsolute)
             {
                 return false;
@@ -61,10 +62,14 @@ namespace Kaylumah.Ssg.Utilities
 
         void RenderTargetAttribute(LinkInline linkInline, Uri uri)
         {
-            Debug.Assert(uri != null);
-#pragma warning disable
-            // anchor.GetAttributes().AddClass("external");
-            linkInline.SetAttributes(new HtmlAttributes() { Properties = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("target", "_blank"), new KeyValuePair<string, string>("rel", "noopener"), } });
+            string uriAsString = uri.ToString();
+            bool isExternal = uriAsString.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal) == false;
+            if (isExternal)
+            {
+                linkInline.GetAttributes().AddClass("external");
+            }
+
+            // linkInline.SetAttributes(new HtmlAttributes() { Properties = new List<KeyValuePair<string, string>>() { new KeyValuePair<string, string>("target", "_blank"), new KeyValuePair<string, string>("rel", "noopener"), } });
         }
     }
 }
