@@ -15,5 +15,6 @@
     <PackageReference Include="Microsoft.Extensions.Options" />
     <PackageReference Include="System.ServiceModel.Syndication" />
     <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="Scriban" />
   </ItemGroup>
 </Project>
