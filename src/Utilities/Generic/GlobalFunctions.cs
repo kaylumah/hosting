@@ -12,17 +12,6 @@ namespace Kaylumah.Ssg.Utilities
 {
     public class GlobalFunctions
     {
-        static readonly JsonSerializerOptions _Options;
-        static GlobalFunctions()
-        {
-#pragma warning disable IDESIGN103 // Avoid compound statements.
-            _Options = new JsonSerializerOptions()
-            {
-                WriteIndented = true
-            };
-#pragma warning restore IDESIGN103 // Avoid compound statements.
-        }
-
         public static AsyncLocal<DateTimeOffset> Date
         { get; } = new();
         public static AsyncLocal<string> Url
@@ -177,7 +166,10 @@ namespace Kaylumah.Ssg.Utilities
 
         public static string ToJson(object o)
         {
-            string result = JsonSerializer.Serialize(o, _Options);
+#pragma warning disable CA1869
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            string result = JsonSerializer.Serialize(o, options);
             return result;
         }
     }
