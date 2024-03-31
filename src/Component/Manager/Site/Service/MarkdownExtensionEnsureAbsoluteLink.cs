@@ -11,7 +11,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities
 {
-    class MarkdownExtensionAbsoluteLink : IMarkdownExtension
+    class MarkdownExtensionEnsureAbsoluteLink : IMarkdownExtension
     {
         void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
         {
