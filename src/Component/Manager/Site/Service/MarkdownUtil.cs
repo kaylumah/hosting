@@ -100,6 +100,16 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
+        public static string ToText(string source)
+        {
+            MarkdownPipeline pipeline = BuildPipeline();
+
+            MarkdownDocument doc = Markdown.Parse(source, pipeline);
+            string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string result = intermediateResult.Trim();
+            return result;
+        }
+
         static MarkdownPipeline BuildPipeline()
         {
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
