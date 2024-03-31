@@ -75,7 +75,7 @@ namespace Kaylumah.Ssg.Utilities
             // renderer.Render(doc);
             // string result = writer.ToString().Trim();
             string intermediateResult = Markdown.ToHtml(doc, pipeline);
-            string result = intermediateResult.Trim();
+            string result = intermediateResult; //.Trim();
             return result;
         }
     }
