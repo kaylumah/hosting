@@ -88,8 +88,8 @@ namespace Kaylumah.Ssg.Utilities
             }
         }
 
-         bool TryHeadingBlockRenderer(HtmlRenderer renderer, HeadingBlock headingBlock)
-         {
+        bool TryHeadingBlockRenderer(HtmlRenderer renderer, HeadingBlock headingBlock)
+        {
             LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null!);
             ContainerInline previousInline = headingBlock.Inline!;
             headingBlock.Inline = null;
@@ -97,7 +97,7 @@ namespace Kaylumah.Ssg.Utilities
             headingBlock.Inline = inline;
             // renderer.Write(headingBlock);
             return false;
-         }
+        }
     }
 
     class PictureInline : IMarkdownExtension
