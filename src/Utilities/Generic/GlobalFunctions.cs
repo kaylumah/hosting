@@ -17,12 +17,6 @@ namespace Kaylumah.Ssg.Utilities
         { get; } = new();
         public static AsyncLocal<string> BaseUrl
         { get; } = new();
-        public static DateTimeOffset ToDate(string input)
-        {
-            IFormatProvider culture = new CultureInfo("en-US", true);
-            DateTimeOffset result = DateTimeOffset.ParseExact(input, "yyyy-MM-dd", culture);
-            return result;
-        }
 
         public static string DateToAgo(DateTimeOffset date)
         {
