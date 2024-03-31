@@ -165,6 +165,60 @@ namespace Kaylumah.Ssg.Utilities
         }
     }
 
+    class FixInline : IMarkdownExtension
+    {
+        void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
+        {
+            // Empty on purpose
+        }
+
+        void IMarkdownExtension.Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+        {
+            if (renderer is HtmlRenderer htmlRenderer)
+            {
+                LinkInlineRenderer? inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
+                inlineRenderer?.TryWriters.Add(TryLinkInlineRenderer);
+            }
+        }
+
+        bool TryLinkInlineRenderer(HtmlRenderer renderer, LinkInline anchor)
+        {
+            string anchorUrl = anchor.Url!;
+            if (!anchor.IsImage)
+            {
+                bool selfLink = anchorUrl.StartsWith('#');
+                if (selfLink)
+                {
+                    return false;
+                }
+
+                bool isRelative = anchorUrl.StartsWith('/');
+                if (isRelative)
+                {
+                    Uri uri = GlobalFunctions.AbsoluteUri(anchorUrl);
+                    anchorUrl = uri.ToString();
+                    anchor.Url = anchorUrl;
+                }
+
+                if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal))
+                {
+                    anchor.GetAttributes().AddClass("external");
+                }
+            }
+
+            // TODO disable pending Medium response...
+            if (anchor.IsImage)
+            {
+                if (anchorUrl.StartsWith("/assets", StringComparison.Ordinal))
+                {
+                    anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
+                }
+            }
+
+            return false;
+        }
+    }
+
     public static class MarkdownUtil
     {
         public static string ToHtml(string source)
@@ -172,8 +226,6 @@ namespace Kaylumah.Ssg.Utilities
             MarkdownPipeline pipeline = BuildPipeline();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
-            ModifyLinks(doc);
-
             // Render the doc
             // StringWriter writer = new StringWriter();
             // HtmlRenderer renderer = new HtmlRenderer(writer);
@@ -205,44 +257,10 @@ namespace Kaylumah.Ssg.Utilities
                 .UseAutoIdentifiers() // used for clickable headers
                 .UsePipeTables() // support for tables
                 .UseGenericAttributes() // support for inline attributes (like width, height)
+                .Use<FixInline>()
                 .Use<ClickableHeaderLink>()
                 .Build();
             return pipeline;
-        }
-
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-        public static void ModifyLinks(MarkdownDocument doc)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-        {
-            IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
-            foreach (LinkInline anchor in anchorTags)
-            {
-                string anchorUrl = anchor.Url!;
-                if (!anchor.IsImage)
-                {
-                    bool isRelative = anchorUrl.StartsWith('/');
-                    if (isRelative)
-                    {
-                        Uri uri = GlobalFunctions.AbsoluteUri(anchorUrl);
-                        anchorUrl = uri.ToString();
-                        anchor.Url = anchorUrl;
-                    }
-
-                    if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal))
-                    {
-                        anchor.GetAttributes().AddClass("external");
-                    }
-                }
-
-                // TODO disable pending Medium response...
-                if (anchor.IsImage)
-                {
-                    if (anchorUrl.StartsWith("/assets", StringComparison.Ordinal))
-                    {
-                        anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
-                    }
-                }
-            }
         }
     }
 }
