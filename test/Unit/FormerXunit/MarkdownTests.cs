@@ -7,8 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Utilities;
 using Markdig;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 namespace Test.Unit.FormerXunit
@@ -19,9 +22,19 @@ namespace Test.Unit.FormerXunit
 
         [Theory]
         [MemberData(nameof(GetBlogPages))]
-        public async Task Verify_BlogPostPageHtml_Contents(string path)
+        public async Task Verify_MarkdownConversion_Contents(string path)
         {
-            string contents = await File.ReadAllTextAsync(path);
+            GlobalFunctions.Url.Value = "https://kaylumah.nl";
+            string rawContents = await File.ReadAllTextAsync(path);
+            string result = MarkdownUtil.Transform(rawContents);
+
+            string testParameter = path
+                .Replace("/", "_")
+                .Replace(".md", "");
+            string methodName = $"{nameof(Verify_MarkdownConversion_Contents)}_{testParameter}";
+            VerifySettings settings = new VerifySettings();
+            settings.UseMethodName(methodName);
+            await Verifier.Verify(result, "html", settings);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
