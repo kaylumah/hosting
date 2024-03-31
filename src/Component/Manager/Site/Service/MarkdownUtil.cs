@@ -35,9 +35,7 @@ namespace Kaylumah.Ssg.Utilities
         public static string ToText(string source)
         {
             MarkdownPipeline pipeline = BuildPipeline();
-
-            MarkdownDocument doc = Markdown.Parse(source, pipeline);
-            string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string intermediateResult = Markdown.ToPlainText(source, pipeline);
             string result = intermediateResult.Trim();
             return result;
         }
