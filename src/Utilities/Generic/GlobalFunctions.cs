@@ -81,7 +81,6 @@ namespace Kaylumah.Ssg.Utilities
 
         public static string DateToPattern(DateTimeOffset date, string pattern)
         {
-            // date.ToUniversalTime()
             string result = date.ToString(pattern, CultureInfo.InvariantCulture);
             return result;
         }
