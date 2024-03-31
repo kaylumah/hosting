@@ -18,45 +18,10 @@ namespace Kaylumah.Ssg.Utilities
     {
         public static string Transform(string source)
         {
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/BootstrapSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmphasisExtraSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/DefinitionListSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/FootnotesSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoLinks.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/ListExtraSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/MediaSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AbbreviationSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/HardlineBreakSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/FigureFooterAndCiteSpecs.md
-            // https://github.com/ilich/Markdig.Prism/blob/main/src/Markdig.Prism/PrismCodeBlockRenderer.cs
-
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseYamlFrontMatter()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmojiSpecs.md
-                //.UseEmojiAndSmiley(new Markdig.Extensions.Emoji.EmojiMapping(new Dictionary<string, string>() { { ":smiley:", "♥" } }, new Dictionary<string, string>()))
-
-                // UseAdvancedExtensions 2021-01-25
-                // .UseAbbreviations()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
                 .UseAutoIdentifiers()
-                // .UseCitations()
-                // .UseCustomContainers()
-                // .UseDefinitionLists()
-                // .UseEmphasisExtras()
-                // .UseFigures()
-                // .UseFooters()
-                // .UseFootnotes()
-                //.UseGridTables()
-                // .UseMathematics()
-                // .UseMediaLinks()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
                 .UsePipeTables()
-                // .UseListExtras()
-                // .UseTaskLists()
-                // .UseDiagrams()
-                // .UseAutoLinks()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
                 .UseGenericAttributes()
                 .Build();
 
