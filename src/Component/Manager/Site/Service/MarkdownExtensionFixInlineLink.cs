@@ -27,8 +27,47 @@ namespace Kaylumah.Ssg.Utilities
             }
         }
 
-        bool TryLinkInlineRenderer(HtmlRenderer renderer, LinkInline anchor)
+        bool TryLinkInlineRenderer(HtmlRenderer renderer, LinkInline linkInline)
         {
+            if (linkInline.Url == null)
+            {
+                return false;
+            }
+
+            LinkInline.GetUrlDelegate? existingDynamicUrl = linkInline.GetDynamicUrl;
+            linkInline.GetDynamicUrl = () =>
+            {
+                string escapeUrl;
+                if (existingDynamicUrl != null)
+                {
+                    string existingResult = existingDynamicUrl();
+                    escapeUrl = existingResult ?? linkInline.Url;
+                }
+                else
+                {
+                    escapeUrl = linkInline.Url;
+                }
+
+                bool success = Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out Uri? parsedResult);
+                if (success == false || parsedResult == null)
+                {
+                    throw new ArgumentException("Failed to create URI");
+                }
+
+                string result;
+                if (parsedResult.IsAbsoluteUri)
+                {
+                    result = escapeUrl;
+                }
+                else
+                {
+                    Uri uri = GlobalFunctions.AbsoluteUri(escapeUrl);
+                    result = uri.ToString();
+                }
+
+                return result;
+            };
+
             // string anchorUrl = anchor.Url!;
             // if (!anchor.IsImage)
             // {
