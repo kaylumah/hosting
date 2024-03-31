@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using HtmlAgilityPack;
 using Kaylumah.Ssg.Utilities;
@@ -13,6 +16,23 @@ namespace Test.Unit.FormerXunit
 
     public class MarkdownTests
     {
+
+        [Theory]
+        [MemberData(nameof(GetBlogPages))]
+        public async Task Verify_BlogPostPageHtml_Contents(string path)
+        {
+            string contents = await File.ReadAllTextAsync(path);
+        }
+
+        public static IEnumerable<object[]> GetBlogPages()
+        {
+            string[] fileNames = Directory.GetFiles("assets", "*.md");
+            foreach(string fileName in fileNames)
+            {
+                yield return new object[] { fileName };
+            }
+        }
+
         [Fact]
         public void Test_ImageConversion()
         {
