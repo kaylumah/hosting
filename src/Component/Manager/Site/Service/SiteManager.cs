@@ -63,7 +63,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            GlobalFunctions.Date.Value = _TimeProvider.GetLocalNow();
             GlobalFunctions.Url.Value = _SiteInfo.Url;
             GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
