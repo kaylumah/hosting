@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using HtmlAgilityPack;
 using Ssg.Extensions.Metadata.Abstractions;
 
@@ -95,6 +96,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             double numberOfWords = kelime;
             int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
             return $"{minutes} minute";
+        }
+
+        public static string ToJson(object o)
+        {
+#pragma warning disable CA1869
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.WriteIndented = true;
+            string result = JsonSerializer.Serialize(o, options);
+            return result;
         }
     }
 }

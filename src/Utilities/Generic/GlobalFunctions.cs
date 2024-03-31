@@ -4,7 +4,6 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
 using System.Xml;
 
@@ -161,15 +160,6 @@ namespace Kaylumah.Ssg.Utilities
         {
             string absoluteUrl = AbsoluteUrl(source);
             Uri result = new Uri(absoluteUrl);
-            return result;
-        }
-
-        public static string ToJson(object o)
-        {
-#pragma warning disable CA1869
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.WriteIndented = true;
-            string result = JsonSerializer.Serialize(o, options);
             return result;
         }
     }
