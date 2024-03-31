@@ -20,7 +20,7 @@ namespace Test.Unit.FormerXunit
     public class MarkdownTests
     {
 
-        [Theory(Skip = "not doing now")]
+        [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_Contents(string path)
         {
@@ -33,6 +33,7 @@ namespace Test.Unit.FormerXunit
                 .Replace(".md", "");
             string methodName = $"{nameof(Verify_MarkdownConversion_Contents)}_{testParameter}";
             VerifySettings settings = new VerifySettings();
+            settings.UseDirectory("snapshots");
             settings.UseMethodName(methodName);
             await Verifier.Verify(result, "html", settings);
         }
