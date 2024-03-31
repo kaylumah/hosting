@@ -19,7 +19,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
 
         public string Execute(string raw)
         {
-            string result = MarkdownUtil.Transform(raw);
+            string result = MarkdownUtil.ToHtml(raw);
             return result;
         }
 

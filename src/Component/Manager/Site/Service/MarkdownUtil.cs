@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Utilities
 
     public static class MarkdownUtil
     {
-        public static string Transform(string source)
+        public static string ToHtml(string source)
         {
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md

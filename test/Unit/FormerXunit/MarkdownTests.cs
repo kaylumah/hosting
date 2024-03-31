@@ -26,7 +26,7 @@ namespace Test.Unit.FormerXunit
         {
             GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
-            string result = MarkdownUtil.Transform(rawContents);
+            string result = MarkdownUtil.ToHtml(rawContents);
 
             string testParameter = path
                 .Replace("/", "_")
@@ -67,7 +67,7 @@ namespace Test.Unit.FormerXunit
         {
             string markdown = "# Header 1 \r\n## Header 2\r\n### Header 3\r\n#### Header 4\r\n##### Header 5\r\n###### Header 6";
             string expected = "<h1 id=\"header-1\"><a href=\"#header-1\">Header 1</a></h1>\n<h2 id=\"header-2\"><a href=\"#header-2\">Header 2</a></h2>\n<h3 id=\"header-3\"><a href=\"#header-3\">Header 3</a></h3>\n<h4 id=\"header-4\"><a href=\"#header-4\">Header 4</a></h4>\n<h5 id=\"header-5\"><a href=\"#header-5\">Header 5</a></h5>\n<h6 id=\"header-6\"><a href=\"#header-6\">Header 6</a></h6>";
-            string result = MarkdownUtil.Transform(markdown);
+            string result = MarkdownUtil.ToHtml(markdown);
             result
                 .Should()
                 .Be(expected);
@@ -78,7 +78,7 @@ namespace Test.Unit.FormerXunit
         {
             string markdown = "| Column | Column |\r\n| - | - |\r\n| A | B |";
             string expected = "<table>\n<thead>\n<tr>\n<th>Column</th>\n<th>Column</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>A</td>\n<td>B</td>\n</tr>\n</tbody>\n</table>";
-            string result = MarkdownUtil.Transform(markdown);
+            string result = MarkdownUtil.ToHtml(markdown);
             result
                 .Should()
                 .Be(expected);
@@ -94,7 +94,7 @@ namespace Test.Unit.FormerXunit
 | Normal Key | Value2 |
 ".Trim();
             string expected = "<table>\n<thead>\n<tr>\n<th></th>\n<th></th>\n<th></th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><strong>Bold Key</strong></td>\n<td>Value1</td>\n<td></td>\n</tr>\n<tr>\n<td>Normal Key</td>\n<td>Value2</td>\n<td></td>\n</tr>\n</tbody>\n</table>";
-            string result = MarkdownUtil.Transform(markdown);
+            string result = MarkdownUtil.ToHtml(markdown);
             result
                 .Should()
                 .Be(expected);
@@ -112,7 +112,7 @@ public class Program
 ```
 ".Trim();
             string expected = "<pre><code class=\"language-cs\">public class Program\n{\n\tpublic static void Main(string[] args) {}\n}\n</code></pre>";
-            string result = MarkdownUtil.Transform(markdown);
+            string result = MarkdownUtil.ToHtml(markdown);
             result
                 .Should()
                 .Be(expected);
@@ -123,7 +123,7 @@ public class Program
         {
             string markdown = ":smiley:".Trim();
             string expected = "<p>:smiley:</p>";
-            string result = MarkdownUtil.Transform(markdown);
+            string result = MarkdownUtil.ToHtml(markdown);
             result
                 .Should()
                 .Be(expected);
@@ -132,7 +132,7 @@ public class Program
         [Fact]
         public void Test6()
         {
-            string result = MarkdownUtil.Transform(
+            string result = MarkdownUtil.ToHtml(
     @"# heading one
 ## heading two
 ### heading three
