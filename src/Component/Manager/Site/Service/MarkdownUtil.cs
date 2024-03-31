@@ -30,7 +30,24 @@ namespace Kaylumah.Ssg.Utilities
                 .Build();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
+            ModifyHeaders(doc);
+            ModifyLinks(doc);
 
+            // Render the doc
+            StringWriter writer = new StringWriter();
+            HtmlRenderer renderer = new HtmlRenderer(writer);
+            pipeline.Setup(renderer);
+            renderer.Render(doc);
+            string intermediateResult = writer.ToString();
+            // string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string result = intermediateResult.Trim();
+            return result;
+        }
+
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
+        public static void ModifyHeaders(MarkdownDocument doc)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
+        {
             // Process headings to insert an intermediate LinkInline
             IEnumerable<HeadingBlock> blocks = doc.Descendants<HeadingBlock>();
             foreach (HeadingBlock headingBlock in blocks)
@@ -41,7 +58,12 @@ namespace Kaylumah.Ssg.Utilities
                 inline.AppendChild(previousInline);
                 headingBlock.Inline = inline;
             }
+        }
 
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
+        public static void ModifyLinks(MarkdownDocument doc)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
+        {
             IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
             foreach (LinkInline anchor in anchorTags)
             {
@@ -71,16 +93,6 @@ namespace Kaylumah.Ssg.Utilities
                     }
                 }
             }
-
-            // Render the doc
-            StringWriter writer = new StringWriter();
-            HtmlRenderer renderer = new HtmlRenderer(writer);
-            pipeline.Setup(renderer);
-            renderer.Render(doc);
-            string intermediateResult = writer.ToString();
-            // string intermediateResult = Markdown.ToHtml(doc, pipeline);
-            string result = intermediateResult.Trim();
-            return result;
         }
     }
 }
