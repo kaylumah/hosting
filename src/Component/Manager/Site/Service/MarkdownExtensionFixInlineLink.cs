@@ -11,7 +11,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities
 {
-    class MarkdownExtensionFixInlineLink : IMarkdownExtension
+    class MarkdownExtensionAbsoluteLink : IMarkdownExtension
     {
         void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
         {
@@ -29,37 +29,37 @@ namespace Kaylumah.Ssg.Utilities
 
         bool TryLinkInlineRenderer(HtmlRenderer renderer, LinkInline anchor)
         {
-            string anchorUrl = anchor.Url!;
-            if (!anchor.IsImage)
-            {
-                bool selfLink = anchorUrl.StartsWith('#');
-                if (selfLink)
-                {
-                    return false;
-                }
+            // string anchorUrl = anchor.Url!;
+            // if (!anchor.IsImage)
+            // {
+            //     bool selfLink = anchorUrl.StartsWith('#');
+            //     if (selfLink)
+            //     {
+            //         return false;
+            //     }
 
-                bool isRelative = anchorUrl.StartsWith('/');
-                if (isRelative)
-                {
-                    Uri uri = GlobalFunctions.AbsoluteUri(anchorUrl);
-                    anchorUrl = uri.ToString();
-                    anchor.Url = anchorUrl;
-                }
+            //     bool isRelative = anchorUrl.StartsWith('/');
+            //     if (isRelative)
+            //     {
+            //         Uri uri = GlobalFunctions.AbsoluteUri(anchorUrl);
+            //         anchorUrl = uri.ToString();
+            //         anchor.Url = anchorUrl;
+            //     }
 
-                if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal))
-                {
-                    anchor.GetAttributes().AddClass("external");
-                }
-            }
+            //     if (!anchorUrl.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal))
+            //     {
+            //         anchor.GetAttributes().AddClass("external");
+            //     }
+            // }
 
-            // TODO disable pending Medium response...
-            if (anchor.IsImage)
-            {
-                if (anchorUrl.StartsWith("/assets", StringComparison.Ordinal))
-                {
-                    anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
-                }
-            }
+            // // TODO disable pending Medium response...
+            // if (anchor.IsImage)
+            // {
+            //     if (anchorUrl.StartsWith("/assets", StringComparison.Ordinal))
+            //     {
+            //         anchor.Url = GlobalFunctions.Url.Value + anchor.Url;
+            //     }
+            // }
 
             return false;
         }

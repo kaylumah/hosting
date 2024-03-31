@@ -36,7 +36,7 @@ namespace Kaylumah.Ssg.Utilities
                 .UseAutoIdentifiers() // used for clickable headers
                 .UsePipeTables() // support for tables
                 .UseGenericAttributes() // support for inline attributes (like width, height)
-                .Use<MarkdownExtensionFixInlineLink>()
+                .Use<MarkdownExtensionAbsoluteLink>()
                 .Use<MarkdownExtensionClickableHeaderLink>()
                 .Build();
             return pipeline;
