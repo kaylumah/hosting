@@ -1,0 +1,208 @@
+﻿<p>There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.</p>
+<p>Thanks to the combination of .editorConfig and Roslyn Analyzers, managing this for your team is easier. Recently, however, I was required to create a custom check for my code. A quick google search pointed me to <a href="https://www.meziantou.net/the-roslyn-analyzers-i-use.htm" class="external">an article from Meziantou</a> which mentioned the &quot;Banned Symbol&quot; Roslyn Analyzer.</p>
+<h2 id="scenario"><a href="#scenario">Scenario</a></h2>
+<p>Before diving into this Analyzer, let's take a few steps back and do a quick scenario sketch. Imagine you work for a company that allows funds transfer between two parties. Since your company needs to make money, you charge a small fee.</p>
+<pre><code class="language-cs">public class FeeCalculator : IFeeCalculator
+{
+    private const decimal FeePercentage = 0.12M;
+    private const decimal MinimumCharge = 0.50M;
+    private const decimal PriorityFeePercentage = 0.25M;
+    private const decimal PriorityMinimumCharge = 7.50M;
+
+    public decimal Calculate(decimal baseAmount, bool isPriority = false)
+    {
+        if (isPriority)
+        {
+            return InternalCalculate(baseAmount, PriorityFeePercentage, PriorityMinimumCharge);
+        }
+        return InternalCalculate(baseAmount, FeePercentage, MinimumCharge);
+    }
+
+    private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
+    {
+        var calculatedFee = amount * (percentage / 100);
+        if (calculatedFee &lt; minimumFee)
+        {
+            return minimumFee;
+        }
+        return calculatedFee;
+    }
+}
+</code></pre>
+<p>The company decided to offer &quot;Monday Madness&quot; at a heavily discounted fee as a special offer.
+The implementation would look similar to the snippet below.</p>
+<pre><code class="language-cs">public class DatedFeeCalculator : IFeeCalculator
+{
+    private const decimal DiscountedFeePercentage = 0.07M;
+    private const decimal FeePercentage = 0.12M;
+    private const decimal MinimumCharge = 0.50M;
+    private const decimal PriorityFeePercentage = 0.25M;
+    private const decimal PriorityMinimumCharge = 7.50M;
+
+    public decimal Calculate(decimal baseAmount, bool isPriority = false)
+    {
+        if (isPriority)
+        {
+            return InternalCalculate(baseAmount, PriorityFeePercentage, PriorityMinimumCharge);
+        }
+
+        if (DateTime.Now.DayOfWeek == DayOfWeek.Monday)
+        {
+            return InternalCalculate(baseAmount, DiscountedFeePercentage, MinimumCharge);
+        }
+        return InternalCalculate(baseAmount, FeePercentage, MinimumCharge);
+    }
+
+    private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
+    {
+        var calculatedFee = amount * (percentage / 100);
+        if (calculatedFee &lt; minimumFee)
+        {
+            return minimumFee;
+        }
+        return calculatedFee;
+    }
+}
+</code></pre>
+<p>Take notice of line <code>16</code> which now uses <code>DateTime.Now</code>; the problem that now arises is: how do we test this code?</p>
+<h2 id="why-testing-datetime-is-hard"><a href="#why-testing-datetime-is-hard">Why testing DateTime is hard</a></h2>
+<p>The following test only results in a green build on a Monday, which is excellent if we release every week just before &quot;Monday Madness&quot; but not so great on every other day.</p>
+<pre><code class="language-cs">[Fact]
+public void Test2_Discounted()
+{
+    IFeeCalculator calculator = new DatedFeeCalculator();
+    var fee = calculator.Calculate(10_000M, false);
+    fee.Should().Be(7.00M); // note only on Mondays it's 7.00; every other day its 12.00
+}
+</code></pre>
+<p>We could mitigate by skipping the offending test every day that is not Monday like this; problem solved, right?</p>
+<pre><code class="language-cs">[SkippableFact]
+public void Test2_Discounted_Alternative()
+{
+    Skip.If(DateTimeOffset.Now.DayOfWeek != DayOfWeek.Monday);
+    IFeeCalculator calculator = new DatedFeeCalculator();
+    var fee = calculator.Calculate(10_000M, false);
+    fee.Should().Be(7.00M);
+}
+</code></pre>
+<p>Well, no, not actually. What we want is to decouple our code from statics like DateTime.Now by putting them behind an interface. By providing an interface implementation, we can <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices#stub-static-references" class="external">stub a static reference</a>.
+In an ideal world, this interface would already exist, similar to ILogger in Microsoft.Extensions. For some background reading on why it does not yet exist, see this <a href="https://github.com/dotnet/runtime/issues/36617" class="external">GitHub Issue</a>.</p>
+<h2 id="updated-scenario"><a href="#updated-scenario">Updated Scenario</a></h2>
+<p>In its most simple from the SystemClock can look like the snippet below.</p>
+<pre><code class="language-cs">public interface ISystemClock
+{
+    DateTimeOffset Now { get; }
+}
+
+public class SystemClock : ISystemClock
+{
+    public DateTimeOffset Now =&gt; DateTimeOffset.Now;
+}
+</code></pre>
+<p>Our updated scenario looks like this:</p>
+<pre><code class="language-cs">public class SystemClockFeeCalculator : IFeeCalculator
+{
+    private const decimal DiscountedFeePercentage = 0.07M;
+    private const decimal FeePercentage = 0.12M;
+    private const decimal MinimumCharge = 0.50M;
+    private const decimal PriorityFeePercentage = 0.25M;
+    private const decimal PriorityMinimumCharge = 7.50M;
+
+    private readonly ISystemClock systemClock;
+
+    public SystemClockFeeCalculator(ISystemClock systemClock)
+    {
+        this.systemClock = systemClock;
+    }
+
+
+    public decimal Calculate(decimal baseAmount, bool isPriority = false)
+    {
+        if (isPriority)
+        {
+            return InternalCalculate(baseAmount, PriorityFeePercentage, PriorityMinimumCharge);
+        }
+
+        if (systemClock.Now.DayOfWeek == DayOfWeek.Monday)
+        {
+            return InternalCalculate(baseAmount, DiscountedFeePercentage, MinimumCharge);
+        }
+        return InternalCalculate(baseAmount, FeePercentage, MinimumCharge);
+    }
+
+    private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
+    {
+        var calculatedFee = amount * (percentage / 100);
+        if (calculatedFee &lt; minimumFee)
+        {
+            return minimumFee;
+        }
+        return calculatedFee;
+    }
+}
+</code></pre>
+<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
+<pre><code class="language-cs">public sealed class SystemClockMock : Mock&lt;ISystemClock&gt;
+{
+    public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
+    {
+        Setup(x =&gt; x.Now).Returns(systemTime);
+        return this;
+    }
+}
+</code></pre>
+<p>Thanks to <code>SystemClockMock</code> I can now change the current date for the test.</p>
+<pre><code class="language-cs">[Fact]
+public void Test3_FakeClock_Monday()
+{
+    var clock = new SystemClockMock()
+        .SetupSystemTime(new DateTimeOffset(new DateTime(2022, 1, 31)));
+    IFeeCalculator calculator = new SystemClockFeeCalculator(clock.Object);
+    var fee = calculator.Calculate(10_000M, false);
+    fee.Should().Be(7.00M);
+}
+
+[Fact]
+public void Test3_FakeClock_Tuesday()
+{
+    var clock = new SystemClockMock()
+        .SetupSystemTime(new DateTimeOffset(new DateTime(2022, 2, 1)));
+    IFeeCalculator calculator = new SystemClockFeeCalculator(clock.Object);
+    var fee = calculator.Calculate(10_000M, false);
+    fee.Should().Be(12.00M);
+}
+</code></pre>
+<h2 id="force-wrapper-over-static-reference"><a href="#force-wrapper-over-static-reference">Force Wrapper over Static Reference</a></h2>
+<p>Now that we have our SystemClock, how do we make sure every dev in our team uses it over just calling <code>DateTimeOffset.Now</code>?</p>
+<p>Finally, our Roslyn Analyzer comes into play. We can use <a href="https://github.com/dotnet/roslyn-analyzers/blob/main/src/Microsoft.CodeAnalysis.BannedApiAnalyzers/BannedApiAnalyzers.Help.md" class="external">Microsoft.CodeAnalysis.BannedApiAnalyzers</a>, which triggers the build warning <code>RS0030</code>. I prefer to enable these warnings on every project under src, so I use a Directory.Build.props file to install the analyzer via NuGet.</p>
+<pre><code class="language-xml">&lt;Project&gt;
+  &lt;Import Project=&quot;../Directory.Build.props&quot; /&gt;
+  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Microsoft.CodeAnalysis.BannedApiAnalyzers&quot; Version=&quot;3.3.2&quot;&gt;
+      &lt;PrivateAssets&gt;all&lt;/PrivateAssets&gt;
+      &lt;IncludeAssets&gt;runtime; build; native; contentfiles; analyzers&lt;/IncludeAssets&gt;
+    &lt;/PackageReference&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;AdditionalFiles Include=&quot;$(MSBuildThisFileDirectory)/BannedSymbols.txt&quot; /&gt;
+  &lt;/ItemGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+<p>All that remains is to create a file called <code>BannedSymbols.txt</code> with the following content</p>
+<blockquote>
+<p><strong>note</strong>: I also blocked the use of DateTime in favour of DateTimeOffset.</p>
+</blockquote>
+<pre><code class="language-txt">T:System.DateTime;Always use System.DateTimeOffset over System.DateTime
+P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
+</code></pre>
+<p>From this point on every use of <code>DateTimeOffset.Now</code> results in the following error: <code>error RS0030: The symbol 'DateTimeOffset.Now' is banned in this project: Use ISystemClock.Now instead</code>. Which in my opinion is pretty cool :)</p>
+<h2 id="closing-thoughts"><a href="#closing-thoughts">Closing Thoughts</a></h2>
+<p>Even if the system used in today's example is fictional, I think the BannedSymbolAnalyzers is a compelling package to include in your toolbelt. At the very least, I will use it to force DateTimeOffset over DateTime. Situation allowing I will also push my wrappers over static references to improve testability.</p>
+<p>As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.</p>
+<p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/ImproveCodeQualityWithBannedSymbolAnalyzers" class="external">GitHub</a>.</p>
+<p>See you next time, stay healthy and happy coding to all 🧸!</p>
+<h2 id="additional-resources"><a href="#additional-resources">Additional Resources</a></h2>
+<ul>
+<li>[https://github.com/dotnet/roslyn-analyzers](Roslyn Analyzers)</li>
+<li>[https://docs.microsoft.com/en-us/visualstudio/code-quality/roslyn-analyzers-overview](Visual Studio Code Quality)</li>
+</ul>

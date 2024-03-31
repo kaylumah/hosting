@@ -1,0 +1,151 @@
+﻿<p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://kaylumah.nl/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
+<p>The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called <a href="https://stevetalkscode.co.uk/openapireference-commands" class="external">&quot;Using OpenApiReference To Generate Open API Client Code&quot;</a>. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.</p>
+<h2 id="safe-openapi-specification-on-build"><a href="#safe-openapi-specification-on-build">Safe OpenAPI specification on build</a></h2>
+<p>The purpose of the post is not to detail how to configure an OpenAPI spec for your project since the standard template already supports Swashbuckle. You can find more information on that over <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&amp;tabs=visual-studio" class="external">at Microsoft Learn</a>. One thing I like to add to the standard template, is that I want the specification to be part of the project output. We can achieve that with the Swashbuckle CLI, which you can install with the command <code>dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0</code>. Note that the version of the CLI must match the version of Swashbuckle used in the API project. After you install the tool, you can modify the csproj to look like this.</p>
+<pre><code class="language-xml">&lt;Target Name=&quot;Generate OpenAPI Specification Document&quot; AfterTargets=&quot;Build&quot;&gt;
+  &lt;PropertyGroup&gt;
+    &lt;OpenApiDocumentName&gt;v1&lt;/OpenApiDocumentName&gt;
+    &lt;ApiDll&gt;$(OutputPath)$(AssemblyName).dll&lt;/ApiDll&gt;
+    &lt;OutputApiDocument&gt;$(OutputPath)$(AssemblyName).json&lt;/OutputApiDocument&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;Exec Command=&quot;dotnet swagger tofile --output $(OutputApiDocument) $(ApiDll) $(OpenApiDocumentName)&quot; ContinueOnError=&quot;true&quot; /&gt;
+&lt;/Target&gt;
+</code></pre>
+<p>The <code>swagger</code> command takes the output location (OutputApiDocument), the DLL for the specification (ApiDll) and the document name (OpenAPIDocumentName) as input parameters. The default name of the API document is <code>v1</code>. We use some existing MSBuild properties to populate these parameters, so in our case, <code>OutputPath</code> looks like <code>bin/Debug/net7.0/</code> and <code>AssemblyName</code> is <code>Demo</code>. That means that after the project builds, a file <code>bin/Debug/net7.0/Demo.json</code> will contain our Open API Specification.</p>
+<p>Note that as part of the <code>bin</code> folder, the specification is not under source control. Sometimes I place it in the project root to track any changes made to the specification. Doing so is especially useful for monitoring unexpected or unintended changes to the specification.</p>
+<h2 id="use-nswag.msbuild-to-generate-a-csharp-client"><a href="#use-nswag.msbuild-to-generate-a-csharp-client">Use NSwag.MSBuild to generate a csharp client</a></h2>
+<p>To add NSwag manually to our project, we need the <code>NSwag.MSBuild</code> NuGet package. Which we can install via <code>dotnet add package NSwag.MSBuild --version 13.18.2</code>. The process is mostly the same as I detailed in 2021; one of the few changes is the target framework to use. Modify the csproj as follows:</p>
+<pre><code class="language-xml">&lt;Target Name=&quot;NSwag&quot; AfterTargets=&quot;PostBuildEvent&quot; Condition=&quot; '$(Configuration)' == 'Debug' &quot;&gt;
+    &lt;!--https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild--&gt;
+    &lt;!-- &lt;Exec Command=&quot;$(NSwagExe_Net70) new&quot; /&gt; --&gt;
+    &lt;PropertyGroup&gt;
+      &lt;OpenApiDocument&gt;../../Api/Demo/bin/Debug/net7.0/Demo.json&lt;/OpenApiDocument&gt;
+      &lt;NSwagConfiguration&gt;nswag.json&lt;/NSwagConfiguration&gt;
+      &lt;GeneratedOutput&gt;Client.g.cs&lt;/GeneratedOutput&gt;
+    &lt;/PropertyGroup&gt;
+    &lt;Exec Command=&quot;$(NSwagExe_Net70) run $(NSwagConfiguration) /variables:OpenApiDocument=$(OpenApiDocument),GeneratedOutput=$(GeneratedOutput)&quot; /&gt;
+&lt;/Target&gt;
+</code></pre>
+<p>You can uncomment <code>$(NSwagExe_Net70) new</code> to generate a fresh nswag.json, the configuration file used for NSwag. After you have the config file, you still need to specify the runtime, the document, and the output location. Abbreviated the change to the file looks like this:</p>
+<pre><code class="language-json">{
+  &quot;runtime&quot;: &quot;Net70&quot;,
+  &quot;defaultVariables&quot;: null,
+  &quot;documentGenerator&quot;: {
+    &quot;fromDocument&quot;: {
+      &quot;json&quot;: &quot;$(OpenApiDocument)&quot;
+    }
+  },
+  &quot;codeGenerators&quot;: {
+     &quot;openApiToCSharpClient&quot;: { 
+      // ...
+      &quot;output&quot;: &quot;$(GeneratedOutput)&quot;
+      // ...
+     }
+  }
+}
+</code></pre>
+<p>I don't remember it being possible back in 2021, but you can now change the JSON serializer used in the generated client. You can do so by modifying the value of <code>codeGenerators openApiToCSharpClient jsonLibrary</code> to <code>SystemTextJson</code>. If you do not do this, you must install the <code>Newtonsoft.Json</code> package, or the generated code will not compile.</p>
+<h2 id="using-openapi-reference"><a href="#using-openapi-reference">Using OpenAPI Reference</a></h2>
+<h3 id="using-openapi-reference-from-visual-studio"><a href="#using-openapi-reference-from-visual-studio">Using OpenAPI reference from Visual Studio</a></h3>
+<p>I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.</p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000" alt="Microsoft Visual Studio - Add Service reference" /></p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925" alt="Microsoft Visual Studio - Select service reference type" /></p>
+<p>By choosing the option &quot;Service reference...&quot; instead of &quot;Connected Service&quot; you get the second prompt immediately. By selecting &quot;Connected service&quot; you get the overview of all connected services for the project and then need an extra click to add the service reference.</p>
+<p>We can customize the input for the msbuild task on the third screen. We only need to specify the file location of the Open API JSON.</p>
+<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923" alt="Microsoft Visual Studio - Add service reference OpenAPI" /></p>
+<p>By selecting &quot;finish&quot;, Visual Studio will make all necessary modifications. Easy right? The project file should now look like this:</p>
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
+                    CodeGenerator=&quot;NSwagCSharp&quot;
+                    Link=&quot;OpenAPIs\Demo.json&quot; /&gt;
+&lt;/ItemGroup&gt;
+
+&lt;ItemGroup&gt;
+  &lt;PackageReference Include=&quot;Microsoft.Extensions.ApiDescription.Client&quot; Version=&quot;3.0.0&quot;&gt;
+    &lt;PrivateAssets&gt;all&lt;/PrivateAssets&gt;
+    &lt;IncludeAssets&gt;runtime; build; native; contentfiles; analyzers; buildtransitive&lt;/IncludeAssets&gt;
+  &lt;/PackageReference&gt;
+  &lt;PackageReference Include=&quot;Newtonsoft.Json&quot; Version=&quot;13.0.1&quot; /&gt;
+  &lt;PackageReference Include=&quot;NSwag.ApiDescription.Client&quot; Version=&quot;13.0.5&quot;&gt;
+    &lt;PrivateAssets&gt;all&lt;/PrivateAssets&gt;
+    &lt;IncludeAssets&gt;runtime; build; native; contentfiles; analyzers; buildtransitive&lt;/IncludeAssets&gt;
+  &lt;/PackageReference&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<p>The generated code will be in the <code>obj</code> folder if you build the project. As mentioned above, the API specification is in the <code>Debug/net7.0</code> folder, so it will break if I retarget this solution to a newer framework. That is another reason to just put the specification at the root of the API project.</p>
+<h3 id="using-openapi-reference-from-command-line"><a href="#using-openapi-reference-from-command-line">Using OpenAPI reference from command line</a></h3>
+<p>You may wonder if it is as simple if you do not have Visual Studio as your IDE. It is; Microsoft published a dotnet tool for this exact reason. You can install it by running <code>dotnet tool install --local Microsoft.dotnet-openapi --version 7.0.4</code>. You can add the API specification by using a terminal from your project's directory and running the following command.</p>
+<pre><code class="language-shell">dotnet dotnet-openapi add file ..\..\Api\Demo\bin\Debug\net7.0\Demo.json
+</code></pre>
+<p>The result looks like this:</p>
+<pre><code class="language-xml">&lt;ItemGroup&gt;
+  &lt;PackageReference Include=&quot;Newtonsoft.Json&quot; Version=&quot;12.0.2&quot; /&gt;
+  &lt;PackageReference Include=&quot;NSwag.ApiDescription.Client&quot; Version=&quot;13.0.5&quot; /&gt;
+&lt;/ItemGroup&gt;
+&lt;ItemGroup&gt;
+  &lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; /&gt;
+&lt;/ItemGroup&gt;
+</code></pre>
+<p>Yeah, that is right, it is similar but not the same as if done via Visual Studio.</p>
+<ul>
+<li>The package <code>Microsoft Extensions ApiDescription Client</code> is missing.</li>
+<li>The version for NewtonSoft is different.</li>
+<li>The CodeGenerator is not specified, and it defaults to <code>NSwagCSharp</code>.
+I expected the tool to use the same templates as Visual Studio, but this is not the case. The missing package is still used, but as a transitive dependency of <code>NSwag.ApiDescription.Client</code>, with the installed version it is just a preview build.</li>
+</ul>
+<p>Do note that it is not required to use the dotnet tool for this; you can manually add the same lines as provided above. The tool is just there for convenience. Documentation for the tool is still somewhat limited but is described at the <a href="https://learn.microsoft.com/en-us/aspnet/core/web-api/microsoft.dotnet-openapi?view=aspnetcore-7.0" class="external">docs</a> over here.</p>
+<h3 id="influence-created-output"><a href="#influence-created-output">Influence created output</a></h3>
+<p>We have already seen that for the manual approach, making changes to the configuration can be done by modifying the nswag.json, a file we do not have when using OpenApiReference. So this section will go into making the same modification for this version.</p>
+<p>Before I go into it, we must fix one issue with the template used so far. There is a glaring issue which only appears if you have built the project in different ways. For example, here is the output building from Visual Studio</p>
+<pre><code class="language-shell">1&gt;GenerateNSwagCSharp:
+1&gt;  &quot;C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\build\../tools/Win/NSwag.exe&quot; openapi2csclient /className:DemoClient /namespace:ConnectedService /input:C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json /output:obj\DemoClient.cs
+1&gt;NSwag command line tool for .NET 4.6.1+ WinX64, toolchain v13.0.5.0 (NJsonSchema v10.0.22.0 (Newtonsoft.Json v11.0.0.0))
+1&gt;Visit http://NSwag.org for more information.
+1&gt;NSwag bin directory: C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\tools\Win
+1&gt;Code has been successfully written to file.
+</code></pre>
+<p>Compare that with the output from the dotnet CLI:</p>
+<pre><code class="language-shell">  GenerateNSwagCSharp:
+    dotnet --roll-forward-on-no-candidate-fx 2 C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\build\../tools/NetCore21//dotnet-nswag.dll openapi2csclient /className:DemoClient /na
+  mespace:ConnectedService /input:C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json /output:obj\DemoClient.cs
+  NSwag command line tool for .NET Core NetCore21, toolchain v13.0.5.0 (NJsonSchema v10.0.22.0 (Newtonsoft.Json v11.0.0.0))
+  Visit http://NSwag.org for more information.
+  NSwag bin directory: C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\tools\NetCore21
+  Code has been successfully written to file.
+</code></pre>
+<p>Do you see the issue? The CLI variant differs from the NSwag version used; it uses a <code>NetCore21</code> dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.</p>
+<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <OpenApiReference> line like this:</p>
+<pre><code class="language-xml">&lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
+                  CodeGenerator=&quot;NSwagCSharp&quot; 
+                  Namespace=&quot;MyNamespace&quot;
+                  ClassName=&quot;MyClient&quot; 
+                  Link=&quot;OpenAPIs\Demo.json&quot; /&gt;
+</code></pre>
+<p>Other options, like the JsonLibrary, need to be formatted differently. Like <code>Namespace</code>, there is an <code>Options</code> attribute. For example, we change the configuration below to use SystemTextJson and provide a custom name for the Exception class in the generated code base.</p>
+<pre><code class="language-xml">&lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
+                  CodeGenerator=&quot;NSwagCSharp&quot; 
+                  Options=&quot;/JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException&quot; 
+                  ClassName=&quot;MyClient&quot; 
+                  Link=&quot;OpenAPIs\Demo.json&quot; /&gt;
+</code></pre>
+<p>Any value set by nswag.json can also be provided here in the format <code>/propertyName:value</code>. I like to point out that properties like namespace can not be set here, so the following snippet will not work.</p>
+<pre><code class="language-xml">&lt;OpenApiReference 
+  Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
+  CodeGenerator=&quot;NSwagCSharp&quot; 
+  Options=&quot;/Namespace:MyNamspace /JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException&quot; 
+  ClassName=&quot;MyClient&quot; 
+  Link=&quot;OpenAPIs\Demo.json&quot; /&gt;
+</code></pre>
+<p>The reason is that task creates the following NSwag command (displayed in the output window)</p>
+<pre><code class="language-shell">dotnet --roll-forward-on-no-candidate-fx 2 &quot;C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.18.2\build\../tools/Net70//dotnet-nswag.dll&quot; openapi2csclient /className:MyClient /namespace:Override /input:&quot;C:\projects\BlogTopics\MyBlog\src\Api\Demo\bin\Debug\net7.0\Demo.json&quot; /output:&quot;obj\DemoClient.cs&quot; /Namespace:MyNamspace /JsonLibrary:SystemTextJson /ExceptionClass:DemoApiException
+</code></pre>
+<p>It has a duplicate <code>/Namespace</code>, and the first wins. The only way to customize the namespace is by providing it as an attribute. Otherwise, the default value, which is the assembly name, will be used.</p>
+<h2 id="conclusion"><a href="#conclusion">Conclusion</a></h2>
+<p>In conclusion, I cannot deny that the OpenApiReference feels a lot easier than the manual approach. It has its issues. For example, the lack of documentation configuring the generated code is disappointing. I also think it is weird that the different approaches between Visual Studio and command-line are out of sync and that both templates are outdated. It makes me question if people are using it. Both reasons are not a hard no-go for me. The new approach does feel less like magic, but the trade-off for me is that the settings used are less transparent than a nswag.json file. As I showed in the previous version of this article, NSwag can also function without specifying all options and will apply the defaults themselves. I like things to be explicit, so that is a point in favour of the manual approach, that it gives me a choice to specify everything or omit the things I don't need. The abstraction might have been better if we could still provide a config file or if there were properties that Microsoft would map to NSwag stuff internally, decoupling my code generation from the implementation. What do you think about this? Which version do you prefer?</p>
+<p>As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.</p>
+<p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/GenerateCSharpClientForOpenAPIRevisited" class="external">GitHub</a>.</p>
+<p>See you next time, stay healthy and happy coding to all 🧸!</p>
+<h2 id="additional-resources"><a href="#additional-resources">Additional Resources</a></h2>
+<ul>
+<li><a href="https://devblogs.microsoft.com/dotnet/generating-http-api-clients-using-visual-studio-connected-services/" class="external">Visual Studio Connected Services</a></li>
+</ul>

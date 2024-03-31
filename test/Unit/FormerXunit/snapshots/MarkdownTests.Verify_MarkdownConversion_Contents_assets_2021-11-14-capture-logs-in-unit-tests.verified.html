@@ -1,0 +1,326 @@
+﻿<p>In application code, we are used to writing log statements primarily for diagnostic purposes. For instance, we use logs to capture unexpected error flows. Therefore it is not uncommon to want to capture the log output in our unit tests. You have three distinctive options to handle log output in unit tests, as far as I can tell.</p>
+<h2 id="scenario"><a href="#scenario">Scenario</a></h2>
+<p>Our test scenario is a service or system under test (SUT) that takes a string input and returns it without modification. We rely on <code>Microsoft Extensions</code> for our logging purposes. As the test framework, we will be using <code>Xunit</code>.</p>
+<pre><code class="language-cs">public interface IEchoService
+{
+    Task&lt;string&gt; Echo(string input);
+}
+</code></pre>
+<p>The initial implementation of our SUT could look like this:</p>
+<pre><code class="language-cs">public class EchoService : IEchoService
+{
+    private readonly ILogger&lt;EchoService&gt; _logger;
+
+    public EchoService(ILogger&lt;EchoService&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    public Task&lt;string&gt; Echo(string input)
+    {
+        _logger.LogInformation(&quot;echo was invoked&quot;);
+        return Task.FromResult(input);
+    }
+}
+</code></pre>
+<p>For this article, the snippet above would be more than sufficient. But in a real-life application, I prefer to log the input as well. If, however, we would use simple string interpolation, we immediately get a Code-Analysis warning about it. The recommendation here is to use LoggerMessage that enables the use of <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/loggermessage?view=aspnetcore-6.0" class="external">high-performance logging</a>. I've always found that implementing the LoggerMessage pattern required quite a bit of boilerplate. Luckily in .NET 6, this is a lot easier. We can <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/logger-message-generator" class="external">generate</a> all the boilerplate we need. As per usual, Andrew Lock <a href="https://andrewlock.net/exploring-dotnet-6-part-8-improving-logging-performance-with-source-generators/" class="external">wrote a piece</a> about this new feature already.</p>
+<p>After applying our <code>LoggerMessage</code> changes to the SUT it looks like the snippet below. Please note that in order for this to work the class <code>EchoService</code> it self is now marked as <code>partial</code>.</p>
+<pre><code class="language-cs">public partial class EchoService : IEchoService
+{
+    private readonly ILogger&lt;EchoService&gt; _logger;
+
+    public EchoService(ILogger&lt;EchoService&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    public Task&lt;string&gt; Echo(string input)
+    {
+        //_logger.LogInformation(&quot;echo was invoked&quot;);
+
+        // The logging message template should not vary between calls to ... csharp(CA2254)
+        // _logger.LogInformation($&quot;echo was invoked with {input}&quot;);
+
+        LogEchoCall(input);
+
+        return Task.FromResult(input);
+    }
+
+    [LoggerMessage(1000, LogLevel.Information, &quot;echo was invoked '{EchoInput}'&quot;)]
+    partial void LogEchoCall(string echoInput);
+}
+</code></pre>
+<h2 id="option-1"><a href="#option-1">Option 1</a></h2>
+<p>First up is doing absolutely nothing. Yeah, you read that correctly. You might find it silly to start this piece with the first option being nothing, but doing nothing with log statements in your test code is perfectly fine. Heck, even doing nothing comes in two flavours.</p>
+<p>If we use Dependency Injection in our test, we have access to &quot;AddLogging()&quot;. If we don't provide a logging provider, our code will run just fine. Otherwise, if you have already set up a logging provider or provided one explicitly, it will log to zero or more providers depending on your current configuration. For instance, you could use the ConsoleLoggerProvider to log to the console during the test. I often use the DI variant in my test since I am writing extension methods on IServiceCollection to write up my code anyway, so using the same extension method in test code simplifies matters.</p>
+<pre><code class="language-cs">[Fact]
+public async Task Test_DependencyInjection_EmptyLoggingBuilder()
+{
+    var configuration = new ConfigurationBuilder().Build();
+    var serviceProvider = new ServiceCollection()
+        .AddLogging() // could also be part of AddEcho to make sure ILogger is available outside ASP.NET runtime
+        .AddEcho(configuration)
+        .BuildServiceProvider();
+    var sut = serviceProvider.GetRequiredService&lt;IEchoService&gt;();
+    var testInput = &quot;Scenario: empty logging builder&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+}
+</code></pre>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - No ILogger Registered" /></p>
+<pre><code class="language-cs">[Fact]
+public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
+{
+    var configuration = new ConfigurationBuilder().Build();
+    var serviceProvider = new ServiceCollection()
+        .AddLogging(loggingBuilder =&gt; {
+            loggingBuilder.AddConsole();
+        })
+        .AddEcho(configuration)
+        .BuildServiceProvider();
+    var sut = serviceProvider.GetRequiredService&lt;IEchoService&gt;();
+    var testInput = &quot;Scenario: console logging builder&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+}
+</code></pre>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - console ILogger registered" /></p>
+<p>If, however, you cannot rely on dependency injection in your tests, you have the alternative of manual creating your SUT and relevant dependencies. The only dependency of our EchoService is an instance of ILogger. For testing purposes, you can use the NullLoggerFactory, which creates a logger that logs into the void.</p>
+<pre><code class="language-cs">[Fact]
+public async Task Test_Manuel_NullLoggingFactory()
+{
+    var sut = new EchoService(NullLogger&lt;EchoService&gt;.Instance);
+    var testInput = &quot;Scenario: null logger factory&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+}
+</code></pre>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - null ILogger registered" /></p>
+<blockquote>
+<p>As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.</p>
+</blockquote>
+<h2 id="option-2"><a href="#option-2">Option 2</a></h2>
+<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
+<pre><code class="language-cs">public class LoggerMock&lt;TCategoryName&gt; : Mock&lt;ILogger&lt;TCategoryName&gt;&gt;
+{
+    private readonly List&lt;LogMessage&gt; logMessages = new();
+
+    public ReadOnlyCollection&lt;LogMessage&gt; LogMessages =&gt; new(logMessages);
+
+    protected LoggerMock()
+    {
+    }
+
+    public static LoggerMock&lt;TCategoryName&gt; CreateDefault()
+    {
+        return new LoggerMock&lt;TCategoryName&gt;()
+            .SetupLog()
+            .SetupIsEnabled(LogLevel.Information);
+    }
+
+    public LoggerMock&lt;TCategoryName&gt; SetupIsEnabled(LogLevel logLevel, bool enabled = true)
+    {
+        Setup(x =&gt; x.IsEnabled(It.Is&lt;LogLevel&gt;(p =&gt; p.Equals(logLevel))))
+            .Returns(enabled);
+        return this;
+    }
+
+    public LoggerMock&lt;TCategoryName&gt; SetupLog()
+    {
+        Setup(logger =&gt; logger.Log(
+            It.IsAny&lt;LogLevel&gt;(),
+            It.IsAny&lt;EventId&gt;(),
+            It.Is&lt;It.IsAnyType&gt;((v, t) =&gt; true),
+            It.IsAny&lt;Exception&gt;(),
+            It.Is&lt;Func&lt;It.IsAnyType, Exception?, string&gt;&gt;((v, t) =&gt; true)
+        ))
+        .Callback(new InvocationAction(invocation =&gt; {
+            var logLevel = (LogLevel)invocation.Arguments[0];
+            var eventId = (EventId)invocation.Arguments[1];
+            var state = invocation.Arguments[2];
+            var exception = (Exception?)invocation.Arguments[3];
+            var formatter = invocation.Arguments[4];
+
+            var invokeMethod = formatter.GetType().GetMethod(&quot;Invoke&quot;);
+            var actualMessage = (string?)invokeMethod?.Invoke(formatter, new[] { state, exception });
+
+            logMessages.Add(new LogMessage {
+                EventId = eventId,
+                LogLevel = logLevel,
+                Message = actualMessage,
+                Exception = exception,
+                State = state
+            });
+        }));
+        return this;
+    }
+}
+</code></pre>
+<p>Any <code>Mock</code> created with Moq will provide you with the ability to assert invocations made to the mocked class. Since my approach makes the mock stateful, I can capture any request made against it. We can make concrete assertions because we can access information like <code>EventId</code> and <code>LogLevel</code>. If, for instance, you have alerts written against business events, you want to validate that the correct information passes into your logging system.</p>
+<pre><code class="language-cs">[Fact]
+public async Task Test_Moq_DefaultMockedLogger()
+{
+    var loggerMock = LoggerMock&lt;EchoService&gt;.CreateDefault();
+    var sut = new EchoService(loggerMock.Object);
+    var testInput = &quot;Scenario: mocked logger&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+
+    loggerMock.LogMessages.Should().NotBeEmpty().And.HaveCount(1);
+    loggerMock.VerifyEventWasLogged(new EventId(1000));
+}
+
+[Fact]
+public async Task Test_Moq_LogLevelDisabledMockedLogger()
+{
+    var loggerMock = LoggerMock&lt;EchoService&gt;.CreateDefault().SetupIsEnabled(LogLevel.Information, enabled: false);
+    var sut = new EchoService(loggerMock.Object);
+    var testInput = &quot;Scenario: log level disabled mocked logger&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+
+    loggerMock.LogMessages.Should().BeEmpty();
+}
+</code></pre>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - mock ILogger registered" /></p>
+<h2 id="options-3"><a href="#options-3">Options 3</a></h2>
+<p>Thus far, we have discussed options that would work outside <code>Xunit</code>. The third technique is not limited to <code>Xunit</code>, but its implementation is restricted to use in a <code>Xunit</code> project because we will now rely on Xunit's <code>ITestOutputHelper</code> mechanism. In most cases, we would use <code>ITestOutputHelper</code> to log lines inside the test case itself; it is, however, possible to create an <code>ILogger</code> that writes to <code>ITestOutputHelper</code> so we can also capture logs our SUT produces.</p>
+<p>Microsoft has <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/custom-logging-provider" class="external">well-written documentation</a> on how to create a custom logger provider. We start with a configuration class for our <code>XunitLogger</code>. We will have no custom settings in this demo, but putting the configuration in place makes it easier to add settings later. The <code>ConsoleLogger</code>, for example, uses configuration to control LogScope inclusion and timestamp formats.</p>
+<pre><code class="language-cs">public class XunitLoggerConfiguration
+{
+}
+</code></pre>
+<p>Next up is our Xunit logger itself. The ColoredConsole sample from the docs does nothing with scope, but to not limit ourselves later, we changed the implementation of <code>BeginScope</code> to use <code>IExternalScopeProvider</code>. To print the log line, we need the last argument of <code>Log&lt;TState&gt;</code>, which is the formatter. We then pass it the Xunit's ITestOutputHelper to <a href="https://xunit.net/docs/capturing-output" class="external">capture output</a>. Depending on your specific needs, you can log the logger's category (name), event, log level, scope or even exception. For now, let's keep it simple.</p>
+<pre><code class="language-cs">public class XunitLogger : ILogger
+{
+    private readonly string _loggerName;
+    private readonly Func&lt;XunitLoggerConfiguration&gt; _getCurrentConfig;
+    private readonly IExternalScopeProvider _externalScopeProvider;
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public XunitLogger(string loggerName, Func&lt;XunitLoggerConfiguration&gt; getCurrentConfig, IExternalScopeProvider externalScopeProvider, ITestOutputHelper testOutputHelper)
+    {
+        _loggerName = loggerName;
+        _getCurrentConfig = getCurrentConfig;
+        _externalScopeProvider = externalScopeProvider;
+        _testOutputHelper = testOutputHelper;
+    }
+
+    public IDisposable BeginScope&lt;TState&gt;(TState state) =&gt; _externalScopeProvider.Push(state);
+
+    public bool IsEnabled(LogLevel logLevel) =&gt; LogLevel.None != logLevel;
+
+    public void Log&lt;TState&gt;(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func&lt;TState, Exception?, string&gt; formatter)
+    {
+        if (!IsEnabled(logLevel))
+        {
+            return;
+        }
+
+         var message = formatter(state, exception);
+         _testOutputHelper.WriteLine(message);
+    }
+}
+</code></pre>
+<p>An <code>ILoggerProvider</code> is responsible for creating <code>ILogger</code> instances; this means we also need the custom <code>XunitLoggerProvider</code> to take care of making our <code>XunitLogger</code>.</p>
+<pre><code class="language-cs">public sealed class XunitLoggerProvider : ILoggerProvider
+{
+    private readonly IDisposable _configurationOnChangeToken;
+    private XunitLoggerConfiguration _currentConfiguration;
+    private readonly ConcurrentDictionary&lt;string, XunitLogger&gt; _loggers = new();
+    private readonly IExternalScopeProvider _externalScopeProvider = new LoggerExternalScopeProvider();
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public XunitLoggerProvider(IOptionsMonitor&lt;XunitLoggerConfiguration&gt; optionsMonitor, ITestOutputHelper testOutputHelper)
+    {
+        _currentConfiguration = optionsMonitor.CurrentValue;
+        _configurationOnChangeToken = optionsMonitor.OnChange(updatedConfiguration =&gt; _currentConfiguration = updatedConfiguration);
+        _testOutputHelper = testOutputHelper;
+    }
+
+    public ILogger CreateLogger(string categoryName)
+    {
+        var logger = _loggers.GetOrAdd(categoryName, name =&gt; new XunitLogger(name, GetCurrentConfiguration, _externalScopeProvider, _testOutputHelper));
+        return logger;
+    }
+
+    public void Dispose()
+    {
+        _loggers.Clear();
+        _configurationOnChangeToken.Dispose();
+    }
+
+    private XunitLoggerConfiguration GetCurrentConfiguration() =&gt; _currentConfiguration;
+}
+</code></pre>
+<p>The final puzzle piece is an extension method that allows us to register the new logger type. Note that we also add <code>ITestOutputHelper</code> to the DI container of the LoggingBuilder; that is why the <code>XunitLoggingProvider</code> in the previous snippet can retrieve it from the dependency injection container.</p>
+<pre><code class="language-cs">public static class XunitLoggingBuilderExtensions
+{
+    public static ILoggingBuilder AddXunit(this ILoggingBuilder builder, ITestOutputHelper testOutputHelper)
+    {
+        builder.AddConfiguration();
+
+        builder.Services.TryAddSingleton(testOutputHelper);
+
+        builder.Services.TryAddEnumerable(
+            ServiceDescriptor.Singleton&lt;ILoggerProvider, XunitLoggerProvider&gt;());
+
+        LoggerProviderOptions.RegisterProviderOptions
+            &lt;XunitLoggerConfiguration, XunitLoggerProvider&gt;(builder.Services);
+
+        return builder;
+    }
+
+    public static ILoggingBuilder AddXunit(this ILoggingBuilder builder, ITestOutputHelper testOutputHelper, Action&lt;XunitLoggerConfiguration&gt; configure)
+    {
+        builder.AddXunit(testOutputHelper);
+        builder.Services.Configure(configure);
+
+        return builder;
+    }
+}
+</code></pre>
+<p>The usage is the same as the ConsoleLogger example we did previously.</p>
+<pre><code class="language-cs">[Fact]
+public async Task Test_Custom_XunitLoggingBuilder()
+{
+    var configuration = new ConfigurationBuilder().Build();
+    var serviceProvider = new ServiceCollection()
+        .AddLogging(loggingBuilder =&gt; {
+            loggingBuilder.AddXunit(_testOutputHelper);
+        })
+        .AddEcho(configuration)
+        .BuildServiceProvider();
+    var sut = serviceProvider.GetRequiredService&lt;IEchoService&gt;();
+    var testInput = &quot;Scenario: custom logging builder&quot;;
+    var testResult = await sut.Echo(testInput).ConfigureAwait(false);
+    testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
+}
+</code></pre>
+<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - Xunit ILogger registered" /></p>
+<p>The first time I ran this test, I was baffled. I could only see the console output from ConsoleLogger test we did previously. A quick google search brought me to the <a href="https://github.com/xunit/xunit/issues/1141#issuecomment-555717377" class="external">solution</a>. We need to tell the dotnet test runner to display it with <code>dotnet test --logger:&quot;console;verbosity=detailed&quot;</code>. Telling an entire team they can no longer simply run <code>dotnet test</code> was not a real solution; luckily, we can simplify things with <code>dotnet test --settings runsettings.xml</code>.</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;RunSettings&gt;
+    &lt;LoggerRunSettings&gt;
+        &lt;Loggers&gt;
+            &lt;Logger friendlyName=&quot;console&quot; enabled=&quot;True&quot;&gt;
+                &lt;Configuration&gt;
+                    &lt;Verbosity&gt;detailed&lt;/Verbosity&gt;
+                &lt;/Configuration&gt;
+            &lt;/Logger&gt;
+        &lt;/Loggers&gt;
+    &lt;/LoggerRunSettings&gt;
+&lt;/RunSettings&gt;
+</code></pre>
+<p>However, explicitly passing <code>--settings</code> every time does not solve anything. On the <a href="https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022" class="external">Microsoft Docs</a> I found the solution. We can tell MSBuild to use <code>RunSettingsFilePath</code>, which takes care of it for us. If we now run <code>dotnet test</code> we get proper output. For example, you can add a <code>Directory.Build.props</code> to the root of your project.</p>
+<pre><code class="language-xml">&lt;Project&gt;
+  &lt;PropertyGroup&gt;
+    &lt;RunSettingsFilePath&gt;$(MSBuildThisFileDirectory)runsettings.xml&lt;/RunSettingsFilePath&gt;
+  &lt;/PropertyGroup&gt;
+&lt;/Project&gt;
+</code></pre>
+<h2 id="closing-thoughts"><a href="#closing-thoughts">Closing Thoughts</a></h2>
+<p>I know I am not the first to write about this topic, but I hope to provide fresh insight into the subject matter. The different techniques all have their merit. I have used all three on other occasions and remind you that the NullLogger is a viable option in many cases. Nine times out of 10, you probably only care about the business logic to test. For the final remaining time, I can only say the well-known programming wisdom: &quot;It depends&quot;.</p>
+<p>As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them.</p>
+<p>The corresponding source code for this article is on <a href="https://github.com/kaylumah/CaptureLogsInUnitTests" class="external">GitHub</a>.</p>
+<p>See you next time, stay healthy and happy coding to all 🧸!</p>
