@@ -1,0 +1,290 @@
+﻿<h2 id="why-use-hooks"><a href="#why-use-hooks">Why use hooks?</a></h2>
+<p>We, as developers, love platforms like GitHub, GitLab, Atlassian, Azure DevOps etc., as our managed git system and collaboration platform. We also love clean code and keep inventing new linters and rules to enforce it. In my opinion, every commit should allow the codebase to deploy to production. There is nothing worse than commits like “fixed style errors” or “fixed build”. These are often small mistakes you want to know as early as possible in your development cycle. You don’t want to break the build for the next developer because he pulled your ‘mistake’ or waste precious build minutes of your CI server. Say you have asked your teammate to review your code; in the meantime, the build server rejects your code. That means you have to go back and fix this, and your teammate has to come back and possibly review again after the changes (i.e., approvals reset on new commit). Doing so would waste a lot of time and effort.</p>
+<blockquote>
+<p><strong>note</strong>: I favour server-side hooks, but when using a SaaS solution, this is not always a possibility. I know I would not want someone to run arbitrary code on my servers. Unfortunately, a developer can bypass the client-side hooks. Until we can run, possibly sandboxed, server-side hooks on our prefered platform, we have to make the best of it by using client-side hooks.</p>
+</blockquote>
+<p>Githooks are scripts that can execute on certain parts of the git lifecycle. Hooks must be executable, but other than that, hooks' power is only limited to the developer's imagination. I have seen many samples of hooks written in JavaScript (node) using tools like <a href="https://github.com/typicode/husky" class="external">husky</a> and <a href="https://github.com/conventional-changelog/commitlint" class="external">commitlint</a> to enforce a certain way of working. When I was browsing the changes in the upcoming .NET Core 3.0 release, the concept of <a href="https://docs.microsoft.com/en-us/dotnet/core/whats-new/dotnet-core-3-0#local-dotnet-tools" class="external">local-tools</a> got me thinking. I knew of the existence of <a href="https://www.hanselman.com/blog/CAndNETCoreScriptingWithTheDotnetscriptGlobalTool.aspx" class="external">dotnet-script</a>, would that make it possible to C# in my GitHooks?</p>
+<blockquote>
+<p><strong>note</strong>: in the past I have used a set-up with node since I occasionally work with front-end frameworks like Angular. Since I had node installed I could use it even in my pure backend projects to enforce commit messages and such. For me it felt dirty, since that would require team members to have node installed. Using the dotnet cli feels less as a forced decision since members are likely to have it installed already.</p>
+</blockquote>
+<h2 id="lets-get-started"><a href="#lets-get-started">Let’s get started!</a></h2>
+<p>When creating a git repository there is a folder called hooks where all the git hooks are placed. For every event there is a sample post-fixed with .sample that shows the possibility of each hook. This directory is not under source control and we are going to create our own directory to be able to share the hooks with the team.</p>
+<pre><code class="language-bash">mkdir git-hooks-example  
+cd git-hooks-example  
+git init  
+dotnet new gitignore  
+dotnet new tool-manifest  
+dotnet tool install dotnet-script  
+dotnet tool install dotnet-format  
+mkdir .githooks
+</code></pre>
+<h3 id="pre-commit-hook"><a href="#pre-commit-hook">Pre-Commit Hook</a></h3>
+<p>To demonstrate we are going to create a plain hook. To check if it is working <strong>git commit -m “”</strong> (using empty commit message will abort the commit). You should see the line pre-commit hook printed.</p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+Console.WriteLine(&quot;pre-commit hook&quot;);
+</code></pre>
+<p>To make it executable run:</p>
+<pre><code class="language-bash">find .git/hooks -type f -exec rm {} \;
+find .githooks -type f -exec chmod +x {} \;
+find .githooks -type f -exec ln -sf ../../{} .git/hooks/ \;
+</code></pre>
+<p>Since we can reference other files (and even load nuget packages) in our csx we will first create a couple of files so we can have code-reuse between the hooks.</p>
+<p>Create a file called <strong>logger.csx</strong></p>
+<pre><code class="language-csharp">public class Logger
+{
+    public static void LogInfo(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.Error.WriteLine(message);
+    }
+    public static void LogError(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Error.WriteLine(message);
+    }
+}
+</code></pre>
+<p>Create a file called <strong>command-line.csx</strong></p>
+<pre><code class="language-csharp">#load &quot;logger.csx&quot;
+public class CommandLine
+{
+    public static string Execute(string command)
+    {
+        // according to: https://stackoverflow.com/a/15262019/637142
+        // thans to this we will pass everything as one command
+        command = command.Replace(&quot;\&quot;&quot;, &quot;\&quot;\&quot;&quot;);
+        var proc = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = &quot;/bin/bash&quot;,
+                Arguments = &quot;-c \&quot;&quot; + command + &quot;\&quot;&quot;,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
+            }
+        };
+        proc.Start();
+        proc.WaitForExit();
+        if (proc.ExitCode != 0)
+        {
+            Logger.LogError(proc.StandardOutput.ReadToEnd());
+            return proc.ExitCode.ToString();
+        }
+        return proc.StandardOutput.ReadToEnd();
+    }
+}
+</code></pre>
+<p>Create a file called <strong>dotnet-commands.csx</strong></p>
+<pre><code class="language-csharp">#load &quot;logger.csx&quot;
+#load &quot;command-line.csx&quot;
+public class DotnetCommands
+{
+    public static int FormatCode() =&gt; ExecuteCommand(&quot;dotnet format&quot;);
+    public static int BuildCode() =&gt; ExecuteCommand(&quot;dotnet build&quot;);
+
+    public static int TestCode() =&gt; ExecuteCommand(&quot;dotnet test&quot;);
+
+    private static int ExecuteCommand(string command)
+    {
+        string response = CommandLine.Execute(command);
+        Int32.TryParse(response, out int exitCode);
+        return exitCode;
+    }
+
+}
+</code></pre>
+<p>Create a file called <strong>git-commands.csx</strong></p>
+<pre><code class="language-csharp">#load &quot;logger.csx&quot;
+#load &quot;command-line.csx&quot;
+public class GitCommands
+{
+    public static void StashChanges()
+    {
+        CommandLine.Execute(&quot;git stash -q --keep-index&quot;);
+    }
+    public static void UnstashChanges()
+    {
+        CommandLine.Execute(&quot;git stash pop -q&quot;);
+    }
+}
+</code></pre>
+<p>We now have a utility in place for Logging and running GIT and dotnet commands. Next we are going to start with out pre-commit hook. Create a file called <strong>pre-commit</strong> The difference between this file and the others we just made is that we don’t specify the extension, and that using Shebang we explicitly load dotnet-script. For an explanation of each hook see the article posted below.</p>
+<p><a href="https://www.atlassian.com/git/tutorials/git-hooks" class="external">Git Hooks | Atlassian Git Tutorial</a></p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+#load &quot;logger.csx&quot;
+#load &quot;git-commands.csx&quot;
+#load &quot;dotnet-commands.csx&quot;
+
+// We'll only runchecks on changes that are a part of this commit so let's stash others
+GitCommands.StashChanges();
+
+int buildCode = DotnetCommands.BuildCode();
+
+// We're done with checks, we can unstash changes
+GitCommands.UnstashChanges();
+if (buildCode != 0) {
+    Logger.LogError(&quot;Failed to pass the checks&quot;);
+    Environment.Exit(-1);
+}
+// All checks have passed
+</code></pre>
+<p>If we run <strong>git commit -m “”</strong> again this time we get an error saying Failed to pass the checks, which makes sense since we don’t have a project yet. We are going to create a simple sln consisting of a classlibary and a test libary.</p>
+<pre><code class="language-bash">dotnet new sln  
+dotnet new classlib --framework netstandard2.1 --langVersion 8 --name SomeLib --output src/SomeLib  
+dotnet new xunit --output tests/SomeLibTests  
+dotnet sln add **/*.csproj 
+cd tests/SomeLibTests/  
+dotnet add reference ../../src/SomeLib/SomeLib.csproj  
+cd ../../  
+dotnet build
+</code></pre>
+<p>If we use git commit -m “” one more time, we get the message about aborting the commit again. We now know that every commit will at least compile :-) If for example we remove the namespace ending curly brace from Class1 we get the error <strong>Class1.cs(7,6): error CS1513: }</strong>. If we extend our pre-commit hook even further we can have <a href="https://www.hanselman.com/blog/EditorConfigCodeFormattingFromTheCommandLineWithNETCoresDotnetFormatGlobalTool.aspx" class="external">dotnet-format</a> and dotnet-test running on every commit. If we purposely write a failing test (1 equals 0 or something like that) the build won’t pass.</p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+#load &quot;logger.csx&quot;
+#load &quot;git-commands.csx&quot;
+#load &quot;dotnet-commands.csx&quot;
+
+Logger.LogInfo(&quot;pre-commit hook&quot;);
+
+// We'll only runchecks on changes that are a part of this commit so let's stash others
+GitCommands.StashChanges();
+
+int formatCode = DotnetCommands.FormatCode();
+int buildCode = DotnetCommands.BuildCode();
+int testCode = DotnetCommands.TestCode();
+
+// We're done with checks, we can unstash changes
+GitCommands.UnstashChanges();
+int exitCode = formatCode + buildCode + testCode;
+if (exitCode != 0) {
+    Logger.LogError(&quot;Failed to pass the checks&quot;);
+    Environment.Exit(-1);
+}
+// All checks have passed
+</code></pre>
+<h3 id="prepare-commit-message-hook"><a href="#prepare-commit-message-hook">Prepare-commit-message hook</a></h3>
+<p>Thus far, we have not really used anything we need C# for; Admittedly we are using C# to execute shell commands. For our next hook we are going to use System.IO. Imagine as a team you have a commit-message convention. Let's say you want each commit message to include a reference to your issue tracker.</p>
+<pre><code class="language-text">type(scope?): subject  #scope is optional
+</code></pre>
+<p>Create a file <strong>prepare-commit-msg</strong> in this hook we can provide a convenient commit message place holder if the user did not supply a message. To actual enforce the message, you need the <strong>commit-msg</strong> hook. In this example, we only create a message for feature branches.</p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+#load &quot;logger.csx&quot;
+#load &quot;util.csx&quot;
+#load &quot;git-commands.csx&quot;
+
+Logger.LogInfo(&quot;prepare-commit-msg hook&quot;);
+
+string commitMessageFilePath = Util.CommandLineArgument(Args, 0);
+string commitType = Util.CommandLineArgument(Args, 1);
+string commitHash = Util.CommandLineArgument(Args, 2);
+
+if (commitType.Equals(&quot;message&quot;)) {
+    // user supplied a commit message, no need to prefill.
+    Logger.LogInfo(&quot;commitType message&quot;);
+    Environment.Exit(0);
+}
+
+string[] files = GitCommands.ChangedFiles();
+for(int i = 0; i &lt; files.Length; i++) {
+    // perhaps determine scope based on what was changed.
+    Logger.LogInfo(files[i]);
+}
+
+string branch = GitCommands.CurrentBranch();
+if (branch.StartsWith(&quot;feature&quot;)) {
+    string messageToBe = &quot;feat: ISS-XXX&quot;;
+    PrepareCommitMessage(commitMessageFilePath, messageToBe);
+}
+
+public static void PrepareCommitMessage(string messageFile, string message)
+{
+     string tempfile = Path.GetTempFileName();
+    using (var writer = new StreamWriter(tempfile))
+    using (var reader = new StreamReader(messageFile))
+    {
+        writer.WriteLine(message);
+        while (!reader.EndOfStream)
+            writer.WriteLine(reader.ReadLine());
+    }
+    File.Copy(tempfile, messageFile, true);
+}
+</code></pre>
+<p>Create a new helper called <strong>util.csx</strong></p>
+<pre><code class="language-csharp">public class Util
+{
+    public static string CommandLineArgument(IList&lt;string&gt; Args, int position)
+    {
+        if (Args.Count() &gt;= position + 1)
+        {
+            return Args[position];
+        }
+        return string.Empty;
+    }
+
+}
+</code></pre>
+<h3 id="commit-msg-hook"><a href="#commit-msg-hook">Commit-msg Hook</a></h3>
+<p>The final local git hook I took for a spin is the commit-msg hook. It uses a regex to make sure the commit message is according the specified format.</p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+#load &quot;logger.csx&quot;
+#load &quot;util.csx&quot;
+#load &quot;git-commands.csx&quot;
+using System.Text.RegularExpressions;
+
+Logger.LogInfo(&quot;commit-msg hook&quot;);
+
+string commitMessageFilePath = Util.CommandLineArgument(Args, 0);
+string branch = GitCommands.CurrentBranch();
+Logger.LogInfo(commitMessageFilePath);
+Logger.LogInfo(branch);
+string message = GetCommitedMessage(commitMessageFilePath);
+Logger.LogInfo(message);
+
+const string regex = @&quot;\b(feat|bug)\b(\({1}\b(core)\b\){1})?(:){1}(\s){1}(ISS-[0-9]{0,3}){1}&quot;;
+var match = Regex.Match(message, regex);
+
+if (!match.Success) {
+    Logger.LogError(&quot;Message does not match commit format&quot;);
+    Environment.Exit(1);
+}
+
+public static string GetCommitedMessage(string filePath) {
+    return File.ReadAllLines(filePath)[0];
+}
+</code></pre>
+<h3 id="pre-push-hook"><a href="#pre-push-hook">pre push Hook</a></h3>
+<p>It is even possible to use NuGet packages in our hooks. Let say we want to prevent pushes to master (perhaps not even commits?). We can read a config file using Newtonsoft.Json and look for a protected branch and abort.</p>
+<pre><code class="language-csharp">#!/usr/bin/env dotnet dotnet-script
+#r &quot;nuget: Newtonsoft.Json, 12.0.2&quot;
+#load &quot;logger.csx&quot;
+#load &quot;config.csx&quot;
+#load &quot;git-commands.csx&quot;
+using Newtonsoft.Json;
+
+string currentBranch = GitCommands.CurrentBranch().Trim();
+Config currentConfig = GetConfig();
+bool lockedBranch = currentConfig.ProtectedBranches.Contains(currentBranch);
+
+if (lockedBranch) {
+    Logger.LogError($&quot;Trying to commit on protected branch '{currentBranch}'&quot;);
+    Environment.Exit(1);
+}
+
+public static Config GetConfig()
+{
+    return JsonConvert.DeserializeObject&lt;Config&gt;(File.ReadAllText(&quot;.githooks/config.json&quot;));
+}
+</code></pre>
+<h2 id="conclusion"><a href="#conclusion">Conclusion</a></h2>
+<p>My current hooks are far from the best, and perhaps C# is not the fastest language to use in git hook. I do, however consider the experiment a success. I much rather code in C# than in shell script. Ideas for further improvement include</p>
+<ul>
+<li>based on the list of changes, determine the scope of the change (i.e. only one directory changed we might know the scope)</li>
+<li>configure the regex, allowed scopes, allowed types</li>
+<li>improve pre-commit-msg for more scenarios</li>
+<li>enforce users to use the hooks</li>
+<li>managing versions of the hooks, on checkout old / different version of pull (with an update of the hooks) sync the directory. <a href="https://www.viget.com/articles/two-ways-to-share-git-hooks-with-your-team/" class="external">(perhaps githook location)</a></li>
+</ul>
+<p>Let me know what you think :-)</p>
+<p><a href="https://github.com/maxhamulyak/git-hooks-example" class="external">maxhamulyak/git-hooks-example</a></p>
+<p>Happy Coding 🍻</p>

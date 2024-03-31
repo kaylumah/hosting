@@ -33,4 +33,11 @@
     <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\..\_site\_posts\*.md">
+      <TargetPath>assets\%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+  </ItemGroup>
+
 </Project>

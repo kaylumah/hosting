@@ -3,10 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
-using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
@@ -15,7 +13,34 @@ namespace Kaylumah.Ssg.Utilities
 {
     public static class MarkdownUtil
     {
-        public static string Transform(string source)
+        public static string ToHtml(string source)
+        {
+            MarkdownPipeline pipeline = BuildPipeline();
+
+            MarkdownDocument doc = Markdown.Parse(source, pipeline);
+            ModifyHeaders(doc);
+            ModifyLinks(doc);
+
+            // Render the doc
+            // StringWriter writer = new StringWriter();
+            // HtmlRenderer renderer = new HtmlRenderer(writer);
+            // pipeline.Setup(renderer);
+            // renderer.Render(doc);
+            // string intermediateResult = writer.ToString();
+            string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string result = intermediateResult.Trim();
+            return result;
+        }
+
+        public static string ToText(string source)
+        {
+            MarkdownPipeline pipeline = BuildPipeline();
+            string intermediateResult = Markdown.ToPlainText(source, pipeline);
+            string result = intermediateResult.Trim();
+            return result;
+        }
+
+        static MarkdownPipeline BuildPipeline()
         {
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
@@ -23,25 +48,12 @@ namespace Kaylumah.Ssg.Utilities
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
 
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseYamlFrontMatter()
-                .UseAutoIdentifiers()
-                .UsePipeTables()
-                .UseGenericAttributes()
+                .UseYamlFrontMatter() // needed to remove any frontmatter
+                .UseAutoIdentifiers() // used for clickable headers
+                .UsePipeTables() // support for tables
+                .UseGenericAttributes() // support for inline attributes (like width, height)
                 .Build();
-
-            MarkdownDocument doc = Markdown.Parse(source, pipeline);
-            ModifyHeaders(doc);
-            ModifyLinks(doc);
-
-            // Render the doc
-            StringWriter writer = new StringWriter();
-            HtmlRenderer renderer = new HtmlRenderer(writer);
-            pipeline.Setup(renderer);
-            renderer.Render(doc);
-            string intermediateResult = writer.ToString();
-            // string intermediateResult = Markdown.ToHtml(doc, pipeline);
-            string result = intermediateResult.Trim();
-            return result;
+            return pipeline;
         }
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
