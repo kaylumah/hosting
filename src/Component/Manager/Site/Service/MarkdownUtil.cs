@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using Markdig;
-using Markdig.Syntax;
 
 namespace Kaylumah.Ssg.Utilities
 {
@@ -12,15 +11,7 @@ namespace Kaylumah.Ssg.Utilities
         public static string ToHtml(string source)
         {
             MarkdownPipeline pipeline = BuildPipeline();
-
-            MarkdownDocument doc = Markdown.Parse(source, pipeline);
-            // Render the doc
-            // StringWriter writer = new StringWriter();
-            // HtmlRenderer renderer = new HtmlRenderer(writer);
-            // pipeline.Setup(renderer);
-            // renderer.Render(doc);
-            // string intermediateResult = writer.ToString();
-            string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string intermediateResult = Markdown.ToHtml(source, pipeline);
             string result = intermediateResult.Trim();
             return result;
         }
