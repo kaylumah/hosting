@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
 using Markdig.Helpers;
 using Markdig.Renderers;
