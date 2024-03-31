@@ -89,10 +89,10 @@ namespace Kaylumah.Ssg.Utilities
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
 
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseYamlFrontMatter()
-                .UseAutoIdentifiers()
-                .UsePipeTables()
-                .UseGenericAttributes()
+                .UseYamlFrontMatter() // needed to remove any frontmatter
+                .UseAutoIdentifiers() // used for clickable headers
+                .UsePipeTables() // support for tables
+                .UseGenericAttributes() // support for inline attributes (like width, height)
                 .Build();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
