@@ -41,12 +41,12 @@ namespace Kaylumah.Ssg.Utilities
                 return false;
             }
 
-            if(linkInline.Url!.EndsWith(".gif", System.StringComparison.OrdinalIgnoreCase))
+            if (linkInline.Url!.EndsWith(".gif", System.StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
-            if(linkInline.Url!.EndsWith(".svg", System.StringComparison.OrdinalIgnoreCase))
+            if (linkInline.Url!.EndsWith(".svg", System.StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
