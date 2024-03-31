@@ -27,6 +27,7 @@ namespace Test.Unit.FormerXunit
             GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
             string html = MarkdownUtil.ToHtml(rawContents);
+            // string text = MarkdownUtil.ToText(rawContents);
 
             string testParameter = path
                 .Replace("/", "_")
@@ -37,6 +38,7 @@ namespace Test.Unit.FormerXunit
             settings.UseMethodName(methodName);
 
             await Verifier.Verify(html, "html", settings);
+            // await Verifier.Verify(text, "txt", settings);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
