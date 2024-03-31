@@ -87,7 +87,8 @@ namespace Test.Unit.FormerXunit
         public void Test_ImageConversion()
         {
             MarkdownPipelineBuilder pipelineBuilder = new MarkdownPipelineBuilder()
-                .Use<PictureInline>();
+                .Use<PictureInline>()
+                .UseGenericAttributes();
             MarkdownPipeline pipeline = pipelineBuilder.Build();
 
             string markdownText = """
@@ -95,8 +96,8 @@ namespace Test.Unit.FormerXunit
                                   ![Without Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png){width=4500 height=4000}
                                   ![Microsoft Extensions Logging Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png){width=4500 height=6000}
                                   """;
-            // string html = Markdown.ToHtml(markdownText, pipeline);
-            string txt = Markdown.ToPlainText(markdownText, pipeline);
+            string html = Markdown.ToHtml(markdownText, pipeline);
+            // string txt = Markdown.ToPlainText(markdownText, pipeline);
         }
 
         [Fact]
