@@ -61,8 +61,15 @@ namespace Kaylumah.Ssg.Utilities
                 }
                 else
                 {
-                    Uri uri = GlobalFunctions.AbsoluteUri(escapeUrl);
-                    result = uri.ToString();
+                    if (escapeUrl.StartsWith('#'))
+                    {
+                        result = escapeUrl;
+                    }
+                    else
+                    {
+                        Uri uri = GlobalFunctions.AbsoluteUri(escapeUrl);
+                        result = uri.ToString();
+                    }
                 }
 
                 return result;
