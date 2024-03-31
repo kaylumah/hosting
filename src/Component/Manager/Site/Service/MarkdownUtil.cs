@@ -13,6 +13,65 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities
 {
+//     class AbsoluteLinkConverter : IMarkdownExtension
+//     {
+//         public string BaseUrl
+//         { get; }
+//         public string Domain
+//         { get; }
+
+//         public AbsoluteLinkConverter(string baseUrl, string domain)
+//         {
+//             BaseUrl = baseUrl;
+//             Domain = domain;
+//         }
+
+//         public void Setup(MarkdownPipelineBuilder pipeline)
+//         {
+//         }
+
+//         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+//         {
+//             HtmlRenderer? htmlRenderer = renderer as HtmlRenderer;
+//             if (htmlRenderer != null)
+//             {
+//                 LinkInlineRenderer? inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
+//                 inlineRenderer?.TryWriters.Add(TryLinkAbsoluteUrlWriter);
+//             }
+//         }
+//         private bool TryLinkAbsoluteUrlWriter(HtmlRenderer renderer, LinkInline linkInline)
+//         {
+//             LinkInline.GetUrlDelegate? prevDynamic = linkInline.GetDynamicUrl;
+//             linkInline.GetDynamicUrl = () => {
+//                 string escapeUrl = prevDynamic != null ? prevDynamic() ?? linkInline.Url! : linkInline.Url!;
+//                 if(!Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out var parsedResult))
+//                 {
+// #pragma warning disable CA2201 // Do not raise reserved exception types
+//                     throw new Exception($"Error making link for {escapeUrl} @ {BaseUrl}");
+// #pragma warning restore CA2201 // Do not raise reserved exception types
+//                 }
+//                 if(parsedResult.IsAbsoluteUri)
+//                 {
+//                     return escapeUrl;
+//                 }
+//                 UriBuilder uriBuilder = new UriBuilder(Domain);
+//                 if(!escapeUrl.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+//                 {
+//                     uriBuilder = uriBuilder.WithPathSegment($"/{BaseUrl}/{escapeUrl}");
+//                 }
+//                 else 
+//                 {
+//                     uriBuilder = uriBuilder.WithPathSegment(parsedResult.ToString());
+//                 }
+    
+//                 string result = uriBuilder.Uri.ToString();
+//                 return result;
+//             };
+            
+//             return false;
+//         }
+//     }
+
     class PictureInline : IMarkdownExtension
     {
         void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
