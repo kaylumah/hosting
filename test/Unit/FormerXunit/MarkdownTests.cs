@@ -41,7 +41,7 @@ namespace Test.Unit.FormerXunit
         public static IEnumerable<object[]> GetBlogPages()
         {
             string[] fileNames = Directory.GetFiles("assets", "*.md");
-            foreach(string fileName in fileNames)
+            foreach (string fileName in fileNames)
             {
                 yield return new object[] { fileName };
             }
@@ -143,7 +143,7 @@ public class Program
             pageDoc.LoadHtml(result);
 
             HtmlNode root = pageDoc.DocumentNode;
-            System.Collections.Generic.List<HtmlNode> nodes = root.Descendants()
+            List<HtmlNode> nodes = root.Descendants()
                 .Where(n => n.NodeType == HtmlNodeType.Element)
                 .ToList();
             nodes.Count.Should().Be(12);
