@@ -92,24 +92,6 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
-        public static string ToCdata(string source)
-        {
-#pragma warning disable IDESIGN103
-            XmlWriterSettings settings = new XmlWriterSettings()
-            {
-                ConformanceLevel = ConformanceLevel.Fragment,
-                Encoding = new System.Text.UTF8Encoding(false)
-            };
-#pragma warning restore IDESIGN103
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream, settings);
-            writer.WriteCData(source);
-            writer.Close();
-            byte[] arr = stream.ToArray();
-            string text = System.Text.Encoding.UTF8.GetString(arr);
-            return text;
-        }
-
         public static string DateToXmlschema(DateTimeOffset date)
         {
             string result = DateToPattern(date, "o");
