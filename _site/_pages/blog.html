@@ -25,7 +25,7 @@ type: Collection
                 <p class="flex-1 text-base">{{ post.description }}</p>
             </a>
             <div class="flex flex-col gap-1 text-sm">
-                <span>Published <time datetime="{{ post.published | date_to_xmlschema }}">{{ post.published | date_to_ago }}</time> by <span>{{ site.data.authors[post.author | author_id].fullname }}</span></span>
+                <span>Published <time datetime="{{ post.published | date_to_xmlschema }}">{{ site | published_time_ago post }}</time> by <span>{{ site.data.authors[post.author | author_id].fullname }}</span></span>
                 <span class="flex flex-row gap-1">
                     {% for tag in post.tags %}
                     <span>{{ site.data.tags[tag].name }}</span>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using HtmlAgilityPack;
@@ -15,6 +16,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static AuthorId AuthorId(string author)
         {
             return author;
+        }
+
+        public static string PublishedTimeAgo(SiteMetaData siteMetaData, PageMetaData pageMetaData)
+        {
+            Debug.Assert(pageMetaData != null);
+            Debug.Assert(siteMetaData != null);
+            string result = string.Empty;
+            return result;
         }
 
         public static IEnumerable<object> TagCloud(SiteMetaData site)
