@@ -180,13 +180,5 @@ namespace Kaylumah.Ssg.Utilities
             string result = JsonSerializer.Serialize(o, _Options);
             return result;
         }
-
-        public static string Encode()
-        {
-            // https://jekyllrb.com/docs/liquid/filters/#options-for-the-slugify-filter
-            // https://stackoverflow.com/questions/17352981/webutility-htmldecode-vs-httputilty-htmldecode
-            // https://github.com/scriban/scriban/blob/4ee719b54df1c4f58e4bfc7d863197674d693783/src/Scriban/Functions/HtmlFunctions.cs
-            return "";
-        }
     }
 }
