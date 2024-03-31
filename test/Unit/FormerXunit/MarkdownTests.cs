@@ -128,27 +128,5 @@ public class Program
             nodes.ElementAt(10)
                 .Name.Should().Be("h6");
         }
-
-        [Fact]
-        public void Test7()
-        {
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseLinkExtension()
-                .Build();
-
-            string input = @"[link](https://kaylumah.nl)";
-            string output = Markdown.ToHtml(input, pipeline);
-        }
-
-        [Fact]
-        public void Test8()
-        {
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseLinkExtension()
-                .Build();
-
-            string input = @"[link](https://google.com)";
-            string output = Markdown.ToHtml(input, pipeline);
-        }
     }
 }

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
-using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 using Markdig.Syntax;
@@ -19,49 +18,36 @@ namespace Kaylumah.Ssg.Utilities
         public static string Transform(string source)
         {
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/BootstrapSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmphasisExtraSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/DefinitionListSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/FootnotesSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoLinks.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/ListExtraSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/MediaSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AbbreviationSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/HardlineBreakSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/FigureFooterAndCiteSpecs.md
-            // https://github.com/ilich/Markdig.Prism/blob/main/src/Markdig.Prism/PrismCodeBlockRenderer.cs
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
 
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseYamlFrontMatter()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/EmojiSpecs.md
-                //.UseEmojiAndSmiley(new Markdig.Extensions.Emoji.EmojiMapping(new Dictionary<string, string>() { { ":smiley:", "♥" } }, new Dictionary<string, string>()))
-
-                // UseAdvancedExtensions 2021-01-25
-                // .UseAbbreviations()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
                 .UseAutoIdentifiers()
-                // .UseCitations()
-                // .UseCustomContainers()
-                // .UseDefinitionLists()
-                // .UseEmphasisExtras()
-                // .UseFigures()
-                // .UseFooters()
-                // .UseFootnotes()
-                //.UseGridTables()
-                // .UseMathematics()
-                // .UseMediaLinks()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
                 .UsePipeTables()
-                // .UseListExtras()
-                // .UseTaskLists()
-                // .UseDiagrams()
-                // .UseAutoLinks()
-                // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
                 .UseGenericAttributes()
                 .Build();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
+            ModifyHeaders(doc);
+            ModifyLinks(doc);
 
+            // Render the doc
+            StringWriter writer = new StringWriter();
+            HtmlRenderer renderer = new HtmlRenderer(writer);
+            pipeline.Setup(renderer);
+            renderer.Render(doc);
+            string intermediateResult = writer.ToString();
+            // string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            string result = intermediateResult.Trim();
+            return result;
+        }
+
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
+        public static void ModifyHeaders(MarkdownDocument doc)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
+        {
             // Process headings to insert an intermediate LinkInline
             IEnumerable<HeadingBlock> blocks = doc.Descendants<HeadingBlock>();
             foreach (HeadingBlock headingBlock in blocks)
@@ -72,7 +58,12 @@ namespace Kaylumah.Ssg.Utilities
                 inline.AppendChild(previousInline);
                 headingBlock.Inline = inline;
             }
+        }
 
+#pragma warning disable CS3001 // Argument type is not CLS-compliant
+        public static void ModifyLinks(MarkdownDocument doc)
+#pragma warning restore CS3001 // Argument type is not CLS-compliant
+        {
             IEnumerable<LinkInline> anchorTags = doc.Descendants<LinkInline>();
             foreach (LinkInline anchor in anchorTags)
             {
@@ -102,72 +93,6 @@ namespace Kaylumah.Ssg.Utilities
                     }
                 }
             }
-
-            // Render the doc
-            StringWriter writer = new StringWriter();
-            HtmlRenderer renderer = new HtmlRenderer(writer);
-            pipeline.Setup(renderer);
-            renderer.Render(doc);
-
-            string result = writer.ToString().Trim();
-            return result;
-        }
-    }
-
-    public static class MarkdownPipelineBuilderExtensions
-    {
-#pragma warning disable CS3002 // Return type is not CLS-compliant
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-        public static MarkdownPipelineBuilder UseLinkExtension(this MarkdownPipelineBuilder pipeline)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-#pragma warning restore CS3002 // Return type is not CLS-compliant
-        {
-            OrderedList<IMarkdownExtension> extensions;
-            extensions = pipeline.Extensions;
-
-            if (!extensions.Contains<LinkExtension>())
-            {
-                LinkExtension ext = new LinkExtension();
-                extensions.Add(ext);
-            }
-
-            return pipeline;
-        }
-    }
-
-    public class LinkExtension : IMarkdownExtension
-    {
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-        public void Setup(MarkdownPipelineBuilder pipeline)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-        {
-            pipeline.DocumentProcessed += Pipeline_DocumentProcessed;
-        }
-
-        void Pipeline_DocumentProcessed(MarkdownDocument document)
-        {
-            IEnumerable<MarkdownObject> descendants = document.Descendants();
-            foreach (MarkdownObject node in descendants)
-            {
-                if (node is Inline)
-                {
-                    if (node is LinkInline linkInlineNode)
-                    {
-                        string uri = linkInlineNode.Url!;
-                        if (!uri.StartsWith("https://kaylumah.nl", StringComparison.Ordinal))
-                        {
-                            linkInlineNode.GetAttributes().AddClass("img-fluid");
-                        }
-                    }
-                }
-            }
-        }
-
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-        public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-        {
-            // throw new System.NotImplementedException();
         }
     }
 }
