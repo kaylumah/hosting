@@ -13,64 +13,92 @@ using Markdig.Syntax.Inlines;
 
 namespace Kaylumah.Ssg.Utilities
 {
-//     class AbsoluteLinkConverter : IMarkdownExtension
-//     {
-//         public string BaseUrl
-//         { get; }
-//         public string Domain
-//         { get; }
+    //     class AbsoluteLinkConverter : IMarkdownExtension
+    //     {
+    //         public string BaseUrl
+    //         { get; }
+    //         public string Domain
+    //         { get; }
 
-//         public AbsoluteLinkConverter(string baseUrl, string domain)
-//         {
-//             BaseUrl = baseUrl;
-//             Domain = domain;
-//         }
+    //         public AbsoluteLinkConverter(string baseUrl, string domain)
+    //         {
+    //             BaseUrl = baseUrl;
+    //             Domain = domain;
+    //         }
 
-//         public void Setup(MarkdownPipelineBuilder pipeline)
-//         {
-//         }
+    //         public void Setup(MarkdownPipelineBuilder pipeline)
+    //         {
+    //         }
 
-//         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
-//         {
-//             HtmlRenderer? htmlRenderer = renderer as HtmlRenderer;
-//             if (htmlRenderer != null)
-//             {
-//                 LinkInlineRenderer? inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
-//                 inlineRenderer?.TryWriters.Add(TryLinkAbsoluteUrlWriter);
-//             }
-//         }
-//         private bool TryLinkAbsoluteUrlWriter(HtmlRenderer renderer, LinkInline linkInline)
-//         {
-//             LinkInline.GetUrlDelegate? prevDynamic = linkInline.GetDynamicUrl;
-//             linkInline.GetDynamicUrl = () => {
-//                 string escapeUrl = prevDynamic != null ? prevDynamic() ?? linkInline.Url! : linkInline.Url!;
-//                 if(!Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out var parsedResult))
-//                 {
-// #pragma warning disable CA2201 // Do not raise reserved exception types
-//                     throw new Exception($"Error making link for {escapeUrl} @ {BaseUrl}");
-// #pragma warning restore CA2201 // Do not raise reserved exception types
-//                 }
-//                 if(parsedResult.IsAbsoluteUri)
-//                 {
-//                     return escapeUrl;
-//                 }
-//                 UriBuilder uriBuilder = new UriBuilder(Domain);
-//                 if(!escapeUrl.StartsWith("/", StringComparison.OrdinalIgnoreCase))
-//                 {
-//                     uriBuilder = uriBuilder.WithPathSegment($"/{BaseUrl}/{escapeUrl}");
-//                 }
-//                 else 
-//                 {
-//                     uriBuilder = uriBuilder.WithPathSegment(parsedResult.ToString());
-//                 }
-    
-//                 string result = uriBuilder.Uri.ToString();
-//                 return result;
-//             };
-            
-//             return false;
-//         }
-//     }
+    //         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    //         {
+    //             HtmlRenderer? htmlRenderer = renderer as HtmlRenderer;
+    //             if (htmlRenderer != null)
+    //             {
+    //                 LinkInlineRenderer? inlineRenderer = htmlRenderer.ObjectRenderers.FindExact<LinkInlineRenderer>();
+    //                 inlineRenderer?.TryWriters.Add(TryLinkAbsoluteUrlWriter);
+    //             }
+    //         }
+    //         private bool TryLinkAbsoluteUrlWriter(HtmlRenderer renderer, LinkInline linkInline)
+    //         {
+    //             LinkInline.GetUrlDelegate? prevDynamic = linkInline.GetDynamicUrl;
+    //             linkInline.GetDynamicUrl = () => {
+    //                 string escapeUrl = prevDynamic != null ? prevDynamic() ?? linkInline.Url! : linkInline.Url!;
+    //                 if(!Uri.TryCreate(escapeUrl, UriKind.RelativeOrAbsolute, out var parsedResult))
+    //                 {
+    // #pragma warning disable CA2201 // Do not raise reserved exception types
+    //                     throw new Exception($"Error making link for {escapeUrl} @ {BaseUrl}");
+    // #pragma warning restore CA2201 // Do not raise reserved exception types
+    //                 }
+    //                 if(parsedResult.IsAbsoluteUri)
+    //                 {
+    //                     return escapeUrl;
+    //                 }
+    //                 UriBuilder uriBuilder = new UriBuilder(Domain);
+    //                 if(!escapeUrl.StartsWith("/", StringComparison.OrdinalIgnoreCase))
+    //                 {
+    //                     uriBuilder = uriBuilder.WithPathSegment($"/{BaseUrl}/{escapeUrl}");
+    //                 }
+    //                 else 
+    //                 {
+    //                     uriBuilder = uriBuilder.WithPathSegment(parsedResult.ToString());
+    //                 }
+
+    //                 string result = uriBuilder.Uri.ToString();
+    //                 return result;
+    //             };
+
+    //             return false;
+    //         }
+    //     }
+
+    class ClickableHeaderLink : IMarkdownExtension
+    {
+        void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
+        {
+            // Empty on purpose
+        }
+
+        void IMarkdownExtension.Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+        {
+            if (renderer is HtmlRenderer htmlRenderer)
+            {
+                HeadingRenderer? headingRenderer = htmlRenderer.ObjectRenderers.FindExact<HeadingRenderer>();
+                headingRenderer?.TryWriters.Add(TryHeadingBlockRenderer);
+            }
+        }
+
+         bool TryHeadingBlockRenderer(HtmlRenderer renderer, HeadingBlock headingBlock)
+         {
+            LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null!);
+            ContainerInline previousInline = headingBlock.Inline!;
+            headingBlock.Inline = null;
+            inline.AppendChild(previousInline);
+            headingBlock.Inline = inline;
+            // renderer.Write(headingBlock);
+            return false;
+         }
+    }
 
     class PictureInline : IMarkdownExtension
     {
@@ -144,7 +172,6 @@ namespace Kaylumah.Ssg.Utilities
             MarkdownPipeline pipeline = BuildPipeline();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
-            ModifyHeaders(doc);
             ModifyLinks(doc);
 
             // Render the doc
@@ -178,24 +205,9 @@ namespace Kaylumah.Ssg.Utilities
                 .UseAutoIdentifiers() // used for clickable headers
                 .UsePipeTables() // support for tables
                 .UseGenericAttributes() // support for inline attributes (like width, height)
+                .Use<ClickableHeaderLink>()
                 .Build();
             return pipeline;
-        }
-
-#pragma warning disable CS3001 // Argument type is not CLS-compliant
-        public static void ModifyHeaders(MarkdownDocument doc)
-#pragma warning restore CS3001 // Argument type is not CLS-compliant
-        {
-            // Process headings to insert an intermediate LinkInline
-            IEnumerable<HeadingBlock> blocks = doc.Descendants<HeadingBlock>();
-            foreach (HeadingBlock headingBlock in blocks)
-            {
-                LinkInline inline = new LinkInline($"#{headingBlock.GetAttributes().Id}", null!);
-                ContainerInline previousInline = headingBlock.Inline!;
-                headingBlock.Inline = null;
-                inline.AppendChild(previousInline);
-                headingBlock.Inline = inline;
-            }
         }
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
