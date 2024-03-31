@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <!-- <PackageReference Include="System.Text.Json" /> -->
-    <PackageReference Include="Markdig" />
+    <!-- <PackageReference Include="Markdig" /> -->
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <!-- <PackageReference Include="Scriban" /> -->
   </ItemGroup>

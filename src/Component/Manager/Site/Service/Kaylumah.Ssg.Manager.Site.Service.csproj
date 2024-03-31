@@ -16,5 +16,6 @@
     <PackageReference Include="System.ServiceModel.Syndication" />
     <PackageReference Include="HtmlAgilityPack" />
     <PackageReference Include="Scriban" />
+    <PackageReference Include="Markdig" />
   </ItemGroup>
 </Project>
