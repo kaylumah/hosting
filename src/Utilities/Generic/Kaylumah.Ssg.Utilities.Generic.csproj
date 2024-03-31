@@ -4,17 +4,8 @@
     <PackageReference Include="Markdig" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Scriban" />
-    <PackageReference Include="HtmlAgilityPack" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Files\Kaylumah.Ssg.Utilities.Files.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Plugins/seo_template.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Plugins/feed_template.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
