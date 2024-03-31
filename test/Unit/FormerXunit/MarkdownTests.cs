@@ -92,8 +92,6 @@ namespace Test.Unit.FormerXunit
             MarkdownPipeline pipeline = pipelineBuilder.Build();
 
             string markdownText = """
-                                  this is a test!
-                                  ![Without Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png){width=4500 height=4000}
                                   ![Microsoft Extensions Logging Metadata in NuGet Package Explorer](/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png){width=4500 height=6000}
                                   """;
             string html = Markdown.ToHtml(markdownText, pipeline);
