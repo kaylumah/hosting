@@ -34,7 +34,7 @@ $Images = Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Fi
 $Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images" -Filter social_preview.png
 foreach ($image in $Images)
 {
-    $ConvertedImageName = $image.BaseName + ".webp"
+    $ConvertedImageName = $image.Name + ".webp"
     $ConvertedImageResultFullPath = [IO.Path]::Combine($image.DirectoryName, $ConvertedImageName)
     &$ConversionToolPath -q $Quality $image.FullName -o $ConvertedImageResultFullPath
 }
