@@ -83,17 +83,7 @@ namespace Kaylumah.Ssg.Utilities
     {
         public static string ToHtml(string source)
         {
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
-            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
-
-            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
-                .UseYamlFrontMatter() // needed to remove any frontmatter
-                .UseAutoIdentifiers() // used for clickable headers
-                .UsePipeTables() // support for tables
-                .UseGenericAttributes() // support for inline attributes (like width, height)
-                .Build();
+            MarkdownPipeline pipeline = BuildPipeline();
 
             MarkdownDocument doc = Markdown.Parse(source, pipeline);
             ModifyHeaders(doc);
@@ -108,6 +98,22 @@ namespace Kaylumah.Ssg.Utilities
             string intermediateResult = Markdown.ToHtml(doc, pipeline);
             string result = intermediateResult.Trim();
             return result;
+        }
+
+        static MarkdownPipeline BuildPipeline()
+        {
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
+
+            MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
+                .UseYamlFrontMatter() // needed to remove any frontmatter
+                .UseAutoIdentifiers() // used for clickable headers
+                .UsePipeTables() // support for tables
+                .UseGenericAttributes() // support for inline attributes (like width, height)
+                .Build();
+            return pipeline;
         }
 
 #pragma warning disable CS3001 // Argument type is not CLS-compliant
