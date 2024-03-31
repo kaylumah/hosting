@@ -5,14 +5,11 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Threading;
-using System.Xml;
 
 namespace Kaylumah.Ssg.Utilities
 {
     public class GlobalFunctions
     {
-        public static AsyncLocal<DateTimeOffset> Date
-        { get; } = new();
         public static AsyncLocal<string> Url
         { get; } = new();
         public static AsyncLocal<string> BaseUrl
