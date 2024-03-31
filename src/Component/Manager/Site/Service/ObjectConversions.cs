@@ -22,6 +22,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             Debug.Assert(pageMetaData != null);
             Debug.Assert(siteMetaData != null);
+            Debug.Assert(siteMetaData.Build != null);
+            BuildData buildData = siteMetaData.Build;
+            DateTimeOffset now = buildData.Time;
             string result = string.Empty;
             return result;
         }
