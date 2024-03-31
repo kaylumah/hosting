@@ -100,12 +100,12 @@ namespace Kaylumah.Ssg.Utilities
             ModifyLinks(doc);
 
             // Render the doc
-            StringWriter writer = new StringWriter();
-            HtmlRenderer renderer = new HtmlRenderer(writer);
-            pipeline.Setup(renderer);
-            renderer.Render(doc);
-            string intermediateResult = writer.ToString();
-            // string intermediateResult = Markdown.ToHtml(doc, pipeline);
+            // StringWriter writer = new StringWriter();
+            // HtmlRenderer renderer = new HtmlRenderer(writer);
+            // pipeline.Setup(renderer);
+            // renderer.Render(doc);
+            // string intermediateResult = writer.ToString();
+            string intermediateResult = Markdown.ToHtml(doc, pipeline);
             string result = intermediateResult.Trim();
             return result;
         }
