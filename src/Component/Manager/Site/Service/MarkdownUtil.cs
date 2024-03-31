@@ -18,6 +18,11 @@ namespace Kaylumah.Ssg.Utilities
     {
         public static string Transform(string source)
         {
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
+            // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
+
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseYamlFrontMatter()
                 .UseAutoIdentifiers()
