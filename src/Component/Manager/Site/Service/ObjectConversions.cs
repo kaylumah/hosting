@@ -85,16 +85,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                     .Where(s => Char.IsLetter(s[0]));
                 int wordCount = words.Count();
-                // if (wordCount > 0) (swapped for IDESIGN105)
                 if (0 < wordCount)
                 {
-                    // Console.WriteLine(String.Join(" ", words));
                     kelime += wordCount;
                 }
             }
 
             double wordsPerMinute = 265;
-            double numberOfWords = kelime;//text.Split(' ').Length;
+            double numberOfWords = kelime;
             int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
             return $"{minutes} minute";
         }
