@@ -136,9 +136,9 @@ Done...
 <h2 id="share-debug-configuration-from-microsoft-visual-studio"><a href="#share-debug-configuration-from-microsoft-visual-studio">Share debug configuration from Microsoft Visual Studio</a></h2>
 <p>I could not verify it online, but I think Visual Studio introduced launch settings as part of the first <code>ASP NET Core</code> release. Since launch profiles is a <code>Visual Studio</code> feature, I don't have much to add above the definition I've already given for the specification. One cool thing I like to mention is that running from <code>Visual Studio</code> <code>launchSettings</code> can reference <code>MSBuild</code> variables. That is a pretty handy way to provide something dynamic.</p>
 <p>For our console, we see the following selection in Visual Studio:</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_console_launchprofile.png" width="2640" height="796" alt="Microsoft Visual Studio - Console Launch Profile" /></picture></p>
 <p>For our API, we see the following selection in Visual Studio:</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_api_launchprofile.png" width="2604" height="1080" alt="Microsoft Visual Studio - API Launch Profile" /></picture></p>
 <p>As you see, the WebAPI variant shows more than just our launch profiles.</p>
 <p>Another aspect of development configuration is the ability to run more projects simultaneously. We can achieve this in <code>Visual Studio</code> by selecting multiple startup projects.  As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called <a href="https://marketplace.visualstudio.com/items?itemName=vs-publisher-141975.SwitchStartupProjectForVS2022" class="external">SwitchStartUpProject</a>.</p>
 <p>We can quickly provide multiple configurations. We can provide a <code>ProfileName</code> for each project that matches one in our launch settings. It is that simple.</p>
@@ -161,12 +161,12 @@ Done...
     }
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/visualstudio_compound_configuration.png" width="3848" height="348" alt="Microsoft Visual Studio - Compound Settings" /></picture></p>
 <h2 id="share-debug-configuration-from-jetbrains-rider"><a href="#share-debug-configuration-from-jetbrains-rider">Share debug configuration from JetBrains Rider</a></h2>
 <p>As it turns out, <code>launchSettings</code> has been supported in <code>Rider</code> for a long time. They first introduced it in <a href="https://blog.jetbrains.com/dotnet/2018/11/08/using-net-core-launchsettings-json-rundebug-apps-rider/" class="external">November 2018</a>. As a matter of fact, to use <code>launchSettings</code> inside <code>Rider</code> you don't need to do a thing. <code>Rider</code> <a href="https://www.jetbrains.com/help/rider/Run_Debug_Configuration_dotNet_Launch_Settings_Profile.html#creating-run-debug-configurations-based-on-launch-profiles" class="external">automatically detects</a> if your projects are using <code>launchSettings</code>. Not all features are supported, but using profiles of <code>commandName project</code> are. If you did provide MSBuild variable in <code>launchSettings</code> <code>Rider</code> would correctly pass them along.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_launchprofiles.png" width="964" height="904" alt="JetBrains Rider - launch profiles" /></picture></p>
 <p>A thing I like about <code>Rider</code> is that I don't need an additional plugin to support multiple start up projects.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144" alt="JetBrains Rider - Compound Settings" /></picture></p>
 <p>It's important to check <code>Store as project file</code>; otherwise, you won't share it with your team. In this particular example, it will look like this:</p>
 <pre><code class="language-xml">&lt;component name=&quot;ProjectRunConfigurationManager&quot;&gt;
   &lt;configuration default=&quot;false&quot; name=&quot;Console and API&quot; type=&quot;CompoundRunConfigurationType&quot;&gt;
@@ -282,7 +282,7 @@ Our base URL comes from the <code>launchSettings.json</code>, but the <code>laun
     }
 ]
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/vscode_launchprofiles.png" width="680" height="620" alt="Microsoft VS Code - launch profiles" /></picture></p>
 <h2 id="bonus-use-launch-settings-from-dotnet-cli"><a href="#bonus-use-launch-settings-from-dotnet-cli">Bonus use Launch Settings from Dotnet CLI</a></h2>
 <p>Technically the Dotnet CLI is not an IDE, so consider this a small bonus chapter. I am including the CLI since it also uses launch profiles when running locally.</p>
 <p>As it turns out the CLI also defaults to the first project in <code>Properties\launchSettings.json</code>, so in our case <code>DemoConsole.V0</code>. Just like VS Code did. The following example uses a bit of <code>PowerShell</code> to run the CLI.</p>

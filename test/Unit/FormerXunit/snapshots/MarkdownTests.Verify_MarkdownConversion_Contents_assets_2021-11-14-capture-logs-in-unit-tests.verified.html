@@ -67,7 +67,7 @@ public async Task Test_DependencyInjection_EmptyLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - No ILogger Registered" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/001_NoLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - No ILogger Registered" /></picture></p>
 <pre><code class="language-cs">[Fact]
 public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
 {
@@ -84,7 +84,7 @@ public async Task Test_DependencyInjection_ConsoleLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - console ILogger registered" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/002_ConsoleLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - console ILogger registered" /></picture></p>
 <p>If, however, you cannot rely on dependency injection in your tests, you have the alternative of manual creating your SUT and relevant dependencies. The only dependency of our EchoService is an instance of ILogger. For testing purposes, you can use the NullLoggerFactory, which creates a logger that logs into the void.</p>
 <pre><code class="language-cs">[Fact]
 public async Task Test_Manuel_NullLoggingFactory()
@@ -95,7 +95,7 @@ public async Task Test_Manuel_NullLoggingFactory()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - null ILogger registered" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/003_NullLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - null ILogger registered" /></picture></p>
 <blockquote>
 <p>As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.</p>
 </blockquote>
@@ -182,7 +182,7 @@ public async Task Test_Moq_LogLevelDisabledMockedLogger()
     loggerMock.LogMessages.Should().BeEmpty();
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - mock ILogger registered" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/004_MockLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - mock ILogger registered" /></picture></p>
 <h2 id="options-3"><a href="#options-3">Options 3</a></h2>
 <p>Thus far, we have discussed options that would work outside <code>Xunit</code>. The third technique is not limited to <code>Xunit</code>, but its implementation is restricted to use in a <code>Xunit</code> project because we will now rely on Xunit's <code>ITestOutputHelper</code> mechanism. In most cases, we would use <code>ITestOutputHelper</code> to log lines inside the test case itself; it is, however, possible to create an <code>ILogger</code> that writes to <code>ITestOutputHelper</code> so we can also capture logs our SUT produces.</p>
 <p>Microsoft has <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/custom-logging-provider" class="external">well-written documentation</a> on how to create a custom logger provider. We start with a configuration class for our <code>XunitLogger</code>. We will have no custom settings in this demo, but putting the configuration in place makes it easier to add settings later. The <code>ConsoleLogger</code>, for example, uses configuration to control LogScope inclusion and timestamp formats.</p>
@@ -297,7 +297,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
     testResult.Should().Be(testInput, &quot;the input should have been returned&quot;);
 }
 </code></pre>
-<p><img src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - Xunit ILogger registered" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20211114/capture-logs-in-unit-tests/005_XunitLogger.png" width="1564" height="814" alt="VS Code - Dotnet Debugger - Xunit ILogger registered" /></picture></p>
 <p>The first time I ran this test, I was baffled. I could only see the console output from ConsoleLogger test we did previously. A quick google search brought me to the <a href="https://github.com/xunit/xunit/issues/1141#issuecomment-555717377" class="external">solution</a>. We need to tell the dotnet test runner to display it with <code>dotnet test --logger:&quot;console;verbosity=detailed&quot;</code>. Telling an entire team they can no longer simply run <code>dotnet test</code> was not a real solution; luckily, we can simplify things with <code>dotnet test --settings runsettings.xml</code>.</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
 &lt;RunSettings&gt;
