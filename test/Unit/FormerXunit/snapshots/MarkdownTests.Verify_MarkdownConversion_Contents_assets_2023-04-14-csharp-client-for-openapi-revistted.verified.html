@@ -48,11 +48,11 @@
 <h2 id="using-openapi-reference"><a href="#using-openapi-reference">Using OpenAPI Reference</a></h2>
 <h3 id="using-openapi-reference-from-visual-studio"><a href="#using-openapi-reference-from-visual-studio">Using OpenAPI reference from Visual Studio</a></h3>
 <p>I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000" alt="Microsoft Visual Studio - Add Service reference" /></p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925" alt="Microsoft Visual Studio - Select service reference type" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000" alt="Microsoft Visual Studio - Add Service reference" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925" alt="Microsoft Visual Studio - Select service reference type" /></picture></p>
 <p>By choosing the option &quot;Service reference...&quot; instead of &quot;Connected Service&quot; you get the second prompt immediately. By selecting &quot;Connected service&quot; you get the overview of all connected services for the project and then need an extra click to add the service reference.</p>
 <p>We can customize the input for the msbuild task on the third screen. We only need to specify the file location of the Open API JSON.</p>
-<p><img src="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923" alt="Microsoft Visual Studio - Add service reference OpenAPI" /></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923" alt="Microsoft Visual Studio - Add service reference OpenAPI" /></picture></p>
 <p>By selecting &quot;finish&quot;, Visual Studio will make all necessary modifications. Easy right? The project file should now look like this:</p>
 <pre><code class="language-xml">&lt;ItemGroup&gt;
   &lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 

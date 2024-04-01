@@ -41,22 +41,36 @@ namespace Kaylumah.Ssg.Utilities
                 return false;
             }
 
-            // handle .gif?
+            if (linkInline.Url!.EndsWith(".gif", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (linkInline.Url!.EndsWith(".svg", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
 
             renderer.Write("<picture>");
-            WriteImageTag(renderer, linkInline, ".webp", "image/webp");
-            WriteImageTag(renderer, linkInline, string.Empty);
+            WriteSourceTag(renderer, linkInline);
+            WriteImgTag(renderer, linkInline);
             renderer.Write("</picture>");
             return true;
         }
 
-        void WriteImageTag(HtmlRenderer renderer, LinkInline link, string suffix, string? type = null)
+        void WriteSourceTag(HtmlRenderer renderer, LinkInline link)
         {
-            renderer.Write(string.IsNullOrWhiteSpace(type) ? $"<img loading=\"lazy\" src=\"" : $"<source type=\"{type}\" srcset=\"");
             string escapeUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url! : link.Url!;
-            renderer.WriteEscapeUrl($"{escapeUrl}{suffix}");
-            renderer.Write("\"");
+            string webpUrl = $"{escapeUrl}.webp";
+            renderer.Write($"<source type=\"image/webp\" srcset=\"{webpUrl}\">");
+        }
+
+        void WriteImgTag(HtmlRenderer renderer, LinkInline link)
+        {
+            string webpUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url! : link.Url!;
+            renderer.Write($"<img loading=\"lazy\" src=\"{webpUrl}\"");
             renderer.WriteAttributes(link);
+
             if (renderer.EnableHtmlForInline)
             {
                 renderer.Write(" alt=\"");

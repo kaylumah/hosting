@@ -30,7 +30,8 @@ $Quality = 80
 $ScriptRoot = $PSScriptRoot
 $RepoRoot = Split-Path $ScriptRoot -Parent
 
-$Images = Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter cover_image.png
+$Images = Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter *.png
+$Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter *.jpeg
 $Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images" -Filter social_preview.png
 foreach ($image in $Images)
 {

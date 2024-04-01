@@ -244,7 +244,7 @@
         <header class="prose laptop:mx-auto">
             <picture class="hidden">
                 <source type="image/webp" srcset="/assets/images/posts/20210327/nuget-metadata/cover_image.png.webp">
-                <img src="/assets/images/posts/20210327/nuget-metadata/cover_image.png" alt="cover for Set NuGet metadata via MSBuild" height="640" width="1280" />
+                <img loading="lazy" src="/assets/images/posts/20210327/nuget-metadata/cover_image.png" alt="cover for Set NuGet metadata via MSBuild" height="640" width="1280" />
             </picture>
             <h1>Set NuGet metadata via MSBuild</h1>
             <div class="flex flex-row gap-4">
@@ -297,9 +297,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 </code></pre>
 <p>This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect &quot;Kaylumah Logging Extensions Abstractions 1.0.0 nupkg&quot;? My prefered way is the <a href="https://github.com/NuGetPackageExplorer/NuGetPackageExplorer" class="external">NuGet Package Explorer</a>, which is unfortunately only available on Windows.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000" alt="Without Metadata in NuGet Package Explorer" /></picture></p>
 <p>There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading <a href="https://www.nuget.org/api/v2/package/Microsoft.Extensions.Logging.Console/3.1.13" class="external">the package</a> from nuget.org and view it like we just did for &quot;Kaylumah.Logging.*.nupkg&quot;. Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000" alt="Microsoft Extensions Logging Metadata in NuGet Package Explorer" /></picture></p>
 <p>Now that is what I call metadata. Remember that <code>.nupkg</code> files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from <code>.nupkg</code> to <code>.zip</code> and then extracting it. It contains the &quot;Kaylumah Logging .nuspec&quot;, which is the manifest I was talking about in the introduction. At the moment, it looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;package xmlns=&quot;http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd&quot;&gt;
@@ -334,9 +334,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 &lt;/Project&gt;
 </code></pre>
 <p>If we run <code>dotnet pack</code> now, we can immediately see that our package no longer has empty metadata.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000" alt="With Author Metadata in NuGet Package Explorer" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000" alt="With Author Metadata in NuGet Package Explorer" /></picture></p>
 <p>You can also verify this in Visual Studio by checking your projects properties and clicking on the <code>Package</code> tab.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000" alt="With Author Metadata in VS2019" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000" alt="With Author Metadata in VS2019" /></picture></p>
 <p>In the introduction, I talked about what exactly is a NuGet package. We are now at the part regarding other files. Since we already took care of branding, let us also add an icon. Our code is under license; how do we include it in the package?</p>
 <p>Add files named <code>Logo.png</code> and <code>LICENSE</code> to the folder containing our project. We can then use the tags <code>PackageIcon</code> and <code>PackageLicenseFile</code> respectfully. We also need to tell MSBuild that these files should be part of the package. The updated project file looks like this:</p>
 <pre><code class="language-xml">&lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
@@ -359,7 +359,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
 &lt;/Project&gt;
 </code></pre>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000" alt="Including NuGet Package Explorer FileMetadata" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000" alt="Including NuGet Package Explorer FileMetadata" /></picture></p>
 <p>Regarding these files, I like to say a couple of things before moving on to more advanced use cases.
 There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs <a href="https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#pack-target" class="external">describe</a>. Both used to have a <code>Url</code> variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of <code>PackageLicenseFile</code>, the alternative is  <code>PackageLicenseExpression</code>, which uses <code>SDPX</code> license identifiers.</p>
 <blockquote>
@@ -393,7 +393,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
     &lt;/PropertyGroup&gt;
 &lt;/Project&gt;
 </code></pre>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V1" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V1" /></picture></p>
 <p>What happened? Something is wrong; why do I see the copyright year 2021, but not my company name? Before explaining it, let me prove it by adding a company tag to the <code>Directory.Build.props</code> with a different value. For example:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;Project&gt;
@@ -404,7 +404,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 &lt;/Project&gt;
 </code></pre>
 <p>Unlike the <code>Copyright</code> tag do not remove the <code>Company</code> tag from the <code>.csproj</code> file. The result, this time, is a little different.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V2" /></picture></p>
 <p>It appears that I have two different values for <code>Company</code>; this happens because <code>Directory.Build.props</code> gets imported before your project, and <code>Directory.Build.targets</code> gets imported after. The latest registration wins. That is why if we would read the <code>System.Reflection AssemblyCopyrightAttribute</code> the value for <code>Company</code> is &quot;Kaylumah&quot;, but when we set <code>Copyright</code>, it is still &quot;NotKaylumah&quot;. You can verify this behaviour by running the preprocess command (<code>dotnet build -pp:fullproject.xml</code>). See <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference?view=vs-2019" class="external">msbuild comand line reference</a> for an explanation.</p>
 <blockquote>
 <p>Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, <code>Company</code> and <code>Copyright</code> are likely to be the same for every project. The <code>Authors</code> and <code>PackageTags</code> could be project-specific; heck, even <code>Description</code> could be reused if so desired. One thing for sure is that <code>Id</code> can not be recycled since every package requires a unique Id.</p>
@@ -428,7 +428,7 @@ In my example, the value for <code>PackageIcon</code> and the name of my icon fi
 
 &lt;/Project&gt;
 </code></pre>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000" alt="Using BuildProps NuGet Package Explorer V3" /></picture></p>
 <p>In case you are wondering where did <code>$(MSBuildThisFileDirectory)</code> come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties?view=vs-2019" class="external">Microsoft Docs</a> on the topic.</p>
 <h3 id="bonus-chapter"><a href="#bonus-chapter">Bonus Chapter</a></h3>
 <p>I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code (Under repository in the nuspec).</p>
@@ -482,7 +482,7 @@ REPO_COMMIT=$(git rev-parse HEAD)
 dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$REPO_BRANCH&quot; -p:RepositoryCommit=&quot;$REPO_COMMIT&quot; -p:RepositoryType=&quot;git&quot;
 </code></pre>
 <p>Remember, we now generate a package on build. Let us verify we see repo info by opening the created package in NuGet Package Explorer.</p>
-<p><img src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000" alt="Repo Info in NuGet Package Explorer" /></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000" alt="Repo Info in NuGet Package Explorer" /></picture></p>
 <p>Even though it is OK to add repo metadata this way, there is a better alternative. This alternative does more than add metadata; it also enables source code debugging from NuGet packages. How cool is that? This technology is called <a href="https://github.com/dotnet/sourcelink" class="external">Source Link</a>.</p>
 <p>Like before with the properties, I have no wish to add source link to every package separately. For this, create <code>Directory.Build.targets</code>, which looks like this:</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
@@ -688,7 +688,7 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
             </div>
         </footer>
         <div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-10 flex flex-col justify-between gap-x-8 gap-y-4 bg-white p-6 tablet:flex-row tablet:items-center laptop:px-8">
-            <p class="text-sm leading-6 text-gray-900">This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies. Learn more in our <a class="font-semibold text-teal-600" href="/privacy">cookie policy</a>.</p>
+            <p class="text-sm leading-6 text-gray-900">This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies. Learn more in our <a class="font-semibold text-teal-900" href="/privacy">cookie policy</a>.</p>
             <div class="mr-16 flex flex-none items-center gap-x-5">
                 <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">Accept all</button>
                 <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold leading-6 text-gray-900">Reject all</button>
