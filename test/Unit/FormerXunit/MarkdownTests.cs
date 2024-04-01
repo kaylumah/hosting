@@ -27,7 +27,6 @@ namespace Test.Unit.FormerXunit
             GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
             string html = MarkdownUtil.ToHtml(rawContents);
-            // string text = MarkdownUtil.ToText(rawContents);
 
             string testParameter = path
                 .Replace("/", "_")
@@ -38,7 +37,25 @@ namespace Test.Unit.FormerXunit
             settings.UseMethodName(methodName);
 
             await Verifier.Verify(html, "html", settings);
-            // await Verifier.Verify(text, "txt", settings);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetBlogPages))]
+        public async Task Verify_MarkdownConversion_TxtContents(string path)
+        {
+            GlobalFunctions.Url.Value = "https://kaylumah.nl";
+            string rawContents = await File.ReadAllTextAsync(path);
+            string txt = MarkdownUtil.ToText(rawContents);
+
+            string testParameter = path
+                .Replace("/", "_")
+                .Replace(".md", "");
+            string methodName = $"{nameof(Verify_MarkdownConversion_TxtContents)}_{testParameter}";
+            VerifySettings settings = new VerifySettings();
+            settings.UseDirectory("snapshots");
+            settings.UseMethodName(methodName);
+
+            await Verifier.Verify(txt, "txt", settings);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
