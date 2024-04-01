@@ -67,9 +67,8 @@ namespace Kaylumah.Ssg.Utilities
 
         void WriteImgTag(HtmlRenderer renderer, LinkInline link)
         {
-            // $"<img loading=\"lazy\" src=\""
             string webpUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url! : link.Url!;
-            renderer.Write($"<img src=\"{webpUrl}\"");
+            renderer.Write($"<img loading=\"lazy\" src=\"{webpUrl}\"");
             renderer.WriteAttributes(link);
 
             if (renderer.EnableHtmlForInline)
