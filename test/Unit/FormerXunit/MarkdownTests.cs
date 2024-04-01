@@ -22,7 +22,7 @@ namespace Test.Unit.FormerXunit
 
         [Theory]
         [MemberData(nameof(GetBlogPages))]
-        public async Task Verify_MarkdownConversion_Contents(string path)
+        public async Task Verify_MarkdownConversion_HtmlContents(string path)
         {
             GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
@@ -32,7 +32,7 @@ namespace Test.Unit.FormerXunit
             string testParameter = path
                 .Replace("/", "_")
                 .Replace(".md", "");
-            string methodName = $"{nameof(Verify_MarkdownConversion_Contents)}_{testParameter}";
+            string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_{testParameter}";
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
             settings.UseMethodName(methodName);
