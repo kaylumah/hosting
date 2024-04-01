@@ -20,7 +20,7 @@ namespace Test.Unit.FormerXunit
     public class MarkdownTests
     {
 
-        [Theory(Skip = "while still testing...")]
+        [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_Contents(string path)
         {
