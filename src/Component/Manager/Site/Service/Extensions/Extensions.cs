@@ -50,5 +50,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             TimeSpan result = TimeSpan.FromMinutes(minutes);
             return result;
         }
+
+        public static string ToReadableDuration(this TimeSpan timeSpan)
+        {
+            int minutes = timeSpan.Minutes;
+            string result = $"{minutes} minute";
+            return result;
+        }
     }
 }

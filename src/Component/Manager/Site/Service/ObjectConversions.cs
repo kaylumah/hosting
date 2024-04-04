@@ -150,8 +150,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static string ReadingTime(string content)
         {
             TimeSpan duration = content.Duration();
-            int minutes = duration.Minutes;
-            return $"{minutes} minute";
+            string result = duration.ToReadableDuration();
+            return result;
         }
 
         public static string ToJson(object o)
