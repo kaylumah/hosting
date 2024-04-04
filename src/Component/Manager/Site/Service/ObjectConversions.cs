@@ -30,7 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             BuildData buildData = siteMetaData.Build;
             DateTimeOffset buildTime = buildData.Time;
             DateTimeOffset publishedTime = pageMetaData.Published;
-            string result = buildTime.ToRelativeTime(publishedTime);
+            string result = buildTime.ToReadableRelativeTime(publishedTime);
             return result;
         }
 

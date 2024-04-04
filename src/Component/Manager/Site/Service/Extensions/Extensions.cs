@@ -59,7 +59,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ToRelativeTime(this DateTimeOffset now, DateTimeOffset date)
+        public static string ToReadableRelativeTime(this DateTimeOffset now, DateTimeOffset date)
         {
             // https://stackoverflow.com/questions/11/calculate-relative-time-in-c-sharp?page=1&tab=votes#tab-top
             const int second = 1;
