@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using HtmlAgilityPack;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -160,9 +161,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
             foreach (string text in innerTexts)
             {
-                IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
-                    .Where(s => Char.IsLetter(s[0]));
-                int wordCount = words.Count();
+                // IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
+                //     .Where(s => Char.IsLetter(s[0]));
+                // int wordCount = words.Count();
+                int wordCount = text.CountWords();
                 if (0 < wordCount)
                 {
                     kelime += wordCount;

@@ -60,4 +60,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return page;
         }
     }
+
+    public static class Extensions
+    {
+        public static int CountWords(this string source)
+        {
+            char[] delimiters = new char[] { ' '/*, '\r', '\n'*/ };
+            string[] splitSource = source.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            int result = splitSource.Length;
+            return result;
+        }
+    }
 }
