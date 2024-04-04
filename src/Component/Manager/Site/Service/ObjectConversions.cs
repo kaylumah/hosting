@@ -34,8 +34,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ReadingTime(string content)
+        public static string ReadingTime(PageMetaData pageMetaData)
         {
+            string content = pageMetaData.Content;
             TimeSpan duration = content.Duration();
             string result = duration.ToReadableDuration();
             return result;
