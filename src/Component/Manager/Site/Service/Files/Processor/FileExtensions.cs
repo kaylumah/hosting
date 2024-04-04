@@ -92,5 +92,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             return result;
         }
+
+        public static TimeSpan Duration(this string html)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+            double wordsPerMinute = 265;
+            double numberOfWords = document.CountWords();
+            ;
+            int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
+            TimeSpan result = TimeSpan.FromMinutes(minutes);
+            return result;
+        }
     }
 }

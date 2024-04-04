@@ -149,12 +149,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ReadingTime(string content)
         {
-            HtmlDocument document = new HtmlDocument();
-            document.LoadHtml(content);
-            int kelime = document.CountWords();
-            double wordsPerMinute = 265;
-            double numberOfWords = kelime;
-            int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
+            TimeSpan duration = content.Duration();
+            int minutes = duration.Minutes;
             return $"{minutes} minute";
         }
 
