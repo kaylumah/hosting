@@ -67,7 +67,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             char[] delimiters = new char[] { ' '/*, '\r', '\n'*/ };
             string[] splitSource = source.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-            int result = splitSource.Length;
+            // int result = splitSource.Length;
+            IEnumerable<string> onlyText = splitSource.Where(s => Char.IsLetter(s[0]));
+            int result = onlyText.Count();
             return result;
         }
     }
