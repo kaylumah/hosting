@@ -83,15 +83,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             HtmlNodeCollection textNodes = documentNode.SelectNodes("//text()");
             IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
 
-            string totalText = string.Join(Environment.NewLine, innerTexts);
-            int result = totalText.CountWords();
-
-            // int result = 0;
-            // foreach (string text in innerTexts)
-            // {
-            //     int wordCount = text.CountWords();
-            //     result += wordCount;
-            // }
+            int result = 0;
+            foreach (string text in innerTexts)
+            {
+                int wordCount = text.CountWords();
+                result += wordCount;
+            }
 
             return result;
         }
