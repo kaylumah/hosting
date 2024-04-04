@@ -94,7 +94,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        
         public static string ToJson(object o)
         {
 #pragma warning disable CA1869
