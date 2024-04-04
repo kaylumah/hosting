@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -56,6 +57,67 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             int minutes = timeSpan.Minutes;
             string result = $"{minutes} minute";
             return result;
+        }
+
+        public static string ToRelativeTime(this DateTimeOffset now, DateTimeOffset date)
+        {
+            // https://stackoverflow.com/questions/11/calculate-relative-time-in-c-sharp?page=1&tab=votes#tab-top
+            const int second = 1;
+            const int minute = 60 * second;
+            const int hour = 60 * minute;
+            const int day = 24 * hour;
+            const int month = 30 * day;
+
+            TimeSpan ts = new TimeSpan(now.Ticks - date.Ticks);
+            double delta = Math.Abs(ts.TotalSeconds);
+
+            if (delta < 1 * minute)
+            {
+                return ts.Seconds == 1 ? "one second ago" : ts.Seconds + " seconds ago";
+            }
+
+            if (delta < 2 * minute)
+            {
+                return "a minute ago";
+            }
+
+            if (delta < 45 * minute)
+            {
+                return ts.Minutes + " minutes ago";
+            }
+
+            if (delta < 90 * minute)
+            {
+                return "an hour ago";
+            }
+
+            if (delta < 24 * hour)
+            {
+                return ts.Hours + " hours ago";
+            }
+
+            if (delta < 48 * hour)
+            {
+                return "yesterday";
+            }
+
+            if (delta < 30 * day)
+            {
+                return ts.Days + " days ago";
+            }
+
+            if (delta < 12 * month)
+            {
+                double input = Math.Floor((double)ts.Days / 30);
+                int months = Convert.ToInt32(input);
+                return months <= 1 ? "one month ago" : months + " months ago";
+            }
+            else
+            {
+                double input = Math.Floor((double)ts.Days / 365);
+                int years = Convert.ToInt32(input);
+                return years <= 1 ? "one year ago" : years + " years ago";
+            }
         }
     }
 }
