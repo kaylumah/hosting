@@ -149,28 +149,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ReadingTime(string content)
         {
-            // http://www.craigabbott.co.uk/blog/how-to-calculate-reading-time-like-medium
-            //https://stackoverflow.com/questions/12787449/html-agility-pack-removing-unwanted-tags-without-removing-content
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(content);
-            // https://stackoverflow.com/questions/60929281/number-of-words-by-htmlagilitypack
-            char[] delimiter = new char[] { ' ' };
-            int kelime = 0;
-            HtmlNode documentNode = document.DocumentNode;
-            HtmlNodeCollection textNodes = documentNode.SelectNodes("//text()");
-            IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
-            foreach (string text in innerTexts)
-            {
-                // IEnumerable<string> words = text.Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
-                //     .Where(s => Char.IsLetter(s[0]));
-                // int wordCount = words.Count();
-                int wordCount = text.CountWords();
-                if (0 < wordCount)
-                {
-                    kelime += wordCount;
-                }
-            }
-
+            int kelime = document.CountWords();
             double wordsPerMinute = 265;
             double numberOfWords = kelime;
             int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
