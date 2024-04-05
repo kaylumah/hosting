@@ -20,7 +20,7 @@ namespace Test.E2e.SnapshotTests
             _MobileFixture = mobileFixture;
         }
 
-        [Fact(Skip = "About is redirected")]
+        [Fact]
         public async Task Verify_AboutPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -34,8 +34,7 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(aboutPage);
         }
 
-        // [ScreenshotFact]
-        [Fact(Skip = "About is redirected")]
+        [ScreenshotFact]
         public async Task Verify_AboutPageHtml_DesktopScreenshot()
         {
             IPage page = await _DesktopFixture.GetPage();
@@ -45,8 +44,7 @@ namespace Test.E2e.SnapshotTests
             await BasePageVerifier.VerifyScreenshot(aboutPage);
         }
 
-        // [ScreenshotFact]
-        [Fact(Skip = "About is redirected")]
+        [ScreenshotFact]
         public async Task Verify_AboutPageHtml_MobileScreenshot()
         {
             IPage page = await _MobileFixture.GetPage();
