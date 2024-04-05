@@ -61,6 +61,10 @@
     <lastmod>2024-02-09T21:00:00+01:00</lastmod>
   </url>
   <url>
+    <loc>https://BaseUrl_1/about.html</loc>
+    <lastmod>2021-12-19T00:00:00+01:00</lastmod>
+  </url>
+  <url>
     <loc>https://BaseUrl_1/blog.html</loc>
     <lastmod>2024-02-09T21:00:00+01:00</lastmod>
   </url>
