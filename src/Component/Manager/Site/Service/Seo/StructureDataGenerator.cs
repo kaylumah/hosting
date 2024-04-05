@@ -90,6 +90,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             string language = page.Language;
             string content = page.Content;
+            // wordCount
+            // inlanguage
+            // name
+
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
 
