@@ -17,11 +17,6 @@
       "statusCode": 301
     },
     {
-      "route": "/about.html",
-      "redirect": "/",
-      "statusCode": 302
-    },
-    {
       "route": "/archive",
       "redirect": "/archive.html",
       "statusCode": 301
