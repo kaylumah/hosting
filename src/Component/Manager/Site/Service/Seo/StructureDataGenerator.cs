@@ -88,6 +88,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
+            string language = page.Language;
+            string content = page.Content;
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
 
