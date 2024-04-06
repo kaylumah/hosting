@@ -87,8 +87,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 })
                 .ToList();
 
-            string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(fileNames).ConfigureAwait(false);
+            List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(filesWithoutCollections).ConfigureAwait(false);
             result.AddRange(resultForFilesWithoutCollections);
 
             string[] directoryNames = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
@@ -128,16 +127,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<BinaryFile>> ProcessFiles(string[] files)
+        async Task<List<BinaryFile>> ProcessFiles(IEnumerable<IFileInfo> files)
         {
-            List<IFileInfo> fileInfos = new List<IFileInfo>();
-            foreach (string file in files)
-            {
-                IFileInfo fileInfo = _FileSystem.GetFile(file);
-                fileInfos.Add(fileInfo);
-            }
-
-            IFileInfo[] fileInfosArray = fileInfos.ToArray();
+            IFileInfo[] fileInfosArray = files.ToArray();
             List<BinaryFile> result = await ProcessFilesInScope(fileInfosArray, scope: null).ConfigureAwait(false);
             return result;
         }
