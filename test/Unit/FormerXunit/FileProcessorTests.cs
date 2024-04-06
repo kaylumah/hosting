@@ -66,7 +66,7 @@ namespace Test.Unit.FormerXunit
             {
                 RootDirectory = "_site",
                 DirectoriesToSkip = new string[] { },
-                FileExtensionsToTarget = new string[] { ".md" }
+                FileExtensionsToTarget = new string[] { ".html" }
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);

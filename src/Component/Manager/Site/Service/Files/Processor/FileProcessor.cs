@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
@@ -80,12 +79,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 .ToList();
 
             List<IFileInfo> filesWithoutCollections = files
-                .Where(fileInfo =>
-                {
-                    string extension = Path.GetExtension(fileInfo.Name);
-                    bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
-                    return includesExtension;
-                })
                 .ToList();
 
             List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(criteria, filesWithoutCollections).ConfigureAwait(false);
@@ -161,12 +154,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
         {
-            Debug.Assert(criteria != null);
             List<BinaryFile> result = new List<BinaryFile>();
             foreach (IFileSystemInfo fileInfo in files)
             {
                 BinaryFile fileResult = await ProcessFileInScope(fileInfo, scope);
-                result.Add(fileResult);
+                string extension = Path.GetExtension(fileResult.Name);
+                bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
+                if (includesExtension)
+                {
+                    result.Add(fileResult);
+                }
             }
 
             return result;
