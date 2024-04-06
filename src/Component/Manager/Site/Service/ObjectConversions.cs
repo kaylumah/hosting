@@ -34,10 +34,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ReadingTime(Article pageMetaData)
         {
-            string content = pageMetaData.Content;
-            // get from pageMetaData once available
-            (int numberOfWords, TimeSpan duration) readingData = content.ToReadingData();
-            string result = readingData.duration.ToReadableDuration();
+            TimeSpan duration = pageMetaData.Duration;
+            string result = duration.ToReadableDuration();
             return result;
         }
 
