@@ -149,7 +149,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
         {
             List<BinaryFile> result = new List<BinaryFile>();
-            foreach (IFileSystemInfo fileInfo in files)
+            foreach (IFileInfo fileInfo in files)
             {
                 BinaryFile fileResult = await ProcessFileInScope(fileInfo, scope);
                 string extension = Path.GetExtension(fileResult.Name);
@@ -163,7 +163,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<BinaryFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        async Task<BinaryFile> ProcessFileInScope(IFileInfo fileInfo, string? scope)
         {
             using IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
