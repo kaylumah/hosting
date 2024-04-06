@@ -31,7 +31,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             int result = _InternalData.GetValue<int>(key);
             return result;
         }
-        
+
         protected TimeSpan GetTimeSpan(string key)
         {
             TimeSpan result = _InternalData.GetValue<TimeSpan>(key);
