@@ -69,7 +69,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 int numberOfWords = htmlDocument.CountWords();
                 TimeSpan duration = numberOfWords.Duration();
                 result = new(numberOfWords, duration);
-            }            
+            }
+
             return result;
         }
 
