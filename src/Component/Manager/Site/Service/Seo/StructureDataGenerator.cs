@@ -116,8 +116,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
-            // blogPost.InLanguage = page.Language;
             // blogPost.Name = page.Title;
+            blogPost.InLanguage = page.Language;
             blogPost.WordCount = page.NumberOfWords;
             blogPost.TimeRequired = page.Duration;
             return blogPost;
