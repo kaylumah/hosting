@@ -90,12 +90,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 List<BinaryFile> targetFiles = collection
                     .Files
-                    .Where(file =>
-                    {
-                        string extension = Path.GetExtension(file.Name);
-                        bool result = criteria.FileExtensionsToTarget.Contains(extension);
-                        return result;
-                    })
                     .ToList();
                 bool exists = _SiteInfo.Collections.Contains(collection.Name);
                 if (!exists)
@@ -155,10 +149,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
             IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
             List<BinaryFile> files = await ProcessFilesInScope(targetFilesArray, keyName).ConfigureAwait(false);
-
+            IEnumerable<BinaryFile> filteredFiles = files.Where(file =>
+            {
+                string extension = Path.GetExtension(file.Name);
+                bool result = criteria.FileExtensionsToTarget.Contains(extension);
+                return result;
+            });
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
-            fileCollection.Files = files.ToArray();
+            fileCollection.Files = filteredFiles.ToArray();
             return fileCollection;
         }
 
