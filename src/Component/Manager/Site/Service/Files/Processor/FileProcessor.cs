@@ -59,13 +59,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             List<BinaryFile> result = new List<BinaryFile>();
 
-            List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
+            IEnumerable<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory);
 
-            if (directoryContents.Count == 0)
+            if (directoryContents.Any() == false)
             {
                 LogNoFiles();
                 return result;
             }
+
+            // IEnumerable<IDirectoryInfo> directories = directoryContents.OfType<IDirectoryInfo>();
+            // IEnumerable<IFileInfo> files = directoryContents.OfType<IDirectoryInfo>();
 
             List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
                 .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
@@ -81,11 +84,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }).ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<BinaryFile> files = await ProcessFiles(fileNames).ConfigureAwait(false);
-            result.AddRange(files);
+            List<BinaryFile> files2 = await ProcessFiles(fileNames).ConfigureAwait(false);
+            result.AddRange(files2);
 
-            string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
-            List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
+            string[] directories2 = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
+            List<FileCollection> collections = await ProcessDirectories(criteria, directories2).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
                 List<BinaryFile> targetFiles = collection
