@@ -88,11 +88,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 .ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<BinaryFile> files2 = await ProcessFiles(fileNames).ConfigureAwait(false);
-            result.AddRange(files2);
+            List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(fileNames).ConfigureAwait(false);
+            result.AddRange(resultForFilesWithoutCollections);
 
-            string[] directories2 = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
-            List<FileCollection> collections = await ProcessDirectories(criteria, directories2).ConfigureAwait(false);
+            string[] directoryNames = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
+            List<FileCollection> collections = await ProcessDirectories(criteria, directoryNames).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
                 List<BinaryFile> targetFiles = collection
