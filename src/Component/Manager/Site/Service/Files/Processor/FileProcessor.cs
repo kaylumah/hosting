@@ -151,18 +151,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
             string keyName = directoryName[1..];
-            string collectionDirectory = Path.Combine(criteria.RootDirectory, directoryName);
-            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
-            IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, targetFilesArray, keyName).ConfigureAwait(false);
-
+            IFileInfo[] filesForDirectory = directory.GetFiles();
+            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, keyName).ConfigureAwait(false);
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
             fileCollection.Files = files.ToArray();
             return fileCollection;
         }
 
-        async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileSystemInfo[] files, string? scope)
+        async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
         {
             Debug.Assert(criteria != null);
             List<BinaryFile> result = new List<BinaryFile>();
