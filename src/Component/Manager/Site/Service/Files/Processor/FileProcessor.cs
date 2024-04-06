@@ -89,12 +89,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 List<BinaryFile> targetFiles = collection
                     .Files
-                    .Where(file =>
-                    {
-                        string extension = Path.GetExtension(file.Name);
-                        bool result = criteria.FileExtensionsToTarget.Contains(extension);
-                        return result;
-                    })
                     .ToList();
                 bool exists = _SiteInfo.Collections.Contains(collection.Name);
                 if (!exists)
