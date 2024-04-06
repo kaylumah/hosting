@@ -73,7 +73,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
             {
-                bool notDirectory = !info.IsDirectory();
+                bool notDirectory = info.IsDirectory() == false;
                 string extension = Path.GetExtension(info.Name);
                 bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
                 bool isMatch = notDirectory && includesExtension;
