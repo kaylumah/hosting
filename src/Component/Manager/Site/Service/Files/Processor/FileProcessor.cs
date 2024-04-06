@@ -70,8 +70,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             IEnumerable<IDirectoryInfo> directories = directoryContents.OfType<IDirectoryInfo>();
             IEnumerable<IFileInfo> files = directoryContents.OfType<IFileInfo>();
 
-            List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
-                .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
+            List<IDirectoryInfo> directoriesToProcessAsCollection = directories
+                .Where(directoryInfo =>
+                {
+                    bool result = criteria.DirectoriesToSkip.Contains(directoryInfo.Name) == false;
+                    return result;
+                })
                 .ToList();
 
             List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
