@@ -120,7 +120,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
-            blogPost.InLanguage = page.Language;
+            // blogPost.InLanguage = page.Language;
             // blogPost.Name = page.Title;
             // TODO: consider including this
             // string content = page.Content;
