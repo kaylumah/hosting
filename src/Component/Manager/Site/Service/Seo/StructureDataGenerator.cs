@@ -88,12 +88,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            string language = page.Language;
-            string content = page.Content;
-            // wordCount
-            // inlanguage
-            // name
-
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
 
@@ -126,6 +120,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
+            blogPost.InLanguage = page.Language;
+            // blogPost.Name = page.Title;
+            string content = page.Content;
+            int wordCount = content.CountWords();
+            blogPost.WordCount = wordCount;
+            // TimeSpan duration = content.Duration();
+            // blogPost.TimeRequired = duration;
             return blogPost;
         }
     }
