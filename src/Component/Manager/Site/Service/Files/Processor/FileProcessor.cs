@@ -78,14 +78,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 })
                 .ToList();
 
-            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
-            {
-                bool notDirectory = !info.IsDirectory();
-                string extension = Path.GetExtension(info.Name);
-                bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
-                bool isMatch = notDirectory && includesExtension;
-                return isMatch;
-            }).ToList();
+            List<IFileInfo> filesWithoutCollections = files
+                .Where(fileInfo =>
+                {
+                    string extension = Path.GetExtension(fileInfo.Name);
+                    bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
+                    return includesExtension;
+                })
+                .ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
             List<BinaryFile> files2 = await ProcessFiles(fileNames).ConfigureAwait(false);
