@@ -29,6 +29,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             Dictionary<string, object?> data = file.ToDictionary();
             Article result = new Article(data);
+            string content = result.Content;
+            (int numberOfWords, TimeSpan duration) readingData = content.ToReadingData();
             return result;
         }
 

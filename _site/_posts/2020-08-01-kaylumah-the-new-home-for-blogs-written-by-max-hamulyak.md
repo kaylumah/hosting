@@ -1,5 +1,5 @@
 ---
-type: 'Announcement'
+subtype: 'Announcement'
 title: Guiding my thoughts home
 description: Moving all content to my own platform
 image: /assets/images/posts/20200801/welcome/cover_image.png

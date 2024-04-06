@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
 using Article = Ssg.Extensions.Metadata.Abstractions.Article;
+using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
@@ -43,23 +43,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
 
-            if (renderData.Page is PageMetaData pageMetaData)
+            if (renderData.Page is Article article)
             {
-                LogLdJson(pageMetaData.Uri, pageMetaData.Type);
-                if (pageMetaData.IsArticle())
-                {
-                    BlogPosting blogPost = ToBlogPosting(pageMetaData, authors, organizations);
-                    string ldjson = blogPost.ToString(settings);
-                    return ldjson;
-                }
-                else if (pageMetaData.IsCollection() && "blog.html".Equals(pageMetaData.Uri, StringComparison.Ordinal))
-                {
-                    List<Article> articles = renderData.Site.FeaturedArticles.ToList();
-
-                    Blog blog = ToBlog(pageMetaData, articles, authors, organizations);
-                    string ldjson = blog.ToString(settings);
-                    return ldjson;
-                }
+                LogLdJson(article.Uri, article.Type);
+                BlogPosting blogPost = ToBlogPosting(article, authors, organizations);
+                string ldjson = blogPost.ToString(settings);
+                return ldjson;
+            }
+            else if (renderData.Page is CollectionPage collectionPage && "blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+            {
+                List<Article> articles = renderData.Site.FeaturedArticles.ToList();
+                Blog blog = ToBlog(collectionPage, articles, authors, organizations);
+                string ldjson = blog.ToString(settings);
+                return ldjson;
             }
 
             string result = string.Empty;
@@ -70,7 +66,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             List<BlogPosting> posts = new List<BlogPosting>();
-            foreach (PageMetaData article in articles)
+            foreach (Article article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
                 posts.Add(blogPosting);
@@ -86,7 +82,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return blog;
         }
 
-        BlogPosting ToBlogPosting(PageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        BlogPosting ToBlogPosting(Article page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
             BlogPosting blogPost = new BlogPosting();
@@ -120,6 +116,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
+            // blogPost.InLanguage = page.Language;
+            // blogPost.Name = page.Title;
+            // TODO: consider including this
+            // string content = page.Content;
+            // int wordCount = content.CountWords();
+            // blogPost.WordCount = wordCount;
+            // TimeSpan duration = wordCount.Duration();
+            // blogPost.TimeRequired = duration;
             return blogPost;
         }
     }
