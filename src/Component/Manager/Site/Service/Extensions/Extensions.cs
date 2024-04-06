@@ -58,10 +58,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static (int numberOfWords, TimeSpan duration) ToReadingData(this string html)
         {
-            HtmlDocument htmlDocument = html.ToHtmlDocument();
-            int numberOfWords = htmlDocument.CountWords();
-            TimeSpan duration = numberOfWords.Duration();
-            (int numberOfWords, TimeSpan duration) result = new(numberOfWords, duration);
+            (int numberOfWords, TimeSpan duration) result;
+            if (string.IsNullOrEmpty(html))
+            {
+                result = new(0, TimeSpan.Zero);
+            }
+            else
+            {
+                HtmlDocument htmlDocument = html.ToHtmlDocument();
+                int numberOfWords = htmlDocument.CountWords();
+                TimeSpan duration = numberOfWords.Duration();
+                result = new(numberOfWords, duration);
+            }            
             return result;
         }
 
