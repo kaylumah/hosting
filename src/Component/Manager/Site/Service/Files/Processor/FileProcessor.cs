@@ -59,33 +59,40 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             List<BinaryFile> result = new List<BinaryFile>();
 
-            List<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory).ToList();
+            IEnumerable<IFileSystemInfo> directoryContents = _FileSystem.GetFiles(criteria.RootDirectory);
 
-            if (directoryContents.Count == 0)
+            if (directoryContents.Any() == false)
             {
                 LogNoFiles();
                 return result;
             }
 
-            List<IFileSystemInfo> directoriesToProcessAsCollection = directoryContents
-                .Where(info => info.IsDirectory() && !criteria.DirectoriesToSkip.Contains(info.Name))
+            IEnumerable<IDirectoryInfo> directories = directoryContents.OfType<IDirectoryInfo>();
+            IEnumerable<IFileInfo> files = directoryContents.OfType<IFileInfo>();
+
+            List<IDirectoryInfo> directoriesToProcessAsCollection = directories
+                .Where(directoryInfo =>
+                {
+                    bool result = criteria.DirectoriesToSkip.Contains(directoryInfo.Name) == false;
+                    return result;
+                })
                 .ToList();
 
-            List<IFileSystemInfo> filesWithoutCollections = directoryContents.Where(info =>
-            {
-                bool notDirectory = !info.IsDirectory();
-                string extension = Path.GetExtension(info.Name);
-                bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
-                bool isMatch = notDirectory && includesExtension;
-                return isMatch;
-            }).ToList();
+            List<IFileInfo> filesWithoutCollections = files
+                .Where(fileInfo =>
+                {
+                    string extension = Path.GetExtension(fileInfo.Name);
+                    bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
+                    return includesExtension;
+                })
+                .ToList();
 
             string[] fileNames = filesWithoutCollections.Select(x => x.FullName).ToArray();
-            List<BinaryFile> files = await ProcessFiles(fileNames).ConfigureAwait(false);
-            result.AddRange(files);
+            List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(fileNames).ConfigureAwait(false);
+            result.AddRange(resultForFilesWithoutCollections);
 
-            string[] directories = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
-            List<FileCollection> collections = await ProcessDirectories(criteria, directories).ConfigureAwait(false);
+            string[] directoryNames = directoriesToProcessAsCollection.Select(x => x.Name).ToArray();
+            List<FileCollection> collections = await ProcessDirectories(criteria, directoryNames).ConfigureAwait(false);
             foreach (FileCollection collection in collections)
             {
                 List<BinaryFile> targetFiles = collection
