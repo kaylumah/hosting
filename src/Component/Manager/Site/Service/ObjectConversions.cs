@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ReadingTime(Article pageMetaData)
+        public static string ReadingTime(PageMetaData pageMetaData)
         {
             string content = pageMetaData.Content;
             // get from pageMetaData once available
