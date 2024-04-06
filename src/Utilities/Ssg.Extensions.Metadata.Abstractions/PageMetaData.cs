@@ -26,6 +26,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        protected int GetInt(string key)
+        {
+            int result = _InternalData.GetValue<int>(key);
+            return result;
+        }
+
         protected bool GetBoolValue(string key)
         {
             bool result = _InternalData.GetBoolValue(key);
@@ -252,6 +258,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
             set
             {
                 SetValue(nameof(Series), value);
+            }
+        }
+
+        public int NumberOfWords
+        {
+            get
+            {
+                int result = GetInt(nameof(NumberOfWords));
+                return result;
+            }
+            set
+            {
+                SetValue(nameof(NumberOfWords), value);
             }
         }
 
