@@ -29,6 +29,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             Dictionary<string, object?> data = file.ToDictionary();
             Article result = new Article(data);
+            string content = result.Content;
             return result;
         }
 

@@ -49,12 +49,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static TimeSpan Duration(this string html)
+        public static HtmlDocument ToHtmlDocument(this string html)
         {
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
-            int numberOfWords = document.CountWords();
-            TimeSpan result = numberOfWords.Duration();
+            return document;
+        }
+
+        public static (int numberOfWords, TimeSpan duration) ToReadingData(this string html)
+        {
+            HtmlDocument htmlDocument = html.ToHtmlDocument();
+            int numberOfWords = htmlDocument.CountWords();
+            TimeSpan duration = numberOfWords.Duration();
+            (int numberOfWords, TimeSpan duration) result = new(numberOfWords, duration);
             return result;
         }
 
