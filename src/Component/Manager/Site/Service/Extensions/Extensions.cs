@@ -40,15 +40,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
+        public static TimeSpan Duration(this int numberOfWords, int wordsPerMinute = 256)
+        {
+            double numberOf = numberOfWords;
+            double wordsPer = wordsPerMinute;
+            int minutes = (int)Math.Ceiling(numberOf / wordsPer);
+            TimeSpan result = TimeSpan.FromMinutes(minutes);
+            return result;
+        }
+
         public static TimeSpan Duration(this string html)
         {
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(html);
-            double wordsPerMinute = 265;
-            double numberOfWords = document.CountWords();
-            ;
-            int minutes = (int)Math.Ceiling(numberOfWords / wordsPerMinute);
-            TimeSpan result = TimeSpan.FromMinutes(minutes);
+            int numberOfWords = document.CountWords();
+            TimeSpan result = numberOfWords.Duration();
             return result;
         }
 
