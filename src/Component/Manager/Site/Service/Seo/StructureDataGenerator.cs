@@ -125,8 +125,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string content = page.Content;
             int wordCount = content.CountWords();
             blogPost.WordCount = wordCount;
-            // TimeSpan duration = content.Duration();
-            // blogPost.TimeRequired = duration;
+            TimeSpan duration = wordCount.Duration();
+            blogPost.TimeRequired = duration;
             return blogPost;
         }
     }
