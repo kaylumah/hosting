@@ -118,12 +118,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             // blogPost.InLanguage = page.Language;
             // blogPost.Name = page.Title;
-            // TODO: consider including this
-            // string content = page.Content;
-            // int wordCount = content.CountWords();
             blogPost.WordCount = page.NumberOfWords;
-            // TimeSpan duration = wordCount.Duration();
-            // blogPost.TimeRequired = duration;
+            blogPost.TimeRequired = page.Duration;
             return blogPost;
         }
     }

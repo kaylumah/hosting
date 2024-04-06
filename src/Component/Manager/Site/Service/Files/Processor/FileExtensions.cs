@@ -32,6 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string content = result.Content;
             (int numberOfWords, TimeSpan duration) readingData = content.ToReadingData();
             result.NumberOfWords = readingData.numberOfWords;
+            result.Duration = readingData.duration;
             return result;
         }
 
