@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
@@ -80,12 +79,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 .ToList();
 
             List<IFileInfo> filesWithoutCollections = files
-                .Where(fileInfo =>
-                {
-                    string extension = Path.GetExtension(fileInfo.Name);
-                    bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
-                    return includesExtension;
-                })
                 .ToList();
 
             List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(criteria, filesWithoutCollections).ConfigureAwait(false);
@@ -96,21 +89,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 List<BinaryFile> targetFiles = collection
                     .Files
-                    .Where(file =>
-                    {
-                        string extension = Path.GetExtension(file.Name);
-                        bool result = criteria.FileExtensionsToTarget.Contains(extension);
-                        return result;
-                    })
                     .ToList();
-                bool exists = _SiteInfo.Collections.Contains(collection.Name);
-                if (!exists)
+
+                bool exists = _SiteInfo.Collections.TryGetValue(collection.Name, out Collection? collectionSettings);
+                if (exists && collectionSettings != null)
                 {
-                    result.AddRange(targetFiles);
-                }
-                else
-                {
-                    if (exists && _SiteInfo.Collections[collection.Name].Output)
+                    if (collectionSettings.Output)
                     {
                         targetFiles = targetFiles
                             .Select(x =>
@@ -119,9 +103,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                                 return x;
                             })
                             .ToList();
-                        result.AddRange(targetFiles);
                     }
                 }
+
+                result.AddRange(targetFiles);
             }
 
             return result;
@@ -151,31 +136,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
             string keyName = directoryName[1..];
-            string collectionDirectory = Path.Combine(criteria.RootDirectory, directoryName);
-            List<IFileSystemInfo> targetFiles = _FileSystem.GetFiles(collectionDirectory).Where(x => !x.IsDirectory()).ToList();
-            IFileSystemInfo[] targetFilesArray = targetFiles.ToArray();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, targetFilesArray, keyName).ConfigureAwait(false);
-
+            IFileInfo[] filesForDirectory = directory.GetFiles();
+            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, keyName).ConfigureAwait(false);
             FileCollection fileCollection = new FileCollection();
             fileCollection.Name = keyName;
             fileCollection.Files = files.ToArray();
             return fileCollection;
         }
 
-        async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileSystemInfo[] files, string? scope)
+        async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
         {
-            Debug.Assert(criteria != null);
             List<BinaryFile> result = new List<BinaryFile>();
-            foreach (IFileSystemInfo fileInfo in files)
+            foreach (IFileInfo fileInfo in files)
             {
                 BinaryFile fileResult = await ProcessFileInScope(fileInfo, scope);
-                result.Add(fileResult);
+                string extension = Path.GetExtension(fileResult.Name);
+                bool includesExtension = criteria.FileExtensionsToTarget.Contains(extension);
+                if (includesExtension)
+                {
+                    result.Add(fileResult);
+                }
             }
 
             return result;
         }
 
-        async Task<BinaryFile> ProcessFileInScope(IFileSystemInfo fileInfo, string? scope)
+        async Task<BinaryFile> ProcessFileInScope(IFileInfo fileInfo, string? scope)
         {
             using IDisposable? logScope = _Logger.BeginScope($"[File: '{fileInfo.Name}']");
             Stream fileStream = fileInfo.CreateReadStream();
