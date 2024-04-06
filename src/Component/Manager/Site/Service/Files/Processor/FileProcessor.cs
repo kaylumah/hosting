@@ -90,14 +90,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 List<BinaryFile> targetFiles = collection
                     .Files
                     .ToList();
-                bool exists = _SiteInfo.Collections.Contains(collection.Name);
-                if (!exists)
+
+                bool exists = _SiteInfo.Collections.TryGetValue(collection.Name, out Collection? collectionSettings);
+                if (exists && collectionSettings != null)
                 {
-                    result.AddRange(targetFiles);
-                }
-                else
-                {
-                    if (exists && _SiteInfo.Collections[collection.Name].Output)
+                    if (collectionSettings.Output)
                     {
                         targetFiles = targetFiles
                             .Select(x =>
@@ -106,9 +103,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                                 return x;
                             })
                             .ToList();
-                        result.AddRange(targetFiles);
                     }
                 }
+
+                result.AddRange(targetFiles);
             }
 
             return result;
