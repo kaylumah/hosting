@@ -116,14 +116,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
-            // blogPost.InLanguage = page.Language;
             // blogPost.Name = page.Title;
-            // TODO: consider including this
-            // string content = page.Content;
-            // int wordCount = content.CountWords();
-            // blogPost.WordCount = wordCount;
-            // TimeSpan duration = wordCount.Duration();
-            // blogPost.TimeRequired = duration;
+            blogPost.InLanguage = page.Language;
+            blogPost.WordCount = page.NumberOfWords;
+            blogPost.TimeRequired = page.Duration;
             return blogPost;
         }
     }

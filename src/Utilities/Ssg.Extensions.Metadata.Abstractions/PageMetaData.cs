@@ -26,6 +26,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        protected int GetInt(string key)
+        {
+            int result = _InternalData.GetValue<int>(key);
+            return result;
+        }
+
+        protected TimeSpan GetTimeSpan(string key)
+        {
+            TimeSpan result = _InternalData.GetValue<TimeSpan>(key);
+            return result;
+        }
+
         protected bool GetBoolValue(string key)
         {
             bool result = _InternalData.GetBoolValue(key);
@@ -252,6 +264,32 @@ namespace Ssg.Extensions.Metadata.Abstractions
             set
             {
                 SetValue(nameof(Series), value);
+            }
+        }
+
+        public int NumberOfWords
+        {
+            get
+            {
+                int result = GetInt(nameof(NumberOfWords));
+                return result;
+            }
+            set
+            {
+                SetValue(nameof(NumberOfWords), value);
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                TimeSpan result = GetTimeSpan(nameof(Duration));
+                return result;
+            }
+            set
+            {
+                SetValue(nameof(Duration), value);
             }
         }
 
