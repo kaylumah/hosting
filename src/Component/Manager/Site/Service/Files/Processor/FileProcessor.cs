@@ -90,22 +90,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 List<BinaryFile> targetFiles = collection
                     .Files
                     .ToList();
-
-                bool exists = _SiteInfo.Collections.TryGetValue(collection.Name, out Collection? collectionSettings);
-                if (exists && collectionSettings != null)
-                {
-                    if (collectionSettings.Output)
-                    {
-                        targetFiles = targetFiles
-                            .Select(x =>
-                            {
-                                x.MetaData.Collection = collection.Name;
-                                return x;
-                            })
-                            .ToList();
-                    }
-                }
-
                 result.AddRange(targetFiles);
             }
 
@@ -135,11 +119,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
-            string keyName = directoryName[1..];
+            string scope = directoryName[1..];
+            bool exists = _SiteInfo.Collections.TryGetValue(scope, out Collection? collectionSettings);
             IFileInfo[] filesForDirectory = directory.GetFiles();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, keyName).ConfigureAwait(false);
+            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
+            if (exists && collectionSettings != null)
+            {
+                if (collectionSettings.Output)
+                {
+                    files = files
+                        .Select(x =>
+                        {
+                            x.MetaData.Collection = collectionSettings.Name;
+                            return x;
+                        })
+                        .ToList();
+                }
+            }
+
             FileCollection fileCollection = new FileCollection();
-            fileCollection.Name = keyName;
+            fileCollection.Name = scope;
             fileCollection.Files = files.ToArray();
             return fileCollection;
         }
