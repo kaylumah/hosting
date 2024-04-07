@@ -113,22 +113,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
+            bool outputScopeDetails = false;
             string scope = directoryName[1..];
             bool exists = _SiteInfo.Collections.TryGetValue(scope, out Collection? collectionSettings);
-            IFileInfo[] filesForDirectory = directory.GetFiles();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
             if (exists && collectionSettings != null)
             {
-                if (collectionSettings.Output)
+                outputScopeDetails = collectionSettings.Output;
+                if (string.IsNullOrWhiteSpace(collectionSettings.TreatAs) == false)
                 {
-                    files = files
-                        .Select(x =>
-                        {
-                            x.MetaData.Collection = collectionSettings.Name;
-                            return x;
-                        })
-                        .ToList();
+                    scope = collectionSettings.TreatAs;
                 }
+            }
+
+            IFileInfo[] filesForDirectory = directory.GetFiles();
+            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
+            if (outputScopeDetails)
+            {
+                files = files
+                    .Select(x =>
+                    {
+                        x.MetaData.Collection = scope;
+                        return x;
+                    })
+                    .ToList();
             }
 
             return files;
