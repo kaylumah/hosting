@@ -84,30 +84,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(criteria, filesWithoutCollections).ConfigureAwait(false);
             result.AddRange(resultForFilesWithoutCollections);
 
-            List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
-            foreach (FileCollection collection in collections)
-            {
-                List<BinaryFile> targetFiles = collection
-                    .Files
-                    .ToList();
-
-                bool exists = _SiteInfo.Collections.TryGetValue(collection.Name, out Collection? collectionSettings);
-                if (exists && collectionSettings != null)
-                {
-                    if (collectionSettings.Output)
-                    {
-                        targetFiles = targetFiles
-                            .Select(x =>
-                            {
-                                x.MetaData.Collection = collection.Name;
-                                return x;
-                            })
-                            .ToList();
-                    }
-                }
-
-                result.AddRange(targetFiles);
-            }
+            List<BinaryFile> collectionBoundFiles = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
+            result.AddRange(collectionBoundFiles);
 
             return result;
         }
@@ -119,29 +97,48 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, IEnumerable<IDirectoryInfo> directories)
+        async Task<List<BinaryFile>> ProcessDirectories(FileFilterCriteria criteria, IEnumerable<IDirectoryInfo> directories)
         {
-            List<FileCollection> result = new List<FileCollection>();
+            List<BinaryFile> result = new List<BinaryFile>();
             foreach (IDirectoryInfo directory in directories)
             {
-                FileCollection fileCollection = await ProcessDirectory(criteria, directory);
-                result.Add(fileCollection);
+                List<BinaryFile> directoryResult = await ProcessDirectory(criteria, directory);
+                result.AddRange(directoryResult);
             }
 
             return result;
         }
 
-        async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, IDirectoryInfo directory)
+        async Task<List<BinaryFile>> ProcessDirectory(FileFilterCriteria criteria, IDirectoryInfo directory)
         {
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
-            string keyName = directoryName[1..];
+            bool outputScopeDetails = false;
+            string scope = directoryName[1..];
+            bool exists = _SiteInfo.Collections.TryGetValue(scope, out Collection? collectionSettings);
+            if (exists && collectionSettings != null)
+            {
+                outputScopeDetails = collectionSettings.Output;
+                if (string.IsNullOrWhiteSpace(collectionSettings.TreatAs) == false)
+                {
+                    scope = collectionSettings.TreatAs;
+                }
+            }
+
             IFileInfo[] filesForDirectory = directory.GetFiles();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, keyName).ConfigureAwait(false);
-            FileCollection fileCollection = new FileCollection();
-            fileCollection.Name = keyName;
-            fileCollection.Files = files.ToArray();
-            return fileCollection;
+            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
+            if (outputScopeDetails)
+            {
+                files = files
+                    .Select(x =>
+                    {
+                        x.MetaData.Collection = scope;
+                        return x;
+                    })
+                    .ToList();
+            }
+
+            return files;
         }
 
         async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
