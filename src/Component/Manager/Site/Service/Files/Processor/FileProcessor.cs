@@ -84,14 +84,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<BinaryFile> resultForFilesWithoutCollections = await ProcessFiles(criteria, filesWithoutCollections).ConfigureAwait(false);
             result.AddRange(resultForFilesWithoutCollections);
 
-            List<FileCollection> collections = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
-            foreach (FileCollection collection in collections)
-            {
-                List<BinaryFile> targetFiles = collection
-                    .Files
-                    .ToList();
-                result.AddRange(targetFiles);
-            }
+            List<BinaryFile> collectionBoundFiles = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
+            result.AddRange(collectionBoundFiles);
 
             return result;
         }
@@ -103,19 +97,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        async Task<List<FileCollection>> ProcessDirectories(FileFilterCriteria criteria, IEnumerable<IDirectoryInfo> directories)
+        async Task<List<BinaryFile>> ProcessDirectories(FileFilterCriteria criteria, IEnumerable<IDirectoryInfo> directories)
         {
-            List<FileCollection> result = new List<FileCollection>();
+            List<BinaryFile> result = new List<BinaryFile>();
             foreach (IDirectoryInfo directory in directories)
             {
-                FileCollection fileCollection = await ProcessDirectory(criteria, directory);
-                result.Add(fileCollection);
+                List<BinaryFile> directoryResult = await ProcessDirectory(criteria, directory);
+                result.AddRange(directoryResult);
             }
 
             return result;
         }
 
-        async Task<FileCollection> ProcessDirectory(FileFilterCriteria criteria, IDirectoryInfo directory)
+        async Task<List<BinaryFile>> ProcessDirectory(FileFilterCriteria criteria, IDirectoryInfo directory)
         {
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
@@ -137,10 +131,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                 }
             }
 
-            FileCollection fileCollection = new FileCollection();
-            fileCollection.Name = scope;
-            fileCollection.Files = files.ToArray();
-            return fileCollection;
+            return files;
         }
 
         async Task<List<BinaryFile>> ProcessFilesInScope(FileFilterCriteria criteria, IFileInfo[] files, string? scope)
