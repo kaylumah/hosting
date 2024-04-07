@@ -189,7 +189,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileResult;
         }
 
-        internal ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
+        ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
         {
             ParsedFile<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
             if (result.FrontMatter == null)
