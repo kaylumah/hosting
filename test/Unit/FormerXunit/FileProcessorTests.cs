@@ -198,13 +198,8 @@ namespace Test.Unit.FormerXunit
                 [$"{Root}/file.html"] = string.Empty
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
@@ -228,11 +223,6 @@ namespace Test.Unit.FormerXunit
                 [$"{Root}/file.html"] = string.Empty
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
                 Defaults = new DefaultMetadatas {
@@ -243,7 +233,7 @@ namespace Test.Unit.FormerXunit
                     }
                 }
             };
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
@@ -267,11 +257,6 @@ namespace Test.Unit.FormerXunit
                 [$"{Root}/file.html"] = string.Empty
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
                 Defaults = new DefaultMetadatas {
@@ -284,7 +269,7 @@ namespace Test.Unit.FormerXunit
                             }
                         }
             };
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -309,11 +294,6 @@ namespace Test.Unit.FormerXunit
                 [$"{Root}/test/file.html"] = "---\r\noutputlocation: test/:name:ext---"
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
                 Defaults = new DefaultMetadatas {
@@ -333,7 +313,7 @@ namespace Test.Unit.FormerXunit
                             }
                         }
             };
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -360,11 +340,6 @@ namespace Test.Unit.FormerXunit
                 [$"{Root}/test/file.html"] = "---\r\noutputlocation: test/:name:ext---"
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
                 Defaults = new DefaultMetadatas {
@@ -385,7 +360,7 @@ namespace Test.Unit.FormerXunit
                             }
                         }
             };
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -412,11 +387,6 @@ namespace Test.Unit.FormerXunit
                 [$"posts/2021/file.html"] = "---\r\noutputlocation: posts/2021/:name:ext---"
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
-            IContentPreprocessorStrategy[] preprocessorStrategies = Array.Empty<IContentPreprocessorStrategy>();
-            SiteInfo siteInfo = new SiteInfo();
-            IYamlParser yamlParser = new YamlParser();
-            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
                 Defaults = new DefaultMetadatas {
@@ -436,7 +406,7 @@ namespace Test.Unit.FormerXunit
                             }
                         }
             };
-            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "posts",
@@ -451,6 +421,17 @@ namespace Test.Unit.FormerXunit
             result.Uri.Should().Be("posts/2021/file.html");
             result.Layout.Should().NotBeNull();
             result.Layout.Should().Be("default.html");
+        }
+
+        FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, IContentPreprocessorStrategy[] preprocessorStrategies = null, SiteInfo siteInfo = null)
+        {
+            preprocessorStrategies ??= Array.Empty<IContentPreprocessorStrategy>();
+            siteInfo ??= new SiteInfo();
+            ILogger<FileProcessor> logger = NullLoggerFactory.Instance.CreateLogger<FileProcessor>();
+            IYamlParser yamlParser = new YamlParser();
+            YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
+            FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
+            return sut;
         }
 
         static string CreateFrontMatter(Dictionary<string, object> data = null)
