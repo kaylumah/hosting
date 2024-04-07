@@ -28,23 +28,6 @@ namespace Test.Unit.FormerXunit
     {
         const string Root = "_site";
 
-        static MockFileData EmptyFile()
-        {
-            return ContentFile(string.Empty);
-        }
-
-        static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
-        {
-            string frontMatter = CreateFrontMatter(data);
-            return ContentFile(frontMatter);
-        }
-
-        static MockFileData ContentFile(string content)
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(content);
-            return new MockFileData(bytes);
-        }
-
         [Fact]
         public async Task Test_FileProcessor_ChangedFileExtension()
         {
@@ -468,6 +451,23 @@ namespace Test.Unit.FormerXunit
             stream.Position = 0;
             StreamReader streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
+        }
+
+        static MockFileData EmptyFile()
+        {
+            return ContentFile(string.Empty);
+        }
+
+        static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
+        {
+            string frontMatter = CreateFrontMatter(data);
+            return ContentFile(frontMatter);
+        }
+
+        static MockFileData ContentFile(string content)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(content);
+            return new MockFileData(bytes);
         }
     }
 }
