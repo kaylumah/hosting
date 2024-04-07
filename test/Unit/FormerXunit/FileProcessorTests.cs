@@ -16,9 +16,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Moq;
 using Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Xunit;
 
@@ -31,20 +29,19 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_ChangedFileExtension()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{Root}/test.md", EmptyFile() }
         });
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions()
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions()
             {
                 ExtensionMapping = new Dictionary<string, string> {
                         { ".md", ".html" }
                     }
-            });
+            };
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -59,14 +56,14 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_Subdirectories()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{Root}/_subdir/test.txt", EmptyFile() }
         });
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -82,10 +79,6 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_FrontMatter()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{Root}/a.txt", EmptyFile() },
@@ -93,7 +86,10 @@ namespace Test.Unit.FormerXunit
             { $"{Root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
             { $"{Root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
         });
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -117,12 +113,12 @@ namespace Test.Unit.FormerXunit
         [Fact(Skip = "figure out empty directory")]
         public async Task Test_FileProcessor_WithoutFiles_Should_ReturnEmptyList()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(
                 new Dictionary<string, MockFileData> { });
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 DirectoriesToSkip = new string[] { },
@@ -134,14 +130,14 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{Root}/index.html", EmptyFile() }
         });
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
@@ -154,15 +150,15 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
         {
-            SiteInfo optionsMock = new SiteInfo();
-            Mock<ILogger<FileProcessor>> loggerMock = new Mock<ILogger<FileProcessor>>();
-            YamlFrontMatterMetadataProvider metadataProviderMock = new YamlFrontMatterMetadataProvider(new YamlParser());
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
         {
             { $"{Root}/index.html", EmptyFile() },
             { $"{Root}/other.png", EmptyFile() }
         });
-            FileProcessor sut = new FileProcessor(mockFileSystem, loggerMock.Object, new IContentPreprocessorStrategy[] { }, optionsMock, metadataProviderMock, new MetadataParserOptions());
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+
+            FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
+
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
