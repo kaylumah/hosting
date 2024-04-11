@@ -11,9 +11,11 @@ on:
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-20.04
     name: Build and Deploy Job
+    runs-on: ubuntu-20.04
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    outputs:
+      docs_changed: steps.check_file_changed.outputs.docs_changed == 'True' && github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,7 +30,6 @@ jobs:
         with:
           global-json-file: global.json
       - name: Set TimeZone
-        # uses: szenius/set-timezone@v1.2
         uses: hoang-rio/set-timezone@v1.4
         with:
           timezoneLinux: "Europe/Amsterdam"
@@ -44,12 +45,12 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-      # disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: Test Reports
-      #     path: ${{ github.workspace }}/LivingDoc.html
+                  # disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591
+                  # - name: Upload artifacts
+                  #   uses: actions/upload-artifact@master
+                  #   with:
+                  #     name: Test Reports
+                  #     path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
         if: github.actor != 'dependabot[bot]'
         id: builddeploy
@@ -92,38 +93,17 @@ jobs:
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
-          $diff
+          # $diff
+          # Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
-          Write-Host "::set-output name=docs_changed::$HasDiff"
-      - name: 'Submit SiteMap URLs'
-        if: ${{ github.event_name != 'pull_request' && steps.check_file_changed.outputs.docs_changed == 'True' }}
-        shell: pwsh
-        run: |
-          ./tools/Seo.ps1 -BaseUrl "https://kaylumah.nl"
-     
-      # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
-      # - name: 'Verify Website'
-      #   if: github.actor != 'dependabot[bot]'
-      #   id: verifywebsite
-      #   shell: pwsh
-      #   run: |
-      #     $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
-      #     $SiteMapOutputAsString = $SiteMapOutput -join ","
-      #     echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
-      # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-      # - name: Lighthouse
-      #   if: github.actor != 'dependabot[bot]'
-      #   uses: foo-software/lighthouse-check-action@master
-      #   with:
-      #     outputDirectory: '${{ github.workspace }}/tmp/artifacts'
-      #     urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
-      # - name: Upload artifacts
-      #   if: github.actor != 'dependabot[bot]'
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: Lighthouse reports
-      #     path: ${{ github.workspace }}/tmp/artifacts
+          # Write-Host "::set-output name=docs_changed::$HasDiff"
+          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
+
+  seo_job:
+    needs: [ build_and_deploy_job ]
+    if: needs.build_and_deploy_job.outputs.docs_changed == 'True'
+    uses: ./.github/workflows/seo.yml
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
