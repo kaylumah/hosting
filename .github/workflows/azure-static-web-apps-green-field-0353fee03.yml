@@ -29,12 +29,14 @@ jobs:
           $diff = git diff --name-only HEAD^ HEAD
           $diff
           $SiteFolderDiff = $diff | Where-Object { $_ -match '^_site/' }
+          $HasSite = $SiteFolderDiff.Length -gt 0
           $SnapshotsFolderDiff = $diff | Where-Object { $_ -match '^test/E2e/Snapshots/' }
-          # $SourceDiff = $SiteFolderDiff -or $SnapshotsFolderDiff
-          Write-Host "SiteFolderDiff: " + $SiteFolderDiff
-          Write-Host "SnapshotsFolderDiff: " + $SnapshotsFolderDiff
+          $HasSnapshots = $SnapshotsFolderDiff.Length -gt 0
+          Write-Host "SiteFolderDiff: " + $HasSite
+          Write-Host "SnapshotsFolderDiff: " + $HasSnapshots
           # $SourceDiff = $diff | Where-Object { $_ -match '^_site/' -or $_ -match '^test/E2e/Snapshots/' }
           # $HasDiff = $SourceDiff.Length -gt 0
+          $HasDiff = $HasSite -or $HasSnapshots
           # Write-Host "::set-output name=docs_changed::$HasDiff"
           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
       - name: Use Node.js v20
