@@ -21,6 +21,22 @@ jobs:
         with:
           # submodules: true
           fetch-depth: 2
+      - name: 'Check if _site has changes'
+        id: check_file_changed
+        # if: github.event_name != 'pull_request'
+        shell: pwsh
+        run: |
+          $diff = git diff --name-only HEAD^ HEAD
+          $diff
+          $SiteFolderDiff = $diff | Where-Object { $_ -match '^_site/' }
+          $SnapshotsFolderDiff = $diff | Where-Object { $_ -match '^test/E2e/Snapshots/' }
+          $SourceDiff = $SiteFolderDiff -or $SnapshotsFolderDiff
+          Write-Host "SiteFolderDiff: " + $SiteFolderDiff
+          Write-Host "SnapshotsFolderDiff: " + $SnapshotsFolderDiff
+          # $SourceDiff = $diff | Where-Object { $_ -match '^_site/' -or $_ -match '^test/E2e/Snapshots/' }
+          $HasDiff = $SourceDiff.Length -gt 0
+          # Write-Host "::set-output name=docs_changed::$HasDiff"
+          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -87,22 +103,6 @@ jobs:
           path: |
             **/*.received.*
             **/*.verified.*
-      - name: 'Check if _site has changes'
-        id: check_file_changed
-        # if: github.event_name != 'pull_request'
-        shell: pwsh
-        run: |
-          $diff = git diff --name-only HEAD^ HEAD
-          $diff
-          $SiteFolderDiff = $diff | Where-Object { $_ -match '^_site/' }
-          $SnapshotsFolderDiff = $diff | Where-Object { $_ -match '^test/E2e/Snapshots/' }
-          $SourceDiff = $SiteFolderDiff -or $SnapshotsFolderDiff
-          Write-Host "SiteFolderDiff: " + $SiteFolderDiff
-          Write-Host "SnapshotsFolderDiff: " + $SnapshotsFolderDiff
-          # $SourceDiff = $diff | Where-Object { $_ -match '^_site/' -or $_ -match '^test/E2e/Snapshots/' }
-          $HasDiff = $SourceDiff.Length -gt 0
-          # Write-Host "::set-output name=docs_changed::$HasDiff"
-          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
 
   seo_job:
     needs: [ build_and_deploy_job ]
