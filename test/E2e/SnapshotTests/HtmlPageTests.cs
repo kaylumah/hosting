@@ -118,6 +118,7 @@ namespace Test.E2e.SnapshotTests
             yield return new object[] { "2021/05/23/generate-csharp-client-for-openapi.html" };
             yield return new object[] { "2021/04/11/an-approach-to-writing-mocks.html" };
             yield return new object[] { "2021/03/27/set-nuget-metadata-via-msbuild.html" };
+            yield return new object[] { "2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html" };
             yield return new object[] { "2019/09/07/using-csharp-code-your-git-hooks.html" };
         }
     }
