@@ -35,5 +35,35 @@ namespace Test.E2e.SnapshotTests
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
             await Verifier.Verify(xml, settings);
         }
+
+        [Fact]
+        public async Task Verify_RobotTxt_Contents()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            RobotsPage robotsPage = new RobotsPage(page);
+            await robotsPage.NavigateAsync();
+            page.Url.Should().EndWith(robotsPage.PagePath);
+
+            string txt = await robotsPage.GetContent();
+            VerifySettings settings = new VerifySettings();
+            Regex regex = VerifierHelper.BaseUrl();
+            settings.ScrubMatches(regex, "BaseUrl_");
+            await Verifier.Verify(txt, settings);
+        }
+
+        [Fact]
+        public async Task Verify_SitemapXml_Contents()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            SitemapPage sitemapPage = new SitemapPage(page);
+            await sitemapPage.NavigateAsync();
+            page.Url.Should().EndWith(sitemapPage.PagePath);
+
+            string xml = await sitemapPage.GetContent();
+            VerifySettings settings = new VerifySettings();
+            Regex regex = VerifierHelper.BaseUrl();
+            settings.ScrubMatches(regex, "BaseUrl_");
+            await Verifier.Verify(xml, settings);
+        }
     }
 }
