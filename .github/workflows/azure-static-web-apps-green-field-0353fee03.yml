@@ -14,6 +14,8 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-20.04
     name: Build and Deploy Job
+    outputs:
+      docs_changed: steps.check_file_changed.outputs.docs_changed == 'True' && github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -97,11 +99,6 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
           # Write-Host "::set-output name=docs_changed::$HasDiff"
           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
-      - name: 'Submit SiteMap URLs'
-        if: github.event_name != 'pull_request' && steps.check_file_changed.outputs.docs_changed == 'True'
-        shell: pwsh
-        run: |
-          ./tools/Seo.ps1 -BaseUrl "https://kaylumah.nl"
      
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
       # - name: 'Verify Website'
