@@ -93,6 +93,7 @@ jobs:
         run: |
           $diff = git diff --name-only HEAD^ HEAD
           # $diff
+          # Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
           # Write-Host "::set-output name=docs_changed::$HasDiff"
