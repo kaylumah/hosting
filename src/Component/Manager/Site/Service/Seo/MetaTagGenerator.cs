@@ -123,15 +123,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 hrefAttribute.Value = uri.ToString();
                 linkElement.Attributes.Append(hrefAttribute);
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
+                Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
                 List<string> result = new List<string>()
-        {
-            titleElement.OuterXml,
-            linkElement.OuterXml,
-            CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
-            CreateMetaTag("description", renderData.Description),
-            CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-            CreateMetaTag("keywords", formattedTags)
-        };
+                {
+                    titleElement.OuterXml,
+                    linkElement.OuterXml,
+                    CreateLinkTag("alternate", "application/atom+xml", feedUri, $"{renderData.Site.Title} RSS Feed"),
+                    CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
+                    CreateMetaTag("description", renderData.Description),
+                    CreateMetaTag("copyright", renderData.Site.Build.Copyright),
+                    CreateMetaTag("keywords", formattedTags)
+                };
                 if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                 {
                     AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
@@ -299,6 +301,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             contentAttribute.Value = content;
             createdElement.Attributes.Append(contentAttribute);
             string result = createdElement.OuterXml;
+            return result;
+        }
+
+        static string CreateLinkTag(string rel, string type, Uri url, string name)
+        {
+            XmlDocument finalDocument = new XmlDocument();
+            XmlElement linkElement = finalDocument.CreateElement("link");
+
+            XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
+            relAttribute.Value = rel;
+            linkElement.Attributes.Append(relAttribute);
+
+            XmlAttribute typeAttribute = finalDocument.CreateAttribute("rel");
+            typeAttribute.Value = type;
+            linkElement.Attributes.Append(relAttribute);
+
+            XmlAttribute urlAttribute = finalDocument.CreateAttribute("rel");
+            urlAttribute.Value = url.ToString();
+            linkElement.Attributes.Append(relAttribute);
+
+            XmlAttribute nameAttribute = finalDocument.CreateAttribute("rel");
+            nameAttribute.Value = name;
+            linkElement.Attributes.Append(relAttribute);
+
+            string result = linkElement.OuterXml;
             return result;
         }
     }
