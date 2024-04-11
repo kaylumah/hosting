@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/assets/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+    <link rel="manifest" href="/assets/images/site.webmanifest" />
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+
+    <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+
+    <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+    
+    <!-- Common Meta Tags -->
+    <title>Max Hamulyák · Kaylumah</title>
+    <link rel="canonical" href="https://BaseUrl_1/index.html" />
+    <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
+    <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
+    <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+    <meta name="description" content="A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák" />
+    <meta name="copyright" content="© Kaylumah. All rights reserved." />
+    <meta name="keywords" content="Developer, Blog, Max Hamulyák" />
+    
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+    <meta property="og:title" content="" />
+    <meta property="og:url" content="https://BaseUrl_1/index.html" />
+    <meta property="og:description" content="A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák" />
+    <meta property="og:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="A blog and portfolio website for Kaylumah, a company founded by Max Hamulyák" />
+    <meta name="twitter:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
+    <meta name="twitter:site" content="@kaylumah" />
+    <meta name="twitter:creator" content="@kaylumah" />
+    
+    <!-- Kaylumah BuildInfo Meta Tags -->
+    <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+    <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+    <meta property="kaylumah:version" content="1.0.0.BuildNumber_1" />
+    <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+    <meta property="kaylumah:buildNumber" content="BuildNumber_1" />
+    <meta property="kaylumah:time" content="DateTimeOffset_1" />
+    <meta property="kaylumah:site" content="Guid_1" />
+    <meta property="kaylumah:page" content="Guid_2" />
+    
+    
+    
+    <!-- End Kaylumah SEO tag -->
+    <!--
+                                                        
+       _  __           _                       _        
+      | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+      | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+      | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+      |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                 |___/                                  
+                                                        
+     You found 🧸                                      
+                                                       
+    -->
+    
+    <script>
+    
+      const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+      const consoleSignatureStyle = `
+      font-size: 16px;
+      background: #4cae50;
+      color: white;
+      text-align: center;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 20px;
+    `;
+      console.log(consoleSignatureText, consoleSignatureStyle);
+    </script>
+    <script>
+      window.getCookieConsent = function() {
+          try {
+              const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
+              return consent;
+          } catch (error) {
+              console.log("failed to retrieve consent", error);
+              return "unknown";
+          }
+      };
+    
+      window.setCookieConsent = function(status) {
+    
+        if (status != "denied" && status != "granted") {
+          throw new Error(`Status ${status} is not supported!`);
+        }
+    
+        let today = new Date();
+        let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+        document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
+      }
+    
+    </script>
+    <script>
+      // Define dataLayer and the gtag function.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+    
+      window.setGtagConsentStatus = function(mode, status) {
+    
+        if (mode != "update" && mode != "default") {
+          throw new Error(`Mode ${mode} is not supported!`);
+        }
+    
+        if (status != "denied" && status != "granted") {
+          throw new Error(`Status ${status} is not supported!`);
+        }
+    
+        gtag('consent', mode, {
+          'ad_storage': status,
+          'ad_user_data': status,
+          'ad_personalization': status,
+          'analytics_storage': status
+        });
+      }
+    
+      let currentStatus = window.getCookieConsent();
+      let cookiesAllowed = currentStatus == "granted";
+    
+      if (cookiesAllowed) {
+        console.log("cookies already approved");
+        window.setGtagConsentStatus("default", "granted");
+      } else {
+        console.log("assume cookies are denied");
+        window.setGtagConsentStatus("default", "denied");
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+    
+      gtag('js', new Date());
+      gtag('config', 'UA-168549883-1');
+    </script>
+    <link href="https://mastodon.nl/@kaylumah" rel="me">
+</head>
+
+<body class="bg-gray-100 antialiased">
+    <div class="flex flex-col h-screen">
+        <header class="bg-gray-900">
+            <nav class="flex flex-wrap items-center justify-between p-4">
+                <a data-testid="NavLink-Home" href="/" rel="home">
+                    <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80"
+                        src="/assets/logo.svg" alt="Kaylumah" />
+                </a>
+                <button id="hamburger"
+                    class="tablet:hidden p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <ul
+                    class="toggle hidden tablet:flex w-full tablet:w-auto text-right text-bold mt-5 tablet:mt-0 border-t-2 border-gray-600 tablet:border-none">
+                    
+                                        <li>
+                                            <a data-testid="NavLink-About" href="/about.html"
+                                                class="block tablet:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 tablet:border-none">
+                                                About
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a data-testid="NavLink-Blog" href="/blog.html"
+                                                class="block tablet:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 tablet:border-none">
+                                                Blog
+                                            </a>
+                                        </li>
+                                        
+                </ul>
+            </nav>
+            <script>
+                document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                    for (let i = 0; i < navToggle.length; i++) {
+                        navToggle.item(i).classList.toggle('hidden');
+                    }
+                };
+            </script>
+        </header>
+        <main class="flex-1 p-4 text-gray-900">
+            <div class="h-full flex flex-col items-center justify-center gap-4">
+  <div class="flex flex-col items-center">
+    <h1 class="text-4xl font-semibold">Max Hamulyák</h1>
+    <span class="text-2xl italic">aka Kaylumah</span>
+  </div>
+  <p class="prose">Welcome to my personal website. Here I blog on a variety of topics with a focus on .NET technologies</p>
+  <ul class="flex flex-row gap-4">
+    <li>
+      <a href="https://github.com/kaylumah" target="_blank" rel="noopener noreferrer me" title="GitHub Profile">
+        <svg class="block h-6 w-6" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path fill="#000000" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/in/maxhamulyak" target="_blank" rel="noopener noreferrer me" title="LinkedIn Profile">
+        <svg class="block h-6 w-6" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path fill="#000000" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+    </li>
+    <li>
+      <a href="https://BaseUrl_1/feed.xml" target="_blank" rel="noopener noreferrer me" title="Atom Feed">
+        <svg class="block h-6 w-6" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS</title><path fill="#000000" d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg>
+      </a>
+    </li>
+  </ul>
+</div>
+        </main>
+        <footer class="bg-gray-900 p-4">
+            <div class="flex flex-col text-center text-gray-100">
+                <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                <!-- <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">BuildNumber_1</a></span> -->
+            </div>
+        </footer>
+        <div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-10 flex flex-col justify-between gap-x-8 gap-y-4 bg-white p-6 tablet:flex-row tablet:items-center laptop:px-8">
+            <p class="text-sm leading-6 text-gray-900">This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies. Learn more in our <a class="font-semibold text-teal-900" href="/privacy">cookie policy</a>.</p>
+            <div class="mr-16 flex flex-none items-center gap-x-5">
+                <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">Accept all</button>
+                <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold leading-6 text-gray-900">Reject all</button>
+            </div>
+            <script>
+
+                window.hideCookieBanner = function() {
+                    let cookieBanner = document.getElementById("cookie-banner");
+                    cookieBanner.classList.toggle("hidden");
+                }
+    
+                window.handleCookieConsentGranted = function() {
+                  window.setCookieConsent("granted");
+                  window.setGtagConsentStatus("update", "granted");
+                  window.hideCookieBanner();
+                }
+              
+                window.handleCookieConsentDenied = function() {
+                    window.setCookieConsent("denied");
+                    window.setGtagConsentStatus("update", "denied");
+                    window.hideCookieBanner();
+                }
+    
+                let hideCookieBanner = window.getCookieConsent() != "unknown";
+                if (hideCookieBanner)
+                {
+                    window.hideCookieBanner();
+                }
+              
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
