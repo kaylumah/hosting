@@ -88,7 +88,7 @@ jobs:
             **/*.verified.*
       - name: 'Check if _site has changes'
         id: check_file_changed
-        if: github.event_name != 'pull_request'
+        # if: github.event_name != 'pull_request'
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
