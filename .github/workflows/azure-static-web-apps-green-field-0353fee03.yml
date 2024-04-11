@@ -81,6 +81,7 @@ jobs:
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
+          $diff
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
           Write-Host "::set-output name=docs_changed::$HasDiff"
