@@ -93,9 +93,7 @@ jobs:
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
-          # $diff
-          # Where-Object { $_ -match '^docs/' -or $_ -match '.md$' }
-          $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
+          $SourceDiff = $diff | Where-Object { $_ -match '^_site/' -or $_ -match '^test/E2e/Snapshots/' }
           $HasDiff = $SourceDiff.Length -gt 0
           # Write-Host "::set-output name=docs_changed::$HasDiff"
           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
