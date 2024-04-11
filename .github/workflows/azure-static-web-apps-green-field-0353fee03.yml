@@ -92,10 +92,11 @@ jobs:
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
-          $diff
+          # $diff
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
-          Write-Host "::set-output name=docs_changed::$HasDiff"
+          # Write-Host "::set-output name=docs_changed::$HasDiff"
+          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
       - name: 'Submit SiteMap URLs'
         if: ${{ github.event_name != 'pull_request' && steps.check_file_changed.outputs.docs_changed == 'True' }}
         shell: pwsh
