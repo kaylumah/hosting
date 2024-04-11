@@ -113,25 +113,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 XmlDocument finalDocument = new XmlDocument();
                 XmlElement titleElement = finalDocument.CreateElement("title");
                 titleElement.InnerText = renderData.Title;
-
-                XmlElement linkElement = finalDocument.CreateElement("link");
-                XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
-                relAttribute.Value = "canonical";
-                linkElement.Attributes.Append(relAttribute);
-                XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
-                Uri uri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
-                hrefAttribute.Value = uri.ToString();
-                linkElement.Attributes.Append(hrefAttribute);
+                Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
+                Uri sitemapUri = GlobalFunctions.AbsoluteUri("sitemap.xml");
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
-        {
-            titleElement.OuterXml,
-            linkElement.OuterXml,
-            CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
-            CreateMetaTag("description", renderData.Description),
-            CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-            CreateMetaTag("keywords", formattedTags)
-        };
+                {
+                    titleElement.OuterXml,
+                    CreateLinkTag("canonical", pageUri),
+                    CreateLinkTag("alternate", feedUri, "application/atom+xml", $"{renderData.Site.Title} RSS Feed"),
+                    CreateLinkTag("sitemap", sitemapUri, "application/xml", $"{renderData.Site.Title} Sitemap"),
+                    CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
+                    CreateMetaTag("description", renderData.Description),
+                    CreateMetaTag("copyright", renderData.Site.Build.Copyright),
+                    CreateMetaTag("keywords", formattedTags)
+                };
                 if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                 {
                     AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
@@ -299,6 +295,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             contentAttribute.Value = content;
             createdElement.Attributes.Append(contentAttribute);
             string result = createdElement.OuterXml;
+            return result;
+        }
+
+        static string CreateLinkTag(string rel, Uri url, string? type = null, string? title = null)
+        {
+            XmlDocument finalDocument = new XmlDocument();
+            XmlElement linkElement = finalDocument.CreateElement("link");
+
+            XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
+            relAttribute.Value = rel;
+            linkElement.Attributes.Append(relAttribute);
+
+            if (string.IsNullOrEmpty(type) == false)
+            {
+                XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
+                typeAttribute.Value = type;
+                linkElement.Attributes.Append(typeAttribute);
+            }
+
+            XmlAttribute urlAttribute = finalDocument.CreateAttribute("href");
+            urlAttribute.Value = url.ToString();
+            linkElement.Attributes.Append(urlAttribute);
+
+            if (string.IsNullOrEmpty(title) == false)
+            {
+                XmlAttribute titleAttribute = finalDocument.CreateAttribute("title");
+                titleAttribute.Value = title;
+                linkElement.Attributes.Append(titleAttribute);
+            }
+
+            string result = linkElement.OuterXml;
             return result;
         }
     }
