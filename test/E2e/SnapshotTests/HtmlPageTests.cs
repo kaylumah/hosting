@@ -9,12 +9,12 @@ using Xunit;
 
 namespace Test.E2e.SnapshotTests
 {
-    public class HtmlPageHtmlTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
+    public class HtmlPageTests : IClassFixture<DesktopFixture>, IClassFixture<MobileFixture>
     {
         readonly DesktopFixture _DesktopFixture;
         readonly MobileFixture _MobileFixture;
 
-        public HtmlPageHtmlTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
+        public HtmlPageTests(DesktopFixture desktopFixture, MobileFixture mobileFixture)
         {
             _DesktopFixture = desktopFixture;
             _MobileFixture = mobileFixture;
