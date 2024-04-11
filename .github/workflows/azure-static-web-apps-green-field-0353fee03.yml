@@ -95,6 +95,11 @@ jobs:
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
           Write-Host "::set-output name=docs_changed::$HasDiff"
+      - name: 'Submit SiteMap URLs'
+        if: ${{ github.event_name != 'pull_request' && steps.check_file_changed.outputs.docs_changed == 'True' }}
+        shell: pwsh
+        run: |
+          ./tools/Seo.ps1 -BaseUrl "https://kaylumah.nl"
      
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
       # - name: 'Verify Website'
