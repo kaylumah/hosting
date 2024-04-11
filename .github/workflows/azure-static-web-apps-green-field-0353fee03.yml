@@ -17,7 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
+          # submodules: true
+          fetch-depth: 2
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
