@@ -1,0 +1,318 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/assets/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+    <link rel="manifest" href="/assets/images/site.webmanifest" />
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="DarkGreen" />
+
+    <link href="/compiled.css?v=[SHORT-COMMIT-HASH]" rel="stylesheet" />
+
+    <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
+    
+    <!-- Common Meta Tags -->
+    <title>Cookie Policy for Kaylumah</title>
+    <link rel="canonical" href="https://BaseUrl_1/privacy.html" />
+    <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
+    <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
+    <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
+    <meta name="description" content="Cookie policy for Kaylumah" />
+    <meta name="copyright" content="© Kaylumah. All rights reserved." />
+    <meta name="keywords" content="" />
+    
+    <!-- OpenGraph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
+    <meta property="og:title" content="Cookie Policy for Kaylumah" />
+    <meta property="og:url" content="https://BaseUrl_1/privacy.html" />
+    <meta property="og:description" content="Cookie policy for Kaylumah" />
+    <meta property="og:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cookie Policy for Kaylumah" />
+    <meta name="twitter:description" content="Cookie policy for Kaylumah" />
+    <meta name="twitter:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
+    <meta name="twitter:site" content="@kaylumah" />
+    <meta name="twitter:creator" content="@kaylumah" />
+    
+    <!-- Kaylumah BuildInfo Meta Tags -->
+    <meta property="kaylumah:copyright" content="© Kaylumah. All rights reserved." />
+    <meta property="kaylumah:commit" content="[COMMIT-HASH]" />
+    <meta property="kaylumah:version" content="1.0.0.BuildNumber_1" />
+    <meta property="kaylumah:buildId" content="[BUILD-ID]" />
+    <meta property="kaylumah:buildNumber" content="BuildNumber_1" />
+    <meta property="kaylumah:time" content="DateTimeOffset_1" />
+    <meta property="kaylumah:site" content="Guid_1" />
+    <meta property="kaylumah:page" content="Guid_2" />
+    
+    
+    
+    <!-- End Kaylumah SEO tag -->
+    <!--
+                                                        
+       _  __           _                       _        
+      | |/ /__ _ _   _| |_   _ _ __ ___   __ _| |__     
+      | ' // _` | | | | | | | | '_ ` _ \ / _` | '_ \    
+      | . \ (_| | |_| | | |_| | | | | | | (_| | | | |   
+      |_|\_\__,_|\__, |_|\__,_|_| |_| |_|\__,_|_| |_|   
+                 |___/                                  
+                                                        
+     You found 🧸                                      
+                                                       
+    -->
+    
+    <script>
+    
+      const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+      const consoleSignatureStyle = `
+      font-size: 16px;
+      background: #4cae50;
+      color: white;
+      text-align: center;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 20px;
+    `;
+      console.log(consoleSignatureText, consoleSignatureStyle);
+    </script>
+    <script>
+      window.getCookieConsent = function() {
+          try {
+              const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
+              return consent;
+          } catch (error) {
+              console.log("failed to retrieve consent", error);
+              return "unknown";
+          }
+      };
+    
+      window.setCookieConsent = function(status) {
+    
+        if (status != "denied" && status != "granted") {
+          throw new Error(`Status ${status} is not supported!`);
+        }
+    
+        let today = new Date();
+        let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
+        document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
+      }
+    
+    </script>
+    <script>
+      // Define dataLayer and the gtag function.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+    
+      window.setGtagConsentStatus = function(mode, status) {
+    
+        if (mode != "update" && mode != "default") {
+          throw new Error(`Mode ${mode} is not supported!`);
+        }
+    
+        if (status != "denied" && status != "granted") {
+          throw new Error(`Status ${status} is not supported!`);
+        }
+    
+        gtag('consent', mode, {
+          'ad_storage': status,
+          'ad_user_data': status,
+          'ad_personalization': status,
+          'analytics_storage': status
+        });
+      }
+    
+      let currentStatus = window.getCookieConsent();
+      let cookiesAllowed = currentStatus == "granted";
+    
+      if (cookiesAllowed) {
+        console.log("cookies already approved");
+        window.setGtagConsentStatus("default", "granted");
+      } else {
+        console.log("assume cookies are denied");
+        window.setGtagConsentStatus("default", "denied");
+      }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168549883-1">
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+    
+      gtag('js', new Date());
+      gtag('config', 'UA-168549883-1');
+    </script>
+    <link href="https://mastodon.nl/@kaylumah" rel="me">
+</head>
+
+<body class="bg-gray-100 antialiased">
+    <div class="flex flex-col h-screen">
+        <header class="bg-gray-900">
+            <nav class="flex flex-wrap items-center justify-between p-4">
+                <a data-testid="NavLink-Home" href="/" rel="home">
+                    <img data-testid="NavLogo" class="h-12 w-20" height="48" width="80"
+                        src="/assets/logo.svg" alt="Kaylumah" />
+                </a>
+                <button id="hamburger"
+                    class="tablet:hidden p-2 rounded-md text-gray-100 hover:text-gray-400 hover:bg-gray-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <ul
+                    class="toggle hidden tablet:flex w-full tablet:w-auto text-right text-bold mt-5 tablet:mt-0 border-t-2 border-gray-600 tablet:border-none">
+                    
+                                        <li>
+                                            <a data-testid="NavLink-About" href="/about.html"
+                                                class="block tablet:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 tablet:border-none">
+                                                About
+                                            </a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a data-testid="NavLink-Blog" href="/blog.html"
+                                                class="block tablet:inline-block text-gray-100 hover:text-gray-400 px-3 py-3 border-b-2 border-gray-600 tablet:border-none">
+                                                Blog
+                                            </a>
+                                        </li>
+                                        
+                </ul>
+            </nav>
+            <script>
+                document.getElementById('hamburger').onclick = function toggleMenu() {
+                    const navToggle = document.getElementsByClassName('toggle');
+                    for (let i = 0; i < navToggle.length; i++) {
+                        navToggle.item(i).classList.toggle('hidden');
+                    }
+                };
+            </script>
+        </header>
+        <main class="flex-1 p-4 text-gray-900">
+            <div class="prose">
+    <h1>Cookie Policy for Kaylumah</h1>
+
+    <p>This is the Cookie Policy for Kaylumah, accessible from https://BaseUrl_1</p>
+
+    <h2>What Are Cookies</h2>
+
+    <p>As is common practice with almost all professional websites this site uses cookies, which are tiny files that are
+        downloaded to your computer, to improve your experience. This page describes what information they gather, how
+        we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies
+        from being stored however this may downgrade or 'break' certain elements of the sites functionality.</p>
+
+    <h2>How We Use Cookies</h2>
+
+    <p>We use cookies for a variety of reasons detailed below. Unfortunately in most cases there are no industry
+        standard options for disabling cookies without completely disabling the functionality and features they add to
+        this site. It is recommended that you leave on all cookies if you are not sure whether you need them or not in
+        case they are used to provide a service that you use.</p>
+
+    <h2>Disabling Cookies</h2>
+
+    <p>You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how
+        to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that
+        you visit. Disabling cookies will usually result in also disabling certain functionality and features of the
+        this site. Therefore it is recommended that you do not disable cookies. This Cookies Policy was created with the
+        help of the <a href="https://www.cookiepolicygenerator.com/cookie-policy-generator/">Cookies Policy
+            Generator</a>.</p>
+
+    <h2>The Cookies We Set</h2>
+
+    <ul>
+        <li>
+            <p>Site preferences cookies</p>
+            <p>In order to provide you with a great experience on this site we provide the functionality to set your
+                preferences for how this site runs when you use it. In order to remember your preferences we need to set
+                cookies so that this information can be called whenever you interact with a page is affected by your
+                preferences.</p>
+        </li>
+    </ul>
+
+    <h2>Third Party Cookies</h2>
+
+    <p>In some special cases we also use cookies provided by trusted third parties. The following section details which
+        third party cookies you might encounter through this site.</p>
+
+    <ul>
+        <li>
+            <p>This site uses Google Analytics which is one of the most widespread and trusted analytics solution on the
+                web for helping us to understand how you use the site and ways that we can improve your experience.
+                These cookies may track things such as how long you spend on the site and the pages that you visit so we
+                can continue to produce engaging content.</p>
+            <p>For more information on Google Analytics cookies, see the official Google Analytics page.</p>
+        </li>
+    </ul>
+
+    <h2><strong>More Information</strong></h2>
+
+    <p>Hopefully that has clarified things for you and as was previously mentioned if there is something that you aren't sure whether you need or not it's usually safer to leave cookies enabled in case it does interact with one of the features you use on our site.</p>
+
+    <!-- <p>For more general information on cookies, please read <a
+            href="https://www.cookiepolicygenerator.com/sample-cookies-policy/">the Cookies Policy article</a>.</p> -->
+
+    <p>However if you are still looking for more information then you can contact us through one of our preferred contact methods:</p>
+    <ul>
+        <li>Email: max@kaylumah.nl</li>
+    </ul>
+
+</div>
+        </main>
+        <footer class="bg-gray-900 p-4">
+            <div class="flex flex-col text-center text-gray-100">
+                <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
+                <!-- <span class="text-xs">Deployed from commit <a data-testid="FooterLink-CommitId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/commit/[COMMIT-HASH]">[SHORT-COMMIT-HASH]</a> via build <a data-testid="FooterLink-BuildId" class="hover:text-gray-400" href="https://github.com/kaylumah/hosting/actions/runs/[BUILD-ID]">BuildNumber_1</a></span> -->
+            </div>
+        </footer>
+        <div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-10 flex flex-col justify-between gap-x-8 gap-y-4 bg-white p-6 tablet:flex-row tablet:items-center laptop:px-8">
+            <p class="text-sm leading-6 text-gray-900">This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies. Learn more in our <a class="font-semibold text-teal-900" href="/privacy">cookie policy</a>.</p>
+            <div class="mr-16 flex flex-none items-center gap-x-5">
+                <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">Accept all</button>
+                <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold leading-6 text-gray-900">Reject all</button>
+            </div>
+            <script>
+
+                window.hideCookieBanner = function() {
+                    let cookieBanner = document.getElementById("cookie-banner");
+                    cookieBanner.classList.toggle("hidden");
+                }
+    
+                window.handleCookieConsentGranted = function() {
+                  window.setCookieConsent("granted");
+                  window.setGtagConsentStatus("update", "granted");
+                  window.hideCookieBanner();
+                }
+              
+                window.handleCookieConsentDenied = function() {
+                    window.setCookieConsent("denied");
+                    window.setGtagConsentStatus("update", "denied");
+                    window.hideCookieBanner();
+                }
+    
+                let hideCookieBanner = window.getCookieConsent() != "unknown";
+                if (hideCookieBanner)
+                {
+                    window.hideCookieBanner();
+                }
+              
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

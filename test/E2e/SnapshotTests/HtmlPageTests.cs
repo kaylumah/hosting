@@ -60,6 +60,20 @@ namespace Test.E2e.SnapshotTests
         }
 
         [Fact]
+        public async Task Verify_PrivacyPageHtml_Contents()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            PrivacyPage privacyPage = new PrivacyPage(page);
+            await privacyPage.NavigateAsync();
+
+            Dictionary<string, string> headers = await privacyPage.GetHeaders();
+            // string title = await page.TitleAsync();
+            // title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
+
+            await HtmlPageVerifier.Verify(privacyPage);
+        }
+
+        [Fact]
         public async Task Verify_BlogPageHtml_Contents()
         {
             IPage page = await _DesktopFixture.GetPage();
