@@ -77,6 +77,14 @@ jobs:
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: https://kaylumah.nl
+      - name: Upload Test Results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-test-results
+          path: |
+            **/*.received.*
+            **/*.verified.*
       - name: 'Check if _site has changes'
         id: check_file_changed
         shell: pwsh
@@ -86,14 +94,7 @@ jobs:
           $SourceDiff = $diff | Where-Object { $_ -match '^_site/' }
           $HasDiff = $SourceDiff.Length -gt 0
           Write-Host "::set-output name=docs_changed::$HasDiff"
-      - name: Upload Test Results
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: verify-test-results
-          path: |
-            **/*.received.*
-            **/*.verified.*
+     
       # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
       # - name: 'Verify Website'
       #   if: github.actor != 'dependabot[bot]'
