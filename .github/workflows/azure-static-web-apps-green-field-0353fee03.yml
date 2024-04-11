@@ -44,12 +44,12 @@ jobs:
         shell: pwsh
         run: |
           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-      # disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@master
-      #   with:
-      #     name: Test Reports
-      #     path: ${{ github.workspace }}/LivingDoc.html
+                  # disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591
+                  # - name: Upload artifacts
+                  #   uses: actions/upload-artifact@master
+                  #   with:
+                  #     name: Test Reports
+                  #     path: ${{ github.workspace }}/LivingDoc.html
       - name: Build And Deploy
         if: github.actor != 'dependabot[bot]'
         id: builddeploy
