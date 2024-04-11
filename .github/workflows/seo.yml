@@ -2,10 +2,8 @@ name: Upload SEO Data
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
-    paths:
-      - _site
+    branches: [ 'main' ]
+    paths: [ '_site/**' ]
 
 jobs:
   update_seo:
