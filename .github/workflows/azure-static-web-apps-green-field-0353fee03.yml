@@ -77,7 +77,8 @@ jobs:
            dotnet test test/E2e
         env:
           PLAYWRIGHT_TEST_BASE_URL: https://kaylumah.nl
-      - id: check_file_changed
+      - name: 'Check if _site has changes'
+        id: check_file_changed
         shell: pwsh
         run: |
           $diff = git diff --name-only HEAD^ HEAD
