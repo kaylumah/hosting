@@ -169,7 +169,6 @@ namespace Test.E2e
         public override string PagePath => "privacy.html";
     }
 
-
     public class NotFoundPage : HtmlPage
     {
         public NotFoundPage(IPage page) : base(page)
