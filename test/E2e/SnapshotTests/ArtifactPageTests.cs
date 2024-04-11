@@ -11,11 +11,11 @@ using Xunit;
 
 namespace Test.E2e.SnapshotTests
 {
-    public class AtomFeedXmlTests : IClassFixture<DesktopFixture>
+    public class ArtifactPageTests : IClassFixture<DesktopFixture>
     {
         readonly DesktopFixture _DesktopFixture;
 
-        public AtomFeedXmlTests(DesktopFixture desktopFixture)
+        public ArtifactPageTests(DesktopFixture desktopFixture)
         {
             _DesktopFixture = desktopFixture;
         }
