@@ -113,22 +113,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 XmlDocument finalDocument = new XmlDocument();
                 XmlElement titleElement = finalDocument.CreateElement("title");
                 titleElement.InnerText = renderData.Title;
-
-                XmlElement linkElement = finalDocument.CreateElement("link");
-                XmlAttribute relAttribute = finalDocument.CreateAttribute("rel");
-                relAttribute.Value = "canonical";
-                linkElement.Attributes.Append(relAttribute);
-                XmlAttribute hrefAttribute = finalDocument.CreateAttribute("href");
-                Uri uri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
-                hrefAttribute.Value = uri.ToString();
-                linkElement.Attributes.Append(hrefAttribute);
-                string formattedTags = string.Join(", ", pageMetaData.Tags);
+                Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
                 Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
+                string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
-                    linkElement.OuterXml,
-                    CreateLinkTag("alternate", "application/atom+xml", feedUri, $"{renderData.Site.Title} RSS Feed"),
+                    CreateLinkTag("canonical", pageUri),
+                    CreateLinkTag("alternate", feedUri, "application/atom+xml", $"{renderData.Site.Title} RSS Feed"),
                     CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
                     CreateMetaTag("description", renderData.Description),
                     CreateMetaTag("copyright", renderData.Site.Build.Copyright),
@@ -304,7 +296,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return result;
         }
 
-        static string CreateLinkTag(string rel, string type, Uri url, string name)
+        static string CreateLinkTag(string rel, Uri url, string? type = null, string? title = null)
         {
             XmlDocument finalDocument = new XmlDocument();
             XmlElement linkElement = finalDocument.CreateElement("link");
@@ -313,17 +305,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             relAttribute.Value = rel;
             linkElement.Attributes.Append(relAttribute);
 
-            XmlAttribute typeAttribute = finalDocument.CreateAttribute("rel");
-            typeAttribute.Value = type;
-            linkElement.Attributes.Append(relAttribute);
+            if (string.IsNullOrEmpty(type) == false)
+            {
+                XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
+                typeAttribute.Value = type;
+                linkElement.Attributes.Append(relAttribute);
+            }
 
-            XmlAttribute urlAttribute = finalDocument.CreateAttribute("rel");
+            XmlAttribute urlAttribute = finalDocument.CreateAttribute("href");
             urlAttribute.Value = url.ToString();
             linkElement.Attributes.Append(relAttribute);
 
-            XmlAttribute nameAttribute = finalDocument.CreateAttribute("rel");
-            nameAttribute.Value = name;
-            linkElement.Attributes.Append(relAttribute);
+            if (string.IsNullOrEmpty(title) == false)
+            {
+                XmlAttribute titleAttribute = finalDocument.CreateAttribute("title");
+                titleAttribute.Value = title;
+                linkElement.Attributes.Append(relAttribute);
+            }
 
             string result = linkElement.OuterXml;
             return result;
