@@ -115,12 +115,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 titleElement.InnerText = renderData.Title;
                 Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
                 Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
+                Uri sitemapUri = GlobalFunctions.AbsoluteUri("sitemap.xml");
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
                     CreateLinkTag("canonical", pageUri),
                     CreateLinkTag("alternate", feedUri, "application/atom+xml", $"{renderData.Site.Title} RSS Feed"),
+                    CreateLinkTag("sitemap", sitemapUri, "application/xml", $"{renderData.Site.Title} Sitemap"),
                     CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
                     CreateMetaTag("description", renderData.Description),
                     CreateMetaTag("copyright", renderData.Site.Build.Copyright),
