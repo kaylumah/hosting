@@ -311,18 +311,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             {
                 XmlAttribute typeAttribute = finalDocument.CreateAttribute("type");
                 typeAttribute.Value = type;
-                linkElement.Attributes.Append(relAttribute);
+                linkElement.Attributes.Append(typeAttribute);
             }
 
             XmlAttribute urlAttribute = finalDocument.CreateAttribute("href");
             urlAttribute.Value = url.ToString();
-            linkElement.Attributes.Append(relAttribute);
+            linkElement.Attributes.Append(urlAttribute);
 
             if (string.IsNullOrEmpty(title) == false)
             {
                 XmlAttribute titleAttribute = finalDocument.CreateAttribute("title");
                 titleAttribute.Value = title;
-                linkElement.Attributes.Append(relAttribute);
+                linkElement.Attributes.Append(titleAttribute);
             }
 
             string result = linkElement.OuterXml;
