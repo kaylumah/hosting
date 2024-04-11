@@ -28,7 +28,6 @@ jobs:
         with:
           global-json-file: global.json
       - name: Set TimeZone
-        # uses: szenius/set-timezone@v1.2
         uses: hoang-rio/set-timezone@v1.4
         with:
           timezoneLinux: "Europe/Amsterdam"
