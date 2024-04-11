@@ -99,31 +99,8 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
           # Write-Host "::set-output name=docs_changed::$HasDiff"
           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
-     
-              # https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/ 
-              # - name: 'Verify Website'
-              #   if: github.actor != 'dependabot[bot]'
-              #   id: verifywebsite
-              #   shell: pwsh
-              #   run: |
-              #     $SiteMapOutput = ./tools/Get-SiteMapUrls.ps1 -SiteMapUrl "${{ steps.builddeploy.outputs.static_web_app_url }}/sitemap.xml" | Foreach-object { $_.Trim() }
-              #     $SiteMapOutputAsString = $SiteMapOutput -join ","
-              #     echo "::set-output name=siteMapUrls::$SiteMapOutputAsString"
-              # - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-              # - name: Lighthouse
-              #   if: github.actor != 'dependabot[bot]'
-              #   uses: foo-software/lighthouse-check-action@master
-              #   with:
-              #     outputDirectory: '${{ github.workspace }}/tmp/artifacts'
-              #     urls: '${{ steps.verifywebsite.outputs.siteMapUrls }}'
-              # - name: Upload artifacts
-              #   if: github.actor != 'dependabot[bot]'
-              #   uses: actions/upload-artifact@master
-              #   with:
-              #     name: Lighthouse reports
-              #     path: ${{ github.workspace }}/tmp/artifacts
 
-   seo_job:
+  seo_job:
     name: SEO Job
     runs-on: ubuntu-20.04
     needs: [ build_and_deploy_job ]
