@@ -101,8 +101,6 @@ jobs:
           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
 
   seo_job:
-    name: SEO Job
-    runs-on: ubuntu-20.04
     needs: [ build_and_deploy_job ]
     if: needs.build_and_deploy_job.outputs.docs_changed == 'True'
     uses: ./.github/workflows/seo.yml
