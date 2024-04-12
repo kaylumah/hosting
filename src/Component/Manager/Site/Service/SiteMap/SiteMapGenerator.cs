@@ -45,14 +45,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 Uri siteMapUri = page.Canonical;
                 node.Url = siteMapUri.ToString();
                 node.LastModified = page.Modified;
-
-                // TODO consider handling this case
-                bool isIndex = page.IsUrl("index.html");
-                if (isIndex)
-                {
-                    node.Url = GlobalFunctions.Url.Value!;
-                }
-
                 siteMapNodes.Add(node);
             }
 
