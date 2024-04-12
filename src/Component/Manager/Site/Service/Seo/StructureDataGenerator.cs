@@ -64,7 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         Blog ToBlog(PageMetaData page, List<Article> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
+            Uri pageUri = page.CanonicalUri;
             List<BlogPosting> posts = new List<BlogPosting>();
             foreach (Article article in articles)
             {
@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         BlogPosting ToBlogPosting(Article page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            Uri pageUri = GlobalFunctions.AbsoluteUri(page.Uri);
+            Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
 
             blogPost.MainEntityOfPage = pageUri;
@@ -100,10 +100,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
 
-            if (!string.IsNullOrEmpty(page.Image))
+            if (page.WebImage != null)
             {
-                Uri imageUri = GlobalFunctions.AbsoluteUri(page.Image);
-                blogPost.Image = new Values<IImageObject, Uri>(imageUri);
+                blogPost.Image = new Values<IImageObject, Uri>(page.WebImage);
             }
 
             if (!string.IsNullOrEmpty(page.Author) && authors.TryGetValue(page.Author, out Person? person))

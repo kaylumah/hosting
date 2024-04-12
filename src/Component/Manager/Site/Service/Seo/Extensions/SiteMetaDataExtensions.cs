@@ -46,13 +46,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         if (!string.IsNullOrEmpty(x.Uri))
                         {
-                            Uri personUri = GlobalFunctions.AbsoluteUri(x.Uri);
+                            Uri personUri = source.AbsoluteUri(x.Uri);
                             person.Url = personUri;
                         }
 
                         if (!string.IsNullOrEmpty(x.Picture))
                         {
-                            Uri image = GlobalFunctions.AbsoluteUri(x.Picture);
+                            Uri image = source.AbsoluteUri(x.Picture);
                             person.Image = new Values<IImageObject, Uri>(image);
                         }
 
@@ -90,7 +90,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         if (!string.IsNullOrEmpty(x.Logo))
                         {
-                            Uri logoUri = GlobalFunctions.AbsoluteUri(x.Logo);
+                            Uri logoUri = source.AbsoluteUri(x.Logo);
                             organization.Logo =
                                 new Values<IImageObject, Uri>(logoUri);
                         }

@@ -42,16 +42,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             foreach (PageMetaData page in pages)
             {
                 SiteMapNode node = new SiteMapNode();
-                Uri siteMapUri = GlobalFunctions.AbsoluteUri(page.Uri);
+                Uri siteMapUri = page.CanonicalUri;
                 node.Url = siteMapUri.ToString();
                 node.LastModified = page.Modified;
-
-                bool isIndex = page.IsUrl("index.html");
-                if (isIndex)
-                {
-                    node.Url = GlobalFunctions.Url.Value!;
-                }
-
                 siteMapNodes.Add(node);
             }
 

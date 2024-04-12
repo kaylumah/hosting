@@ -105,8 +105,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public static AsyncLocal<string> Url
         { get; } = new();
-        public static AsyncLocal<string> BaseUrl
-        { get; } = new();
 
         public static string DateToPattern(DateTimeOffset date, string pattern)
         {
@@ -127,43 +125,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return filePathWithoutExt;
         }
 
-        static string RelativeUrl(string source)
-        {
-            if (!string.IsNullOrWhiteSpace(BaseUrl.Value))
-            {
-                string result = Path.Combine($"{Path.DirectorySeparatorChar}", BaseUrl.Value, source);
-                return result;
-            }
-
-            return source;
-        }
-
-        static string AbsoluteUrl(string source)
-        {
-            string resolvedSource = RelativeUrl(source);
-            char webSeperator = '/';
-            if (!string.IsNullOrWhiteSpace(resolvedSource))
-            {
-                if (resolvedSource.StartsWith(Path.DirectorySeparatorChar) || resolvedSource.StartsWith(webSeperator))
-                {
-                    resolvedSource = resolvedSource[1..];
-                }
-
-                if (!string.IsNullOrWhiteSpace(Url.Value))
-                {
-
-                    resolvedSource = $"{Url.Value}{webSeperator}{resolvedSource}";
-                }
-            }
-
-            string result = resolvedSource.Replace(Path.DirectorySeparatorChar, '/');
-            return result;
-        }
-
         public static Uri AbsoluteUri(string source)
         {
-            string absoluteUrl = AbsoluteUrl(source);
-            Uri result = new Uri(absoluteUrl);
+            string baseUrl = Url.Value!;
+            Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
             return result;
         }
     }

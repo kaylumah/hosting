@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             string copyrightClaim = build.Copyright;
             DateTimeOffset generatedAtBuildTime = build.Time;
             LogCreateBlog(generatorVersion);
-            Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
+            Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
             SyndicationFeed feed = new SyndicationFeed();
             feed.Language = siteMetaData.Language;
             feed.Title = new CDataSyndicationContent(siteMetaData.Title);
@@ -55,21 +55,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             feed.Id = feedUri.ToString();
             feed.Copyright = new CDataSyndicationContent(copyrightClaim);
             feed.LastUpdatedTime = generatedAtBuildTime;
-            feed.ImageUrl = GlobalFunctions.AbsoluteUri("assets/logo_alt.svg");
+            feed.ImageUrl = siteMetaData.AbsoluteUri("assets/logo_alt.svg");
             feed.Generator = "Kaylumah Site Generator";
 
-            SyndicationLink selfLink = BuildLink("feed.xml", "self", "application/atom+xml");
+            SyndicationLink selfLink = BuildLink(feedUri, "self", "application/atom+xml");
             feed.Links.Add(selfLink);
 
-            SyndicationLink alternateLink = BuildLink("blog.html", "alternate", "text/html");
+            Uri blogUri = siteMetaData.AbsoluteUri("blog.html");
+            SyndicationLink alternateLink = BuildLink(blogUri, "alternate", "text/html");
             feed.Links.Add(alternateLink);
 
             return feed;
         }
 
-        SyndicationLink BuildLink(string relativePath, string relationshipType, string mediaType)
+        SyndicationLink BuildLink(Uri absoluteUri, string relationshipType, string mediaType)
         {
-            Uri absoluteUri = GlobalFunctions.AbsoluteUri(relativePath);
             SyndicationLink result = new SyndicationLink(absoluteUri);
             result.RelationshipType = relationshipType;
             result.MediaType = mediaType;
@@ -88,7 +88,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
                 foreach (PageMetaData pageMetaData in posts)
                 {
-                    Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                    Uri pageUri = pageMetaData.CanonicalUri;
                     string pageUrl = pageUri.ToString();
                     SyndicationItem item = new SyndicationItem();
                     item.Id = pageUrl;

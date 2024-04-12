@@ -113,9 +113,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 XmlDocument finalDocument = new XmlDocument();
                 XmlElement titleElement = finalDocument.CreateElement("title");
                 titleElement.InnerText = renderData.Title;
-                Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
-                Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
-                Uri sitemapUri = GlobalFunctions.AbsoluteUri("sitemap.xml");
+                Uri pageUri = pageMetaData.CanonicalUri;
+                SiteMetaData siteMetaData = renderData.Site;
+                Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
+                Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
                 {
@@ -162,9 +163,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
-                if (!string.IsNullOrEmpty(pageMetaData.Image))
+                if (pageMetaData.WebImage != null)
                 {
-                    Uri twitterUri = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    Uri twitterUri = pageMetaData.WebImage;
                     string url = twitterUri.ToString();
                     string imageTag = CreateMetaTag("twitter:image", url);
                     result.Add(imageTag);
@@ -204,7 +205,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             StringBuilder sb = new StringBuilder();
             if (renderData.Page is PageMetaData pageMetaData)
             {
-                Uri pageUri = GlobalFunctions.AbsoluteUri(pageMetaData.Uri);
+                Uri pageUri = pageMetaData.CanonicalUri;
                 string pageUrl = pageUri.ToString();
                 List<string> result = new List<string>
         {
@@ -216,9 +217,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
-                if (!string.IsNullOrEmpty(pageMetaData.Image))
+                if (pageMetaData.WebImage != null)
                 {
-                    Uri image = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    Uri image = pageMetaData.WebImage;
                     string imageUrl = image.ToString();
                     string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
                     result.Add(imageTag);

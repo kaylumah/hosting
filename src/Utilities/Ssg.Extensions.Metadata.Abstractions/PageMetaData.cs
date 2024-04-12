@@ -63,6 +63,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public string Uri => GetString(nameof(Uri));
 
+        public string BaseUri => GetString(nameof(BaseUri));
+
+        public Uri CanonicalUri => GetCanonicalUri();
+
         public string Content
         {
             get
@@ -87,6 +91,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
             {
                 SetValue(nameof(Type), value);
             }
+        }
+
+        Uri GetCanonicalUri()
+        {
+            string baseUrl = BaseUri;
+            Uri result;
+            if ("index.html".Equals(Uri, StringComparison.OrdinalIgnoreCase))
+            {
+                result = new Uri(baseUrl);
+            }
+            else
+            {
+                result = RenderHelperFunctions.AbsoluteUri(baseUrl, Uri);
+            }
+
+            return result;
         }
     }
 
@@ -148,6 +168,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
         public string Layout => GetString(nameof(Layout));
         public string Image => GetString(nameof(Image));
+        public Uri? WebImage => ResolveImageUri();
+
+        Uri? ResolveImageUri()
+        {
+            string? image = Image;
+            if (string.IsNullOrEmpty(image))
+            {
+                return null;
+            }
+
+            Uri result = RenderHelperFunctions.AbsoluteUri(BaseUri, image);
+            return result;
+        }
 
         public string Name
         {
@@ -332,6 +365,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static bool IsUrl(this PageMetaData pageMetaData, string url)
         {
+            // TODO use this more
             bool result = url.Equals(pageMetaData.Uri, StringComparison.OrdinalIgnoreCase);
             return result;
         }
