@@ -1,1 +1,1 @@
-Sitemap: {{ "sitemap.xml" | absolute_uri }}
+Sitemap: {{ site | absolute_uri "sitemap.xml" }}

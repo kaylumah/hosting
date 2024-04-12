@@ -67,6 +67,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
+        public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)
+        {
+            Uri result = site.AbsoluteUri(relativeUrl);
+            return result;
+        }
+
         public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
@@ -99,12 +105,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string result = JsonSerializer.Serialize(o, options);
             return result;
         }
-    }
-
-    public class GlobalFunctions
-    {
-        public static AsyncLocal<string> Url
-        { get; } = new();
 
         public static string DateToPattern(DateTimeOffset date, string pattern)
         {
@@ -115,20 +115,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static string DateToXmlschema(DateTimeOffset date)
         {
             string result = DateToPattern(date, "o");
-            return result;
-        }
-
-        public static string FileNameWithoutExtension(string source)
-        {
-            string extension = Path.GetExtension(source);
-            string filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
-            return filePathWithoutExt;
-        }
-
-        public static Uri AbsoluteUri(string source)
-        {
-            string baseUrl = Url.Value!;
-            Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
             return result;
         }
     }

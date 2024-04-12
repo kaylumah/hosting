@@ -2,10 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
 using Markdig.Renderers;
-using Markdig.Renderers.Html;
 using Markdig.Renderers.Html.Inlines;
 using Markdig.Syntax.Inlines;
 
@@ -67,7 +65,8 @@ namespace Kaylumah.Ssg.Utilities
                     }
                     else
                     {
-                        Uri uri = GlobalFunctions.AbsoluteUri(escapeUrl);
+                        // TODO should be better way to pass this
+                        Uri uri = new Uri($"https://kaylumah.nl{escapeUrl}");
                         result = uri.ToString();
                     }
                 }
