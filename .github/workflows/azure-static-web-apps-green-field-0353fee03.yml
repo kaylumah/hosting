@@ -110,7 +110,7 @@ jobs:
 
   seo_job:
     needs: [ build_and_deploy_job ]
-    if: needs.build_and_deploy_job.outputs.docs_changed == 'True'
+    if: needs.build_and_deploy_job.outputs.docs_changed
     name: SEO
     runs-on: ubuntu-20.04
     steps:
