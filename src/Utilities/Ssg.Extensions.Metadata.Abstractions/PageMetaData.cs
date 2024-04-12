@@ -173,7 +173,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             string? image = Image;
             if (string.IsNullOrEmpty(image))
             {
-                return null;
+                throw new ArgumentException("Image was not set!");
             }
 
             Uri result = RenderHelperFunctions.AbsoluteUri(image);
