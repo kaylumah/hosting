@@ -63,6 +63,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public string Uri => GetString(nameof(Uri));
 
+        public Uri Canonical => GetCanonicalUri();
+
         public string Content
         {
             get
@@ -87,6 +89,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
             {
                 SetValue(nameof(Type), value);
             }
+        }
+
+        Uri GetCanonicalUri()
+        {
+            string uri = Uri;
+            Uri result = new Uri(uri);
+            return result;
         }
     }
 
