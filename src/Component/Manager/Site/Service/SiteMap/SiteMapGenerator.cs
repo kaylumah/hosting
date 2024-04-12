@@ -42,7 +42,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             foreach (PageMetaData page in pages)
             {
                 SiteMapNode node = new SiteMapNode();
-                Uri siteMapUri = page.Canonical;
+                Uri siteMapUri = page.CanonicalUri;
                 node.Url = siteMapUri.ToString();
                 node.LastModified = page.Modified;
                 siteMapNodes.Add(node);

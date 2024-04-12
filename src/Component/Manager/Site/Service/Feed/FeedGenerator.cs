@@ -88,7 +88,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
                 Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
                 foreach (PageMetaData pageMetaData in posts)
                 {
-                    Uri pageUri = pageMetaData.Canonical;
+                    Uri pageUri = pageMetaData.CanonicalUri;
                     string pageUrl = pageUri.ToString();
                     SyndicationItem item = new SyndicationItem();
                     item.Id = pageUrl;

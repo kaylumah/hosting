@@ -63,7 +63,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public string Uri => GetString(nameof(Uri));
 
-        public Uri Canonical => GetCanonicalUri();
+        public Uri CanonicalUri => GetCanonicalUri();
 
         public string Content
         {

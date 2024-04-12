@@ -64,7 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         Blog ToBlog(PageMetaData page, List<Article> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            Uri pageUri = page.Canonical;
+            Uri pageUri = page.CanonicalUri;
             List<BlogPosting> posts = new List<BlogPosting>();
             foreach (Article article in articles)
             {
@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         BlogPosting ToBlogPosting(Article page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            Uri pageUri = page.Canonical;
+            Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
 
             blogPost.MainEntityOfPage = pageUri;

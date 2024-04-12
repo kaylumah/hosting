@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 XmlDocument finalDocument = new XmlDocument();
                 XmlElement titleElement = finalDocument.CreateElement("title");
                 titleElement.InnerText = renderData.Title;
-                Uri pageUri = pageMetaData.Canonical;
+                Uri pageUri = pageMetaData.CanonicalUri;
                 Uri feedUri = AbsoluteUri("feed.xml");
                 Uri sitemapUri = AbsoluteUri("sitemap.xml");
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
@@ -210,7 +210,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             StringBuilder sb = new StringBuilder();
             if (renderData.Page is PageMetaData pageMetaData)
             {
-                Uri pageUri = pageMetaData.Canonical;
+                Uri pageUri = pageMetaData.CanonicalUri;
                 string pageUrl = pageUri.ToString();
                 List<string> result = new List<string>
         {
