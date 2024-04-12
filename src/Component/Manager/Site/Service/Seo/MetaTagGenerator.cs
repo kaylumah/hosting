@@ -105,7 +105,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         static Uri AbsoluteUri(string url)
         {
-            Uri absolute = GlobalFunctions.AbsoluteUri(url);
+            Uri absolute = RenderHelperFunctions.AbsoluteUri(url);
             return absolute;
         }
 
