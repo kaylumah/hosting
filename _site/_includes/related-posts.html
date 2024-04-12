@@ -1,0 +1,5 @@
+{% if related_articles | array.size > 0 %}
+<li class="w-full laptop:w-64">
+    {% include 'tiles/related.html' %}
+</li>
+{% endif %}
