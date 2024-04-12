@@ -102,7 +102,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             if (!string.IsNullOrEmpty(page.Image))
             {
-                Uri imageUri = GlobalFunctions.AbsoluteUri(page.Image);
+                Uri imageUri = AbsoluteUri(page.Image);
                 blogPost.Image = new Values<IImageObject, Uri>(imageUri);
             }
 
@@ -121,6 +121,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blogPost.WordCount = page.NumberOfWords;
             blogPost.TimeRequired = page.Duration;
             return blogPost;
+        }
+
+        static Uri AbsoluteUri(string url)
+        {
+            Uri absolute = GlobalFunctions.AbsoluteUri(url);
+            return absolute;
         }
     }
 }

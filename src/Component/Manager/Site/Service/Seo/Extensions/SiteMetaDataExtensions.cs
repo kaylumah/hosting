@@ -46,13 +46,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         if (!string.IsNullOrEmpty(x.Uri))
                         {
-                            Uri personUri = GlobalFunctions.AbsoluteUri(x.Uri);
+                            Uri personUri = AbsoluteUri(x.Uri);
                             person.Url = personUri;
                         }
 
                         if (!string.IsNullOrEmpty(x.Picture))
                         {
-                            Uri image = GlobalFunctions.AbsoluteUri(x.Picture);
+                            Uri image = AbsoluteUri(x.Picture);
                             person.Image = new Values<IImageObject, Uri>(image);
                         }
 
@@ -61,6 +61,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             return result;
+        }
+
+        static Uri AbsoluteUri(string url)
+        {
+            Uri absolute = GlobalFunctions.AbsoluteUri(url);
+            return absolute;
         }
 
         public static Dictionary<OrganizationId, Organization> ToOrganizations(this SiteMetaData source)
@@ -90,7 +96,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                         if (!string.IsNullOrEmpty(x.Logo))
                         {
-                            Uri logoUri = GlobalFunctions.AbsoluteUri(x.Logo);
+                            Uri logoUri = AbsoluteUri(x.Logo);
                             organization.Logo =
                                 new Values<IImageObject, Uri>(logoUri);
                         }
