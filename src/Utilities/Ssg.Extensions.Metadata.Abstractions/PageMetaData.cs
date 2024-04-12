@@ -341,6 +341,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static bool IsUrl(this PageMetaData pageMetaData, string url)
         {
+            // TODO use this more
             bool result = url.Equals(pageMetaData.Uri, StringComparison.OrdinalIgnoreCase);
             return result;
         }
