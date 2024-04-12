@@ -170,7 +170,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 if (!string.IsNullOrEmpty(pageMetaData.Image))
                 {
-                    Uri twitterUri = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    Uri twitterUri = AbsoluteUri(pageMetaData.Image);
                     string url = twitterUri.ToString();
                     string imageTag = CreateMetaTag("twitter:image", url);
                     result.Add(imageTag);
@@ -224,7 +224,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 if (!string.IsNullOrEmpty(pageMetaData.Image))
                 {
-                    Uri image = GlobalFunctions.AbsoluteUri(pageMetaData.Image);
+                    Uri image = AbsoluteUri(pageMetaData.Image);
                     string imageUrl = image.ToString();
                     string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
                     result.Add(imageTag);

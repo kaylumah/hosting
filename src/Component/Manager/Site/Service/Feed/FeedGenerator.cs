@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             string copyrightClaim = build.Copyright;
             DateTimeOffset generatedAtBuildTime = build.Time;
             LogCreateBlog(generatorVersion);
-            Uri feedUri = GlobalFunctions.AbsoluteUri("feed.xml");
+            Uri feedUri = AbsoluteUri("feed.xml");
             SyndicationFeed feed = new SyndicationFeed();
             feed.Language = siteMetaData.Language;
             feed.Title = new CDataSyndicationContent(siteMetaData.Title);
@@ -55,7 +55,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             feed.Id = feedUri.ToString();
             feed.Copyright = new CDataSyndicationContent(copyrightClaim);
             feed.LastUpdatedTime = generatedAtBuildTime;
-            feed.ImageUrl = GlobalFunctions.AbsoluteUri("assets/logo_alt.svg");
+            feed.ImageUrl = AbsoluteUri("assets/logo_alt.svg");
             feed.Generator = "Kaylumah Site Generator";
 
             SyndicationLink selfLink = BuildLink("feed.xml", "self", "application/atom+xml");
@@ -69,7 +69,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         SyndicationLink BuildLink(string relativePath, string relationshipType, string mediaType)
         {
-            Uri absoluteUri = GlobalFunctions.AbsoluteUri(relativePath);
+            Uri absoluteUri = AbsoluteUri(relativePath);
             SyndicationLink result = new SyndicationLink(absoluteUri);
             result.RelationshipType = relationshipType;
             result.MediaType = mediaType;
@@ -126,6 +126,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
             IEnumerable<Article> feed = articles.Where(x => x.Feed);
 
             return feed;
+        }
+
+        static Uri AbsoluteUri(string url)
+        {
+            Uri absolute = GlobalFunctions.AbsoluteUri(url);
+            return absolute;
         }
     }
 }
