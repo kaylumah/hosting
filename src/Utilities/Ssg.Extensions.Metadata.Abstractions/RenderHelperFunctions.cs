@@ -14,6 +14,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             string baseUrl = Url.Value!;
             Uri result;
+
+            if (source.StartsWith('/'))
+            {
+                source = source[1..];
+            }
+
             if ("index.html".Equals(source, StringComparison.OrdinalIgnoreCase))
             {
                 result = new Uri(baseUrl);
