@@ -128,15 +128,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static Uri AbsoluteUri(string source)
         {
             string baseUrl = Url.Value!;
-            Uri result;
-
-            if (source.StartsWith('/'))
-            {
-                source = source[1..];
-            }
-
-            result = new Uri($"{baseUrl}/{source}");
-
+            Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
             return result;
         }
     }
