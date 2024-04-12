@@ -110,7 +110,14 @@ jobs:
   seo_job:
     needs: [ build_and_deploy_job ]
     if: needs.build_and_deploy_job.outputs.docs_changed == 'True'
-    uses: ./.github/workflows/seo.yml
+    name: SEO
+    runs-on: ubuntu-20.04
+    steps:
+      - name: 'Submit SiteMap URLs'
+        shell: pwsh
+        run: |
+          ./tools/Seo.ps1 -BaseUrl "https://kaylumah.nl"
+    # uses: ./.github/workflows/seo.yml
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.actor != 'dependabot[bot]'
