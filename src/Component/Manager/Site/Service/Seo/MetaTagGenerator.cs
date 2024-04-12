@@ -103,12 +103,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sbResult;
         }
 
-        static Uri AbsoluteUri(string url)
-        {
-            Uri absolute = RenderHelperFunctions.AbsoluteUri(url);
-            return absolute;
-        }
-
         static string ToCommonTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
@@ -120,8 +114,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 XmlElement titleElement = finalDocument.CreateElement("title");
                 titleElement.InnerText = renderData.Title;
                 Uri pageUri = pageMetaData.CanonicalUri;
-                Uri feedUri = AbsoluteUri("feed.xml");
-                Uri sitemapUri = AbsoluteUri("sitemap.xml");
+                SiteMetaData siteMetaData = renderData.Site;
+                Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
+                Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
                 string formattedTags = string.Join(", ", pageMetaData.Tags);
                 List<string> result = new List<string>()
                 {
