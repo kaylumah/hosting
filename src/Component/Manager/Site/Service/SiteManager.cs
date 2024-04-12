@@ -65,6 +65,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             GlobalFunctions.Url.Value = _SiteInfo.Url;
             GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
+            RenderHelperFunctions.Url.Value = _SiteInfo.Url;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
             FileFilterCriteria criteria = new FileFilterCriteria();

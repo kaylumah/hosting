@@ -93,8 +93,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         Uri GetCanonicalUri()
         {
-            string uri = Uri;
-            Uri result = new Uri($"/{uri}");
+            Uri result = RenderHelperFunctions.AbsoluteUri(Uri);
             return result;
         }
     }
