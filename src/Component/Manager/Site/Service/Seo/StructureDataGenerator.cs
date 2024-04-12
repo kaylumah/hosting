@@ -100,10 +100,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
 
-            if (!string.IsNullOrEmpty(page.Image))
+            if (page.Image != null)
             {
-                Uri imageUri = AbsoluteUri(page.Image);
-                blogPost.Image = new Values<IImageObject, Uri>(imageUri);
+                blogPost.Image = new Values<IImageObject, Uri>(page.Image);
             }
 
             if (!string.IsNullOrEmpty(page.Author) && authors.TryGetValue(page.Author, out Person? person))

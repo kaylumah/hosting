@@ -168,9 +168,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
-                if (!string.IsNullOrEmpty(pageMetaData.Image))
+                if (pageMetaData.Image != null)
                 {
-                    Uri twitterUri = AbsoluteUri(pageMetaData.Image);
+                    Uri twitterUri = pageMetaData.Image;
                     string url = twitterUri.ToString();
                     string imageTag = CreateMetaTag("twitter:image", url);
                     result.Add(imageTag);
@@ -222,9 +222,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
 
-                if (!string.IsNullOrEmpty(pageMetaData.Image))
+                if (pageMetaData.Image != null)
                 {
-                    Uri image = AbsoluteUri(pageMetaData.Image);
+                    Uri image = pageMetaData.Image;
                     string imageUrl = image.ToString();
                     string imageTag = CreateOpenGraphMetaTag("og:image", imageUrl);
                     result.Add(imageTag);

@@ -155,7 +155,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
         public string Layout => GetString(nameof(Layout));
-        public string Image => GetString(nameof(Image));
+        public Uri? Image => ResolveImageUri();
+
+        Uri? ResolveImageUri()
+        {
+            string? image = GetString(nameof(Image));
+            if (string.IsNullOrEmpty(image))
+            {
+                return null;
+            }
+
+            Uri result = RenderHelperFunctions.AbsoluteUri(image);
+            return result;
+        }
 
         public string Name
         {
