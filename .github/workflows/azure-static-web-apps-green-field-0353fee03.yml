@@ -39,8 +39,8 @@ jobs:
           # $HasDiff = $SourceDiff.Length -gt 0
           $HasDiff = $HasSite -or $HasSnapshots
           Write-Host "HasDiff: $HasDiff"
-          Write-Host "::set-output name=docs_changed::$HasDiff"
-          #echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
+          # Write-Host "::set-output name=docs_changed::$HasDiff"
+          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
       # - name: Use Node.js v20
       #   uses: actions/setup-node@v4
       #   with:
