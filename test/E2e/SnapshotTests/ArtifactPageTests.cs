@@ -31,7 +31,7 @@ namespace Test.E2e.SnapshotTests
             string xml = await atomFeed.GetContent();
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
-            settings.ScrubMatches(regex, "BaseUrl_");
+            settings.ReplaceMatches(regex, "BaseUrl_1");
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-ddTHH:mm:sszzz");
             await Verifier.Verify(xml, settings);
         }
@@ -62,7 +62,7 @@ namespace Test.E2e.SnapshotTests
             string xml = await sitemapPage.GetContent();
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
-            settings.ScrubMatches(regex, "BaseUrl_");
+            settings.ReplaceMatches(regex, "BaseUrl_1");
             await Verifier.Verify(xml, settings);
         }
     }

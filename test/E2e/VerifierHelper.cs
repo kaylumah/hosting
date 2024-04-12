@@ -75,7 +75,7 @@ namespace Test.E2e
 
             Regex buildNumberRegex = new Regex($"(?<before>(content=\"[0-9.]*|>))(?<val>{buildNumber})(?<after>(\"|<))");
 
-            settings.ScrubMatches(baseUrlRegex, "BaseUrl_");
+            settings.ReplaceMatches(baseUrlRegex, "BaseUrl_1");
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             settings.AddScrubber(_ => _.Replace(shortCommitHash, "[SHORT-COMMIT-HASH]"));
