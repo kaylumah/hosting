@@ -63,7 +63,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public async Task GenerateSite(GenerateSiteRequest request)
         {
-            GlobalFunctions.Url.Value = _SiteInfo.Url;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
             FileFilterCriteria criteria = new FileFilterCriteria();
@@ -214,7 +213,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     // note: work-around for Build becoming part of Site
                     scriptObject.Import("build", () => request.Metadata.Site.Build);
                     context.PushGlobal(scriptObject);
-                    scriptObject.Import(typeof(GlobalFunctions));
                     scriptObject.Import(typeof(ObjectConversions));
 
                     // scriptObject.Import("seo", new Func<TemplateContext, string>(templateContext => {

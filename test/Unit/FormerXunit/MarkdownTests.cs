@@ -24,7 +24,6 @@ namespace Test.Unit.FormerXunit
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_HtmlContents(string path)
         {
-            GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
             string html = MarkdownUtil.ToHtml(rawContents);
 
@@ -43,7 +42,6 @@ namespace Test.Unit.FormerXunit
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_TxtContents(string path)
         {
-            GlobalFunctions.Url.Value = "https://kaylumah.nl";
             string rawContents = await File.ReadAllTextAsync(path);
             string txt = MarkdownUtil.ToText(rawContents);
 

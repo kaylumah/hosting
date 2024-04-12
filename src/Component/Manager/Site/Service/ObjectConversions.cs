@@ -118,17 +118,4 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
     }
-
-    public class GlobalFunctions
-    {
-        public static AsyncLocal<string> Url
-        { get; } = new();
-
-        // public static string FileNameWithoutExtension(string source)
-        // {
-        //     string extension = Path.GetExtension(source);
-        //     string filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
-        //     return filePathWithoutExt;
-        // }
-    }
 }

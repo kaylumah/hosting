@@ -63,7 +63,7 @@ namespace Kaylumah.Ssg.Utilities
         void RenderTargetAttribute(LinkInline linkInline, Uri uri)
         {
             string uriAsString = uri.ToString();
-            bool isExternal = uriAsString.StartsWith(GlobalFunctions.Url.Value!, StringComparison.Ordinal) == false;
+            bool isExternal = uriAsString.StartsWith("https://kaylumah.nl", StringComparison.Ordinal) == false;
             if (isExternal)
             {
                 linkInline.GetAttributes().AddClass("external");
