@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     outputs:
-      docs_changed: steps.check_file_changed.outputs.docs_changed == 'True' # && github.event_name != 'pull_request'
+      docs_changed: ${{ steps.check_file_changed.outputs.docs_changed }}
+      # && github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,8 +39,8 @@ jobs:
           # $HasDiff = $SourceDiff.Length -gt 0
           $HasDiff = $HasSite -or $HasSnapshots
           Write-Host "HasDiff: $HasDiff"
-          Write-Host "::set-output name=docs_changed::$HasDiff"
-          #echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
+          # Write-Host "::set-output name=docs_changed::$HasDiff"
+          echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -109,7 +110,7 @@ jobs:
 
   seo_job:
     needs: [ build_and_deploy_job ]
-    if: needs.build_and_deploy_job.outputs.docs_changed == 'True'
+    if: needs.build_and_deploy_job.outputs.docs_changed && github.event_name != 'pull_request'
     uses: ./.github/workflows/seo.yml
 
   close_pull_request_job:
