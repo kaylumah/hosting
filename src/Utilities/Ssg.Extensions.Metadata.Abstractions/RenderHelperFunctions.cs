@@ -12,7 +12,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static Uri AbsoluteUri(string source)
         {
-            Uri result = new Uri($"{Url.Value}/{source}");
+            string baseUrl = Url.Value!;
+            Uri result;
+            if ("index.html".Equals(source, StringComparison.OrdinalIgnoreCase))
+            {
+                result = new Uri(baseUrl);
+            }
+            else
+            {
+                result = new Uri($"{Url.Value}/{source}");
+            }
+
             return result;
         }
     }
