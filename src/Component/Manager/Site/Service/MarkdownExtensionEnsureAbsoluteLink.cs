@@ -67,7 +67,7 @@ namespace Kaylumah.Ssg.Utilities
                     }
                     else
                     {
-                        Uri uri = new Uri($"https://kaylumah.nl/{escapeUrl}"); // GlobalFunctions.AbsoluteUri(escapeUrl);
+                        Uri uri = new Uri($"https://kaylumah.nl{escapeUrl}"); // GlobalFunctions.AbsoluteUri(escapeUrl);
                         result = uri.ToString();
                     }
                 }
