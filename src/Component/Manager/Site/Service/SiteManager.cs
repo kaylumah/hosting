@@ -64,7 +64,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public async Task GenerateSite(GenerateSiteRequest request)
         {
             GlobalFunctions.Url.Value = _SiteInfo.Url;
-            GlobalFunctions.BaseUrl.Value = _SiteInfo.BaseUrl;
             RenderHelperFunctions.Url.Value = _SiteInfo.Url;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 

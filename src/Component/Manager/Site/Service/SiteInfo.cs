@@ -9,8 +9,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public string Lang
         { get; set; } = null!;
-        public string BaseUrl
-        { get; set; } = null!;
         public string Url
         { get; set; } = null!;
         public string Title

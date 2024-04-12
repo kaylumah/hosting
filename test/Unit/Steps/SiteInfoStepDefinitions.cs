@@ -37,7 +37,6 @@ namespace Test.Unit.Steps
             _SiteInfo.Title = data.title;
             _SiteInfo.Description = data.description;
             _SiteInfo.Lang = data.Language;
-            _SiteInfo.BaseUrl = data.baseUrl;
             _SiteInfo.SupportedFileExtensions = new HashSet<string>(data.supportedFileExtensions);
             _SiteInfo.SupportedDataFileExtensions = new HashSet<string>() { ".yml" };
         }
