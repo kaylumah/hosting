@@ -77,7 +77,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 
         string GetUrl()
         {
-            // TODO consider if we can do it here...
             string uri = Page?.Uri ?? Site?.Url ?? string.Empty;
             return uri;
         }
