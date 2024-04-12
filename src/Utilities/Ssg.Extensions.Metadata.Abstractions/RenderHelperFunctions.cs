@@ -21,7 +21,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
 
             result = new Uri($"{baseUrl}/{source}");
-            
+
             return result;
         }
     }

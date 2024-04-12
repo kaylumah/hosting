@@ -99,7 +99,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 string baseUrl = RenderHelperFunctions.Url.Value!;
                 result = new Uri(baseUrl);
             }
-            else 
+            else
             {
                 result = RenderHelperFunctions.AbsoluteUri(Uri);
             }
