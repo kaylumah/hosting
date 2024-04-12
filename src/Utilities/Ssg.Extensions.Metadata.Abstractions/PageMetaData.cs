@@ -63,6 +63,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public string Uri => GetString(nameof(Uri));
 
+        public string BaseUri => GetString(nameof(BaseUri));
+
         public Uri CanonicalUri => GetCanonicalUri();
 
         public string Content
@@ -93,15 +95,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         Uri GetCanonicalUri()
         {
+            string baseUrl = BaseUri;
             Uri result;
             if ("index.html".Equals(Uri, StringComparison.OrdinalIgnoreCase))
             {
-                string baseUrl = RenderHelperFunctions.Url.Value!;
                 result = new Uri(baseUrl);
             }
             else
             {
-                result = RenderHelperFunctions.AbsoluteUri(Uri);
+                result = RenderHelperFunctions.AbsoluteUri(baseUrl, Uri);
             }
 
             return result;
@@ -176,7 +178,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 return null;
             }
 
-            Uri result = RenderHelperFunctions.AbsoluteUri(image);
+            Uri result = RenderHelperFunctions.AbsoluteUri(BaseUri, image);
             return result;
         }
 

@@ -121,9 +121,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public Uri AbsoluteUri(string url)
+        public Uri AbsoluteUri(string relativeUrl)
         {
-            Uri uri = RenderHelperFunctions.AbsoluteUri(url);
+            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
             return uri;
         }
     }

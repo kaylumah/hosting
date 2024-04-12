@@ -64,7 +64,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public async Task GenerateSite(GenerateSiteRequest request)
         {
             GlobalFunctions.Url.Value = _SiteInfo.Url;
-            RenderHelperFunctions.Url.Value = _SiteInfo.Url;
             Guid siteGuid = _SiteInfo.Url.CreateSiteGuid();
 
             FileFilterCriteria criteria = new FileFilterCriteria();
@@ -81,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<BinaryFile> pageList = processed.ToList();
 
             List<TextFile> textFiles = pageList.OfType<TextFile>().ToList();
-            List<BasePage> pages = ToPageMetadata(textFiles, siteGuid);
+            List<BasePage> pages = ToPageMetadata(textFiles, siteGuid, _SiteInfo.Url);
             BuildData buildData = EnrichSiteWithAssemblyData();
 
             string siteId = siteGuid.ToString();
@@ -236,8 +235,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return results;
         }
 
-        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid)
+        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid, string baseUrl)
         {
+            foreach (TextFile textFile in files)
+            {
+                textFile.MetaData.SetValue(nameof(PageMetaData.BaseUri), baseUrl);
+            }
+
             IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
             {
                 string? type = file.MetaData.GetValue<string?>("type");

@@ -7,12 +7,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class RenderHelperFunctions
     {
-        public static AsyncLocal<string> Url
-        { get; } = new();
-
-        public static Uri AbsoluteUri(string source)
+        public static Uri AbsoluteUri(string baseUrl, string source)
         {
-            string baseUrl = Url.Value!;
             Uri result;
 
             if (source.StartsWith('/'))
