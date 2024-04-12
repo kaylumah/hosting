@@ -121,11 +121,5 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blogPost.TimeRequired = page.Duration;
             return blogPost;
         }
-
-        static Uri AbsoluteUri(string url)
-        {
-            Uri absolute = GlobalFunctions.AbsoluteUri(url);
-            return absolute;
-        }
     }
 }
