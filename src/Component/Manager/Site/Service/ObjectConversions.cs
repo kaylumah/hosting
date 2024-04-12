@@ -124,18 +124,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string FileNameWithoutExtension(string source)
-        {
-            string extension = Path.GetExtension(source);
-            string filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
-            return filePathWithoutExt;
-        }
-
-        // public static Uri AbsoluteUri(string source)
+        // public static string FileNameWithoutExtension(string source)
         // {
-        //     string baseUrl = Url.Value!;
-        //     Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
-        //     return result;
+        //     string extension = Path.GetExtension(source);
+        //     string filePathWithoutExt = source.Substring(0, source.Length - extension.Length);
+        //     return filePathWithoutExt;
         // }
     }
 }
