@@ -234,8 +234,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         result.Add(authorTag);
                     }
 
-                    string formattedPublishTime = GlobalFunctions.DateToXmlschema(pageMetaData.Published);
-                    string formattedModifiedTime = GlobalFunctions.DateToXmlschema(pageMetaData.Modified);
+                    string formattedPublishTime = ObjectConversions.DateToXmlschema(pageMetaData.Published);
+                    string formattedModifiedTime = ObjectConversions.DateToXmlschema(pageMetaData.Modified);
                     string publishedTag = CreateOpenGraphMetaTag("article:published_time", formattedPublishTime);
                     string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
                     result.Add(publishedTag);

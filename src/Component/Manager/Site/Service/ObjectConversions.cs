@@ -105,12 +105,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string result = JsonSerializer.Serialize(o, options);
             return result;
         }
-    }
-
-    public class GlobalFunctions
-    {
-        public static AsyncLocal<string> Url
-        { get; } = new();
 
         public static string DateToPattern(DateTimeOffset date, string pattern)
         {
@@ -123,6 +117,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string result = DateToPattern(date, "o");
             return result;
         }
+    }
+
+    public class GlobalFunctions
+    {
+        public static AsyncLocal<string> Url
+        { get; } = new();
 
         // public static string FileNameWithoutExtension(string source)
         // {
