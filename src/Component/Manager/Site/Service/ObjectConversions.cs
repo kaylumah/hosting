@@ -67,6 +67,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
+        public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)
+        {
+            Uri result = site.AbsoluteUri(relativeUrl);
+            return result;
+        }
+
         public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
@@ -125,11 +131,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return filePathWithoutExt;
         }
 
-        public static Uri AbsoluteUri(string source)
-        {
-            string baseUrl = Url.Value!;
-            Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
-            return result;
-        }
+        // public static Uri AbsoluteUri(string source)
+        // {
+        //     string baseUrl = Url.Value!;
+        //     Uri result = RenderHelperFunctions.AbsoluteUri(baseUrl, source);
+        //     return result;
+        // }
     }
 }
