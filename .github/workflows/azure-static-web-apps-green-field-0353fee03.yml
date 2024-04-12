@@ -110,7 +110,7 @@ jobs:
 
   seo_job:
     needs: [ build_and_deploy_job ]
-    if: needs.build_and_deploy_job.outputs.docs_changed
+    if: needs.build_and_deploy_job.outputs.docs_changed && github.event_name != 'pull_request'
     uses: ./.github/workflows/seo.yml
 
   close_pull_request_job:
