@@ -130,7 +130,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 
         static Uri AbsoluteUri(string url)
         {
-            Uri absolute = GlobalFunctions.AbsoluteUri(url);
+            Uri absolute = RenderHelperFunctions.AbsoluteUri(url);
             return absolute;
         }
     }
