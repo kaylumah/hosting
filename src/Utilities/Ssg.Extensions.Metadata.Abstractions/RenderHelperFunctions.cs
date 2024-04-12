@@ -20,15 +20,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 source = source[1..];
             }
 
-            if ("index.html".Equals(source, StringComparison.OrdinalIgnoreCase))
-            {
-                result = new Uri(baseUrl);
-            }
-            else
-            {
-                result = new Uri($"{baseUrl}/{source}");
-            }
-
+            result = new Uri($"{baseUrl}/{source}");
+            
             return result;
         }
     }

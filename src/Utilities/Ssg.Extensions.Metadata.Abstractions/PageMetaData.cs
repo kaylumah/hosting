@@ -93,7 +93,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         Uri GetCanonicalUri()
         {
-            Uri result = RenderHelperFunctions.AbsoluteUri(Uri);
+            Uri result;
+            if ("index.html".Equals(Uri, StringComparison.OrdinalIgnoreCase))
+            {
+                string baseUrl = RenderHelperFunctions.Url.Value!;
+                result = new Uri(baseUrl);
+            }
+            else 
+            {
+                result = RenderHelperFunctions.AbsoluteUri(Uri);
+            }
+
             return result;
         }
     }
