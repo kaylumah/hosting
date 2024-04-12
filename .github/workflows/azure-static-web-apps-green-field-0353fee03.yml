@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     outputs:
-      docs_changed: steps.check_file_changed.outputs.docs_changed == 'True' # && github.event_name != 'pull_request'
+      docs_changed: steps.check_file_changed.outputs.docs_changed
+      # && github.event_name != 'pull_request'
     steps:
       - uses: actions/checkout@v4
         with:
