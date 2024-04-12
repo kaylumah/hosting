@@ -170,7 +170,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         Uri? ResolveImageUri()
         {
-            string? image = GetString(nameof(Image));
+            string? image = Image;
             if (string.IsNullOrEmpty(image))
             {
                 return null;
