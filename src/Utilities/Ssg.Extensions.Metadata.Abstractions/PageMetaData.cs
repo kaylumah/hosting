@@ -155,7 +155,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
         public string Layout => GetString(nameof(Layout));
-        public Uri? Image => ResolveImageUri();
+        public string Image => GetString(nameof(Image));
+        public Uri? WebImage => ResolveImageUri();
 
         Uri? ResolveImageUri()
         {
