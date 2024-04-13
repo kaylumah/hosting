@@ -60,6 +60,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Build = buildData;
         }
 
+        public IEnumerable<BasePage> GetItems()
+        {
+            return Items;
+        }
+
         public IEnumerable<PageMetaData> GetPages()
         {
             IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
