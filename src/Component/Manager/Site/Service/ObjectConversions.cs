@@ -55,12 +55,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     displayName = tagData.Name;
                 }
 
-                object resultForTag = new
-                {
-                    Id = tag,
-                    DisplayName = displayName,
-                    Size = items.Length
-                };
+                TagViewModel resultForTag = new TagViewModel(tag, displayName, items.Length);
                 result.Add(resultForTag);
             }
 
