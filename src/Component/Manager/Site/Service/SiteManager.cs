@@ -89,8 +89,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Lang,
                 string.Empty,
                 _SiteInfo.Url,
-                buildData);
-            siteMetadata.Items = pages;
+                buildData,
+                pages);
             _DataProcessor.EnrichSiteWithData(siteMetadata);
             EnrichSite(siteMetadata);
 
@@ -112,7 +112,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
         {
-            MetadataRenderRequest[] requests = siteMetadata.Items
+            IEnumerable<BasePage> pages = siteMetadata.GetItems();
+            MetadataRenderRequest[] requests = pages
                             .Select(basePage =>
                             {
                                 RenderData metaData = new RenderData(siteMetadata, basePage);
