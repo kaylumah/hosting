@@ -11,13 +11,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string DisplayName
         { get; init; }
 
+        public string Description
+        { get; init; }
+
         public int Size
         { get; init; }
 
-        public TagViewModel(string id, string displayName, int size)
+        public string Uri => $"/blog.html?tag={Id}";
+
+        public TagViewModel(string id, string displayName, string description, int size)
         {
             Id = id;
             DisplayName = displayName;
+            Description = description;
             Size = size;
         }
     }

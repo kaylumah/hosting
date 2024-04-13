@@ -48,18 +48,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 string tag = item.Key;
                 string displayName = item.Key;
+                string description = string.Empty;
                 PageMetaData[] items = item.Value;
                 bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
                 if (success && tagData != null)
                 {
                     displayName = tagData.Name;
+                    description = tagData.Description;
                 }
 
-                TagViewModel resultForTag = new TagViewModel(tag, displayName, items.Length);
+                TagViewModel resultForTag = new TagViewModel(tag, displayName, description, items.Length);
                 result.Add(resultForTag);
             }
 
             return result;
+        }
+
+        public static TagViewModel GetTag(SiteMetaData site, string tag)
+        {
+            TagViewModel tagViewModel = site.GetTagViewModel(tag);
+            return tagViewModel;
         }
 
         public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)

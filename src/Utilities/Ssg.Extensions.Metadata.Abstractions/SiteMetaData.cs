@@ -125,15 +125,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             string id = tag;
             string displayName = tag;
+            string description = string.Empty;
             int size = 0;
 
             bool hasTagMetaData = TagMetaData.TryGetValue(tag, out TagMetaData? tagData);
             if (hasTagMetaData && tagData != null)
             {
                 displayName = tagData.Name;
+                description = tagData.Description;
             }
 
-            TagViewModel resultForTag = new TagViewModel(tag, displayName, size);
+            TagViewModel resultForTag = new TagViewModel(tag, displayName, description, size);
             return resultForTag;
         }
     }
