@@ -89,8 +89,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Lang,
                 string.Empty,
                 _SiteInfo.Url,
-                buildData);
-            siteMetadata.Items = pages;
+                buildData,
+                pages);
             _DataProcessor.EnrichSiteWithData(siteMetadata);
             EnrichSite(siteMetadata);
 

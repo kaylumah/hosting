@@ -47,9 +47,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
         // { get; set; } = new();
 
         public List<BasePage> Items
-        { get; set; } = new();
+        { get; init; }
 
-        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData)
+        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
         {
             Id = id;
             Title = title;
@@ -58,6 +58,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Author = author;
             Url = url;
             Build = buildData;
+            Items = items;
         }
 
         public IEnumerable<BasePage> GetItems()
