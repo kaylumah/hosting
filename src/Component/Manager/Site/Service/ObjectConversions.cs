@@ -39,32 +39,35 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<object> TagCloud(SiteMetaData site)
+        public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
             SortedDictionary<string, PageMetaData[]> tags = site.Tags;
             TagMetaDataCollection tagMetaData = site.TagMetaData;
-            List<object> result = new List<object>();
+            List<TagViewModel> result = new List<TagViewModel>();
             foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
                 string tag = item.Key;
                 string displayName = item.Key;
+                string description = string.Empty;
                 PageMetaData[] items = item.Value;
                 bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
                 if (success && tagData != null)
                 {
                     displayName = tagData.Name;
+                    description = tagData.Description;
                 }
 
-                object resultForTag = new
-                {
-                    Id = tag,
-                    DisplayName = displayName,
-                    Size = items.Length
-                };
+                TagViewModel resultForTag = new TagViewModel(tag, displayName, description, items.Length);
                 result.Add(resultForTag);
             }
 
             return result;
+        }
+
+        public static TagViewModel GetTag(SiteMetaData site, string tag)
+        {
+            TagViewModel tagViewModel = site.GetTagViewModel(tag);
+            return tagViewModel;
         }
 
         public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)

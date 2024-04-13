@@ -343,7 +343,8 @@ It will also include articles about Azure DevOps and Azure. Such as build pipeli
                 words.forEach(word => {
                   const li = document.createElement('li');
                   const anchor = document.createElement('a');
-                  anchor.href = "/blog.html?tag=" + word.Id;
+                  anchor.href = word.Uri;
+                  anchor.title = word.Description;
                   anchor.text = `${word.DisplayName} (${word.Size})`;
                   const x = word.Size;
                   switch(true)
