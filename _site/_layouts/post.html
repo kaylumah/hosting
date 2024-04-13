@@ -15,8 +15,7 @@ layout: 'default.html'
                 <span>{{ page | reading_time }}</span>
             </div>
             <span class="flex flex-row gap-4">
-                {% for tag in page.tags %}
-                {% assign articleTag = site | get_tag tag %}
+                {% for tag in page.tags %}{% assign articleTag = site | get_tag tag %}
                 <a href="{{ articleTag.uri }}" title="{{ articleTag.description }}">{{ articleTag.displayname }}</a>
                 {% endfor %}
             </span>
