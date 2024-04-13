@@ -92,8 +92,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
-
         IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
@@ -109,6 +107,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
+        // TODO Consider (re)exposing Collections, Years, Series, Types
+        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
         SortedDictionary<string, PageMetaData[]> GetPagesByTag()
         {
             SortedDictionary<string, PageMetaData[]> result = new();
