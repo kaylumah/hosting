@@ -39,11 +39,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<object> TagCloud(SiteMetaData site)
+        public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
             SortedDictionary<string, PageMetaData[]> tags = site.Tags;
             TagMetaDataCollection tagMetaData = site.TagMetaData;
-            List<object> result = new List<object>();
+            List<TagViewModel> result = new List<TagViewModel>();
             foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
                 string tag = item.Key;

@@ -120,5 +120,21 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
             return uri;
         }
+
+        public TagViewModel GetTagViewModel(string tag)
+        {
+            string id = tag;
+            string displayName = tag;
+            int size = 0;
+
+            bool hasTagMetaData = TagMetaData.TryGetValue(tag, out TagMetaData? tagData);
+            if (hasTagMetaData && tagData != null)
+            {
+                displayName = tagData.Name;
+            }
+
+            TagViewModel resultForTag = new TagViewModel(tag, displayName, size);
+            return resultForTag;
+        }
     }
 }
