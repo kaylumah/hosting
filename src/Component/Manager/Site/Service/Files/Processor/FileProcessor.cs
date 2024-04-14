@@ -124,18 +124,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     scope = collectionSettings.TreatAs;
                 }
             }
-
-            IFileInfo[] filesForDirectory = directory.GetFiles();
-            List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
+            List<BinaryFile> files = new List<BinaryFile>();
             if (outputScopeDetails)
             {
-                files = files
+                IFileInfo[] filesForDirectory = directory.GetFiles();
+                List<BinaryFile> internalFiles = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
+
+                internalFiles = internalFiles
                     .Select(x =>
                     {
                         x.MetaData.Collection = scope;
                         return x;
                     })
                     .ToList();
+                files.AddRange(internalFiles);
             }
 
             return files;
