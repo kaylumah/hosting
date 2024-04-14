@@ -124,6 +124,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
                     scope = collectionSettings.TreatAs;
                 }
             }
+
             List<BinaryFile> files = new List<BinaryFile>();
             if (outputScopeDetails)
             {
