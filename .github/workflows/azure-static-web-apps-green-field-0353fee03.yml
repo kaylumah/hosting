@@ -1,10 +1,12 @@
 # https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-to-azure-static-web-app 
+# For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+
 name: Kaylumah.nl CI/CD
 
 env:
-  APP_LOCATION: "/"
-  API_LOCATION: "api"
-  OUTPUT_LOCATION: "build"
+  APP_LOCATION: "dist" # App source code path
+  API_LOCATION: "" # Api source code path - optional
+  OUTPUT_LOCATION: "" # Built app content directory - optional
 
 on:
     push:
@@ -35,12 +37,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GREEN_FIELD_0353FEE03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "dist" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
+          app_location: ${{ env.APP_LOCATION }}
+          api_location: ${{ env.API_LOCATION }}
+          output_location: ${{ env.OUTPUT_LOCATION }}
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
