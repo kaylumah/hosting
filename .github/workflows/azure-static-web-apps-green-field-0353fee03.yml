@@ -1,3 +1,4 @@
+# https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-to-azure-static-web-app 
 name: Kaylumah.nl CI/CD
 
 on:
