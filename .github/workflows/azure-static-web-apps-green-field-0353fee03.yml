@@ -70,6 +70,7 @@ jobs:
         run: |
             $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
             $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
+            Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
             pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chromium --with-deps
             dotnet test test/E2e
 
@@ -115,14 +116,6 @@ jobs:
 #           Write-Host "HasDiff: $HasDiff"
 #           # Write-Host "::set-output name=docs_changed::$HasDiff"
 #           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
-#       - name: Upload Test Results
-#         if: failure()
-#         uses: actions/upload-artifact@v4
-#         with:
-#           name: verify-test-results
-#           path: |
-#             **/*.received.*
-#             **/*.verified.*
 
 #   seo_job:
 #     needs: [ build_and_deploy_job ]
