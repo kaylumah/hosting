@@ -70,6 +70,8 @@ jobs:
         run: |
             $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
             $EnvironmentUrl
+            $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
+            $Env:PLAYWRIGHT_TEST_BASE_URL
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
