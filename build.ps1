@@ -11,8 +11,7 @@ $ErrorActionPreference = "Stop"
 [string] $RepoRoot = $PSScriptRoot
 [string] $BuildConfiguration = "Release"
 [string] $TargetFramework = "net8.0"
-[string] $PrBuildId = $env:PR_BUILD_ID
-[string] $BaseUrl = ![string]::IsNullOrEmpty($PrBuildId) ? "https://green-field-0353fee03-$PrBuildId.westeurope.1.azurestaticapps.net" : "https://kaylumah.nl"
+[string] $BaseUrl = ./tools/Get-BaseUrl.ps1
 
 Write-Host "Using build-id '$BuildId'"
 Write-Host "Using build-number '$BuildNumber'"
