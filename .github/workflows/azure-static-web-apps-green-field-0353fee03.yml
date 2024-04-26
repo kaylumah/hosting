@@ -31,6 +31,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Set TimeZone
+        uses: hoang-rio/set-timezone@v1.4
+        with:
+          timezoneLinux: "Europe/Amsterdam"
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -99,25 +103,12 @@ jobs:
 #           Write-Host "HasDiff: $HasDiff"
 #           # Write-Host "::set-output name=docs_changed::$HasDiff"
 #           echo "docs_changed=$HasDiff" >> $env:GITHUB_OUTPUT
-#       - name: Set TimeZone
-#         uses: hoang-rio/set-timezone@v1.4
-#         with:
-#           timezoneLinux: "Europe/Amsterdam"
+
 #       - name: Sets env vars for PR
 #         if: github.event_name == 'pull_request'
 #         run: |
 #           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
 
-#       - name: 'Generate Website'
-#         shell: pwsh
-#         run: |
-#           ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
-#                   # disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591
-#                   # - name: Upload artifacts
-#                   #   uses: actions/upload-artifact@master
-#                   #   with:
-#                   #     name: Test Reports
-#                   #     path: ${{ github.workspace }}/LivingDoc.html
 #       - name: Build And Deploy
 #         if: github.actor != 'dependabot[bot]'
 #         id: builddeploy
