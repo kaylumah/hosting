@@ -17,10 +17,10 @@ on:
       branches:
         - main
 
-# permissions:
-#   issues: write
-#   contents: read
-#   pull-requests: write
+permissions:
+  issues: write
+  contents: read
+  pull-requests: write
 
 jobs:
   build_and_deploy:
