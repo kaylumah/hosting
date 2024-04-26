@@ -35,6 +35,10 @@ jobs:
         uses: hoang-rio/set-timezone@v1.4
         with:
           timezoneLinux: "Europe/Amsterdam"
+      - name: Sets env vars for PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
