@@ -39,6 +39,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+      - name: 'Make tools available'
+        shell: pwsh
+        run: |
+          dotnet tool restore
       - name: 'Generate Website'
         shell: pwsh
         run: |
@@ -103,10 +107,7 @@ jobs:
 #         if: github.event_name == 'pull_request'
 #         run: |
 #           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
-#       - name: 'Make tools available'
-#         shell: pwsh
-#         run: |
-#           dotnet tool restore
+
 #       - name: 'Generate Website'
 #         shell: pwsh
 #         run: |
