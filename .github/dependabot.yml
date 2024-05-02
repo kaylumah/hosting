@@ -25,6 +25,10 @@ updates:
       patterns:
         - "System.IO.Abstractions"
         - "System.IO.Abstractions.*"
+    Xunit:
+      patterns:
+        - "xunit.runner.visualstudio"
+        - "xunit"
 
   open-pull-requests-limit: 25
 
