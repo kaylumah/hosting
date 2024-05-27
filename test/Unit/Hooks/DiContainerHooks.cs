@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
-using BoDi;
+using Reqnroll.BoDi;
 using Microsoft.Extensions.Time.Testing;
 using Reqnroll;
 
