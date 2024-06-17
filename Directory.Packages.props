@@ -31,7 +31,7 @@
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.3" />
     <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
-    <PackageVersion Include="YamlDotNet" Version="15.1.6" />
+    <PackageVersion Include="YamlDotNet" Version="15.3.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
