@@ -18,12 +18,12 @@ namespace Test.Unit.Helpers
         {
             public bool Accepts(Type type) => type == typeof(DateTimeOffset);
 
-            public object ReadYaml(IParser parser, Type type)
+            public object ReadYaml(IParser parser, Type type, ObjectDeserializer serializer)
             {
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type)
+            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
             {
                 DateTimeOffset dateTime = (DateTimeOffset)value;
                 string str = dateTime.ToString("o", CultureInfo.InvariantCulture);
@@ -39,12 +39,12 @@ namespace Test.Unit.Helpers
                 return type == _ContentCategoryNodeType;
             }
 
-            public object ReadYaml(IParser parser, Type type)
+            public object ReadYaml(IParser parser, Type type, ObjectDeserializer serializer)
             {
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type)
+            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
             {
                 AuthorId node = (AuthorId)value;
                 string str = node;
@@ -60,12 +60,12 @@ namespace Test.Unit.Helpers
                 return type == _ContentCategoryNodeType;
             }
 
-            public object ReadYaml(IParser parser, Type type)
+            public object ReadYaml(IParser parser, Type type, ObjectDeserializer serializer)
             {
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type)
+            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
             {
                 OrganizationId node = (OrganizationId)value;
                 string str = node;
