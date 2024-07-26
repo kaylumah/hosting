@@ -26,8 +26,8 @@
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="8.7.0" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="5.10.0" />
-    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.29.0.95321" />
-    <PackageVersion Include="System.IO.Abstractions" Version="21.0.26" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.30.0.95878" />
+    <PackageVersion Include="System.IO.Abstractions" Version="21.0.29" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.4" />
     <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
@@ -37,8 +37,8 @@
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="xunit" Version="2.9.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
-    <PackageVersion Include="Verify.Xunit" Version="25.3.2" />
-    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="21.0.26" />
+    <PackageVersion Include="Verify.Xunit" Version="26.1.2" />
+    <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="21.0.29" />
     <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
     <PackageVersion Include="Reqnroll.xUnit" Version="2.0.3" />
     <PackageVersion Include="Moq" Version="4.18.4" />
