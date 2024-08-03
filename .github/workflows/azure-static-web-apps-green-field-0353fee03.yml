@@ -21,6 +21,7 @@ permissions:
   issues: write
   contents: read
   pull-requests: write
+  checks: write
 
 jobs:
   build_and_deploy:
