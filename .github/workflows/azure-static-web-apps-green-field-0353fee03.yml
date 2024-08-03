@@ -69,6 +69,14 @@ jobs:
           path: |
             test/**/TestResults
         if: always()
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
       - name: Build And Deploy
         # if: github.actor != 'dependabot[bot]'
         uses: Azure/static-web-apps-deploy@v1
