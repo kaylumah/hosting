@@ -30,6 +30,7 @@ namespace Test.Unit.FormerXunit
 
             string testParameter = path
                 .Replace("/", "_")
+                .Replace("\\", "_")
                 .Replace(".md", "");
             string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_{testParameter}";
             VerifySettings settings = new VerifySettings();
