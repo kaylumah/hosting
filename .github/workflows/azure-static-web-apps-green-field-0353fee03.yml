@@ -69,6 +69,7 @@ jobs:
           name: dotnet-results
           path: |
             test/**/TestResults
+            test/**/snapshots/**
         if: always()
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
