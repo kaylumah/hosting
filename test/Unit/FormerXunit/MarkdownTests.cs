@@ -26,7 +26,7 @@ namespace Test.Unit.FormerXunit
         {
             string rawContents = await File.ReadAllTextAsync(path);
             string html = MarkdownUtil.ToHtml(rawContents);
-            html.Replace("/Users/maxhamulyak/", "ExamplePath");
+            html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
 
             string testParameter = path
                 .Replace("/", "_")

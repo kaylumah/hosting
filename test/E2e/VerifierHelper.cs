@@ -58,7 +58,7 @@ namespace Test.E2e
         public static async Task Verify(HtmlPage page, string methodName = null)
         {
             string html = await page.GetContent();
-            html.Replace("/Users/maxhamulyak/", "ExamplePath/");
+            html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             Dictionary<string, string> metaTags = await page.GetMetaTags();
 
             string commitHash = metaTags["kaylumah:commit"];
