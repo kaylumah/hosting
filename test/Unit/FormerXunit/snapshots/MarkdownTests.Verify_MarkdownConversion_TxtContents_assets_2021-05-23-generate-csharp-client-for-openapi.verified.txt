@@ -187,10 +187,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   All projects are up-to-date for restore.
   NSwag command line tool for .NET Core NetCore31, toolchain v13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))
   Visit http://NSwag.org for more information.
-  NSwag bin directory: {UserProfile}/.nuget/packages/nswag.msbuild/13.11.1/tools/NetCore31
+  NSwag bin directory: ExamplePath.nuget/packages/nswag.msbuild/13.11.1/tools/NetCore31
   
   Executing file 'nswag.json' with variables 'Configuration=Debug'...
-  Launcher directory: {UserProfile}/.nuget/packages/nswag.msbuild/13.11.1/tools/NetCore31
+  Launcher directory: ExamplePath.nuget/packages/nswag.msbuild/13.11.1/tools/NetCore31
   System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
    --- System.InvalidOperationException: No service for type 'NSwag.Generation.IOpenApiDocumentGenerator' has been registered.
 The reason behind this error is that the tool requires NSwag in the API project. To do this, we need to install the NSwag.AspNetCore package with dotnet add package NSwag.AspNetCore.  The scope of this tutorial is not how to set up an API project with NSwag luckily, the guide is straightforward. We modify the ConfigureServices method in Startup.cs with services.AddOpenApiDocument(); and we add app.UseOpenApi(); and app.UseSwaggerUi3(); to the Configure method. We have an Open API specification for our WeatherForecast controller with these changes and can easily view and test it with Swagger UI.
