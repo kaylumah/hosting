@@ -2,7 +2,7 @@
 # https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
 
 name: build and test
-
+# on: workflow_dispatch
 on:
 #   push:
   pull_request:
@@ -11,9 +11,6 @@ on:
     - '**.cs'
     - '**.csproj'
     - '**.yml'
-
-# env:
-#   DOTNET_VERSION: '6.0.401' # The .NET SDK version to use
 
 jobs:
   build-and-test:
@@ -50,12 +47,3 @@ jobs:
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
-
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if: always()
-      with:
-        name: DotNET Tests ${{matrix.os}}
-        path: "**/*.trx"                            
-        reporter: dotnet-trx
-        fail-on-error: true
