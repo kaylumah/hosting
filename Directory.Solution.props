@@ -11,6 +11,6 @@
       <OutdatedScript>$(MSBuildProjectDirectory)/tools/Outdated.ps1</OutdatedScript>
       <TargetProject>$(MSBuildProjectDirectory)/SSG.sln</TargetProject>
     </PropertyGroup>
-    <!-- <Exec Command="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" /> -->
+    <Exec Command="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" />
   </Target>
 </Project>
