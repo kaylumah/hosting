@@ -7,7 +7,8 @@
   <Target Name="CheckDependencies" AfterTargets="Build">
     <PropertyGroup>
       <PowerShellCommand>dotnet pwsh</PowerShellCommand>
-      <PowerShellExecutionPolicy>Restricted</PowerShellExecutionPolicy>
+      <!-- <PowerShellExecutionPolicy>Restricted</PowerShellExecutionPolicy> -->
+      <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
       <OutdatedScript>$(MSBuildProjectDirectory)/tools/Outdated.ps1</OutdatedScript>
       <TargetProject>$(MSBuildProjectDirectory)/SSG.sln</TargetProject>
     </PropertyGroup>

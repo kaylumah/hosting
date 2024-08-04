@@ -1,0 +1,48 @@
+# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
+
+name: build and test
+on: workflow_dispatch
+# on:
+#   pull_request:
+#     branches: [ main ]
+#     paths:
+#     - '**.cs'
+#     - '**.csproj'
+#     - '**.yml'
+
+jobs:
+  build-and-test:
+
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set TimeZone
+      uses: hoang-rio/set-timezone@v1.4
+      with:
+        timezoneLinux: "Europe/Amsterdam"
+        timezoneMacos: "Europe/Amsterdam"
+        timezoneWindows: "W. Europe Standard Time"
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        global-json-file: global.json
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Install dependencies (tools)
+      run: dotnet tool restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
