@@ -47,4 +47,4 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test --no-restore --verbosity normal test/Unit/Test.Unit.csproj
+      run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
