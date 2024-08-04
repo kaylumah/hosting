@@ -46,9 +46,8 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Formatting Failure"
 }
 
-# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test --no-restore --no-build --configuration $BuildConfiguration --logger trx ./test/Unit/Test.Unit.csproj
+dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
 # dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
 if ($LASTEXITCODE -ne 0)
 {
