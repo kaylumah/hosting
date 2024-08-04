@@ -2,15 +2,14 @@
 # https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
 
 name: build and test
-# on: workflow_dispatch
-on:
-#   push:
-  pull_request:
-    branches: [ main ]
-    paths:
-    - '**.cs'
-    - '**.csproj'
-    - '**.yml'
+on: workflow_dispatch
+# on:
+#   pull_request:
+#     branches: [ main ]
+#     paths:
+#     - '**.cs'
+#     - '**.csproj'
+#     - '**.yml'
 
 jobs:
   build-and-test:
