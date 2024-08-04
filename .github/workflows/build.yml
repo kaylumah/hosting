@@ -31,6 +31,8 @@ jobs:
       uses: hoang-rio/set-timezone@v1.4
       with:
         timezoneLinux: "Europe/Amsterdam"
+        timezoneMacos: "Europe/Amsterdam"
+        timezoneWindows: "Europe/Amsterdam"
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
