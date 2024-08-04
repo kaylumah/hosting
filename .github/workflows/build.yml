@@ -45,6 +45,15 @@ jobs:
       
     - name: Build
       run: dotnet build --configuration Release --no-restore
+
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: DotNET Tests ${{matrix.os}}
+        path: "**/*.trx"                            
+        reporter: dotnet-trx
+        fail-on-error: true
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
