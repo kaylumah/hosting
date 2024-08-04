@@ -38,8 +38,8 @@ jobs:
     - name: Install dependencies (tools)
       run: dotnet tool restore
       
-    # - name: Build
-    #   run: dotnet build --configuration Release --no-restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
     
-    # - name: Test
-    #   run: dotnet test --no-restore --verbosity normal
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal test/Unit/Test.Unit.csproj
