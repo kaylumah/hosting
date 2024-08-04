@@ -29,7 +29,6 @@ namespace Test.E2e.SnapshotTests
             page.Url.Should().EndWith(atomFeed.PagePath);
 
             string xml = await atomFeed.GetContent();
-            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ReplaceMatches(regex, "BaseUrl_1");
@@ -61,7 +60,6 @@ namespace Test.E2e.SnapshotTests
             page.Url.Should().EndWith(sitemapPage.PagePath);
 
             string xml = await sitemapPage.GetContent();
-            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ReplaceMatches(regex, "BaseUrl_1");
