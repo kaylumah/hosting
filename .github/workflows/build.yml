@@ -27,6 +27,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set TimeZone
+      uses: hoang-rio/set-timezone@v1.4
+      with:
+        timezoneLinux: "Europe/Amsterdam"
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
