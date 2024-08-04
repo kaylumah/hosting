@@ -21,7 +21,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set TimeZone
       uses: hoang-rio/set-timezone@v1.4
