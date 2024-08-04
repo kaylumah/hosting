@@ -34,6 +34,9 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
+
+    - name: Install dependencies (tools)
+      run: dotnet tool restore
       
     # - name: Build
     #   run: dotnet build --configuration Release --no-restore
