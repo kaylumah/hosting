@@ -55,15 +55,16 @@ jobs:
       run: |
         $Output = & ./tools/Check-Snapshots.ps1
         $Files = $Output -join "`r`n" | Out-String
+        $Files
         Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
-    - uses: actions/upload-artifact@v4
-      # if: steps.verify_results.conclusion == success()
-      if: always()
-      with:
-        name: "snapshots"
-        path: ${{ steps.verify_results.outputs.Files}}
-        if-no-files-found: ignore
-        retention-days: 1
+    # - uses: actions/upload-artifact@v4
+    #   # if: steps.verify_results.conclusion == success()
+    #   if: always()
+    #   with:
+    #     name: "snapshots"
+    #     path: ${{ steps.verify_results.outputs.Files}}
+    #     if-no-files-found: ignore
+    #     retention-days: 1
   
