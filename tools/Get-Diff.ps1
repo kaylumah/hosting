@@ -6,3 +6,6 @@ $diff
 
 Write-Host "-------------------"
 git diff --histogram HEAD^ HEAD
+Write-Host "-------------------"
+git diff --stat HEAD^ HEAD
+Write-Host "-------------------"
