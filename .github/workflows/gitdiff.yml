@@ -2,6 +2,7 @@ name: verify changes
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   verify:
