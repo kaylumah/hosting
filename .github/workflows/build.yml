@@ -54,6 +54,7 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1 -TargetFolder Test/Unit
+        $Output = $Output | % { "." +$_ }
         # $Files = $Output -join "`r`n" | Out-String
         $Files = $Output -join " " | Out-String
         # $Files
