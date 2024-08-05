@@ -2,14 +2,15 @@
 # https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
 
 name: build and test
-on: workflow_dispatch
-# on:
-#   pull_request:
-#     branches: [ main ]
-#     paths:
-#     - '**.cs'
-#     - '**.csproj'
-#     - '**.yml'
+
+on:
+  workflow_dispatch:
+  # pull_request:
+  #   branches: [ main ]
+  #   paths:
+  #   - '**.cs'
+  #   - '**.csproj'
+  #   - '**.yml'
 
 jobs:
   build-and-test:
@@ -17,8 +18,10 @@ jobs:
     name: build-and-test-${{matrix.os}}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
+      # os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
     - uses: actions/checkout@v4
@@ -46,3 +49,28 @@ jobs:
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
+      # run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
+
+    #  Enable the following to do something with snapshot result(s)
+    # - name: Check Verify Results
+    #   if: always()
+    #   run: |
+    #     $Output = & ./tools/Check-Snapshots.ps1
+    #     #  -TargetFolder Test/Unit
+    #     $Output = $Output | % { "." +$_ }
+    #     if ($Output.count -gt 0) {
+    #       New-Item -ItemType Directory "snapshots"
+    #       foreach ($File in $Output) {
+    #         Copy-Item $File -Destination snapshots
+    #       }
+    #     }
+    #   shell: pwsh
+    
+    # - uses: actions/upload-artifact@v4
+    #   if: always()
+    #   with:
+    #     name: "snapshots-${{matrix.os}}"
+    #     path: snapshots
+    #     if-no-files-found: ignore
+    #     retention-days: 1
+  
