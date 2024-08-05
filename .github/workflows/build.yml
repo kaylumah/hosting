@@ -48,11 +48,18 @@ jobs:
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
       # run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
 
-    - name: Check Verify Results
+    - id: verify_results
+      name: Check Verify Results
       if: always()
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1
         Write-Output "Files=$($Output)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
+    
+    - uses: actions/upload-artifact@v4
+      with:
+        path: ${{ steps.verify_results.outputs.Files}}
+        if-no-files-found: ignore
+        retention-days: 1
   
