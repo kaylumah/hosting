@@ -15,7 +15,8 @@ jobs:
       - name: verify
         shell: pwsh
         run: |
-            ./tools/Get-Diff.ps1
+            $GitDiff = & ./tools/Get-Diff.ps1
+            Write-Output $GitDiff >> $GITHUB_STEP_SUMMARY
 
 # Consider this...
 #   seo_job:
