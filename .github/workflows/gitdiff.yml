@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+         #fails without this
+         fetch-depth: 2
       - name: verify
         shell: pwsh
         run: |
