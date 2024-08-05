@@ -18,6 +18,8 @@ jobs:
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $GITHUB_STEP_SUMMARY
             echo "hello" >> $GITHUB_STEP_SUMMARY
+            Write-Output "hello V@" >> $GITHUB_STEP_SUMMARY
+            Write-Output "hello V3" >> $Env:GITHUB_STEP_SUMMARY
 
 # Consider this...
 #   seo_job:
