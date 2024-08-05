@@ -54,8 +54,9 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1
-        $Files = $Output -join "`r`n" | Out-String
-        $Files
+        # $Files = $Output -join "`r`n" | Out-String
+        $Files = $Output -join " " | Out-String
+        # $Files
         Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
