@@ -53,7 +53,7 @@ jobs:
       if: always()
       # run: ./tools/Check-Snapshots.ps1
       run: |
-        $Output = & ./tools/Check-Snapshots.ps1
+        $Output = & ./tools/Check-Snapshots.ps1 -TargetFolder Test/Unit
         # $Files = $Output -join "`r`n" | Out-String
         $Files = $Output -join " " | Out-String
         # $Files
