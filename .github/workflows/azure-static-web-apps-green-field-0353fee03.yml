@@ -8,14 +8,14 @@ env:
   API_LOCATION: "" # Api source code path - optional
   OUTPUT_LOCATION: "" # Built app content directory - optional
 
-on:
-    push:
-      branches:
-        - main
-    pull_request:
-      types: [opened, synchronize, reopened, closed]
-      branches:
-        - main
+# on:
+#     push:
+#       branches:
+#         - main
+#     pull_request:
+#       types: [opened, synchronize, reopened, closed]
+#       branches:
+#         - main
 
 permissions:
   issues: write
