@@ -21,5 +21,5 @@ foreach ($File in $ExpectedVerifiedFiles) {
 }
 
 $Combined = $($ReceivedFiles; $VerifiedFiles)
-$Result = $Combined | foreach { $_ -replace $RepoRoot, "" }
+$Result = $Combined | foreach { $_ -replace @"$RepoRoot", "" }
 $Result
