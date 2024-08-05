@@ -49,5 +49,9 @@ jobs:
 
     - name: Check Verify Results
       if: always()
-      run: ./tools/Check-Snapshots.ps1
+      # run: ./tools/Check-Snapshots.ps1
+      run: |
+        $Output = & ./tools/Check-Snapshots.ps1
+        $Output >> $Env:GITHUB_OUTPUT
       shell: pwsh
+  
