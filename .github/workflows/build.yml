@@ -2,14 +2,15 @@
 # https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
 
 name: build and test
-on: workflow_dispatch
-# on:
-#   pull_request:
-#     branches: [ main ]
-#     paths:
-#     - '**.cs'
-#     - '**.csproj'
-#     - '**.yml'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '**.cs'
+    - '**.csproj'
+    - '**.yml'
 
 jobs:
   build-and-test:
@@ -48,10 +49,8 @@ jobs:
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
       # run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
 
-    - id: verify_results
-      name: Check Verify Results
+    - name: Check Verify Results
       if: always()
-      # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1 -TargetFolder Test/Unit
         $Output = $Output | % { "." +$_ }
@@ -61,15 +60,9 @@ jobs:
             Copy-Item $File -Destination snapshots
           }
         }
-        # $Output = $Output | % { "." +$_ }
-        # # $Files = $Output -join "`r`n" | Out-String
-        # $Files = $Output -join " " | Out-String
-        # # $Files
-        # Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
     - uses: actions/upload-artifact@v4
-      # if: steps.verify_results.conclusion == success()
       if: always()
       with:
         name: "snapshots"
