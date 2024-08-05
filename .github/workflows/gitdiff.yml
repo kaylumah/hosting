@@ -1,0 +1,14 @@
+name: verify changes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: verify
+        shell: pwsh
+        run: |
+            ./tools/Get-Diff.ps1
