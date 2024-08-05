@@ -17,6 +17,7 @@ jobs:
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $GITHUB_STEP_SUMMARY
+            echo "hello" >> $GITHUB_STEP_SUMMARY
 
 # Consider this...
 #   seo_job:
