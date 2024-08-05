@@ -46,3 +46,8 @@ jobs:
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
+
+    - name: Check Verify Results
+      if: always()
+      run: ./tools/Check-Snapshots.ps1
+      shell: pwsh
