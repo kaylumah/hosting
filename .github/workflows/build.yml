@@ -54,6 +54,7 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1
+        $Output.GetType()
         Write-Output "Files=$($Output)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
