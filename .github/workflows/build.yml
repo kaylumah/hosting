@@ -54,8 +54,8 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1
-        $Output.GetType()
-        Write-Output "Files=$($Output)" >> $Env:GITHUB_OUTPUT
+        $Files = $Output -join "`r`n" | Out-String
+        Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
     - uses: actions/upload-artifact@v4
