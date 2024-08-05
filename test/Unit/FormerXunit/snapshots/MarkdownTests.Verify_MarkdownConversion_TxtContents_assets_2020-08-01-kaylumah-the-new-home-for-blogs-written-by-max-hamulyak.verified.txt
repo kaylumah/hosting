@@ -3,4 +3,4 @@ So what can you expect on my blog
 Not sure about that yet, I suppose we will find out soon enough. The biggest problem will be time, but I will try and share ideas and or projects that I work on professionally, or even experiments I am trying.
 I am a full-stack Software Engineer, and I specialize in backend development (mainly C# / Java). My current front-end framework of choice is Angular, but I have to admit that time, again, is an issue here. Because of time constraints, I cannot dabble in it al much as I would like.
 I suspect that I will write articles about my technology stack of choice.
-It will also include articles about Azure DevOps and Azure. Sullh as build pipelines and ARM templates. I might even write more articles about Git and Code quality.
+It will also include articles about Azure DevOps and Azure. Such as build pipelines and ARM templates. I might even write more articles about Git and Code quality.
