@@ -54,11 +54,17 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1 -TargetFolder Test/Unit
-        $Output = $Output | % { "." +$_ }
-        # $Files = $Output -join "`r`n" | Out-String
-        $Files = $Output -join " " | Out-String
-        # $Files
-        Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
+        if ($Output.count -gt 0) {
+          New-Item -ItemType Directory "snapshots"
+          foreach ($File in $Output) {
+            Copy-Item $File -Destination snapshots
+          }
+        }
+        # $Output = $Output | % { "." +$_ }
+        # # $Files = $Output -join "`r`n" | Out-String
+        # $Files = $Output -join " " | Out-String
+        # # $Files
+        # Write-Output "Files=$($Files)" >> $Env:GITHUB_OUTPUT
       shell: pwsh
     
     - uses: actions/upload-artifact@v4
@@ -66,7 +72,7 @@ jobs:
       if: always()
       with:
         name: "snapshots"
-        path: ${{ steps.verify_results.outputs.Files}}
+        path: snapshots
         if-no-files-found: ignore
         retention-days: 1
   
