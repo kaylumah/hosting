@@ -8,6 +8,7 @@ env:
   API_LOCATION: "" # Api source code path - optional
   OUTPUT_LOCATION: "" # Built app content directory - optional
 
+on: workflow_dispatch
 # on:
 #     push:
 #       branches:
