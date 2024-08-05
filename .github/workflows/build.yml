@@ -54,6 +54,7 @@ jobs:
       # run: ./tools/Check-Snapshots.ps1
       run: |
         $Output = & ./tools/Check-Snapshots.ps1 -TargetFolder Test/Unit
+        $Output = $Output | % { "." +$_ }
         if ($Output.count -gt 0) {
           New-Item -ItemType Directory "snapshots"
           foreach ($File in $Output) {
