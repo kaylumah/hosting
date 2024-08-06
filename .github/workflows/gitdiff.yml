@@ -43,6 +43,7 @@ jobs:
         with:
           header: assets
           append: true
+          # recreate: true
           message: |
             Detected assets folder change for ${{ github.sha }}
           
