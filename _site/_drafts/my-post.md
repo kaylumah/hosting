@@ -24,19 +24,7 @@ Using the Markdown preview feature of VSCode that would look like this:
 
 If you’re like me, your project contains many more files than the few shown in the example. In such cases, I prefer working inside the _posts folder. Unfortunately, as the screenshot below shows, this breaks the image preview functionality.
 
-
-
-
-
-
-
-
-
-However, in my case there are a lot more files in the root directory. Sometimes I just want to experience just editing the posts.
-
-Let's open the `_posts` directory to see what it looks like.
-
-![](/assets/images/drafts/markdown-preview/002.png)
+![Markdown preview from subfolder](/assets/images/drafts/markdown-preview/002.png)
 
 As you can see my logo is no longer displaying.
 You might say, well there is no `assets` directory in the post directory. Change that to `../assets` and it will work.
