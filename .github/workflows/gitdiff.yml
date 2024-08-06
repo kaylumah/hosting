@@ -20,6 +20,8 @@ jobs:
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff.ChangedFiles >> $Env:GITHUB_STEP_SUMMARY
+
+            # Write all folders we required in follow-up actions
             $AssetsChanged = $GitDiff.Assets.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
