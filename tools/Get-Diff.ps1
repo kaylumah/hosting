@@ -4,8 +4,8 @@
 $diff = git diff --name-only HEAD^ HEAD
 $diff
 
-# git diff --stat HEAD^ HEAD
-# git diff --name-status HEAD^ HEAD
+git diff --stat HEAD^ HEAD
+git diff --name-status HEAD^ HEAD
 
 # Example check with regex
 # $SiteFolderDiff = $diff | Where-Object { $_ -match '^_site/' }
