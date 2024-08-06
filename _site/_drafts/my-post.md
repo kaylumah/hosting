@@ -44,12 +44,10 @@ From the filesystem perspective the "_posts" folder now has a subfolder called p
 
 ![Markdown preview with symlink](/assets/images/drafts/markdown-preview/003.png)
 
+## To consider
 
+Personally, I believe its a nice workaround for an issue that irritated me.
+Before you leave I like to leave you with some final thoughts.
 
-
-## Resources
-
-- https://jekyllrb.com/docs/posts/#including-images-and-resources
-- https://jekyllrb.com/docs/structure/
-- https://stackoverflow.com/questions/954560/how-does-git-handle-symbolic-links/18791647#18791647
-- https://stackoverflow.com/questions/5917249/git-symbolic-links-in-windows/59761201#59761201
+- This behavior is disabled by default, to prevent opening untrusted content. So don't blindly apply this solution everywhere
+- If your blog is under source control via GIT you can [include those symlinks](https://stackoverflow.com/questions/954560/how-does-git-handle-symbolic-links/18791647#18791647) in GIT so your teammates have the same benefits. If you are using Git for Windows you may need [additional steps to support symlinks](https://stackoverflow.com/questions/5917249/git-symbolic-links-in-windows/59761201#59761201)
