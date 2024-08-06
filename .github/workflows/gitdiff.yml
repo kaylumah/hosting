@@ -22,7 +22,7 @@ jobs:
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $false
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
-            echo "secret-number=test" >> "$GITHUB_OUTPUT"
+            echo "secret-number=test" >> $GITHUB_OUTPUT
             echo "Val2=Moe" >> $env:GITHUB_OUTPUT
             "Val3=Moe" >> $env:GITHUB_OUTPUT
       - name: Use that secret output (protected by a mask)
