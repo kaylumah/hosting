@@ -14,7 +14,7 @@ on:
       branches:
         - main
     pull_request:
-      types: [opened, synchronize, reopened, closed]
+      types: [opened, synchronize, reopened, closed, ready_for_review, converted_to_draft]
       branches:
         - main
 
@@ -24,8 +24,16 @@ permissions:
   pull-requests: write
 
 jobs:
+
+  fail_if_pull_request_is_draft:
+    if: github.event.pull_request.draft == true && (github.event_name == 'pull_request' && github.event.action != 'closed') 
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fails in order to indicate that pull request needs to be marked as ready to review and unit tests workflow needs to pass.
+      run: exit 1
+
   build_and_deploy:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event.pull_request.draft == false && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed'))
     runs-on: ubuntu-latest
     name: Build and Deploy
     steps:
