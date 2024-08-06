@@ -106,6 +106,7 @@ namespace Test.E2e.SnapshotTests
 
         public static IEnumerable<object[]> GetBlogPages()
         {
+            yield return new object[] { "2024/08/06/fix-vscode-markdown-preview.html" };
             yield return new object[] { "2024/02/09/long-live-reqnroll.html" };
             yield return new object[] { "2023/04/14/csharp-client-for-openapi-revistted.html" };
             yield return new object[] { "2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" };

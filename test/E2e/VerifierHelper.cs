@@ -32,7 +32,7 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>https://)(?<val>(kaylumah.nl|green-field-0353fee03-[0-9]{3}.westeurope.1.azurestaticapps.net))(?<after>[\w\/\.\-]*)?")]
         public static partial Regex BaseUrl();
 
-        [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 ]*)(?<after> ago<)")]
+        [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 -]*)(?<after> ago<)")]
         public static partial Regex TimeAgo();
 
         [GeneratedRegex(@"(?<before>var words = \[)(?<val>(.|\n)*)(?<after>];)")]
