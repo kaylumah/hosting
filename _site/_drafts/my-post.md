@@ -37,6 +37,8 @@ This workaround will not work for two reasons
 ![](/assets/images/drafts/markdown-preview/003.png)
 
 
+ln -s ../assets assets 
+
 ## Resources
 
 - https://jekyllrb.com/docs/posts/#including-images-and-resources
