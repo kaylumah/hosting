@@ -22,6 +22,7 @@ jobs:
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $false
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
+            echo "secret-number=test" >> "$GITHUB_OUTPUT"
 
       - name: verify
         shell: pwsh
