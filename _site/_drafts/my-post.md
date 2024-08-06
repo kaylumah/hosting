@@ -1,7 +1,13 @@
 ---
-title: "A"
+title: A
+# description: SpecFlow rebooted; please welcome Reqnroll!
+# image: /assets/images/posts/20240209/reqnroll/cover_image.png
+# tags:
+#   - testing
+#   - reqnroll
+# publishedtime: '21:00'
+# commentid: '555' 
 ---
-
 Many static website generators support writing blogs in Markdown. Jekyll and several other generators organize content, such as blog posts, and assets, like images and CSS files, into separate directories.
 
 My favorite editor for writing Markdown is VSCode. While this separation is useful for organization, it can be somewhat cumbersome when editing and previewing Markdown.
