@@ -3,6 +3,9 @@
 # See: https://git-scm.com/docs/git-diff
 $DiffOutput = git diff --name-only HEAD^ HEAD
 
+$AssetFolderDiff = $diff | Where-Object { $_ -match '^assets/' }
+$AssestFolderChanged = $AssetFolderDiff.Length -gt 0
+
 # git diff --stat HEAD^ HEAD
 # git diff --name-status HEAD^ HEAD
 
@@ -13,4 +16,5 @@ $DiffOutput = git diff --name-only HEAD^ HEAD
 
 [PSCustomObject]@{
     ChangedFiles = $DiffOutput
+    Assets = $AssestFolderChanged
 }
