@@ -20,7 +20,7 @@ jobs:
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
-            $AssetsChanged = $false.ToString()
+            $AssetsChanged = $false.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
             echo "secret-number=test" >> $GITHUB_OUTPUT
             echo "Val2=Moe" >> $env:GITHUB_OUTPUT
