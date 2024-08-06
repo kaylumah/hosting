@@ -42,8 +42,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: assets
-          append: true
-          # recreate: true
+          recreate: true
           message: |
             Detected assets folder change for ${{ github.sha }}
 
