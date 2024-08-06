@@ -39,11 +39,12 @@ jobs:
       #     # $GitStatus
 
       - if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
-        uses: EndBug/add-and-commit@v9
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          add: '_site/assets'
-          default_author: user_info
-          push: true
+          header: assets
+          append: true
+          message: |
+            Detected assets folder change for ${{ github.sha }}
           
 
 # Consider this...
