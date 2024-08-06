@@ -15,7 +15,7 @@ jobs:
          fetch-depth: 2
       
       - id: git_diff
-        name: verify
+        name: Compare to previous version
         shell: pwsh
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
