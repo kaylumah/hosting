@@ -19,6 +19,10 @@ jobs:
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             # Write-Output "hello V3" >> $Env:GITHUB_STEP_SUMMARY
+      - name: verify
+        shell: pwsh
+        run: |
+          ./tools/Convert-WebImage.ps1
 
 # Consider this...
 #   seo_job:
