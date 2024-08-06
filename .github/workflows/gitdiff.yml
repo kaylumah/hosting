@@ -27,6 +27,7 @@ jobs:
             "Val3=Moe" >> $env:GITHUB_OUTPUT
       - name: Use that secret output (protected by a mask)
         run: |
+          echo "the secret number is ${{ steps.git_diff.outputs.AssetsChanged }}"
           echo "the secret number is ${{ steps.git_diff.outputs.secret-number }}"
           echo "the secret number is ${{ steps.git_diff.outputs.Val2 }}"
           echo "the secret number is ${{ steps.git_diff.outputs.Val3 }}"
