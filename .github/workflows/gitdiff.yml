@@ -21,7 +21,7 @@ jobs:
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $false
-            Write-Output "AssetsChanged=$($AssetsChanged)" >> $Env:GITHUB_OUTPUT
+            Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
       - name: verify
         shell: pwsh
