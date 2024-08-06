@@ -1,6 +1,10 @@
 #Requires -Version 7.2
 
-$ToolVersion = "libwebp-1.3.2-mac-arm64"
+param (
+    [Parameter()]
+    [string] $ToolVersion = "libwebp-1.3.2-mac-arm64"
+)
+
 $ToolFile = "libwebp.tar.gz"
 
 if (-Not (Test-Path -Path $ToolFile))
@@ -33,6 +37,9 @@ $RepoRoot = Split-Path $ScriptRoot -Parent
 $Images = Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter *.png
 $Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/posts" -Filter *.jpeg
 $Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images" -Filter social_preview.png
+$Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/drafts" -Filter *.png
+$Images += Get-ChildItem -Recurse -Path "$RepoRoot/_site/assets/images/drafts" -Filter *.jpeg
+
 foreach ($image in $Images)
 {
     $ConvertedImageName = $image.Name + ".webp"
