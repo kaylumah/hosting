@@ -19,7 +19,7 @@ jobs:
         shell: pwsh
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
-            $GitDiff >> $Env:GITHUB_STEP_SUMMARY
+            $GitDiff.ChangedFiles >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $true.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
