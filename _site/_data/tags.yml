@@ -18,6 +18,10 @@
   name: Git
   description: for the Git version control system
   icon: /assets/icons/simpleicons/git.svg
+- id: markdown
+  name: Markdown
+  description: for the Markdown language
+  icon: 
 - id: moq
   name: Moq
   description: for the Moq mocking library in .NET
