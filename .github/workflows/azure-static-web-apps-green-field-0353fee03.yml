@@ -85,7 +85,7 @@ jobs:
             dotnet test test/E2e
 
   close_pull_request:
-    if: github.event.pull_request.draft == false && (github.event_name == 'pull_request' && github.event.action == 'closed')
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request
     steps:
