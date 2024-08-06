@@ -13,7 +13,8 @@ jobs:
         with:
          #fails without this
          fetch-depth: 2
-      - name: verify
+      - id: git_diff
+        name: verify
         shell: pwsh
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
@@ -23,6 +24,7 @@ jobs:
 
       - name: verify
         shell: pwsh
+        if: ${{ steps.git_diff.outputs.AssetsChanged}}
         run: |
           ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
           $GitStatus = git status --short
