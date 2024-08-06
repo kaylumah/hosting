@@ -28,14 +28,15 @@ jobs:
             $AssetsChanged = $GitDiff.Assets.ToString().ToLower()
             Write-Host "AssetsChanged=$AssetsChanged"
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
-
-      - name: Verify if images in next-gen format are present
-        if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
-        shell: pwsh
-        run: |
-          ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
-          # $GitStatus = git status --short
-          # $GitStatus
+      
+      # Consider this
+      # - name: Verify if images in next-gen format are present
+      #   if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
+      #   shell: pwsh
+      #   run: |
+      #     ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
+      #     # $GitStatus = git status --short
+      #     # $GitStatus
 
       - if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
         uses: EndBug/add-and-commit@v9
