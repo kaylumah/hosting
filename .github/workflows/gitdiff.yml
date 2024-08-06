@@ -22,15 +22,6 @@ jobs:
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $false.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
-            echo "secret-number=test" >> $GITHUB_OUTPUT
-            echo "Val2=Moe" >> $env:GITHUB_OUTPUT
-            "Val3=Moe" >> $env:GITHUB_OUTPUT
-      - name: Use that secret output (protected by a mask)
-        run: |
-          echo "the secret number is ${{ steps.git_diff.outputs.AssetsChanged }}"
-          echo "the secret number is ${{ steps.git_diff.outputs.secret-number }}"
-          echo "the secret number is ${{ steps.git_diff.outputs.Val2 }}"
-          echo "the secret number is ${{ steps.git_diff.outputs.Val3 }}"
 
       - name: verify
         shell: pwsh
