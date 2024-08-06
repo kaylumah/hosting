@@ -1,10 +1,10 @@
 ---
-title: A
-# description: SpecFlow rebooted; please welcome Reqnroll!
+title: Fixing VSCode Markdown preview with symbolic links!
+description: Render images from everywhere inside VSCode's markdown preview
 # image: /assets/images/posts/20240209/reqnroll/cover_image.png
-# tags:
-#   - testing
-#   - reqnroll
+tags:
+  - vscode
+  - markdown
 # publishedtime: '21:00'
 # commentid: '555' 
 ---
