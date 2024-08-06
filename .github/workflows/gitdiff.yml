@@ -46,7 +46,6 @@ jobs:
           # recreate: true
           message: |
             Detected assets folder change for ${{ github.sha }}
-          
 
 # Consider this...
 #   seo_job:
