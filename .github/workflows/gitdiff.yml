@@ -23,6 +23,9 @@ jobs:
             $AssetsChanged = $false
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
             echo "secret-number=test" >> "$GITHUB_OUTPUT"
+      - name: Use that secret output (protected by a mask)
+        run: |
+          echo "the secret number is ${{ steps.git_diff.outputs.secret-number }}"
 
       # - name: verify
       #   shell: pwsh
