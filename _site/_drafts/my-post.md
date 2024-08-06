@@ -6,11 +6,7 @@ Many static website generators support writing blogs in Markdown. Jekyll and sev
 
 My favorite editor for writing Markdown is VSCode. While this separation is useful for organization, it can be somewhat cumbersome when editing and previewing Markdown.
 
-A typical directory structure would look like this:
-
-
-
-For the sake of argument let's say that our directory structure looks like this:
+To illustrate this point, let’s look at an example. A typical directory structure looks like this:
 
 ```sh
 # generated with the command tree -L 2
