@@ -5,7 +5,7 @@
 $DiffOutput = git diff --name-status HEAD^ HEAD
 # git diff --stat HEAD^ HEAD
 
-$AssetFolderDiff = $diff | Where-Object { $_ -match '^_site/assets/' }
+$AssetFolderDiff = $DiffOutput | Where-Object { $_ -match '^_site/assets/' }
 $AssestFolderChanged = $AssetFolderDiff.Length -gt 0
 
 [PSCustomObject]@{
