@@ -23,6 +23,7 @@ jobs:
 
             # Write all folders we required in follow-up actions
             $AssetsChanged = $GitDiff.Assets.ToString().ToLower()
+            Write-Host "AssetsChanged=$AssetsChanged"
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
       - name: Verify if images in next-gen format are present
