@@ -21,6 +21,7 @@ jobs:
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
             $AssetsChanged = $false
+            # Write-Output "AssetsChanged=${{ toJSON($AssetsChanged) }}" >> $Env:GITHUB_OUTPUT
             Write-Output "AssetsChanged=$($AssetsChanged)" >> $Env:GITHUB_OUTPUT
             echo "secret-number=test" >> $GITHUB_OUTPUT
             echo "Val2=Moe" >> $env:GITHUB_OUTPUT
