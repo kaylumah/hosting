@@ -26,13 +26,13 @@ To illustrate this point, let’s look at an example. A typical directory struct
 
 Using the Markdown preview feature of VSCode that would look like this:
 <!-- code --profile "Blog" . -->
-![Markdown preview from project root](/assets/images/drafts/markdown-preview/001.png){width=2272 height=1760}
+![Markdown preview from project root](/assets/images/drafts/20240806/markdown-preview/001.png){width=2272 height=1760}
 
 ## The issue
 
 If you’re like me, your project contains many more files than the few shown in the example. In such cases, I prefer working inside the _posts folder. Unfortunately, as the screenshot below shows, this breaks the image preview functionality.
 
-![Markdown preview from subfolder](/assets/images/drafts/markdown-preview/002.png){width=2272 height=1760}
+![Markdown preview from subfolder](/assets/images/drafts/20240806/markdown-preview/002.png){width=2272 height=1760}
 
 Instead of displaying my logo, the preview now shows a broken image icon. Technically, this behavior is correct because, relative to our “hello-world.md” post, there is no “assets” directory. You might think that changing the path to “../assets/” would solve the issue, since that’s where the folder exists on disk. However, VSCode does not allow this due to [security concerns](https://github.com/Microsoft/vscode/issues/64685#issuecomment-446414622). Even if it did work, it would create the issue that the preview would no longer function correctly when opened from the root directory.
 
@@ -48,7 +48,7 @@ ln -s ../assets assets
 
 From the filesystem perspective the "_posts" folder now has a subfolder called posts. If we now open it inside VSCode it renders the image correctly.
 
-![Markdown preview with symlink](/assets/images/drafts/markdown-preview/003.png){width=2272 height=1760}
+![Markdown preview with symlink](/assets/images/drafts/20240806/markdown-preview/003.png){width=2272 height=1760}
 
 ## To consider
 
