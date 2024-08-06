@@ -20,7 +20,7 @@ jobs:
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
-            $AssetsChanged = $false.ToString().ToLower()
+            $AssetsChanged = $true.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
       - name: verify
