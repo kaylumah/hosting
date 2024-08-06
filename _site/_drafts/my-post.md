@@ -18,9 +18,19 @@ To illustrate this point, let’s look at an example. A typical directory struct
 └── index.html
 ```
 
-> **note**: to ensure no installed extensions can interfere with this demo I am opening VSCode in profile mode (i.e. `code --profile "Blog" .`)
+Using the Markdown preview feature of VSCode that would look like this:
+<!-- code --profile "Blog" . -->
+![Markdown preview from project root](/assets/images/drafts/markdown-preview/001.png)
 
-![](/assets/images/drafts/markdown-preview/001.png)
+If you’re like me, your project contains many more files than the few shown in the example. In such cases, I prefer working inside the _posts folder. Unfortunately, as the screenshot below shows, this breaks the image preview functionality.
+
+
+
+
+
+
+
+
 
 However, in my case there are a lot more files in the root directory. Sometimes I just want to experience just editing the posts.
 
