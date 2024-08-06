@@ -18,8 +18,9 @@ jobs:
         run: |
             $GitDiff = & ./tools/Get-Diff.ps1
             $GitDiff >> $Env:GITHUB_STEP_SUMMARY
-            # Write-Output "hello V3" >> $Env:GITHUB_STEP_SUMMARY
-      
+            $AssetsChanged = $true
+            Write-Output "AssetsChanged=$($AssetsChanged)" >> $Env:GITHUB_OUTPUT
+
       - name: verify
         shell: pwsh
         run: |
