@@ -2,7 +2,13 @@
 title: "A"
 ---
 
-The first incarnation of my blog was written using Jekyll, since then I moved to a custom written static website generator. In Jekyll Pages/Posts are separated from the assets directory, I chose to keep the same separation from my code.
+Many static website generators support writing blogs in Markdown. Jekyll and several other generators organize content, such as blog posts, and assets, like images and CSS files, into separate directories.
+
+My favorite editor for writing Markdown is VSCode. While this separation is useful for organization, it can be somewhat cumbersome when editing and previewing Markdown.
+
+A typical directory structure would look like this:
+
+
 
 For the sake of argument let's say that our directory structure looks like this:
 
