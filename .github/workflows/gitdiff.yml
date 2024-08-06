@@ -32,13 +32,13 @@ jobs:
           echo "the secret number is ${{ steps.git_diff.outputs.Val2 }}"
           echo "the secret number is ${{ steps.git_diff.outputs.Val3 }}"
 
-      # - name: verify
-      #   shell: pwsh
-      #   if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
-      #   run: |
-      #     ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
-      #     $GitStatus = git status --short
-      #     $GitStatus
+      - name: verify
+        shell: pwsh
+        if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
+        run: |
+          ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
+          $GitStatus = git status --short
+          $GitStatus
           
 
 # Consider this...
