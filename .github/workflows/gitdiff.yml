@@ -1,4 +1,4 @@
-name: verify changes
+name: Verify follow-up actions required
 
 on:
   # workflow_dispatch:
