@@ -26,8 +26,8 @@ jobs:
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
       - name: verify
-        shell: pwsh
         if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
+        shell: pwsh
         run: |
           ./tools/Convert-WebImage.ps1 -ToolVersion libwebp-1.3.2-linux-x86-64 | Out-Null
           $GitStatus = git status --short
