@@ -25,7 +25,7 @@ jobs:
             $AssetsChanged = $GitDiff.Assets.ToString().ToLower()
             Write-Output "AssetsChanged=$AssetsChanged" >> $Env:GITHUB_OUTPUT
 
-      - name: verify
+      - name: Verify if images in next-gen format are present
         if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
         shell: pwsh
         run: |
