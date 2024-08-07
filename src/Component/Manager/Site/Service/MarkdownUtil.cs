@@ -6,9 +6,16 @@ using Markdig;
 namespace Kaylumah.Ssg.Utilities
 {
 
-    public static class MarkdownUtil
+    public class MarkdownUtil
     {
-        public static string ToHtml(string source)
+        readonly string _BaseUrl;
+
+        public MarkdownUtil(string baseUrl)
+        {
+            _BaseUrl = baseUrl;
+        }
+
+        public string ToHtml(string source)
         {
             MarkdownPipeline pipeline = BuildPipeline();
             string intermediateResult = Markdown.ToHtml(source, pipeline);
@@ -16,7 +23,7 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
-        public static string ToText(string source)
+        public string ToText(string source)
         {
             MarkdownPipeline pipeline = BuildPipeline();
             string intermediateResult = Markdown.ToPlainText(source, pipeline);
@@ -24,20 +31,22 @@ namespace Kaylumah.Ssg.Utilities
             return result;
         }
 
-        static MarkdownPipeline BuildPipeline()
+        MarkdownPipeline BuildPipeline()
         {
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/YamlSpecs.md
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/AutoIdentifierSpecs.md
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/PipeTableSpecs.md
             // https://github.com/xoofx/markdig/blob/master/src/Markdig.Tests/Specs/GenericAttributesSpecs.md
 
+            MarkdownExtensionEnsureAbsoluteLink markdownExtensionEnsureAbsoluteLink = new MarkdownExtensionEnsureAbsoluteLink(_BaseUrl);
+            MarkdownExtensionEnsureExternalLink markdownExtensionEnsureExternalLink = new MarkdownExtensionEnsureExternalLink(_BaseUrl);
             MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
                 .UseYamlFrontMatter() // needed to remove any frontmatter
                 .UseAutoIdentifiers() // used for clickable headers
                 .UsePipeTables() // support for tables
                 .UseGenericAttributes() // support for inline attributes (like width, height)
-                .Use<MarkdownExtensionEnsureAbsoluteLink>()
-                .Use<MarkdownExtensionEnsureExternalLink>()
+                .Use(markdownExtensionEnsureAbsoluteLink)
+                .Use(markdownExtensionEnsureExternalLink)
                 .Use<MarkdownExtensionClickableHeaderLink>()
                 .Use<MarkdownExtensionUsePictures>()
                 .Build();

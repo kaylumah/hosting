@@ -11,15 +11,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
     public class MarkdownContentPreprocessorStrategy : IContentPreprocessorStrategy
     {
         readonly string[] _TargetExtensions;
+        readonly SiteInfo _SiteInfo;
 
-        public MarkdownContentPreprocessorStrategy()
+        public MarkdownContentPreprocessorStrategy(SiteInfo siteInfo)
         {
             _TargetExtensions = [".md"];
+            _SiteInfo = siteInfo;
         }
 
         public string Execute(string raw)
         {
-            string result = MarkdownUtil.ToHtml(raw);
+            MarkdownUtil markdownUtil = new MarkdownUtil(_SiteInfo.Url);
+            string result = markdownUtil.ToHtml(raw);
             return result;
         }
 

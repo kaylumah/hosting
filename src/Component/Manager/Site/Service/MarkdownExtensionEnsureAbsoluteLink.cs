@@ -11,6 +11,13 @@ namespace Kaylumah.Ssg.Utilities
 {
     class MarkdownExtensionEnsureAbsoluteLink : IMarkdownExtension
     {
+        readonly string _BaseUrl;
+
+        public MarkdownExtensionEnsureAbsoluteLink(string baseUrl)
+        {
+            _BaseUrl = baseUrl;
+        }
+
         void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
         {
             // Empty on purpose
@@ -65,8 +72,7 @@ namespace Kaylumah.Ssg.Utilities
                     }
                     else
                     {
-                        // TODO should be better way to pass this
-                        Uri uri = new Uri($"https://kaylumah.nl{escapeUrl}");
+                        Uri uri = new Uri($"{_BaseUrl}{escapeUrl}");
                         result = uri.ToString();
                     }
                 }
