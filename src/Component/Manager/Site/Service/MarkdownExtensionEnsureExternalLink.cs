@@ -15,6 +15,13 @@ namespace Kaylumah.Ssg.Utilities
 {
     class MarkdownExtensionEnsureExternalLink : IMarkdownExtension
     {
+        readonly string _BaseUrl;
+
+        public MarkdownExtensionEnsureExternalLink(string baseUrl)
+        {
+            _BaseUrl = baseUrl;
+        }
+
         void IMarkdownExtension.Setup(MarkdownPipelineBuilder pipeline)
         {
             // Empty on purpose
@@ -63,7 +70,7 @@ namespace Kaylumah.Ssg.Utilities
         void RenderTargetAttribute(LinkInline linkInline, Uri uri)
         {
             string uriAsString = uri.ToString();
-            bool isExternal = uriAsString.StartsWith("https://kaylumah.nl", StringComparison.Ordinal) == false;
+            bool isExternal = uriAsString.StartsWith(_BaseUrl, StringComparison.Ordinal) == false;
             if (isExternal)
             {
                 linkInline.GetAttributes().AddClass("external");
