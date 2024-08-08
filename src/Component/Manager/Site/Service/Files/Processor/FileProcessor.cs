@@ -173,7 +173,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             criteria.FileName = fileInfo.Name;
             FileMetaData fileMeta = Parse(criteria);
-            string fileContents = fileMeta.Raw;
 
             IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileMeta));
             if (preprocessor != null)
@@ -182,11 +181,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
             else
             {
-                fileMeta.Content = fileContents;
+                fileMeta.Content = fileMeta.Raw;
             }
 
             Encoding encoding = fileStream.DetermineEncoding();
-            byte[] fileBytes = encoding.GetBytes(fileContents);
+            byte[] fileBytes = encoding.GetBytes(fileMeta.Content);
             BinaryFile fileResult = new TextFile(fileMeta, fileBytes, encoding.WebName);
             return fileResult;
         }
