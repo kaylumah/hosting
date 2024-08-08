@@ -24,7 +24,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
         {
             string raw = fileMetaData.Raw;
             MarkdownUtil markdownUtil = new MarkdownUtil(_SiteInfo.Url);
-            string result = markdownUtil.ToHtml(raw);
+            fileMetaData.Content = markdownUtil.ToHtml(raw);
         }
 
         public bool ShouldExecute(FileMetaData fileMetaData)
