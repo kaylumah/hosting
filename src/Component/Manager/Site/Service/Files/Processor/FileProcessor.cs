@@ -179,7 +179,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 preprocessor.Execute(fileMeta);
             }
-            else
+
+            if (string.IsNullOrEmpty(fileMeta.Content))
             {
                 fileMeta.Content = fileMeta.Raw;
             }
