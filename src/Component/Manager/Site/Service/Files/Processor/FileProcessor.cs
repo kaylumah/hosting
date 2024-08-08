@@ -180,6 +180,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             {
                 preprocessor.Execute(fileMeta);
             }
+            else
+            {
+                fileMeta.Content = fileContents;
+            }
 
             Encoding encoding = fileStream.DetermineEncoding();
             byte[] fileBytes = encoding.GetBytes(fileContents);

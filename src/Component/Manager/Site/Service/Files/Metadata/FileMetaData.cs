@@ -88,6 +88,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string Content
+        {
+            get
+            {
+                string content = this.GetValue<string>(nameof(Content));
+                return content;
+            }
+            set
+            {
+                this.SetValue(nameof(Content), value);
+            }
+        }
+
         public string Collection
         {
             get
