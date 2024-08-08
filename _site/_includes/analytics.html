@@ -17,7 +17,7 @@
 
     let today = new Date();
     let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-    document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
+    document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/; SameSite=Strict`;
   }
 
 </script>
