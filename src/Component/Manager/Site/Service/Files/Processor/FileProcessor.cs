@@ -216,6 +216,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             string lowerName = nameof(result.FrontMatter.OutputLocation).ToLower(CultureInfo.InvariantCulture);
             result.FrontMatter.Remove(lowerName);
             result.FrontMatter.Uri = outputLocation;
+            result.FrontMatter.SourceFileName = criteria.FileName;
 
             return result;
         }

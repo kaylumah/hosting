@@ -62,6 +62,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string SourceFileName
+        {
+            get
+            {
+                string sourceFileName = this.GetValue<string>(nameof(SourceFileName));
+                return sourceFileName;
+            }
+            set
+            {
+                this.SetValue(nameof(SourceFileName), value);
+            }
+        }
+
         public string Collection
         {
             get
