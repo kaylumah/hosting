@@ -25,6 +25,7 @@ namespace Test.Unit.FormerXunit
     public class FileProcessorTests
     {
         const string Root = "_site";
+        const int DefaultValueCount = 4;
 
         [Fact]
         public async Task Test_FileProcessor_ChangedFileExtension()
@@ -97,17 +98,17 @@ namespace Test.Unit.FormerXunit
                 FileExtensionsToTarget = new string[] { ".txt" }
             });
             result.Should().NotBeEmpty();
-            result.Count().Should().Be(4);
+            result.Count().Should().Be(DefaultValueCount);
 
             BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt"));
             BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt"));
             BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt"));
             BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt"));
 
-            fileA.MetaData.Count.Should().Be(1);
-            fileB.MetaData.Count.Should().Be(1);
-            fileC.MetaData.Count.Should().Be(2, "Default keys + one new keys equals 2");
-            fileD.MetaData.Count.Should().Be(1);
+            fileA.MetaData.Count.Should().Be(DefaultValueCount);
+            fileB.MetaData.Count.Should().Be(DefaultValueCount);
+            fileC.MetaData.Count.Should().Be(DefaultValueCount + 1, "Default keys + one new keys equals 2");
+            fileD.MetaData.Count.Should().Be(DefaultValueCount);
         }
 
         [Fact(Skip = "figure out empty directory")]
@@ -189,7 +190,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(1, "Only URI is added by default");
+            result.Count.Should().Be(DefaultValueCount, "Only URI is added by default");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("file.html");
         }
@@ -223,7 +224,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(1, "Only URI is added by default");
+            result.Count.Should().Be(DefaultValueCount, "Only URI is added by default");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("file.html");
         }
@@ -258,7 +259,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
+            result.Count.Should().Be(DefaultValueCount + 1, "Defaults = 1 + Applied Config = 1, Makes 2 values");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("file.html");
             result.Layout.Should().NotBeNull();
@@ -302,7 +303,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
+            result.Count.Should().Be(DefaultValueCount + 2, "Defaults = 1 + Applied Config = 2, Makes 3 values");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("test/file.html");
             result.Layout.Should().NotBeNull();
@@ -349,7 +350,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(3, "Defaults = 1 + Applied Config = 2, Makes 3 values");
+            result.Count.Should().Be(DefaultValueCount + 2, "Defaults = 1 + Applied Config = 2, Makes 3 values");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("test/file.html");
             result.Layout.Should().NotBeNull();
@@ -395,7 +396,7 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
+            result.Count.Should().Be(DefaultValueCount + 1, "Defaults = 1 + Applied Config = 1, Makes 2 values");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("posts/2021/file.html");
             result.Layout.Should().NotBeNull();
