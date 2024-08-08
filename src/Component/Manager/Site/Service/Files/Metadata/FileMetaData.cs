@@ -75,6 +75,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
+        public string Raw
+        {
+            get
+            {
+                string raw = this.GetValue<string>(nameof(Raw));
+                return raw;
+            }
+            set
+            {
+                this.SetValue(nameof(Raw), value);
+            }
+        }
+
         public string Collection
         {
             get

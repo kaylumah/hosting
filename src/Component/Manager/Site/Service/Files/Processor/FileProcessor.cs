@@ -172,10 +172,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             criteria.FileName = fileInfo.Name;
-            ParsedFile<FileMetaData> response = Parse(criteria);
-
-            FileMetaData fileMeta = response.FrontMatter;
-            string fileContents = response.Content;
+            FileMetaData fileMeta = Parse(criteria);
+            string fileContents = fileMeta.Raw;
 
             IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
             if (preprocessor != null)
@@ -189,7 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return fileResult;
         }
 
-        ParsedFile<FileMetaData> Parse(MetadataCriteria criteria)
+        FileMetaData Parse(MetadataCriteria criteria)
         {
             ParsedFile<FileMetaData> result = _MetadataProvider.Retrieve<FileMetaData>(criteria.Content);
             if (result.FrontMatter == null)
@@ -218,8 +216,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             result.FrontMatter.Uri = outputLocation;
             result.FrontMatter.SourceFileName = criteria.FileName;
+            result.FrontMatter.Raw = result.Content;
 
-            return result;
+            return result.FrontMatter;
         }
 
         string RetrieveExtension(string fileName)
