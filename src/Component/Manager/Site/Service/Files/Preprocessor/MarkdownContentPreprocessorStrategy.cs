@@ -4,6 +4,7 @@
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
@@ -19,16 +20,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor
             _SiteInfo = siteInfo;
         }
 
-        public string Execute(string raw)
+        public void Execute(FileMetaData fileMetaData)
         {
+            string raw = fileMetaData.Raw;
             MarkdownUtil markdownUtil = new MarkdownUtil(_SiteInfo.Url);
             string result = markdownUtil.ToHtml(raw);
-            return result;
         }
 
-        public bool ShouldExecute(IFileSystemInfo fileInfo)
+        public bool ShouldExecute(FileMetaData fileMetaData)
         {
-            string extension = Path.GetExtension(fileInfo.Name);
+            string extension = Path.GetExtension(fileMetaData.SourceFileName);
             bool isMatch = _TargetExtensions.Contains(extension);
             return isMatch;
         }

@@ -175,10 +175,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             FileMetaData fileMeta = Parse(criteria);
             string fileContents = fileMeta.Raw;
 
-            IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileInfo));
+            IContentPreprocessorStrategy? preprocessor = _PreprocessorStrategies.SingleOrDefault(x => x.ShouldExecute(fileMeta));
             if (preprocessor != null)
             {
-                fileContents = preprocessor.Execute(fileContents);
+                preprocessor.Execute(fileMeta);
             }
 
             Encoding encoding = fileStream.DetermineEncoding();
