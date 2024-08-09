@@ -8,9 +8,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Search
         public string Id
         { get; set; }
 
-        public IndexItem(string id)
+        public string Title
+        { get; set; }
+
+        public IndexItem(string id, string title)
         {
             Id = id;
+            Title = title;
         }
     }
 }
