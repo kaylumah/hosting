@@ -2,8 +2,10 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
+using Kaylumah.Ssg.Manager.Site.Service.Search;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Ssg.Extensions.Metadata.Abstractions;
 
@@ -18,6 +20,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
+            IEnumerable<Article> articles = siteMetaData.GetArticles();
+            List<IndexItem> indexItems = new List<IndexItem>();
+            IndexItem[] array = indexItems.ToArray();
+            SearchIndex searchIndex = new SearchIndex(array);
+            byte[] bytes = searchIndex.SaveAsJson();
+            Artifact artifact = new Artifact("search.json", bytes);
             Artifact[] result =  Array.Empty<Artifact>();
             return result;
         }
