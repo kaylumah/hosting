@@ -86,10 +86,10 @@ jobs:
           Write-Host $BaseUrl
           dotnet src/Component/Client/SiteGenerator/bin/Release/net8.0/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
-      - name: Print site
-        shell: pwsh
-        run: |
-          tree dist
+      # - name: Print site
+      #   shell: pwsh
+      #   run: |
+      #     tree dist
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
