@@ -47,15 +47,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
 
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: global.json
       - name: 'Make tools available'
         shell: pwsh
         run: |
