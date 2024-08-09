@@ -137,12 +137,12 @@ type: Collection
                     this.ref("uri");
 
                     // If you added more searchable fields to the search index, list them here.
-                    this.field("title");
-                    this.field("content");
-                    this.field("description");
-                    this.field("categories");
+                    // this.field("title");
+                    // this.field("content");
+                    // this.field("description");
+                    // this.field("categories");
 
-                    for (var doc of request.response)
+                    for (var doc of request.response.Items)
                     {
                     this.add(doc);
                     lookup[doc.uri] = doc;
@@ -164,32 +164,4 @@ type: Collection
             console.log("results", results);
         }
     });
-    //   function searchDone() {}
-    //   function initIndex()
-    //   {
-    //     var request = new XMLHttpRequest();
-    //     request.open("GET", "/search.json");
-    //     request.responseType = "json";
-
-    //     request.addEventListener("load", function(event) {
-
-    //         var index = lunr(function() {
-    //             console.log("preparing lunr...");
-    //             var response = request.response;
-    //             var items = response.Items;
-    //             for (var doc of items)
-    //             {
-    //                 console.log("reg", doc);
-    //                 this.add(doc);
-    //             }
-    //         });
-
-    //         console.log("index", index);
-    //     });
-    //     request.addEventListener("error", searchDone, false);
-
-    //     request.send(null);
-    //   }
-
-    //   initIndex();
 </script>
