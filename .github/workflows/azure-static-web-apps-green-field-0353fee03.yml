@@ -84,11 +84,7 @@ jobs:
         run: |
           $BaseUrl = ./tools/Get-BaseUrl.ps1
           Write-Host $BaseUrl
-
-      # - name: 'Generate Website'
-      #   shell: pwsh
-      #   run: |
-      #     ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
+          dotnet src/Component/Client/SiteGenerator/bin/Release/net8.0/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
