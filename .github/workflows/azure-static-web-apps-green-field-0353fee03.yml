@@ -89,7 +89,7 @@ jobs:
       - name: Print site
         shell: pwsh
         run: |
-          tree
+          tree dist
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
