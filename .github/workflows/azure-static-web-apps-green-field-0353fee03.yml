@@ -32,9 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy
     steps:
+
       - uses: actions/checkout@v4
-        with:
-          submodules: true
+
       - name: Set TimeZone
         uses: hoang-rio/set-timezone@v1.4
         with:
