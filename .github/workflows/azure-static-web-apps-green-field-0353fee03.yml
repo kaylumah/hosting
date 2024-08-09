@@ -53,10 +53,12 @@ jobs:
           global-json-file: global.json
 
       - name: Install dependencies
+        shell: pwsh
         run: |
           dotnet restore
 
       - name: Install dependencies (tools)
+        shell: pwsh
         run: |
           dotnet tool restore
 
@@ -68,6 +70,7 @@ jobs:
           dotnet build --no-restore --configuration Release /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 
       - name: Test
+        shell: pwsh
         run: |
           dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
