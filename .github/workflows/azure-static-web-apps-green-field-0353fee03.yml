@@ -61,6 +61,7 @@ jobs:
           dotnet tool restore
 
       - name: Build
+        shell: pwsh
         run: |
           $BuildId = $env:GITHUB_RUN_ID
           $BuildNumber = $env:GITHUB_RUN_NUMBER
