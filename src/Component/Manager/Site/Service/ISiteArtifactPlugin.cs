@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
@@ -11,6 +12,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     public interface ISiteArtifactPlugin
     {
         Artifact[] Generate(SiteMetaData siteMetaData);
+    }
+
+    public class SearchIndexArtifactPlugin : ISiteArtifactPlugin
+    {
+        public Artifact[] Generate(SiteMetaData siteMetaData)
+        {
+            Artifact[] result =  Array.Empty<Artifact>();
+            return result;
+        }
     }
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
