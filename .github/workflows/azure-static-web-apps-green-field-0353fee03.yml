@@ -36,9 +36,11 @@ jobs:
         with:
           submodules: true
       - name: Set TimeZone
-        uses: hoang-rio/set-timezone@v1.4
-        with:
-          timezoneLinux: "Europe/Amsterdam"
+        uses: ./.github/workflows/timezone
+      # - name: Set TimeZone
+      #   uses: hoang-rio/set-timezone@v1.4
+      #   with:
+      #     timezoneLinux: "Europe/Amsterdam"
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
@@ -68,7 +70,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           app_location: "dist"
-          api_location: ""
+          # api_location: ""
           output_location: ""
           skip_app_build: true
           skip_api_build: true
