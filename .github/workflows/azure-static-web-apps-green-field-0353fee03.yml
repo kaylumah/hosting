@@ -53,16 +53,20 @@ jobs:
           global-json-file: global.json
 
       - name: Install dependencies
-        run: dotnet restore
+        run: |
+          dotnet restore
 
       - name: Install dependencies (tools)
-        run: dotnet tool restore
+        run: |
+          dotnet tool restore
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: |
+          dotnet build --no-restore --configuration Release /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 
       - name: Test
-        run: dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
+        run: |
+          dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
       # - name: Sets env vars for PR
       #   if: github.event_name == 'pull_request'
