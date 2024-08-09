@@ -35,10 +35,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Set TimeZone
-        uses: hoang-rio/set-timezone@v1.4
-        with:
-          timezoneLinux: "Europe/Amsterdam"
+      - uses: ./.github/workflows/timezone
+      # - name: Set TimeZone
+      #   uses: hoang-rio/set-timezone@v1.4
+      #   with:
+      #     timezoneLinux: "Europe/Amsterdam"
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
