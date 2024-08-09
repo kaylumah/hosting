@@ -91,6 +91,14 @@ jobs:
       #   run: |
       #     tree dist
 
+      - name: Upload generated website
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist
+          if-no-files-found: error
+          retention-days: 1
+
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
       #   uses: Azure/static-web-apps-deploy@v1
