@@ -109,10 +109,10 @@ jobs:
           Remove-Item dist/tailwind.config.js
           Remove-Item dist/node_modules -Recurse -Force
 
-      - name: Print site
-        shell: pwsh
-        run: |
-          tree dist
+      # - name: Print site
+      #   shell: pwsh
+      #   run: |
+      #     tree dist
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
