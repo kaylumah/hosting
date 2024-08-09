@@ -39,6 +39,9 @@ jobs:
         uses: hoang-rio/set-timezone@v1.4
         with:
           timezoneLinux: "Europe/Amsterdam"
+          timezoneMacos: "Europe/Amsterdam"
+          timezoneWindows: "W. Europe Standard Time"
+
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
         run: |
