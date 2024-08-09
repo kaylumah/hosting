@@ -42,14 +42,16 @@ jobs:
           timezoneMacos: "Europe/Amsterdam"
           timezoneWindows: "W. Europe Standard Time"
 
-      - name: Sets env vars for PR
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Sets env vars for PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
+
       - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
