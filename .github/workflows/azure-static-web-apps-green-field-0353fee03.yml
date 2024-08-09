@@ -42,6 +42,11 @@ jobs:
           timezoneMacos: "Europe/Amsterdam"
           timezoneWindows: "W. Europe Standard Time"
 
+      - name: Sets env vars for PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
+
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -79,11 +84,6 @@ jobs:
         run: |
           $BaseUrl = ./tools/Get-BaseUrl.ps1
           Write-Host $BaseUrl
-
-      # - name: Sets env vars for PR
-      #   if: github.event_name == 'pull_request'
-      #   run: |
-      #     echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
 
       # - name: 'Generate Website'
       #   shell: pwsh
