@@ -164,6 +164,11 @@ type: Collection
             var results = index.search(term);
             searchDone();
 
+            for (var result of results)
+            {
+                console.log("result", result);
+            }
+
             console.log("results", results);
         }
     });
