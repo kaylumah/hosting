@@ -138,7 +138,7 @@ type: Collection
                     this.ref("Id");
 
                     // If you added more searchable fields to the search index, list them here.
-                    // this.field("title");
+                    this.field("Title");
                     // this.field("content");
                     // this.field("description");
                     // this.field("categories");
@@ -146,10 +146,12 @@ type: Collection
                     for (var doc of request.response.Items)
                     {
                     this.add(doc);
-                    lookup[doc.uri] = doc;
+                    lookup[doc.Id] = doc;
                     }
                 });
 
+                console.log("lunr", index);
+                console.log("lookup", lookup);
                 // Search index is ready, perform the search now
                 search(queuedTerm);
             }, false);
