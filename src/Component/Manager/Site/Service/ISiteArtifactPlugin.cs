@@ -22,7 +22,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             IEnumerable<Article> articles = siteMetaData.GetArticles();
             List<IndexItem> indexItems = new List<IndexItem>();
-            foreach(Article article in articles)
+            foreach (Article article in articles)
             {
                 IndexItem indexItem = new IndexItem();
                 indexItems.Add(indexItem);
@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SearchIndex searchIndex = new SearchIndex(array);
             byte[] bytes = searchIndex.SaveAsJson();
             Artifact artifact = new Artifact("search.json", bytes);
-            Artifact[] result =  Array.Empty<Artifact>();
+            Artifact[] result = Array.Empty<Artifact>();
             return result;
         }
     }
