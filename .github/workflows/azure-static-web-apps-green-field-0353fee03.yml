@@ -62,7 +62,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --no-restore --no-build --verbosity normal --logger trx test/Unit/Test.Unit.csproj
+        run: dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
       # - name: Sets env vars for PR
       #   if: github.event_name == 'pull_request'
