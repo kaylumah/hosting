@@ -5,5 +5,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Search
 {
     public class IndexItem
     {
+        public string Id
+        { get; set; }
+
+        public IndexItem(string id)
+        {
+            Id = id;
+        }
     }
 }

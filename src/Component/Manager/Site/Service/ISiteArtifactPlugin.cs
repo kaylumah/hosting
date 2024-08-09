@@ -24,7 +24,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<IndexItem> indexItems = new List<IndexItem>();
             foreach (Article article in articles)
             {
-                IndexItem indexItem = new IndexItem();
+                IndexItem indexItem = new IndexItem(article.Id);
                 indexItems.Add(indexItem);
             }
 
