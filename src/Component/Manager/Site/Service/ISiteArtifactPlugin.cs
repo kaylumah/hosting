@@ -22,6 +22,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             IEnumerable<Article> articles = siteMetaData.GetArticles();
             List<IndexItem> indexItems = new List<IndexItem>();
+            foreach(Article article in articles)
+            {
+                IndexItem indexItem = new IndexItem();
+                indexItems.Add(indexItem);
+            }
+
             IndexItem[] array = indexItems.ToArray();
             SearchIndex searchIndex = new SearchIndex(array);
             byte[] bytes = searchIndex.SaveAsJson();
