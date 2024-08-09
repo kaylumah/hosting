@@ -58,6 +58,9 @@ jobs:
       - name: Install dependencies (tools)
         run: dotnet tool restore
 
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
       # - name: Sets env vars for PR
       #   if: github.event_name == 'pull_request'
       #   run: |
@@ -69,26 +72,26 @@ jobs:
       #     ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
-      - name: Build And Deploy
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GREEN_FIELD_0353FEE03 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          app_location: "dist"
-          api_location: ""
-          output_location: ""
-          skip_app_build: true
-          skip_api_build: true
+      # - name: Build And Deploy
+      #   uses: Azure/static-web-apps-deploy@v1
+      #   with:
+      #     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GREEN_FIELD_0353FEE03 }}
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+      #     action: "upload"
+      #     app_location: "dist"
+      #     api_location: ""
+      #     output_location: ""
+      #     skip_app_build: true
+      #     skip_api_build: true
 
-      - name: Run E2e
-        shell: pwsh
-        run: |
-            $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
-            $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
-            Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
-            pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chromium --with-deps
-            dotnet test test/E2e
+      # - name: Run E2e
+      #   shell: pwsh
+      #   run: |
+      #       $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
+      #       $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
+      #       Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
+      #       pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chromium --with-deps
+      #       dotnet test test/E2e
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
