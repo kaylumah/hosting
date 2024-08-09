@@ -71,3 +71,47 @@ type: Collection
 </script>
 
 <script src="https://unpkg.com/lunr/lunr.js"></script>
+<script>
+    window.addEventListener("DOMContentLoaded", function(event) {
+        var index = null;
+        var lookup = null;
+        var queuedTerm = null;
+
+        var form = document.getElementById("search");
+        var input = document.getElementById("search-input");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            console.log("form list")
+        });
+    });
+    //   function searchDone() {}
+    //   function initIndex()
+    //   {
+    //     var request = new XMLHttpRequest();
+    //     request.open("GET", "/search.json");
+    //     request.responseType = "json";
+
+    //     request.addEventListener("load", function(event) {
+
+    //         var index = lunr(function() {
+    //             console.log("preparing lunr...");
+    //             var response = request.response;
+    //             var items = response.Items;
+    //             for (var doc of items)
+    //             {
+    //                 console.log("reg", doc);
+    //                 this.add(doc);
+    //             }
+    //         });
+
+    //         console.log("index", index);
+    //     });
+    //     request.addEventListener("error", searchDone, false);
+
+    //     request.send(null);
+    //   }
+
+    //   initIndex();
+</script>
