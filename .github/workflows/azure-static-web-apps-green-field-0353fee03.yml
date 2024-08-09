@@ -74,6 +74,12 @@ jobs:
         run: |
           dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
+      - name: Run SiteGenerator
+        shell: pwsh
+        run: |
+          $BaseUrl = ./tools/Get-BaseUrl.ps1
+          Write-Host $BaseUrl
+
       # - name: Sets env vars for PR
       #   if: github.event_name == 'pull_request'
       #   run: |
