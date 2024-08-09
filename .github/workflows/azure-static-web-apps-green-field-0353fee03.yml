@@ -99,10 +99,11 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Print site
+      - name: Run npm steps
         shell: pwsh
         run: |
           npm i --prefix dist
+          npm run build:prod --prefix dist
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
