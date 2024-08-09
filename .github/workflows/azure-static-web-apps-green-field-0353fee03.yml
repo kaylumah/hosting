@@ -35,7 +35,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: ./.github/workflows/timezone
+      - name: Set TimeZone
+        uses: ./.github/workflows/timezone
       # - name: Set TimeZone
       #   uses: hoang-rio/set-timezone@v1.4
       #   with:
