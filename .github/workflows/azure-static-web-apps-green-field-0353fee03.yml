@@ -109,6 +109,14 @@ jobs:
           Remove-Item dist/tailwind.config.js
           Remove-Item dist/node_modules -Recurse -Force
 
+      - name: Upload generated website
+        uses: actions/upload-artifact@v4
+        with:
+          name: site_clean
+          path: dist
+          if-no-files-found: error
+          retention-days: 1
+
       # - name: Print site
       #   shell: pwsh
       #   run: |
