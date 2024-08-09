@@ -100,6 +100,15 @@ jobs:
           npm i --prefix dist
           npm run build:prod --prefix dist
 
+      - name: Cleanup
+        shell: pwsh
+        run: |
+          Remove-Item dist/styles.css
+          Remove-Item dist/package.json
+          Remove-Item dist/package-lock.json
+          Remove-Item dist/tailwind.config.js
+          Remove-Item dist/node_modules -Recurse -Force
+
       - name: Print site
         shell: pwsh
         run: |
