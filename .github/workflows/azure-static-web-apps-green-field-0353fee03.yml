@@ -58,15 +58,15 @@ jobs:
       - name: Install dependencies (tools)
         run: dotnet tool restore
 
-      - name: Sets env vars for PR
-        if: github.event_name == 'pull_request'
-        run: |
-          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
+      # - name: Sets env vars for PR
+      #   if: github.event_name == 'pull_request'
+      #   run: |
+      #     echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
 
-      - name: 'Generate Website'
-        shell: pwsh
-        run: |
-          ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
+      # - name: 'Generate Website'
+      #   shell: pwsh
+      #   run: |
+      #     ./build.ps1 -BuildId $env:GITHUB_RUN_ID -BuildNumber $env:GITHUB_RUN_NUMBER -CleanDevDependencies
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       - name: Build And Deploy
