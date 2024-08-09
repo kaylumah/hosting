@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SearchIndex searchIndex = new SearchIndex(array);
             byte[] bytes = searchIndex.SaveAsJson();
             Artifact artifact = new Artifact("search.json", bytes);
-            Artifact[] result = Array.Empty<Artifact>();
+            Artifact[] result = [artifact];
             return result;
         }
     }
