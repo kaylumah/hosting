@@ -166,10 +166,12 @@ type: Collection
 
             for (var result of results)
             {
+                var doc = lookup[result.ref];
                 console.log("result", result);
+                console.log("doc", doc);
             }
 
-            console.log("results", results);
+            // console.log("results", results);
         }
     });
 </script>
