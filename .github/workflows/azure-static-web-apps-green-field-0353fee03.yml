@@ -94,6 +94,17 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    steps:
+
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+
       - name: Run npm steps
         shell: pwsh
         run: |
@@ -108,6 +119,11 @@ jobs:
           Remove-Item dist/package-lock.json
           Remove-Item dist/tailwind.config.js
           Remove-Item dist/node_modules -Recurse -Force
+
+      - name: Print site
+        shell: pwsh
+        run: |
+          tree dist
 
       # Deploy the app to Azure Static Web Apps using the artifacts built previously
       # - name: Build And Deploy
@@ -130,22 +146,6 @@ jobs:
       #       Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
       #       pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chromium --with-deps
       #       dotnet test test/E2e
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_and_test
-    steps:
-
-      - name: Download site artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: site
-          path: dist
-
-      - name: Print site
-        shell: pwsh
-        run: |
-          tree dist
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
