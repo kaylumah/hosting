@@ -18,6 +18,9 @@ permissions:
   contents: read
   pull-requests: write
 
+env:
+  BuildConfiguration: Debug
+
 jobs:
 
   fail_if_pull_request_is_draft:
@@ -80,18 +83,21 @@ jobs:
         run: |
           $BuildId = $env:GITHUB_RUN_ID
           $BuildNumber = $env:GITHUB_RUN_NUMBER
-          dotnet build --no-restore --configuration Release /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
+          $BuildConfiguration = $env:BuildConfiguration
+          dotnet build --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 
       - name: Test
         shell: pwsh
         run: |
-          dotnet test --no-restore --no-build --configuration Release --verbosity normal --logger trx test/Unit/Test.Unit.csproj
+          $BuildConfiguration = $env:BuildConfiguration
+          dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
       - name: Run SiteGenerator
         shell: pwsh
         run: |
           $BaseUrl = "${{ steps.outputJobVariables.outputs.baseUrl }}"
-          dotnet src/Component/Client/SiteGenerator/bin/Release/net8.0/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
+          $BuildConfiguration = $env:BuildConfiguration
+          dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/net8.0/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       - name: Upload generated website
         uses: actions/upload-artifact@v4
@@ -157,7 +163,8 @@ jobs:
             $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
             $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
-            pwsh ./test/E2e/bin/Release/net8.0/playwright.ps1 install chromium --with-deps
+            $BuildConfiguration = $env:BuildConfiguration
+            pwsh ./test/E2e/bin/$BuildConfiguration/net8.0/playwright.ps1 install chromium --with-deps
             dotnet test test/E2e
 
   close_pull_request:
