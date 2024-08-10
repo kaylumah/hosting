@@ -74,9 +74,3 @@ jobs:
     #     path: snapshots
     #     if-no-files-found: ignore
     #     retention-days: 1
-
-  deploy:
-    needs: build-and-test-ubuntu-latest
-    runs-on: ubuntu-latest  
-    steps:
-      - run: echo "Hello World"
