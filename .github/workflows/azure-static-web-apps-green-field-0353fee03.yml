@@ -91,7 +91,6 @@ jobs:
         shell: pwsh
         run: |
           $BaseUrl = "${{ steps.outputJobVariables.outputs.baseUrl }}"
-          Write-Host $BaseUrl
           dotnet src/Component/Client/SiteGenerator/bin/Release/net8.0/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       - name: Upload generated website
