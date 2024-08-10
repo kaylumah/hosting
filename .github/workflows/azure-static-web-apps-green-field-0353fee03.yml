@@ -188,7 +188,7 @@ jobs:
           skip_app_build: true
           skip_api_build: true
 
-      # Note: this also restores/builds E2e project
+      # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
         shell: pwsh
         env:
@@ -197,9 +197,9 @@ jobs:
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
             $BuildConfiguration = "${{ env.BuildConfiguration }}"
             $TargetFramework = "${{ env.TargetFramework }}"
-            $PlaywrightScript = "./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1"
-            & $PlaywrightScript install chromium --with-deps
-            dotnet test test/E2e
+            dotnet build test/E2e --configuration $BuildConfiguration
+            & ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
+            dotnet test --no-build test/E2e
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
