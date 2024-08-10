@@ -82,23 +82,23 @@ jobs:
       - name: Build
         shell: pwsh
         run: |
-          $BuildId = $env:GITHUB_RUN_ID
-          $BuildNumber = $env:GITHUB_RUN_NUMBER
-          $BuildConfiguration = $env:BuildConfiguration
+          $BuildId = "$env:GITHUB_RUN_ID"
+          $BuildNumber = "$env:GITHUB_RUN_NUMBER"
+          $BuildConfiguration = "$env:BuildConfiguration"
           dotnet build --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 
       - name: Test
         shell: pwsh
         run: |
-          $BuildConfiguration = $env:BuildConfiguration
+          $BuildConfiguration = "$env:BuildConfiguration"
           dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
       - name: Run SiteGenerator
         shell: pwsh
         run: |
           $BaseUrl = "${{ steps.outputJobVariables.outputs.baseUrl }}"
-          $BuildConfiguration = $env:BuildConfiguration
-          $TargetFramework = $env:TargetFramework
+          $BuildConfiguration = "$env:BuildConfiguration"
+          $TargetFramework = "$env:TargetFramework"
           dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       - name: Upload generated website
@@ -169,8 +169,8 @@ jobs:
             $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
             $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
-            $BuildConfiguration = $env:BuildConfiguration
-            $TargetFramework = $env:TargetFramework
+            $BuildConfiguration = "$env:BuildConfiguration"
+            $TargetFramework = "$env:TargetFramework"
             pwsh ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
             dotnet test test/E2e
 
