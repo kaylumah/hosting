@@ -1,0 +1,12 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action#creating-an-action-metadata-file
+name: "Setup Timezone"
+description: "Ensures timezone is set correctly"
+runs:
+    using: "composite"
+    steps:
+      - name: Set TimeZone
+        uses: hoang-rio/set-timezone@v1.4
+        with:
+            timezoneLinux: "Europe/Amsterdam"
+            timezoneMacos: "Europe/Amsterdam"
+            timezoneWindows: "W. Europe Standard Time"
