@@ -35,6 +35,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
+    # outputs:
+      # deployUrl: ${{ steps.setvars.outputs.baseUrl }}
     steps:
 
       - uses: actions/checkout@v4
@@ -48,8 +50,9 @@ jobs:
 
       - name: Sets env vars for PR
         if: github.event_name == 'pull_request'
+        shell: pwsh
         run: |
-          echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
+          Write-Host "PR_BUILD_ID=${{ github.event.number }}" >> $env:GITHUB_ENV
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
