@@ -99,9 +99,7 @@ jobs:
           $BaseUrl = "${{ steps.outputJobVariables.outputs.baseUrl }}"
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
           $TargetFramework = "${{ env.TargetFramework }}"
-          $Dll = dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll
-          $Dll
-          # dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
+          dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 
       - name: Upload generated website
         uses: actions/upload-artifact@v4
@@ -173,7 +171,7 @@ jobs:
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
             $BuildConfiguration = "${{ env.BuildConfiguration }}"
             $TargetFramework = "${{ env.TargetFramework }}"
-            pwsh ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
+            pwsh "./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1" install chromium --with-deps
             dotnet test test/E2e
 
   close_pull_request:
