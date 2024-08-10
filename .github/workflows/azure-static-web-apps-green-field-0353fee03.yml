@@ -35,8 +35,8 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macOS-latest ]
-    # outputs:
-      # deployUrl: ${{ steps.setvars.outputs.baseUrl }}
+    outputs:
+      deployUrl: ${{ steps.outputJobVariables.outputs.baseUrl }}
     steps:
 
       - uses: actions/checkout@v4
@@ -53,6 +53,12 @@ jobs:
         shell: pwsh
         run: |
           Write-Host "PR_BUILD_ID=${{ github.event.number }}" >> $env:GITHUB_ENV
+
+      - id: outputJobVariables
+        shell: pwsh
+        run: |
+          $BaseUrl = ./tools/Get-BaseUrl.ps1
+          Write-Host "BaseUrl=$BaseUrl" >> $env:GITHUB_OUTPUT
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
