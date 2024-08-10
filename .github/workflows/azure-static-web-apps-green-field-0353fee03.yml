@@ -99,7 +99,9 @@ jobs:
           $BaseUrl = "${{ steps.outputJobVariables.outputs.baseUrl }}"
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
           $TargetFramework = "${{ env.TargetFramework }}"
-          dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
+          $Dll = dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll
+          $Dll
+          # dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramwork/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       - name: Upload generated website
         uses: actions/upload-artifact@v4
