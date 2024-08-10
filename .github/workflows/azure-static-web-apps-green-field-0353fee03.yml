@@ -51,11 +51,6 @@ jobs:
         run: |
           echo "PR_BUILD_ID=${{ github.event.number }}" >> $GITHUB_ENV
 
-      - name: Use Node.js v20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
         with:
@@ -108,6 +103,11 @@ jobs:
         with:
           name: ${{ format('site-{0}', 'ubuntu-latest') }}
           path: dist
+
+      - name: Use Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Run npm steps
         shell: pwsh
