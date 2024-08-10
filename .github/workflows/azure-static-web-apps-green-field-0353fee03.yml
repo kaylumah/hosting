@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ${{ env.LINUX_OS }} ]
+        os: [  env.LINUX_OS ]
     steps:
 
       - uses: actions/checkout@v4
