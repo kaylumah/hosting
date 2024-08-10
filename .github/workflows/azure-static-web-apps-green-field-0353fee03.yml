@@ -199,7 +199,7 @@ jobs:
             $TargetFramework = "${{ env.TargetFramework }}"
             dotnet build test/E2e --configuration $BuildConfiguration
             & ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
-            dotnet test --no-build test/E2e
+            dotnet test --no-build --configuration $BuildConfiguration test/E2e
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
