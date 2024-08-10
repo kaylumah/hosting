@@ -1,5 +1,7 @@
 # https://docs.github.com/en/actions/deployment/deploying-to-your-cloud-provider/deploying-to-azure/deploying-to-azure-static-web-app 
 # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+# https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+# https://learn.microsoft.com/en-us/dotnet/devops/dotnet-test-github-action
 
 name: Kaylumah.nl CI/CD
 
