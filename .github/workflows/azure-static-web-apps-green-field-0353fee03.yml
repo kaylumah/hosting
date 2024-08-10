@@ -19,7 +19,7 @@ permissions:
   pull-requests: write
 
 env:
-  BuildConfiguration: Debug
+  BuildConfiguration: Release
   TargetFramework: net8.0
 
 jobs:
