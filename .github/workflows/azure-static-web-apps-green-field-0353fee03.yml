@@ -106,7 +106,7 @@ jobs:
       - name: Download site artifact
         uses: actions/download-artifact@v4
         with:
-          name: site
+          name: ${{ format('site-{0}', 'ubuntu-latest') }}
           path: dist
 
       - name: Run npm steps
