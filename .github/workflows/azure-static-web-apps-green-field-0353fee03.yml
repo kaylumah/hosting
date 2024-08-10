@@ -3,6 +3,9 @@
 
 name: Kaylumah.nl CI/CD
 
+env:
+  LINUX_OS: ubuntu-latest
+
 on:
     workflow_dispatch:
     push:
@@ -29,8 +32,12 @@ jobs:
 
   build_and_test:
     if: github.event.pull_request.draft == false && (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed'))
+    name: Build and Test (for ${{matrix.os}})
     runs-on: ubuntu-latest
-    name: Build and Test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ${{ env.LINUX_OS }} ]
     steps:
 
       - uses: actions/checkout@v4
