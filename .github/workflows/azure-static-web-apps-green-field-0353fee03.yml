@@ -197,7 +197,8 @@ jobs:
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
             $BuildConfiguration = "${{ env.BuildConfiguration }}"
             $TargetFramework = "${{ env.TargetFramework }}"
-            & ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
+            $PlaywrightScript = "./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1"
+            & $PlaywrightScript install chromium --with-deps
             dotnet test test/E2e
 
   close_pull_request:
