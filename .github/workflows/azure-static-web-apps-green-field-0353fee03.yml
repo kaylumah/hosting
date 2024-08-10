@@ -139,9 +139,8 @@ jobs:
   deploy:
     name: Deploy (for ubuntu-latest)
     runs-on: ubuntu-latest
-    needs: build_and_test
+    needs: build_and_test      
     steps:
-
       # Needed until dotnet is publsihed...
       - uses: actions/checkout@v4
 
@@ -192,9 +191,9 @@ jobs:
       # Note: this also restores/builds E2e project
       - name: Run E2e
         shell: pwsh
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ needs.build_and_test.outputs.deployUrl }}
         run: |
-            $EnvironmentUrl = ./tools/Get-BaseUrl.ps1
-            $Env:PLAYWRIGHT_TEST_BASE_URL = $EnvironmentUrl
             Write-Host "Will run E2e against $Env:PLAYWRIGHT_TEST_BASE_URL"
             $BuildConfiguration = "${{ env.BuildConfiguration }}"
             $TargetFramework = "${{ env.TargetFramework }}"
