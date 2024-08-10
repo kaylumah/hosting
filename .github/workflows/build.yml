@@ -1,4 +1,0 @@
-# - name: Test
-#   run: dotnet test --no-restore --verbosity normal --logger trx test/Unit/Test.Unit.csproj
-#   # run: dotnet test --logger "trx;LogFileName=test-results.trx" || true
-
