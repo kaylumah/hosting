@@ -17,5 +17,6 @@
     <PackageReference Include="HtmlAgilityPack" />
     <PackageReference Include="Scriban" />
     <PackageReference Include="Markdig" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>
