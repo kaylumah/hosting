@@ -28,8 +28,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             byte[] bytes = sitemap.SaveAsXml();
             Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
 
-            // TODO: Add SiteMapIndex via Factory?
             SiteMapIndex siteMapIndex = new SiteMapIndex();
+            SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
+            siteMapIndexNode.Url = "sitemap.xml";
+            siteMapIndex.Items = [siteMapIndexNode];
             byte[] siteMapIndexBytes = siteMapIndex.SaveAsXml();
             Artifact siteMapIndexAsArtifact = new Artifact("sitemap_index.xml", siteMapIndexBytes);
 
