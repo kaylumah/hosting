@@ -40,9 +40,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 siteMapArtifacts.Add(siteMapAsArtifact);
             }
 
-            SiteMapIndex siteMapIndex = new SiteMapIndex("sitemap_index.xml", siteMapIndexNodes);
+            SiteMapIndex siteMapIndex = new SiteMapIndex(siteMapIndexNodes);
             byte[] siteMapIndexBytes = siteMapIndex.SaveAsXml();
-            Artifact siteMapIndexAsArtifact = new Artifact(siteMapIndex.FileName, siteMapIndexBytes);
+            SiteMapIndexAsArtifact siteMapIndexArtifact = new SiteMapIndexAsArtifact("sitemap_index.xml", siteMapIndex);
+            Artifact siteMapIndexAsArtifact = new Artifact(siteMapIndexArtifact.FileName, siteMapIndexBytes);
 
             List<Artifact> artifacts = new List<Artifact>();
             artifacts.AddRange(siteMapArtifacts);
