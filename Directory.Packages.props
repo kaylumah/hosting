@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
-    <PackageVersion Include="HtmlAgilityPack" Version="1.11.62" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.65" />
     <PackageVersion Include="Markdig" Version="0.37.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
@@ -23,7 +23,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="8.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="8.8.0" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="5.10.0" />
     <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
@@ -32,7 +32,7 @@
     <PackageVersion Include="System.Text.Json" Version="8.0.4" />
     <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
     <PackageVersion Include="YamlDotNet" Version="16.0.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="xunit" Version="2.9.0" />
