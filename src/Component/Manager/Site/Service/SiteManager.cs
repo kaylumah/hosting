@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Abstractions;
@@ -155,7 +156,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
             {
+                Stopwatch stopwatch = Stopwatch.StartNew();
                 Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
+#pragma warning disable
+                _Logger.LogInformation($"The '{siteArtifactPlugin.GetType().Name}' took '{stopwatch.ElapsedMilliseconds}ms' to generate '{pluginArtifacts.Length}' artifact(s)");
+#pragma warning restore
                 artifacts.AddRange(pluginArtifacts);
             }
 
