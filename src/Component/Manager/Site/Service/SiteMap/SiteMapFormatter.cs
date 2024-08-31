@@ -21,24 +21,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         {
             ArgumentNullException.ThrowIfNull(writer);
 
-            writer.WriteStartElement(SiteMapConstants.UrlSetTag, SiteMapConstants.SiteMapNamespace);
+            writer.WriteStartElement(Constants.UrlSetTag, Constants.SiteMapNamespace);
             WriteItems(writer, _SiteMap.Items);
         }
 
         static void WriteItem(XmlWriter writer, SiteMapNode item)
         {
-            writer.WriteStartElement(SiteMapConstants.UrlTag);
+            writer.WriteStartElement(Constants.UrlTag);
             WriteItemContents(writer, item);
             writer.WriteEndElement();
         }
 
         static void WriteItemContents(XmlWriter writer, SiteMapNode item)
         {
-            writer.WriteElementString(SiteMapConstants.LocationTag, item.Url);
+            writer.WriteElementString(Constants.LocationTag, item.Url);
             if (item.LastModified.HasValue)
             {
                 string formatted = item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
-                writer.WriteElementString(SiteMapConstants.LastModifiedTag, formatted);
+                writer.WriteElementString(Constants.LastModifiedTag, formatted);
             }
         }
 

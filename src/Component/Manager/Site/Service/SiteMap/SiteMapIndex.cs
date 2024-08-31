@@ -43,24 +43,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         {
             ArgumentNullException.ThrowIfNull(writer);
 
-            writer.WriteStartElement(SiteMapConstants.SiteMapIndexTag, SiteMapConstants.SiteMapNamespace);
+            writer.WriteStartElement(Constants.SiteMapIndexTag, Constants.SiteMapNamespace);
             WriteItems(writer, _SiteMapIndex.Items);
         }
 
         static void WriteItem(XmlWriter writer, SiteMapIndexNode item)
         {
-            writer.WriteStartElement(SiteMapConstants.SiteMapTag);
+            writer.WriteStartElement(Constants.SiteMapTag);
             WriteItemContents(writer, item);
             writer.WriteEndElement();
         }
 
         static void WriteItemContents(XmlWriter writer, SiteMapIndexNode item)
         {
-            writer.WriteElementString(SiteMapConstants.LocationTag, item.Url);
+            writer.WriteElementString(Constants.LocationTag, item.Url);
             if (item.LastModified.HasValue)
             {
                 string formatted = item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
-                writer.WriteElementString(SiteMapConstants.LastModifiedTag, formatted);
+                writer.WriteElementString(Constants.LastModifiedTag, formatted);
             }
         }
 
