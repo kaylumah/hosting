@@ -28,15 +28,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         {
             LogGenerateSiteMap();
 
-            List<PageMetaData> pages = siteMetaData.GetPages()
-                            .Where(file => file.IsHtml())
-                            .Where(file =>
-                            {
-                                bool is404 = file.IsUrl("404.html");
-                                bool result = is404 == false;
-                                return result;
-                            })
-                            .ToList();
+            IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
+            IEnumerable<PageMetaData> htmlPages = sitePages.Where(file => file.IsHtml());
+            IEnumerable<PageMetaData> without404 = htmlPages.Where(file => {
+                bool is404 = file.IsUrl("404.html");
+                bool result = is404 == false;
+                return result;
+            });
+
+            List<PageMetaData> pages = without404.ToList();
 
             List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
             foreach (PageMetaData page in pages)
