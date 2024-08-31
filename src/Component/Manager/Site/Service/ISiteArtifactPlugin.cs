@@ -98,14 +98,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
-            Feed.Feed generatedFeed = CreateDefault(siteMetaData);
-            List<Feed.Feed> feeds = new List<Feed.Feed>()
+            Feed.FeedArtifact generatedFeed = CreateDefault(siteMetaData);
+            List<Feed.FeedArtifact> feeds = new List<Feed.FeedArtifact>()
             {
                 generatedFeed
             };
 
             List<Artifact> artifacts = new List<Artifact>();
-            foreach(Feed.Feed feed in feeds)
+            foreach(Feed.FeedArtifact feed in feeds)
             {
                 byte[] bytes = feed.SaveAsAtom10();
                 Artifact feedAsArtifact = new Artifact(feed.FileName, bytes);
@@ -116,13 +116,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public Feed.Feed CreateDefault(SiteMetaData siteMetaData)
+        public Feed.FeedArtifact CreateDefault(SiteMetaData siteMetaData)
         {
             SyndicationFeed feed = GetBlogInformation(siteMetaData);
             List<SyndicationItem> posts = GetPosts(siteMetaData);
             feed.Items = posts;
 
-            Feed.Feed result = new Feed.Feed("feed.xml", feed);
+            Feed.FeedArtifact result = new Feed.FeedArtifact("feed.xml", feed);
             return result;
         }
 

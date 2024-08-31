@@ -10,13 +10,13 @@ namespace System
 {
     public static partial class ByteExtensions
     {
-        public static Feed ToSyndicationFeed(this byte[] bytes, string fileName)
+        public static FeedArtifact ToSyndicationFeed(this byte[] bytes, string fileName)
         {
             using MemoryStream stream = new MemoryStream(bytes);
             using XmlReader xmlReader = XmlReader.Create(stream);
             SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
 
-            Feed result = new Feed(fileName, feed);
+            FeedArtifact result = new FeedArtifact(fileName, feed);
             return result;
         }
     }

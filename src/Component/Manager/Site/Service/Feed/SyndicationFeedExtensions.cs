@@ -9,7 +9,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
     public static class SyndicationFeedExtensions
     {
-        public static byte[] SaveAsAtom10(this Feed feed)
+        public static byte[] SaveAsAtom10(this FeedArtifact feed)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

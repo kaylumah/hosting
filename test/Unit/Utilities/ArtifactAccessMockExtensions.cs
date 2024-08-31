@@ -21,7 +21,7 @@ namespace Test.Unit.Utilities
         public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
             => artifactAccess.GetArtifactContents(path).ToHtmlDocument();
 
-        public static Feed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
+        public static FeedArtifact GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
             => artifactAccess.GetArtifactContents(path).ToSyndicationFeed(path);
 
         public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
