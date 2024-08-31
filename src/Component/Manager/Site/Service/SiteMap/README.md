@@ -4,3 +4,6 @@
         // https://social.msdn.microsoft.com/Forums/en-US/b0c0d3fe-f3da-4102-9d6b-b1cdc80065bf/how-to-generate-sitemap-for-a-site-to-list-all-the-web-pages?forum=aspgettingstarted
         // https://rehansaeed.com/dynamically-generating-sitemap-xml-for-asp-net-mvc/
         // https://stackoverflow.com/questions/55504758/how-to-write-sitemap-file-with-xmlwriter
+
+        // SiteMap: https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+        // SiteMapIndex: https://developers.google.com/search/docs/crawling-indexing/sitemaps/large-sitemaps
