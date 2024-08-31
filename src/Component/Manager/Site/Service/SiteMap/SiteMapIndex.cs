@@ -71,7 +71,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             writer.WriteElementString(Constants.LocationTag, urlAsString);
             if (item.LastModified.HasValue)
             {
-                string formatted = item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
+                string formatted = item.LastModified.GetValueOrDefault().ToString(Constants.DateTimeFormat, CultureInfo.InvariantCulture);
                 writer.WriteElementString(Constants.LastModifiedTag, formatted);
             }
         }

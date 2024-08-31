@@ -12,5 +12,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         public const string LastModifiedTag = "lastmod";
         public const string SiteMapIndexTag = "sitemapindex";
         public const string SiteMapTag = "sitemap";
+        public const string DateTimeFormat = "yyyy-MM-ddTHH:mm:sszzz";
     }
 }
