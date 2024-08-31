@@ -20,5 +20,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             byte[] result = stream.ToArray();
             return result;
         }
+
+        public static byte[] SaveAsXml(this SiteMapIndex siteMapIndex)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.Encoding = new System.Text.UTF8Encoding(false);
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream, settings);
+            siteMapIndex.SaveAsXml(writer);
+            writer.Close();
+            byte[] result = stream.ToArray();
+            return result;
+        }
     }
 }

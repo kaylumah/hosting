@@ -25,10 +25,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
             SiteMap.SiteMap sitemap = _SiteMapGenerator.Create(siteMetaData);
-            byte[] bytes = sitemap
-                    .SaveAsXml();
+            byte[] bytes = sitemap.SaveAsXml();
             Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
-            Artifact[] result = [siteMapAsArtifact];
+
+            // TODO: Add SiteMapIndex via Factory?
+            SiteMapIndex siteMapIndex = new SiteMapIndex();
+            byte[] siteMapIndexBytes = siteMapIndex.SaveAsXml();
+            Artifact siteMapIndexAsArtifact = new Artifact("sitemap_index.xml", siteMapIndexBytes);
+
+            Artifact[] result = [siteMapAsArtifact, siteMapIndexAsArtifact];
             return result;
         }
     }

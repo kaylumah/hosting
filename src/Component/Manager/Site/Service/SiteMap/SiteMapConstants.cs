@@ -11,6 +11,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         public const string UrlTag = "url";
         public const string LocationTag = "loc";
         public const string LastModifiedTag = "lastmod";
+        public const string SiteMapIndexTag = "sitemapindex";
+        public const string SiteMapTag = "sitemap";
 #pragma warning restore IDESIGN102 // Avoid inline member initialization.
     }
 }
