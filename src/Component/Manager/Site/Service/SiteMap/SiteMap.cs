@@ -14,6 +14,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         public string FileName
         { get; set; }
 
+        public DateTimeOffset? LastModified
+        { get;set; }
+
         public IEnumerable<SiteMapNode> Items
         { get; set; }
 
@@ -22,6 +25,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
             FileName = fileName;
             IEnumerable<SiteMapNode> orderedByLocation = items.OrderBy(node => node.Url);
             Items = orderedByLocation;
+
+            IEnumerable<SiteMapNode> orderedByModified = items.OrderByDescending(node => node.LastModified);
+            SiteMapNode? mostRecent = orderedByModified.FirstOrDefault();
+            LastModified = mostRecent?.LastModified;
         }
 
         public SiteMapFormatter GetFormatter() => new SiteMapFormatter(this);
