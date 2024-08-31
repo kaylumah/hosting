@@ -12,7 +12,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
     public class SiteMapIndex
     {
         public string FileName
-        { get;set; }
+        { get; set; }
 
         public IEnumerable<SiteMapIndexNode> Items
         { get; set; }
