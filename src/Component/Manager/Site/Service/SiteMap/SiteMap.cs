@@ -11,11 +11,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     public class SiteMap
     {
+        public string FileName
+        { get;set; }
+
         public IEnumerable<SiteMapNode> Items
         { get; set; }
 
-        public SiteMap(IEnumerable<SiteMapNode> items)
+        public SiteMap(string fileName, IEnumerable<SiteMapNode> items)
         {
+            FileName = fileName;
             IEnumerable<SiteMapNode> orderedNodes = items.OrderBy(node => node.Url);
             Items = orderedNodes;
         }

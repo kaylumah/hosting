@@ -10,7 +10,7 @@ namespace System
 {
     public static partial class ByteExtensions
     {
-        public static SiteMap ToSiteMap(this byte[] bytes)
+        public static SiteMap ToSiteMap(this byte[] bytes, string fileName)
         {
             using MemoryStream stream = new MemoryStream(bytes);
             using XmlReader xmlReader = XmlReader.Create(stream);
@@ -41,7 +41,7 @@ namespace System
                 }
             }
 
-            SiteMap sitemap = new SiteMap(nodes);
+            SiteMap sitemap = new SiteMap(fileName, nodes);
             return sitemap;
         }
     }

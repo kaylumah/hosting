@@ -48,7 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 siteMapNodes.Add(node);
             }
 
-            SiteMap siteMap = new SiteMap(siteMapNodes);
+            SiteMap siteMap = new SiteMap("sitemap.xml", siteMapNodes);
             return siteMap;
         }
     }

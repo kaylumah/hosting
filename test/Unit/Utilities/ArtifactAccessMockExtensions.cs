@@ -25,6 +25,6 @@ namespace Test.Unit.Utilities
             => artifactAccess.GetArtifactContents(path).ToSyndicationFeed();
 
         public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
-            => artifactAccess.GetArtifactContents(path).ToSiteMap();
+            => artifactAccess.GetArtifactContents(path).ToSiteMap(path);
     }
 }
