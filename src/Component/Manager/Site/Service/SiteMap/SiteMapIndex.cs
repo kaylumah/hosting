@@ -4,14 +4,25 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
     public class SiteMapIndex
     {
+        public string FileName
+        { get;set; }
+
         public IEnumerable<SiteMapIndexNode> Items
-        { get; set; } = new List<SiteMapIndexNode>();
+        { get; set; }
+
+        public SiteMapIndex(string fileName, IEnumerable<SiteMapIndexNode> items)
+        {
+            FileName = fileName;
+            IEnumerable<SiteMapIndexNode> orderedNodes = items.OrderBy(node => node.Url);
+            Items = orderedNodes;
+        }
 
         public SiteMapIndexFormatter GetFormatter() => new SiteMapIndexFormatter(this);
 

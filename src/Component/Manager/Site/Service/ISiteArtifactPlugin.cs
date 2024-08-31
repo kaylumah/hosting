@@ -28,12 +28,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             byte[] bytes = sitemap.SaveAsXml();
             Artifact siteMapAsArtifact = new Artifact(sitemap.FileName, bytes);
 
-            SiteMapIndex siteMapIndex = new SiteMapIndex();
             SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
-            siteMapIndexNode.Url = "sitemap.xml";
-            siteMapIndex.Items = [siteMapIndexNode];
+            siteMapIndexNode.Url = sitemap.FileName;
+            SiteMapIndexNode[] siteMapIndexNodes = [siteMapIndexNode];
+            SiteMapIndex siteMapIndex = new SiteMapIndex("sitemap_index.xml", siteMapIndexNodes);
             byte[] siteMapIndexBytes = siteMapIndex.SaveAsXml();
-            Artifact siteMapIndexAsArtifact = new Artifact("sitemap_index.xml", siteMapIndexBytes);
+            Artifact siteMapIndexAsArtifact = new Artifact(siteMapIndex.FileName, siteMapIndexBytes);
 
             Artifact[] result = [siteMapAsArtifact, siteMapIndexAsArtifact];
             return result;
