@@ -41,8 +41,6 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<MetaTagGenerator>();
             services.AddSingleton<SeoGenerator>();
             services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
-            services.AddSingleton<ISiteArtifactPlugin, SiteMapSiteArtifactPlugin>();
-            services.AddSingleton<ISiteArtifactPlugin, FeedSiteArtifactPlugin>();
             services.AddSingleton<IKnownFileProcessor, TagFileProcessor>();
             services.AddSingleton<IKnownFileProcessor, OrganizationFileProcessor>();
             services.AddSingleton<IKnownFileProcessor, AuthorFileProcessor>();

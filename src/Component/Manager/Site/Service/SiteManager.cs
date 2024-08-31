@@ -34,7 +34,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly TimeProvider _TimeProvider;
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
-        readonly ISiteArtifactPlugin[] _SiteArtifactPlugins;
         readonly DataProcessor _DataProcessor;
 
         public SiteManager(
@@ -46,12 +45,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             TimeProvider timeProvider,
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
-            IEnumerable<ISiteArtifactPlugin> siteArtifactPlugins,
             DataProcessor dataProcessor
             )
         {
             _RenderPlugins = renderPlugins.ToArray();
-            _SiteArtifactPlugins = siteArtifactPlugins.ToArray();
             _FileProcessor = fileProcessor;
             _ArtifactAccess = artifactAccess;
             _FileSystem = fileSystem;
@@ -154,7 +151,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<Artifact> artifacts = new List<Artifact>();
 
-            foreach (ISiteArtifactPlugin siteArtifactPlugin in _SiteArtifactPlugins)
+            // Ensure Feed(s) are generated first
+            ISiteArtifactPlugin feedPlugin = new FeedSiteArtifactPlugin();
+            ISiteArtifactPlugin sitemapPlugin = new SiteMapSiteArtifactPlugin();
+
+            List<ISiteArtifactPlugin> plugins = new List<ISiteArtifactPlugin>()
+            {
+                feedPlugin,
+                sitemapPlugin
+            };
+
+            foreach (ISiteArtifactPlugin siteArtifactPlugin in plugins)
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
                 Artifact[] pluginArtifacts = siteArtifactPlugin.Generate(siteMetadata);
