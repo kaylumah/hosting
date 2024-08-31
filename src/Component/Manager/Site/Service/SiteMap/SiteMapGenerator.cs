@@ -48,11 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
                 siteMapNodes.Add(node);
             }
 
-            IEnumerable<SiteMapNode> orderedNodes = siteMapNodes.OrderBy(node => node.Url);
-            List<SiteMapNode> result = orderedNodes.ToList();
-
-            SiteMap siteMap = new SiteMap();
-            siteMap.Items = result;
+            SiteMap siteMap = new SiteMap("sitemap.xml", siteMapNodes);
             return siteMap;
         }
     }

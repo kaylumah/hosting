@@ -39,5 +39,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="**/*.feature"/>
+  </ItemGroup>
 
 </Project>

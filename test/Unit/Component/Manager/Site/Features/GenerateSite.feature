@@ -46,6 +46,7 @@ Feature: SiteManager GenerateSite
           | Path         |
           | example.html |
           | sitemap.xml  |
+          | sitemap_index.xml  |
           | feed.xml     |
         And the atom feed 'feed.xml' is verified:
         And the sitemap 'sitemap.xml' is verified:

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
@@ -24,11 +25,34 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
-            SiteMap.SiteMap sitemap = _SiteMapGenerator.Create(siteMetaData);
-            byte[] bytes = sitemap
-                    .SaveAsXml();
-            Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
-            Artifact[] result = [siteMapAsArtifact];
+            List<SiteMap.SiteMap> siteMaps = new List<SiteMap.SiteMap>();
+            // TODO: Consider the split
+            SiteMap.SiteMap generatedSiteMap = _SiteMapGenerator.Create(siteMetaData);
+            siteMaps.Add(generatedSiteMap);
+
+            List<SiteMapIndexNode> siteMapIndexNodes = new List<SiteMapIndexNode>();
+            List<Artifact> siteMapArtifacts = new List<Artifact>();
+            foreach(SiteMap.SiteMap siteMap in siteMaps)
+            {
+                SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
+                siteMapIndexNode.Url = siteMetaData.AbsoluteUri(siteMap.FileName);
+                siteMapIndexNode.LastModified = siteMap.LastModified;
+                siteMapIndexNodes.Add(siteMapIndexNode);
+
+                byte[] bytes = siteMap.SaveAsXml();
+                Artifact siteMapAsArtifact = new Artifact(siteMap.FileName, bytes);
+                siteMapArtifacts.Add(siteMapAsArtifact);
+            }
+
+            SiteMapIndex siteMapIndex = new SiteMapIndex("sitemap_index.xml", siteMapIndexNodes);
+            byte[] siteMapIndexBytes = siteMapIndex.SaveAsXml();
+            Artifact siteMapIndexAsArtifact = new Artifact(siteMapIndex.FileName, siteMapIndexBytes);
+
+            List<Artifact> artifacts = new List<Artifact>();
+            artifacts.AddRange(siteMapArtifacts);
+            artifacts.Add(siteMapIndexAsArtifact);
+
+            Artifact[] result = artifacts.ToArray();
             return result;
         }
     }
