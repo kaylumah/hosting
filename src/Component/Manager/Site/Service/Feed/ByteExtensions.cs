@@ -4,17 +4,20 @@
 using System.IO;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using Kaylumah.Ssg.Manager.Site.Service.Feed;
 
 namespace System
 {
     public static partial class ByteExtensions
     {
-        public static SyndicationFeed ToSyndicationFeed(this byte[] bytes)
+        public static Feed ToSyndicationFeed(this byte[] bytes, string fileName)
         {
             using MemoryStream stream = new MemoryStream(bytes);
             using XmlReader xmlReader = XmlReader.Create(stream);
             SyndicationFeed feed = SyndicationFeed.Load(xmlReader);
-            return feed;
+
+            Feed result = new Feed(fileName, feed);
+            return result;
         }
     }
 }
