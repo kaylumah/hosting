@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -17,5 +18,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         {
             GetFormatter().WriteXml(writer);
         }
+    }
+
+    public class SiteMapNode
+    {
+        public SitemapFrequency? Frequency
+        { get; set; }
+        public DateTimeOffset? LastModified
+        { get; set; }
+        public double? Priority
+        { get; set; }
+        public string Url
+        { get; set; } = null!;
+    }
+
+    public enum SitemapFrequency
+    {
+        Never,
+        Yearly,
+        Monthly,
+        Weekly,
+        Daily,
+        Hourly,
+        Always
     }
 }
