@@ -19,48 +19,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        public static bool IsNot404(PageMetaData pageMetaData)
-        {
-            bool is404 = pageMetaData.IsUrl("404.html");
-            bool result = is404 == false;
-            return result;
-        }
-
-        static SiteMapNode ToSiteMapNode(PageMetaData pageMetaData)
-        {
-            SiteMapNode node = new SiteMapNode();
-            Uri siteMapUri = pageMetaData.CanonicalUri;
-            node.Url = siteMapUri.ToString();
-            node.LastModified = pageMetaData.Modified;
-            return node;
-        }
-
-        static List<SiteMapNode> ToSiteMapNodes(IEnumerable<PageMetaData> pages)
-        {
-            List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
-            foreach (PageMetaData page in pages)
-            {
-                SiteMapNode siteMapNode = ToSiteMapNode(page);
-                siteMapNodes.Add(siteMapNode);
-            }
-
-            return siteMapNodes;
-        }
-
-        SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
-        {
-            IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
-            IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
-            IEnumerable<PageMetaData> without404 = htmlPages.Where(IsNot404);
-
-            List<PageMetaData> pages = without404.ToList();
-            List<SiteMapNode> siteMapNodes = ToSiteMapNodes(pages);
-
-            SiteMap.SiteMap siteMap = new SiteMap.SiteMap("sitemap.xml", siteMapNodes);
-            return siteMap;
-        }
-
-        public Artifact[] Generate(SiteMetaData siteMetaData)
+        Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
             List<SiteMap.SiteMap> siteMaps = new List<SiteMap.SiteMap>();
             // TODO: Consider the split
@@ -92,10 +51,60 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Artifact[] result = artifacts.ToArray();
             return result;
         }
+
+        static bool IsNot404(PageMetaData pageMetaData)
+        {
+            bool is404 = pageMetaData.IsUrl("404.html");
+            bool result = is404 == false;
+            return result;
+        }
+
+        static SiteMapNode ToSiteMapNode(PageMetaData pageMetaData)
+        {
+            SiteMapNode node = new SiteMapNode();
+            Uri siteMapUri = pageMetaData.CanonicalUri;
+            node.Url = siteMapUri.ToString();
+            node.LastModified = pageMetaData.Modified;
+            return node;
+        }
+
+        static List<SiteMapNode> ToSiteMapNodes(IEnumerable<PageMetaData> pages)
+        {
+            List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
+            foreach (PageMetaData page in pages)
+            {
+                SiteMapNode siteMapNode = ToSiteMapNode(page);
+                siteMapNodes.Add(siteMapNode);
+            }
+
+            return siteMapNodes;
+        }
+
+        static SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
+        {
+            IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
+            IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
+            IEnumerable<PageMetaData> without404 = htmlPages.Where(IsNot404);
+
+            List<PageMetaData> pages = without404.ToList();
+            List<SiteMapNode> siteMapNodes = ToSiteMapNodes(pages);
+
+            SiteMap.SiteMap siteMap = new SiteMap.SiteMap("sitemap.xml", siteMapNodes);
+            return siteMap;
+        }
     }
 
     public class FeedSiteArtifactPlugin : ISiteArtifactPlugin
     {
+        Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
+        {
+            SyndicationFeed feed = Create(siteMetaData);
+            byte[] bytes = feed
+                    .SaveAsAtom10();
+            Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
+            Artifact[] result = [feedAsArtifact];
+            return result;
+        }
 
         public SyndicationFeed Create(SiteMetaData siteMetaData)
         {
@@ -189,16 +198,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IEnumerable<Article> feed = articles.Where(x => x.Feed);
 
             return feed;
-        }
-
-        public Artifact[] Generate(SiteMetaData siteMetaData)
-        {
-            SyndicationFeed feed = Create(siteMetaData);
-            byte[] bytes = feed
-                    .SaveAsAtom10();
-            Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
-            Artifact[] result = [feedAsArtifact];
-            return result;
         }
     }
 }
