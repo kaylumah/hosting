@@ -21,22 +21,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
-            List<SiteMap.SiteMap> siteMaps = new List<SiteMap.SiteMap>();
+            List<SiteMapArtifact> siteMaps = new List<SiteMapArtifact>();
             // TODO: Consider the split
-            SiteMap.SiteMap generatedSiteMap = CreateDefault(siteMetaData);
+            SiteMapArtifact generatedSiteMap = CreateDefault(siteMetaData);
             siteMaps.Add(generatedSiteMap);
 
             List<SiteMapIndexNode> siteMapIndexNodes = new List<SiteMapIndexNode>();
             List<Artifact> siteMapArtifacts = new List<Artifact>();
-            foreach (SiteMap.SiteMap siteMap in siteMaps)
+            foreach (SiteMapArtifact siteMapArtifact in siteMaps)
             {
                 SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
-                siteMapIndexNode.Url = siteMetaData.AbsoluteUri(siteMap.FileName);
-                siteMapIndexNode.LastModified = siteMap.LastModified;
+                siteMapIndexNode.Url = siteMetaData.AbsoluteUri(siteMapArtifact.FileName);
+                siteMapIndexNode.LastModified = siteMapArtifact.SiteMap.LastModified;
                 siteMapIndexNodes.Add(siteMapIndexNode);
 
-                byte[] bytes = siteMap.SaveAsXml();
-                Artifact siteMapAsArtifact = new Artifact(siteMap.FileName, bytes);
+                byte[] bytes = siteMapArtifact.SiteMap.SaveAsXml();
+                Artifact siteMapAsArtifact = new Artifact(siteMapArtifact.FileName, bytes);
                 siteMapArtifacts.Add(siteMapAsArtifact);
             }
 
@@ -80,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteMapNodes;
         }
 
-        static SiteMap.SiteMap CreateDefault(SiteMetaData siteMetaData)
+        static SiteMapArtifact CreateDefault(SiteMetaData siteMetaData)
         {
             IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
             IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
@@ -88,9 +88,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             List<PageMetaData> pages = without404.ToList();
             List<SiteMapNode> siteMapNodes = ToSiteMapNodes(pages);
+            SiteMap.SiteMap siteMap = new SiteMap.SiteMap(siteMapNodes);
 
-            SiteMap.SiteMap siteMap = new SiteMap.SiteMap("sitemap.xml", siteMapNodes);
-            return siteMap;
+            SiteMapArtifact artifact = new SiteMapArtifact("sitemap.xml", siteMap);
+            return artifact;
         }
     }
 
@@ -98,14 +99,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
-            Feed.FeedArtifact generatedFeed = CreateDefault(siteMetaData);
-            List<Feed.FeedArtifact> feeds = new List<Feed.FeedArtifact>()
+            FeedArtifact generatedFeed = CreateDefault(siteMetaData);
+            List<FeedArtifact> feeds = new List<FeedArtifact>()
             {
                 generatedFeed
             };
 
             List<Artifact> artifacts = new List<Artifact>();
-            foreach(Feed.FeedArtifact feed in feeds)
+            foreach (FeedArtifact feed in feeds)
             {
                 byte[] bytes = feed.SaveAsAtom10();
                 Artifact feedAsArtifact = new Artifact(feed.FileName, bytes);
@@ -116,13 +117,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public Feed.FeedArtifact CreateDefault(SiteMetaData siteMetaData)
+        public FeedArtifact CreateDefault(SiteMetaData siteMetaData)
         {
             SyndicationFeed feed = GetBlogInformation(siteMetaData);
             List<SyndicationItem> posts = GetPosts(siteMetaData);
             feed.Items = posts;
 
-            Feed.FeedArtifact result = new Feed.FeedArtifact("feed.xml", feed);
+            FeedArtifact result = new FeedArtifact("feed.xml", feed);
             return result;
         }
 

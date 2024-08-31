@@ -1,3 +1,6 @@
+// Copyright (c) Kaylumah, 2024. All rights reserved.
+// See LICENSE file in the project root for full license information.
+
 using System.ServiceModel.Syndication;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Feed
@@ -8,7 +11,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
         { get; set; }
 
         public SyndicationFeed SyndicationFeed
-        { get;set; }
+        { get; set; }
 
         public FeedArtifact(string fileName, SyndicationFeed syndicationFeed)
         {
