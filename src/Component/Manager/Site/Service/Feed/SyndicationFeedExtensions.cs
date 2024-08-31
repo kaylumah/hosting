@@ -9,13 +9,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
     public static class SyndicationFeedExtensions
     {
-        public static byte[] SaveAsAtom10(this SyndicationFeed syndicationFeed)
+        public static byte[] SaveAsAtom10(this Feed feed)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.Encoding = new System.Text.UTF8Encoding(false);
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream, settings);
+            SyndicationFeed syndicationFeed = feed.SyndicationFeed;
             syndicationFeed.SaveAsAtom10(writer);
             writer.Close();
             byte[] result = stream.ToArray();

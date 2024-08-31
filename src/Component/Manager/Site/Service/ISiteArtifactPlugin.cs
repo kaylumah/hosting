@@ -23,7 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             List<SiteMap.SiteMap> siteMaps = new List<SiteMap.SiteMap>();
             // TODO: Consider the split
-            SiteMap.SiteMap generatedSiteMap = GenerateSiteMap(siteMetaData);
+            SiteMap.SiteMap generatedSiteMap = CreateDefault(siteMetaData);
             siteMaps.Add(generatedSiteMap);
 
             List<SiteMapIndexNode> siteMapIndexNodes = new List<SiteMapIndexNode>();
@@ -80,7 +80,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return siteMapNodes;
         }
 
-        static SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
+        static SiteMap.SiteMap CreateDefault(SiteMetaData siteMetaData)
         {
             IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
             IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
@@ -98,20 +98,32 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
-            SyndicationFeed feed = CreateDefault(siteMetaData);
-            byte[] bytes = feed
-                    .SaveAsAtom10();
-            Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
-            Artifact[] result = [feedAsArtifact];
+            Feed.Feed generatedFeed = CreateDefault(siteMetaData);
+            List<Feed.Feed> feeds = new List<Feed.Feed>()
+            {
+                generatedFeed
+            };
+
+            List<Artifact> artifacts = new List<Artifact>();
+            foreach(Feed.Feed feed in feeds)
+            {
+                byte[] bytes = feed.SaveAsAtom10();
+                Artifact feedAsArtifact = new Artifact(feed.FileName, bytes);
+                artifacts.Add(feedAsArtifact);
+            }
+
+            Artifact[] result = artifacts.ToArray();
             return result;
         }
 
-        public SyndicationFeed CreateDefault(SiteMetaData siteMetaData)
+        public Feed.Feed CreateDefault(SiteMetaData siteMetaData)
         {
             SyndicationFeed feed = GetBlogInformation(siteMetaData);
             List<SyndicationItem> posts = GetPosts(siteMetaData);
             feed.Items = posts;
-            return feed;
+
+            Feed.Feed result = new Feed.Feed("feed.xml", feed);
+            return result;
         }
 
         SyndicationFeed GetBlogInformation(SiteMetaData siteMetaData)
