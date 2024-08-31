@@ -68,7 +68,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             List<SiteMapIndexNode> siteMapIndexNodes = new List<SiteMapIndexNode>();
             List<Artifact> siteMapArtifacts = new List<Artifact>();
-            foreach(SiteMap.SiteMap siteMap in siteMaps)
+            foreach (SiteMap.SiteMap siteMap in siteMaps)
             {
                 SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
                 siteMapIndexNode.Url = siteMetaData.AbsoluteUri(siteMap.FileName);

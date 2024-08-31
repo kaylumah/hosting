@@ -15,7 +15,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         { get; set; }
 
         public DateTimeOffset? LastModified
-        { get;set; }
+        { get; set; }
 
         public IEnumerable<SiteMapNode> Items
         { get; set; }
