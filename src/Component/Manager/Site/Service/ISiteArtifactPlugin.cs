@@ -18,15 +18,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
     {
+        public static bool IsNot404(PageMetaData pageMetaData)
+        {
+            bool is404 = pageMetaData.IsUrl("404.html");
+            bool result = is404 == false;
+            return result;
+        }
+
         SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
         {
             IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
-            IEnumerable<PageMetaData> htmlPages = sitePages.Where(file => file.IsHtml());
-            IEnumerable<PageMetaData> without404 = htmlPages.Where(file => {
-                bool is404 = file.IsUrl("404.html");
-                bool result = is404 == false;
-                return result;
-            });
+            IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
+            IEnumerable<PageMetaData> without404 = htmlPages.Where(IsNot404);
 
             List<PageMetaData> pages = without404.ToList();
 
