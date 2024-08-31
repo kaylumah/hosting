@@ -36,6 +36,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
                 siteMapIndexNode.Url = siteMetaData.AbsoluteUri(siteMap.FileName);
+                siteMapIndexNode.LastModified = siteMap.LastModified;
                 siteMapIndexNodes.Add(siteMapIndexNode);
 
                 byte[] bytes = siteMap.SaveAsXml();
