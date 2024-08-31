@@ -45,6 +45,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IKnownFileProcessor, OrganizationFileProcessor>();
             services.AddSingleton<IKnownFileProcessor, AuthorFileProcessor>();
             services.AddSingleton<IKnownExtensionProcessor, YamlFileProcessor>();
+            services.AddSingleton<IKnownExtensionProcessor, JsonFileProcessor>();
             services.AddSingleton(TimeProvider.System);
             return services;
         }

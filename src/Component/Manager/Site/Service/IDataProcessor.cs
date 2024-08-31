@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Ssg.Extensions.Data.Yaml;
@@ -92,6 +94,22 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string extension = file.Extension;
             bool extensionMatches = extension.Equals(KnownExtension, StringComparison.Ordinal);
             return extensionMatches;
+        }
+    }
+
+    public class JsonFileProcessor : IKnownExtensionProcessor
+    {
+        public string KnownExtension => ".json";
+
+        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        {
+            string raw = file.ReadFile();
+            JsonNode? result = JsonSerializer.Deserialize<JsonNode>(raw);
+            if (result != null)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file.Name);
+                siteMetaData.Data[fileName] = result;
+            }
         }
     }
 
