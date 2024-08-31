@@ -15,8 +15,8 @@ updates:
       timezone: "Europe/Amsterdam"
   assignees:
     - "kaylumah"
-  ignore:
-    - dependency-name: "Moq"
+#  ignore:
+#    - dependency-name: "Moq"
   groups:
     Microsoft.Extensions:
       patterns:
