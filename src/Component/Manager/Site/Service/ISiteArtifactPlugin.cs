@@ -26,7 +26,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             SiteMap.SiteMap sitemap = _SiteMapGenerator.Create(siteMetaData);
             byte[] bytes = sitemap.SaveAsXml();
-            Artifact siteMapAsArtifact = new Artifact("sitemap.xml", bytes);
+            Artifact siteMapAsArtifact = new Artifact(sitemap.FileName, bytes);
 
             SiteMapIndex siteMapIndex = new SiteMapIndex();
             SiteMapIndexNode siteMapIndexNode = new SiteMapIndexNode();
