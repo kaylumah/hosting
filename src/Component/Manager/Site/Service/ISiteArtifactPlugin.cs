@@ -25,6 +25,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
+        static SiteMapNode ToSiteMapNode(PageMetaData pageMetaData)
+        {
+            SiteMapNode node = new SiteMapNode();
+            Uri siteMapUri = pageMetaData.CanonicalUri;
+            node.Url = siteMapUri.ToString();
+            node.LastModified = pageMetaData.Modified;
+            return node;
+        }
+
+        static List<SiteMapNode> ToSiteMapNodes(IEnumerable<PageMetaData> pages)
+        {
+            List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
+            foreach (PageMetaData page in pages)
+            {
+                SiteMapNode siteMapNode = ToSiteMapNode(page);
+                siteMapNodes.Add(siteMapNode);
+            }
+
+            return siteMapNodes;
+        }
+
         SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
         {
             IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
@@ -32,16 +53,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IEnumerable<PageMetaData> without404 = htmlPages.Where(IsNot404);
 
             List<PageMetaData> pages = without404.ToList();
-
-            List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
-            foreach (PageMetaData page in pages)
-            {
-                SiteMapNode node = new SiteMapNode();
-                Uri siteMapUri = page.CanonicalUri;
-                node.Url = siteMapUri.ToString();
-                node.LastModified = page.Modified;
-                siteMapNodes.Add(node);
-            }
+            List<SiteMapNode> siteMapNodes = ToSiteMapNodes(pages);
 
             SiteMap.SiteMap siteMap = new SiteMap.SiteMap("sitemap.xml", siteMapNodes);
             return siteMap;
