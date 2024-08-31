@@ -9,20 +9,31 @@ using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
-    public class SiteMap
+    public class SiteMapArtifact
     {
         public string FileName
         { get; set; }
 
+        public SiteMap SiteMap
+        { get; set; }
+
+        public SiteMapArtifact(string fileName, SiteMap siteMap)
+        {
+            FileName = fileName;
+            SiteMap = siteMap;
+        }
+    }
+
+    public class SiteMap
+    {
         public DateTimeOffset? LastModified
-        { get;set; }
+        { get; set; }
 
         public IEnumerable<SiteMapNode> Items
         { get; set; }
 
-        public SiteMap(string fileName, IEnumerable<SiteMapNode> items)
+        public SiteMap(IEnumerable<SiteMapNode> items)
         {
-            FileName = fileName;
             IEnumerable<SiteMapNode> orderedByLocation = items.OrderBy(node => node.Url);
             Items = orderedByLocation;
 

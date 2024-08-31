@@ -9,17 +9,28 @@ using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 {
-    public class SiteMapIndex
+    public class SiteMapIndexAsArtifact
     {
         public string FileName
         { get; set; }
 
+        public SiteMapIndex SiteMapIndex
+        { get; set; }
+
+        public SiteMapIndexAsArtifact(string fileName, SiteMapIndex siteMapIndex)
+        {
+            FileName = fileName;
+            SiteMapIndex = siteMapIndex;
+        }
+    }
+
+    public class SiteMapIndex
+    {
         public IEnumerable<SiteMapIndexNode> Items
         { get; set; }
 
-        public SiteMapIndex(string fileName, IEnumerable<SiteMapIndexNode> items)
+        public SiteMapIndex(IEnumerable<SiteMapIndexNode> items)
         {
-            FileName = fileName;
             IEnumerable<SiteMapIndexNode> orderedByLocation = items.OrderBy(node => node.Url);
             Items = orderedByLocation;
         }

@@ -2,8 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using System.ServiceModel.Syndication;
 using HtmlAgilityPack;
+using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 
 namespace Test.Unit.Utilities
@@ -21,10 +21,10 @@ namespace Test.Unit.Utilities
         public static HtmlDocument GetHtmlDocument(this ArtifactAccessMock artifactAccess, string path)
             => artifactAccess.GetArtifactContents(path).ToHtmlDocument();
 
-        public static SyndicationFeed GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
-            => artifactAccess.GetArtifactContents(path).ToSyndicationFeed();
+        public static FeedArtifact GetFeedArtifact(this ArtifactAccessMock artifactAccess, string path = "feed.xml")
+            => artifactAccess.GetArtifactContents(path).ToSyndicationFeed(path);
 
-        public static SiteMap GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
+        public static SiteMapArtifact GetSiteMapArtifact(this ArtifactAccessMock artifactAccess, string path = "sitemap.xml")
             => artifactAccess.GetArtifactContents(path).ToSiteMap(path);
     }
 }
