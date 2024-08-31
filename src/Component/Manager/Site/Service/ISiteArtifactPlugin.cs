@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
@@ -16,18 +18,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class SiteMapSiteArtifactPlugin : ISiteArtifactPlugin
     {
-        readonly SiteMapGenerator _SiteMapGenerator;
-
-        public SiteMapSiteArtifactPlugin(SiteMapGenerator siteMapGenerator)
+        SiteMap.SiteMap GenerateSiteMap(SiteMetaData siteMetaData)
         {
-            _SiteMapGenerator = siteMapGenerator;
+            IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
+            IEnumerable<PageMetaData> htmlPages = sitePages.Where(file => file.IsHtml());
+            IEnumerable<PageMetaData> without404 = htmlPages.Where(file => {
+                bool is404 = file.IsUrl("404.html");
+                bool result = is404 == false;
+                return result;
+            });
+
+            List<PageMetaData> pages = without404.ToList();
+
+            List<SiteMapNode> siteMapNodes = new List<SiteMapNode>();
+            foreach (PageMetaData page in pages)
+            {
+                SiteMapNode node = new SiteMapNode();
+                Uri siteMapUri = page.CanonicalUri;
+                node.Url = siteMapUri.ToString();
+                node.LastModified = page.Modified;
+                siteMapNodes.Add(node);
+            }
+
+            SiteMap.SiteMap siteMap = new SiteMap.SiteMap("sitemap.xml", siteMapNodes);
+            return siteMap;
         }
 
         public Artifact[] Generate(SiteMetaData siteMetaData)
         {
             List<SiteMap.SiteMap> siteMaps = new List<SiteMap.SiteMap>();
             // TODO: Consider the split
-            SiteMap.SiteMap generatedSiteMap = _SiteMapGenerator.Create(siteMetaData);
+            SiteMap.SiteMap generatedSiteMap = GenerateSiteMap(siteMetaData);
             siteMaps.Add(generatedSiteMap);
 
             List<SiteMapIndexNode> siteMapIndexNodes = new List<SiteMapIndexNode>();
