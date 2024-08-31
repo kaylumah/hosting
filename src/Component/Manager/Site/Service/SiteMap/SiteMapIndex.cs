@@ -34,7 +34,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 
     public class SiteMapIndexNode
     {
-        public string Url
+        public Uri Url
         { get; set; } = null!;
 
         public DateTimeOffset? LastModified
@@ -67,7 +67,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
 
         static void WriteItemContents(XmlWriter writer, SiteMapIndexNode item)
         {
-            writer.WriteElementString(Constants.LocationTag, item.Url);
+            string urlAsString = item.Url.ToString();
+            writer.WriteElementString(Constants.LocationTag, urlAsString);
             if (item.LastModified.HasValue)
             {
                 string formatted = item.LastModified.GetValueOrDefault().ToString("yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture);
