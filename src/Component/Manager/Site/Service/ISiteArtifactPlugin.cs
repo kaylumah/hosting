@@ -98,7 +98,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
     {
         Artifact[] ISiteArtifactPlugin.Generate(SiteMetaData siteMetaData)
         {
-            SyndicationFeed feed = Create(siteMetaData);
+            SyndicationFeed feed = CreateDefault(siteMetaData);
             byte[] bytes = feed
                     .SaveAsAtom10();
             Artifact feedAsArtifact = new Artifact("feed.xml", bytes);
@@ -106,7 +106,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public SyndicationFeed Create(SiteMetaData siteMetaData)
+        public SyndicationFeed CreateDefault(SiteMetaData siteMetaData)
         {
             SyndicationFeed feed = GetBlogInformation(siteMetaData);
             List<SyndicationItem> posts = GetPosts(siteMetaData);
