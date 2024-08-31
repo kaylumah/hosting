@@ -41,11 +41,7 @@ namespace System
                 }
             }
 
-            SiteMap sitemap = new SiteMap()
-            {
-                Items = nodes
-            };
-
+            SiteMap sitemap = new SiteMap(nodes);
             return sitemap;
         }
     }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Xml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
@@ -11,7 +12,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
     public class SiteMap
     {
         public IEnumerable<SiteMapNode> Items
-        { get; set; } = new List<SiteMapNode>();
+        { get; set; }
+
+        public SiteMap(IEnumerable<SiteMapNode> items)
+        {
+            IEnumerable<SiteMapNode> orderedNodes = items.OrderBy(node => node.Url);
+            Items = orderedNodes;
+        }
 
         public SiteMapFormatter GetFormatter() => new SiteMapFormatter(this);
 
