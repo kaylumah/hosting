@@ -15,7 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.0.1",
-    "@tailwindcss/typography": "0.5.14",
-    "tailwindcss": "3.4.9"
+    "@tailwindcss/typography": "0.5.15",
+    "tailwindcss": "3.4.10"
   }
 }
