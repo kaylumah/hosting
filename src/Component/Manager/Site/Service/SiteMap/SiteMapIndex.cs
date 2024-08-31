@@ -20,8 +20,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.SiteMap
         public SiteMapIndex(string fileName, IEnumerable<SiteMapIndexNode> items)
         {
             FileName = fileName;
-            IEnumerable<SiteMapIndexNode> orderedNodes = items.OrderBy(node => node.Url);
-            Items = orderedNodes;
+            IEnumerable<SiteMapIndexNode> orderedByLocation = items.OrderBy(node => node.Url);
+            Items = orderedByLocation;
         }
 
         public SiteMapIndexFormatter GetFormatter() => new SiteMapIndexFormatter(this);
