@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
@@ -103,12 +104,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         protected override string GetFormattedContent(string content)
         {
-            // TODO: https://stackoverflow.com/a/3871822
             System.Xml.Linq.XDocument xmlDoc = System.Xml.Linq.XDocument.Parse(content);
-            using StringWriter stringWriter = new StringWriter();
+            // xmlDoc.Declaration = new System.Xml.Linq.XDeclaration("1.0", "utf-8", null);
+            using StringWriter stringWriter = new Utf8StringWriter();
             xmlDoc.Save(stringWriter, System.Xml.Linq.SaveOptions.None);
             string formattedXml = stringWriter.ToString();
             return formattedXml;
+        }
+
+        class Utf8StringWriter : StringWriter
+        {
+            public override Encoding Encoding => Encoding.UTF8;
         }
     }
 }
