@@ -134,6 +134,16 @@ namespace Test.E2e
         public override string PagePath { get; }
     }
 
+    public class SitemapIndexPage : XmlPage
+    {
+        public SitemapIndexPage(IPage page, string sitemapUrl = "sitemap_index.xml") : base(page)
+        {
+            PagePath = sitemapUrl;
+        }
+
+        public override string PagePath { get; }
+    }
+    
     public class SitemapPage : XmlPage
     {
         public SitemapPage(IPage page, string sitemapUrl = "sitemap.xml") : base(page)
