@@ -41,10 +41,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         bool IPostProcessor.IsApplicable(Artifact artifact)
         {
-            string actual = GetExtension(artifact);
-            string target = GetTargetExtension();
+            // string actual = GetExtension(artifact);
+            // string target = GetTargetExtension();
+            // bool result = string.Equals(actual, target, StringComparison.OrdinalIgnoreCase);
 
-            bool result = string.Equals(actual, target, StringComparison.OrdinalIgnoreCase);
+            bool result = false;
             return result;
         }
 
