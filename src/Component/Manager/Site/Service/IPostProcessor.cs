@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Text;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
@@ -114,7 +113,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         class Utf8StringWriter : StringWriter
         {
-            public override Encoding Encoding => Encoding.UTF8;
+            public override System.Text.Encoding Encoding => System.Text.Encoding.UTF8;
         }
     }
 }
