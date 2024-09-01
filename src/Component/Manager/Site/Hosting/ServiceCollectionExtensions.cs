@@ -31,20 +31,21 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.SetupOptions<SiteInfo>(configuration, "Site");
             services.SetupOptions<MetadataParserOptions>(configuration, MetadataParserOptions.Options);
 
-            services.AddSingleton<IContentPreprocessorStrategy, MarkdownContentPreprocessorStrategy>();
             services.AddSingleton<IFileProcessor, FileProcessor>();
             services.AddSingleton<IFrontMatterMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
-            services.AddSingleton<ISiteManager, SiteManager>();
             services.AddSingleton<DataProcessor>();
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();
             services.AddSingleton<SeoGenerator>();
             services.AddSingleton(TimeProvider.System);
+            services.RegisterImplementationsAsSingleton<IContentPreprocessorStrategy>();
             services.RegisterImplementationsAsSingleton<IRenderPlugin>();
             services.RegisterImplementationsAsSingleton<IKnownFileProcessor>();
             services.RegisterImplementationsAsSingleton<IKnownExtensionProcessor>();
 
+            services.AddSingleton<ISiteManager, SiteManager>();
+            
             return services;
         }
     }
