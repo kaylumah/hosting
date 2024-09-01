@@ -7,6 +7,7 @@
     <ProjectReference Include="..\..\..\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Files\Kaylumah.Ssg.Utilities.Files.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Common\Kaylumah.Ssg.Utilities.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Schema.NET" />
