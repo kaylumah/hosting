@@ -45,7 +45,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.RegisterImplementationsAsSingleton<IKnownExtensionProcessor>();
 
             services.AddSingleton<ISiteManager, SiteManager>();
-            
+
             return services;
         }
     }
