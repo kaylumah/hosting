@@ -67,5 +67,21 @@ namespace Test.E2e.SnapshotTests
             settings.ReplaceMatches(regex, "BaseUrl_1");
             await Verifier.Verify(xml, settings);
         }
+        
+        [Fact]
+        public async Task Verify_SitemapIndexXml_Contents()
+        {
+            IPage page = await _DesktopFixture.GetPage();
+            SitemapIndexPage sitemapPage = new SitemapIndexPage(page);
+            await sitemapPage.NavigateAsync();
+            page.Url.Should().EndWith(sitemapPage.PagePath);
+
+            string xml = await sitemapPage.GetContent();
+            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
+            VerifySettings settings = new VerifySettings();
+            Regex regex = VerifierHelper.BaseUrl();
+            settings.ReplaceMatches(regex, "BaseUrl_1");
+            await Verifier.Verify(xml, settings);
+        }
     }
 }
