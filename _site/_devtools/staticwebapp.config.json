@@ -7,6 +7,11 @@
       }
     },
     {
+      "route": "/{year}/{month}/{day}/{*title}",
+      "redirect": "/posts/{year}/{month}/{*title}",
+      "statusCode": 301
+    },
+    {
       "route": "/index.html",
       "redirect": "/",
       "statusCode": 301
