@@ -7,8 +7,8 @@
       }
     },
     {
-      "route": "/{year}/{month}/{day}/{*title}",
-      "redirect": "/posts/{year}/{month}/{title}",
+      "route": "/{year}/{month}/{day}/{*title}.html",
+      "redirect": "/posts/{year}/{month}/{title}.html",
       "statusCode": 301
     },
     {
