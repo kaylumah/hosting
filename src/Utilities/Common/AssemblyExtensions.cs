@@ -22,6 +22,10 @@ namespace System.Reflection
 
             // Only interessted in concretions
             filteredTypes = filteredTypes.Where(type => type.IsInterface == false);
+
+            // Cannot use abstractions
+            filteredTypes = filteredTypes.Where(type => type.IsAbstract == false);
+
             Type[] result = filteredTypes.ToArray();
             return result;
         }
