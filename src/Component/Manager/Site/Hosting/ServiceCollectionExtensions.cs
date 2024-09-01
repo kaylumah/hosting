@@ -40,12 +40,9 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();
             services.AddSingleton<SeoGenerator>();
-            services.AddSingleton<IRenderPlugin, HtmlSeoRenderPlugin>();
-            services.AddSingleton<IKnownFileProcessor, TagFileProcessor>();
-            services.AddSingleton<IKnownFileProcessor, OrganizationFileProcessor>();
-            services.AddSingleton<IKnownFileProcessor, AuthorFileProcessor>();
-            services.AddSingleton<IKnownExtensionProcessor, YamlFileProcessor>();
-            services.AddSingleton<IKnownExtensionProcessor, JsonFileProcessor>();
+            services.RegisterImplementationsAsSingleton<IRenderPlugin>();
+            services.RegisterImplementationsAsSingleton<IKnownFileProcessor>();
+            services.RegisterImplementationsAsSingleton<IKnownExtensionProcessor>();
             services.AddSingleton(TimeProvider.System);
             return services;
         }
