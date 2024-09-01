@@ -23,7 +23,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _Logger = logger;
         }
-        
+
         string GetExtension(Artifact artifact)
         {
             string path = artifact.Path;
@@ -95,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public XmlPostProcessor(ILogger<XmlPostProcessor> logger) : base(logger)
         {
         }
-        
+
         protected override string GetTargetExtension()
         {
             return ".xml";

@@ -143,7 +143,7 @@ namespace Test.E2e
 
         public override string PagePath { get; }
     }
-    
+
     public class SitemapPage : XmlPage
     {
         public SitemapPage(IPage page, string sitemapUrl = "sitemap.xml") : base(page)
