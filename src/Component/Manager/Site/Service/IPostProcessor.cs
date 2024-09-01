@@ -103,6 +103,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         protected override string GetFormattedContent(string content)
         {
+            // TODO: https://stackoverflow.com/a/3871822
             System.Xml.Linq.XDocument xmlDoc = System.Xml.Linq.XDocument.Parse(content);
             using StringWriter stringWriter = new StringWriter();
             xmlDoc.Save(stringWriter, System.Xml.Linq.SaveOptions.None);
