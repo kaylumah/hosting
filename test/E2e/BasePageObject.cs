@@ -126,20 +126,32 @@ namespace Test.E2e
 
     public class AtomFeedPage : XmlPage
     {
-        public AtomFeedPage(IPage page) : base(page)
+        public AtomFeedPage(IPage page, string feedUrl = "feed.xml") : base(page)
         {
+            PagePath = feedUrl;
         }
 
-        public override string PagePath => "feed.xml";
+        public override string PagePath { get; }
     }
 
-    public class SitemapPage : XmlPage
+    public class SitemapIndexPage : XmlPage
     {
-        public SitemapPage(IPage page) : base(page)
+        public SitemapIndexPage(IPage page, string sitemapUrl = "sitemap_index.xml") : base(page)
         {
+            PagePath = sitemapUrl;
         }
 
-        public override string PagePath => "sitemap.xml";
+        public override string PagePath { get; }
+    }
+    
+    public class SitemapPage : XmlPage
+    {
+        public SitemapPage(IPage page, string sitemapUrl = "sitemap.xml") : base(page)
+        {
+            PagePath = sitemapUrl;
+        }
+
+        public override string PagePath { get; }
     }
 
     public class HomePage : HtmlPage
@@ -189,12 +201,11 @@ namespace Test.E2e
 
     public class BlogItemPage : HtmlPage
     {
-        readonly string _PagePath;
         public BlogItemPage(string pagePath, IPage page) : base(page)
         {
-            _PagePath = pagePath;
+            PagePath = pagePath;
         }
 
-        public override string PagePath => _PagePath;
+        public override string PagePath { get; }
     }
 }
