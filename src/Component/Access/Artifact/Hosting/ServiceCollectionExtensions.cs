@@ -16,11 +16,11 @@ namespace Kaylumah.Ssg.Access.Artifact.Hosting
 #pragma warning disable IDE0060
         public static IServiceCollection AddArtifactAccess(this IServiceCollection services, IConfiguration configuration)
         {
-#pragma warning restore IDE0060
-#pragma warning disable IDESIGN103
-            services.TryAdd(ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>)));
-#pragma warning restore IDESIGN103
-            services.AddSingleton<IStoreArtifactsStrategy, FileSystemStoreArtifactsStrategy>();
+            ServiceDescriptor loggerDescriptor = ServiceDescriptor.Singleton(typeof(ILogger<>), typeof(NullLogger<>));
+            services.TryAdd(loggerDescriptor);
+
+            services.RegisterImplementationsAsSingleton<IStoreArtifactsStrategy>();
+
             services.AddSingleton<IArtifactAccess, ArtifactAccess>();
             return services;
         }
