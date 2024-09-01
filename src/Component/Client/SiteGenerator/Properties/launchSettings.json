@@ -5,7 +5,8 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
         "DEVELOPER_MODE": "true",
-        "Kaylumah_LOGGING__Console__LOGLEVEL__Kaylumah": "Trace"
+        "Kaylumah_LOGGING__Console__LOGLEVEL__Kaylumah": "Trace",
+        "TEST": "$(RootDirectory)"
       },
       "commandLineArgs": ""
     }
