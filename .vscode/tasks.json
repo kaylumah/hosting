@@ -2,28 +2,26 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build-sitegenerator",
+            "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Component/Client/SiteGenerator/Kaylumah.Ssg.Client.SiteGenerator.csproj",
+                "${workspaceFolder}/SSG.sln",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary",
-                "/p:BuildId=1",
-                "/p:BuildNumber=20210320.1"
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build-sitevalidator",
+            "label": "publish",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "build",
-                "${workspaceFolder}/src/Component/Client/SiteValidator/Kaylumah.Ssg.Client.SiteValidator.csproj",
+                "publish",
+                "${workspaceFolder}/SSG.sln",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -34,9 +32,8 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Component/Client/SiteGenerator/Kaylumah.Ssg.Client.SiteGenerator.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "--project",
+                "${workspaceFolder}/SSG.sln"
             ],
             "problemMatcher": "$msCompile"
         }
