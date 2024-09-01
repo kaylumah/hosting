@@ -15,8 +15,6 @@ updates:
       timezone: "Europe/Amsterdam"
   assignees:
     - "kaylumah"
-#  ignore:
-#    - dependency-name: "Moq"
   groups:
     Microsoft.Extensions:
       patterns:
@@ -56,6 +54,8 @@ updates:
       time: "09:00"
       timezone: "Europe/Amsterdam"
 
+#  ignore:
+#    - dependency-name: "Moq"
 # https://docs.github.com/en/enterprise-server@3.9/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
 # - package-ecosystem: "" # See documentation for possible values
 #   directory: "/" # Location of package manifests
