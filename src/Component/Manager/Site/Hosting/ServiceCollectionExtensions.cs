@@ -43,6 +43,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.RegisterImplementationsAsSingleton<IRenderPlugin>();
             services.RegisterImplementationsAsSingleton<IKnownFileProcessor>();
             services.RegisterImplementationsAsSingleton<IKnownExtensionProcessor>();
+            services.RegisterImplementationsAsSingleton<IPostProcessor>();
 
             services.AddSingleton<ISiteManager, SiteManager>();
 

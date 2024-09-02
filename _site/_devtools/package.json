@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tailwindcss -i styles.css -o compiled.css",
     "build:prod": "npx tailwindcss -i styles.css -o compiled.css --minify",
     "http-server": "npx http-server",

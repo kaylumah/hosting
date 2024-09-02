@@ -19,7 +19,6 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
-using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
@@ -34,6 +33,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly TimeProvider _TimeProvider;
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
+        readonly IPostProcessor[] _PostProcessors;
         readonly DataProcessor _DataProcessor;
 
         public SiteManager(
@@ -45,10 +45,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             TimeProvider timeProvider,
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
+            IEnumerable<IPostProcessor> postProcessors,
             DataProcessor dataProcessor
             )
         {
             _RenderPlugins = renderPlugins.ToArray();
+            _PostProcessors = postProcessors.ToArray();
             _FileProcessor = fileProcessor;
             _ArtifactAccess = artifactAccess;
             _FileSystem = fileSystem;
@@ -94,6 +96,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
+
+            Artifact[] postProcessable = [
+                .. renderedArtifacts,
+                .. generatedArtifacts
+            ];
+
+            foreach (Artifact artifact in postProcessable)
+            {
+                IPostProcessor? postProcessor = _PostProcessors.SingleOrDefault(x => x.IsApplicable(artifact));
+                postProcessor?.Apply(artifact);
+            }
+
             Artifact[] assetArtifacts = GetAssetFolderArtifacts();
 
             List<Artifact> artifacts = [

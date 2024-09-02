@@ -67,7 +67,7 @@ namespace Test.E2e.SnapshotTests
             settings.ReplaceMatches(regex, "BaseUrl_1");
             await Verifier.Verify(xml, settings);
         }
-        
+
         [Fact]
         public async Task Verify_SitemapIndexXml_Contents()
         {
