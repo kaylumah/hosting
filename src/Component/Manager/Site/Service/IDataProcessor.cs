@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 
@@ -99,17 +100,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
     public class JsonFileProcessor : IKnownExtensionProcessor
     {
+        readonly IJsonParser _JsonParser;
+
+        public JsonFileProcessor(IJsonParser jsonParser)
+        {
+            _JsonParser = jsonParser;
+        }
+
         public string KnownExtension => ".json";
 
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
-            string raw = file.ReadFile();
-            JsonNode? result = JsonSerializer.Deserialize<JsonNode>(raw);
-            if (result != null)
-            {
-                string fileName = Path.GetFileNameWithoutExtension(file.Name);
-                siteMetaData.Data[fileName] = result;
-            }
+            object result = _JsonParser.Parse<object>(file);
+            string fileName = Path.GetFileNameWithoutExtension(file.Name);
+            siteMetaData.Data[fileName] = result;
         }
     }
 
