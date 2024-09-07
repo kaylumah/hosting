@@ -1,6 +1,8 @@
 // Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Diagnostics;
+using System.Text.Json;
 using Ssg.Extensions.Data.Abstractions;
 
 namespace Ssg.Extensions.Data.Json
@@ -9,7 +11,10 @@ namespace Ssg.Extensions.Data.Json
     {
         T IParser.Parse<T>(string raw)
         {
-            throw new System.NotImplementedException();
+            // JsonNode? result = JsonSerializer.Deserialize<JsonNode>(raw);
+            T? result = JsonSerializer.Deserialize<T>(raw);
+            Debug.Assert(result != null);
+            return result;
         }
     }
 }
