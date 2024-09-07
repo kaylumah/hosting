@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Metadata.Abs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Metadata.YamlFrontMatter", "src\Utilities\Ssg.Extensions.Metadata.YamlFrontMatter\Ssg.Extensions.Metadata.YamlFrontMatter.csproj", "{5FA34136-9A39-45BB-99FC-D2F25249DE37}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Data.Abstractions", "src\Utilities\Ssg.Extensions.Data.Abstractions\Ssg.Extensions.Data.Abstractions.csproj", "{53DF5EAF-CA64-4FD0-8E6C-517267E85C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Data", "src\Utilities\Ssg.Extensions.Data\Ssg.Extensions.Data.csproj", "{53DF5EAF-CA64-4FD0-8E6C-517267E85C6E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ssg.Extensions.Data.Yaml", "src\Utilities\Ssg.Extensions.Data.Yaml\Ssg.Extensions.Data.Yaml.csproj", "{CB36D921-2B5C-40C6-AB7F-CC83D7C92F8F}"
 EndProject

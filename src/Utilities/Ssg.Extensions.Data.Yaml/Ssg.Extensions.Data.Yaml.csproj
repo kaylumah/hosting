@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Ssg.Extensions.Data.Abstractions\Ssg.Extensions.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Ssg.Extensions.Data\Ssg.Extensions.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="YamlDotNet" />
