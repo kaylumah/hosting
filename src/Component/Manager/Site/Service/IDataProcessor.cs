@@ -106,7 +106,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _JsonParser = jsonParser;
         }
-        
+
         public string KnownExtension => ".json";
 
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)

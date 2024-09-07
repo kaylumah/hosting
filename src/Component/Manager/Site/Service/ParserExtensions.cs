@@ -24,7 +24,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 throw;
             }
         }
-        
+
         public static T Parse<T>(this IJsonParser jsonParser, System.IO.Abstractions.IFileSystemInfo file)
         {
             try
