@@ -8,7 +8,7 @@ using Ssg.Extensions.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
-    public static class YamlParserExtensions
+    public static class ParserExtensions
     {
         public static T Parse<T>(this IYamlParser yamlParser, System.IO.Abstractions.IFileSystemInfo file)
         {
