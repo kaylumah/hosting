@@ -5,6 +5,14 @@
     <lastmod>2024-04-11T00:00:00+02:00</lastmod>
   </url>
   <url>
+    <loc>https://BaseUrl_1/about.html</loc>
+    <lastmod>2024-04-11T00:00:00+02:00</lastmod>
+  </url>
+  <url>
+    <loc>https://BaseUrl_1/blog.html</loc>
+    <lastmod>2024-08-06T17:30:00+02:00</lastmod>
+  </url>
+  <url>
     <loc>https://BaseUrl_1/blog/2019/09/07/using-csharp-code-your-git-hooks.html</loc>
     <lastmod>2021-03-21T00:00:00+01:00</lastmod>
   </url>
@@ -62,14 +70,6 @@
   </url>
   <url>
     <loc>https://BaseUrl_1/blog/2024/08/06/fix-vscode-markdown-preview.html</loc>
-    <lastmod>2024-08-06T17:30:00+02:00</lastmod>
-  </url>
-  <url>
-    <loc>https://BaseUrl_1/about.html</loc>
-    <lastmod>2024-04-11T00:00:00+02:00</lastmod>
-  </url>
-  <url>
-    <loc>https://BaseUrl_1/blog.html</loc>
     <lastmod>2024-08-06T17:30:00+02:00</lastmod>
   </url>
   <url>
