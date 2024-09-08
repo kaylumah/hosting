@@ -8,11 +8,6 @@
     },
     {% endfor %}
     {
-      "route": "/2023/*",
-      "redirect": "/blogs/2023/{*}",
-      "statusCode": 301
-    },
-    {
       "route": "/assets/*.{svg,png,jpg,gif}",
       "headers": {
         "Cache-Control": "public, max-age=15552000"
