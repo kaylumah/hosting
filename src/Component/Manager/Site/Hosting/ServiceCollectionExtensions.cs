@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Ssg.Extensions.Data.Abstractions;
+using Ssg.Extensions.Data.Csv;
 using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -37,6 +38,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<IFrontMatterMetadataProvider, YamlFrontMatterMetadataProvider>();
             services.AddSingleton<IYamlParser, YamlParser>();
             services.AddSingleton<IJsonParser, JsonParser>();
+            services.AddSingleton<ICsvParser, CsvParser>();
             services.AddSingleton<DataProcessor>();
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();

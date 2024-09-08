@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Data.Csv;
 using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -98,6 +99,26 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
+    public class CsvFileProcessor : IKnownExtensionProcessor
+    {
+        readonly ICsvParser _CsvParser;
+
+        public CsvFileProcessor(ICsvParser csvParser)
+        {
+            _CsvParser = csvParser;
+        }
+
+        public string KnownExtension => ".csv";
+
+        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        {
+            object result = _CsvParser.Parse<object>(file);
+            // object result = _CsvParser.Parse<Dictionary<string, object>>(file);
+            string fileName = Path.GetFileNameWithoutExtension(file.Name);
+            siteMetaData.Data[fileName] = result;
+        }
+    }
+
     public class JsonFileProcessor : IKnownExtensionProcessor
     {
         readonly IJsonParser _JsonParser;
@@ -111,7 +132,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
-            object result = _JsonParser.Parse<object>(file);
+            object result = _JsonParser.Parse<JsonNode>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
             siteMetaData.Data[fileName] = result;
         }

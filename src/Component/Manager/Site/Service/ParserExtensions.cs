@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Ssg.Extensions.Data.Csv;
 using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
 
@@ -31,6 +32,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 string raw = file.ReadFile();
                 T result = jsonParser.Parse<T>(raw);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.Assert(ex != null);
+                throw;
+            }
+        }
+
+        public static T[] Parse<T>(this ICsvParser csvParser, System.IO.Abstractions.IFileSystemInfo file)
+        {
+            try
+            {
+                string raw = file.ReadFile();
+                T[] result = csvParser.Parse<T>(raw);
                 return result;
             }
             catch (Exception ex)
