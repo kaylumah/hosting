@@ -9,7 +9,7 @@ namespace Ssg.Extensions.Data.Abstractions
     {
         T Parse<T>(string raw);
     }
-    
+
     public interface ICollectionParser
     {
         T[] Parse<T>(string raw);
