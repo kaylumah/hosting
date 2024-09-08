@@ -18,7 +18,7 @@
     
     <!-- Common Meta Tags -->
     <title>How to use Azurite for testing Azure Storage in dotnet?</title>
-    <link rel="canonical" href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+    <link rel="canonical" href="https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
     <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
     <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
     <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
@@ -31,7 +31,7 @@
     <meta property="og:locale" content="en" />
     <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
     <meta property="og:title" content="How to use Azurite for testing Azure Storage in dotnet?" />
-    <meta property="og:url" content="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+    <meta property="og:url" content="https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
     <meta property="og:description" content="Learn how to setup the Azure SDK for dotnet with Azurite" />
     <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png" />
     <meta property="article:author" content="Max Hamulyák" />
@@ -65,8 +65,8 @@
       "@type": "BlogPosting",
       "description": "Learn how to setup the Azure SDK for dotnet with Azurite",
       "image": "https://BaseUrl_1/assets/images/posts/20220917/azurite/cover_image.png",
-      "mainEntityOfPage": "https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
-      "url": "https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
+      "mainEntityOfPage": "https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
+      "url": "https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html",
       "author": {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -269,7 +269,7 @@
         </header>
         <main class="prose laptop:mx-auto">
             <h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
-<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
+<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
 <p>There are a few ways we can go about testing this:</p>
 <ol>
 <li>Create a mock or fake implementation of every Storage API required.</li>
@@ -308,7 +308,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 </code></pre>
 <p>Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external">Azure Pipelines</a>. I, however, am still not entirely happy with it.</p>
 <h2 id="how-to-use-azurite-without-a-connectionstring"><a href="#how-to-use-azurite-without-a-connectionstring">How to use Azurite without a ConnectionString?</a></h2>
-<p>In the post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
+<p>In the post <a href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
 <pre><code class="language-csharp">using Azure.Identity;
 using Azure.Storage.Blobs;
 

@@ -18,7 +18,7 @@
     
     <!-- Common Meta Tags -->
     <title>Validated Strongly Typed IOptions</title>
-    <link rel="canonical" href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
+    <link rel="canonical" href="https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html" />
     <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
     <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
     <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
@@ -31,7 +31,7 @@
     <meta property="og:locale" content="en" />
     <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
     <meta property="og:title" content="Validated Strongly Typed IOptions" />
-    <meta property="og:url" content="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
+    <meta property="og:url" content="https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html" />
     <meta property="og:description" content="Find configuration errors early with data annotations validation for IOptions in .NET" />
     <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png" />
     <meta property="article:author" content="Max Hamulyák" />
@@ -64,8 +64,8 @@
       "@type": "BlogPosting",
       "description": "Find configuration errors early with data annotations validation for IOptions in .NET",
       "image": "https://BaseUrl_1/assets/images/posts/20211129/validated-strongly-typed-ioptions/cover_image.png",
-      "mainEntityOfPage": "https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html",
-      "url": "https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html",
+      "mainEntityOfPage": "https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html",
+      "url": "https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html",
       "author": {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -362,7 +362,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 </code></pre>
 <h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
 <p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
-<p>In my article <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>In my article <a href="https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
 <p>As I see it, there are two distinct ways configuration can fail.</p>
 <h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
 <p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>

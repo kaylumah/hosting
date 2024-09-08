@@ -18,7 +18,7 @@
     
     <!-- Common Meta Tags -->
     <title>Working with Azure SDK for .NET</title>
-    <link rel="canonical" href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
+    <link rel="canonical" href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
     <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
     <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
     <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
@@ -31,7 +31,7 @@
     <meta property="og:locale" content="en" />
     <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
     <meta property="og:title" content="Working with Azure SDK for .NET" />
-    <meta property="og:url" content="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
+    <meta property="og:url" content="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
     <meta property="og:description" content="The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios" />
     <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png" />
     <meta property="article:author" content="Max Hamulyák" />
@@ -64,8 +64,8 @@
       "@type": "BlogPosting",
       "description": "The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios",
       "image": "https://BaseUrl_1/assets/images/posts/20220221/working-with-azure-sdk-for-dotnet/cover_image.png",
-      "mainEntityOfPage": "https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html",
-      "url": "https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html",
+      "mainEntityOfPage": "https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html",
+      "url": "https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html",
       "author": {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -517,7 +517,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </code></pre>
 <h2 id="can-i-use-configuration-to-create-azure-sdk-clients"><a href="#can-i-use-configuration-to-create-azure-sdk-clients">Can I use configuration to create Azure SDK clients?</a></h2>
 <p>If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.</p>
-<p>In my <a href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
+<p>In my <a href="https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
 <p>That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.</p>
 <pre><code class="language-csharp">public class UnitTest1
 {
