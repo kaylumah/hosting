@@ -18,5 +18,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         { get; set; } = new DefaultMetadatas();
         public Dictionary<string, string> ExtensionMapping
         { get; set; } = new Dictionary<string, string>();
+        public string FallbackOutputLocation
+        { get; set; } = string.Empty;
     }
 }

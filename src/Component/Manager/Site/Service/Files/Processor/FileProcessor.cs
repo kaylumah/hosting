@@ -199,7 +199,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
             if (string.IsNullOrEmpty(result.FrontMatter.OutputLocation))
             {
-                result.FrontMatter.OutputLocation = "/:year/:month/:day/:name:ext";
+                result.FrontMatter.OutputLocation = _Options.FallbackOutputLocation;
             }
 
             string outputLocation = DetermineOutputLocation(criteria.FileName, result.FrontMatter);
