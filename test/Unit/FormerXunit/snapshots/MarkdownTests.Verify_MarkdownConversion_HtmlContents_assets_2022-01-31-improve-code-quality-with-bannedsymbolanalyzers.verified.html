@@ -141,7 +141,7 @@ public class SystemClock : ISystemClock
     }
 }
 </code></pre>
-<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://kaylumah.nl/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
+<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://kaylumah.nl/blog/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
 <pre><code class="language-cs">public sealed class SystemClockMock : Mock&lt;ISystemClock&gt;
 {
     public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
