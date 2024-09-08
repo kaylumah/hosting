@@ -77,7 +77,7 @@ Before you leave I like to leave you with some final thoughts.</p>
 I'd like to personally thank Gáspár for the effort to first revive Specflow and now for the process of starting the fork and a brand new community. I hope the efforts will not be in vain and we can make the project successful. I will make it a priority that upcoming content will make use of Reqnroll! Not only because I love this way of writing tests but also to show that Gáspár has my full support moving forward!</p>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html</id>
+    <id>https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI - Revisited]]></title>
     <summary type="text"><![CDATA[A comparison of NSwag.MSBuild and OpenApiReference]]></summary>
     <published>DateTimeOffset_4</published>
@@ -86,7 +86,7 @@ I'd like to personally thank Gáspár for the effort to first revive Specflow an
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html" />
+    <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html" />
     <category term="C#" />
     <category term="NSwag" />
     <category term="OpenAPI" />
