@@ -1,17 +1,17 @@
 Route;Redirect;StatusCode;Reason
 /2023/04/14/csharp-client-for-openapi-revistted.html;/2023/04/14/csharp-client-for-openapi-revisited.html;301;Typo in original URL
-/2019/09/07/using-csharp-code-your-git-hooks.html;/blog/2019/09/07/using-csharp-code-your-git-hooks.html;301;URL Schema changed to include /blog
-/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html;/blog/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html;301;URL Schema changed to include /blog
-/2021/03/27/set-nuget-metadata-via-msbuild.html;/blog/2021/03/27/set-nuget-metadata-via-msbuild.html;301;URL Schema changed to include /blog
-/2021/04/11/an-approach-to-writing-mocks.html;/blog/2021/04/11/an-approach-to-writing-mocks.html;301;URL Schema changed to include /blog
-/2021/05/23/generate-csharp-client-for-openapi.html;/blog/2021/05/23/generate-csharp-client-for-openapi.html;301;URL Schema changed to include /blog
-/2021/07/17/decreasing-solution-build-time-with-filters.html;/blog/2021/07/17/decreasing-solution-build-time-with-filters.html;301;URL Schema changed to include /blog
-/2021/11/14/capture-logs-in-unit-tests.html;/blog/2021/11/14/capture-logs-in-unit-tests.html;301;URL Schema changed to include /blog
-/2021/11/29/validated-strongly-typed-ioptions.html;/blog/2021/11/29/validated-strongly-typed-ioptions.html;301;URL Schema changed to include /blog
-/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html;/blog/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html;301;URL Schema changed to include /blog
-/2022/02/21/working-with-azure-sdk-for-dotnet.html;/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html;301;URL Schema changed to include /blog
-/2022/06/07/share-debug-configuration-with-launch-profiles.html;/blog/2022/06/07/share-debug-configuration-with-launch-profiles.html;301;URL Schema changed to include /blog
-/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html;/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html;301;URL Schema changed to include /blog
-/2023/04/14/csharp-client-for-openapi-revisited.html;/blog/2023/04/14/csharp-client-for-openapi-revisited.html;301;URL Schema changed to include /blog
-/2024/02/09/long-live-reqnroll.html;/blog/2024/02/09/long-live-reqnroll.html;301;URL Schema changed to include /blog
-/2024/08/06/fix-vscode-markdown-preview.html;/blog/2024/08/06/fix-vscode-markdown-preview.html;301;URL Schema changed to include /blog
+# /2019/09/07/using-csharp-code-your-git-hooks.html;/blog/2019/09/07/using-csharp-code-your-git-hooks.html;301;URL Schema changed to include /blog
+# /2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html;/blog/2020/08/01/kaylumah-the-new-home-for-blogs-written-by-max-hamulyak.html;301;URL Schema changed to include /blog
+# /2021/03/27/set-nuget-metadata-via-msbuild.html;/blog/2021/03/27/set-nuget-metadata-via-msbuild.html;301;URL Schema changed to include /blog
+# /2021/04/11/an-approach-to-writing-mocks.html;/blog/2021/04/11/an-approach-to-writing-mocks.html;301;URL Schema changed to include /blog
+# /2021/05/23/generate-csharp-client-for-openapi.html;/blog/2021/05/23/generate-csharp-client-for-openapi.html;301;URL Schema changed to include /blog
+# /2021/07/17/decreasing-solution-build-time-with-filters.html;/blog/2021/07/17/decreasing-solution-build-time-with-filters.html;301;URL Schema changed to include /blog
+# /2021/11/14/capture-logs-in-unit-tests.html;/blog/2021/11/14/capture-logs-in-unit-tests.html;301;URL Schema changed to include /blog
+# /2021/11/29/validated-strongly-typed-ioptions.html;/blog/2021/11/29/validated-strongly-typed-ioptions.html;301;URL Schema changed to include /blog
+# /2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html;/blog/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html;301;URL Schema changed to include /blog
+# /2022/02/21/working-with-azure-sdk-for-dotnet.html;/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html;301;URL Schema changed to include /blog
+# /2022/06/07/share-debug-configuration-with-launch-profiles.html;/blog/2022/06/07/share-debug-configuration-with-launch-profiles.html;301;URL Schema changed to include /blog
+# /2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html;/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html;301;URL Schema changed to include /blog
+# /2023/04/14/csharp-client-for-openapi-revisited.html;/blog/2023/04/14/csharp-client-for-openapi-revisited.html;301;URL Schema changed to include /blog
+# /2024/02/09/long-live-reqnroll.html;/blog/2024/02/09/long-live-reqnroll.html;301;URL Schema changed to include /blog
+# /2024/08/06/fix-vscode-markdown-preview.html;/blog/2024/08/06/fix-vscode-markdown-preview.html;301;URL Schema changed to include /blog
