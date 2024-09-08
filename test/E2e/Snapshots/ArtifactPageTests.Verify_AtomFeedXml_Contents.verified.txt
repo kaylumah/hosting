@@ -10,7 +10,7 @@
   <link rel="self" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" />
   <link rel="alternate" type="text/html" href="https://BaseUrl_1/blog.html" />
   <entry>
-    <id>https://BaseUrl_1/blog/2024/08/06/fix-vscode-markdown-preview.html</id>
+    <id>https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html</id>
     <title type="text"><![CDATA[Fixing VSCode Markdown preview with symbolic links!]]></title>
     <summary type="text"><![CDATA[Render images from everywhere inside VSCode's markdown preview]]></summary>
     <published>DateTimeOffset_2</published>
@@ -19,7 +19,7 @@
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2024/08/06/fix-vscode-markdown-preview.html" />
+    <link href="https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html" />
     <category term="VS Code" />
     <category term="Markdown" />
     <content type="html"><![CDATA[<p>Many static website generators support writing blogs in Markdown. Jekyll and several other generators organize content, such as blog posts, and assets, like images and CSS files, into separate directories.</p>
@@ -56,7 +56,7 @@ Before you leave I like to leave you with some final thoughts.</p>
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2024/02/09/long-live-reqnroll.html</id>
+    <id>https://BaseUrl_1/2024/02/09/long-live-reqnroll.html</id>
     <title type="text"><![CDATA[Specflow has died; long live Reqnroll!]]></title>
     <summary type="text"><![CDATA[SpecFlow rebooted; please welcome Reqnroll!]]></summary>
     <published>DateTimeOffset_3</published>
@@ -65,7 +65,7 @@ Before you leave I like to leave you with some final thoughts.</p>
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2024/02/09/long-live-reqnroll.html" />
+    <link href="https://BaseUrl_1/2024/02/09/long-live-reqnroll.html" />
     <category term="Testing" />
     <category term="Reqnroll" />
     <content type="html"><![CDATA[<p>Today's post is a short one. My goal is to spread awareness inside the .NET community that on 2024-02-08 at 14:56:14Z, Specflow was <a href="https://github.com/SpecFlowOSS/SpecFlow/issues/2719#issuecomment-1934292742" class="external">pronounced dead</a>. The statement was made by none other than Gáspár Nagy, the original creator of Specflow.</p>
@@ -77,7 +77,7 @@ Before you leave I like to leave you with some final thoughts.</p>
 I'd like to personally thank Gáspár for the effort to first revive Specflow and now for the process of starting the fork and a brand new community. I hope the efforts will not be in vain and we can make the project successful. I will make it a priority that upcoming content will make use of Reqnroll! Not only because I love this way of writing tests but also to show that Gáspár has my full support moving forward!</p>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html</id>
+    <id>https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI - Revisited]]></title>
     <summary type="text"><![CDATA[A comparison of NSwag.MSBuild and OpenApiReference]]></summary>
     <published>DateTimeOffset_4</published>
@@ -86,12 +86,12 @@ I'd like to personally thank Gáspár for the effort to first revive Specflow an
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html" />
+    <link href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html" />
     <category term="C#" />
     <category term="NSwag" />
     <category term="OpenAPI" />
     <category term="Swashbuckle" />
-    <content type="html"><![CDATA[<p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
+    <content type="html"><![CDATA[<p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
 <p>The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called <a href="https://stevetalkscode.co.uk/openapireference-commands" class="external">&quot;Using OpenApiReference To Generate Open API Client Code&quot;</a>. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.</p>
 <h2 id="safe-openapi-specification-on-build"><a href="#safe-openapi-specification-on-build">Safe OpenAPI specification on build</a></h2>
 <p>The purpose of the post is not to detail how to configure an OpenAPI spec for your project since the standard template already supports Swashbuckle. You can find more information on that over <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&amp;tabs=visual-studio" class="external">at Microsoft Learn</a>. One thing I like to add to the standard template, is that I want the specification to be part of the project output. We can achieve that with the Swashbuckle CLI, which you can install with the command <code>dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0</code>. Note that the version of the CLI must match the version of Swashbuckle used in the API project. After you install the tool, you can modify the csproj to look like this.</p>
@@ -244,7 +244,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html</id>
+    <id>https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html</id>
     <title type="text"><![CDATA[How to use Azurite for testing Azure Storage in dotnet?]]></title>
     <summary type="text"><![CDATA[Learn how to setup the Azure SDK for dotnet with Azurite]]></summary>
     <published>DateTimeOffset_5</published>
@@ -253,12 +253,12 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
+    <link href="https://BaseUrl_1/2022/09/17/how-to-use-azurite-for-testing-azure-storage-in-dotnet.html" />
     <category term="C#" />
     <category term="Azure" />
     <category term="Testing" />
     <content type="html"><![CDATA[<h2 id="how-to-test-a-dependency-on-azure"><a href="#how-to-test-a-dependency-on-azure">How to test a dependency on Azure?</a></h2>
-<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
+<p>A recent project tasked me with integrating an application with Azure Blob Storage. Due to my post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a>, I knew all about the current SDK to interface with Azure. The team in charge of the dotnet SDK has done a great job with providing accessible samples. My previous post did not focus on the testability aspects of the System, mainly because it was a simple demo for production code that is, of course, a no-go.</p>
 <p>There are a few ways we can go about testing this:</p>
 <ol>
 <li>Create a mock or fake implementation of every Storage API required.</li>
@@ -297,7 +297,7 @@ azurite-table --silent --location c:\azurite --debug c:\azurite\debug.log
 </code></pre>
 <p>Most would stop here because what I have shown so far is more than enough to use BlobServices from test code. It even works in <a href="https://docs.microsoft.com/en-us/azure/storage/blobs/use-azurite-to-run-automated-tests#run-tests-on-azure-pipelines" class="external">Azure Pipelines</a>. I, however, am still not entirely happy with it.</p>
 <h2 id="how-to-use-azurite-without-a-connectionstring"><a href="#how-to-use-azurite-without-a-connectionstring">How to use Azurite without a ConnectionString?</a></h2>
-<p>In the post <a href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
+<p>In the post <a href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html">&quot;Working with Azure SDK for .NET&quot;</a> I made a point that connection strings should be a thing of the past. The <code>TokenCredential</code> should be the way forward (<code>dotnet add package Azure.Identity</code>).</p>
 <pre><code class="language-csharp">using Azure.Identity;
 using Azure.Storage.Blobs;
 
@@ -401,7 +401,7 @@ public async Task Test2()
 <p>Usually, this is where I post a link to the posts GitHub repo. This time, the source code is the NuGet package on this <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite" class="external">GitHub Repo</a>. In the post itself, I focussed on NPM; if you are looking for how to integrate with Docker containers, you can find an example test <a href="https://github.com/kaylumah/Kaylumah.Testing.Azurite/blob/main/test/Unit/AzuriteDockerRunner.cs" class="external">in the GitHub repo</a> As always, if you have any questions, feel free to reach out. Do you have suggestions or alternatives? I would love to hear about them. Especially since this is my first NuGet package let me know if it helped you out.</p>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2022/06/07/share-debug-configuration-with-launch-profiles.html</id>
+    <id>https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html</id>
     <title type="text"><![CDATA[Share debug configuration between .NET IDEs with launch profiles]]></title>
     <summary type="text"><![CDATA[Pick your own .NET IDE and benefit from shared developer configuration with launchSettings.json]]></summary>
     <published>DateTimeOffset_6</published>
@@ -410,7 +410,7 @@ public async Task Test2()
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
+    <link href="https://BaseUrl_1/2022/06/07/share-debug-configuration-with-launch-profiles.html" />
     <category term="Rider" />
     <category term="Visual Studio" />
     <category term="VS Code" />
@@ -727,7 +727,7 @@ dotnet run
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html</id>
+    <id>https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html</id>
     <title type="text"><![CDATA[Working with Azure SDK for .NET]]></title>
     <summary type="text"><![CDATA[The latest iteration of the Azure SDK for dotnet has several cool features baked into its design. We take a look at some common scenarios]]></summary>
     <published>DateTimeOffset_7</published>
@@ -736,7 +736,7 @@ dotnet run
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
+    <link href="https://BaseUrl_1/2022/02/21/working-with-azure-sdk-for-dotnet.html" />
     <category term="C#" />
     <category term="Azure" />
     <content type="html"><![CDATA[<p>February 2022 marks the 20th anniversary of the dotnet platform, which is quite a milestone. I found it the perfect time to reflect; I have been working professionally for almost six years and using .NET during the four years before that in my studies. For a dotnet blogger like myself, I could not stand idly by and let this pass without a post. February 2022 also marks another milestone for me. My first ever open-source contribution has been released into the wild. I made a <a href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CHANGELOG.md#760-2022-02-08" class="external">small contribution</a> to the <code>Azure SDK for .NET</code>. So in honour of both, I wrote this article with small tips and tricks I picked up when working with the SDK.</p>
@@ -991,7 +991,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </code></pre>
 <h2 id="can-i-use-configuration-to-create-azure-sdk-clients"><a href="#can-i-use-configuration-to-create-azure-sdk-clients">Can I use configuration to create Azure SDK clients?</a></h2>
 <p>If I had one criticism of the SDK, it would be that the extension methods require the address right there in the call to the method. To be fair, there is an overload that uses IConfiguration, but that leaves everything up to the SDK to validate.</p>
-<p>In my <a href="https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
+<p>In my <a href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html">previous article on validating IOptions</a>, I wrote about a way to make sure all configuration for my app is valid.</p>
 <p>That approach, of course, requires access to the dependency injection container. Luckily there is an additional method available.</p>
 <pre><code class="language-csharp">public class UnitTest1
 {
@@ -1039,7 +1039,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
+    <id>https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html</id>
     <title type="text"><![CDATA[Improve Code Quality with Banned Symbol Analyzers]]></title>
     <summary type="text"><![CDATA[Learn how a simple Roslyn Analyzer can improve code consistency]]></summary>
     <published>DateTimeOffset_8</published>
@@ -1048,7 +1048,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
+    <link href="https://BaseUrl_1/2022/01/31/improve-code-quality-with-bannedsymbolanalyzers.html" />
     <category term="C#" />
     <category term="Code Quality" />
     <content type="html"><![CDATA[<p>There are many aspects of code quality; testability and consistency come to mind. I don t find it hard to imagine that the longer a project takes with multiple engineers that work on it, the more inconsistencies are in your codebase.</p>
@@ -1194,7 +1194,7 @@ public class SystemClock : ISystemClock
     }
 }
 </code></pre>
-<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://BaseUrl_1/blog/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
+<p>With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, <a href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a> you can read more about my preferred way of creating mocks.</p>
 <pre><code class="language-cs">public sealed class SystemClockMock : Mock&lt;ISystemClock&gt;
 {
     public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
@@ -1261,7 +1261,7 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html</id>
+    <id>https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html</id>
     <title type="text"><![CDATA[Validated Strongly Typed IOptions]]></title>
     <summary type="text"><![CDATA[Find configuration errors early with data annotations validation for IOptions in .NET]]></summary>
     <published>DateTimeOffset_9</published>
@@ -1270,7 +1270,7 @@ P:System.DateTimeOffset.Now;Use ISystemClock.Now instead
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/11/29/validated-strongly-typed-ioptions.html" />
+    <link href="https://BaseUrl_1/2021/11/29/validated-strongly-typed-ioptions.html" />
     <category term="C#" />
     <category term="Configuration" />
     <content type="html"><![CDATA[<p>Almost every project will have some settings that are configured differently per environment. Chapter three of &quot;The Twelve-Factor App&quot; <a href="https://12factor.net/config" class="external">explains</a> why separating configuration from code is a good idea. In <code>.NET</code>, we use the <code>IConfigurationBuilder</code> to manage our configuration. An <code>IOptions&lt;&gt;</code> is used to make a configuration available as a strongly typed type in our applications.</p>
@@ -1370,7 +1370,7 @@ ServiceType = 'Microsoft.Extensions.Options.IConfigureOptions`1[Test.Unit.Exampl
 </code></pre>
 <h2 id="validated-options"><a href="#validated-options">Validated Options</a></h2>
 <p>Now that we covered the basics, I can move on to the focal point of this blog post. As you can imagine overlaying the different configuration sources does not guarantee a valid result from the point of view of your application. Worse, since the number of configuration sources can differ between environments, you can potentially have configuration issues very late in your CICD pipeline. For example, if you use Azure Key Vault as a configuration provider, settings might be changed by anyone with access to the vault.</p>
-<p>In my article <a href="https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
+<p>In my article <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">Generate C# client for OpenAPI</a>, I used HttpClient to call a generated OpenAPI service. HTTP is the perfect example for validating configuration. In our API example, we will likely have different base URLs per environment. If we represent an URL as a string in configuration, it is feasible to enter &quot;not-an-url&quot; as its value, which causes your application to crash and burn.</p>
 <p>As I see it, there are two distinct ways configuration can fail.</p>
 <h3 id="missing-configuration-sections"><a href="#missing-configuration-sections">Missing Configuration Sections</a></h3>
 <p>The first variant is binding configuration at a section that does not exist. That is because <code>configuration.GetSection</code> does not throw but <a href="https://docs.microsoft.com/en-us/dotnet/api/system.configuration.configuration.getsection?view=dotnet-plat-ext-6.0" class="external">returns null</a> for a section that does not exist. Oddly enough, when configuration fails to bind, you still get an <code>IOptions&lt;TOptions&gt;</code> but with null values.</p>
@@ -1769,7 +1769,7 @@ typedOptions.Name.Should().Be(options.Name);
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/11/14/capture-logs-in-unit-tests.html</id>
+    <id>https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html</id>
     <title type="text"><![CDATA[Capture Logs in Unit Tests]]></title>
     <summary type="text"><![CDATA[A guide to capturing logs in Xunit]]></summary>
     <published>DateTimeOffset_10</published>
@@ -1778,7 +1778,7 @@ typedOptions.Name.Should().Be(options.Name);
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/11/14/capture-logs-in-unit-tests.html" />
+    <link href="https://BaseUrl_1/2021/11/14/capture-logs-in-unit-tests.html" />
     <category term="C#" />
     <category term="Testing" />
     <category term="Xunit" />
@@ -1884,7 +1884,7 @@ public async Task Test_Manuel_NullLoggingFactory()
 <p>As you can see in the screenshot above, and empty logger and a NullLogger are not the same thing.</p>
 </blockquote>
 <h2 id="option-2"><a href="#option-2">Option 2</a></h2>
-<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://BaseUrl_1/blog/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
+<p>The second method uses the Moq framework, which makes it possible to hide the logger behind a Mock, which means it's a fake version of ILogger. In my previous article, <a href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html">&quot;Adventures with Mock&quot;</a>, I touched upon my preferred method of writing mocks. I even included an initial version of the LoggerMock. Since then, I have fleshed out the concept more, so here is an updated version of the Logger Mock.</p>
 <pre><code class="language-cs">public class LoggerMock&lt;TCategoryName&gt; : Mock&lt;ILogger&lt;TCategoryName&gt;&gt;
 {
     private readonly List&lt;LogMessage&gt; logMessages = new();
@@ -2110,7 +2110,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
 <p>See you next time, stay healthy and happy coding to all 🧸!</p>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/07/17/decreasing-solution-build-time-with-filters.html</id>
+    <id>https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html</id>
     <title type="text"><![CDATA[Decreasing Solution Build time with Filters]]></title>
     <summary type="text"><![CDATA[How to use solution filters to increase focus and decrease build time]]></summary>
     <published>DateTimeOffset_11</published>
@@ -2119,7 +2119,7 @@ public async Task Test_Custom_XunitLoggingBuilder()
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/07/17/decreasing-solution-build-time-with-filters.html" />
+    <link href="https://BaseUrl_1/2021/07/17/decreasing-solution-build-time-with-filters.html" />
     <category term="MSBuild" />
     <category term="Visual Studio 2019" />
     <content type="html"><![CDATA[<p>There are many ways to structure your projects source code. My preference is a style called single-solution-model. Amongst other things, I like that it provides a single entry point to my project. If, however, your project grows, it can become slow to build it. I am sure some of you will be familiar with the following <a href="https://imgs.xkcd.com/comics/compiling.png" class="external">xkcd joke</a> or some variant of it:</p>
@@ -2257,7 +2257,7 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html</id>
+    <id>https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html</id>
     <title type="text"><![CDATA[Generate C# client for OpenAPI]]></title>
     <summary type="text"><![CDATA[A look at using OpenAPI clients in C#]]></summary>
     <published>DateTimeOffset_12</published>
@@ -2266,13 +2266,13 @@ $root | ConvertTo-Json | Out-File $outputSlnFilter
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html" />
+    <link href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html" />
     <category term="C#" />
     <category term="NSwag" />
     <category term="OpenAPI" />
     <category term="Swashbuckle" />
     <content type="html"><![CDATA[<blockquote>
-<p><strong>note</strong>: on 2023-04-14 I published a revised version of this article which you can find here <a href="https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revistted.html">&quot;Generate C# client for OpenAPI - Revisited&quot;</a> it compares an alternative to the way described in this article. Including an update to <code>net7.0</code>, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)</p>
+<p><strong>note</strong>: on 2023-04-14 I published a revised version of this article which you can find here <a href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revistted.html">&quot;Generate C# client for OpenAPI - Revisited&quot;</a> it compares an alternative to the way described in this article. Including an update to <code>net7.0</code>, but if you are looking specifically for configuring NSwag you can use this article for the general idea :)</p>
 </blockquote>
 <p>I've recently worked on a project where I was the consumer of a third party API. Luckily for me, we decided on an Open API specification which made integrating services a breeze. If you have been following my content, you know I often use C# in my projects. So I needed a type-safe client for use in my C# code base.</p>
 <p>To accomplish my goals, I used the <a href="https://github.com/RicoSuter/NSwag/wiki/NSwag.MSBuild" class="external">NSwag library</a> created by Rico Suter. This project provides me with an MSBuild task for generating clients. In my case, I used a JSON file version to generate my client. NSwag is not limited to just one way of working.</p>
@@ -2628,7 +2628,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/04/11/an-approach-to-writing-mocks.html</id>
+    <id>https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html</id>
     <title type="text"><![CDATA[Experiment with Moq, an approach to writing mocks]]></title>
     <summary type="text"><![CDATA[An experiment to create reusable mocks in my testing code]]></summary>
     <published>DateTimeOffset_13</published>
@@ -2637,7 +2637,7 @@ If I am writing an OpenAPI specification, I prefer the syntax of Swashbuckle for
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/04/11/an-approach-to-writing-mocks.html" />
+    <link href="https://BaseUrl_1/2021/04/11/an-approach-to-writing-mocks.html" />
     <category term="C#" />
     <category term="Moq" />
     <category term="Testing" />
@@ -3437,7 +3437,7 @@ public async Task Test_ArticleAccess_Returns200OK()
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2021/03/27/set-nuget-metadata-via-msbuild.html</id>
+    <id>https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html</id>
     <title type="text"><![CDATA[Set NuGet metadata via MSBuild]]></title>
     <summary type="text"><![CDATA[Discover how to use MSBuild to set your NuGet package's metadata]]></summary>
     <published>DateTimeOffset_14</published>
@@ -3446,7 +3446,7 @@ public async Task Test_ArticleAccess_Returns200OK()
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2021/03/27/set-nuget-metadata-via-msbuild.html" />
+    <link href="https://BaseUrl_1/2021/03/27/set-nuget-metadata-via-msbuild.html" />
     <category term="MSBuild" />
     <category term="NuGet" />
     <content type="html"><![CDATA[<p>For .NET, the standard mechanism for sharing packages is NuGet. A <code>.nupkg</code> file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata (<a href="https://docs.microsoft.com/en-us/nuget/what-is-nuget" class="external">source</a>). This blog post will show you how data in this manifest can be controlled by using MSBuild.</p>
@@ -3746,7 +3746,7 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
 </ul>]]></content>
   </entry>
   <entry>
-    <id>https://BaseUrl_1/blog/2019/09/07/using-csharp-code-your-git-hooks.html</id>
+    <id>https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html</id>
     <title type="text"><![CDATA[Using C# code in your git hooks]]></title>
     <summary type="text"><![CDATA[Getting started with C# script in your client-side git hooks]]></summary>
     <published>DateTimeOffset_15</published>
@@ -3755,7 +3755,7 @@ dotnet build -p:RepositoryUrl=&quot;$REPO_URL&quot; -p:RepositoryBranch=&quot;$R
       <name>Max Hamulyák</name>
       <email>max@kaylumah.nl</email>
     </author>
-    <link href="https://BaseUrl_1/blog/2019/09/07/using-csharp-code-your-git-hooks.html" />
+    <link href="https://BaseUrl_1/2019/09/07/using-csharp-code-your-git-hooks.html" />
     <category term="C#" />
     <category term="Git" />
     <content type="html"><![CDATA[<h2 id="why-use-hooks"><a href="#why-use-hooks">Why use hooks?</a></h2>

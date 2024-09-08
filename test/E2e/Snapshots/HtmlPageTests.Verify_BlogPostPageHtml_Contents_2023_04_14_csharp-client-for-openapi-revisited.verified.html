@@ -18,7 +18,7 @@
     
     <!-- Common Meta Tags -->
     <title>Generate C# client for OpenAPI - Revisited</title>
-    <link rel="canonical" href="https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html" />
+    <link rel="canonical" href="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html" />
     <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
     <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
     <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
@@ -31,7 +31,7 @@
     <meta property="og:locale" content="en" />
     <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
     <meta property="og:title" content="Generate C# client for OpenAPI - Revisited" />
-    <meta property="og:url" content="https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html" />
+    <meta property="og:url" content="https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html" />
     <meta property="og:description" content="A comparison of NSwag.MSBuild and OpenApiReference" />
     <meta property="og:image" content="https://BaseUrl_1/assets/images/posts/20230414/openapi/cover_image.png" />
     <meta property="article:author" content="Max Hamulyák" />
@@ -66,8 +66,8 @@
       "@type": "BlogPosting",
       "description": "A comparison of NSwag.MSBuild and OpenApiReference",
       "image": "https://BaseUrl_1/assets/images/posts/20230414/openapi/cover_image.png",
-      "mainEntityOfPage": "https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html",
-      "url": "https://BaseUrl_1/blog/2023/04/14/csharp-client-for-openapi-revisited.html",
+      "mainEntityOfPage": "https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html",
+      "url": "https://BaseUrl_1/2023/04/14/csharp-client-for-openapi-revisited.html",
       "author": {
         "@context": "https://schema.org",
         "@type": "Person",
@@ -271,7 +271,7 @@
             </span>
         </header>
         <main class="prose laptop:mx-auto">
-            <p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/blog/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
+            <p>I am working on an article for the blog that relies on a C# generated Open API client. I wrote an article on that a few years ago called <a href="https://BaseUrl_1/2021/05/23/generate-csharp-client-for-openapi.html">&quot;Generate C# client for OpenAPI&quot;</a>. So I decided to check if the advice from that post would still be valid today. Combined with the fact that, according to analytics, it is one of my most popular articles to date, this post was born.</p>
 <p>The solution provided relied on using an MSBuild task to generate the API on build using a tool called NSwag. However, even back then, in 2021, an alternative was already available. Steve Collins, another dotnet content creator, published an article called <a href="https://stevetalkscode.co.uk/openapireference-commands" class="external">&quot;Using OpenApiReference To Generate Open API Client Code&quot;</a>. The alternative directly adds OpenAPI support to the project while still using NSWag under the hood. Back then, Steve mentioned that there was little documentation, and I was already familiar with doing it manually, so I decided to stick with that. Today I wanted to compare doing it manually or via the built-in mechanism.</p>
 <h2 id="safe-openapi-specification-on-build"><a href="#safe-openapi-specification-on-build">Safe OpenAPI specification on build</a></h2>
 <p>The purpose of the post is not to detail how to configure an OpenAPI spec for your project since the standard template already supports Swashbuckle. You can find more information on that over <a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-7.0&amp;tabs=visual-studio" class="external">at Microsoft Learn</a>. One thing I like to add to the standard template, is that I want the specification to be part of the project output. We can achieve that with the Swashbuckle CLI, which you can install with the command <code>dotnet tool install --local Swashbuckle.AspNetCore.Cli --version 6.4.0</code>. Note that the version of the CLI must match the version of Swashbuckle used in the API project. After you install the tool, you can modify the csproj to look like this.</p>
@@ -490,11 +490,11 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
                 <ul class="flex flex-col gap-2">
                     
                             <li>
-                                <a href="/blog/2021/04/11/an-approach-to-writing-mocks.html">Experiment with Moq, an approach to writing mocks</a>
+                                <a href="/2021/04/11/an-approach-to-writing-mocks.html">Experiment with Moq, an approach to writing mocks</a>
                             </li>
                             
                             <li>
-                                <a href="/blog/2019/09/07/using-csharp-code-your-git-hooks.html">Using C# code in your git hooks</a>
+                                <a href="/2019/09/07/using-csharp-code-your-git-hooks.html">Using C# code in your git hooks</a>
                             </li>
                             
                 </ul>
