@@ -1,5 +1,12 @@
 {
   "routes": [
+    {% for redirect in site.data.redirects %}
+    {
+      "route": "{{ redirect.Route }}",
+      "redirect": "{{ redirect.Redirect }}",
+      "statusCode": {{ redirect.StatusCode }}
+    },
+    {% endfor %}
     {
       "route": "/assets/*.{svg,png,jpg,gif}",
       "headers": {
