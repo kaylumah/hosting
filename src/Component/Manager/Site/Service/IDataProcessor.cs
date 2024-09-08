@@ -132,7 +132,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
         {
-            object result = _JsonParser.Parse<object>(file);
+            object result = _JsonParser.Parse<JsonNode>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
             siteMetaData.Data[fileName] = result;
         }
