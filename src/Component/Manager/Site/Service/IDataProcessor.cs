@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
+using Ssg.Extensions.Data.Csv;
 using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -95,6 +96,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string extension = file.Extension;
             bool extensionMatches = extension.Equals(KnownExtension, StringComparison.Ordinal);
             return extensionMatches;
+        }
+    }
+
+    public class CsvFileProcessor : IKnownExtensionProcessor
+    {
+        readonly ICsvParser _CsvParser;
+
+        public CsvFileProcessor(ICsvParser csvParser)
+        {
+            _CsvParser = csvParser;
+        }
+
+        public string KnownExtension => ".csv";
+
+        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        {
+            object result = _CsvParser.Parse<object>(file);
+            string fileName = Path.GetFileNameWithoutExtension(file.Name);
+            siteMetaData.Data[fileName] = result;
         }
     }
 
