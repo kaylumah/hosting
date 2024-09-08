@@ -1,0 +1,138 @@
+---
+layout: default.html
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+</head>
+<body>
+    <h1>404 - Page Not Found</h1>
+    <p>We couldn't find the page you were looking for. Did you mean:</p>
+    <ul id="suggestions"></ul>
+
+    <script>
+        // Global variable to store all valid URLs from sitemaps
+        let validUrls = [];
+
+        /**
+         * Calculates the Levenshtein distance between two strings.
+         * @param {string} source - The source string (the requested URL).
+         * @param {string} target - The target string (a valid URL).
+         * @returns {number} - The Levenshtein distance between the source and target strings.
+         */
+        function calculateLevenshteinDistance(source, target) {
+            const distanceMatrix = [];
+
+            for (let row = 0; row <= target.length; row++) {
+                distanceMatrix[row] = [row];
+            }
+            for (let col = 0; col <= source.length; col++) {
+                distanceMatrix[0][col] = col;
+            }
+
+            for (let row = 1; row <= target.length; row++) {
+                for (let col = 1; col <= source.length; col++) {
+                    const cost = source.charAt(col - 1) === target.charAt(row - 1) ? 0 : 1;
+
+                    distanceMatrix[row][col] = Math.min(
+                        distanceMatrix[row - 1][col] + 1,     // deletion
+                        distanceMatrix[row][col - 1] + 1,     // insertion
+                        distanceMatrix[row - 1][col - 1] + cost // substitution
+                    );
+                }
+            }
+
+            return distanceMatrix[target.length][source.length];
+        }
+
+        /**
+         * Fetches and parses an XML sitemap file to extract URLs.
+         * @param {string} sitemapUrl - The URL of the sitemap to fetch.
+         * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs.
+         */
+        function fetchSitemapUrls(sitemapUrl) {
+            return fetch(sitemapUrl)
+                .then(response => response.text())
+                .then(xmlText => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    const urlElements = xmlDoc.getElementsByTagName('loc');
+                    return Array.from(urlElements).map(el => el.textContent);
+                })
+                .catch(error => {
+                    console.error('Error fetching sitemap:', error);
+                    return [];
+                });
+        }
+
+        /**
+         * Fetches and parses the sitemap index to extract all individual sitemap URLs.
+         * @param {string} sitemapIndexUrl - The URL of the sitemap index file.
+         * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs found in all sitemaps.
+         */
+        function fetchSitemapIndexUrls(sitemapIndexUrl) {
+            return fetch(sitemapIndexUrl)
+                .then(response => response.text())
+                .then(xmlText => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    const sitemapElements = xmlDoc.getElementsByTagName('sitemap');
+                    const sitemapUrls = Array.from(sitemapElements).map(el => el.getElementsByTagName('loc')[0].textContent);
+
+                    // Fetch URLs from each individual sitemap
+                    const fetchPromises = sitemapUrls.map(fetchSitemapUrls);
+                    return Promise.all(fetchPromises).then(urlArrays => urlArrays.flat());
+                })
+                .catch(error => {
+                    console.error('Error fetching sitemap index:', error);
+                    return [];
+                });
+        }
+
+        // Configuration parameters
+        const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
+        const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
+        const maxSuggestions = 3; // Maximum number of suggestions to display
+
+        // Get the current URL path from the browser
+        const requestedUrl = window.location.pathname;
+
+        // Fetch all valid URLs from the sitemap index and store them in the global variable
+        fetchSitemapIndexUrls(sitemapIndexUrl).then(urls => {
+            validUrls = urls; // Store fetched URLs in the global variable
+
+            if (!validUrls.length) {
+                console.error('No valid URLs found.');
+                return;
+            }
+
+            // Calculate the Levenshtein distances
+            const urlDistances = validUrls.map(validUrl => ({
+                url: validUrl,
+                distance: calculateLevenshteinDistance(requestedUrl, validUrl)
+            }));
+
+            // Sort the URLs by their computed Levenshtein distance
+            urlDistances.sort((a, b) => a.distance - b.distance);
+
+            // Display the closest matching URLs within the acceptable distance
+            const suggestionsElement = document.getElementById('suggestions');
+            let suggestionsCount = 0;
+
+            for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
+                if (urlDistances[i].distance <= maxAcceptableDistance) {
+                    const suggestionItem = document.createElement('li');
+                    suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
+                    suggestionsElement.appendChild(suggestionItem);
+                    suggestionsCount++;
+                }
+            }
+        }).catch(error => {
+            console.error('Error processing sitemaps:', error);
+        });
+    </script>
+</body>
+</html>
