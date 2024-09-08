@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+</head>
+<body>
+    <h1>404 - Page Not Found</h1>
+    <p>We couldn't find the page you were looking for. Did you mean:</p>
+    <ul id="suggestions"></ul>
+
+    <script>
+        /**
+         * Calculates the Levenshtein distance between two strings.
+         * This distance measures the minimum number of single-character edits (insertions, deletions, substitutions)
+         * required to change one string into the other.
+         * @param {string} source - The source string (the requested URL).
+         * @param {string} target - The target string (a valid URL).
+         * @returns {number} - The Levenshtein distance between the source and target strings.
+         */
+        function calculateLevenshteinDistance(source, target) {
+            const distanceMatrix = [];
+
+            // Initialize the first row and column of the matrix
+            for (let row = 0; row <= target.length; row++) {
+                distanceMatrix[row] = [row];
+            }
+            for (let col = 0; col <= source.length; col++) {
+                distanceMatrix[0][col] = col;
+            }
+
+            // Compute the distances
+            for (let row = 1; row <= target.length; row++) {
+                for (let col = 1; col <= source.length; col++) {
+                    const cost = source.charAt(col - 1) === target.charAt(row - 1) ? 0 : 1;
+
+                    distanceMatrix[row][col] = Math.min(
+                        distanceMatrix[row - 1][col] + 1,     // deletion
+                        distanceMatrix[row][col - 1] + 1,     // insertion
+                        distanceMatrix[row - 1][col - 1] + cost // substitution
+                    );
+                }
+            }
+
+            // The final distance is in the bottom-right corner of the matrix
+            return distanceMatrix[target.length][source.length];
+        }
+
+        // A list of valid URLs on the website
+        const validUrls = [
+            '/home',
+            '/about',
+            '/contact',
+            '/products',
+            '/services',
+            '/blog'
+        ];
+
+        // Configuration parameters
+        // 5? 3?
+        const maxAcceptableDistance = 100; // Maximum allowable distance for a suggestion
+        const maxSuggestions = 6; // Maximum number of suggestions to display
+
+        // Get the current URL path from the browser
+        const requestedUrl = window.location.pathname;
+
+        // Array to hold the distances of all URLs
+        const urlDistances = validUrls.map(validUrl => ({
+            url: validUrl,
+            distance: calculateLevenshteinDistance(requestedUrl, validUrl)
+        }));
+
+        // Sort the URLs by their computed Levenshtein distance
+        urlDistances.sort((a, b) => a.distance - b.distance);
+        console.log(urlDistances);
+
+        // Display the closest matching URLs within the acceptable distance
+        const suggestionsElement = document.getElementById('suggestions');
+        let suggestionsCount = 0;
+
+        for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
+            if (urlDistances[i].distance <= maxAcceptableDistance) {
+                const suggestionItem = document.createElement('li');
+                suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
+                suggestionsElement.appendChild(suggestionItem);
+                suggestionsCount++;
+            }
+        }
+    </script>
+</body>
+</html>
