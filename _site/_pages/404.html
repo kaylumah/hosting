@@ -166,6 +166,7 @@ modifieddate: '2024-04-11'
 
     console.log('URL scores:', urlDistances);
 
+    let suggestionsCount = 0;
     for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
       if (urlDistances[i].distance <= maxAcceptableDistance) {
         const suggestionItem = document.createElement('li');
