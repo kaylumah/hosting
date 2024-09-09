@@ -11,7 +11,8 @@ modifieddate: '2024-04-11'
   <div class="max-w-xl mx-auto py-16 tablet:py-24">
     <div class="text-center">
       <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">404 error</p>
-      <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight tablet:text-5xl">This page does not exist.</h1>
+      <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight tablet:text-5xl">This page does not exist.
+      </h1>
       <p class="mt-2 text-lg text-gray-500">The page you are looking for could not be found.</p>
     </div>
     <div class="mt-12">
@@ -21,8 +22,10 @@ modifieddate: '2024-04-11'
           <div class="flex-shrink-0">
             <span class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-50">
               <!-- Heroicon name: outline/rss -->
-              <svg class="h-6 w-6 text-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+              <svg class="h-6 w-6 text-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
               </svg>
             </span>
           </div>
@@ -39,14 +42,18 @@ modifieddate: '2024-04-11'
           </div>
           <div class="flex-shrink-0 self-center">
             <!-- Heroicon name: solid/chevron-right -->
-            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+              fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd" />
             </svg>
           </div>
         </li>
       </ul>
       <div class="mt-8">
-        <a href="/" class="text-base font-medium text-indigo-600 hover:text-indigo-500">Or go back home<span aria-hidden="true"> &rarr;</span></a>
+        <a href="/" class="text-base font-medium text-indigo-600 hover:text-indigo-500">Or go back home<span
+            aria-hidden="true"> &rarr;</span></a>
       </div>
     </div>
   </div>
@@ -54,6 +61,62 @@ modifieddate: '2024-04-11'
 <div id="four-oh-four-suggestion">
 
 </div>
+<script>
+  // Configuration parameters
+  const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
+  const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
+  const maxSuggestions = 3; // Maximum number of suggestions to display
+
+  /**
+           * Fetches and parses an XML sitemap file to extract URLs.
+           * @param {string} sitemapUrl - The URL of the sitemap to fetch.
+           * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs.
+           */
+  function fetchSitemapUrls(sitemapUrl) {
+    return fetch(sitemapUrl)
+      .then(response => response.text())
+      .then(xmlText => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        const urlElements = xmlDoc.getElementsByTagName('loc');
+        return Array.from(urlElements).map(el => el.textContent);
+      })
+      .catch(error => {
+        console.error('Error fetching sitemap:', error);
+        return [];
+      });
+  }
+
+  /**
+   * Fetches and parses the sitemap index to extract all individual sitemap URLs.
+   * @param {string} sitemapIndexUrl - The URL of the sitemap index file.
+   * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs found in all sitemaps.
+   */
+  function fetchSitemapIndexUrls(sitemapIndexUrl) {
+    return fetch(sitemapIndexUrl)
+      .then(response => response.text())
+      .then(xmlText => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+        const sitemapElements = xmlDoc.getElementsByTagName('sitemap');
+        const sitemapUrls = Array.from(sitemapElements).map(el => el.getElementsByTagName('loc')[0].textContent);
+
+        // Fetch URLs from each individual sitemap
+        const fetchPromises = sitemapUrls.map(fetchSitemapUrls);
+        return Promise.all(fetchPromises).then(urlArrays => urlArrays.flat());
+      })
+      .catch(error => {
+        console.error('Error fetching sitemap index:', error);
+        return [];
+      });
+  }
+
+  fetchSitemapIndexUrls(sitemapIndexUrl).then(urls => {
+    console.log('Sitemap URLs:', urls);
+  });
+
+</script>
+<!--
 <script type="text/javascript">
   // https://ben.balter.com/2022/06/30/helpful-404s-for-jekyll-and-github-pages/
   const levenshteinDistance = (s, t) => {
@@ -121,3 +184,4 @@ modifieddate: '2024-04-11'
     xhr.send();
   }
 </script>
+-->
