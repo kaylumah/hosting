@@ -114,7 +114,7 @@ modifieddate: '2024-04-11'
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
         const urlElements = xmlDoc.getElementsByTagName('loc');
-        return Array.from(urlElements).map(el => new URL(el.textContent).Path);
+        return Array.from(urlElements).map(el => new URL(el.textContent).pathname);
       })
       .catch(error => {
         console.error('Error fetching sitemap:', error);
