@@ -103,10 +103,10 @@ modifieddate: '2024-04-11'
 
 
   /**
-           * Fetches and parses an XML sitemap file to extract URLs.
-           * @param {string} sitemapUrl - The URL of the sitemap to fetch.
-           * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs.
-           */
+   * Fetches and parses an XML sitemap file to extract URLs.
+   * @param {string} sitemapUrl - The URL of the sitemap to fetch.
+   * @returns {Promise<Array<string>>} - A promise that resolves to an array of URLs.
+   */
   function fetchSitemapUrls(sitemapUrl) {
     return fetch(sitemapUrl)
       .then(response => response.text())
