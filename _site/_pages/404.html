@@ -147,7 +147,6 @@ modifieddate: '2024-04-11'
   }
 
   fetchSitemapIndexUrls(sitemapIndexUrl).then(validUrls => {
-    console.log('Sitemap URLs:', validUrls);
 
     if (!validUrls.length) {
       console.error('No valid URLs found.');
@@ -165,7 +164,7 @@ modifieddate: '2024-04-11'
     // Sort the URLs by their computed Levenshtein distance
     urlDistances.sort((a, b) => a.distance - b.distance);
 
-    console.log('URL distances:', urlDistances);
+    console.log('URL scores:', urlDistances);
   });
 
 </script>
