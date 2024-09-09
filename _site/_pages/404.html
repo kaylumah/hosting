@@ -165,7 +165,7 @@ modifieddate: '2024-04-11'
     urlDistances.sort((a, b) => a.distance - b.distance);
 
     console.log('URL scores:', urlDistances);
-
+    const suggestionsElement = document.getElementById('suggestions');
     let suggestionsCount = 0;
     for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
       if (urlDistances[i].distance <= maxAcceptableDistance) {
