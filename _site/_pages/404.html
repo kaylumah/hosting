@@ -59,8 +59,9 @@ modifieddate: '2024-04-11'
   </div>
 </div>
 <div id="four-oh-four-suggestion">
-
 </div>
+<p>We couldn't find the page you were looking for. Did you mean:</p>
+<ul id="suggestions"></ul>
 <script>
   // Configuration parameters
   const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
@@ -164,6 +165,18 @@ modifieddate: '2024-04-11'
     urlDistances.sort((a, b) => a.distance - b.distance);
 
     console.log('URL scores:', urlDistances);
+
+    for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
+      if (urlDistances[i].distance <= maxAcceptableDistance) {
+        const suggestionItem = document.createElement('li');
+        suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
+        suggestionsElement.appendChild(suggestionItem);
+        suggestionsCount++;
+      }
+    }
+
+  }).catch(error => {
+    console.error('Error processing sitemaps:', error);
   });
 
 </script>
