@@ -154,6 +154,8 @@ modifieddate: '2024-04-11'
       return;
     }
 
+    console.log('Requested URL:', requestedUrl);
+
     // Calculate the Levenshtein distances
     const urlDistances = validUrls.map(validUrl => ({
       url: validUrl,
