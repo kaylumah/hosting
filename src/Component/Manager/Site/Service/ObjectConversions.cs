@@ -102,9 +102,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ToJson(object o)
         {
-#pragma warning disable CA1869
+#pragma warning disable
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.WriteIndented = true;
+            options.Converters.Add(new AuthorIdJsonConverter());
+            options.Converters.Add(new OrganizationIdJsonConverter());
             string result = JsonSerializer.Serialize(o, options);
             return result;
         }

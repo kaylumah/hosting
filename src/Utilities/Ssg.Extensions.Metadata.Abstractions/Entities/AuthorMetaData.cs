@@ -1,13 +1,45 @@
 ﻿// Copyright (c) Kaylumah, 2024. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+
+    public sealed class AuthorIdJsonConverter : JsonConverter<AuthorId>
+    {
+#pragma warning disable
+        public override AuthorId Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options) =>
+                new AuthorId(reader.GetString());
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            AuthorId authorId,
+            JsonSerializerOptions options) =>
+                writer.WriteStringValue(authorId);
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            AuthorId authorId,
+            JsonSerializerOptions options) =>
+                writer.WritePropertyName(authorId);
+
+        public override AuthorId ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options) =>
+                Read(ref reader, typeToConvert, options);
+    }
+
     public readonly struct AuthorId
     {
         readonly string _AuthorId;
