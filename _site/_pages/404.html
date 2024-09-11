@@ -62,6 +62,11 @@ modifieddate: '2024-04-11'
 </div>
 <p>We couldn't find the page you were looking for. Did you mean:</p>
 <ul id="suggestions"></ul>
+
+<pre id="json">
+  {{ site | to_json}}
+</pre>
+
 <script>
   // Configuration parameters
   const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
