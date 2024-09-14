@@ -83,7 +83,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         protected override string GetFormattedContent(string content)
         {
             HtmlDocument document = new HtmlDocument();
-            document.OptionOutputAsXml = true; // Set to true if you want XML output
+            document.OptionOutputAsXml = false; // Set to true if you want XML output
             document.OptionWriteEmptyNodes = true; // Set to false if you don't want to write empty nodes
             document.OptionAutoCloseOnEnd = true; // Set to false if you don't want to auto-close tags
             document.LoadHtml(content);
