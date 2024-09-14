@@ -13,30 +13,37 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public sealed class OrganizationIdJsonConverter : JsonConverter<OrganizationId>
     {
-#pragma warning disable
         public override OrganizationId Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options) =>
-                new OrganizationId(reader.GetString());
+            JsonSerializerOptions options)
+        {
+            string? value = reader.GetString()!;
+            OrganizationId result = new OrganizationId(value);
+            return result;
+        }
 
-        public override void Write(
-            Utf8JsonWriter writer,
-            OrganizationId OrganizationId,
-            JsonSerializerOptions options) =>
-                writer.WriteStringValue(OrganizationId);
+        public override void Write(Utf8JsonWriter writer, OrganizationId value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value);
+        }
 
         public override void WriteAsPropertyName(
             Utf8JsonWriter writer,
-            OrganizationId OrganizationId,
-            JsonSerializerOptions options) =>
-                writer.WritePropertyName(OrganizationId);
+            OrganizationId value,
+            JsonSerializerOptions options)
+        {
+            writer.WritePropertyName(value);
+        }
 
         public override OrganizationId ReadAsPropertyName(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options) =>
-                Read(ref reader, typeToConvert, options);
+            JsonSerializerOptions options)
+        {
+            OrganizationId value = Read(ref reader, typeToConvert, options);
+            return value;
+        }
     }
 
     public readonly struct OrganizationId
