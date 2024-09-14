@@ -14,30 +14,37 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public sealed class AuthorIdJsonConverter : JsonConverter<AuthorId>
     {
-#pragma warning disable
         public override AuthorId Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options) =>
-                new AuthorId(reader.GetString());
+            JsonSerializerOptions options)
+        {
+            string? value = reader.GetString()!;
+            AuthorId result = new AuthorId(value);
+            return result;
+        }
 
-        public override void Write(
-            Utf8JsonWriter writer,
-            AuthorId authorId,
-            JsonSerializerOptions options) =>
-                writer.WriteStringValue(authorId);
+        public override void Write(Utf8JsonWriter writer, AuthorId value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value);
+        }
 
         public override void WriteAsPropertyName(
             Utf8JsonWriter writer,
-            AuthorId authorId,
-            JsonSerializerOptions options) =>
-                writer.WritePropertyName(authorId);
+            AuthorId value,
+            JsonSerializerOptions options)
+        {
+            writer.WritePropertyName(value);
+        }
 
         public override AuthorId ReadAsPropertyName(
             ref Utf8JsonReader reader,
             Type typeToConvert,
-            JsonSerializerOptions options) =>
-                Read(ref reader, typeToConvert, options);
+            JsonSerializerOptions options)
+        {
+            AuthorId value = Read(ref reader, typeToConvert, options);
+            return value;
+        }
     }
 
     public readonly struct AuthorId
