@@ -77,7 +77,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         public IEnumerable<PageMetaData> Pages => GetPages();
-        
+
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
