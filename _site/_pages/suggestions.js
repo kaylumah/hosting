@@ -76,21 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Dynamically create list items with Tailwind styling
         suggestions.forEach(suggestion => {
-            /*
-            const url = suggestion.url;
-            const item = pageData[url];
-            const listItem = document.createElement('li');
-            listItem.classList.add('mb-3', 'last:mb-0');
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.textContent = item.title;
-            link.classList.add('text-blue-500', 'hover:text-blue-700', 'underline', 'text-lg', 'block');
-
-            listItem.appendChild(link);
-            suggestionsList.appendChild(listItem);
-             */
-
             const url = suggestion.url;
             const item = pageData[url];
             const listItem = document.createElement('li');
