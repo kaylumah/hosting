@@ -130,16 +130,27 @@ modifieddate: '2024-04-11'
       urlDistances.sort((a, b) => a.distance - b.distance);
 
       console.log('URL scores:', urlDistances);
-      const suggestionsElement = document.getElementById('suggestions');
+     
       let suggestionsCount = 0;
       for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
           if (urlDistances[i].distance <= maxAcceptableDistance) {
-              const suggestionItem = document.createElement('li');
-              suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
-              suggestionsElement.appendChild(suggestionItem);
+
+              CreateSuggestion(`${urlDistances[i]}`);
               suggestionsCount++;
           }
       }
+  }
+
+  /**
+   * Add suggestion to the markup
+   * @param {string} url
+   */
+  function CreateSuggestion(url)
+  {
+      const suggestionsElement = document.getElementById('suggestions');
+      const suggestionItem = document.createElement('li');
+      suggestionItem.innerHTML = `<a href="${url}">${url}</a>`;
+      suggestionsElement.appendChild(suggestionItem);
   }
   
   /**
