@@ -6,9 +6,39 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+    public sealed class OrganizationIdJsonConverter : JsonConverter<OrganizationId>
+    {
+#pragma warning disable
+        public override OrganizationId Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options) =>
+                new OrganizationId(reader.GetString());
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            OrganizationId OrganizationId,
+            JsonSerializerOptions options) =>
+                writer.WriteStringValue(OrganizationId);
+
+        public override void WriteAsPropertyName(
+            Utf8JsonWriter writer,
+            OrganizationId OrganizationId,
+            JsonSerializerOptions options) =>
+                writer.WritePropertyName(OrganizationId);
+
+        public override OrganizationId ReadAsPropertyName(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options) =>
+                Read(ref reader, typeToConvert, options);
+    }
+
     public readonly struct OrganizationId
     {
         readonly string _OrganizationId;
