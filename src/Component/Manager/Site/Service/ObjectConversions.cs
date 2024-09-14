@@ -42,22 +42,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
             SortedDictionary<string, PageMetaData[]> tags = site.Tags;
-            TagMetaDataCollection tagMetaData = site.TagMetaData;
             List<TagViewModel> result = new List<TagViewModel>();
             foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
                 string tag = item.Key;
-                string displayName = item.Key;
-                string description = string.Empty;
-                PageMetaData[] items = item.Value;
-                bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
-                if (success && tagData != null)
-                {
-                    displayName = tagData.Name;
-                    description = tagData.Description;
-                }
-
-                TagViewModel resultForTag = new TagViewModel(tag, displayName, description, items.Length);
+                TagViewModel resultForTag = GetTag(site, tag);
                 result.Add(resultForTag);
             }
 

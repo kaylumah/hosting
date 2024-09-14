@@ -128,14 +128,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
             string description = string.Empty;
             int size = 0;
 
-            bool hasTagMetaData = TagMetaData.TryGetValue(tag, out TagMetaData? tagData);
+            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
             if (hasTagMetaData && tagData != null)
             {
                 displayName = tagData.Name;
                 description = tagData.Description;
             }
 
-            TagViewModel resultForTag = new TagViewModel(tag, displayName, description, size);
+            bool hasPageInfo = Tags.TryGetValue(id, out PageMetaData[]? pageInfos);
+            if (hasPageInfo && pageInfos != null)
+            {
+                size = pageInfos.Length;
+            }
+
+            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
             return resultForTag;
         }
     }
