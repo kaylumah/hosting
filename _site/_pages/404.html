@@ -66,10 +66,13 @@ modifieddate: '2024-04-11'
 {{ site.pages | to_diagnostic_html "my-id" }}
 
 <script>
-    
-    
   const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
   const maxSuggestions = 3; // Maximum number of suggestions to display
+  const pageData = {
+    {% for page in site.pages %}
+      "/{{ page.uri }}": {},
+    {% endfor %}
+  };
 
   // Get the current URL path from the browser
   const requestedUrl = window.location.pathname;
@@ -188,11 +191,7 @@ modifieddate: '2024-04-11'
   // fetchSitemapIndexUrls(sitemapIndexUrl).then(determineClosestMatch).catch(error => {
   //   console.error('Error processing sitemaps:', error);
   // });
-  const validUrls = [
-      {% for page in site.pages %}
-      "/{{ page.uri }}",
-      {% endfor %}
-  ];
+  const validUrls = Object.keys(pageData);
   determineClosestMatch(validUrls);
 
 </script>
