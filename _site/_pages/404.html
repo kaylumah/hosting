@@ -66,6 +66,8 @@ modifieddate: '2024-04-11'
 {{ site.pages | to_diagnostic_html "my-id" }}
 
 <script>
+    
+    
   const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
   const maxSuggestions = 3; // Maximum number of suggestions to display
 
@@ -182,9 +184,15 @@ modifieddate: '2024-04-11'
   }
 
   // Configuration parameters
-  const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
-  fetchSitemapIndexUrls(sitemapIndexUrl).then(determineClosestMatch).catch(error => {
-    console.error('Error processing sitemaps:', error);
-  });
+  // const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
+  // fetchSitemapIndexUrls(sitemapIndexUrl).then(determineClosestMatch).catch(error => {
+  //   console.error('Error processing sitemaps:', error);
+  // });
+  const validUrls = [
+      {% for page in site.pages %}
+      "/{{ page.uri }}",
+      {% endfor %}
+  ];
+  determineClosestMatch(validUrls);
 
 </script>
