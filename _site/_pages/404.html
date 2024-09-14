@@ -66,13 +66,12 @@ modifieddate: '2024-04-11'
 {{ site.pages | to_diagnostic_html "my-id" }}
 
 <script>
-  // Configuration parameters
-  const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
   const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
   const maxSuggestions = 3; // Maximum number of suggestions to display
 
   // Get the current URL path from the browser
   const requestedUrl = window.location.pathname;
+  console.log('Requested URL:', requestedUrl, maxAcceptableDistance, maxSuggestions);
 
   /**
    * Calculates the Levenshtein distance between two strings.
@@ -105,6 +104,39 @@ modifieddate: '2024-04-11'
     return distanceMatrix[target.length][source.length];
   }
 
+  /**
+   * Process URLs
+   * @param {Array<string>} validUrls - The urls to use in calculating the best matches
+   */
+  function determineClosestMatch(validUrls)
+  {
+      if (!validUrls.length) {
+          console.error('No valid URLs found.');
+          return;
+      }
+
+      // Calculate the Levenshtein distances
+      const urlDistances = validUrls.map(validUrl => ({
+          url: validUrl,
+          distance: calculateLevenshteinDistance(requestedUrl, validUrl)
+      }));
+
+      // Sort the URLs by their computed Levenshtein distance
+      urlDistances.sort((a, b) => a.distance - b.distance);
+
+      console.log('URL scores:', urlDistances);
+      const suggestionsElement = document.getElementById('suggestions');
+      let suggestionsCount = 0;
+      for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
+          if (urlDistances[i].distance <= maxAcceptableDistance) {
+              const suggestionItem = document.createElement('li');
+              suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
+              suggestionsElement.appendChild(suggestionItem);
+              suggestionsCount++;
+          }
+      }
+  }
+  
   /**
    * Fetches and parses an XML sitemap file to extract URLs.
    * @param {string} sitemapUrl - The URL of the sitemap to fetch.
@@ -149,37 +181,9 @@ modifieddate: '2024-04-11'
       });
   }
 
-  fetchSitemapIndexUrls(sitemapIndexUrl).then(validUrls => {
-
-    if (!validUrls.length) {
-      console.error('No valid URLs found.');
-      return;
-    }
-
-    console.log('Requested URL:', requestedUrl);
-
-    // Calculate the Levenshtein distances
-    const urlDistances = validUrls.map(validUrl => ({
-      url: validUrl,
-      distance: calculateLevenshteinDistance(requestedUrl, validUrl)
-    }));
-
-    // Sort the URLs by their computed Levenshtein distance
-    urlDistances.sort((a, b) => a.distance - b.distance);
-
-    console.log('URL scores:', urlDistances);
-    const suggestionsElement = document.getElementById('suggestions');
-    let suggestionsCount = 0;
-    for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
-      if (urlDistances[i].distance <= maxAcceptableDistance) {
-        const suggestionItem = document.createElement('li');
-        suggestionItem.innerHTML = `<a href="${urlDistances[i].url}">${urlDistances[i].url}</a>`;
-        suggestionsElement.appendChild(suggestionItem);
-        suggestionsCount++;
-      }
-    }
-
-  }).catch(error => {
+  // Configuration parameters
+  const sitemapIndexUrl = '/sitemap_index.xml'; // URL of your sitemap index file
+  fetchSitemapIndexUrls(sitemapIndexUrl).then(determineClosestMatch).catch(error => {
     console.error('Error processing sitemaps:', error);
   });
 
