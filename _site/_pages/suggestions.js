@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const suggestionsContainer = document.getElementById('suggestions');
     const maxAcceptableDistance = 5; // Maximum allowable distance for a suggestion
     const maxSuggestions = 3; // Maximum number of suggestions to display
     const pageData = {
         {% for page in site.pages %}
-        "/{{ page.uri }}": {},
+        "/{{ page.uri }}": { "title": "{{ page.title }}" },
         {% endfor %}
     };
 
@@ -42,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return distanceMatrix[target.length][source.length];
     }
-
+    
     /**
-     * Process URLs
-     * @param {Array<string>} validUrls - The urls to use in calculating the best matches
+     *
+     * @param {Array<string>} validUrls - The urls to use in calculating the best matches     * @returns {*}
+     * @returns {Array<{distance: number,url: string}>}
      */
     function determineClosestMatch(validUrls)
     {
@@ -64,22 +64,32 @@ document.addEventListener('DOMContentLoaded', function () {
         urlDistances.sort((a, b) => a.distance - b.distance);
         return urlDistances;
     }
-
-    /**
-     * Add suggestion to the markup
-     * @param {string} url
-     */
-    function CreateSuggestion(url)
-    {
-        const suggestionsElement = document.getElementById('suggestions');
-        const suggestionItem = document.createElement('li');
-        suggestionItem.innerHTML = `<a href="${url}">${url}</a>`;
-        suggestionsElement.appendChild(suggestionItem);
-    }
-
+    
+    const suggestionsList = document.getElementById('suggestions');
     const validUrls = Object.keys(pageData);
-    const urlDistances = determineClosestMatch(validUrls);
-    console.log('URL scores:', urlDistances);
+    const suggestions = determineClosestMatch(validUrls);
+    console.log('URL scores:', suggestions);
+
+    setTimeout(function() {
+        // Clear any placeholder content
+        suggestionsList.innerHTML = '';
+
+        // Dynamically create list items with Tailwind styling
+        suggestions.forEach(suggestion => {
+            const url = suggestion.url;
+            const item = pageData[url];
+            const listItem = document.createElement('li');
+            listItem.classList.add('mb-3', 'last:mb-0');
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.textContent = item.title;
+            link.classList.add('text-blue-500', 'hover:text-blue-700', 'underline', 'text-lg', 'block');
+
+            listItem.appendChild(link);
+            suggestionsList.appendChild(listItem);
+        });
+    }, 1000);
 
     /*
     let suggestionsCount = 0;
