@@ -63,9 +63,7 @@ modifieddate: '2024-04-11'
 <p>We couldn't find the page you were looking for. Did you mean:</p>
 <ul id="suggestions"></ul>
 
-<pre id="json">
-  {{ site | to_json}}
-</pre>
+{{ site.pages | to_diagnostic_html "my-id" }}
 
 <script>
   // Configuration parameters

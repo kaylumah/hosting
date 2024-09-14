@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -108,6 +109,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             options.Converters.Add(new AuthorIdJsonConverter());
             options.Converters.Add(new OrganizationIdJsonConverter());
             string result = JsonSerializer.Serialize(o, options);
+            return result;
+        }
+
+        public static string ToDiagnosticHtml(object o, string id)
+        {
+            string json = ToJson(o);
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"<pre id=\"{id}\">");
+            sb.Append(json);
+            sb.Append("</pre>");
+            string result = sb.ToString();
             return result;
         }
 
