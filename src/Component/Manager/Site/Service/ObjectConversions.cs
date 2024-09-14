@@ -5,16 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
-using System.Threading;
 using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class ObjectConversions
     {
+        static readonly JsonSerializerOptions _JsonSerializerOptions;
+
+        static ObjectConversions()
+        {
+            _JsonSerializerOptions = new JsonSerializerOptions();
+            _JsonSerializerOptions.WriteIndented = true;
+        }
+
         public static AuthorId AuthorId(string author)
         {
             return author;
@@ -42,22 +49,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
             SortedDictionary<string, PageMetaData[]> tags = site.Tags;
-            TagMetaDataCollection tagMetaData = site.TagMetaData;
             List<TagViewModel> result = new List<TagViewModel>();
             foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
                 string tag = item.Key;
-                string displayName = item.Key;
-                string description = string.Empty;
-                PageMetaData[] items = item.Value;
-                bool success = tagMetaData.TryGetValue(tag, out TagMetaData? tagData);
-                if (success && tagData != null)
-                {
-                    displayName = tagData.Name;
-                    description = tagData.Description;
-                }
-
-                TagViewModel resultForTag = new TagViewModel(tag, displayName, description, items.Length);
+                TagViewModel resultForTag = GetTag(site, tag);
                 result.Add(resultForTag);
             }
 
@@ -102,10 +98,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ToJson(object o)
         {
-#pragma warning disable CA1869
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.WriteIndented = true;
-            string result = JsonSerializer.Serialize(o, options);
+            string result = JsonSerializer.Serialize(o, _JsonSerializerOptions);
+            return result;
+        }
+
+        public static string ToDiagnosticHtml(object o, string id)
+        {
+            string json = ToJson(o);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(CultureInfo.InvariantCulture, $"<pre id=\"{id}\">");
+            sb.Append(json);
+            sb.Append("</pre>");
+            string result = sb.ToString();
             return result;
         }
 
