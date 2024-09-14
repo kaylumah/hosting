@@ -62,17 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Sort the URLs by their computed Levenshtein distance
         urlDistances.sort((a, b) => a.distance - b.distance);
-
-        console.log('URL scores:', urlDistances);
-
-        let suggestionsCount = 0;
-        for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
-            if (urlDistances[i].distance <= maxAcceptableDistance) {
-
-                CreateSuggestion(urlDistances[i].url);
-                suggestionsCount++;
-            }
-        }
+        return urlDistances;
     }
 
     /**
@@ -88,5 +78,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const validUrls = Object.keys(pageData);
-    determineClosestMatch(validUrls);
+    const urlDistances = determineClosestMatch(validUrls);
+    console.log('URL scores:', urlDistances);
+
+    /*
+    let suggestionsCount = 0;
+    for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
+        if (urlDistances[i].distance <= maxAcceptableDistance) {
+
+            CreateSuggestion(urlDistances[i].url);
+            suggestionsCount++;
+        }
+    }*/
 });
