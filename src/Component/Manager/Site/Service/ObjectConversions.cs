@@ -16,6 +16,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 {
     public class ObjectConversions
     {
+        static readonly JsonSerializerOptions _JsonSerializerOptions;
+
+        static ObjectConversions()
+        {
+            _JsonSerializerOptions = new JsonSerializerOptions();
+            _JsonSerializerOptions.WriteIndented = true;
+        }
+
         public static AuthorId AuthorId(string author)
         {
             return author;
@@ -92,13 +100,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static string ToJson(object o)
         {
-#pragma warning disable CA1869
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.WriteIndented = true;
-            string result = JsonSerializer.Serialize(o, options);
+            string result = JsonSerializer.Serialize(o, _JsonSerializerOptions);
             return result;
         }
-        
+
         public static string ToDiagnosticHtml(object o, string id)
         {
             string json = ToJson(o);
