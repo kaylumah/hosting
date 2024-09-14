@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using HtmlAgilityPack;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
@@ -68,6 +69,28 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         }
     }
 
+    public class HtmlPostProcessor : CommonPostProcessor
+    {
+        public HtmlPostProcessor(ILogger<HtmlPostProcessor> logger) : base(logger)
+        {
+        }
+
+        protected override string GetTargetExtension()
+        {
+            return ".html";
+        }
+
+        protected override string GetFormattedContent(string content)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(content);
+            using StringWriter stringWriter = new StringWriter();
+            document.Save(stringWriter);
+            string formattedHtml = stringWriter.ToString();
+            return formattedHtml;
+        }
+    }
+    
     public class JsonPostProcessor : CommonPostProcessor
     {
         public JsonPostProcessor(ILogger<JsonFileProcessor> logger) : base(logger)
