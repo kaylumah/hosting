@@ -65,13 +65,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const urlDistances = determineClosestMatch(validUrls);
     console.log('URL scores:', urlDistances);
-
+    
+    const tried = document.getElementById("tried");
+    tried.innerHTML = requestedUrl;
+        
     setTimeout(function () {
         // Clear any placeholder content
         // suggestionsList.innerHTML = '';
         const suggestion = urlDistances[0];
         if (suggestion.distance <= maxAcceptableDistance) {
-            console.log("Suggestion: " + suggestion.url);
+            
         }
     }, 1000);
 });
