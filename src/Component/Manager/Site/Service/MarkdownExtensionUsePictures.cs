@@ -62,7 +62,7 @@ namespace Kaylumah.Ssg.Utilities
         {
             string escapeUrl = link.GetDynamicUrl != null ? link.GetDynamicUrl() ?? link.Url! : link.Url!;
             string webpUrl = $"{escapeUrl}.webp";
-            renderer.Write($"<source type=\"image/webp\" srcset=\"{webpUrl}\">");
+            renderer.Write($"<source type=\"image/webp\" srcset=\"{webpUrl}\" />");
         }
 
         void WriteImgTag(HtmlRenderer renderer, LinkInline link)

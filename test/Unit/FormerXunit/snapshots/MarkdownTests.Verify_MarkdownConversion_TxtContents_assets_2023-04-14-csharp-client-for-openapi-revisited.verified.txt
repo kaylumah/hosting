@@ -45,11 +45,11 @@ I don't remember it being possible back in 2021, but you can now change the JSON
 Using OpenAPI Reference
 Using OpenAPI reference from Visual Studio
 I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000"Microsoft Visual Studio - Add Service reference</picture>
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925"Microsoft Visual Studio - Select service reference type</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000"Microsoft Visual Studio - Add Service reference</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925"Microsoft Visual Studio - Select service reference type</picture>
 By choosing the option "Service reference..." instead of "Connected Service" you get the second prompt immediately. By selecting "Connected service" you get the overview of all connected services for the project and then need an extra click to add the service reference.
 We can customize the input for the msbuild task on the third screen. We only need to specify the file location of the Open API JSON.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923"Microsoft Visual Studio - Add service reference OpenAPI</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923"Microsoft Visual Studio - Add service reference OpenAPI</picture>
 By selecting "finish", Visual Studio will make all necessary modifications. Easy right? The project file should now look like this:
 ItemGroup
   OpenApiReference Include=..\..\Api\Demo\bin\Debug\net7.0\Demo.json 
@@ -104,7 +104,7 @@ Compare that with the output from the dotnet CLI:
   NSwag bin directory: C:\Users\hamulyak\.nuget\packages\nswag.msbuild\13.0.5\tools\NetCore21
   Code has been successfully written to file.
 Do you see the issue? The CLI variant differs from the NSwag version used; it uses a NetCore21 dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.
-Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the  line like this:
+Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the OpenApiReference line like this:
 OpenApiReference Include=..\..\Api\Demo\bin\Debug\net7.0\Demo.json 
                   CodeGenerator=NSwagCSharp 
                   Namespace=MyNamespace

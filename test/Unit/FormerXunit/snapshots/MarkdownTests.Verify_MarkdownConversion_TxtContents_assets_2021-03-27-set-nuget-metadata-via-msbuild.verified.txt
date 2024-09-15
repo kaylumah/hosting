@@ -32,9 +32,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Kaylumah.Logging.Extensions.Abstractions - C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\netstandard2.0\Kaylumah.Logging.Extensions.Abstractions.dll
   Successfully created package 'C:\Projects\NugetMetadata\src\Kaylumah.Logging.Extensions.Abstractions\bin\Debug\Kaylumah.Logging.Extensions.Abstractions.1.0.0.nupkg'.
 This command generated the package in my bin folder. Since I did not specify a configuration, it chose the default configuration, which is Debug. So how do we inspect "Kaylumah Logging Extensions Abstractions 1.0.0 nupkg"? My prefered way is the NuGet Package Explorer, which is unfortunately only available on Windows.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000"Without Metadata in NuGet Package Explorer</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/001_npe_initial_metadata.png" width="4500" height="4000"Without Metadata in NuGet Package Explorer</picture>
 There seems to be no metadata set by default. Let's, for a quick moment, compare it to what Microsoft adds to its packages. We can do this by downloading the package from nuget.org and view it like we just did for "Kaylumah.Logging.*.nupkg". Alternatively, the NuGet Package Explorer also supports viewing metadata from remote sources such as nuget.org.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000"Microsoft Extensions Logging Metadata in NuGet Package Explorer</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/002_console_logger_info.png" width="4500" height="6000"Microsoft Extensions Logging Metadata in NuGet Package Explorer</picture>
 Now that is what I call metadata. Remember that .nupkg files are archives; this means we can easily verify what the explorer was telling us about our package.  You can do this by changing the extension from .nupkg to .zip and then extracting it. It contains the "Kaylumah Logging .nuspec", which is the manifest I was talking about in the introduction. At the moment, it looks like this:
 ?xml version=1.0 encoding=utf-8?
 package xmlns=http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd
@@ -67,9 +67,9 @@ Project Sdk=Microsoft.NET.Sdk
   /PropertyGroup
 /Project
 If we run dotnet pack now, we can immediately see that our package no longer has empty metadata.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000"With Author Metadata in NuGet Package Explorer</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/003_npe_author_metadata.png" width="4500" height="4000"With Author Metadata in NuGet Package Explorer</picture>
 You can also verify this in Visual Studio by checking your projects properties and clicking on the Package tab.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000"With Author Metadata in VS2019</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/004_vs2019_author_metadata.png" width="4500" height="3000"With Author Metadata in VS2019</picture>
 In the introduction, I talked about what exactly is a NuGet package. We are now at the part regarding other files. Since we already took care of branding, let us also add an icon. Our code is under license; how do we include it in the package?
 Add files named Logo.png and LICENSE to the folder containing our project. We can then use the tags PackageIcon and PackageLicenseFile respectfully. We also need to tell MSBuild that these files should be part of the package. The updated project file looks like this:
 Project Sdk=Microsoft.NET.Sdk
@@ -91,7 +91,7 @@ Project Sdk=Microsoft.NET.Sdk
   /ItemGroup
 
 /Project
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000"Including NuGet Package Explorer FileMetadata</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/005_npe_includingfiles_metadata.png" width="4500" height="4000"Including NuGet Package Explorer FileMetadata</picture>
 Regarding these files, I like to say a couple of things before moving on to more advanced use cases.
 There is more than one way to set both the Icon and the License files for starters, which the Microsoft Docs describe. Both used to have a Url variant that would link to the Icon or License in question. Both of those options are now deprecated, and in the case of PackageLicenseFile, the alternative is  PackageLicenseExpression, which uses SDPX license identifiers.
 note: For backwards compatibility, PackageLicenseUrl gets populated with https://docs.microsoft.com/en-us/nuget/consume-packages/finding-and-choosing-packages#license-url-deprecation if you choose to use PackageLicenseFile and with https://licenses.nuget.org/MIT for example, if your SPDX would be MIT.
@@ -119,7 +119,7 @@ Project
         CopyrightCopyright © $(Company) $([System.DateTime]::Now.Year)/Copyright
     /PropertyGroup
 /Project
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V1</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/006_npe_buildpropsv1.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V1</picture>
 What happened? Something is wrong; why do I see the copyright year 2021, but not my company name? Before explaining it, let me prove it by adding a company tag to the Directory.Build.props with a different value. For example:
 ?xml version=1.0 encoding=utf-8?
 Project
@@ -129,7 +129,7 @@ Project
     /PropertyGroup
 /Project
 Unlike the Copyright tag do not remove the Company tag from the .csproj file. The result, this time, is a little different.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V2</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/007_npe_buildpropsv2.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V2</picture>
 It appears that I have two different values for Company; this happens because Directory.Build.props gets imported before your project, and Directory.Build.targets gets imported after. The latest registration wins. That is why if we would read the System.Reflection AssemblyCopyrightAttribute the value for Company is "Kaylumah", but when we set Copyright, it is still "NotKaylumah". You can verify this behaviour by running the preprocess command (dotnet build -pp:fullproject.xml). See msbuild comand line reference for an explanation.
 Word of caution, you should not set every property this way. You should only set the values that are shared cross-project. For example, Company and Copyright are likely to be the same for every project. The Authors and PackageTags could be project-specific; heck, even Description could be reused if so desired. One thing for sure is that Id can not be recycled since every package requires a unique Id.
 ?xml version=1.0 encoding=utf-8?
@@ -150,7 +150,7 @@ Project
     /ItemGroup
 
 /Project
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V3</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/008_npe_buildpropsv3.png" width="4500" height="4000"Using BuildProps NuGet Package Explorer V3</picture>
 In case you are wondering where did $(MSBuildThisFileDirectory) come from, it is one of the predefined MSBuild variables you can use. It allows us to set the path without thinking about relative file paths; for other variables, see the Microsoft Docs on the topic.
 Bonus Chapter
 I have referred to the list of properties before. There are a couple of handy ones we have not yet discussed. I am talking about the repository fields, making sure that an artefact can always trace back to a specific revision of your source code (Under repository in the nuspec).
@@ -171,7 +171,7 @@ REPO_BRANCH=$(git branch --show-current)
 REPO_COMMIT=$(git rev-parse HEAD)
 dotnet build -p:RepositoryUrl=$REPO_URL -p:RepositoryBranch=$REPO_BRANCH -p:RepositoryCommit=$REPO_COMMIT -p:RepositoryType=git
 Remember, we now generate a package on build. Let us verify we see repo info by opening the created package in NuGet Package Explorer.
-<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000"Repo Info in NuGet Package Explorer</picture>
+<picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210327/nuget-metadata/009_npe_repoinfo.png" width="4500" height="4000"Repo Info in NuGet Package Explorer</picture>
 Even though it is OK to add repo metadata this way, there is a better alternative. This alternative does more than add metadata; it also enables source code debugging from NuGet packages. How cool is that? This technology is called Source Link.
 Like before with the properties, I have no wish to add source link to every package separately. For this, create Directory.Build.targets, which looks like this:
 ?xml version=1.0 encoding=utf-8?

@@ -169,7 +169,7 @@ Compare that with the output from the dotnet CLI:
 
 Do you see the issue? The CLI variant differs from the NSwag version used; it uses a `NetCore21` dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.
 
-Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <OpenApiReference> line like this:
+Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the `OpenApiReference` line like this:
 
 ```xml
 <OpenApiReference Include="..\..\Api\Demo\bin\Debug\net7.0\Demo.json" 

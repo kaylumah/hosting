@@ -11,10 +11,10 @@
 </code></pre>
 <p>Using the Markdown preview feature of VSCode that would look like this:</p>
 <!-- code --profile "Blog" . -->
-<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/001_RootPreview.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/001_RootPreview.png" width="2272" height="1760" alt="Markdown preview from project root" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/001_RootPreview.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/001_RootPreview.png" width="2272" height="1760" alt="Markdown preview from project root" /></picture></p>
 <h2 id="the-issue"><a href="#the-issue">The issue</a></h2>
 <p>If you’re like me, your project contains many more files than the few shown in the example. In such cases, I prefer working inside the _posts folder. Unfortunately, as the screenshot below shows, this breaks the image preview functionality.</p>
-<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png" width="2272" height="1760" alt="Markdown preview from subfolder" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png" width="2272" height="1760" alt="Markdown preview from subfolder" /></picture></p>
 <p>Instead of displaying my logo, the preview now shows a broken image icon. Technically, this behavior is correct because, relative to our “hello-world.md” post, there is no “assets” directory. You might think that changing the path to “../assets/” would solve the issue, since that’s where the folder exists on disk. However, VSCode does not allow this due to <a href="https://github.com/Microsoft/vscode/issues/64685#issuecomment-446414622" class="external">security concerns</a>. Even if it did work, it would create the issue that the preview would no longer function correctly when opened from the root directory.</p>
 <h2 id="the-solution"><a href="#the-solution">The solution</a></h2>
 <p>To my knowledge, there is no built-in function in VSCode to address this issue. However, there is an operating system-level solution: using symbolic links.</p>
@@ -22,7 +22,7 @@
 <pre><code class="language-sh">ln -s ../assets assets
 </code></pre>
 <p>From the filesystem perspective the &quot;_posts&quot; folder now has a subfolder called posts. If we now open it inside VSCode it renders the image correctly.</p>
-<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png.webp"><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png" width="2272" height="1760" alt="Markdown preview with symlink" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png" width="2272" height="1760" alt="Markdown preview with symlink" /></picture></p>
 <h2 id="to-consider"><a href="#to-consider">To consider</a></h2>
 <p>Personally, I believe its a nice workaround for an issue that irritated me.
 Before you leave I like to leave you with some final thoughts.</p>
