@@ -77,7 +77,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         protected override string GetTargetExtension()
         {
-            return ".html";
+            return ".html2";
         }
 
         protected override string GetFormattedContent(string content)
