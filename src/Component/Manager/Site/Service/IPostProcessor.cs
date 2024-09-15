@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using HtmlAgilityPack;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.Logging;
 
@@ -65,6 +66,31 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(formattedContent);
                 artifact.Contents = bytes;
             }
+        }
+    }
+
+    public class HtmlPostProcessor : CommonPostProcessor
+    {
+        public HtmlPostProcessor(ILogger<HtmlPostProcessor> logger) : base(logger)
+        {
+        }
+
+        protected override string GetTargetExtension()
+        {
+            return ".html";
+        }
+
+        protected override string GetFormattedContent(string content)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.OptionOutputAsXml = false; // Set to true if you want XML output
+            document.OptionWriteEmptyNodes = true; // Set to false if you don't want to write empty nodes
+            document.OptionAutoCloseOnEnd = true; // Set to false if you don't want to auto-close tags
+            document.LoadHtml(content);
+            using StringWriter stringWriter = new StringWriter();
+            document.Save(stringWriter);
+            string formattedHtml = stringWriter.ToString();
+            return formattedHtml;
         }
     }
 
