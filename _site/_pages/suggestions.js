@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const maxAcceptableDistance = 3;
-    const pageData = [
+    const validUrls = [
     {% for page in site.pages %}
         "/{{ page.uri }}",
     {% endfor %}
@@ -63,28 +63,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return urlDistances;
     }
 
-    // const suggestionsList = document.getElementById('suggestions');
-    // const validUrls = Object.keys(pageData);
     const urlDistances = determineClosestMatch(validUrls);
     console.log('URL scores:', urlDistances);
 
     setTimeout(function () {
         // Clear any placeholder content
-        suggestionsList.innerHTML = '';
-
-        const suggestion = urlDistances[i];
-        if (urlDistances[i].distance <= maxAcceptableDistance) {
-            console.writeline("Suggestion: " + suggestion.url);
+        // suggestionsList.innerHTML = '';
+        const suggestion = urlDistances[0];
+        if (suggestion.distance <= maxAcceptableDistance) {
+            console.log("Suggestion: " + suggestion.url);
         }
     }, 1000);
-
-    /*
-    let suggestionsCount = 0;
-    for (let i = 0; i < urlDistances.length && suggestionsCount < maxSuggestions; i++) {
-        if (urlDistances[i].distance <= maxAcceptableDistance) {
-
-            CreateSuggestion(urlDistances[i].url);
-            suggestionsCount++;
-        }
-    }*/
 });
