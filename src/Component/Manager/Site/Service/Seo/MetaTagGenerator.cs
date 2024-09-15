@@ -56,6 +56,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     sb.Append(twitter);
                 }
 
+                string mastodon = ToMastodonTags(renderData);
+                if (!string.IsNullOrEmpty(mastodon))
+                {
+                    sb.AppendLine(string.Empty);
+                    sb.Append(twitter);
+                }
+
                 string kaylumah = ToKaylumahTags(renderData);
                 if (!string.IsNullOrEmpty(kaylumah))
                 {
@@ -149,6 +156,33 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return sbResult;
         }
 
+        static string ToMastodonTags(RenderData renderData)
+        {
+            ArgumentNullException.ThrowIfNull(renderData);
+            StringBuilder sb = new StringBuilder();
+            if (renderData.Page is PageMetaData pageMetaData)
+            {
+                Uri mastodonUri = new Uri("https://mastodon.nl/@kaylumah");
+
+
+                List<string> result = [
+                    CreateLinkTag("me", mastodonUri)
+                ];
+                
+                if (0 < result.Count)
+                {
+                    sb.AppendLine("<!-- Mastodon Meta Tags -->");
+                    foreach (string item in result)
+                    {
+                        sb.AppendLine(item);
+                    }
+                }
+            }
+
+            string sbResult = sb.ToString();
+            return sbResult;
+        }
+        
         static string ToTwitterTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
