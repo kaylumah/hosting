@@ -96,7 +96,7 @@
         "logo": "https://BaseUrl_1/assets/logo.svg"
       },
       "timeRequired": "PT7M",
-      "wordCount": 1633
+      "wordCount": 1634
     }</script>
     
     <!-- End Kaylumah SEO tag -->
@@ -380,7 +380,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
   Code has been successfully written to file.
 </code></pre>
 <p>Do you see the issue? The CLI variant differs from the NSwag version used; it uses a <code>NetCore21</code> dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.</p>
-<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <openapireference> line like this:
+<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <code>OpenApiReference</code> line like this:</p>
 <pre><code class="language-xml">&lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
                   CodeGenerator=&quot;NSwagCSharp&quot; 
                   Namespace=&quot;MyNamespace&quot;
@@ -415,14 +415,14 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
 <ul>
 <li><a href="https://devblogs.microsoft.com/dotnet/generating-http-api-clients-using-visual-studio-connected-services/" class="external">Visual Studio Connected Services</a></li>
 </ul>
-        
+        </main>
         <footer class="">
             
                         <script src="https://giscus.app/client.js" data-repo="kaylumah/hosting" data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU=" data-mapping="number" data-term="266" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" data-loading="lazy" crossorigin="anonymous" async>
                         </script>
                         
         </footer>
-    
+    </article>
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
             <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
@@ -524,9 +524,9 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
             </div>
         </li>
     </ul>
+</div>
 
-
-        
+        </main>
         <footer class="bg-gray-900 p-4">
             <div class="flex flex-col text-center text-gray-100">
                 <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
@@ -566,7 +566,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
               
             </script>
         </div>
-    
+    </div>
+</body>
 
-
-</openapireference></p></main></article></div></main></div></body></html>
+</html>
