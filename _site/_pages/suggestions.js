@@ -71,20 +71,20 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const two = document.getElementById("two");
         
-    setTimeout(function () {
-        const suggestion = urlDistances[0];
-        if (suggestion.distance <= maxAcceptableDistance) {
-            two.innerHTML = "";
+    // setTimeout(function () {
+    const suggestion = urlDistances[0];
+    if (suggestion.distance <= maxAcceptableDistance) {
+        two.innerHTML = "";
 
-            const textNode = document.createTextNode("Maybe you were looking for: ");
-            two.appendChild(textNode);
-            
-            const aTag = document.createElement('a');
-            aTag.setAttribute('href', suggestion.url);
-            aTag.innerText = suggestion.url;
-            aTag.classList = "text-blue-500 underline";
-            
-            two.appendChild(aTag);
-        }
-    }, 1000);
+        const textNode = document.createTextNode("Maybe you were looking for: ");
+        two.appendChild(textNode);
+        
+        const aTag = document.createElement('a');
+        aTag.setAttribute('href', suggestion.url);
+        aTag.innerText = suggestion.url;
+        aTag.classList = "text-blue-500 underline";
+        
+        two.appendChild(aTag);
+    }
+    // }, 1000);
 });
