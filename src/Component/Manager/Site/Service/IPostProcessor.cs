@@ -93,7 +93,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return formattedHtml;
         }
     }
-    
+
     public class JsonPostProcessor : CommonPostProcessor
     {
         public JsonPostProcessor(ILogger<JsonFileProcessor> logger) : base(logger)

@@ -167,7 +167,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 List<string> result = [
                     CreateLinkTag("me", mastodonUri)
                 ];
-                
+
                 if (0 < result.Count)
                 {
                     sb.AppendLine("<!-- Mastodon Meta Tags -->");
@@ -181,7 +181,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string sbResult = sb.ToString();
             return sbResult;
         }
-        
+
         static string ToTwitterTags(RenderData renderData)
         {
             ArgumentNullException.ThrowIfNull(renderData);
