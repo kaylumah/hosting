@@ -114,7 +114,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
   Code has been successfully written to file.
 </code></pre>
 <p>Do you see the issue? The CLI variant differs from the NSwag version used; it uses a <code>NetCore21</code> dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.</p>
-<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <OpenApiReference> line like this:</p>
+<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the `OpenApiReference` line like this:</p>
 <pre><code class="language-xml">&lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
                   CodeGenerator=&quot;NSwagCSharp&quot; 
                   Namespace=&quot;MyNamespace&quot;
