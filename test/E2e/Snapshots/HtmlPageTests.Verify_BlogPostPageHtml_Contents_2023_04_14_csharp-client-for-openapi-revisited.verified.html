@@ -314,11 +314,11 @@
 <h2 id="using-openapi-reference"><a href="#using-openapi-reference">Using OpenAPI Reference</a></h2>
 <h3 id="using-openapi-reference-from-visual-studio"><a href="#using-openapi-reference-from-visual-studio">Using OpenAPI reference from Visual Studio</a></h3>
 <p>I can imagine that people do not like the manual way, especially if you don't know the inner workings of MSBuild; it can feel a bit like magic. Adding an OpenAPI reference via Visual Studio is as simple as right-clicking any project and choosing add connected service.</p>
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/01_add_service_reference.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000" alt="Microsoft Visual Studio - Add Service reference" /></picture></p>
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/02_select_service_type.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925" alt="Microsoft Visual Studio - Select service reference type" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/01_add_service_reference.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/01_add_service_reference.png" width="1546" height="1000" alt="Microsoft Visual Studio - Add Service reference" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/02_select_service_type.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/02_select_service_type.png" width="1443" height="925" alt="Microsoft Visual Studio - Select service reference type" /></picture></p>
 <p>By choosing the option &quot;Service reference...&quot; instead of &quot;Connected Service&quot; you get the second prompt immediately. By selecting &quot;Connected service&quot; you get the overview of all connected services for the project and then need an extra click to add the service reference.</p>
 <p>We can customize the input for the msbuild task on the third screen. We only need to specify the file location of the Open API JSON.</p>
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/03_add_openapi.png.webp"><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923" alt="Microsoft Visual Studio - Add service reference OpenAPI" /></picture></p>
+<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20230414/openapi/03_add_openapi.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20230414/openapi/03_add_openapi.png" width="1547" height="923" alt="Microsoft Visual Studio - Add service reference OpenAPI" /></picture></p>
 <p>By selecting &quot;finish&quot;, Visual Studio will make all necessary modifications. Easy right? The project file should now look like this:</p>
 <pre><code class="language-xml">&lt;ItemGroup&gt;
   &lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
@@ -380,7 +380,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
   Code has been successfully written to file.
 </code></pre>
 <p>Do you see the issue? The CLI variant differs from the NSwag version used; it uses a <code>NetCore21</code> dll. We get this behaviour because the templates use an outdated package version. According to NuGet the old version (13.0.5) is downloaded over 2 million times, whereas all other versions do not exceed half a million. After updating, the NSwag version will equal your project's target framework.</p>
-<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <OpenApiReference> line like this:</p>
+<p>Back to the issue at hand, how do we customize the output? It is a mix-match situation. You can modify the Namespace and Client name directly by specifying them as properties on the <openapireference> line like this:
 <pre><code class="language-xml">&lt;OpenApiReference Include=&quot;..\..\Api\Demo\bin\Debug\net7.0\Demo.json&quot; 
                   CodeGenerator=&quot;NSwagCSharp&quot; 
                   Namespace=&quot;MyNamespace&quot;
@@ -415,14 +415,14 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
 <ul>
 <li><a href="https://devblogs.microsoft.com/dotnet/generating-http-api-clients-using-visual-studio-connected-services/" class="external">Visual Studio Connected Services</a></li>
 </ul>
-        </main>
+        
         <footer class="">
             
                         <script src="https://giscus.app/client.js" data-repo="kaylumah/hosting" data-repo-id="MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU=" data-mapping="number" data-term="266" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light_high_contrast" data-lang="en" data-loading="lazy" crossorigin="anonymous" async>
                         </script>
                         
         </footer>
-    </article>
+    
     <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
         <li class="w-full laptop:w-64">
             <div class="bg-slate-50 border-2 p-6 flex flex-col items-center gap-2">
@@ -524,9 +524,9 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
             </div>
         </li>
     </ul>
-</div>
 
-        </main>
+
+        
         <footer class="bg-gray-900 p-4">
             <div class="flex flex-col text-center text-gray-100">
                 <span data-testid="Footer-CopyrightNotice">© Kaylumah. All rights reserved.</span>
@@ -566,7 +566,7 @@ I expected the tool to use the same templates as Visual Studio, but this is not 
               
             </script>
         </div>
-    </div>
-</body>
+    
 
-</html>
+
+</openapireference></p></main></article></div></main></div></body></html>
