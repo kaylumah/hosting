@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (suggestion.distance <= maxAcceptableDistance) {
         two.innerHTML = "";
 
-        const textNode = document.createTextNode("Maybe you were looking for: ");
+        const textNode = document.createTextNode("We think you may have been looking for: ");
         two.appendChild(textNode);
         
         const aTag = document.createElement('a');
