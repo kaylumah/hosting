@@ -60,7 +60,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 if (!string.IsNullOrEmpty(mastodon))
                 {
                     sb.AppendLine(string.Empty);
-                    sb.Append(twitter);
+                    sb.Append(mastodon);
                 }
 
                 string kaylumah = ToKaylumahTags(renderData);
@@ -163,7 +163,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             if (renderData.Page is PageMetaData pageMetaData)
             {
                 Uri mastodonUri = new Uri("https://mastodon.nl/@kaylumah");
-
 
                 List<string> result = [
                     CreateLinkTag("me", mastodonUri)
