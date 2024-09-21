@@ -15,6 +15,6 @@
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.0.1",
     "@tailwindcss/typography": "0.5.15",
-    "tailwindcss": "3.4.10"
+    "tailwindcss": "3.4.12"
   }
 }
