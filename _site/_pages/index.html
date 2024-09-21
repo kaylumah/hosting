@@ -29,13 +29,4 @@ modifieddate: '2024-04-11'
       </a>
     </li>
   </ul>
-  {{ site | to_diagnostic_html "test"}}
-  {% for x in site.pages | array.sort "uri" | array.reverse %}
-  {% if x.uri != "index.html" and x.uri != "404.html" %}
-  {
-    "route": "{{ x.uri | string.split ".html" | array.first}}",
-    "redirect": "{{ x.uri }}",
-  },
-  {% endif %}
-  {% endfor %}
 </div>

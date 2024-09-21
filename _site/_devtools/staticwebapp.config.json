@@ -7,6 +7,14 @@
       "statusCode": {{ redirect.StatusCode }}
     },
     {% endfor %}
+    {% for x in site.pages | array.sort "uri" | array.reverse %}
+    {% if x.uri != "index.html" and x.uri != "404.html" %}
+    {
+      "route": "{{ x.uri | string.split ".html" | array.first}}",
+      "redirect": "{{ x.uri }}",
+    },
+    {% endif %}
+    {% endfor %}
     {
       "route": "/about",
       "redirect": "/about.html",
