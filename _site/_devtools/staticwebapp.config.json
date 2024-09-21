@@ -24,8 +24,7 @@
     },
     {
       "route": "/{path}",
-      "redirect": "/{path}.html",
-      "statusCode": 301
+      "rewrite": "/{path}.html"
     }
   ],
   "mimeTypes": {
