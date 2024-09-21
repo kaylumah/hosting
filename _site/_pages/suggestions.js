@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     const two = document.getElementById("two");
         
-    // setTimeout(function () {
     const suggestion = urlDistances[0];
     if (suggestion.distance <= maxAcceptableDistance) {
         two.innerHTML = "";
@@ -92,5 +91,4 @@ document.addEventListener('DOMContentLoaded', function () {
         
         two.appendChild(aTag);
     }
-    // }, 1000);
 });
