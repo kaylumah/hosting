@@ -1,123 +1,33 @@
 ---
-layout: default.html
 title: "Page not found · Kaylumah"
 description: "Unfortunately the page you are looking for was not found"
 modifieddate: '2024-04-11'
 ---
-<div class="max-w-7xl w-full mx-auto px-4 tablet:px-6 lg:px-8">
-  <div class="flex-shrink-0 pt-16">
-    <img class="mx-auto h-24 w-auto" src="{{ '/assets/logo_small.svg' }}" alt="Kaylumah 404" />
-  </div>
-  <div class="max-w-xl mx-auto py-16 tablet:py-24">
-    <div class="text-center">
-      <p class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">404 error</p>
-      <h1 class="mt-2 text-4xl font-extrabold text-gray-900 tracking-tight tablet:text-5xl">This page does not exist.</h1>
-      <p class="mt-2 text-lg text-gray-500">The page you are looking for could not be found.</p>
-    </div>
-    <div class="mt-12">
-      <h2 class="text-sm font-semibold text-gray-500 tracking-wide uppercase">Popular pages</h2>
-      <ul role="list" class="mt-4 border-t border-b border-gray-200 divide-y divide-gray-200">
-        <li class="relative py-6 flex items-start space-x-4">
-          <div class="flex-shrink-0">
-            <span class="flex items-center justify-center h-12 w-12 rounded-lg bg-indigo-50">
-              <!-- Heroicon name: outline/rss -->
-              <svg class="h-6 w-6 text-indigo-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
-              </svg>
-            </span>
-          </div>
-          <div class="min-w-0 flex-1">
-            <h3 class="text-base font-medium text-gray-900">
-              <span class="rounded-sm focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                <a href="/blog.html" class="focus:outline-none">
-                  <span class="absolute inset-0" aria-hidden="true"></span>
-                  Blog
-                </a>
-              </span>
-            </h3>
-            <p class="text-base text-gray-500">Read our latest news and articles</p>
-          </div>
-          <div class="flex-shrink-0 self-center">
-            <!-- Heroicon name: solid/chevron-right -->
-            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-            </svg>
-          </div>
-        </li>
-      </ul>
-      <div class="mt-8">
-        <a href="/" class="text-base font-medium text-indigo-600 hover:text-indigo-500">Or go back home<span aria-hidden="true"> &rarr;</span></a>
-      </div>
-    </div>
-  </div>
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="{{ '/assets/images/favicon.ico' }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon-16x16.png' }}" />
+    <link rel="manifest" href="{{ '/assets/images/site.webmanifest' }}" />
+    <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' }}" color="DarkGreen" />
+
+    <link href="/compiled.css?v={{ build.shortgithash }}" rel="stylesheet" />
+
+    {% include 'seo.html' %}
+    {% include 'banner.html' %}
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+<div class="text-center">
+    <img src="{{ '/assets/404.png' }}" alt="404" class="mx-auto mb-4">
+    <h1 class="text-3xl font-bold mb-2">Page Not Found</h1>
+    <p class="text-lg mb-4">The requested url <span id="tried" class="text-red-500">/tried-url</span> was not found on this server. </p>
+    <p id="nextAction" class="text-lg">Unfortunately we could not find a close match</p>
 </div>
-<div id="four-oh-four-suggestion">
-
-</div>
-<script type="text/javascript">
-  // https://ben.balter.com/2022/06/30/helpful-404s-for-jekyll-and-github-pages/
-  const levenshteinDistance = (s, t) => {
-    if (!s.length) return t.length;
-    if (!t.length) return s.length;
-    const arr = [];
-    for (let i = 0; i <= t.length; i++) {
-      arr[i] = [i];
-      for (let j = 1; j <= s.length; j++) {
-        arr[i][j] =
-          i === 0
-            ? j
-            : Math.min(
-                arr[i - 1][j] + 1,
-                arr[i][j - 1] + 1,
-                arr[i - 1][j - 1] + (s[j - 1] === t[i - 1] ? 0 : 1)
-              );
-      }
-    }
-    return arr[t.length][s.length];
-  };
-
-  const cleanUp = (s) => {
-    let url = new URL(s);
-    let path = url.pathname;
-    return path;
-  };
-
-  const closest = (currentUrl, urls) => {
-    console.log('determining closest match', currentUrl, urls);
-    let dict = {};
-    for (let url of urls)
-    {
-      let distance = levenshteinDistance(currentUrl, url);
-      dict[url] = distance;
-    }
-    let items = Object.keys(dict).map((key) => { return [key, dict[key]] });
-    items.sort((first, second) => { return first[1] - second[1] });
-    console.log('scores', items);
-    var result = items.map((e) => { return e[0] });
-    return result;
-  }
-
-  const div = document.getElementById('four-oh-four-suggestion');
-  if (div)
-  {
-    const xhr = new XMLHttpRequest();
-    xhr.onload = () => { 
-      const xml = xhr.responseXML;
-      const siteMapUrls = Array.from(xml.querySelectorAll('urlset > url > loc')).map((el) => { 
-        const textContent = el.textContent;
-        const result = cleanUp(textContent);
-        return result;
-      });
-      const requestedUrl = cleanUp(window.location.href);
-      const results = closest(requestedUrl, siteMapUrls);
-      /*
-      
-      const url = new URL(matches[0]);
-      console.log(url);
-      div.innerHTML = `<a href="${url.href}">${url.pathname}</a>`;
-      */
-    }
-    xhr.open('GET', `${window.location.protocol}//${window.location.host}/sitemap.xml`);
-    xhr.send();
-  }
-</script>
+<script src="/suggestions.js" defer></script>
+</body>
+</html>
