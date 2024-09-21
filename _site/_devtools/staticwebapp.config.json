@@ -8,17 +8,6 @@
     },
     {% endfor %}
     {
-      "route": "/assets/*.{svg,png,jpg,gif}",
-      "headers": {
-        "Cache-Control": "public, max-age=15552000"
-      }
-    },
-    {
-      "route": "/index.html",
-      "redirect": "/",
-      "statusCode": 301
-    },
-    {
       "route": "/about",
       "redirect": "/about.html",
       "statusCode": 301
@@ -42,6 +31,17 @@
       "route": "/privacy",
       "redirect": "/privacy.html",
       "statusCode": 301
+    },
+    {
+      "route": "/index.html",
+      "redirect": "/",
+      "statusCode": 301
+    },
+    {
+      "route": "/assets/*.{svg,png,jpg,gif}",
+      "headers": {
+        "Cache-Control": "public, max-age=15552000"
+      }
     },
     {
       "route": "/feed",
