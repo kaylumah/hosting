@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
      * @param {Array<string>} validUrls - The urls to use in calculating the best matches     * @returns {*}
      * @returns {Array<{distance: number,url: string}>}
      */
-    function determineClosestMatch(validUrls) {
+    function determineClosestMatch(url, validUrls) {
+        
         if (!validUrls.length) {
             console.error('No valid URLs found.');
             return;
@@ -55,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Calculate the Levenshtein distances
         const urlDistances = validUrls.map(validUrl => ({
             url: validUrl,
-            distance: calculateLevenshteinDistance(requestedUrl, validUrl)
+            distance: calculateLevenshteinDistance(url, validUrl)
         }));
 
         // Sort the URLs by their computed Levenshtein distance
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return urlDistances;
     }
 
-    const urlDistances = determineClosestMatch(validUrls);
+    const urlDistances = determineClosestMatch(requestedUrl, validUrls);
     console.log('URL scores:', urlDistances);
     
     const tried = document.getElementById("tried");
