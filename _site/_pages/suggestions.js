@@ -53,6 +53,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        // let endsWith = url.endsWith('.html');
+        // if (endsWith == false) {
+        //     url = url + ".html";
+        // }
+
         // Calculate the Levenshtein distances
         const urlDistances = validUrls.map(validUrl => ({
             url: validUrl,
