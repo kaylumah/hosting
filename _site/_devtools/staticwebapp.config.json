@@ -23,34 +23,8 @@
       "redirect": "/sitemap.xml"
     },
     {
-      "route": "/index.html",
-      "redirect": "/",
-      "statusCode": 301
-    },
-    {
-      "route": "/about",
-      "redirect": "/about.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive",
-      "redirect": "/archive.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive.html",
-      "redirect": "/blog.html",
-      "statusCode": 302
-    },
-    {
-      "route": "/blog",
-      "redirect": "/blog.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/privacy",
-      "redirect": "/privacy.html",
-      "statusCode": 301
+      "route": "/{path}",
+      "redirect": "/{path}.html"
     }
   ],
   "mimeTypes": {
