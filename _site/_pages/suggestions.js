@@ -75,20 +75,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const tried = document.getElementById("tried");
     tried.innerHTML = requestedUrl;
     
-    const two = document.getElementById("two");
+    const nextAction = document.getElementById("nextAction");
         
     const suggestion = urlDistances[0];
     if (suggestion.distance <= maxAcceptableDistance) {
-        two.innerHTML = "";
+        nextAction.innerHTML = "";
 
         const textNode = document.createTextNode("We think you may have been looking for: ");
-        two.appendChild(textNode);
+        nextAction.appendChild(textNode);
         
         const aTag = document.createElement('a');
         aTag.setAttribute('href', suggestion.url);
         aTag.innerText = suggestion.url;
         aTag.classList = "text-blue-500 underline";
         
-        two.appendChild(aTag);
+        nextAction.appendChild(aTag);
     }
 });
