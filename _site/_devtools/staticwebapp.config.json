@@ -15,6 +15,14 @@
       }
     },
     {
+      "route": "/feed",
+      "redirect": "/feed.xml"
+    },
+    {
+      "route": "/sitemap",
+      "redirect": "/sitemap.xml"
+    },
+    {
       "route": "/index.html",
       "redirect": "/",
       "statusCode": 301
@@ -43,14 +51,6 @@
       "route": "/privacy",
       "redirect": "/privacy.html",
       "statusCode": 301
-    },
-    {
-      "route": "/feed",
-      "redirect": "/feed.xml"
-    },
-    {
-      "route": "/sitemap",
-      "redirect": "/sitemap.xml"
     }
   ],
   "mimeTypes": {
