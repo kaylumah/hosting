@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "routes": [
     {% for redirect in site.data.redirects %}
     {
@@ -15,16 +14,42 @@
       }
     },
     {
+      "route": "/index.html",
+      "redirect": "/",
+      "statusCode": 301
+    },
+    {
+      "route": "/about",
+      "redirect": "/about.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/archive",
+      "redirect": "/archive.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/archive.html",
+      "redirect": "/blog.html",
+      "statusCode": 302
+    },
+    {
+      "route": "/blog",
+      "redirect": "/blog.html",
+      "statusCode": 301
+    },
+    {
+      "route": "/privacy",
+      "redirect": "/privacy.html",
+      "statusCode": 301
+    },
+    {
       "route": "/feed",
       "redirect": "/feed.xml"
     },
     {
       "route": "/sitemap",
       "redirect": "/sitemap.xml"
-    },
-    {
-      "route": "/{path}",
-      "rewrite": "/{path}.html"
     }
   ],
   "mimeTypes": {
