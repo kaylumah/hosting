@@ -12,6 +12,7 @@
     {
       "route": "{{ x.uri | string.split ".html" | array.first}}",
       "redirect": "{{ x.uri }}",
+      "statusCode": 301
     },
     {% endif %}
     {% endfor %}
