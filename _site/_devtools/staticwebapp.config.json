@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "routes": [
     {% for redirect in site.data.redirects %}
     {
