@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const maxAcceptableDistance = 3;
+    const maxAcceptableDistance = 5;
     const validUrls = [
     {% for page in site.pages %}
         "/{{ page.uri }}",
