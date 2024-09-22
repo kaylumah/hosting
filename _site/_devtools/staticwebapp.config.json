@@ -7,41 +7,25 @@
       "statusCode": {{ redirect.StatusCode }}
     },
     {% endfor %}
+    {% for x in site.pages | array.sort "uri" | array.reverse %}
+    {% if x.uri != "index.html" and x.uri != "404.html" %}
     {
-      "route": "/assets/*.{svg,png,jpg,gif}",
-      "headers": {
-        "Cache-Control": "public, max-age=15552000"
-      }
+      "route": "/{{ x.uri | string.split ".html" | array.first}}",
+      "redirect": "/{{ x.uri }}",
+      "statusCode": 301
     },
+    {% endif %}
+    {% endfor %}
     {
       "route": "/index.html",
       "redirect": "/",
       "statusCode": 301
     },
     {
-      "route": "/about",
-      "redirect": "/about.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive",
-      "redirect": "/archive.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive.html",
-      "redirect": "/blog.html",
-      "statusCode": 302
-    },
-    {
-      "route": "/blog",
-      "redirect": "/blog.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/privacy",
-      "redirect": "/privacy.html",
-      "statusCode": 301
+      "route": "/assets/*.{svg,png,jpg,gif}",
+      "headers": {
+        "Cache-Control": "public, max-age=15552000"
+      }
     },
     {
       "route": "/feed",
