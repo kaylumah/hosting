@@ -31,8 +31,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
         public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
 
-        IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
-        IDictionary<string, TagMetaData> Tags2 => TagMetaData.Dictionary;
+        public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
+        public IDictionary<string, TagMetaData> Tags2 => TagMetaData.Dictionary;
 
         public T? GetData<T>(string key) where T : class
         {
