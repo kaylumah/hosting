@@ -54,7 +54,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
+        public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
 
         public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
         {
@@ -148,7 +148,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 description = tagData.Description;
             }
 
-            bool hasPageInfo = Tags.TryGetValue(id, out PageMetaData[]? pageInfos);
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out PageMetaData[]? pageInfos);
             if (hasPageInfo && pageInfos != null)
             {
                 size = pageInfos.Length;
