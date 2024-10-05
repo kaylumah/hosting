@@ -57,6 +57,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Items = items;
         }
 
+        public Uri AbsoluteUri(string relativeUrl)
+        {
+            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
+            return uri;
+        }
+
         public IEnumerable<BasePage> GetItems()
         {
             return Items;
@@ -115,12 +121,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
 
             return result;
-        }
-
-        public Uri AbsoluteUri(string relativeUrl)
-        {
-            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
-            return uri;
         }
 
         public TagViewModel GetTagViewModel(string tag)
