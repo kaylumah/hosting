@@ -54,23 +54,24 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
             dataFiles = dataFiles.Except(knownFiles).ToList();
 
+            Dictionary<string, object> data = new Dictionary<string, object>();
             foreach (IFileSystemInfo fileSystemInfo in knownFiles)
             {
                 IKnownFileProcessor? strategy = _KnownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
-                strategy?.Execute(site, fileSystemInfo);
+                strategy?.Execute(data, fileSystemInfo);
             }
 
             foreach (IFileSystemInfo fileSystemInfo in dataFiles)
             {
                 IKnownExtensionProcessor? strategy = _KnownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
-                strategy?.Execute(site, fileSystemInfo);
+                strategy?.Execute(data, fileSystemInfo);
             }
         }
     }
 
     public interface IDataFileProcessor
     {
-        void Execute(SiteMetaData siteMetaData, IFileSystemInfo file);
+        void Execute(Dictionary<string, object> data, IFileSystemInfo file);
     }
 
     public interface IKnownFileProcessor : IDataFileProcessor
@@ -110,12 +111,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownExtension => ".csv";
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             object result = _CsvParser.Parse<object>(file);
             // object result = _CsvParser.Parse<Dictionary<string, object>>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
-            siteMetaData.Data[fileName] = result;
+            data[fileName] = result;
         }
     }
 
@@ -130,11 +131,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownExtension => ".json";
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             object result = _JsonParser.Parse<JsonNode>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
-            siteMetaData.Data[fileName] = result;
+            data[fileName] = result;
         }
     }
 
@@ -149,45 +150,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownExtension => ".yml";
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             object result = _YamlParser.Parse<object>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
-            siteMetaData.Data[fileName] = result;
+            data[fileName] = result;
         }
     }
 
     public partial class TagFileProcessor : IKnownFileProcessor
     {
-        [LoggerMessage(
-            EventId = 1,
-            Level = LogLevel.Warning,
-            Message = "TagFile is missing `{Tags}`")]
-        private partial void LogMissingTags(string tags);
-
-        readonly ILogger _Logger;
         readonly IYamlParser _YamlParser;
 
         public string KnownFileName => Constants.KnownFiles.Tags;
 
-        public TagFileProcessor(ILogger<TagFileProcessor> logger, IYamlParser yamlParser)
+        public TagFileProcessor(IYamlParser yamlParser)
         {
-            _Logger = logger;
             _YamlParser = yamlParser;
         }
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             TagMetaDataCollection tagData = _YamlParser.Parse<TagMetaDataCollection>(file);
-            IEnumerable<string> tags = siteMetaData.GetTags();
-            IEnumerable<string> otherTags = tagData.Keys.Except(tags);
-            IEnumerable<string> unmatchedTags = tags
-                .Except(tagData.Keys)
-                .Concat(otherTags);
-            string unmatchedTagsString = string.Join(",", unmatchedTags);
-            LogMissingTags(unmatchedTagsString);
-            siteMetaData.TagMetaData.AddRange(tagData);
-            siteMetaData.Data["tags"] = siteMetaData.TagMetaData.Dictionary;
+            data["tags"] = tagData;
         }
     }
 
@@ -202,11 +187,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownFileName => Constants.KnownFiles.Organizations;
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             OrganizationMetaDataCollection organizationData = _YamlParser.Parse<OrganizationMetaDataCollection>(file);
-            siteMetaData.OrganizationMetaData.AddRange(organizationData);
-            siteMetaData.Data["organizations"] = siteMetaData.OrganizationMetaData.Dictionary;
+            data["organizations"] = organizationData;
         }
     }
 
@@ -221,11 +205,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public string KnownFileName => Constants.KnownFiles.Authors;
 
-        public void Execute(SiteMetaData siteMetaData, IFileSystemInfo file)
+        public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
             AuthorMetaDataCollection authorData = _YamlParser.Parse<AuthorMetaDataCollection>(file);
-            siteMetaData.AuthorMetaData.AddRange(authorData);
-            siteMetaData.Data["authors"] = siteMetaData.AuthorMetaData.Dictionary;
+            data["authors"] = authorData;
         }
     }
 }
