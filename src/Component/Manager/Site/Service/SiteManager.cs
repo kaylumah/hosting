@@ -92,6 +92,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 _SiteInfo.Lang,
                 string.Empty,
                 _SiteInfo.Url,
+                siteData,
                 buildData,
                 pages);
             // EnrichSite(siteMetadata);

@@ -25,7 +25,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
 
         public Dictionary<string, object> Data
-        { get; set; } = new();
+        { get; set; }
 
         public TagMetaDataCollection TagMetaData => GetData<TagMetaDataCollection>("tags") ?? new();
         public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
@@ -56,7 +56,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
 
-        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
+        public SiteMetaData(
+            string id,
+            string title,
+            string description,
+            string language,
+            string author,
+            string url,
+            Dictionary<string, object> data,
+            BuildData buildData,
+            List<BasePage> items)
         {
             Id = id;
             Title = title;
@@ -64,6 +73,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Language = language;
             Author = author;
             Url = url;
+            Data = data;
             Build = buildData;
             Items = items;
         }
