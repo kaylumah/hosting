@@ -92,7 +92,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 buildData,
                 pages);
             _DataProcessor.EnrichSiteWithData(siteMetadata);
-            EnrichSite(siteMetadata);
+            // EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
