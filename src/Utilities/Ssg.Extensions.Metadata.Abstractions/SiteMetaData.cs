@@ -27,12 +27,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public Dictionary<string, object> Data
         { get; set; } = new();
 
-        public TagMetaDataCollection TagMetaData
-        { get; set; } = new();
-        public AuthorMetaDataCollection AuthorMetaData
-        { get; set; } = new();
-        public OrganizationMetaDataCollection OrganizationMetaData
-        { get; set; } = new();
+        public TagMetaDataCollection TagMetaData => GetData<TagMetaDataCollection>("tags") ?? new();
+        public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
+        public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
+
+        public T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
+        }
 
         public List<BasePage> Items
         { get; init; }

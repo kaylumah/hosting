@@ -54,7 +54,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
             dataFiles = dataFiles.Except(knownFiles).ToList();
 
-            Dictionary<string, object> data = new Dictionary<string, object>();
+            Dictionary<string, object> data = site.Data;
             foreach (IFileSystemInfo fileSystemInfo in knownFiles)
             {
                 IKnownFileProcessor? strategy = _KnownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
