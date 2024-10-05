@@ -9,7 +9,7 @@ $ErrorActionPreference  = "Stop"
 $ScriptRoot = $PSScriptRoot
 
 $SiteMapUrl = "$BaseUrl/sitemap.xml"
-$SiteMapUrlsScript = "$ScriptRoot/Get-SiteMapUrls.ps1"
+$SiteMapUrlsScript = "$ScriptRoot/sitemap/Get-SiteMapUrls.ps1"
 $SiteMapUrls = & $SiteMapUrlsScript -SiteMapUrl $SiteMapUrl
 
 # https://blogs.bing.com/webmaster/may-2022/Spring-cleaning-Removed-Bing-anonymous-sitemap-submission

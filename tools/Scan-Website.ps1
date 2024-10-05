@@ -25,7 +25,7 @@ $SiteMapUrl = "$BaseUrl/sitemap.xml"
 Write-Host "========================================"
 Write-Host "Scan: $SiteMapUrl"
 Write-Host "========================================"
-$SiteMapUrlsScript = "$ScriptRoot/Get-SiteMapUrls.ps1"
+$SiteMapUrlsScript = "$ScriptRoot/sitemap/Get-SiteMapUrls.ps1"
 $SiteMapUrls = & $SiteMapUrlsScript -SiteMapUrl $SiteMapUrl
 foreach ($Url in $SiteMapUrls)
 {
