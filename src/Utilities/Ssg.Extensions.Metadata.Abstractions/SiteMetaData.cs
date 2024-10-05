@@ -37,6 +37,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public List<BasePage> Items
         { get; init; }
 
+        public IEnumerable<PageMetaData> Pages => GetPages();
+
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
+        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
+
         public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
         {
             Id = id;
@@ -76,12 +84,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public IEnumerable<PageMetaData> Pages => GetPages();
-
-        public IEnumerable<Article> RecentArticles => GetRecentArticles();
-
-        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
-
         IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
@@ -97,8 +99,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        // TODO Consider (re)exposing Collections, Years, Series, Types
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
         SortedDictionary<string, PageMetaData[]> GetPagesByTag()
         {
             SortedDictionary<string, PageMetaData[]> result = new();
