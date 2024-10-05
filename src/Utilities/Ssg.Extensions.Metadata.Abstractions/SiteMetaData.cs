@@ -25,14 +25,25 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
 
         public Dictionary<string, object> Data
-        { get; set; } = new();
+        { get; set; }
 
-        public TagMetaDataCollection TagMetaData
-        { get; set; } = new();
-        public AuthorMetaDataCollection AuthorMetaData
-        { get; set; } = new();
-        public OrganizationMetaDataCollection OrganizationMetaData
-        { get; set; } = new();
+        public TagMetaDataCollection TagMetaData => GetData<TagMetaDataCollection>("tags") ?? new();
+        public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
+        public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
+
+        public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
+        public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
+
+        T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
+        }
 
         public List<BasePage> Items
         { get; init; }
@@ -43,9 +54,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
+        public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
 
-        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
+        public SiteMetaData(
+            string id,
+            string title,
+            string description,
+            string language,
+            string author,
+            string url,
+            Dictionary<string, object> data,
+            BuildData buildData,
+            List<BasePage> items)
         {
             Id = id;
             Title = title;
@@ -53,6 +73,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Language = language;
             Author = author;
             Url = url;
+            Data = data;
             Build = buildData;
             Items = items;
         }
@@ -137,7 +158,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 description = tagData.Description;
             }
 
-            bool hasPageInfo = Tags.TryGetValue(id, out PageMetaData[]? pageInfos);
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out PageMetaData[]? pageInfos);
             if (hasPageInfo && pageInfos != null)
             {
                 size = pageInfos.Length;

@@ -52,7 +52,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
-            SortedDictionary<string, PageMetaData[]> tags = site.Tags;
+            SortedDictionary<string, PageMetaData[]> tags = site.PagesByTags;
             List<TagViewModel> result = new List<TagViewModel>();
             foreach (KeyValuePair<string, PageMetaData[]> item in tags)
             {
@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
-            bool tagExists = site.Tags.TryGetValue(tag, out PageMetaData[]? resultForTag);
+            bool tagExists = site.PagesByTags.TryGetValue(tag, out PageMetaData[]? resultForTag);
             IEnumerable<Article> result;
             if (tagExists && resultForTag != null)
             {
