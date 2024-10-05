@@ -32,7 +32,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
 
         public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
-        public IDictionary<string, TagMetaData> Tags2 => TagMetaData.Dictionary;
+        public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
         public T? GetData<T>(string key) where T : class
         {
