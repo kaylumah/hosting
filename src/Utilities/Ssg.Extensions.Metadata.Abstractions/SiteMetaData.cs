@@ -34,7 +34,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
         public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
-        public T? GetData<T>(string key) where T : class
+        T? GetData<T>(string key) where T : class
         {
             bool hasData = Data.TryGetValue(key, out object? value);
             if (hasData && value is T result)
