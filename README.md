@@ -14,9 +14,18 @@ This repository is the home for all content of kaylumah.nl. Here, you can find t
 
 This GitHub project board tracks the status of any planned changes and articles to my website.
 
+## Powered by
+
+|||
+|-|-|
+| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="drawing" width="50"/> | |
+
 ## License
 
 This repo (including Blog content) is licensed under the [MIT License](LICENSE)
 
 <!-- https://giscus.app -->
 <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+
+https://github.com/scriban/scriban/raw/master/img/scriban.png
+https://github.com/xoofx/markdig/raw/master/img/markdig.png
