@@ -84,7 +84,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         static SiteMapArtifact CreateDefault(SiteMetaData siteMetaData)
         {
             IEnumerable<PageMetaData> sitePages = siteMetaData.GetPages();
-            IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataFilters.IsHtml);
+            IEnumerable<PageMetaData> htmlPages = sitePages.Where(PageMetaDataExtensions.IsHtml);
             IEnumerable<PageMetaData> without404 = htmlPages.Where(IsNot404);
 
             List<PageMetaData> pages = without404.ToList();

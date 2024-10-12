@@ -446,13 +446,4 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
     }
-
-    public static class PageMetaDataFilters
-    {
-        public static bool IsHtml(PageMetaData pageMetaData)
-        {
-            bool result = pageMetaData.IsHtml();
-            return result;
-        }
-    }
 }
