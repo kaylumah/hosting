@@ -21,7 +21,8 @@ This GitHub project board tracks the status of any planned changes and articles 
 | <img src="" alt="" width="50"/> | Scriban | |
 | <img src="" alt="" width="50"/> | Markdig | |
 
-## structure
+
+## Documentation
 
 ```mermaid
 classDiagram
