@@ -43,6 +43,9 @@ classDiagram
     }
 
     class SiteMetaData {
+        + Dictionary Data
+        + BuildData BuildData
+        + BasePage[] Items
     }
 
     class BuildData {
@@ -50,6 +53,8 @@ classDiagram
 
     BinaryFile --> FileMetaData
     TextFile --|> BinaryFile
+    SiteMetaData --> BasePage
+    SiteMetaData --> BuildData
 
     note for FileMetaData "Extends Dictionary(string, object?) 
     with some convenience properties"
