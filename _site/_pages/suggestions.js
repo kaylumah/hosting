@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const maxAcceptableDistance = 3;
+    const maxAcceptableDistance = 5;
     const validUrls = [
     {% for page in site.pages %}
         "/{{ page.uri }}",
@@ -53,10 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // let endsWith = url.endsWith('.html');
-        // if (endsWith == false) {
-        //     url = url + ".html";
-        // }
+        let endsWith = url.endsWith('.html');
+        if (endsWith == false) {
+            url = url + ".html";
+        }
 
         // Calculate the Levenshtein distances
         const urlDistances = validUrls.map(validUrl => ({
