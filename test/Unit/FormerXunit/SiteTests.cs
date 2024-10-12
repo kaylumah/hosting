@@ -24,7 +24,7 @@ namespace Test.Unit.FormerXunit
         public void TagCloud_NoTags()
         {
             List<BasePage> items = new List<BasePage>();
-            PageMetaData pageMetaData = CreatePageMetaData(new ());
+            BasePage pageMetaData = CreatePageMetaData(new ());
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
@@ -35,7 +35,7 @@ namespace Test.Unit.FormerXunit
         {
             List<BasePage> items = new List<BasePage>();
             Dictionary<string, object> data = new();
-            PageMetaData pageMetaData = CreatePageMetaData(data);
+            BasePage pageMetaData = CreatePageMetaData(data);
             data["tags"] = new List<object>() { "tag1" };
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
@@ -47,11 +47,12 @@ namespace Test.Unit.FormerXunit
         {
             List<BasePage> items = new List<BasePage>();
             Dictionary<string, object> data = new();
-            PageMetaData pageMetaData = CreatePageMetaData(data);
+            BasePage pageMetaData = CreatePageMetaData(data);
             data["tags"] = new List<object>() { "tag1" };
             items.Add(pageMetaData);
             
             TagMetaDataCollection tagMetaDataCollection = new();
+            tagMetaDataCollection.Add(new TagMetaData() { Id = "tag1", Description = "t"});
             Dictionary<string,object> dataItem = new()
             {
                 ["tags"] = tagMetaDataCollection
@@ -61,9 +62,9 @@ namespace Test.Unit.FormerXunit
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
         }
         
-        static PageMetaData CreatePageMetaData(Dictionary<string, object> data)
+        static BasePage CreatePageMetaData(Dictionary<string, object> data)
         {
-            PageMetaData result = new PageMetaData(data);
+            Article result = new Article(data);
             return result;
         }
         
