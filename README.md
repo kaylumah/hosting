@@ -39,9 +39,6 @@ classDiagram
     class FileMetaData{
     }
 
-    BinaryFile --> FileMetaData
-    TextFile --|> BinaryFile
-
     class BasePage {
     }
 
@@ -50,6 +47,9 @@ classDiagram
 
     class BuildData {
     }
+
+    BinaryFile --> FileMetaData
+    TextFile --|> BinaryFile
 
     note for FileMetaData "Extends Dictionary(string, object?) 
     with some convenience properties"
