@@ -25,15 +25,15 @@ namespace Test.Unit.FormerXunit
             SiteMetaData result = new SiteMetaData(id, title, description, language, author, url, data, build, items);
             return result;
         }
-        
+
         static BuildData EnrichSiteWithAssemblyData()
         {
-            #pragma warning disable
+#pragma warning disable
             AssemblyInfo assemblyInfo = Assembly.GetExecutingAssembly().RetrieveAssemblyInfo();
             DateTimeOffset localNow = DateTimeOffset.Now;
             BuildData buildMetadata = new BuildData(assemblyInfo, localNow);
             return buildMetadata;
-            #pragma warning restore
+#pragma warning restore
         }
     }
 }
