@@ -4,14 +4,40 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Utilities;
 using Ssg.Extensions.Metadata.Abstractions;
+using Xunit;
 
 namespace Test.Unit.FormerXunit
 {
     public class SiteTests
     {
-        static SiteMetaData CreateSiteMetaData()
+        [Fact]
+        public void TagCloud_Empty()
+        {
+            SiteMetaData site = CreateSiteMetaData();
+            IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+        }
+        
+        [Fact]
+        public void TagCloud_NoTags()
+        {
+            List<BasePage> items = new List<BasePage>();
+            PageMetaData pageMetaData = CreatePageMetaData();
+            items.Add(pageMetaData);
+            SiteMetaData site = CreateSiteMetaData(items);
+            IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+        }
+        
+        static PageMetaData CreatePageMetaData()
+        {
+            Dictionary<string, object> data = new();
+            PageMetaData result = new PageMetaData(data);
+            return result;
+        }
+        
+        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null)
         {
             string id = string.Empty;
             string title = string.Empty;
@@ -21,7 +47,7 @@ namespace Test.Unit.FormerXunit
             string url = string.Empty;
             Dictionary<string,object> data = new();
             BuildData build = EnrichSiteWithAssemblyData();
-            List<BasePage> items = new();
+            items ??= new List<BasePage>();
             SiteMetaData result = new SiteMetaData(id, title, description, language, author, url, data, build, items);
             return result;
         }
