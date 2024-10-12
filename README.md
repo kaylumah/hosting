@@ -18,8 +18,8 @@ This GitHub project board tracks the status of any planned changes and articles 
 
 | Icon | Name | Description |
 | - | - | - |
-| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="" width="50"/> | Scriban | |
-| <img src="https://github.com/xoofx/markdig/raw/master/img/markdig.png" alt="" width="50"/> | Markdig | |
+| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="" width="50"/> | Scriban | Template engine|
+| <img src="https://github.com/xoofx/markdig/raw/master/img/markdig.png" alt="" width="50"/> | Markdig | Blogs are written in Markdown and converted to HTML |
 
 
 ## Documentation
