@@ -239,43 +239,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class CollectionPage : PageMetaData
     {
-        readonly IEnumerable<Article> _Articles;
+        readonly IEnumerable<PageMetaData> _Pages;
 
-        public CollectionPage(PageMetaData internalData, IEnumerable<Article> articles) : base(internalData)
+        public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
         {
-            _Articles = articles.ByRecentlyPublished();
+            _Pages = pages.ByRecentlyPublished();
         }
 
         protected override DateTimeOffset GetPublishedDate()
         {
-            Article? firstPublishedArticle = _Articles.LastOrDefault();
-            DateTimeOffset result;
-            if (firstPublishedArticle != null)
-            {
-                result = firstPublishedArticle.Published;
-            }
-            else
-            {
-                result = base.GetPublishedDate();
-            }
-
+            PageMetaData? firstPublishedPage = _Pages.LastOrDefault();
+            DateTimeOffset result = firstPublishedPage?.Published ?? base.GetPublishedDate();
             return result;
         }
 
         protected override DateTimeOffset GetModifiedDate()
         {
-            Article? lastPublishedArticle = _Articles.FirstOrDefault();
-            DateTimeOffset result;
-            if (lastPublishedArticle != null)
-            {
-                result = lastPublishedArticle.Published;
-            }
-            else
-            {
-                // note: if there are no articles use Published date for both fields in collection
-                result = base.GetPublishedDate();
-            }
-
+            PageMetaData? lastPublishedPage = _Pages.FirstOrDefault();
+            DateTimeOffset result = lastPublishedPage?.Published ?? base.GetPublishedDate();
             return result;
         }
     }
@@ -443,6 +424,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<Article> ByRecentlyPublished(this IEnumerable<Article> source)
         {
             IOrderedEnumerable<Article> result = source.OrderByDescending(x => x.Published);
+            return result;
+        }
+        
+        public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
+        {
+            IOrderedEnumerable<PageMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
     }
