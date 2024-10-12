@@ -42,6 +42,12 @@ classDiagram
     class BasePage {
     }
 
+    class PageMetaData {
+    }
+
+    class StaticContent {
+    }
+
     class SiteMetaData {
         + Dictionary Data
         + BuildData BuildData
@@ -55,6 +61,8 @@ classDiagram
     TextFile --|> BinaryFile
     SiteMetaData --> BasePage
     SiteMetaData --> BuildData
+    PageMetaData --|> BasePage
+    StaticContent --|> BasePage
 
     note for FileMetaData "Extends Dictionary(string, object?) 
     with some convenience properties"
