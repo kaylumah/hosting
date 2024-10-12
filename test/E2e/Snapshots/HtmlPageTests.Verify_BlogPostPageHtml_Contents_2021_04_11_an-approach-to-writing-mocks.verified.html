@@ -1139,7 +1139,7 @@ public async Task Test_ArticleAccess_Returns200OK()
                 words.forEach(word => {
                   const li = document.createElement('li');
                   const anchor = document.createElement('a');
-                  anchor.href = word.Uri;
+                  anchor.href = `/blog.html?tag=${word.Id}`;
                   anchor.title = word.Description;
                   anchor.text = `${word.DisplayName} (${word.Size})`;
                   const x = word.Size;

@@ -14,6 +14,61 @@ This repository is the home for all content of kaylumah.nl. Here, you can find t
 
 This GitHub project board tracks the status of any planned changes and articles to my website.
 
+## Powered by
+
+| Icon | Name | Description |
+| - | - | - |
+| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="" width="50"/> | Scriban | Template engine|
+| <img src="https://github.com/xoofx/markdig/raw/master/img/markdig.png" alt="" width="50"/> | Markdig | Blogs are written in Markdown and converted to HTML |
+
+
+## Documentation
+
+```mermaid
+classDiagram
+
+    class BinaryFile{
+        + FileMetaData MetaData
+        + byte[] Bytes
+    }
+    <<Abstract>> BinaryFile
+
+    class TextFile{
+        + string Content
+    }
+
+    class FileMetaData{
+    }
+
+    class BasePage {
+    }
+
+    class PageMetaData {
+    }
+
+    class StaticContent {
+    }
+
+    class SiteMetaData {
+        + Dictionary Data
+        + BuildData BuildData
+        + BasePage[] Items
+    }
+
+    class BuildData {
+    }
+
+    BinaryFile --> FileMetaData
+    TextFile --|> BinaryFile
+    SiteMetaData --> BasePage
+    SiteMetaData --> BuildData
+    PageMetaData --|> BasePage
+    StaticContent --|> BasePage
+
+    note for FileMetaData "Extends Dictionary(string, object?) 
+    with some convenience properties"
+```
+
 ## License
 
 This repo (including Blog content) is licensed under the [MIT License](LICENSE)
