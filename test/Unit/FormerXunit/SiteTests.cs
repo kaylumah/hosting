@@ -20,7 +20,7 @@ namespace Test.Unit.FormerXunit
             string author = string.Empty;
             string url = string.Empty;
             Dictionary<string,object> data = new();
-            BuildData build = new();
+            BuildData build = EnrichSiteWithAssemblyData();
             List<BasePage> items = new();
             SiteMetaData result = new SiteMetaData(id, title, description, language, author, url, data, build, items);
             return result;
