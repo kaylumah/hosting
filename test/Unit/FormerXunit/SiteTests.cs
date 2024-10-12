@@ -24,20 +24,50 @@ namespace Test.Unit.FormerXunit
         public void TagCloud_NoTags()
         {
             List<BasePage> items = new List<BasePage>();
-            PageMetaData pageMetaData = CreatePageMetaData();
+            PageMetaData pageMetaData = CreatePageMetaData(new ());
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
         }
         
-        static PageMetaData CreatePageMetaData()
+        [Fact]
+        public void TagCloud_SingleTag_NoData()
         {
+            List<BasePage> items = new List<BasePage>();
             Dictionary<string, object> data = new();
+            PageMetaData pageMetaData = CreatePageMetaData(data);
+            data["tags"] = new List<object>() { "tag1" };
+            items.Add(pageMetaData);
+            SiteMetaData site = CreateSiteMetaData(items);
+            IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+        }
+        
+        [Fact]
+        public void TagCloud_SingleTag_WithData()
+        {
+            List<BasePage> items = new List<BasePage>();
+            Dictionary<string, object> data = new();
+            PageMetaData pageMetaData = CreatePageMetaData(data);
+            data["tags"] = new List<object>() { "tag1" };
+            items.Add(pageMetaData);
+            
+            TagMetaDataCollection tagMetaDataCollection = new();
+            Dictionary<string,object> dataItem = new()
+            {
+                ["tags"] = tagMetaDataCollection
+            };
+
+            SiteMetaData site = CreateSiteMetaData(items, dataItem);
+            IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+        }
+        
+        static PageMetaData CreatePageMetaData(Dictionary<string, object> data)
+        {
             PageMetaData result = new PageMetaData(data);
             return result;
         }
         
-        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null)
+        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null, Dictionary<string,object> data = null)
         {
             string id = string.Empty;
             string title = string.Empty;
@@ -45,7 +75,7 @@ namespace Test.Unit.FormerXunit
             string language = string.Empty;
             string author = string.Empty;
             string url = string.Empty;
-            Dictionary<string,object> data = new();
+            data ??= new();
             BuildData build = EnrichSiteWithAssemblyData();
             items ??= new List<BasePage>();
             SiteMetaData result = new SiteMetaData(id, title, description, language, author, url, data, build, items);
