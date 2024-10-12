@@ -21,6 +21,40 @@ This GitHub project board tracks the status of any planned changes and articles 
 | <img src="" alt="" width="50"/> | Scriban | |
 | <img src="" alt="" width="50"/> | Markdig | |
 
+## structure
+
+```mermaid
+classDiagram
+
+    class BinaryFile{
+        + FileMetaData MetaData
+        + byte[] Bytes
+    }
+    <<Abstract>> BinaryFile
+
+    class TextFile{
+        + string Content
+    }
+
+    class FileMetaData{
+    }
+
+    BinaryFile --> FileMetaData
+    TextFile --|> BinaryFile
+
+    class BasePage {
+    }
+
+    class SiteMetaData {
+    }
+
+    class BuildData {
+    }
+
+    note for FileMetaData "Extends Dictionary(string, object?) 
+    with some convenience properties"
+```
+
 ## License
 
 This repo (including Blog content) is licensed under the [MIT License](LICENSE)
