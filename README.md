@@ -16,9 +16,9 @@ This GitHub project board tracks the status of any planned changes and articles 
 
 ## Powered by
 
-|||
-|-|-|
-| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="drawing" width="50"/> | |
+| Icon | Name |
+| - | - |
+| <img src="https://github.com/scriban/scriban/raw/master/img/scriban.png" alt="drawing" width="50"/> | Scriban |
 
 ## License
 
