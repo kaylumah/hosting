@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Utilities;
@@ -18,6 +19,7 @@ namespace Test.Unit.FormerXunit
         {
             SiteMetaData site = CreateSiteMetaData();
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+            Assert.Empty(result);
         }
         
         [Fact]
@@ -28,6 +30,7 @@ namespace Test.Unit.FormerXunit
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+            Assert.Empty(result);
         }
         
         [Fact]
@@ -40,6 +43,10 @@ namespace Test.Unit.FormerXunit
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+            Assert.Single(result);
+
+            TagViewModel tagViewModel = result.Single();
+            Assert.Empty(tagViewModel.Description);
         }
         
         [Fact]
@@ -60,6 +67,10 @@ namespace Test.Unit.FormerXunit
 
             SiteMetaData site = CreateSiteMetaData(items, dataItem);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
+            Assert.Single(result);
+            
+            TagViewModel tagViewModel = result.Single();
+            Assert.NotEmpty(tagViewModel.Description);
         }
         
         static BasePage CreatePageMetaData(Dictionary<string, object> data)
