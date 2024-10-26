@@ -7,6 +7,14 @@
       "statusCode": {{ redirect.StatusCode }}
     },
     {% endfor %}
+    {% for x in site.pages | array.sort "uri" | array.reverse %}
+    {% if x.uri != "index.html" and x.uri != "404.html" %}
+    {
+      "route": "/{{ x.uri | string.split ".html" | array.first}}",
+      "redirect": "/{{ x.uri }}",
+      "statusCode": 301
+    },
+    {% endif %}
     {
       "route": "/assets/*.{svg,png,jpg,gif}",
       "headers": {
@@ -16,31 +24,6 @@
     {
       "route": "/index.html",
       "redirect": "/",
-      "statusCode": 301
-    },
-    {
-      "route": "/about",
-      "redirect": "/about.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive",
-      "redirect": "/archive.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/archive.html",
-      "redirect": "/blog.html",
-      "statusCode": 302
-    },
-    {
-      "route": "/blog",
-      "redirect": "/blog.html",
-      "statusCode": 301
-    },
-    {
-      "route": "/privacy",
-      "redirect": "/privacy.html",
       "statusCode": 301
     },
     {
