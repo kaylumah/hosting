@@ -21,18 +21,18 @@ namespace Test.Unit.FormerXunit
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
             Assert.Empty(result);
         }
-        
+
         [Fact]
         public void TagCloud_NoTags()
         {
             List<BasePage> items = new List<BasePage>();
-            BasePage pageMetaData = CreatePageMetaData(new ());
+            BasePage pageMetaData = CreatePageMetaData(new());
             items.Add(pageMetaData);
             SiteMetaData site = CreateSiteMetaData(items);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
             Assert.Empty(result);
         }
-        
+
         [Fact]
         public void TagCloud_SingleTag_NoData()
         {
@@ -48,7 +48,7 @@ namespace Test.Unit.FormerXunit
             TagViewModel tagViewModel = result.Single();
             Assert.Empty(tagViewModel.Description);
         }
-        
+
         [Fact]
         public void TagCloud_SingleTag_WithData()
         {
@@ -57,10 +57,10 @@ namespace Test.Unit.FormerXunit
             BasePage pageMetaData = CreatePageMetaData(data);
             data["tags"] = new List<object>() { "tag1" };
             items.Add(pageMetaData);
-            
+
             TagMetaDataCollection tagMetaDataCollection = new();
-            tagMetaDataCollection.Add(new TagMetaData() { Id = "tag1", Description = "t"});
-            Dictionary<string,object> dataItem = new()
+            tagMetaDataCollection.Add(new TagMetaData() { Id = "tag1", Description = "t" });
+            Dictionary<string, object> dataItem = new()
             {
                 ["tags"] = tagMetaDataCollection
             };
@@ -68,18 +68,18 @@ namespace Test.Unit.FormerXunit
             SiteMetaData site = CreateSiteMetaData(items, dataItem);
             IEnumerable<TagViewModel> result = ObjectConversions.TagCloud(site);
             Assert.Single(result);
-            
+
             TagViewModel tagViewModel = result.Single();
             Assert.NotEmpty(tagViewModel.Description);
         }
-        
+
         static BasePage CreatePageMetaData(Dictionary<string, object> data)
         {
             Article result = new Article(data);
             return result;
         }
-        
-        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null, Dictionary<string,object> data = null)
+
+        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null, Dictionary<string, object> data = null)
         {
             string id = string.Empty;
             string title = string.Empty;
