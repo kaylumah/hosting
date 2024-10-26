@@ -29,11 +29,6 @@
       "statusCode": 301
     },
     {
-      "route": "/archive.html",
-      "redirect": "/blog.html",
-      "statusCode": 302
-    },
-    {
       "route": "/blog",
       "redirect": "/blog.html",
       "statusCode": 301
