@@ -34,7 +34,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         readonly IFrontMatterMetadataProvider _MetadataProvider;
         readonly IRenderPlugin[] _RenderPlugins;
         readonly IPostProcessor[] _PostProcessors;
-        readonly DataProcessor _DataProcessor;
+        readonly IEnumerable<IKnownFileProcessor> _KnownFileProcessors;
+        readonly IEnumerable<IKnownExtensionProcessor> _KnownExtensionProcessors;
 
         public SiteManager(
             IFileProcessor fileProcessor,
@@ -46,9 +47,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IFrontMatterMetadataProvider metadataProvider,
             IEnumerable<IRenderPlugin> renderPlugins,
             IEnumerable<IPostProcessor> postProcessors,
-            DataProcessor dataProcessor
-            )
+            IEnumerable<IKnownFileProcessor> knownFileProcessors,
+            IEnumerable<IKnownExtensionProcessor> knownExtensionProcessors)
         {
+            _KnownFileProcessors = knownFileProcessors;
+            _KnownExtensionProcessors = knownExtensionProcessors;
             _RenderPlugins = renderPlugins.ToArray();
             _PostProcessors = postProcessors.ToArray();
             _FileProcessor = fileProcessor;
@@ -58,7 +61,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _SiteInfo = siteInfo;
             _TimeProvider = timeProvider;
             _MetadataProvider = metadataProvider;
-            _DataProcessor = dataProcessor;
         }
 
         public async Task GenerateSite(GenerateSiteRequest request)
@@ -83,16 +85,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             BuildData buildData = EnrichSiteWithAssemblyData();
 
             string siteId = siteGuid.ToString();
+            Dictionary<string, object> siteData = GetSiteData();
             SiteMetaData siteMetadata = new SiteMetaData(siteId,
                 _SiteInfo.Title,
                 _SiteInfo.Description,
                 _SiteInfo.Lang,
                 string.Empty,
                 _SiteInfo.Url,
+                siteData,
                 buildData,
                 pages);
-            _DataProcessor.EnrichSiteWithData(siteMetadata);
-            EnrichSite(siteMetadata);
+            // EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
@@ -120,6 +123,40 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             Artifact[] artifactArray = artifacts.ToArray();
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
+        }
+
+        Dictionary<string, object> GetSiteData()
+        {
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            string dataDirectory = Constants.Directories.SourceDataDirectory;
+            string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
+            List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
+                .Where(file => !file.IsDirectory())
+                .Where(file =>
+                {
+                    string extension = Path.GetExtension(file.Name);
+                    bool result = extensions.Contains(extension);
+                    return result;
+                })
+                .ToList();
+
+            List<string> knownFileNames = _KnownFileProcessors.Select(x => x.KnownFileName).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            dataFiles = dataFiles.Except(knownFiles).ToList();
+
+            foreach (IFileSystemInfo fileSystemInfo in knownFiles)
+            {
+                IKnownFileProcessor? strategy = _KnownFileProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(result, fileSystemInfo);
+            }
+
+            foreach (IFileSystemInfo fileSystemInfo in dataFiles)
+            {
+                IKnownExtensionProcessor? strategy = _KnownExtensionProcessors.SingleOrDefault(processor => processor.IsApplicable(fileSystemInfo));
+                strategy?.Execute(result, fileSystemInfo);
+            }
+
+            return result;
         }
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)

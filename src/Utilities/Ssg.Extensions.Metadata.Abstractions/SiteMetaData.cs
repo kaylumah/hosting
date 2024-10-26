@@ -25,19 +25,47 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
 
         public Dictionary<string, object> Data
-        { get; set; } = new();
+        { get; set; }
 
-        public TagMetaDataCollection TagMetaData
-        { get; set; } = new();
-        public AuthorMetaDataCollection AuthorMetaData
-        { get; set; } = new();
-        public OrganizationMetaDataCollection OrganizationMetaData
-        { get; set; } = new();
+        public TagMetaDataCollection TagMetaData => GetData<TagMetaDataCollection>("tags") ?? new();
+        public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
+        public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
+
+        public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
+        public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
+
+        T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
+        }
 
         public List<BasePage> Items
         { get; init; }
 
-        public SiteMetaData(string id, string title, string description, string language, string author, string url, BuildData buildData, List<BasePage> items)
+        public IEnumerable<PageMetaData> Pages => GetPages();
+
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
+        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+
+        public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
+
+        public SiteMetaData(
+            string id,
+            string title,
+            string description,
+            string language,
+            string author,
+            string url,
+            Dictionary<string, object> data,
+            BuildData buildData,
+            List<BasePage> items)
         {
             Id = id;
             Title = title;
@@ -45,8 +73,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Language = language;
             Author = author;
             Url = url;
+            Data = data;
             Build = buildData;
             Items = items;
+        }
+
+        public Uri AbsoluteUri(string relativeUrl)
+        {
+            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
+            return uri;
         }
 
         public IEnumerable<BasePage> GetItems()
@@ -76,12 +111,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public IEnumerable<PageMetaData> Pages => GetPages();
-
-        public IEnumerable<Article> RecentArticles => GetRecentArticles();
-
-        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
-
         IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
@@ -97,8 +126,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        // TODO Consider (re)exposing Collections, Years, Series, Types
-        public SortedDictionary<string, PageMetaData[]> Tags => GetPagesByTag();
         SortedDictionary<string, PageMetaData[]> GetPagesByTag()
         {
             SortedDictionary<string, PageMetaData[]> result = new();
@@ -117,12 +144,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public Uri AbsoluteUri(string relativeUrl)
-        {
-            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
-            return uri;
-        }
-
         public TagViewModel GetTagViewModel(string tag)
         {
             string id = tag;
@@ -137,7 +158,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 description = tagData.Description;
             }
 
-            bool hasPageInfo = Tags.TryGetValue(id, out PageMetaData[]? pageInfos);
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out PageMetaData[]? pageInfos);
             if (hasPageInfo && pageInfos != null)
             {
                 size = pageInfos.Length;

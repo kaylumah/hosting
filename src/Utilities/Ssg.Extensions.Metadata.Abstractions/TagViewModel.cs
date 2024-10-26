@@ -17,7 +17,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public int Size
         { get; init; }
 
-        public string Uri => $"/blog.html?tag={Id}";
+        // public string Uri => $"/blog.html?tag={Id}";
 
         public TagViewModel(string id, string displayName, string description, int size)
         {
