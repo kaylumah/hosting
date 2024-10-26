@@ -7,28 +7,28 @@
 version: 2
 updates:
 
-- package-ecosystem: "nuget"
-  directory: "/"
-  schedule:
-      interval: "daily"
-      time: "09:00"
-      timezone: "Europe/Amsterdam"
-  assignees:
-    - "kaylumah"
-  groups:
-    Microsoft.Extensions:
-      patterns:
-        - "Microsoft.Extensions.*"
-    System.IO.Abstractions:
-      patterns:
-        - "System.IO.Abstractions"
-        - "System.IO.Abstractions.*"
-    Xunit:
-      patterns:
-        - "xunit.runner.visualstudio"
-        - "xunit"
+# - package-ecosystem: "nuget"
+#   directory: "/"
+#   schedule:
+#       interval: "daily"
+#       time: "09:00"
+#       timezone: "Europe/Amsterdam"
+#   assignees:
+#     - "kaylumah"
+#   groups:
+#     Microsoft.Extensions:
+#       patterns:
+#         - "Microsoft.Extensions.*"
+#     System.IO.Abstractions:
+#       patterns:
+#         - "System.IO.Abstractions"
+#         - "System.IO.Abstractions.*"
+#     Xunit:
+#       patterns:
+#         - "xunit.runner.visualstudio"
+#         - "xunit"
 
-  open-pull-requests-limit: 25
+#   open-pull-requests-limit: 25
 
 - package-ecosystem: "npm"
   directory: "/_site/_devtools"
