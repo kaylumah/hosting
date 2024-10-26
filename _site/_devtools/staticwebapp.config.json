@@ -29,7 +29,7 @@
       "statusCode": 301
     },
     {
-      "route": "/archived.html",
+      "route": "/archive.html",
       "allowedRoles": ["authenticated"]
     },
     {
