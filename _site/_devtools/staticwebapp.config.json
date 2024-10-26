@@ -29,6 +29,10 @@
       "statusCode": 301
     },
     {
+      "route": "/archived.html",
+      "allowedRoles": ["authenticated"]
+    },
+    {
       "route": "/blog",
       "redirect": "/blog.html",
       "statusCode": 301
