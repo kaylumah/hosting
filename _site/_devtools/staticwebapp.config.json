@@ -15,16 +15,17 @@
       "statusCode": 301
     },
     {% endif %}
+    {% endfor %}
+    {
+      "route": "/index.html",
+      "redirect": "/",
+      "statusCode": 301
+    },
     {
       "route": "/assets/*.{svg,png,jpg,gif}",
       "headers": {
         "Cache-Control": "public, max-age=15552000"
       }
-    },
-    {
-      "route": "/index.html",
-      "redirect": "/",
-      "statusCode": 301
     },
     {
       "route": "/feed",
