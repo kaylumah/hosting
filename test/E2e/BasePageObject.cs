@@ -15,21 +15,21 @@ namespace Test.E2e
     {
         public abstract string PagePath { get; }
 
-        protected readonly IPage _Page;
+        protected readonly IPage Page;
 
-        public IResponse PageResponse { get; private set; }
-        public List<IResponse> Responses { get; } = new List<IResponse>();
+        IResponse PageResponse { get; set; }
+        List<IResponse> Responses { get; } = new List<IResponse>();
 
         public BasePageObject(IPage page)
         {
-            _Page = page;
+            Page = page;
         }
 
         public async Task<byte[]> ScreenshotAsync()
         {
             PageScreenshotOptions pageScreenshotOptions = new PageScreenshotOptions();
             pageScreenshotOptions.FullPage = true;
-            byte[] bytes = await _Page.ScreenshotAsync(pageScreenshotOptions);
+            byte[] bytes = await Page.ScreenshotAsync(pageScreenshotOptions);
             return bytes;
         }
 
@@ -45,9 +45,9 @@ namespace Test.E2e
 
         public async Task NavigateAsync()
         {
-            _Page.Response += Page_Response;
+            Page.Response += Page_Response;
 
-            await _Page.GotoAsync(PagePath);
+            await Page.GotoAsync(PagePath);
         }
 
         void Page_Response(object sender, IResponse e)
@@ -86,7 +86,7 @@ namespace Test.E2e
         public async Task<Dictionary<string, string>> GetMetaTags()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
-            ILocator metaTagNameLocator = _Page.Locator("//meta[@name]");
+            ILocator metaTagNameLocator = Page.Locator("//meta[@name]");
             IReadOnlyList<ILocator> metaNameTags = await metaTagNameLocator.AllAsync();
             foreach (ILocator metaTag in metaNameTags)
             {
@@ -95,7 +95,7 @@ namespace Test.E2e
                 result.TryAdd(key, value);
             }
 
-            ILocator metaTagPropertyLocator = _Page.Locator("//meta[@property]");
+            ILocator metaTagPropertyLocator = Page.Locator("//meta[@property]");
             IReadOnlyList<ILocator> metaPropertyTags = await metaTagPropertyLocator.AllAsync();
             foreach (ILocator metaTag in metaPropertyTags)
             {

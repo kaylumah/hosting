@@ -16,14 +16,14 @@ namespace Test.E2e.SnapshotTests
         [MemberData(nameof(Data))]
         public async Task TestX(string device)
         {
-            var playwright = await Playwright.CreateAsync();
-            var browser = await playwright.Chromium.LaunchAsync();
-            var contextOptions = playwright.Devices[device];
+            IPlaywright playwright = await Playwright.CreateAsync();
+            IBrowser browser = await playwright.Chromium.LaunchAsync();
+            BrowserNewContextOptions contextOptions = playwright.Devices[device];
             contextOptions.BaseURL = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL");
-            var context = await browser.NewContextAsync(contextOptions);
-            var page = await context.NewPageAsync();
+            IBrowserContext context = await browser.NewContextAsync(contextOptions);
+            IPage page = await context.NewPageAsync();
             await page.GotoAsync("blog.html");
-            var bytes = await page.ScreenshotAsync();
+            byte[] bytes = await page.ScreenshotAsync();
             await File.WriteAllBytesAsync($"Output/{device}.png", bytes);
         }
 
