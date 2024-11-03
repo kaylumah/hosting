@@ -42,8 +42,9 @@ namespace Api
             Uri? uri = new Uri(originalUrl.ToString());
             _logger.LogInformation(uri.AbsolutePath);
 
-            //return new OkObjectResult($"Welcome to Azure Functions, {req.Query["name"]}!");
-            return new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
+            RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
+            result.Permanent = true;
+            return result;
         }
     }
 }
