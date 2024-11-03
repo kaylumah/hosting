@@ -2,18 +2,14 @@
   "name": "kaylumah_site",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "build": "npx tailwindcss -i styles.css -o compiled.css",
-    "build:prod": "npx tailwindcss -i styles.css -o compiled.css --minify",
-    "http-server": "npx http-server",
-    "swa": "swa start"
+    "build": "tailwindcss -i styles.css -o compiled.css",
+    "build:prod": "tailwindcss -i styles.css -o compiled.css --minify"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "kaylumah",
+  "license": "MIT",
   "devDependencies": {
-    "@azure/static-web-apps-cli": "2.0.1",
     "@tailwindcss/typography": "0.5.15",
     "tailwindcss": "3.4.14"
   }
