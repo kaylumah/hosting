@@ -107,6 +107,7 @@ jobs:
 
       - name: Upload generated website
         uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('site-{0}', matrix.os) }}
           path: dist
@@ -115,6 +116,7 @@ jobs:
 
       - name: Upload tools
         uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('tools-{0}', matrix.os) }}
           path: tools
