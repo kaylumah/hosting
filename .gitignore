@@ -500,3 +500,6 @@ LivingDoc.html
 
 # Verify snapshot testing
 *.received.*
+
+# Release API (dotnet publish func/func.csproj --output "api")
+/api
