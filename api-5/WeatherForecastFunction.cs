@@ -18,6 +18,7 @@ namespace Api
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
             // https://github.com/Azure/azure-functions-dotnet-worker/issues/1635
+            // https://learn.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-process-guide?tabs=hostbuilder%2Cwindows#aspnet-core-integration
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.WriteAsJsonAsync("result");
 
