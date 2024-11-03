@@ -27,6 +27,18 @@ namespace Api
             Uri? uri = new Uri(originalUrl.ToString());
             _logger.LogInformation(uri.AbsolutePath);
 
+            /*
+                        string AbsolutePath = "/2024/011/02/as-s.html";
+            // string AbsolutePath = "blog.html";
+            string pattern = @"^/(?<year>2024)(?<rest>.*)";
+            string replacement = "/something/${year}${rest}";
+
+            if (Regex.IsMatch(AbsolutePath, pattern))
+            {
+                string newUrl = Regex.Replace(AbsolutePath, pattern, replacement);
+            }*/
+
+
             RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
             result.Permanent = true;
             return result;
