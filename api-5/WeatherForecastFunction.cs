@@ -1,6 +1,9 @@
-using System.Net;
+// Copyright (c) Kaylumah, 2024. All rights reserved.
+// See LICENSE file in the project root for full license information.
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 
 namespace Api
@@ -14,6 +17,7 @@ namespace Api
             _logger = loggerFactory.CreateLogger<HttpTrigger>();
         }
 
+        /*
         [Function("fallback")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
@@ -25,6 +29,13 @@ namespace Api
             var response = req.CreateResponse(System.Net.HttpStatusCode.Redirect);
             response.Headers.Add("Location", "/404?originalUrl=");
             return response;
+        }
+        */
+
+        [Function("fallback")]
+        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
+        {
+            return new OkObjectResult($"Welcome to Azure Functions, {req.Query["name"]}!");
         }
     }
 }
