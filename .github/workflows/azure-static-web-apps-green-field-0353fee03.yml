@@ -124,18 +124,12 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Run API
-        if: matrix.os == 'ubuntu-latest'
-        shell: pwsh
-        run: |
-          dotnet publish api-5/Api.csproj --output "api"
-
       - name: Upload tools
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api
+          path: api-5
           if-no-files-found: error
           retention-days: 1
 
@@ -220,7 +214,7 @@ jobs:
           api_location: "api"
           output_location: ""
           skip_app_build: true
-          skip_api_build: true
+          skip_api_build: false
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
