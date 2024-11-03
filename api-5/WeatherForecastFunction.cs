@@ -35,7 +35,15 @@ namespace Api
         [Function("fallback")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
         {
-            return new OkObjectResult($"Welcome to Azure Functions, {req.Query["name"]}!");
+            bool hasHeader = req.Headers.TryGetValue("x-ms-original-url", out  Microsoft.Extensions.Primitives.StringValues originalUrl);
+
+            _logger.LogInformation($"Original Url: {originalUrl}");
+
+            Uri? uri = new Uri(originalUrl.ToString());
+            _logger.LogInformation(uri.AbsolutePath);
+
+            //return new OkObjectResult($"Welcome to Azure Functions, {req.Query["name"]}!");
+            return new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
         }
     }
 }

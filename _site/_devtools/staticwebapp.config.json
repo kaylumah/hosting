@@ -1,6 +1,10 @@
 {
   "navigationFallback": {
-    "rewrite": "/api/fallback"
+    "rewrite": "/api/fallback",
+    "exclude": [
+      "assets/*",
+      "*.{png,jpg,gif,svg,ico}"
+    ]
   },
   "platform": {
     "apiRuntime": "dotnet-isolated:8.0"
@@ -9,6 +13,10 @@
     {
       "route": "/404",
       "statusCode": 404
+    },
+    {
+      "route": "/favicon.ico",
+      "redirect": "/assets/images/favicon.ico"
     },
     {% for redirect in site.data.redirects %}
     {
