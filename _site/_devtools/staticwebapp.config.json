@@ -1,8 +1,15 @@
 {
+  "navigationFallback": {
+    "rewrite": "/api/fallback"
+  },
   "platform": {
     "apiRuntime": "dotnet-isolated:8.0"
   },
   "routes": [
+    {
+      "route": "/404",
+      "statusCode": 404
+    },
     {% for redirect in site.data.redirects %}
     {
       "route": "{{ redirect.Route }}",
@@ -44,8 +51,5 @@
     ".xml": "application/xml"
   },
   "responseOverrides": {
-    "404": {
-      "rewrite": "/404.html"
-    }
   }
 }

@@ -23,7 +23,7 @@ namespace Api
             // response.WriteAsJsonAsync("result");
             // return response;
             var response = req.CreateResponse(System.Net.HttpStatusCode.Redirect);
-            response.Headers.Add("Location", "http://localhost:4280");
+            response.Headers.Add("Location", "/404?originalUrl=");
             return response;
         }
     }
