@@ -31,7 +31,7 @@ updates:
 #   open-pull-requests-limit: 25
 
 - package-ecosystem: "npm"
-  directory: "/_site/_devtools"
+  directory: "/"
   schedule:
       interval: "weekly"
       time: "09:00"
