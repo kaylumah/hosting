@@ -1,6 +1,6 @@
 {
   "platform": {
-    "apiRuntime": "dotnet-isolated:6.0"
+    "apiRuntime": "node:18"
   },
   "routes": [
     {% for redirect in site.data.redirects %}
