@@ -69,17 +69,13 @@ try
     Set-Location $DistFolder
     npm i
     npm run build:prod
-    if ($CleanDevDependencies)
-    {
-        Write-Host "Cleaning Up DevDependencies"
-        Remove-Item styles.css
-        Remove-Item package.json
-        Remove-Item package-lock.json
-        Remove-Item tailwind.config.js
-        Remove-Item node_modules -Recurse -Force
-    }
 }
 finally
 {
     Set-Location $RepoRoot
+}
+
+if ($CleanDevDependencies)
+{
+    & "./tools/Clean-Dist.ps1"
 }
