@@ -17,6 +17,7 @@ namespace Api
         [Function("WeatherForecast")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
+            // https://github.com/Azure/azure-functions-dotnet-worker/issues/1635
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.WriteAsJsonAsync("result");
 
