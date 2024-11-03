@@ -5,6 +5,8 @@
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
