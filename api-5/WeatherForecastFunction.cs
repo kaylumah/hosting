@@ -42,8 +42,12 @@ namespace Api
             Uri? uri = new Uri(originalUrl.ToString());
             _logger.LogInformation(uri.AbsolutePath);
 
-            RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
-            result.Permanent = true;
+            // RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
+            // result.Permanent = true;
+            // return result;
+
+            // Fallback to 404
+            NotFoundResult result = new NotFoundResult();
             return result;
         }
     }
