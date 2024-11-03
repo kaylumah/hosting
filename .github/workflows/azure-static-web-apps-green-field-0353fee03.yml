@@ -107,9 +107,19 @@ jobs:
 
       - name: Upload generated website
         uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('site-{0}', matrix.os) }}
           path: dist
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload tools
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: ${{ format('tools-{0}', matrix.os) }}
+          path: tools
           if-no-files-found: error
           retention-days: 1
 
@@ -150,6 +160,12 @@ jobs:
           name: ${{ format('site-{0}', 'ubuntu-latest') }}
           path: dist
 
+      - name: Download tools artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ format('tools-{0}', 'ubuntu-latest') }}
+          path: dist
+
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -164,11 +180,7 @@ jobs:
       - name: Cleanup
         shell: pwsh
         run: |
-          Remove-Item dist/styles.css
-          Remove-Item dist/package.json
-          Remove-Item dist/package-lock.json
-          Remove-Item dist/tailwind.config.js
-          Remove-Item dist/node_modules -Recurse -Force
+          ./tools/Clean-Dist.ps1
 
       - name: Print site
         shell: pwsh
