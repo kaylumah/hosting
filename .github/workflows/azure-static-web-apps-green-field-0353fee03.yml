@@ -123,6 +123,21 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Run API
+        if: matrix.os == 'ubuntu-latest'
+        shell: pwsh
+        run: |
+          dotnet publish func/func.csproj --output "api"
+
+      - name: Upload tools
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: ${{ format('api-{0}', matrix.os) }}
+          path: api
+          if-no-files-found: error
+          retention-days: 1
+
       #  Enable the following to do something with snapshot result(s)
       # - name: Check Verify Results
       #   if: always()
