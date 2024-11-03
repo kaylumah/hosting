@@ -164,7 +164,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ format('tools-{0}', 'ubuntu-latest') }}
-          path: dist
+          path: tools
 
       - name: Use Node.js v20
         uses: actions/setup-node@v4
