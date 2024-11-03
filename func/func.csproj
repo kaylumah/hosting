@@ -7,6 +7,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <PublishReadyToRun>true</PublishReadyToRun>
+  </PropertyGroup>
+  <PropertyGroup>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
