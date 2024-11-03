@@ -14,14 +14,16 @@ namespace Api
             _logger = loggerFactory.CreateLogger<HttpTrigger>();
         }
 
-        [Function("WeatherForecast")]
+        [Function("fallback")]
         public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
             // https://github.com/Azure/azure-functions-dotnet-worker/issues/1635
             // https://learn.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-process-guide?tabs=hostbuilder%2Cwindows#aspnet-core-integration
-            var response = req.CreateResponse(HttpStatusCode.OK);
-            response.WriteAsJsonAsync("result");
-
+            // var response = req.CreateResponse(HttpStatusCode.OK);
+            // response.WriteAsJsonAsync("result");
+            // return response;
+            var response = req.CreateResponse(System.Net.HttpStatusCode.Redirect);
+            response.Headers.Add("Location", "http://localhost:4280");
             return response;
         }
     }
