@@ -10,22 +10,22 @@ namespace Api
 {
     public class HttpTrigger
     {
-        private readonly ILogger _logger;
+        readonly ILogger _Logger;
 
         public HttpTrigger(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<HttpTrigger>();
+            _Logger = loggerFactory.CreateLogger<HttpTrigger>();
         }
 
         [Function("fallback")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
         {
-            bool hasHeader = req.Headers.TryGetValue("x-ms-original-url", out  Microsoft.Extensions.Primitives.StringValues originalUrl);
+            bool hasHeader = req.Headers.TryGetValue("x-ms-original-url", out Microsoft.Extensions.Primitives.StringValues originalUrl);
 
-            _logger.LogInformation($"Original Url: {originalUrl}");
+            _Logger.LogInformation($"Original Url: {originalUrl}");
 
             Uri? uri = new Uri(originalUrl.ToString());
-            _logger.LogInformation(uri.AbsolutePath);
+            _Logger.LogInformation(uri.AbsolutePath);
 
             /*
                         string AbsolutePath = "/2024/011/02/as-s.html";
@@ -37,7 +37,6 @@ namespace Api
             {
                 string newUrl = Regex.Replace(AbsolutePath, pattern, replacement);
             }*/
-
 
             RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
             result.Permanent = true;
