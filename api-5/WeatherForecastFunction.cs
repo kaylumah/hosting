@@ -34,7 +34,7 @@ namespace Api
             _RedirectOptions = new List<RedirectOption>();
             RedirectOption option = new RedirectOption(
                 @"\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$",
-                "/something/${year}/${rest}");
+                "/something/${year}/${rest}.html");
             option.Enabled = true;
             option.Permanent = true;
             _RedirectOptions.Add(option);
