@@ -27,7 +27,6 @@ namespace Kaylumah.Api
         }
     }
 
-#pragma warning disable CA1848
     public class HttpTrigger
     {
         readonly ILogger _Logger;
