@@ -38,7 +38,7 @@ namespace Api
                 string newUrl = Regex.Replace(AbsolutePath, pattern, replacement);
             }*/
 
-            RedirectResult result = new RedirectResult($"/404?originalUrl={uri.AbsolutePath}");
+            RedirectResult result = new RedirectResult($"/404.html?originalUrl={uri.AbsolutePath}");
             result.Permanent = true;
             return result;
 
