@@ -32,7 +32,7 @@ namespace Api
         {
             _Logger = loggerFactory.CreateLogger<HttpTrigger>();
             _RedirectOptions = new List<RedirectOption>();
-            RedirectOption option = new RedirectOption(@"\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$", "/something/${year}${rest}");
+            RedirectOption option = new RedirectOption(@"\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$", "/something/${year}/${rest}");
             option.Enabled = true;
             option.Permanent = true;
             _RedirectOptions.Add(option);
@@ -61,7 +61,7 @@ namespace Api
                     result = new RedirectResult($"/404.html?originalUrl={path}");
                 }
             }
-            else 
+            else
             {
                 result = new RedirectResult("/404.html");
             }
