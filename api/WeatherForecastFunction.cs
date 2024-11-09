@@ -7,14 +7,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 
-namespace Api
+namespace Kaylumah.Api
 {
     public class RedirectOption
     {
-        public bool Enabled { get; set; }
-        public bool Permanent { get; set; }
-        public string Pattern { get; set; }
-        public string Rewrite { get; set; }
+        public bool Enabled
+        { get; set; }
+        public bool Permanent
+        { get; set; }
+        public string Pattern
+        { get; set; }
+        public string Rewrite
+        { get; set; }
 
         public RedirectOption(string pattern, string rewrite)
         {
@@ -23,6 +27,7 @@ namespace Api
         }
     }
 
+#pragma warning disable CA1848
     public class HttpTrigger
     {
         readonly ILogger _Logger;
@@ -50,7 +55,7 @@ namespace Api
                 string originalUrl = headerValue.ToString();
                 Uri uri = new Uri(originalUrl);
                 string path = uri.AbsolutePath;
-                _Logger.LogInformation($"Original Url: {originalUrl}");
+                _Logger.LogInformation("Original Url: {OriginalUrl}", originalUrl);
 
                 RedirectOption? option = _RedirectOptions.FirstOrDefault(o => o.Enabled && Regex.IsMatch(path, o.Pattern));
                 if (option != null)
