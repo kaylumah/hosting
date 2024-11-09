@@ -41,6 +41,7 @@ namespace Api
         [Function("fallback")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequest req)
         {
+            IActionResult result;
             bool hasHeader = req.Headers.TryGetValue("x-ms-original-url", out Microsoft.Extensions.Primitives.StringValues headerValue);
             if (hasHeader)
             {
@@ -53,17 +54,17 @@ namespace Api
                 if (option != null)
                 {
                     string newPath = Regex.Replace(path, option.Pattern, option.Rewrite);
-                    _Logger.LogInformation($"Redirecting {path} to {newPath}");
+                    result = new RedirectResult(newPath, option.Permanent);
                 }
-
-                // 
-                RedirectResult result2 = new RedirectResult($"/404.html?originalUrl=");
-                return result2;
-
+                else
+                {
+                    result = new RedirectResult($"/404.html?originalUrl={path}");
+                }
+            }
+            else {
+                result = new RedirectResult("/404.html");
             }
 
-            RedirectResult result = new RedirectResult($"/404.html");
-            result.Permanent = true;
             return result;
         }
     }
