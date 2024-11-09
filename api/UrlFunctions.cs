@@ -12,32 +12,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Api
 {
-    public class RedirectOption
-    {
-        public bool Enabled
-        { get; set; }
-        public bool Permanent
-        { get; set; }
-        public string Pattern
-        { get; set; }
-        public string Rewrite
-        { get; set; }
 
-        public RedirectOption(string pattern, string rewrite)
-        {
-            Pattern = pattern;
-            Rewrite = rewrite;
-        }
-    }
-
-    public class HttpTrigger
+    public class UrlFunctions
     {
         readonly ILogger _Logger;
         readonly List<RedirectOption> _RedirectOptions;
 
-        public HttpTrigger(ILoggerFactory loggerFactory)
+        public UrlFunctions(ILoggerFactory loggerFactory)
         {
-            _Logger = loggerFactory.CreateLogger<HttpTrigger>();
+            _Logger = loggerFactory.CreateLogger<UrlFunctions>();
             _RedirectOptions = new List<RedirectOption>();
             RedirectOption option = new RedirectOption(
                 @"\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$",
