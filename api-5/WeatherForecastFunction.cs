@@ -61,7 +61,8 @@ namespace Api
                     result = new RedirectResult($"/404.html?originalUrl={path}");
                 }
             }
-            else {
+            else 
+            {
                 result = new RedirectResult("/404.html");
             }
 
