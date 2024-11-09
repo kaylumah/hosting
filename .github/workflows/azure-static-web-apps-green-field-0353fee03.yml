@@ -124,12 +124,12 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Upload tools
+      - name: Upload API
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api-5
+          path: api
           if-no-files-found: error
           retention-days: 1
 
