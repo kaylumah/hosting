@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Utilities
 
         public static Guid Create(Guid namespaceId, byte[] nameBytes, int version)
         {
-            if (version != 3 && version != 5)
+            if (version is not 3 and not 5)
             {
                 throw new ArgumentOutOfRangeException(nameof(version), "version must be either 3 or 5.");
             }
