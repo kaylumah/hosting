@@ -23,7 +23,7 @@ namespace Kaylumah.Api
             _Logger = loggerFactory.CreateLogger<UrlFunctions>();
             _RedirectOptions = new List<RedirectOption>();
 
-            RedirectOption fixTypo = new RedirectOption("/2023/04/14/csharp-client-for-openapi-revistted.html", "/2023/04/14/csharp-client-for-openapi-revisited.html");
+            RedirectOption fixTypo = new RedirectOption("^/2023/04/14/csharp-client-for-openapi-revistted.html$", "/2023/04/14/csharp-client-for-openapi-revisited.html");
             fixTypo.Enabled = true;
             fixTypo.Permanent = true;
             _RedirectOptions.Add(fixTypo);
