@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = "Stop"
 [string] $RepoRoot = $PSScriptRoot
 [string] $BuildConfiguration = "Release"
-[string] $TargetFramework = "net8.0"
+[string] $TargetFramework = "net9.0"
 [string] $BaseUrl = ./tools/Get-BaseUrl.ps1
 
 Write-Host "Using build-id '$BuildId'"
