@@ -7,7 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
     ];
 
     // Get the current URL path from the browser
-    const requestedUrl = window.location.pathname;
+    let requestedUrl = window.location.pathname;
+    let url = new URL(window.location.href);
+    if (url.searchParams.has('originalUrl')) {
+        const originalUrl = url.searchParams.get('originalUrl');
+        requestedUrl = originalUrl;
+    }
+
     console.log(`Requested URL: '${requestedUrl}' maxAcceptableDistance: '${maxAcceptableDistance}'`);
 
     /**

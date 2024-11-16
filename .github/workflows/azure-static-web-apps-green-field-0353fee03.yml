@@ -123,6 +123,15 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Upload API
+        uses: actions/upload-artifact@v4
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: ${{ format('api-{0}', matrix.os) }}
+          path: api
+          if-no-files-found: error
+          retention-days: 1
+
       #  Enable the following to do something with snapshot result(s)
       # - name: Check Verify Results
       #   if: always()
@@ -166,6 +175,12 @@ jobs:
           name: ${{ format('tools-{0}', 'ubuntu-latest') }}
           path: tools
 
+      - name: Download api artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ format('api-{0}', 'ubuntu-latest') }}
+          path: api
+
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -195,10 +210,10 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           app_location: "dist"
-          api_location: ""
+          api_location: "api"
           output_location: ""
           skip_app_build: true
-          skip_api_build: true
+          skip_api_build: false
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e

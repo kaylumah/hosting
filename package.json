@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start": "swa start --app-location dist"
+        "start": "swa start --app-location dist --api-location api"
     },
     "devDependencies": {
         "@azure/static-web-apps-cli": "^2.0.1"

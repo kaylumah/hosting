@@ -1,12 +1,24 @@
 {
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  "navigationFallback": {
+    "rewrite": "/api/fallback",
+    "exclude": [
+      "assets/*",
+      "*.{png,jpg,gif,svg,ico}"
+    ]
+  },
+  "platform": {
+    "apiRuntime": "dotnet-isolated:8.0"
+  },
   "routes": [
-    {% for redirect in site.data.redirects %}
     {
-      "route": "{{ redirect.Route }}",
-      "redirect": "{{ redirect.Redirect }}",
-      "statusCode": {{ redirect.StatusCode }}
+      "route": "/404.html",
+      "statusCode": 404
     },
-    {% endfor %}
+    {
+      "route": "/favicon.ico",
+      "redirect": "/assets/images/favicon.ico"
+    },
     {% for x in site.pages | array.sort "uri" | array.reverse %}
     {% if x.uri != "index.html" and x.uri != "404.html" %}
     {
@@ -42,7 +54,7 @@
   },
   "responseOverrides": {
     "404": {
-      "rewrite": "/404.html"
-    }
+       "rewrite": "/404.html"
+     }
   }
 }
