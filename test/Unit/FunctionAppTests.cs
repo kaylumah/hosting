@@ -12,6 +12,7 @@ namespace Test.Unit
     {
         readonly ILoggerFactory _LoggerFactory;
         readonly UrlFunctions _UrlFunctions;
+        readonly string _BaseUrl = "http://localhost:7071";
 
         public FunctionAppTests()
         {
@@ -35,7 +36,7 @@ namespace Test.Unit
         {
             DefaultHttpContext httpContext = new DefaultHttpContext();
             HttpRequest request = httpContext.Request;
-            request.Headers["x-ms-original-url"] = "/blog2";
+            request.Headers["x-ms-original-url"] = $"{_BaseUrl}/blog2";
 
             Microsoft.AspNetCore.Mvc.IActionResult response = _UrlFunctions.Run(request);
             Microsoft.AspNetCore.Mvc.RedirectResult redirectResult = Assert.IsType<Microsoft.AspNetCore.Mvc.RedirectResult>(response);
@@ -47,7 +48,7 @@ namespace Test.Unit
         {
             DefaultHttpContext httpContext = new DefaultHttpContext();
             HttpRequest request = httpContext.Request;
-            request.Headers["x-ms-original-url"] = "/blog2.html";
+            request.Headers["x-ms-original-url"] = $"{_BaseUrl}/blog2.html";
 
             Microsoft.AspNetCore.Mvc.IActionResult response = _UrlFunctions.Run(request);
             Microsoft.AspNetCore.Mvc.RedirectResult redirectResult = Assert.IsType<Microsoft.AspNetCore.Mvc.RedirectResult>(response);
@@ -59,7 +60,7 @@ namespace Test.Unit
         {
             DefaultHttpContext httpContext = new DefaultHttpContext();
             HttpRequest request = httpContext.Request;
-            request.Headers["x-ms-original-url"] = "/2023/04/14/csharp-client-for-openapi-revistted.html";
+            request.Headers["x-ms-original-url"] = $"{_BaseUrl}/2023/04/14/csharp-client-for-openapi-revistted.html";
 
             Microsoft.AspNetCore.Mvc.IActionResult response = _UrlFunctions.Run(request);
             Microsoft.AspNetCore.Mvc.RedirectResult redirectResult = Assert.IsType<Microsoft.AspNetCore.Mvc.RedirectResult>(response);
@@ -71,7 +72,7 @@ namespace Test.Unit
         {
             DefaultHttpContext httpContext = new DefaultHttpContext();
             HttpRequest request = httpContext.Request;
-            request.Headers["x-ms-original-url"] = "/2024/08/06/fix-vscode-markdown-preview.html";
+            request.Headers["x-ms-original-url"] = $"{_BaseUrl}/2024/08/06/fix-vscode-markdown-preview.html";
 
             Microsoft.AspNetCore.Mvc.IActionResult response = _UrlFunctions.Run(request);
             Microsoft.AspNetCore.Mvc.RedirectResult redirectResult = Assert.IsType<Microsoft.AspNetCore.Mvc.RedirectResult>(response);
