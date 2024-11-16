@@ -12,7 +12,7 @@
   },
   "routes": [
     {
-      "route": "/404",
+      "route": "/404.html",
       "statusCode": 404
     },
     {

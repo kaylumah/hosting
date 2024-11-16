@@ -22,12 +22,19 @@ namespace Kaylumah.Api
         {
             _Logger = loggerFactory.CreateLogger<UrlFunctions>();
             _RedirectOptions = new List<RedirectOption>();
-            RedirectOption option = new RedirectOption(
-                @"\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$",
+
+            RedirectOption fixTypo = new RedirectOption("/2023/04/14/csharp-client-for-openapi-revistted.html", "/2023/04/14/csharp-client-for-openapi-revisited.html");
+            fixTypo.Enabled = true;
+            fixTypo.Permanent = true;
+            _RedirectOptions.Add(fixTypo);
+
+            RedirectOption rewritePreType = new RedirectOption(
+                @"^\/(?<year>\d{4})\/(?<month>\d{2})\/(?<day>\d{2})\/(?<rest>[\w-]*?)(?<ext>\.\w+)?$",
                 "/articles/${year}/${month}/${day}/${rest}.html");
-            option.Enabled = true;
-            option.Permanent = true;
-            _RedirectOptions.Add(option);
+            rewritePreType.Enabled = false;
+            rewritePreType.Permanent = true;
+            _RedirectOptions.Add(rewritePreType);
+
         }
 
         [Function("fallback")]
