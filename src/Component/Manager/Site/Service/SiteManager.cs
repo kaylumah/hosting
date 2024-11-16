@@ -387,12 +387,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return buildMetadata;
         }
 
+#pragma warning disable IDE0051
         void EnrichSite(SiteMetaData site)
         {
             EnrichSiteWithYears(site);
             EnrichSiteWithSeries(site);
             EnrichSiteWithCollections(site);
         }
+#pragma warning restore IDE0051
 
         void EnrichSiteWithCollections(SiteMetaData site)
         {
