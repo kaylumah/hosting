@@ -2,6 +2,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <!-- Needed to fix https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1901-nu1904 inside Verify.ImageHash -->
+    <PackageReference Include="SixLabors.ImageSharp" VersionOverride="3.1.5" />
     <PackageReference Include="Verify.ImageHash" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
