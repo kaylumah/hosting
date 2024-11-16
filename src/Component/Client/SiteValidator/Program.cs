@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -121,6 +122,7 @@ namespace Kaylumah.Ssg.Client.SiteValidator
         public PageLinkResult(string fileName, HtmlNode node)
         {
             _FileName = fileName;
+            Debug.Assert(_FileName != null);
             _Node = node;
             Process();
         }
