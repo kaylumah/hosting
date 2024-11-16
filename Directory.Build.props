@@ -16,15 +16,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <!-- IDE0078: Use pattern matching (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0078) -->
     <!-- IDE0100: Remove redundant equality (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0100) -->
     <!-- IDE0290: Use primary constructor (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0290) -->
     <!-- IDE0028: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0028) -->
-    <!-- IDE0305: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0305) -->
-    <!-- IDE0301: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0301) -->
     <!-- IDE0300: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0300) -->
+    <!-- IDE0301: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0301) -->
+    <!-- IDE0305: Collection initialization can be simplified (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/ide0305) -->
     <!-- WarningsNotAsErrors -->
-    <NoWarn>$(NoWarn);IDE0290;IDE0028;IDE0100;IDE0305;IDE0301;IDE0078;IDE0300</NoWarn>
+    <NoWarn>$(NoWarn);IDE0290;IDE0100;IDE0028;IDE0300;IDE0301;IDE0305</NoWarn>
     <!--     CSC : error EnableGenerateDocumentationFile: Set MSBuild property 'GenerateDocumentationFile' to 'true' in project file to enable IDE0005 (Remove unnecessary usings/imports) on build (https://github.com/dotnet/roslyn/issues/41640) -->
     <NoWarn>$(NoWarn);IDE0005</NoWarn>
   </PropertyGroup>
