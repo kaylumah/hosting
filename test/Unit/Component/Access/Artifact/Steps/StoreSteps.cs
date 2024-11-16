@@ -22,7 +22,7 @@ namespace Test.Unit.Component.Access.Artifact.Steps
         [When]
         public async Task WhenTheArtifactAccessIsCalled()
         {
-            async Task TestScenario(IArtifactAccess artifactAccess)
+            static async Task TestScenario(IArtifactAccess artifactAccess)
             {
                 await artifactAccess.Store(new StoreArtifactsRequest(new FileSystemOutputLocation(string.Empty, false), Array.Empty<Kaylumah.Ssg.Access.Artifact.Interface.Artifact>())).ConfigureAwait(false);
             }

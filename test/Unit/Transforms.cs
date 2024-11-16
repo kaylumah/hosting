@@ -70,11 +70,13 @@ namespace Test.Unit
             return defaultMetaDatas;
         }
 
+#pragma warning disable IDE0051
         [StepArgumentTransformation]
         static FileFilterCriteria ToFileFilterCriteria(Table table)
         {
             FileFilterCriteria criteria = table.CreateInstance<FileFilterCriteria>();
             return criteria;
         }
+#pragma warning restore IDE0051
     }
 }
