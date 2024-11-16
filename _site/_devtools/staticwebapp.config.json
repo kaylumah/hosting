@@ -19,13 +19,6 @@
       "route": "/favicon.ico",
       "redirect": "/assets/images/favicon.ico"
     },
-    {% for redirect in site.data.redirects %}
-    {
-      "route": "{{ redirect.Route }}",
-      "redirect": "{{ redirect.Redirect }}",
-      "statusCode": {{ redirect.StatusCode }}
-    },
-    {% endfor %}
     {% for x in site.pages | array.sort "uri" | array.reverse %}
     {% if x.uri != "index.html" and x.uri != "404.html" %}
     {
