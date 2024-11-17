@@ -19,6 +19,9 @@ updates:
     Microsoft.Extensions:
       patterns:
         - "Microsoft.Extensions.*"
+    AzureFunction:
+      patterns:
+        - "Microsoft.Azure.Functions.*"
     System.IO.Abstractions:
       patterns:
         - "System.IO.Abstractions"
