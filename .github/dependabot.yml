@@ -16,9 +16,16 @@ updates:
   assignees:
     - "kaylumah"
   groups:
-    Microsoft.Extensions:
+    Microsoft:
       patterns:
         - "Microsoft.Extensions.*"
+        - "System.*"
+      exclude-patterns:
+        - "System.IO.Abstractions"
+        - "System.IO.Abstractions.*"
+    AzureFunction:
+      patterns:
+        - "Microsoft.Azure.Functions.*"
     System.IO.Abstractions:
       patterns:
         - "System.IO.Abstractions"
