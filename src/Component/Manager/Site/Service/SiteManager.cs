@@ -95,7 +95,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 siteData,
                 buildData,
                 pages);
-            // EnrichSite(siteMetadata);
+            EnrichSite(siteMetadata);
 
             Artifact[] renderedArtifacts = await GetRenderedArtifacts(siteMetadata);
             Artifact[] generatedArtifacts = GetGeneratedArtifacts(siteMetadata);
@@ -396,7 +396,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         void EnrichSiteWithCollections(SiteMetaData site)
         {
-
+            Debug.Assert(site != null);
+            /*
             List<PageMetaData> files = site.GetPages().ToList();
 
             List<string> collections = files
@@ -446,10 +447,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .ToArray();
                 // site.Collections.Add(collection, collectionPages);
             }
+            */
         }
 
         void EnrichSiteWithYears(SiteMetaData site)
         {
+            Debug.Assert(site != null);
+            /*
             List<PageMetaData> pages = site.GetPages().ToList();
             IEnumerable<int> years = pages
                 .IsArticle()
@@ -460,10 +464,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 PageMetaData[] yearFiles = pages.Where(x => x.Published.Year.Equals(year)).ToArray();
                 // site.Years.Add(year, yearFiles);
             }
+            */
         }
 
         void EnrichSiteWithSeries(SiteMetaData site)
         {
+            Debug.Assert(site != null);
+            /*
             List<Article> pages = site.GetArticles().ToList();
 
             IEnumerable<string> series = pages
@@ -479,6 +486,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     .ToArray();
                 // site.Series.Add(serie, seriesFiles);
             }
+            */
         }
     }
 }

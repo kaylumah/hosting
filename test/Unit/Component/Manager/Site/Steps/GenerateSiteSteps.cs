@@ -55,7 +55,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
         [When("the site is generated:")]
         public async Task WhenTheSiteIsGenerated()
         {
-            async Task Scenario(ISiteManager siteManager)
+            static async Task Scenario(ISiteManager siteManager)
             {
                 GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
                 await siteManager.GenerateSite(generateSiteRequest);

@@ -427,6 +427,7 @@ namespace Test.Unit.FormerXunit
             return stringBuilder.ToString();
         }
 
+#pragma warning disable IDE0051
         string CreateEmptyXml()
         {
             XmlWriterSettings settings = new XmlWriterSettings
@@ -448,7 +449,7 @@ namespace Test.Unit.FormerXunit
             StreamReader streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
         }
-
+#pragma warning restore IDE0051
         static MockFileData EmptyFile()
         {
             return ContentFile(string.Empty);
