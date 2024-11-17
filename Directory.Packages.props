@@ -30,7 +30,7 @@
     <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
     <PackageVersion Include="System.IO.Abstractions" Version="21.0.29"/>
     <PackageVersion Include="System.ServiceModel.Syndication" Version="8.0.0"/>
-    <PackageVersion Include="System.Text.Json" Version="8.0.5"/>
+    <PackageVersion Include="System.Text.Json" Version="9.0.0"/>
     <PackageVersion Include="Verify.ImageHash" Version="2.1.1"/>
     <PackageVersion Include="YamlDotNet" Version="16.2.0"/>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
