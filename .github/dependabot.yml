@@ -38,10 +38,10 @@ updates:
   open-pull-requests-limit: 25
 
 - package-ecosystem: "dotnet-sdk"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "wednesday"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+    day: "wednesday"
 
 - package-ecosystem: "npm"
   directory: "/"
