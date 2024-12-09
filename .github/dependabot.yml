@@ -7,70 +7,60 @@
 version: 2
 updates:
 
-- package-ecosystem: "nuget"
-  directory: "/"
-  schedule:
-      interval: "daily"
-      time: "09:00"
-      timezone: "Europe/Amsterdam"
-  assignees:
-    - "kaylumah"
-  groups:
-    Microsoft:
-      patterns:
-        - "Microsoft.Extensions.*"
-        - "System.*"
-      exclude-patterns:
-        - "System.IO.Abstractions"
-        - "System.IO.Abstractions.*"
-    AzureFunction:
-      patterns:
-        - "Microsoft.Azure.Functions.*"
-    System.IO.Abstractions:
-      patterns:
-        - "System.IO.Abstractions"
-        - "System.IO.Abstractions.*"
-    Xunit:
-      patterns:
-        - "xunit.runner.visualstudio"
-        - "xunit"
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: daily
+      time: '09:00'
+      timezone: Europe/Amsterdam
+    assignees:
+      - kaylumah
+    groups:
+      Microsoft:
+        patterns:
+          - Microsoft.Extensions.*
+          - System.*
+        exclude-patterns:
+          - System.IO.Abstractions
+          - System.IO.Abstractions.*
+      AzureFunction:
+        patterns:
+          - Microsoft.Azure.Functions.*
+      System.IO.Abstractions:
+        patterns:
+          - System.IO.Abstractions
+          - System.IO.Abstractions.*
+      Xunit:
+        patterns:
+          - xunit.runner.visualstudio
+          - xunit
+    open-pull-requests-limit: 25
 
-  open-pull-requests-limit: 25
+  - package-ecosystem: dotnet-sdk
+    directory: /
+    schedule:
+      interval: weekly
+      day: wednesday
 
-- package-ecosystem: "dotnet-sdk"
-  directory: "/"
-  schedule:
-    interval: "weekly"
-    day: "wednesday"
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      time: '09:00'
+      timezone: Europe/Amsterdam
+    assignees:
+      - kaylumah
+    groups:
+      tailwind:
+        patterns:
+          - '@tailwindcss/*'
+          - tailwindcss
 
-- package-ecosystem: "npm"
-  directory: "/"
-  schedule:
-      interval: "weekly"
-      time: "09:00"
-      timezone: "Europe/Amsterdam"
-  assignees:
-    - "kaylumah"
-  groups:
-    tailwind:
-      patterns:
-        - "@tailwindcss/*"
-        - "tailwindcss" 
-  
-
-- package-ecosystem: "github-actions"
-  directory: "/"
-  assignees:
-    - "kaylumah"
-  schedule:
-      interval: "weekly"
-      time: "09:00"
-      timezone: "Europe/Amsterdam"
-
-#  ignore:
-#    - dependency-name: "Moq"
-# https://docs.github.com/en/enterprise-server@3.9/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates
-# - package-ecosystem: "" # See documentation for possible values
-#   directory: "/" # Location of package manifests
-#   schedule:
-#     interval: "weekly"
+  - package-ecosystem: github-actions
+    directory: /
+    assignees:
+      - kaylumah
+    schedule:
+      interval: weekly
+      time: '09:00'
+      timezone: Europe/Amsterdam
