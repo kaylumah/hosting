@@ -128,8 +128,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          # path: api
-          path: api/bin/Release/net.8.0/
+          path: api
+          # path: api/bin/Release/net.8.0/
           if-no-files-found: error
           retention-days: 1
 
