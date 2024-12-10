@@ -128,7 +128,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api
+          # path: api
+          path: api/bin/Release/net.8.0
           if-no-files-found: error
           retention-days: 1
 
@@ -168,10 +169,10 @@ jobs:
       #   uses: actions/setup-dotnet@v4
       #   with:
       #     global-json-file: global.json
-      - name: Run npm steps
-        shell: pwsh
-        run: |
-          rm global.json
+      # - name: Run npm steps
+      #   shell: pwsh
+      #   run: |
+      #     rm global.json
 
       - name: Download site artifact
         uses: actions/download-artifact@v4
