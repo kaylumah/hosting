@@ -139,7 +139,7 @@ jobs:
         with:
           name: ${{ format('api-{0}', matrix.os) }}
           # path: api
-          path: api/bin/$BuildConfiguration/$TargetFramework/
+          path: api/bin/Release/net8.0
           if-no-files-found: error
           retention-days: 1
 
