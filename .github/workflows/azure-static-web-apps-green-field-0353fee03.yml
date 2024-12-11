@@ -131,7 +131,7 @@ jobs:
       - name: Print site
         shell: pwsh
         run: |
-          tree api/bin/$BuildConfiguration/$TargetFramework/
+          tree api/bin/Release/net8.0
 
       - name: Upload API
         uses: actions/upload-artifact@v4
