@@ -123,16 +123,6 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Print site
-        shell: pwsh
-        run: |
-          tree api
-
-      - name: Print site
-        shell: pwsh
-        run: |
-          tree api/bin/Release/net8.0
-
       - name: Upload API
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
