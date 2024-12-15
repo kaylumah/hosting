@@ -164,16 +164,6 @@ jobs:
       # Needed until API project is published in previous step (also consider scripts)
       - uses: actions/checkout@v4
 
-      # Ensure that corresponding dotnet version is installed
-      # - name: Setup .NET Core
-      #   uses: actions/setup-dotnet@v4
-      #   with:
-      #     global-json-file: global.json
-      # - name: Run npm steps
-      #   shell: pwsh
-      #   run: |
-      #     rm global.json
-
       - name: Download site artifact
         uses: actions/download-artifact@v4
         with:
