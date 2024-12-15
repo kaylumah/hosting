@@ -124,6 +124,7 @@ jobs:
           retention-days: 1
 
       - name: Run SiteGenerator
+        if: matrix.os == 'ubuntu-latest'
         shell: pwsh
         run: |
           dotnet publish api/Api.csproj -c Release -o api-output
