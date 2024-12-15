@@ -123,13 +123,20 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Run SiteGenerator
+        shell: pwsh
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          dotnet publish api/Api.csproj --configuration Release --output "api-artifact"
+
       - name: Upload API
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
           # path: api
-          path: api/bin/Release/net8.0
+          # path: api/bin/Release/net8.0
+          path: "api-artifact"
           if-no-files-found: error
           retention-days: 1
 
