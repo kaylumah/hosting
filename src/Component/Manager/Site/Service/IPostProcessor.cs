@@ -107,7 +107,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         protected override string GetFormattedContent(string content)
         {
-            System.Text.Json.JsonDocument document = System.Text.Json.JsonDocument.Parse(content);
+            System.Text.Json.JsonDocumentOptions options = new System.Text.Json.JsonDocumentOptions();
+            options.CommentHandling = System.Text.Json.JsonCommentHandling.Skip;
+
+            System.Text.Json.JsonDocument document = System.Text.Json.JsonDocument.Parse(content, options);
 #pragma warning disable CA1869
             System.Text.Json.JsonSerializerOptions serializerOptions = new System.Text.Json.JsonSerializerOptions();
             serializerOptions.WriteIndented = true;
