@@ -181,11 +181,11 @@ jobs:
           name: ${{ format('tools-{0}', 'ubuntu-latest') }}
           path: tools
 
-      - name: Download api artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ format('api-{0}', 'ubuntu-latest') }}
-          path: api
+      # - name: Download api artifact
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: ${{ format('api-{0}', 'ubuntu-latest') }}
+      #     path: api
 
       - name: Use Node.js v20
         uses: actions/setup-node@v4
