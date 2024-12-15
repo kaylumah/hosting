@@ -127,7 +127,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         shell: pwsh
         run: |
-          dotnet publish api/Api.csproj -c Release --runtime linux-x64 -o api-output
+          dotnet publish api/Api.csproj -c Release --runtime linux-x64 --self-contained true -o api-output
 
       - name: Debug Publish Output
         if: matrix.os == 'ubuntu-latest'
