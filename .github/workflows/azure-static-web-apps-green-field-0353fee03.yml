@@ -123,13 +123,12 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-        # dotnet publish api/Api.csproj --configuration Release --output "api-artifact"
       - name: Upload API
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api/bin/Release/net8.0
+          path: api
           if-no-files-found: error
           retention-days: 1
 
@@ -219,7 +218,7 @@ jobs:
           api_location: "api"
           output_location: ""
           skip_app_build: true
-          skip_api_build: true
+          skip_api_build: false
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
