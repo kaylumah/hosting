@@ -4,7 +4,7 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
     <OutputType>Exe</OutputType>
     <NoWarn>$(NoWarn);CS3001;CS3002;CA1848</NoWarn>
-    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <!-- <RuntimeIdentifier>linux-x64</RuntimeIdentifier> -->
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
