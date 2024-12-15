@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+  /*
   "navigationFallback": {
     "rewrite": "/api/fallback",
     "exclude": [
@@ -10,6 +11,7 @@
   "platform": {
     "apiRuntime": "dotnet-isolated:8.0"
   },
+  */
   "routes": [
     {
       "route": "/404.html",
