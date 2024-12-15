@@ -130,6 +130,7 @@ jobs:
           dotnet publish api/Api.csproj -c Release --runtime linux-x64 -o api-output
 
       - name: Debug Publish Output
+        if: matrix.os == 'ubuntu-latest'
         working-directory: ./api-output
         run: |
           ls -al
