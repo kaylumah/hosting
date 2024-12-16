@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "navigationFallback": {
-    "rewrite": "/api/fallback",
+    "rewrite": "/api/httpTrigger1",
     "exclude": [
       "assets/*",
       "*.{png,jpg,gif,svg,ico}"
     ]
   },
   "platform": {
-    "apiRuntime": "dotnet-isolated:8.0"
+    "apiRuntime": "node:18"
   },
   "routes": [
     {

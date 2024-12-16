@@ -5,7 +5,9 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
 
     const name = request.query.get('name') || await request.text() || 'world';
 
-    return { body: `Hello, ${name}!` };
+    // https://stackoverflow.com/questions/42931965/azure-functions-redirect-header
+    // return { body: `Hello, ${name}!` };
+    return { status: 302, headers: { Location: 'https://www.google.com' } };
 };
 
 app.http('httpTrigger1', {
