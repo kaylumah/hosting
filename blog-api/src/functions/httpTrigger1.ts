@@ -24,7 +24,7 @@ const redirectOptions: RedirectOption[] = [
 
 export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     // Extract original URL from header
-    const originalUrl = request.headers["x-ms-original-url"];
+    const originalUrl = request.headers.get("x-ms-original-url");
     if (!originalUrl) {
         console.log("No x-ms-original-url header found. Redirecting to 404.");
         return {
