@@ -24,6 +24,7 @@ const redirectOptions: RedirectOption[] = [
 
 export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     const originalUrl = request.headers.get("x-ms-original-url");
+    
     if (!originalUrl) {
         console.log("No x-ms-original-url header found. Redirecting to 404.");
         return {
@@ -39,7 +40,13 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
     // Find matching redirect option
     const matchedOption = redirectOptions.find((option) => option.enabled && new RegExp(option.pattern).test(path));
 
-    if (matchedOption) {
+    if (!matchedOption) {
+        console.log(`No redirect rule matched. Redirecting to 404 with originalUrl=${path}`);
+        return {
+            status: 302,
+            headers: { Location: `/404.html?originalUrl=${encodeURIComponent(path)}` },
+        };
+    } else {
         const regex = new RegExp(matchedOption.pattern);
         const match = regex.exec(path);
         let newPath = matchedOption.rewrite;
@@ -57,12 +64,6 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
         return {
             status: matchedOption.permanent ? 301 : 302,
             headers: { Location: newPath },
-        };
-    } else {
-        console.log(`No redirect rule matched. Redirecting to 404 with originalUrl=${path}`);
-        return {
-            status: 302,
-            headers: { Location: `/404.html?originalUrl=${encodeURIComponent(path)}` },
         };
     }
 };
