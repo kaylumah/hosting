@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
   "navigationFallback": {
-    "rewrite": "/api/httpTrigger1",
+    "rewrite": "/api/fallback",
     "exclude": [
       "assets/*",
       "*.{png,jpg,gif,svg,ico}"

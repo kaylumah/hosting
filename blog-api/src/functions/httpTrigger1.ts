@@ -70,7 +70,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
     }
 };
 
-app.http('httpTrigger1', {
+app.http('fallback', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: httpTrigger1
