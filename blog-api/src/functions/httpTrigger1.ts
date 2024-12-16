@@ -23,7 +23,6 @@ const redirectOptions: RedirectOption[] = [
 ];
 
 export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    // Extract original URL from header
     const originalUrl = request.headers.get("x-ms-original-url");
     if (!originalUrl) {
         console.log("No x-ms-original-url header found. Redirecting to 404.");
@@ -33,10 +32,9 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
         };
     }
 
-    console.log(`Original Url: ${originalUrl}`);
     const url = new URL(originalUrl);
     const path = url.pathname;
-    console.log(`Path: ${path}`);
+    console.log("Original Url", originalUrl, path);
 
     // Find matching redirect option
     const matchedOption = redirectOptions.find((option) => option.enabled && new RegExp(option.pattern).test(path));
