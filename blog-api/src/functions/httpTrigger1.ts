@@ -3,6 +3,15 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
+    const originalUrl = request.headers.get("x-ms-original-url");
+
+    if (originalUrl) {
+        context.log(`Original URL: ${originalUrl}`);
+    }
+    else {
+        console.log("failed", request);
+    }
+
     const name = request.query.get('name') || await request.text() || 'world';
 
     // https://stackoverflow.com/questions/42931965/azure-functions-redirect-header
