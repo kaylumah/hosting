@@ -48,15 +48,17 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
         };
     } else {
         const regex = new RegExp(matchedOption.pattern);
+        
         const match = regex.exec(path);
-        let newPath = matchedOption.rewrite;
         console.log("match", match);
 
+        let newPath = matchedOption.rewrite;
         if (match && match.groups) {
             // Replace named capture groups dynamically
             newPath = Object.keys(match.groups).reduce((result, groupName) => {
-                console.log(`${result} ${groupName}`)
-                return result.replace(`\${${groupName}}`, match.groups![groupName]);
+                let newValue = match.groups![groupName];
+                console.log(`${result} ${groupName} ${newValue}`);
+                return result.replace(`\${${groupName}}`, newValue);
             }, matchedOption.rewrite);
         }
 
