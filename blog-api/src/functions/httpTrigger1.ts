@@ -45,7 +45,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
         const regex = new RegExp(matchedOption.pattern);
         const match = regex.exec(path);
         let newPath = matchedOption.rewrite;
-        console.log("match", match, match.groups)
+        console.log("match", match)
 
         console.log(`Redirecting to: ${newPath}`);
         return {
