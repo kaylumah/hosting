@@ -50,6 +50,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
         if (match && match.groups) {
             // Replace named capture groups dynamically
             newPath = Object.keys(match.groups).reduce((result, groupName) => {
+                console.log(`${result} ${groupName}`)
                 return result.replace(`\${${groupName}}`, match.groups![groupName]);
             }, matchedOption.rewrite);
         }
