@@ -128,7 +128,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api
+          path: blog-api
           if-no-files-found: error
           retention-days: 1
 
