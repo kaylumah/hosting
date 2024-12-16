@@ -15,7 +15,7 @@ const redirectOptions: RedirectOption[] = [
         permanent: true,
     },
     {
-        pattern: "^\\/(?<year>\\d{4})\\/(?<month>\\d{2})\\/(?<day>\\d{2})\\/(?<rest>[\\w-]*?)(?<ext>\\.\\w+)?$",
+        pattern: "^/(?<year>\d{4})/(?<month>\d{2})/(?<day>\d{2})/(?<rest>[\w-]*?)(?<ext>\.\w+)?$",
         rewrite: "/articles/${year}/${month}/${day}/${rest}.html",
         enabled: true,
         permanent: true,
