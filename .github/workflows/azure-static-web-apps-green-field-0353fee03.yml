@@ -123,12 +123,20 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Run build Azure Function
+        shell: pwsh
+        if: matrix.os == 'ubuntu-latest'
+        working-directory: "blog-api"
+        run: |
+          npm i
+          npm run build
+
       - name: Upload API
         uses: actions/upload-artifact@v4
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api
+          path: blog-api/dist
           if-no-files-found: error
           retention-days: 1
 
@@ -213,7 +221,7 @@ jobs:
           api_location: "api"
           output_location: ""
           skip_app_build: true
-          skip_api_build: false
+          skip_api_build: true
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
