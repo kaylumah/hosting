@@ -36,6 +36,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
     console.log(`Original Url: ${originalUrl}`);
     const url = new URL(originalUrl);
     const path = url.pathname;
+    console.log(`Path: ${path}`);
 
     // Find matching redirect option
     const matchedOption = redirectOptions.find((option) => option.enabled && new RegExp(option.pattern).test(path));
