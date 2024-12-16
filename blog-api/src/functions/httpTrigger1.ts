@@ -41,6 +41,18 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
     const matchedOption = redirectOptions.find((option) => option.enabled && new RegExp(option.pattern).test(path));
 
     if (matchedOption) {
+        const regex = new RegExp(matchedOption.pattern);
+        const match = regex.exec(path);
+        let newPath = matchedOption.rewrite;
+        console.log("match", match, match.groups)
+
+        console.log(`Redirecting to: ${newPath}`);
+        return {
+            status: matchedOption.permanent ? 301 : 302,
+            headers: { Location: newPath },
+        };
+
+        /*
         const newPath = path.replace(new RegExp(matchedOption.pattern), matchedOption.rewrite);
         console.log(`Redirecting to: ${newPath}`);
 
@@ -48,6 +60,7 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
             status: matchedOption.permanent ? 301 : 302,
             headers: { Location: newPath },
         };
+        */
     } else {
         console.log(`No redirect rule matched. Redirecting to 404 with originalUrl=${path}`);
         return {
