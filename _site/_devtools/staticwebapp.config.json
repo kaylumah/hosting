@@ -9,7 +9,7 @@
     ]
   },
   "platform": {
-    "apiRuntime": "dotnet-isolated:8.0"
+    "apiRuntime": "node:18"
   },
   */
   "routes": [
