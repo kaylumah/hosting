@@ -23,19 +23,17 @@ const redirectOptions: RedirectOption[] = [
 ];
 
 export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const logger = context.log;
-
     // Extract original URL from header
     const originalUrl = request.headers["x-ms-original-url"];
     if (!originalUrl) {
-        logger("No x-ms-original-url header found. Redirecting to 404.");
+        console.log("No x-ms-original-url header found. Redirecting to 404.");
         return {
             status: 302,
             headers: { Location: "/404.html" },
         };
     }
 
-    logger(`Original Url: ${originalUrl}`);
+    console.log(`Original Url: ${originalUrl}`);
     const url = new URL(originalUrl);
     const path = url.pathname;
 
@@ -44,14 +42,14 @@ export async function httpTrigger1(request: HttpRequest, context: InvocationCont
 
     if (matchedOption) {
         const newPath = path.replace(new RegExp(matchedOption.pattern), matchedOption.rewrite);
-        logger(`Redirecting to: ${newPath}`);
+        console.log(`Redirecting to: ${newPath}`);
 
         return {
             status: matchedOption.permanent ? 301 : 302,
             headers: { Location: newPath },
         };
     } else {
-        logger(`No redirect rule matched. Redirecting to 404 with originalUrl=${path}`);
+        console.log(`No redirect rule matched. Redirecting to 404 with originalUrl=${path}`);
         return {
             status: 302,
             headers: { Location: `/404.html?originalUrl=${encodeURIComponent(path)}` },
