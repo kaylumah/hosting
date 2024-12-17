@@ -128,7 +128,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('api-{0}', matrix.os) }}
-          path: api
+          path: blog-api
           if-no-files-found: error
           retention-days: 1
 
@@ -214,6 +214,11 @@ jobs:
           output_location: ""
           skip_app_build: true
           skip_api_build: false
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
