@@ -233,6 +233,14 @@ jobs:
             & ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
             dotnet test --no-build --configuration $BuildConfiguration test/E2e
 
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: "snapshots"
+          path: test/E2e/Snapshots
+          if-no-files-found: ignore
+          retention-days: 1
+
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
