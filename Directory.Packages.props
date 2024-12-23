@@ -37,8 +37,10 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.2"/>
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2"/>
     <PackageVersion Include="xunit" Version="2.9.2"/>
+    <PackageVersion Include="xunit.v3" Version="1.0.0"/>
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.0"/>
-    <PackageVersion Include="Verify.Xunit" Version="28.6.1"/>
+    <PackageVersion Include="Verify.Xunit" Version="28.7.0"/>
+    <PackageVersion Include="Verify.XunitV3" Version="28.7.0"/>
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="21.1.7"/>
     <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
     <PackageVersion Include="Reqnroll.xUnit" Version="2.2.1"/>
