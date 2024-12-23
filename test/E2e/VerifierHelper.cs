@@ -72,7 +72,7 @@ namespace Test.E2e
             VerifySettings settings = new VerifySettings();
             if (methodName != null)
             {
-                settings.UseMethodName(methodName);
+                // settings.UseMethodName(methodName);
             }
 
             Regex buildNumberRegex = new Regex($"(?<before>(content=\"[0-9.]*|>))(?<val>{buildNumber})(?<after>(\"|<))");
