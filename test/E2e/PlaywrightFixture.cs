@@ -16,22 +16,6 @@ namespace Test.E2e
         protected IPlaywright PlaywrightInstance { get; set; }
         protected IBrowser Browser { get; set; }
 
-        public async Task DisposeAsync()
-        {
-            if (Browser != null)
-            {
-                await Browser.DisposeAsync();
-            }
-
-            PlaywrightInstance.Dispose();
-        }
-
-        public async Task InitializeAsync()
-        {
-            PlaywrightInstance = await Playwright.CreateAsync();
-            await GetBrowser();
-        }
-
         public async Task<IBrowser> GetBrowser()
         {
             if (Browser == null)
@@ -68,6 +52,22 @@ namespace Test.E2e
         {
             string result = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
             return result;
+        }
+
+        async ValueTask IAsyncLifetime.InitializeAsync()
+        {
+            PlaywrightInstance = await Playwright.CreateAsync();
+            await GetBrowser();
+        }
+
+        async ValueTask IAsyncDisposable.DisposeAsync()
+        {
+            if (Browser != null)
+            {
+                await Browser.DisposeAsync();
+            }
+
+            PlaywrightInstance.Dispose();
         }
     }
 
