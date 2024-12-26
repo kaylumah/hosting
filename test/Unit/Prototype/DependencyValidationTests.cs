@@ -212,6 +212,10 @@ namespace Test.Unit.Prototype
             {
                 return false;
             }
+            
+            // (re)consider
+            // var regexList = allowedNamespaces.Select(ns => new Regex(ns, RegexOptions.Compiled)).ToArray();
+            // bool allowed = allowedNamespaces.Any(allowedNamespace => Regex.IsMatch(type.Namespace, allowedNamespace));
 
             bool allowed = allowedNamespaces.Any(allowedNamespace => type.Namespace.StartsWith(allowedNamespace, StringComparison.Ordinal));
             return allowed;
@@ -291,4 +295,162 @@ namespace Test.Unit.Prototype
             configurationBuilder.AddInMemoryCollection(data);
         }
     }
+    
+    /*
+     
+     Following section is for future blogpost
+     
+     * [TestClass]
+       public class ServiceDependencyValidatorTests
+       {
+           static ServiceDependencyValidatorOptions CreateDefaultOptions()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = new ServiceDependencyValidatorOptions(Array.Empty<string>());
+
+               serviceProviderOptions.ValidateScopes = true;
+               serviceProviderOptions.ValidateOnBuild = true;
+               serviceProviderOptions.ValidateCanConstruct = true;
+
+               return serviceProviderOptions;
+           }
+
+           static ServiceDependencyValidator Create(ServiceDependencyValidatorOptions options)
+           {
+               using ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+               ILogger<ServiceDependencyValidator> logger = loggerFactory.CreateLogger<ServiceDependencyValidator>();
+               ServiceDependencyValidator validator = new ServiceDependencyValidator(options, logger);
+               return validator;
+           }
+
+           [TestMethod]
+           public void Test_Fail_On_NullServiceCollection()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               // force it to be null
+               IServiceCollection services = null!;
+               Assert.ThrowsException<ArgumentNullException>(() => validator.Validate(services));
+           }
+
+           [TestMethod]
+           public void Test_Fail_On_EmptyServiceCollection()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               Assert.ThrowsException<ArgumentOutOfRangeException>(() => validator.Validate(services));
+           }
+
+           [TestMethod]
+           public void Test_Fail_On_NoValidation()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = new ServiceDependencyValidatorOptions(Array.Empty<string>());
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddSingleton<IMyService, MyService>();
+               Assert.ThrowsException<InvalidOperationException>(() => validator.Validate(services));
+           }
+
+           [TestMethod]
+           public void Test_Fail_On_Missing_Dependency()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddSingleton<IMyService, MyService>();
+               Assert.ThrowsException<AggregateException>(() => validator.Validate(services));
+           }
+
+           [TestMethod]
+           public void Test_ConstructorWithoutValidation_Succeeds()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               serviceProviderOptions.ValidateCanConstruct = false;
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddSingleton<IMyService, MyService>();
+               services.AddSingleton<IDependency, Dependency>();
+               validator.Validate(services);
+           }
+
+           [TestMethod]
+           public void Test_Constructor_Fails()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddSingleton<IMyService, MyService>();
+               services.AddSingleton<IDependency, Dependency>();
+               Assert.ThrowsException<AggregateException>(() => validator.Validate(services));
+           }
+
+           [TestMethod]
+           public void Test_Singleton()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddSingleton<IDependency, Dependency>();
+               validator.Validate(services);
+           }
+
+           [TestMethod]
+           public void Test_Scoped()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddScoped<IDependency, Dependency>();
+               validator.Validate(services);
+           }
+
+           [TestMethod]
+           public void Test_Transient()
+           {
+               ServiceDependencyValidatorOptions serviceProviderOptions = CreateDefaultOptions();
+               ServiceDependencyValidator validator = Create(serviceProviderOptions);
+
+               IServiceCollection services = new ServiceCollection();
+               services.AddTransient<IDependency, Dependency>();
+               validator.Validate(services);
+           }
+
+           // TODO "Strategy" / "IEnumerable"
+           // TODO Factory
+           // TODO Scoped
+
+           // TODO validate if it is a root provider
+       }
+       
+       public interface IMyService { }
+       public class MyService : IMyService
+       {
+           public MyService(IDependency dependency)
+           {
+               // Simulate a logic bug inside the constructor
+               throw new InvalidOperationException("A logic error occurred in the constructor.");
+           }
+       }
+
+       public interface IDependency { }
+       public class Dependency : IDependency { }
+
+       public interface IScopedService { }
+       public class ScopedService : IScopedService { }
+
+       public interface ITransientService { }
+       public class TransientService : ITransientService { }
+
+       // Example of open generic repository
+       public interface IRepository<T> { }
+       public class Repository<T> : IRepository<T> { }
+     */
 }
