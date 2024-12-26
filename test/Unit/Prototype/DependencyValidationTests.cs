@@ -212,7 +212,7 @@ namespace Test.Unit.Prototype
             {
                 return false;
             }
-            
+
             // (re)consider
             // var regexList = allowedNamespaces.Select(ns => new Regex(ns, RegexOptions.Compiled)).ToArray();
             // bool allowed = allowedNamespaces.Any(allowedNamespace => Regex.IsMatch(type.Namespace, allowedNamespace));
@@ -228,7 +228,7 @@ namespace Test.Unit.Prototype
         public void ValidateServices()
         {
             IServiceCollection services = CreateDefaultServices();
-            
+
             string[] namespaceTargets = Array.Empty<string>();
             ServiceDependencyValidatorOptions options = new ServiceDependencyValidatorOptions(namespaceTargets);
             options.ValidateScopes = true;
@@ -248,12 +248,12 @@ namespace Test.Unit.Prototype
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
             ApplyConfiguration(configurationBuilder);
             IConfiguration configuration = configurationBuilder.Build();
-            
+
             // TODO: this does not belong here
             services.AddFileSystem();
-            
+
             RegisterServiceDependencies(services, configuration);
-            
+
             return services;
         }
 
@@ -261,7 +261,7 @@ namespace Test.Unit.Prototype
         {
             // Empty on purpose
         }
-        
+
         protected abstract void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration);
     }
 
@@ -272,7 +272,7 @@ namespace Test.Unit.Prototype
             Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions.AddArtifactAccess(services, configuration);
         }
     }
-    
+
     public class SiteManagerDependencyValidationTests : DependencyValidationTests
     {
         protected override void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration)
@@ -285,7 +285,7 @@ namespace Test.Unit.Prototype
             IArtifactAccess artifactAccess = artifactAccessMock.Object;
             services.AddSingleton(artifactAccess);
         }
-        
+
         protected override void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
         {
             Dictionary<string, string?> data = new Dictionary<string, string?>();
@@ -295,7 +295,7 @@ namespace Test.Unit.Prototype
             configurationBuilder.AddInMemoryCollection(data);
         }
     }
-    
+
     /*
      
      Following section is for future blogpost
