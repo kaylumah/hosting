@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <EnableNETAnalyzers>false</EnableNETAnalyzers>
     <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103;</WarningsNotAsErrors>
+    <NoWarn>$(NoWarn);CA1861</NoWarn>
   </PropertyGroup>
 
 </Project>
