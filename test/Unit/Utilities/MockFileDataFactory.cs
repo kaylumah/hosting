@@ -25,7 +25,7 @@ namespace Test.Unit.Utilities
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("---");
-            if (data != null && data.Any())
+            if (data != null && data.Count != 0)
             {
                 YamlDotNet.Serialization.ISerializer serializer = YamlSerializer.Create();
                 string raw = serializer.Serialize(data);

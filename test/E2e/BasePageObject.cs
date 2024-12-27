@@ -17,6 +17,7 @@ namespace Test.E2e
         public abstract string PagePath
         { get; }
 
+#pragma warning disable CA1051
         protected readonly IPage Page;
 
         IResponse? PageResponse

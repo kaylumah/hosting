@@ -79,7 +79,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
             actual.Remove(actualGenerator);
 
             // Kaylumah tags
-            actual.RemoveAll(x => x.Tag.StartsWith("kaylumah"));
+            actual.RemoveAll(x => x.Tag.StartsWith("kaylumah", StringComparison.Ordinal));
 
             actual.Should().BeEquivalentTo(expected);
         }

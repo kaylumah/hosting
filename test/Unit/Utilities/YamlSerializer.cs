@@ -18,7 +18,7 @@ namespace Test.Unit.Helpers
         {
             public bool Accepts(Type type) => type == typeof(DateTimeOffset);
 
-            public object ReadYaml(IParser parser, Type type, ObjectDeserializer serializer)
+            public object ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
             {
                 throw new NotImplementedException();
             }

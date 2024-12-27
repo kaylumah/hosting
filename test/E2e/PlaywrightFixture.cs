@@ -80,6 +80,7 @@ namespace Test.E2e
             }
 
             PlaywrightInstance?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 

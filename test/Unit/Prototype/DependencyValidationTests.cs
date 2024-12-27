@@ -153,10 +153,7 @@ namespace Test.Unit.Prototype
 
         void EnsureServiceCollectionIsValid(IEnumerable<ServiceDescriptor> services)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
+            ArgumentNullException.ThrowIfNull(services);
 
             bool isServiceCollectionEmpty = services.Any() == false;
             if (isServiceCollectionEmpty)

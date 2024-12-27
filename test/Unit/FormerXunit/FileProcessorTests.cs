@@ -45,12 +45,12 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            BinaryFile testFile = result.Single(x => x.Name.Equals("test.html"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.html", StringComparison.Ordinal));
         }
 
         [Fact]
@@ -67,12 +67,12 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".txt" }
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt", StringComparison.Ordinal));
             //testFile.MetaData.Collection.Should().Be("subdir");
         }
 
@@ -93,16 +93,16 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".txt" }
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(4);
 
-            BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt"));
-            BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt"));
-            BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt"));
-            BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt"));
+            BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt", StringComparison.Ordinal));
+            BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt", StringComparison.Ordinal));
+            BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt", StringComparison.Ordinal));
+            BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt", StringComparison.Ordinal));
 
             fileA.MetaData.Count.Should().Be(1);
             fileB.MetaData.Count.Should().Be(1);
@@ -121,8 +121,8 @@ namespace Test.Unit.FormerXunit
 
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
-                DirectoriesToSkip = new string[] { },
-                FileExtensionsToTarget = new string[] { }
+                DirectoriesToSkip = Array.Empty<string>(),
+                FileExtensionsToTarget = Array.Empty<string>()
             });
             result.Should().BeEmpty();
         }
@@ -141,8 +141,8 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
-                FileExtensionsToTarget = new string[] { }
+                DirectoriesToSkip = Array.Empty<string>(),
+                FileExtensionsToTarget = Array.Empty<string>()
             });
             result.Should().BeEmpty();
         }
@@ -162,7 +162,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             result.Should().NotBeEmpty();
@@ -183,7 +183,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
@@ -217,7 +217,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
@@ -252,7 +252,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
@@ -296,7 +296,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
@@ -343,7 +343,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "_site",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
@@ -389,7 +389,7 @@ namespace Test.Unit.FormerXunit
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
             {
                 RootDirectory = "posts",
-                DirectoriesToSkip = new string[] { },
+                DirectoriesToSkip = Array.Empty<string>(),
                 FileExtensionsToTarget = new string[] { ".html" }
             });
             BinaryFile targetFile = processResult.Single();
