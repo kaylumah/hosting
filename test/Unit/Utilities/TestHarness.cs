@@ -24,7 +24,7 @@ namespace Test.Utilities
 
         public TestHarness(IServiceProvider serviceProvider)
         {
-            
+
             _ServiceProvider = serviceProvider;
             _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
         }

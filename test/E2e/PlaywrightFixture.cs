@@ -13,7 +13,7 @@ namespace Test.E2e
 {
     public abstract class PlaywrightFixture : IAsyncLifetime
     {
-        protected IPlaywright? PlaywrightInstance 
+        protected IPlaywright? PlaywrightInstance
         { get; set; }
         protected IBrowser? Browser
         { get; set; }
