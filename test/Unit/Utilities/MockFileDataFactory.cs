@@ -11,9 +11,9 @@ namespace Test.Unit.Utilities
 {
     public class MockFileDataFactory
     {
-        Encoding _Encoding;
-        string _FrontMatter;
-        string _Contents;
+        Encoding? _Encoding;
+        string? _FrontMatter;
+        string? _Contents;
 
         public MockFileDataFactory WithContents(string contents)
         {
@@ -21,7 +21,7 @@ namespace Test.Unit.Utilities
             return this;
         }
 
-        public MockFileDataFactory WithYamlFrontMatter(Dictionary<string, object> data = null)
+        public MockFileDataFactory WithYamlFrontMatter(Dictionary<string, object?>? data = null)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("---");
@@ -58,7 +58,7 @@ namespace Test.Unit.Utilities
             }
 
             string data = sb.ToString();
-            byte[] bytes = _Encoding.GetBytes(data);
+            byte[]? bytes = _Encoding?.GetBytes(data);
             return new MockFileData(bytes);
         }
 
@@ -70,7 +70,7 @@ namespace Test.Unit.Utilities
                 .Create();
         }
 
-        public static MockFileData EnrichedFile(string contents, Dictionary<string, object> data = null)
+        public static MockFileData EnrichedFile(string contents, Dictionary<string, object?>? data = null)
         {
             return new MockFileDataFactory()
                 .WithUtf8Encoding()

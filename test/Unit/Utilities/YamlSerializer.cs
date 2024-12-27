@@ -23,11 +23,11 @@ namespace Test.Unit.Helpers
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+            public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
             {
-                DateTimeOffset dateTime = (DateTimeOffset)value;
-                string str = dateTime.ToString("o", CultureInfo.InvariantCulture);
-                emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+                DateTimeOffset? dateTime = (DateTimeOffset?)value;
+                string? str = dateTime?.ToString("o", CultureInfo.InvariantCulture);
+                emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
             }
         }
         internal sealed class AuthorIdYamlTypeConverter : IYamlTypeConverter
@@ -44,11 +44,11 @@ namespace Test.Unit.Helpers
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+            public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
             {
-                AuthorId node = (AuthorId)value;
-                string str = node;
-                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+                AuthorId? node = (AuthorId?)value;
+                string? str = node;
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
             }
         }
         internal sealed class OrganizationIdYamlTypeConverter : IYamlTypeConverter
@@ -65,11 +65,11 @@ namespace Test.Unit.Helpers
                 throw new NotImplementedException();
             }
 
-            public void WriteYaml(IEmitter emitter, object value, Type type, ObjectSerializer serializer)
+            public void WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
             {
-                OrganizationId node = (OrganizationId)value;
-                string str = node;
-                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str, ScalarStyle.Any, true, false));
+                OrganizationId? node = (OrganizationId?)value;
+                string? str = node;
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
             }
         }
         public static ISerializer Create()

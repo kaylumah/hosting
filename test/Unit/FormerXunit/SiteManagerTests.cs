@@ -37,11 +37,11 @@ namespace Test.Unit.FormerXunit
 
             Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["Site:Lang"] = null
             });
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
             {
                 ["Metadata:ExtensionMapping"] = null
             });
@@ -60,7 +60,7 @@ namespace Test.Unit.FormerXunit
                     _.Url = "https://example.com";
                 })
                 .BuildServiceProvider();
-            ISiteManager siteManager = serviceProvider.GetService<ISiteManager>();
+            ISiteManager siteManager = serviceProvider.GetRequiredService<ISiteManager>();
             GenerateSiteRequest generateSiteRequest = new GenerateSiteRequest();
             await siteManager.GenerateSite(generateSiteRequest);
         }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Playwright;
 
@@ -17,7 +18,7 @@ namespace Test.E2e
 
         protected readonly IPage Page;
 
-        IResponse PageResponse { get; set; }
+        IResponse? PageResponse { get; set; }
         List<IResponse> Responses { get; } = new List<IResponse>();
 
         public BasePageObject(IPage page)
@@ -33,14 +34,26 @@ namespace Test.E2e
             return bytes;
         }
 
-        public Task<Dictionary<string, string>> GetHeaders()
+        public async Task<Dictionary<string, string>?> GetHeaders()
         {
-            return PageResponse.AllHeadersAsync();
+            if (PageResponse == null)
+            {
+                return null;
+            }
+
+            Dictionary<string, string> result = await PageResponse.AllHeadersAsync();
+            return result;
         }
 
-        public Task<string> GetContent()
+        public async Task<string?> GetContent()
         {
-            return PageResponse.TextAsync();
+            if (PageResponse == null)
+            {
+                return null;
+            }
+
+            string result = await PageResponse.TextAsync();
+            return result;
         }
 
         public async Task NavigateAsync()
@@ -50,7 +63,7 @@ namespace Test.E2e
             await Page.GotoAsync(PagePath);
         }
 
-        void Page_Response(object sender, IResponse e)
+        void Page_Response(object? sender, IResponse e)
         {
             bool isRedirect = e.Status == 301;
             bool isTargetUrl = e.Url.EndsWith(PagePath, StringComparison.Ordinal);
@@ -83,25 +96,31 @@ namespace Test.E2e
         {
         }
 
-        public async Task<Dictionary<string, string>> GetMetaTags()
+        public async Task<Dictionary<string, string?>> GetMetaTags()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            Dictionary<string, string?> result = new Dictionary<string, string?>();
             ILocator metaTagNameLocator = Page.Locator("//meta[@name]");
             IReadOnlyList<ILocator> metaNameTags = await metaTagNameLocator.AllAsync();
             foreach (ILocator metaTag in metaNameTags)
             {
-                string key = await metaTag.GetAttributeAsync("name");
-                string value = await metaTag.GetAttributeAsync("content");
-                result.TryAdd(key, value);
+                string? key = await metaTag.GetAttributeAsync("name");
+                string? value = await metaTag.GetAttributeAsync("content");
+                if (key != null)
+                {
+                    result.TryAdd(key, value);
+                }
             }
 
             ILocator metaTagPropertyLocator = Page.Locator("//meta[@property]");
             IReadOnlyList<ILocator> metaPropertyTags = await metaTagPropertyLocator.AllAsync();
             foreach (ILocator metaTag in metaPropertyTags)
             {
-                string key = await metaTag.GetAttributeAsync("property");
-                string value = await metaTag.GetAttributeAsync("content");
-                result.TryAdd(key, value);
+                string? key = await metaTag.GetAttributeAsync("property");
+                string? value = await metaTag.GetAttributeAsync("content");
+                if (key != null)
+                {
+                    result.TryAdd(key, value);
+                }
             }
 
             return result;

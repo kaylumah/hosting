@@ -40,7 +40,7 @@ namespace Test.Utilities
             }
             else
             {
-                System.Reflection.ConstructorInfo constructor = targetType.GetConstructor(Type.EmptyTypes);
+                System.Reflection.ConstructorInfo? constructor = targetType.GetConstructor(Type.EmptyTypes);
                 if (constructor != null)
                 {
                     T proxy = _ProxyGenerator.CreateClassProxyWithTarget(instance, _Interceptors.ToArray());

@@ -16,8 +16,8 @@ namespace Test.Unit.Extensions
         public static BinaryFile ToFile(this PageMetaData pageMetaData)
         {
             FileMetaData fileMetaData = new FileMetaData();
-            Dictionary<string, object> data = pageMetaData;
-            foreach (KeyValuePair<string, object> item in data)
+            Dictionary<string, object?> data = pageMetaData;
+            foreach (KeyValuePair<string, object?> item in data)
             {
                 fileMetaData.Add(item.Key, item.Value);
             }
@@ -34,7 +34,7 @@ namespace Test.Unit.Extensions
         public static PageMetaData ToPageMetaData(this Entities.Article article)
         {
             List<object> tags = article.Tags.Cast<object>().ToList();
-            Dictionary<string, object> pageDictionary = new Dictionary<string, object>();
+            Dictionary<string, object?> pageDictionary = new Dictionary<string, object?>();
             pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
             pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
             pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);

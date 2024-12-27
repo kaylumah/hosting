@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -37,7 +38,7 @@ namespace Test.Unit.FormerXunit
         public void TagCloud_SingleTag_NoData()
         {
             List<BasePage> items = new List<BasePage>();
-            Dictionary<string, object> data = new();
+            Dictionary<string, object?> data = new();
             BasePage pageMetaData = CreatePageMetaData(data);
             data["tags"] = new List<object>() { "tag1" };
             items.Add(pageMetaData);
@@ -53,7 +54,7 @@ namespace Test.Unit.FormerXunit
         public void TagCloud_SingleTag_WithData()
         {
             List<BasePage> items = new List<BasePage>();
-            Dictionary<string, object> data = new();
+            Dictionary<string, object?> data = new();
             BasePage pageMetaData = CreatePageMetaData(data);
             data["tags"] = new List<object>() { "tag1" };
             items.Add(pageMetaData);
@@ -73,13 +74,13 @@ namespace Test.Unit.FormerXunit
             Assert.NotEmpty(tagViewModel.Description);
         }
 
-        static BasePage CreatePageMetaData(Dictionary<string, object> data)
+        static BasePage CreatePageMetaData(Dictionary<string, object?> data)
         {
             Article result = new Article(data);
             return result;
         }
 
-        static SiteMetaData CreateSiteMetaData(List<BasePage> items = null, Dictionary<string, object> data = null)
+        static SiteMetaData CreateSiteMetaData(List<BasePage>? items = null, Dictionary<string, object>? data = null)
         {
             string id = string.Empty;
             string title = string.Empty;

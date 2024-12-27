@@ -19,13 +19,13 @@ namespace Test.Unit.FormerXunit.Mocks
                         It.IsAny<EventId>(),
                         It.IsAny<It.IsAnyType>(),
                         It.IsAny<Exception>(),
-                        (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()
+                        (Func<It.IsAnyType, Exception?, string>)It.IsAny<object>()
                     )
                 )
                 .Callback<LogLevel, EventId, object, Exception, Delegate>(
                     (level, eventid, state, ex, func) =>
                     {
-                        string result = state.ToString();
+                        string? result = state.ToString();
                         //this.Out.WriteLine(state.ToString());
                     }
                 );

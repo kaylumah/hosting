@@ -38,7 +38,7 @@ namespace Test.E2e.SnapshotTests
             IPage page = await _DesktopFixture.GetPage();
             NotFoundPage notFoundPage = new NotFoundPage(page);
             await notFoundPage.NavigateAsync();
-            Dictionary<string, string> headers = await notFoundPage.GetHeaders();
+            Dictionary<string, string>? headers = await notFoundPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Page not found · Kaylumah");
 
@@ -52,7 +52,7 @@ namespace Test.E2e.SnapshotTests
             AboutPage aboutPage = new AboutPage(page);
             await aboutPage.NavigateAsync();
 
-            Dictionary<string, string> headers = await aboutPage.GetHeaders();
+            Dictionary<string, string>? headers = await aboutPage.GetHeaders();
             // string title = await page.TitleAsync();
             // title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
@@ -66,7 +66,7 @@ namespace Test.E2e.SnapshotTests
             PrivacyPage privacyPage = new PrivacyPage(page);
             await privacyPage.NavigateAsync();
 
-            Dictionary<string, string> headers = await privacyPage.GetHeaders();
+            Dictionary<string, string>? headers = await privacyPage.GetHeaders();
             // string title = await page.TitleAsync();
             // title.Should().Be("All about Max Hamulyák from personal to Curriculum Vitae · Kaylumah");
 
@@ -79,7 +79,7 @@ namespace Test.E2e.SnapshotTests
             IPage page = await _DesktopFixture.GetPage();
             BlogPage blogPage = new BlogPage(page);
             await blogPage.NavigateAsync();
-            Dictionary<string, string> headers = await blogPage.GetHeaders();
+            Dictionary<string, string>? headers = await blogPage.GetHeaders();
             string title = await page.TitleAsync();
             title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
 

@@ -8,7 +8,7 @@ namespace Test.Unit.Helpers
 {
     public class PropertyNameEqualityComparer : IEqualityComparer<string>
     {
-        public bool Equals(string x, string y)
+        public bool Equals(string? x, string? y)
         {
             if (x == null || y == null)
             {

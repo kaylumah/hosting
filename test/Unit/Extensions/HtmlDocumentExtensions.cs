@@ -19,9 +19,9 @@ namespace Test.Unit.Utilities
             List<(string Tag, string Value)> result = new List<(string Tag, string Value)>();
             foreach (HtmlNode node in nodes)
             {
-                HtmlAttribute keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
+                HtmlAttribute? keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
                                    ?? node.Attributes.SingleOrDefault(x => x.Name == "property");
-                HtmlAttribute valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
+                HtmlAttribute? valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
                 if (keyAttribute != null && valueAttribute != null)
                 {
                     result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
