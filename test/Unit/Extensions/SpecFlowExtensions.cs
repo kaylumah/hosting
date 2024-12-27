@@ -13,10 +13,7 @@ namespace Test.Unit
         public static Dictionary<string, object> ToDictionary(this Table table)
         {
             // https://stackoverflow.com/questions/47503580/convert-specflow-table-todictionary
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
+            ArgumentNullException.ThrowIfNull(table);
 
             if (table.Rows.Count == 0)
             {
