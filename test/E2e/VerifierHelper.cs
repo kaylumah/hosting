@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -56,17 +57,17 @@ namespace Test.E2e
 
     public static class HtmlPageVerifier
     {
-        public static async Task Verify(HtmlPage page, string methodName = null)
+        public static async Task Verify(HtmlPage page, string? methodName = null)
         {
-            string html = await page.GetContent();
+            string? html = await page.GetContent() ?? string.Empty;
             html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
-            Dictionary<string, string> metaTags = await page.GetMetaTags();
+            Dictionary<string, string?> metaTags = await page.GetMetaTags();
 
-            string commitHash = metaTags["kaylumah:commit"];
-            string shortCommitHash = commitHash[..7];
+            string? commitHash = metaTags["kaylumah:commit"];
+            string shortCommitHash = string.IsNullOrEmpty(commitHash) ? string.Empty : commitHash[..7];
             // string version = metaTags["kaylumah:version"];
-            string buildId = metaTags["kaylumah:buildId"];
-            string buildNumber = metaTags["kaylumah:buildNumber"];
+            string? buildId = metaTags["kaylumah:buildId"];
+            string? buildNumber = metaTags["kaylumah:buildNumber"];
 
             Regex baseUrlRegex = VerifierHelper.BaseUrl();
             VerifySettings settings = new VerifySettings();
@@ -81,8 +82,15 @@ namespace Test.E2e
             settings.ScrubInlineGuids();
             settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
             settings.AddScrubber(_ => _.Replace(shortCommitHash, "[SHORT-COMMIT-HASH]"));
-            settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
-            settings.AddScrubber(_ => _.Replace(buildId, "[BUILD-ID]"));
+            if (commitHash != null)
+            {
+                settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
+            }
+
+            if (buildId != null)
+            {
+                settings.AddScrubber(_ => _.Replace(buildId, "[BUILD-ID]"));
+            }
             // settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             settings.ScrubMatches(buildNumberRegex, "BuildNumber_");

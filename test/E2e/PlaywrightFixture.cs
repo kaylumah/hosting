@@ -13,12 +13,12 @@ namespace Test.E2e
 {
     public abstract class PlaywrightFixture : IAsyncLifetime
     {
-        protected IPlaywright PlaywrightInstance { get; set; }
-        protected IBrowser Browser { get; set; }
+        protected IPlaywright? PlaywrightInstance { get; set; }
+        protected IBrowser? Browser { get; set; }
 
-        public async Task<IBrowser> GetBrowser()
+        public async Task<IBrowser?> GetBrowser()
         {
-            if (Browser == null)
+            if (Browser == null && PlaywrightInstance != null)
             {
                 Browser = await PlaywrightInstance.Chromium.LaunchAsync();
             }
@@ -28,6 +28,11 @@ namespace Test.E2e
 
         public async Task<IPage> GetPage()
         {
+            if (Browser == null)
+            {
+                throw new InvalidOperationException("Browser is null");
+            }
+
             BrowserNewContextOptions contextOptions = GetBrowserNewContextOptions();
             IBrowserContext context = await Browser.NewContextAsync(contextOptions);
             IPage page = await context.NewPageAsync();
@@ -36,7 +41,12 @@ namespace Test.E2e
 
         public BrowserNewContextOptions GetBrowserNewContextOptions()
         {
-            BrowserNewContextOptions browserNewContextOptions = CreateBrowserNewContextOptions();
+            BrowserNewContextOptions? browserNewContextOptions = CreateBrowserNewContextOptions();
+            if (browserNewContextOptions == null)
+            {
+                throw new InvalidOperationException("BrowserNewContextOptions is null");
+            }
+
             ApplyDefaults(browserNewContextOptions);
             return browserNewContextOptions;
         }
@@ -46,7 +56,7 @@ namespace Test.E2e
             browserNewContextOptions.BaseURL = GetBaseUrl();
         }
 
-        protected abstract BrowserNewContextOptions CreateBrowserNewContextOptions();
+        protected abstract BrowserNewContextOptions? CreateBrowserNewContextOptions();
 
         public string GetBaseUrl()
         {
@@ -67,26 +77,26 @@ namespace Test.E2e
                 await Browser.DisposeAsync();
             }
 
-            PlaywrightInstance.Dispose();
+            PlaywrightInstance?.Dispose();
         }
     }
 
     public class DesktopFixture : PlaywrightFixture
     {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
+        protected override BrowserNewContextOptions? CreateBrowserNewContextOptions()
         {
             const string target = "Desktop Chrome";
-            BrowserNewContextOptions options = PlaywrightInstance.Devices[target];
+            BrowserNewContextOptions? options = PlaywrightInstance?.Devices[target];
             return options;
         }
     }
 
     public class MobileFixture : PlaywrightFixture
     {
-        protected override BrowserNewContextOptions CreateBrowserNewContextOptions()
+        protected override BrowserNewContextOptions? CreateBrowserNewContextOptions()
         {
             const string target = "iPhone 14 Pro Max";
-            BrowserNewContextOptions options = PlaywrightInstance.Devices[target];
+            BrowserNewContextOptions? options = PlaywrightInstance?.Devices[target];
             return options;
         }
     }

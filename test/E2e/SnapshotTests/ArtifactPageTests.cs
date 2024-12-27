@@ -28,8 +28,8 @@ namespace Test.E2e.SnapshotTests
             await atomFeed.NavigateAsync();
             page.Url.Should().EndWith(atomFeed.PagePath);
 
-            string xml = await atomFeed.GetContent();
-            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
+            string? xml = await atomFeed.GetContent();
+            xml = xml?.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ReplaceMatches(regex, "BaseUrl_1");
@@ -45,7 +45,7 @@ namespace Test.E2e.SnapshotTests
             await robotsPage.NavigateAsync();
             page.Url.Should().EndWith(robotsPage.PagePath);
 
-            string txt = await robotsPage.GetContent();
+            string? txt = await robotsPage.GetContent();
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ScrubMatches(regex, "BaseUrl_");
@@ -60,8 +60,8 @@ namespace Test.E2e.SnapshotTests
             await sitemapPage.NavigateAsync();
             page.Url.Should().EndWith(sitemapPage.PagePath);
 
-            string xml = await sitemapPage.GetContent();
-            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
+            string? xml = await sitemapPage.GetContent();
+            xml = xml?.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ReplaceMatches(regex, "BaseUrl_1");
@@ -76,8 +76,8 @@ namespace Test.E2e.SnapshotTests
             await sitemapPage.NavigateAsync();
             page.Url.Should().EndWith(sitemapPage.PagePath);
 
-            string xml = await sitemapPage.GetContent();
-            xml = xml.Replace("/Users/maxhamulyak/", "/ExamplePath/");
+            string? xml = await sitemapPage.GetContent();
+            xml = xml?.Replace("/Users/maxhamulyak/", "/ExamplePath/");
             VerifySettings settings = new VerifySettings();
             Regex regex = VerifierHelper.BaseUrl();
             settings.ReplaceMatches(regex, "BaseUrl_1");
