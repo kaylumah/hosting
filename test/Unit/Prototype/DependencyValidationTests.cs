@@ -19,9 +19,11 @@ namespace Test.Unit.Prototype
 {
     public class ServiceDependencyValidatorOptions : ServiceProviderOptions
     {
-        public bool ValidateCanConstruct { get; set; }
+        public bool ValidateCanConstruct
+        { get; set; }
 
-        public string[] AllowedNamespaces { get; set; }
+        public string[] AllowedNamespaces
+        { get; set; }
 
         public ServiceDependencyValidatorOptions(string[] allowedNamespaces)
         {

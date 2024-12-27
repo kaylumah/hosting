@@ -4,8 +4,6 @@
 using Test.Unit.Helpers;
 using Test.Unit.Utilities;
 
-using Constants = Test.Unit.Constants;
-
 // ReSharper disable once CheckNamespace
 namespace System.IO.Abstractions.TestingHelpers
 {

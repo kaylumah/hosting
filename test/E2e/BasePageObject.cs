@@ -14,12 +14,15 @@ namespace Test.E2e
 {
     public abstract class BasePageObject
     {
-        public abstract string PagePath { get; }
+        public abstract string PagePath
+        { get; }
 
         protected readonly IPage Page;
 
-        IResponse? PageResponse { get; set; }
-        List<IResponse> Responses { get; } = new List<IResponse>();
+        IResponse? PageResponse
+        { get; set; }
+        List<IResponse> Responses
+        { get; } = new List<IResponse>();
 
         public BasePageObject(IPage page)
         {
@@ -150,7 +153,8 @@ namespace Test.E2e
             PagePath = feedUrl;
         }
 
-        public override string PagePath { get; }
+        public override string PagePath
+        { get; }
     }
 
     public class SitemapIndexPage : XmlPage
@@ -160,7 +164,8 @@ namespace Test.E2e
             PagePath = sitemapUrl;
         }
 
-        public override string PagePath { get; }
+        public override string PagePath
+        { get; }
     }
 
     public class SitemapPage : XmlPage
@@ -170,7 +175,8 @@ namespace Test.E2e
             PagePath = sitemapUrl;
         }
 
-        public override string PagePath { get; }
+        public override string PagePath
+        { get; }
     }
 
     public class HomePage : HtmlPage
@@ -225,6 +231,7 @@ namespace Test.E2e
             PagePath = pagePath;
         }
 
-        public override string PagePath { get; }
+        public override string PagePath
+        { get; }
     }
 }

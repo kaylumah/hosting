@@ -11,12 +11,11 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Microsoft.Extensions.Logging.Abstractions;
+using Reqnroll;
 using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
-using Reqnroll;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;
-using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 
 namespace Test.Unit.Steps
 {
@@ -24,7 +23,7 @@ namespace Test.Unit.Steps
     public class FileProcessorStepDefinitions
     {
         readonly IFileProcessor _FileProcessor;
-        readonly List<BinaryFile> _Files = new();
+        readonly List<BinaryFile> _Files;
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
@@ -34,6 +33,7 @@ namespace Test.Unit.Steps
                 siteInfo,
                 new YamlFrontMatterMetadataProvider(new YamlParser()),
                 metadataParserOptions);
+            _Files = new();
         }
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)

@@ -12,12 +12,13 @@ namespace Test.Unit.Utilities
 {
     public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {
-        readonly List<StoreArtifactsRequest> _StoreArtifactsRequests = new();
+        readonly List<StoreArtifactsRequest> _StoreArtifactsRequests;
         public ReadOnlyCollection<StoreArtifactsRequest> StoreArtifactRequests => new(_StoreArtifactsRequests);
         public ReadOnlyCollection<Artifact> Artifacts => new(StoreArtifactRequests.SelectMany(x => x.Artifacts).ToList());
 
         public ArtifactAccessMock()
         {
+            _StoreArtifactsRequests = new();
             SetupStore();
         }
 
