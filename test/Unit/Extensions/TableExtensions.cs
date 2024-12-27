@@ -11,7 +11,12 @@ namespace Reqnroll
 {
     public static class TableExtensions
     {
-        static readonly PropertyNameEqualityComparer _PropertyNameEqualityComparer = new();
+        static readonly PropertyNameEqualityComparer _PropertyNameEqualityComparer;
+
+        static TableExtensions()
+        {
+            _PropertyNameEqualityComparer = new();
+        }
 
         public static IEnumerable<string> AsStrings(this Table table, string column)
         {

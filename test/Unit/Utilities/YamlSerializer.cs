@@ -32,7 +32,12 @@ namespace Test.Unit.Helpers
         }
         internal sealed class AuthorIdYamlTypeConverter : IYamlTypeConverter
         {
-            static readonly Type _ContentCategoryNodeType = typeof(AuthorId);
+            static readonly Type _ContentCategoryNodeType;
+
+            static AuthorIdYamlTypeConverter()
+            {
+                _ContentCategoryNodeType = typeof(AuthorId);
+            }
 
             public bool Accepts(Type type)
             {
@@ -53,7 +58,12 @@ namespace Test.Unit.Helpers
         }
         internal sealed class OrganizationIdYamlTypeConverter : IYamlTypeConverter
         {
-            static readonly Type _ContentCategoryNodeType = typeof(OrganizationId);
+            static readonly Type _ContentCategoryNodeType;
+
+            static OrganizationIdYamlTypeConverter()
+            {
+                _ContentCategoryNodeType = typeof(OrganizationId);
+            }
 
             public bool Accepts(Type type)
             {

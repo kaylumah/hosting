@@ -14,11 +14,17 @@ namespace Test.Utilities
     public sealed class TestHarness
     {
         readonly IServiceProvider _ServiceProvider;
-        static readonly ProxyGenerator _ProxyGenerator = new();
+        static readonly ProxyGenerator _ProxyGenerator;
         readonly IReadOnlyList<IInterceptor> _Interceptors;
+
+        static TestHarness()
+        {
+            _ProxyGenerator = new();
+        }
 
         public TestHarness(IServiceProvider serviceProvider)
         {
+            
             _ServiceProvider = serviceProvider;
             _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
         }

@@ -23,7 +23,7 @@ namespace Test.Unit.Steps
     public class FileProcessorStepDefinitions
     {
         readonly IFileProcessor _FileProcessor;
-        readonly List<BinaryFile> _Files = new();
+        readonly List<BinaryFile> _Files;
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
@@ -33,6 +33,7 @@ namespace Test.Unit.Steps
                 siteInfo,
                 new YamlFrontMatterMetadataProvider(new YamlParser()),
                 metadataParserOptions);
+            _Files = new();
         }
         [When("the files are retrieved:")]
         public async Task WhenTheFilesAreRetrieved(FileFilterCriteria criteria)

@@ -10,11 +10,13 @@ namespace Test.Utilities
 {
     public sealed class TestHarnessBuilder
     {
-        readonly List<Action<IConfigurationBuilder>> _ConfigurationRegistrationActions = new();
-        readonly List<Action<IServiceCollection, IConfiguration>> _ServiceRegistrationActions = new();
+        readonly List<Action<IConfigurationBuilder>> _ConfigurationRegistrationActions;
+        readonly List<Action<IServiceCollection, IConfiguration>> _ServiceRegistrationActions;
 
         TestHarnessBuilder()
         {
+            _ConfigurationRegistrationActions = new();
+            _ServiceRegistrationActions = new();
             Register((serviceCollection) =>
             {
                 serviceCollection.AddSingleton<TestHarness>();
