@@ -18,11 +18,11 @@ namespace Test.Unit.Entities
         public static AuthorMetaData ToAuthorMetadata(this Author author)
         {
             AuthorMetaData result = new AuthorMetaData();
-            result.Id = author.Id;
-            result.FullName = author.Name;
-            result.Email = author.Email;
-            result.Uri = author.Uri;
-            result.Picture = author.Picture;
+            result.Id = author.Id!;
+            result.FullName = author.Name!;
+            result.Email = author.Email!;
+            result.Uri = author.Uri!;
+            result.Picture = author.Picture!;
             result.Links = new Links()
             {
                 Devto = author.Id,
@@ -42,8 +42,8 @@ namespace Test.Unit.Entities
         public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
         {
             OrganizationMetaData result = new OrganizationMetaData();
-            result.Id = organization.Id;
-            result.FullName = organization.Name;
+            result.Id = organization.Id!;
+            result.FullName = organization.Name!;
             return result;
         }
 
@@ -55,8 +55,8 @@ namespace Test.Unit.Entities
         public static TagMetaData ToTagMetadata(this Tag tag)
         {
             TagMetaData result = new TagMetaData();
-            result.Id = tag.Id;
-            result.Name = tag.Id;
+            result.Id = tag.Id!;
+            result.Name = tag.Id!;
             return result;
         }
     }

@@ -7,6 +7,6 @@ namespace Test.Unit
 {
     public class ValidationContext
     {
-        public Exception TestServiceException { get; set; }
+        public Exception? TestServiceException { get; set; }
     }
 }

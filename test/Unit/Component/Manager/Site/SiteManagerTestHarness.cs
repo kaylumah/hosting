@@ -40,7 +40,7 @@ namespace Test.Unit.Component.Manager.Site
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Configure(configurationBuilder =>
                 {
-                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string>
+                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
                     {
                         ["Site"] = string.Empty,
                         ["Metadata"] = string.Empty

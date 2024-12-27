@@ -402,7 +402,7 @@ namespace Test.Unit.FormerXunit
             result.Layout.Should().Be("default.html");
         }
 
-        FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, IContentPreprocessorStrategy[] preprocessorStrategies = null, SiteInfo siteInfo = null)
+        FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, IContentPreprocessorStrategy[]? preprocessorStrategies = null, SiteInfo? siteInfo = null)
         {
             preprocessorStrategies ??= Array.Empty<IContentPreprocessorStrategy>();
             siteInfo ??= new SiteInfo();
@@ -413,7 +413,7 @@ namespace Test.Unit.FormerXunit
             return sut;
         }
 
-        static string CreateFrontMatter(Dictionary<string, object> data = null)
+        static string CreateFrontMatter(Dictionary<string, object>? data = null)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("---");
@@ -455,7 +455,7 @@ namespace Test.Unit.FormerXunit
             return ContentFile(string.Empty);
         }
 
-        static MockFileData WithFrontMatter(Dictionary<string, object> data = null)
+        static MockFileData WithFrontMatter(Dictionary<string, object>? data = null)
         {
             string frontMatter = CreateFrontMatter(data);
             return ContentFile(frontMatter);
