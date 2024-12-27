@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103;</WarningsNotAsErrors>
-    <NoWarn>$(NoWarn);CA1861</NoWarn>
+    <NoWarn>$(NoWarn);CA1861;CA1859;</NoWarn>
   </PropertyGroup>
 
 </Project>
