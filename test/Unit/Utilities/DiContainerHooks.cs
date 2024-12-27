@@ -2,9 +2,9 @@
 // See LICENSE file in the project root for full license information.
 
 using System.IO.Abstractions.TestingHelpers;
-using Reqnroll.BoDi;
 using Microsoft.Extensions.Time.Testing;
 using Reqnroll;
+using Reqnroll.BoDi;
 
 namespace Test.Unit
 {
