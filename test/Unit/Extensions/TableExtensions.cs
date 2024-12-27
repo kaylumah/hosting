@@ -83,10 +83,10 @@ namespace Reqnroll
             List<PropertyInfo> gherkinTableHeaderPropertyInfosWithDuplicateIndex = new List<PropertyInfo>();
             foreach (PropertyInfo gherkinTableHeaderPropertyInfo in gherkinTableHeaderPropertyInfos)
             {
-                if (gherkinTableHeaderPropertyInfos.Count(gherkinTableHeaderPropertyInfo2 =>
+                if (1 < gherkinTableHeaderPropertyInfos.Count(gherkinTableHeaderPropertyInfo2 =>
                         gherkinTableHeaderPropertyInfo2.GetCustomAttribute<GherkinTableHeaderAttribute>()
                             ?.HeaderIndex == gherkinTableHeaderPropertyInfo
-                            .GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex) > 1)
+                            .GetCustomAttribute<GherkinTableHeaderAttribute>()?.HeaderIndex))
                 {
                     gherkinTableHeaderPropertyInfosWithDuplicateIndex.Add(gherkinTableHeaderPropertyInfo);
                 }
