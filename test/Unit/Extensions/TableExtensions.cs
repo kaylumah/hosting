@@ -43,41 +43,41 @@ namespace Reqnroll
 
             PropertyInfo[] gherkinTableHeaderPropertyInfosWithDuplicateIndex =
                 FindGherkinTableHeaderPropertyInfosWithDuplicateIndex(orderedGherkinTableHeaderPropertyInfos);
-            if (gherkinTableHeaderPropertyInfosWithDuplicateIndex.Any())
+            if (gherkinTableHeaderPropertyInfosWithDuplicateIndex.Length != 0)
             {
                 IEnumerable<string> gherkinTableHeaderPropertyNamesWithDuplicateIndex =
                     gherkinTableHeaderPropertyInfosWithDuplicateIndex.Select(
                         gherkinTableHeaderPropertyInfoWithDuplicateIndex =>
                             gherkinTableHeaderPropertyInfoWithDuplicateIndex.Name);
                 throw new ArgumentException(
-                    $"{typeof(TObject).FullName} declares two or more gherkin table headers with a duplicate index. (Headers with duplicate index: {string.Join(", ", gherkinTableHeaderPropertyNamesWithDuplicateIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    $"{typeof(TObject).FullName} declares two or more gherkin table headers with a duplicate index. (Headers with duplicate index: {string.Join(", ", gherkinTableHeaderPropertyNamesWithDuplicateIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Length != 0 ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
                     nameof(table));
             }
 
             string[] headersNotDeclaredAsGherkinTableHeader =
                 FindHeadersNotDeclaredAsGherkinTableHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-            if (headersNotDeclaredAsGherkinTableHeader.Any())
+            if (headersNotDeclaredAsGherkinTableHeader.Length != 0)
             {
                 throw new ArgumentException(
-                    $"{nameof(table)} contains headers not declared as gherkin table header on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotDeclaredAsGherkinTableHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    $"{nameof(table)} contains headers not declared as gherkin table header on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotDeclaredAsGherkinTableHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Length != 0 ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
                     nameof(table));
             }
 
             string[] gherkinTableHeadersNotDeclaredAsHeader =
                 FindGherkinTableHeadersNotDeclaredAsHeader(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-            if (gherkinTableHeadersNotDeclaredAsHeader.Any())
+            if (gherkinTableHeadersNotDeclaredAsHeader.Length != 0)
             {
                 throw new ArgumentException(
-                    $"{nameof(table)} contains no headers for gherkin table headers declared on {typeof(TObject).FullName}. (Missing headers: {string.Join(", ", gherkinTableHeadersNotDeclaredAsHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    $"{nameof(table)} contains no headers for gherkin table headers declared on {typeof(TObject).FullName}. (Missing headers: {string.Join(", ", gherkinTableHeadersNotDeclaredAsHeader)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Length != 0 ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
                     nameof(table));
             }
 
             string[] headersNotAtCorrectIndex =
                 FindHeadersNotAtCorrectIndex(tableHeaderNames, orderedGherkinTableHeaderPropertyNames);
-            if (headersNotAtCorrectIndex.Any())
+            if (headersNotAtCorrectIndex.Length != 0)
             {
                 throw new ArgumentException(
-                    $"The headers of {nameof(table)} are not in the order specified on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotAtCorrectIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Any() ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
+                    $"The headers of {nameof(table)} are not in the order specified on {typeof(TObject).FullName}. (Headers: {string.Join(", ", headersNotAtCorrectIndex)}. Declared table headers (in order): {(orderedGherkinTableHeaderPropertyNames.Length != 0 ? string.Join(", ", orderedGherkinTableHeaderPropertyNames) : "none")})",
                     nameof(table));
             }
         }
