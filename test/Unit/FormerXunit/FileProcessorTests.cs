@@ -50,7 +50,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            BinaryFile testFile = result.Single(x => x.Name.Equals("test.html"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.html", StringComparison.Ordinal));
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Test.Unit.FormerXunit
             });
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
-            BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt"));
+            BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt", StringComparison.Ordinal));
             //testFile.MetaData.Collection.Should().Be("subdir");
         }
 
@@ -99,10 +99,10 @@ namespace Test.Unit.FormerXunit
             result.Should().NotBeEmpty();
             result.Count().Should().Be(4);
 
-            BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt"));
-            BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt"));
-            BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt"));
-            BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt"));
+            BinaryFile fileA = result.Single(x => x.Name.Equals("a.txt", StringComparison.Ordinal));
+            BinaryFile fileB = result.Single(x => x.Name.Equals("b.txt", StringComparison.Ordinal));
+            BinaryFile fileC = result.Single(x => x.Name.Equals("c.txt", StringComparison.Ordinal));
+            BinaryFile fileD = result.Single(x => x.Name.Equals("d.txt", StringComparison.Ordinal));
 
             fileA.MetaData.Count.Should().Be(1);
             fileB.MetaData.Count.Should().Be(1);
