@@ -6,7 +6,6 @@ using System.IO.Abstractions.TestingHelpers;
 using Ssg.Extensions.Metadata.Abstractions;
 using Reqnroll;
 using Test.Unit.Entities;
-using Kaylumah.Ssg.Manager.Site.Service;
 
 namespace Test.Unit.Steps.Collections
 {

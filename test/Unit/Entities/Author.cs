@@ -8,19 +8,24 @@ namespace Test.Unit.Entities
     public class Author
     {
         [GherkinTableHeader(0)]
-        public string? Id { get; set; }
+        public string? Id
+        { get; set; }
 
         [GherkinTableHeader(1)]
-        public string? Name { get; set; }
+        public string? Name
+        { get; set; }
 
         [GherkinTableHeader(2)]
-        public string? Email { get; set; }
+        public string? Email
+        { get; set; }
 
         [GherkinTableHeader(3)]
-        public string? Uri { get; set; }
+        public string? Uri
+        { get; set; }
 
         [GherkinTableHeader(4)]
-        public string? Picture { get; set; }
+        public string? Picture
+        { get; set; }
     }
 
     public class AuthorCollection : MockEntityCollection<string, Author>

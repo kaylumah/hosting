@@ -8,7 +8,8 @@ namespace Test.Unit.Helpers
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class GherkinTableHeaderAttribute : Attribute
     {
-        public int HeaderIndex { get; }
+        public int HeaderIndex
+        { get; }
 
         public GherkinTableHeaderAttribute(int headerIndex)
         {

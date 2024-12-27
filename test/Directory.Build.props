@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
-    <EnableIDesignAnalyzers>false</EnableIDesignAnalyzers>
+    <NoWarn>$(NoWarn);IDESIGN103;IDESIGN102;IDESIGN105;IDESIGN100</NoWarn>
   </PropertyGroup>
 
 </Project>

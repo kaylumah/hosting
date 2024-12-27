@@ -8,7 +8,8 @@ namespace Test.Unit.Entities
     public class Tag
     {
         [GherkinTableHeader(0)]
-        public string? Id { get; set; }
+        public string? Id
+        { get; set; }
     }
 
     public class TagCollection : MockEntityCollection<string, Tag>

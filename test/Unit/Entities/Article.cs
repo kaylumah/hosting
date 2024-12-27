@@ -7,13 +7,20 @@ namespace Test.Unit.Entities
 {
     public class Article
     {
-        public string? Uri { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public DateTimeOffset? Created { get; set; }
-        public DateTimeOffset? Modified { get; set; }
-        public string[] Tags { get; set; } = Array.Empty<string>();
-        public string? Author { get; set; }
+        public string? Uri
+        { get; set; }
+        public string? Title
+        { get; set; }
+        public string? Description
+        { get; set; }
+        public DateTimeOffset? Created
+        { get; set; }
+        public DateTimeOffset? Modified
+        { get; set; }
+        public string[] Tags
+        { get; set; } = Array.Empty<string>();
+        public string? Author
+        { get; set; }
     }
 
     public class ArticleCollection : MockEntityCollection<string, Article>

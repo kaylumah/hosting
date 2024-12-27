@@ -14,7 +14,8 @@ namespace Test.Unit.Component.Access.Artifact
 {
     public sealed class ArtifactAccessTestHarness
     {
-        public TestHarnessBuilder TestHarnessBuilder { get; }
+        public TestHarnessBuilder TestHarnessBuilder
+        { get; }
 
         readonly ValidationContext _ValidationContext;
 
