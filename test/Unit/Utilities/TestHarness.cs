@@ -39,8 +39,6 @@ namespace Test.Utilities
         {
             Type targetType = typeof(T);
             T instance = _ServiceProvider.GetRequiredService<T>();
-
-            /*
             if (targetType.IsInterface)
             {
                 T proxy = _ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _Interceptors.ToArray());
@@ -55,7 +53,6 @@ namespace Test.Utilities
                     return proxy;
                 }
             }
-            */
 
             // Fallback to the instance from DI without interception
             return instance;
