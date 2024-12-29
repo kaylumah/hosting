@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Ssg.Extensions.Metadata.Abstractions;
+using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
@@ -12,13 +13,20 @@ namespace Test.Unit
 {
     public class SiteMetadataSnapshotTests
     {
+        readonly VerifySettings _VerifySettings;
+        
+        public SiteMetadataSnapshotTests()
+        {
+            _VerifySettings = new VerifySettings();
+        }
+        
         [Fact]
         public async Task Test1()
         {
             BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, new());
-            await Verifier.Verify(siteMetaData);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
         }
         
         [Fact]
@@ -30,7 +38,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
             
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
-            await Verifier.Verify(siteMetaData);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
         }
         
         [Fact]
@@ -43,7 +51,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
             
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
-            await Verifier.Verify(siteMetaData);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
         }
         
         [Fact]
@@ -61,7 +69,7 @@ namespace Test.Unit
             items.Add(pageMetaData);
             
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, items);
-            await Verifier.Verify(siteMetaData);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
         }
     }
 }
