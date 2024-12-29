@@ -1,1 +1,12 @@
-﻿
+﻿{
+  Build: {},
+  Id: ,
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Pages: [],
+  RecentArticles: [],
+  FeaturedArticles: []
+}
