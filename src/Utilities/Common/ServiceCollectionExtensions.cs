@@ -3,10 +3,12 @@
 
 using System;
 using System.Reflection;
+using Castle.DynamicProxy;
+using Kaylumah.Ssg.Utilities.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class ServiceCollectionExtensions
+    public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection RegisterImplementationsAsSingleton<T>(this IServiceCollection serviceCollection)
         {
@@ -29,5 +31,28 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return serviceCollection;
         }
+
+        public static IServiceCollection AddProxiedService<TInterface, TImplementation>(
+            this IServiceCollection services)
+            where TInterface : class
+            where TImplementation : class, TInterface
+        {
+            ProxyGenerator proxyGenerator = new ProxyGenerator();
+
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton(provider =>
+            {
+                IAsyncInterceptor interceptor = ActivatorUtilities.CreateInstance<LoggingInterceptor>(provider);
+                IAsyncInterceptor[] interceptors = [interceptor];
+
+                TImplementation implementation = provider.GetRequiredService<TImplementation>();
+                TInterface result = proxyGenerator.CreateInterfaceProxyWithTarget<TInterface>(implementation, interceptors);
+                return result;
+            });
+
+            return services;
+        }
+
+#pragma warning disable CA1848
     }
 }
