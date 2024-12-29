@@ -14,39 +14,39 @@ namespace Test.Unit
     public class SiteMetadataSnapshotTests
     {
         readonly VerifySettings _VerifySettings;
-        
+
         public SiteMetadataSnapshotTests()
         {
             _VerifySettings = new VerifySettings();
         }
-        
+
         [Fact]
         public async Task Test_EmptySite_ResultsInDefaults()
         {
-            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-            
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, new());
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
-        
+
         [Fact]
         public async Task Test_OnlyTags()
         {
-            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-            
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
             TagMetaDataCollection tagMetaDataCollection = new();
             tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
-            
+
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
-        
+
         [Fact]
         public async Task Test_OnlyPages()
         {
-            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-            
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
@@ -55,20 +55,20 @@ namespace Test.Unit
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
-            
+
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
-        
+
         [Fact]
         public async Task Test_PagesWithCorrespondingTagData()
         {
-            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-            
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
             TagMetaDataCollection tagMetaDataCollection = new();
             tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
-            
+
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
@@ -77,7 +77,7 @@ namespace Test.Unit
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
-            
+
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
