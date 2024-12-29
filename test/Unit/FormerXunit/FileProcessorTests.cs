@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using FluentAssertions;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
@@ -30,14 +27,15 @@ namespace Test.Unit.FormerXunit
         public async Task Test_FileProcessor_ChangedFileExtension()
         {
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-        {
-            { $"{Root}/test.md", EmptyFile() }
-        });
+            {
+                { $"{Root}/test.md", MockFileSystemHelper.EmptyFile() }
+            });
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions()
             {
-                ExtensionMapping = new Dictionary<string, string> {
-                        { ".md", ".html" }
-                    }
+                ExtensionMapping = new Dictionary<string, string>
+                {
+                    { ".md", ".html" }
+                }
             };
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
@@ -57,9 +55,9 @@ namespace Test.Unit.FormerXunit
         public async Task Test_FileProcessor_Subdirectories()
         {
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-        {
-            { $"{Root}/_subdir/test.txt", EmptyFile() }
-        });
+            {
+                { $"{Root}/_subdir/test.txt", MockFileSystemHelper.EmptyFile() }
+            });
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
@@ -80,12 +78,12 @@ namespace Test.Unit.FormerXunit
         public async Task Test_FileProcessor_FrontMatter()
         {
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-        {
-            { $"{Root}/a.txt", EmptyFile() },
-            { $"{Root}/b.txt", WithFrontMatter() },
-            { $"{Root}/c.txt", WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } }}) },
-            { $"{Root}/d.txt", WithFrontMatter(new Dictionary<string, object> { }) }
-        });
+            {
+                { $"{Root}/a.txt", MockFileSystemHelper.EmptyFile() },
+                { $"{Root}/b.txt", MockFileSystemHelper.WithFrontMatter() },
+                { $"{Root}/c.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } } }) },
+                { $"{Root}/d.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { }) }
+            });
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
@@ -131,9 +129,9 @@ namespace Test.Unit.FormerXunit
         public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
         {
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-        {
-            { $"{Root}/index.html", EmptyFile() }
-        });
+            {
+                { $"{Root}/index.html", MockFileSystemHelper.EmptyFile() }
+            });
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
@@ -151,10 +149,10 @@ namespace Test.Unit.FormerXunit
         public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
         {
             MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-        {
-            { $"{Root}/index.html", EmptyFile() },
-            { $"{Root}/other.png", EmptyFile() }
-        });
+            {
+                { $"{Root}/index.html", MockFileSystemHelper.EmptyFile() },
+                { $"{Root}/other.png", MockFileSystemHelper.EmptyFile() }
+            });
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
@@ -204,11 +202,13 @@ namespace Test.Unit.FormerXunit
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
-                Defaults = new DefaultMetadatas {
-                    new DefaultMetadata {
+                Defaults = new DefaultMetadatas
+                {
+                    new DefaultMetadata
+                    {
                         Path = string.Empty,
-                        Extensions = [ ".html" ],
-                        Values = new FileMetaData {}
+                        Extensions = [".html"],
+                        Values = new FileMetaData { }
                     }
                 }
             };
@@ -238,15 +238,18 @@ namespace Test.Unit.FormerXunit
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
-                Defaults = new DefaultMetadatas {
-                            new DefaultMetadata {
-                                Path = string.Empty,
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Layout = "default.html"
-                                }
-                            }
+                Defaults = new DefaultMetadatas
+                {
+                    new DefaultMetadata
+                    {
+                        Path = string.Empty,
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Layout = "default.html"
                         }
+                    }
+                }
             };
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
@@ -275,22 +278,27 @@ namespace Test.Unit.FormerXunit
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
-                Defaults = new DefaultMetadatas {
-                            new DefaultMetadata {
-                                Path = string.Empty,
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Layout = "default.html"
-                                }
-                            },
-                            new DefaultMetadata {
-                                Path = "test",
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Collection = "test"
-                                }
-                            }
+                Defaults = new DefaultMetadatas
+                {
+                    new DefaultMetadata
+                    {
+                        Path = string.Empty,
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Layout = "default.html"
                         }
+                    },
+                    new DefaultMetadata
+                    {
+                        Path = "test",
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Collection = "test"
+                        }
+                    }
+                }
             };
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
@@ -321,23 +329,28 @@ namespace Test.Unit.FormerXunit
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
-                Defaults = new DefaultMetadatas {
-                            new DefaultMetadata {
-                                Path = string.Empty,
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Layout = "default.html"
-                                }
-                            },
-                            new DefaultMetadata {
-                                Path = "test",
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Layout = "other.html",
-                                    Collection = "test"
-                                }
-                            }
+                Defaults = new DefaultMetadatas
+                {
+                    new DefaultMetadata
+                    {
+                        Path = string.Empty,
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Layout = "default.html"
                         }
+                    },
+                    new DefaultMetadata
+                    {
+                        Path = "test",
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Layout = "other.html",
+                            Collection = "test"
+                        }
+                    }
+                }
             };
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
@@ -368,22 +381,27 @@ namespace Test.Unit.FormerXunit
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
             {
-                Defaults = new DefaultMetadatas {
-                            new DefaultMetadata {
-                                Path = string.Empty,
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Layout = "default.html"
-                                }
-                            },
-                            new DefaultMetadata {
-                                Path = "test",
-                                Extensions = [ ".html" ],
-                                Values = new FileMetaData {
-                                    Collection = "test"
-                                }
-                            }
+                Defaults = new DefaultMetadatas
+                {
+                    new DefaultMetadata
+                    {
+                        Path = string.Empty,
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Layout = "default.html"
                         }
+                    },
+                    new DefaultMetadata
+                    {
+                        Path = "test",
+                        Extensions = [".html"],
+                        Values = new FileMetaData
+                        {
+                            Collection = "test"
+                        }
+                    }
+                }
             };
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
@@ -402,7 +420,8 @@ namespace Test.Unit.FormerXunit
             result.Layout.Should().Be("default.html");
         }
 
-        FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, IContentPreprocessorStrategy[]? preprocessorStrategies = null, SiteInfo? siteInfo = null)
+        FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions,
+            IContentPreprocessorStrategy[]? preprocessorStrategies = null, SiteInfo? siteInfo = null)
         {
             preprocessorStrategies ??= Array.Empty<IContentPreprocessorStrategy>();
             siteInfo ??= new SiteInfo();
@@ -411,60 +430,6 @@ namespace Test.Unit.FormerXunit
             YamlFrontMatterMetadataProvider metadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             FileProcessor sut = new FileProcessor(mockFileSystem, logger, preprocessorStrategies, siteInfo, metadataProvider, metadataParserOptions);
             return sut;
-        }
-
-        static string CreateFrontMatter(Dictionary<string, object>? data = null)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("---");
-            if (data != null)
-            {
-                string raw = new YamlDotNet.Serialization.Serializer().Serialize(data);
-                stringBuilder.Append(raw);
-            }
-
-            stringBuilder.AppendLine("---");
-            return stringBuilder.ToString();
-        }
-
-#pragma warning disable IDE0051
-        string CreateEmptyXml()
-        {
-            XmlWriterSettings settings = new XmlWriterSettings
-            {
-                OmitXmlDeclaration = false,
-                Encoding = Encoding.UTF8
-            };
-            MemoryStream stream = new MemoryStream();
-            using (XmlWriter writer = XmlWriter.Create(stream, settings))
-            {
-                writer.WriteStartDocument();
-                writer.WriteStartElement("feed");
-                writer.WriteEndElement();
-                writer.Flush();
-                writer.Close();
-            }
-
-            stream.Position = 0;
-            StreamReader streamReader = new StreamReader(stream);
-            return streamReader.ReadToEnd();
-        }
-#pragma warning restore IDE0051
-        static MockFileData EmptyFile()
-        {
-            return ContentFile(string.Empty);
-        }
-
-        static MockFileData WithFrontMatter(Dictionary<string, object>? data = null)
-        {
-            string frontMatter = CreateFrontMatter(data);
-            return ContentFile(frontMatter);
-        }
-
-        static MockFileData ContentFile(string content)
-        {
-            byte[] bytes = Encoding.UTF8.GetBytes(content);
-            return new MockFileData(bytes);
         }
     }
 }

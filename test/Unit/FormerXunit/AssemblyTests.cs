@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Test.Unit.FormerXunit
 {
-    public class AssemblyUtilTests
+    public class AssemblyTests
     {
         [Fact(Skip = "Unstable")]
         public void Test_AssemblyData()

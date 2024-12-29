@@ -10,13 +10,11 @@ using Xunit;
 
 namespace Test.Unit.FormerXunit
 {
-    public class EncodingUtilTests
+    public class EncodingTests
     {
 
         [Theory]
-#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
         [MemberData(nameof(EncodingTestData))]
-#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
         public void Test_EncodingUtil_DetermineEncoding_ShouldReturnCorrectEncoding(Stream stream, string expectedEncoding)
         {
             Encoding result = stream.DetermineEncoding();
