@@ -8,6 +8,12 @@ using Kaylumah.Ssg.Utilities.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    public static class Proxy
+    {
+#pragma warning disable
+        public static readonly ProxyGenerator ProxyGenerator = new();
+    }
+
     public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection RegisterImplementationsAsSingleton<T>(this IServiceCollection serviceCollection)
@@ -37,8 +43,6 @@ namespace Microsoft.Extensions.DependencyInjection
             where TInterface : class
             where TImplementation : class, TInterface
         {
-            ProxyGenerator proxyGenerator = new ProxyGenerator();
-
             services.AddSingleton<TImplementation>();
             services.AddSingleton(provider =>
             {
@@ -46,7 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 IAsyncInterceptor[] interceptors = [interceptor];
 
                 TImplementation implementation = provider.GetRequiredService<TImplementation>();
-                TInterface result = proxyGenerator.CreateInterfaceProxyWithTarget<TInterface>(implementation, interceptors);
+                TInterface result = Proxy.ProxyGenerator.CreateInterfaceProxyWithTarget<TInterface>(implementation, interceptors);
                 return result;
             });
 

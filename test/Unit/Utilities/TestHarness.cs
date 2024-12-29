@@ -14,13 +14,7 @@ namespace Test.Utilities
     public sealed class TestHarness
     {
         readonly IServiceProvider _ServiceProvider;
-        static readonly ProxyGenerator _ProxyGenerator;
         readonly IReadOnlyList<IInterceptor> _Interceptors;
-
-        static TestHarness()
-        {
-            _ProxyGenerator = new();
-        }
 
         public TestHarness(IServiceProvider serviceProvider)
         {
@@ -41,7 +35,7 @@ namespace Test.Utilities
             T instance = _ServiceProvider.GetRequiredService<T>();
             if (targetType.IsInterface)
             {
-                T proxy = _ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _Interceptors.ToArray());
+                T proxy = Proxy.ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _Interceptors.ToArray());
                 return proxy;
             }
             else
@@ -49,7 +43,7 @@ namespace Test.Utilities
                 System.Reflection.ConstructorInfo? constructor = targetType.GetConstructor(Type.EmptyTypes);
                 if (constructor != null)
                 {
-                    T proxy = _ProxyGenerator.CreateClassProxyWithTarget(instance, _Interceptors.ToArray());
+                    T proxy = Proxy.ProxyGenerator.CreateClassProxyWithTarget(instance, _Interceptors.ToArray());
                     return proxy;
                 }
             }
