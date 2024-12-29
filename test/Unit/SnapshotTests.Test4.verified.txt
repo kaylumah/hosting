@@ -1,0 +1,31 @@
+﻿{
+  Build: {},
+  Id: ,
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Items: [
+    {
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      CanonicalUri: /example.html
+    }
+  ],
+  Pages: [
+    {
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      CanonicalUri: /example.html
+    }
+  ],
+  RecentArticles: [],
+  FeaturedArticles: []
+}

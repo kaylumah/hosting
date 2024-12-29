@@ -1,0 +1,13 @@
+﻿{
+  Build: {},
+  Id: ,
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Data: {},
+  Pages: [],
+  RecentArticles: [],
+  FeaturedArticles: []
+}
