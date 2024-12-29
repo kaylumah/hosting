@@ -17,7 +17,7 @@ namespace Test.Unit
         
         public SiteMetadataSnapshotTests()
         {
-            _VerifySettings = null!; // new VerifySettings();
+            _VerifySettings = new VerifySettings();
         }
         
         [Fact]
@@ -30,19 +30,7 @@ namespace Test.Unit
         }
         
         [Fact]
-        public async Task Test2()
-        {
-            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-            
-            TagMetaDataCollection tagMetaDataCollection = new();
-            Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
-            
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
-            await Verifier.Verify(siteMetaData, _VerifySettings);
-        }
-        
-        [Fact]
-        public async Task Test3()
+        public async Task Test_OnlyTags()
         {
             BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             
@@ -55,7 +43,7 @@ namespace Test.Unit
         }
         
         [Fact]
-        public async Task Test4()
+        public async Task Test_OnlyPages()
         {
             BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             
@@ -69,6 +57,28 @@ namespace Test.Unit
             items.Add(pageMetaData);
             
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, items);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
+        
+        [Fact]
+        public async Task Test_PagesWithCorrespondingTagData()
+        {
+            BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            
+            TagMetaDataCollection tagMetaDataCollection = new();
+            tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
+            Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
+            
+            List<BasePage> items = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                ["uri"] = "example.html",
+                ["tags"] = new List<object> { "1" }
+            };
+            PageMetaData pageMetaData = new PageMetaData(pageData);
+            items.Add(pageMetaData);
+            
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
     }
