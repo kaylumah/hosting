@@ -17,11 +17,11 @@ namespace Test.Unit
         
         public SiteMetadataSnapshotTests()
         {
-            _VerifySettings = new VerifySettings();
+            _VerifySettings = null!; // new VerifySettings();
         }
         
         [Fact]
-        public async Task Test1()
+        public async Task Test_EmptySite_ResultsInDefaults()
         {
             BuildData buildData = (BuildData) RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             
