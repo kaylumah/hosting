@@ -52,15 +52,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
         {
-            SortedDictionary<string, PageMetaData[]> tags = site.PagesByTags;
-            List<TagViewModel> result = new List<TagViewModel>();
-            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
-            {
-                string tag = item.Key;
-                TagViewModel resultForTag = GetTag(site, tag);
-                result.Add(resultForTag);
-            }
-
+            IEnumerable<TagViewModel> result = site.TagCloud;
             return result;
         }
 

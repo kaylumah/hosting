@@ -1,0 +1,87 @@
+﻿{
+  Build: {},
+  Id: ,
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Data: {
+    tags: [
+      {
+        Id: 1
+      }
+    ]
+  },
+  TagMetaData: [
+    {
+      Id: 1
+    }
+  ],
+  Tags: {
+    1: {
+      Id: 1
+    }
+  },
+  Items: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      CanonicalUri: /example.html
+    }
+  ],
+  Pages: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      CanonicalUri: /example.html
+    }
+  ],
+  RecentArticles: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      CanonicalUri: /example.html
+    }
+  ],
+  FeaturedArticles: [],
+  PagesByTags: {
+    1: [
+      {
+        SocialShare: false,
+        Feed: false,
+        Featured: false,
+        Sitemap: false,
+        Tags: [
+          1
+        ],
+        Uri: example.html,
+        CanonicalUri: /example.html
+      }
+    ]
+  },
+  TagCloud: [
+    {
+      Id: 1,
+      Size: 1
+    }
+  ]
+}

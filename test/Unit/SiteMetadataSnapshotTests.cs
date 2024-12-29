@@ -81,5 +81,27 @@ namespace Test.Unit
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
+        
+        [Fact]
+        public async Task Test_ArticlesWithCorrespondingTagData()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
+            TagMetaDataCollection tagMetaDataCollection = new();
+            tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
+            Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
+
+            List<BasePage> items = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                ["uri"] = "example.html",
+                ["tags"] = new List<object> { "1" }
+            };
+            Article pageMetaData = new Article(pageData);
+            items.Add(pageMetaData);
+
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
     }
 }

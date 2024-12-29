@@ -56,6 +56,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
 
+        public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
+
         public SiteMetaData(
             string id,
             string title,
@@ -139,6 +141,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     .FromTag(tag)
                     .ToArray();
                 result.Add(tag, tagFiles);
+            }
+
+            return result;
+        }
+
+        List<TagViewModel> GetTagCloud()
+        {
+            SortedDictionary<string, PageMetaData[]> tags = PagesByTags;
+            List<TagViewModel> result = new List<TagViewModel>();
+            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
+            {
+                string tag = item.Key;
+                TagViewModel resultForTag = GetTagViewModel(tag);
+                result.Add(resultForTag);
             }
 
             return result;
