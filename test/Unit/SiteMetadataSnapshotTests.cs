@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Gherkin.CucumberMessages.Types;
 using Ssg.Extensions.Metadata.Abstractions;
 using VerifyXunit;
 using Xunit;
 
 namespace Test.Unit
 {
-    public class SnapshotTests
+    public class SiteMetadataSnapshotTests
     {
         [Fact]
         public async Task Test1()
