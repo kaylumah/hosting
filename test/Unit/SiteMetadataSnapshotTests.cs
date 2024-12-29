@@ -50,6 +50,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                ["baseuri"] = "http://127.0.0.1",
                 ["uri"] = "example.html",
                 ["tags"] = new List<object> { "1" }
             };
@@ -72,6 +73,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                ["baseuri"] = "http://127.0.0.1",
                 ["uri"] = "example.html",
                 ["tags"] = new List<object> { "1" }
             };
@@ -94,6 +96,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                ["baseuri"] = "http://127.0.0.1",
                 ["uri"] = "example.html",
                 ["tags"] = new List<object> { "1" }
             };

@@ -33,7 +33,8 @@
         1
       ],
       Uri: example.html,
-      CanonicalUri: /example.html
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
     }
   ],
   Pages: [
@@ -46,7 +47,8 @@
         1
       ],
       Uri: example.html,
-      CanonicalUri: /example.html
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
     }
   ],
   RecentArticles: [
@@ -59,7 +61,8 @@
         1
       ],
       Uri: example.html,
-      CanonicalUri: /example.html
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
     }
   ],
   FeaturedArticles: [],
@@ -74,7 +77,8 @@
           1
         ],
         Uri: example.html,
-        CanonicalUri: /example.html
+        BaseUri: http://127.0.0.1,
+        CanonicalUri: http://127.0.0.1/example.html
       }
     ]
   },
