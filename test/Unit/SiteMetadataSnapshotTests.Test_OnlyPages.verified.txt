@@ -1,0 +1,33 @@
+﻿{
+  Build: {},
+  Id: ,
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Items: [
+    {
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    }
+  ],
+  Pages: [
+    {
+      Sitemap: false,
+      Tags: [
+        1
+      ],
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    }
+  ],
+  RecentArticles: [],
+  FeaturedArticles: []
+}
