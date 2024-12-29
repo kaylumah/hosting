@@ -11,8 +11,9 @@ namespace System.Collections.Generic
         public static bool GetBoolValue(this Dictionary<string, object?> dictionary, string key)
         {
             string stringValue = dictionary.GetValue<string>(key);
-            bool result = bool.Parse(stringValue);
-            return result;
+            bool tryParseOutcome = bool.TryParse(stringValue, out bool parseResult);
+            // if the value is not a boolean, we default to false
+            return tryParseOutcome && parseResult;
         }
 
         public static List<string> GetStringValues(this Dictionary<string, object?> dictionary, string key)
