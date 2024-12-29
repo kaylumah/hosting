@@ -81,7 +81,7 @@ namespace Test.Unit
             SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
-        
+
         [Fact]
         public async Task Test_ArticlesWithCorrespondingTagData()
         {
