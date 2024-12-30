@@ -35,7 +35,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogTrace($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
             }
         }
 
@@ -56,7 +56,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogTrace($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
             }
         }
 
@@ -70,7 +70,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogTrace($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
             }
         }
     }
