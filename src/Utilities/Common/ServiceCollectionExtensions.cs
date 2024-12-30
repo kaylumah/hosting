@@ -8,12 +8,6 @@ using Kaylumah.Ssg.Utilities.Common;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class Proxy
-    {
-#pragma warning disable
-        public static readonly ProxyGenerator ProxyGenerator = new();
-    }
-
     public static partial class ServiceCollectionExtensions
     {
         public static IServiceCollection RegisterImplementationsAsSingleton<T>(this IServiceCollection serviceCollection)
