@@ -49,7 +49,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.RegisterImplementationsAsSingleton<IKnownExtensionProcessor>();
             services.RegisterImplementationsAsSingleton<IPostProcessor>();
 
-            services.AddSingleton<ISiteManager, SiteManager>();
+            services.AddProxiedService<ISiteManager, SiteManager>();
 
             return services;
         }

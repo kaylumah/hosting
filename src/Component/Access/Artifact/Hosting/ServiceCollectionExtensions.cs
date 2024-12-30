@@ -21,7 +21,7 @@ namespace Kaylumah.Ssg.Access.Artifact.Hosting
 
             services.RegisterImplementationsAsSingleton<IStoreArtifactsStrategy>();
 
-            services.AddSingleton<IArtifactAccess, ArtifactAccess>();
+            services.AddProxiedService<IArtifactAccess, ArtifactAccess>();
             return services;
         }
     }
