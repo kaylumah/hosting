@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Kaylumah.Ssg.Utilities.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Test.Utilities

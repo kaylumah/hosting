@@ -3,7 +3,7 @@
 
 using Castle.DynamicProxy;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Kaylumah.Ssg.Utilities.Common
 {
     public static class Proxy
     {
