@@ -32,9 +32,13 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", false), new Artifact[] {
-                    new Artifact("test.txt", Encoding.UTF8.GetBytes(string.Empty))
-                }));
+            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", false);
+            byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
+            Artifact artifact = new Artifact("test.txt", emptyBytes);
+            Artifact[] artifacts = new Artifact[1];
+            artifacts[0] = artifact;
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
+            await sut.Store(storeArtifactsRequest);
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(1);
         }
@@ -53,10 +57,14 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", false), new Artifact[] {
-                    new Artifact(Path.Combine("assets", "test.txt"), Encoding.UTF8.GetBytes(string.Empty))
-                }
-            ));
+            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", false);
+            byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
+            string fileName = Path.Combine("assets", "test.txt");
+            Artifact artifact = new Artifact(fileName, emptyBytes);
+            Artifact[] artifacts = new Artifact[1];
+            artifacts[0] = artifact;
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
+            await sut.Store(storeArtifactsRequest);
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(2);
         }
