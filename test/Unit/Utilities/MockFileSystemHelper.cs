@@ -22,17 +22,15 @@ namespace Test.Unit.FormerXunit
             }
 
             stringBuilder.AppendLine("---");
-            return stringBuilder.ToString();
+            string result = stringBuilder.ToString();
+            return result;
         }
 
-#pragma warning disable IDE0051
         internal static string CreateEmptyXml()
         {
-            XmlWriterSettings settings = new XmlWriterSettings
-            {
-                OmitXmlDeclaration = false,
-                Encoding = Encoding.UTF8
-            };
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.OmitXmlDeclaration = false;
+            settings.Encoding = Encoding.UTF8;
             MemoryStream stream = new MemoryStream();
             using (XmlWriter writer = XmlWriter.Create(stream, settings))
             {
@@ -45,24 +43,27 @@ namespace Test.Unit.FormerXunit
 
             stream.Position = 0;
             StreamReader streamReader = new StreamReader(stream);
-            return streamReader.ReadToEnd();
+            string result = streamReader.ReadToEnd();
+            return result;
         }
-#pragma warning restore IDE0051
         internal static MockFileData EmptyFile()
         {
-            return ContentFile(string.Empty);
+            MockFileData result =  ContentFile(string.Empty);
+            return result;
         }
 
         internal static MockFileData WithFrontMatter(Dictionary<string, object>? data = null)
         {
             string frontMatter = CreateFrontMatter(data);
-            return ContentFile(frontMatter);
+            MockFileData result =  ContentFile(frontMatter);
+            return result;
         }
 
         internal static MockFileData ContentFile(string content)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(content);
-            return new MockFileData(bytes);
+            MockFileData result = new MockFileData(bytes);
+            return result;
         }
     }
 }
