@@ -26,26 +26,26 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_ChangedFileExtension()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            Dictionary<string, MockFileData> fileSystemData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/test.md", MockFileSystemHelper.EmptyFile() }
-            });
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions()
-            {
-                ExtensionMapping = new Dictionary<string, string>
+            };
+            MockFileSystem mockFileSystem = new MockFileSystem(fileSystemData);
+
+            Dictionary<string, string> metaDataConfig = new Dictionary<string, string>
                 {
                     { ".md", ".html" }
-                }
-            };
+                };
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.ExtensionMapping = metaDataConfig;
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
             BinaryFile testFile = result.Single(x => x.Name.Equals("test.html", StringComparison.Ordinal));
@@ -54,20 +54,20 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_Subdirectories()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            Dictionary<string, MockFileData> mockSystemData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/_subdir/test.txt", MockFileSystemHelper.EmptyFile() }
-            });
+            };
+            MockFileSystem mockFileSystem = new MockFileSystem(mockSystemData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".txt" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".txt" };
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
             BinaryFile testFile = result.Single(x => x.Name.Equals("test.txt", StringComparison.Ordinal));
@@ -77,23 +77,23 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_FrontMatter()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            Dictionary<string, MockFileData> fileData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/a.txt", MockFileSystemHelper.EmptyFile() },
                 { $"{Root}/b.txt", MockFileSystemHelper.WithFrontMatter() },
                 { $"{Root}/c.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } } }) },
                 { $"{Root}/d.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { }) }
-            });
+            };
+            MockFileSystem mockFileSystem = new MockFileSystem(fileData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".txt" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".txt" };
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().NotBeEmpty();
             result.Count().Should().Be(4);
 
@@ -111,58 +111,57 @@ namespace Test.Unit.FormerXunit
         [Fact(Skip = "figure out empty directory")]
         public async Task Test_FileProcessor_WithoutFiles_Should_ReturnEmptyList()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(
-                new Dictionary<string, MockFileData> { });
+            Dictionary<string, MockFileData> fileData = new Dictionary<string, MockFileData>();
+            MockFileSystem mockFileSystem = new MockFileSystem(fileData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = Array.Empty<string>()
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = Array.Empty<string>();
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().BeEmpty();
         }
 
         [Fact]
         public async Task Test_FileProcessor_WithoutFilter_Should_ReturnEmptyList()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            Dictionary<string, MockFileData> fileData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/index.html", MockFileSystemHelper.EmptyFile() }
-            });
+            };
+            MockFileSystem mockFileSystem = new MockFileSystem(fileData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = Array.Empty<string>()
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = Array.Empty<string>();
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().BeEmpty();
         }
 
         [Fact]
         public async Task Test_FileProcessor_WithFilter_Should_ReturnMatchingFiles()
         {
-            MockFileSystem mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            Dictionary<string, MockFileData> fileData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/index.html", MockFileSystemHelper.EmptyFile() },
                 { $"{Root}/other.png", MockFileSystemHelper.EmptyFile() }
-            });
+            };
+            MockFileSystem mockFileSystem = new MockFileSystem(fileData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> result = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> result = await sut.Process(criteria);
             result.Should().NotBeEmpty();
             result.Count().Should().Be(1);
         }
@@ -170,20 +169,18 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FilemetadataParser_EmptyFileWithoutConfigOnlyGetsDefaultValues()
         {
-            Dictionary<string, MockFileData> files = new()
-            {
-                [$"{Root}/file.html"] = string.Empty
+            Dictionary<string, MockFileData> files = new Dictionary<string, MockFileData>{
+                { $"{Root}/file.html", string.Empty }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
@@ -197,7 +194,7 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                [$"{Root}/file.html"] = string.Empty
+                { $"{Root}/file.html", string.Empty }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions
