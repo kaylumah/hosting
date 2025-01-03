@@ -37,7 +37,8 @@ namespace Test.Unit
             ArgumentNullException.ThrowIfNull(table);
             table.ValidateIfMappedCorrectlyTo<Tag>();
             TagCollection tagCollection = new TagCollection();
-            tagCollection.AddRange(table.CreateSet<Tag>());
+            System.Collections.Generic.IEnumerable<Tag> tags = table.CreateSet<Tag>();
+            tagCollection.AddRange(tags);
             return tagCollection;
         }
     }
