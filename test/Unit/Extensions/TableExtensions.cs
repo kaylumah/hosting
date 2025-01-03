@@ -20,7 +20,8 @@ namespace Reqnroll
 
         public static IEnumerable<string> AsStrings(this Table table, string column)
         {
-            return table.Rows.Select(r => r[column]).ToArray();
+            string[] result = table.Rows.Select(r => r[column]).ToArray();
+            return result;
         }
 
         public static void ValidateIfMappedCorrectlyTo<TObject>(this Table table) where TObject : class
@@ -97,29 +98,33 @@ namespace Reqnroll
                 }
             }
 
-            return gherkinTableHeaderPropertyInfosWithDuplicateIndex.ToArray();
+            PropertyInfo[] result = gherkinTableHeaderPropertyInfosWithDuplicateIndex.ToArray();
+            return result;
         }
 
         static string[] FindGherkinTableHeadersNotDeclaredAsHeader(IEnumerable<string> tableHeaderNames,
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
-            return gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
+            string[] result = gherkinTableHeaderPropertyNames.Where(orderedGherkinTableHeaderPropertyName =>
                     !tableHeaderNames.Contains(orderedGherkinTableHeaderPropertyName, _PropertyNameEqualityComparer))
                 .ToArray();
+            return result;
         }
 
         static string[] FindHeadersNotAtCorrectIndex(IEnumerable<string> tableHeaderNames,
             string[] orderedGherkinTableHeaderPropertyNames)
         {
-            return tableHeaderNames.Where((t, i) =>
+            string[] result = tableHeaderNames.Where((t, i) =>
                 !_PropertyNameEqualityComparer.Equals(t, orderedGherkinTableHeaderPropertyNames[i])).ToArray();
+            return result;
         }
 
         static string[] FindHeadersNotDeclaredAsGherkinTableHeader(IEnumerable<string> tableHeaderNames,
             IEnumerable<string> gherkinTableHeaderPropertyNames)
         {
-            return tableHeaderNames.Where(tableHeaderName =>
+            string[] result = tableHeaderNames.Where(tableHeaderName =>
                 !gherkinTableHeaderPropertyNames.Contains(tableHeaderName, _PropertyNameEqualityComparer)).ToArray();
+            return result;
         }
     }
 }

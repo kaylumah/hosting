@@ -13,19 +13,22 @@ namespace Test.Unit.Utilities
     {
         public static Article ToArticle(this SiteMapNode siteMapNode)
         {
-            Article article = new Article { Uri = siteMapNode.Url };
+            Article article = new Article();
+            article.Uri = siteMapNode.Url;
             return article;
         }
 
         public static IEnumerable<Article> ToArticles(this IEnumerable<SiteMapNode> siteMapNodes)
         {
-            return siteMapNodes.Select(ToArticle);
+            IEnumerable<Article> result = siteMapNodes.Select(ToArticle);
+            return result;
         }
 
         public static ArticleCollection ToArticles(this SiteMap siteMap)
         {
             ArticleCollection articles = new ArticleCollection();
-            articles.AddRange(siteMap.Items.ToArticles());
+            IEnumerable<Article> items = siteMap.Items.ToArticles();
+            articles.AddRange(items);
             return articles;
         }
     }
@@ -43,13 +46,15 @@ namespace Test.Unit.Utilities
 
         public static IEnumerable<Article> ToArticles(this IEnumerable<SyndicationItem> syndicationItems)
         {
-            return syndicationItems.Select(ToArticle);
+            IEnumerable<Article> result = syndicationItems.Select(ToArticle);
+            return result;
         }
 
         public static ArticleCollection ToArticles(this SyndicationFeed syndicationFeed)
         {
             ArticleCollection articles = new ArticleCollection();
-            articles.AddRange(syndicationFeed.Items.ToArticles());
+            IEnumerable<Article> items = syndicationFeed.Items.ToArticles();
+            articles.AddRange(items);
             return articles;
         }
     }

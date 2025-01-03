@@ -53,7 +53,8 @@ namespace Test.Unit.Helpers
             {
                 AuthorId? node = (AuthorId?)value;
                 string? str = node;
-                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
+                Scalar? scalar = new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false);
+                emitter.Emit(scalar);
             }
         }
         internal sealed class OrganizationIdYamlTypeConverter : IYamlTypeConverter
@@ -79,17 +80,21 @@ namespace Test.Unit.Helpers
             {
                 OrganizationId? node = (OrganizationId?)value;
                 string? str = node;
-                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
+                Scalar scalar = new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false);
+                emitter.Emit(scalar);
             }
         }
         public static ISerializer Create()
         {
+            CustomDateTimeYamlTypeConverter timeConverter = new CustomDateTimeYamlTypeConverter();
+            AuthorIdYamlTypeConverter authorIdYamlTypeConverter = new AuthorIdYamlTypeConverter();
+            OrganizationIdYamlTypeConverter organizationIdYamlTypeConverter = new OrganizationIdYamlTypeConverter();
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
-                .WithTypeConverter(new CustomDateTimeYamlTypeConverter())
-                .WithTypeConverter(new AuthorIdYamlTypeConverter())
-                .WithTypeConverter(new OrganizationIdYamlTypeConverter())
+                .WithTypeConverter(timeConverter)
+                .WithTypeConverter(authorIdYamlTypeConverter)
+                .WithTypeConverter(organizationIdYamlTypeConverter)
                 .Build();
             return serializer;
         }

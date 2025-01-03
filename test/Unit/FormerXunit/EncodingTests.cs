@@ -25,13 +25,15 @@ namespace Test.Unit.FormerXunit
 
         public static IEnumerable<object[]> EncodingTestData()
         {
+            byte[] ascii = Encoding.ASCII.GetBytes("Hello World!");
             yield return new object[] {
-                new MemoryStream(Encoding.ASCII.GetBytes("Hello World!")),
+                new MemoryStream(ascii),
                 Encoding.UTF8.EncodingName
             };
 
+            byte[] utf8 = Encoding.UTF8.GetBytes("Hello World!");
             yield return new object[] {
-                new MemoryStream(Encoding.UTF8.GetBytes("Hello World!")),
+                new MemoryStream(utf8),
                 Encoding.UTF8.EncodingName
             };
         }

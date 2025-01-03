@@ -37,14 +37,16 @@ namespace Test.Unit.FormerXunit
 
             Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+            Dictionary<string, string?> siteConfig = new Dictionary<string, string?>
             {
-                ["Site:Lang"] = null
-            });
-            configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+                { "Site:Lang", null }
+            };
+            configurationBuilder.AddInMemoryCollection(siteConfig);
+            Dictionary<string, string?> metaConfig = new Dictionary<string, string?>
             {
-                ["Metadata:ExtensionMapping"] = null
-            });
+                { "Metadata:ExtensionMapping", null }
+            };
+            configurationBuilder.AddInMemoryCollection(metaConfig);
 
             IConfigurationRoot configuration = configurationBuilder.Build();
             ServiceProvider serviceProvider = new ServiceCollection()

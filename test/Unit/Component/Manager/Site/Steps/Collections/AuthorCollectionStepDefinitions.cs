@@ -26,7 +26,8 @@ namespace Test.Unit.Steps.Collections
         {
             _AuthorCollection.AddRange(authorCollection);
             AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
-            authorMetaDataCollection.AddRange(_AuthorCollection.ToAuthorMetadata());
+            System.Collections.Generic.IEnumerable<AuthorMetaData> authors = _AuthorCollection.ToAuthorMetadata();
+            authorMetaDataCollection.AddRange(authors);
             _FileSystem.AddYamlDataFile(Kaylumah.Ssg.Manager.Site.Service.Constants.KnownFiles.Authors, authorMetaDataCollection);
         }
     }

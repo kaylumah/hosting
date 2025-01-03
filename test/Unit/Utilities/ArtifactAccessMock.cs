@@ -10,6 +10,7 @@ using Moq;
 
 namespace Test.Unit.Utilities
 {
+#pragma warning disable IDESIGN103
     public class ArtifactAccessMock : StrictMock<IArtifactAccess>
     {
         readonly List<StoreArtifactsRequest> _StoreArtifactsRequests;

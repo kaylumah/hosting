@@ -12,31 +12,32 @@ namespace Test.Unit.Entities
     {
         public static IEnumerable<AuthorMetaData> ToAuthorMetadata(this IEnumerable<Author> authors)
         {
-            return authors.Select(ToAuthorMetadata);
+            IEnumerable<AuthorMetaData> result = authors.Select(ToAuthorMetadata);
+            return result;
         }
 
         public static AuthorMetaData ToAuthorMetadata(this Author author)
         {
+            Links links = new Links();
+            links.Devto = author.Id;
+            links.Github = author.Id;
+            links.Linkedin = author.Id;
+            links.Medium = author.Id;
+            links.Twitter = author.Id;
             AuthorMetaData result = new AuthorMetaData();
             result.Id = author.Id!;
             result.FullName = author.Name!;
             result.Email = author.Email!;
             result.Uri = author.Uri!;
             result.Picture = author.Picture!;
-            result.Links = new Links()
-            {
-                Devto = author.Id,
-                Github = author.Id,
-                Linkedin = author.Id,
-                Medium = author.Id,
-                Twitter = author.Id
-            };
+            result.Links = links;
             return result;
         }
 
         public static IEnumerable<OrganizationMetaData> ToOrganizationMetadata(this IEnumerable<Organization> organizations)
         {
-            return organizations.Select(ToOrganizationMetadata);
+            IEnumerable<OrganizationMetaData> result = organizations.Select(ToOrganizationMetadata);
+            return result;
         }
 
         public static OrganizationMetaData ToOrganizationMetadata(this Organization organization)
@@ -49,7 +50,8 @@ namespace Test.Unit.Entities
 
         public static IEnumerable<TagMetaData> ToTagMetadata(this IEnumerable<Tag> tags)
         {
-            return tags.Select(ToTagMetadata);
+            IEnumerable<TagMetaData> result = tags.Select(ToTagMetadata);
+            return result;
         }
 
         public static TagMetaData ToTagMetadata(this Tag tag)
