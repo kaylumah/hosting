@@ -75,9 +75,13 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            await sut.Store(new StoreArtifactsRequest(new FileSystemOutputLocation("dist", true), new Artifact[] {
-                    new Artifact("test.txt", Encoding.UTF8.GetBytes(string.Empty))
-                }));
+            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", true);
+            byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
+            Artifact artifact = new Artifact("test.txt", emptyBytes);
+            Artifact[] artifacts = new Artifact[1];
+            artifacts[0] = artifact;
+            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
+            await sut.Store(storeArtifactsRequest);
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(1);
         }
