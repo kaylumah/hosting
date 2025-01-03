@@ -15,7 +15,9 @@ namespace Test.Unit.Utilities
     {
         public static string GetString(this byte[] bytes)
         {
-            return bytes.GetString(new UTF8Encoding(false));
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            string result = bytes.GetString(encoding);
+            return result;
         }
 
         public static string GetString(this byte[] bytes, Encoding encoding)
