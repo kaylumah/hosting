@@ -15,6 +15,13 @@ namespace Test.Unit.Utilities
         string? _FrontMatter;
         string? _Contents;
 
+        static UTF8Encoding UTF8Encoding;
+
+        static MockFileDataFactory()
+        {
+            UTF8Encoding = new UTF8Encoding(false);
+        }
+
         public MockFileDataFactory WithContents(string contents)
         {
             _Contents = contents;
@@ -37,7 +44,7 @@ namespace Test.Unit.Utilities
             return this;
         }
 
-        public MockFileDataFactory WithUtf8Encoding() => WithEncoding(new UTF8Encoding(false));
+        public MockFileDataFactory WithUtf8Encoding() => WithEncoding(UTF8Encoding);
         MockFileDataFactory WithEncoding(Encoding encoding)
         {
             _Encoding = encoding;
@@ -59,31 +66,36 @@ namespace Test.Unit.Utilities
 
             string data = sb.ToString();
             byte[]? bytes = _Encoding?.GetBytes(data);
-            return new MockFileData(bytes);
+            MockFileData result = new MockFileData(bytes);
+            return result;
         }
 
         public static MockFileData PlainFile(string contents)
         {
-            return new MockFileDataFactory()
+            MockFileData result = new MockFileDataFactory()
                 .WithUtf8Encoding()
                 .WithContents(contents)
                 .Create();
+            return result;
         }
 
         public static MockFileData EnrichedFile(string contents, Dictionary<string, object?>? data = null)
         {
-            return new MockFileDataFactory()
+            MockFileData result = new MockFileDataFactory()
                 .WithUtf8Encoding()
                 .WithContents(contents)
                 .WithYamlFrontMatter(data)
                 .Create();
+            return result;
         }
 
         public static MockFileData EmptyFile()
         {
-            return new MockFileDataFactory()
+            MockFileData result = 
+             new MockFileDataFactory()
                 .WithUtf8Encoding()
                 .Create();
+            return result;
         }
     }
 }
