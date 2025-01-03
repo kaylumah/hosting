@@ -25,7 +25,7 @@ namespace Test.Unit.Helpers
         {
             _ = obj ?? throw new ArgumentNullException(nameof(obj));
 
-            int result =  obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
+            int result = obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
                 .GetHashCode(StringComparison.OrdinalIgnoreCase);
             return result;
         }

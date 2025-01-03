@@ -48,14 +48,14 @@ namespace Test.Unit.FormerXunit
         }
         internal static MockFileData EmptyFile()
         {
-            MockFileData result =  ContentFile(string.Empty);
+            MockFileData result = ContentFile(string.Empty);
             return result;
         }
 
         internal static MockFileData WithFrontMatter(Dictionary<string, object>? data = null)
         {
             string frontMatter = CreateFrontMatter(data);
-            MockFileData result =  ContentFile(frontMatter);
+            MockFileData result = ContentFile(frontMatter);
             return result;
         }
 
