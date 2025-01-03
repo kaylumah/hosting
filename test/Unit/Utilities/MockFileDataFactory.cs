@@ -15,11 +15,11 @@ namespace Test.Unit.Utilities
         string? _FrontMatter;
         string? _Contents;
 
-        static UTF8Encoding UTF8Encoding;
+        static UTF8Encoding _UTF8Encoding;
 
         static MockFileDataFactory()
         {
-            UTF8Encoding = new UTF8Encoding(false);
+            _UTF8Encoding = new UTF8Encoding(false);
         }
 
         public MockFileDataFactory WithContents(string contents)
@@ -44,7 +44,7 @@ namespace Test.Unit.Utilities
             return this;
         }
 
-        public MockFileDataFactory WithUtf8Encoding() => WithEncoding(UTF8Encoding);
+        public MockFileDataFactory WithUtf8Encoding() => WithEncoding(_UTF8Encoding);
         MockFileDataFactory WithEncoding(Encoding encoding)
         {
             _Encoding = encoding;
