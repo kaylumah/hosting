@@ -15,16 +15,19 @@ namespace Test.Unit.Helpers
                 return x == y;
             }
 
-            return string.Equals(x.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase),
-                y.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase), StringComparison.OrdinalIgnoreCase);
+            string xName = x.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase);
+            string yName = y.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase);
+            bool result = string.Equals(xName, yName, StringComparison.OrdinalIgnoreCase);
+            return result;
         }
 
         public int GetHashCode(string obj)
         {
             _ = obj ?? throw new ArgumentNullException(nameof(obj));
 
-            return obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
+            int result =  obj.Replace(" ", string.Empty, StringComparison.OrdinalIgnoreCase)
                 .GetHashCode(StringComparison.OrdinalIgnoreCase);
+            return result;
         }
     }
 }
