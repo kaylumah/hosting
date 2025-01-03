@@ -7,6 +7,7 @@ using Moq;
 
 namespace Test.Unit.FormerXunit.Mocks
 {
+#pragma warning disable IDESIGN103
     public class LoggerMock<T> : Mock<ILogger<T>>
     {
         public LoggerMock()
