@@ -91,7 +91,7 @@ namespace Test.Unit.Utilities
 
         public static MockFileData EmptyFile()
         {
-            MockFileData result = 
+            MockFileData result =
              new MockFileDataFactory()
                 .WithUtf8Encoding()
                 .Create();
