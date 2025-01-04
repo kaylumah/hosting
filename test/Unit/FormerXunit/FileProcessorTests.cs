@@ -197,26 +197,26 @@ namespace Test.Unit.FormerXunit
                 { $"{Root}/file.html", string.Empty }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions
+
+            DefaultMetadata metadata = new DefaultMetadata();
+            metadata.Path = string.Empty;
+            metadata.Extensions = [".html"];
+            metadata.Values = new FileMetaData();
+
+            DefaultMetadatas defaults = new DefaultMetadatas
             {
-                Defaults = new DefaultMetadatas
-                {
-                    new DefaultMetadata
-                    {
-                        Path = string.Empty,
-                        Extensions = [".html"],
-                        Values = new FileMetaData { }
-                    }
-                }
+                metadata
             };
+
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.Defaults = defaults;
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
 
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
@@ -230,31 +230,29 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                [$"{Root}/file.html"] = string.Empty
+                { $"{Root}/file.html",  string.Empty }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions
+
+            DefaultMetadata metadata = new DefaultMetadata();
+            metadata.Path = string.Empty;
+            metadata.Extensions = [".html"];
+            metadata.Values = new FileMetaData();
+            metadata.Values.Layout = "default.html";
+            DefaultMetadatas defaults = new DefaultMetadatas
             {
-                Defaults = new DefaultMetadatas
-                {
-                    new DefaultMetadata
-                    {
-                        Path = string.Empty,
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Layout = "default.html"
-                        }
-                    }
-                }
+                metadata
             };
+
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.Defaults = defaults;
+        
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
@@ -270,40 +268,36 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                [$"{Root}/test/file.html"] = "---\r\noutputlocation: test/:name:ext---"
+                { $"{Root}/test/file.html", "---\r\noutputlocation: test/:name:ext---" }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions
+
+            DefaultMetadata metaA = new DefaultMetadata();
+            metaA.Path = string.Empty;
+            metaA.Extensions = [".html"];
+            metaA.Values = new FileMetaData();
+            metaA.Values.Layout = "default.html";
+
+            DefaultMetadata metaB = new DefaultMetadata();
+            metaB.Path = "test";
+            metaB.Extensions = [".html"];
+            metaB.Values = new FileMetaData();
+            metaB.Values.Collection = "test";
+
+            DefaultMetadatas defaults = new DefaultMetadatas
             {
-                Defaults = new DefaultMetadatas
-                {
-                    new DefaultMetadata
-                    {
-                        Path = string.Empty,
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Layout = "default.html"
-                        }
-                    },
-                    new DefaultMetadata
-                    {
-                        Path = "test",
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Collection = "test"
-                        }
-                    }
-                }
+                metaA,
+                metaB
             };
+
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.Defaults = defaults;
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
@@ -321,41 +315,36 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                [$"{Root}/test/file.html"] = "---\r\noutputlocation: test/:name:ext---"
+                { $"{Root}/test/file.html",  "---\r\noutputlocation: test/:name:ext---" }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions
+
+            DefaultMetadata metaA = new DefaultMetadata();
+            metaA.Path = string.Empty;
+            metaA.Extensions = [".html"];
+            metaA.Values = new FileMetaData();
+            metaA.Values.Layout = "default.html";
+
+            DefaultMetadata metaB = new DefaultMetadata();
+            metaB.Path = "test";
+            metaB.Extensions = [".html"];
+            metaB.Values = new FileMetaData();
+            metaB.Values.Layout = "other.html";
+            metaB.Values.Collection = "test";
+
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.Defaults = new DefaultMetadatas
             {
-                Defaults = new DefaultMetadatas
-                {
-                    new DefaultMetadata
-                    {
-                        Path = string.Empty,
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Layout = "default.html"
-                        }
-                    },
-                    new DefaultMetadata
-                    {
-                        Path = "test",
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Layout = "other.html",
-                            Collection = "test"
-                        }
-                    }
-                }
+                metaA,
+                metaB
             };
+
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "_site",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "_site";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
