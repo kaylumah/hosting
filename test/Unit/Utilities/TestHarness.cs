@@ -21,7 +21,9 @@ namespace Test.Utilities
         {
 
             _ServiceProvider = serviceProvider;
+            #pragma warning disable IDESIGN103
             _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
+            #pragma warning restore IDESIGN103
         }
 
         public async Task TestService<T>(Func<T, Task> scenario) where T : class
