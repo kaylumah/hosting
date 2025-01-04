@@ -9,6 +9,7 @@ using VerifyXunit;
 
 namespace Test.Unit.Component.Manager.Site.Steps
 {
+    #pragma warning disable IDESIGN103
     [Binding]
     public class VerifyArtifactAccessMockSteps
     {
