@@ -246,7 +246,7 @@ namespace Test.Unit.FormerXunit
 
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
             metadataParserOptions.Defaults = defaults;
-        
+
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
             FileFilterCriteria criteria = new FileFilterCriteria();
             criteria.RootDirectory = "_site";
