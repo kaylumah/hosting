@@ -12,14 +12,14 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public void TestKey()
         {
-            DefaultMetadata itemWithoutScope = new DefaultMetadata(); 
+            DefaultMetadata itemWithoutScope = new DefaultMetadata();
             itemWithoutScope.Path = "";
             itemWithoutScope.Extensions = [".html"];
             DefaultMetadata itemWithScope = new DefaultMetadata();
             itemWithScope.Path = "";
             itemWithScope.Scope = "";
             itemWithScope.Extensions = [".html"];
-            DefaultMetadata itemWithNamedScope = new DefaultMetadata(); 
+            DefaultMetadata itemWithNamedScope = new DefaultMetadata();
             itemWithNamedScope.Path = "";
             itemWithNamedScope.Scope = "posts";
             itemWithNamedScope.Extensions = [".html"];

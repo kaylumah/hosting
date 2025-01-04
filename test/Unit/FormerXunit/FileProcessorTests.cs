@@ -77,7 +77,7 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public async Task Test_FileProcessor_FrontMatter()
         {
-            #pragma warning disable IDESIGN103
+#pragma warning disable IDESIGN103
             Dictionary<string, MockFileData> fileData = new Dictionary<string, MockFileData>
             {
                 { $"{Root}/a.txt", MockFileSystemHelper.EmptyFile() },
@@ -85,7 +85,7 @@ namespace Test.Unit.FormerXunit
                 { $"{Root}/c.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { { "tags", new string[] { "A" } } }) },
                 { $"{Root}/d.txt", MockFileSystemHelper.WithFrontMatter(new Dictionary<string, object> { }) }
             };
-            #pragma warning restore IDESIGN103
+#pragma warning restore IDESIGN103
             MockFileSystem mockFileSystem = new MockFileSystem(fileData);
             MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
 
