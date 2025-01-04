@@ -12,10 +12,21 @@ namespace Test.Unit.FormerXunit
         [Fact]
         public void TestKey()
         {
-            DefaultMetadata itemWithoutScope = new DefaultMetadata() { Path = "", Extensions = [".html"] };
-            DefaultMetadata itemWithScope = new DefaultMetadata() { Path = "", Scope = "", Extensions = [".html"] };
-            DefaultMetadata itemWithNamedScope = new DefaultMetadata() { Path = "", Scope = "posts", Extensions = [".html"] };
-            DefaultMetadata itemPathWithNameScope = new DefaultMetadata() { Path = "2019", Scope = "posts", Extensions = [".html"] };
+            DefaultMetadata itemWithoutScope = new DefaultMetadata(); 
+            itemWithoutScope.Path = "";
+            itemWithoutScope.Extensions = [".html"];
+            DefaultMetadata itemWithScope = new DefaultMetadata();
+            itemWithScope.Path = "";
+            itemWithScope.Scope = "";
+            itemWithScope.Extensions = [".html"];
+            DefaultMetadata itemWithNamedScope = new DefaultMetadata(); 
+            itemWithNamedScope.Path = "";
+            itemWithNamedScope.Scope = "posts";
+            itemWithNamedScope.Extensions = [".html"];
+            DefaultMetadata itemPathWithNameScope = new DefaultMetadata();
+            itemPathWithNameScope.Path = "2019";
+            itemPathWithNameScope.Scope = "posts";
+            itemPathWithNameScope.Extensions = [".html"];
 
             DefaultMetadatas data = new DefaultMetadatas
             {
