@@ -25,7 +25,8 @@ namespace Test.Utilities
 
         public static TestHarnessBuilder Create()
         {
-            return new TestHarnessBuilder();
+            TestHarnessBuilder result = new TestHarnessBuilder();
+            return result;
         }
 
         public TestHarnessBuilder Configure(Action<IConfigurationBuilder> configurationRegistrationAction)
@@ -42,7 +43,8 @@ namespace Test.Utilities
 
         public TestHarnessBuilder Register(Action<IServiceCollection> serviceRegistrationAction)
         {
-            return Register((serviceCollection, _) => serviceRegistrationAction(serviceCollection));
+            TestHarnessBuilder result = Register((serviceCollection, _) => serviceRegistrationAction(serviceCollection));
+            return result;
         }
 
         public TestHarness Build()
