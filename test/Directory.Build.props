@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <WarningsNotAsErrors>$(WarningsNotAsErrors);IDESIGN103;</WarningsNotAsErrors>
     <NoWarn>$(NoWarn);CA1861;CA1859;CA1031;CA1848</NoWarn>
   </PropertyGroup>
 

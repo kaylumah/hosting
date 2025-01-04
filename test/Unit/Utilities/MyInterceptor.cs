@@ -79,7 +79,8 @@ namespace Test.Unit
             if (invocation.Arguments is { Length: > 0 })
             {
                 object first = invocation.Arguments[0];
-                _ReqnrollOutputHelper.WriteLine(JsonConvert.SerializeObject(first));
+                string json = JsonConvert.SerializeObject(first);
+                _ReqnrollOutputHelper.WriteLine(json);
             }
             // var validationResults = _validator.ValidateOperation(invocation.Method, invocation.Arguments);
             // if (validationResults.Length > 0)

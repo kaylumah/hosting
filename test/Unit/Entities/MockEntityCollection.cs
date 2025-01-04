@@ -23,7 +23,8 @@ namespace Test.Unit.Entities
 
         protected override TKey GetKeyForItem(TItem item)
         {
-            return BuildKey(item);
+            TKey result = BuildKey(item);
+            return result;
         }
     }
 }

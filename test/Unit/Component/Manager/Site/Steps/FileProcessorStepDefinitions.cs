@@ -27,11 +27,14 @@ namespace Test.Unit.Steps
 
         public FileProcessorStepDefinitions(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions, SiteInfo siteInfo)
         {
+            IEnumerable<IContentPreprocessorStrategy> strategies = Enumerable.Empty<IContentPreprocessorStrategy>();
+            YamlParser yamlParser = new YamlParser();
+            YamlFrontMatterMetadataProvider yamlFrontMatterMetadataProvider = new YamlFrontMatterMetadataProvider(yamlParser);
             _FileProcessor = new FileProcessor(mockFileSystem,
                 NullLogger<FileProcessor>.Instance,
-                Enumerable.Empty<IContentPreprocessorStrategy>(),
+                strategies,
                 siteInfo,
-                new YamlFrontMatterMetadataProvider(new YamlParser()),
+                yamlFrontMatterMetadataProvider,
                 metadataParserOptions);
             _Files = new();
         }

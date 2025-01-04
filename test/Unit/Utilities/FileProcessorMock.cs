@@ -11,6 +11,7 @@ using Test.Unit.Extensions;
 
 namespace Test.Unit.Utilities
 {
+#pragma warning disable IDESIGN103
     public class FileProcessorMock : StrictMock<IFileProcessor>
     {
         readonly ArticleCollection _Articles;

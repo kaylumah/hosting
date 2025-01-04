@@ -28,7 +28,8 @@ namespace Test.Unit.Extensions
 
         public static IEnumerable<BinaryFile> ToFile(this IEnumerable<PageMetaData> pageMetaData)
         {
-            return pageMetaData.Select(ToFile);
+            IEnumerable<BinaryFile> result = pageMetaData.Select(ToFile);
+            return result;
         }
 
         public static PageMetaData ToPageMetaData(this Entities.Article article)
@@ -40,20 +41,24 @@ namespace Test.Unit.Extensions
             pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
             pageDictionary.SetValue(nameof(PageMetaData.Description), article.Description);
             pageDictionary.SetValue(nameof(PageMetaData.Author), article.Author);
+#pragma warning disable
             pageDictionary.SetValue("PublishedDate", article.Created.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
             pageDictionary.SetValue("ModifiedDate", article.Modified.GetValueOrDefault().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+#pragma warning restore
             pageDictionary.SetValue(nameof(PageMetaData.Type), "Article");
             pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
             pageDictionary.SetValue(nameof(Article.Feed), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
             pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
-            return new PageMetaData(pageDictionary);
+            PageMetaData result = new PageMetaData(pageDictionary);
+            return result;
         }
 
         public static IEnumerable<PageMetaData> ToPageMetaData(this IEnumerable<Entities.Article> article)
         {
-            return article.Select(ToPageMetaData);
+            IEnumerable<PageMetaData> result = article.Select(ToPageMetaData);
+            return result;
         }
 
         public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<BinaryFile> files, Guid siteGuid = default)
@@ -62,28 +67,30 @@ namespace Test.Unit.Extensions
             IEnumerable<TextFile> textFiles = files.OfType<TextFile>();
             foreach (TextFile file in textFiles)
             {
-                pageMetas.Add(file.ToPage(siteGuid));
+                PageMetaData page = file.ToPage(siteGuid);
+                pageMetas.Add(page);
             }
 
-            return pageMetas.ToArticles();
+            IEnumerable<Entities.Article> result = pageMetas.ToArticles();
+            return result;
         }
 
         public static IEnumerable<Entities.Article> ToArticles(this IEnumerable<PageMetaData> pageMetaData)
         {
-            return pageMetaData.Select(ToArticle);
+            IEnumerable<Entities.Article> result = pageMetaData.Select(ToArticle);
+            return result;
         }
 
         public static Entities.Article ToArticle(this PageMetaData pageMetaData)
         {
-            return new Entities.Article()
-            {
-                Uri = pageMetaData.Uri,
-                Title = pageMetaData.Title,
-                Description = pageMetaData.Description,
-                Author = pageMetaData.Author,
-                Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null,
-                Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null
-            };
+            Entities.Article result = new Entities.Article();
+            result.Uri = pageMetaData.Uri;
+            result.Title = pageMetaData.Title;
+            result.Description = pageMetaData.Description;
+            result.Author = pageMetaData.Author;
+            result.Created = pageMetaData.Published != DateTimeOffset.MinValue ? pageMetaData.Published : null;
+            result.Modified = pageMetaData.Modified != DateTimeOffset.MinValue ? pageMetaData.Modified : null;
+            return result;
         }
     }
 }

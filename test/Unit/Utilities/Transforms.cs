@@ -24,7 +24,8 @@ namespace Test.Unit
         [StepArgumentTransformation]
         public List<string> TransformToListOfString(string commaSeparatedList)
         {
-            return commaSeparatedList.Split(Constants.Separator).ToList();
+            List<string> result = commaSeparatedList.Split(Constants.Separator).ToList();
+            return result;
         }
 
         [StepArgumentTransformation]
@@ -57,13 +58,12 @@ namespace Test.Unit
                         fileMetaData.Add(item.Key, item.Value);
                     }
 
-                    defaultMetaDatas.Add(new DefaultMetadata
-                    {
-                        Path = path,
-                        Scope = scope,
-                        Values = fileMetaData,
-                        Extensions = [".html"]
-                    });
+                    DefaultMetadata defaultMetadata = new DefaultMetadata();
+                    defaultMetadata.Path = path;
+                    defaultMetadata.Scope = scope;
+                    defaultMetadata.Values = fileMetaData;
+                    defaultMetadata.Extensions = [".html"];
+                    defaultMetaDatas.Add(defaultMetadata);
                 }
             }
 

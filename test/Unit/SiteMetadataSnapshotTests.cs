@@ -25,7 +25,9 @@ namespace Test.Unit
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, new());
+            List<BasePage> items = new();
+            Dictionary<string, object> data = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -35,10 +37,13 @@ namespace Test.Unit
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
 
             TagMetaDataCollection tagMetaDataCollection = new();
-            tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = "1";
+            tagMetaDataCollection.Add(tagMetaData);
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
+            List<BasePage> items = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -50,14 +55,15 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
-                ["baseuri"] = "http://127.0.0.1",
-                ["uri"] = "example.html",
-                ["tags"] = new List<object> { "1" }
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "example.html"},
+                { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, items);
+            Dictionary<string, object> data = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -67,15 +73,17 @@ namespace Test.Unit
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
 
             TagMetaDataCollection tagMetaDataCollection = new();
-            tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = "1";
+            tagMetaDataCollection.Add(tagMetaData);
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
-                ["baseuri"] = "http://127.0.0.1",
-                ["uri"] = "example.html",
-                ["tags"] = new List<object> { "1" }
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "example.html"},
+                { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
@@ -90,15 +98,17 @@ namespace Test.Unit
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
 
             TagMetaDataCollection tagMetaDataCollection = new();
-            tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = "1";
+            tagMetaDataCollection.Add(tagMetaData);
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
-                ["baseuri"] = "http://127.0.0.1",
-                ["uri"] = "example.html",
-                ["tags"] = new List<object> { "1" }
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "example.html"},
+                { "tags", new List<object> { "1" } }
             };
             Article pageMetaData = new Article(pageData);
             items.Add(pageMetaData);

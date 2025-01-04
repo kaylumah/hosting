@@ -38,18 +38,20 @@ namespace Test.Unit.Component.Manager.Site
             SiteInfo siteInfo, ValidationContext validationContext)
         {
             _ValidationContext = validationContext;
+            Dictionary<string, string?> config = new Dictionary<string, string?>()
+            {
+                { "Site", string.Empty },
+                { "Metadata", string.Empty }
+            };
+            MyInterceptor interceptor = new MyInterceptor(reqnrollOutputHelper);
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Configure(configurationBuilder =>
                 {
-                    configurationBuilder.AddInMemoryCollection(new Dictionary<string, string?>
-                    {
-                        ["Site"] = string.Empty,
-                        ["Metadata"] = string.Empty
-                    });
+                    configurationBuilder.AddInMemoryCollection(config);
                 })
                 .Register(services =>
                 {
-                    services.AddSingleton<IAsyncInterceptor>(new MyInterceptor(reqnrollOutputHelper));
+                    services.AddSingleton<IAsyncInterceptor>(interceptor);
                 })
                 .Register((services, configuration) =>
                 {

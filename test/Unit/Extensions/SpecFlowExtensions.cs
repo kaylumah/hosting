@@ -25,7 +25,8 @@ namespace Test.Unit
                 throw new InvalidOperationException($@"Gherkin data table must have exactly 2 columns. Columns found: ""{string.Join(@""", """, table.Rows.First().Keys)}""");
             }
 
-            return table.Rows.ToDictionary(row => row[0], row => (object)row[1]);
+            Dictionary<string, object> result = table.Rows.ToDictionary(row => row[0], row => (object)row[1]);
+            return result;
         }
     }
 }

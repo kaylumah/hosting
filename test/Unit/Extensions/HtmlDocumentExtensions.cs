@@ -24,7 +24,8 @@ namespace Test.Unit.Utilities
                 HtmlAttribute? valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
                 if (keyAttribute != null && valueAttribute != null)
                 {
-                    result.Add(new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value));
+                    ValueTuple<string, string> result1 = new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value);
+                    result.Add(result1);
                 }
             }
 

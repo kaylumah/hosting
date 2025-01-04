@@ -21,7 +21,9 @@ namespace Test.Utilities
         {
 
             _ServiceProvider = serviceProvider;
+#pragma warning disable IDESIGN103
             _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
+#pragma warning restore IDESIGN103
         }
 
         public async Task TestService<T>(Func<T, Task> scenario) where T : class
@@ -34,9 +36,11 @@ namespace Test.Utilities
         {
             Type targetType = typeof(T);
             T instance = _ServiceProvider.GetRequiredService<T>();
+            IInterceptor[] interceptors = _Interceptors.ToArray();
+
             if (targetType.IsInterface)
             {
-                T proxy = Proxy.ProxyGenerator.CreateInterfaceProxyWithTarget(instance, _Interceptors.ToArray());
+                T proxy = Proxy.ProxyGenerator.CreateInterfaceProxyWithTarget(instance, interceptors);
                 return proxy;
             }
             else
@@ -44,7 +48,7 @@ namespace Test.Utilities
                 System.Reflection.ConstructorInfo? constructor = targetType.GetConstructor(Type.EmptyTypes);
                 if (constructor != null)
                 {
-                    T proxy = Proxy.ProxyGenerator.CreateClassProxyWithTarget(instance, _Interceptors.ToArray());
+                    T proxy = Proxy.ProxyGenerator.CreateClassProxyWithTarget(instance, interceptors);
                     return proxy;
                 }
             }

@@ -26,7 +26,8 @@ namespace Test.Unit.Steps.Collections
         {
             _OrganizationCollection.AddRange(organizationCollection);
             OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
-            organizationMetaDataCollection.AddRange(_OrganizationCollection.ToOrganizationMetadata());
+            System.Collections.Generic.IEnumerable<OrganizationMetaData> organizations = _OrganizationCollection.ToOrganizationMetadata();
+            organizationMetaDataCollection.AddRange(organizations);
             _FileSystem.AddYamlDataFile(Kaylumah.Ssg.Manager.Site.Service.Constants.KnownFiles.Organizations, organizationMetaDataCollection);
         }
     }
