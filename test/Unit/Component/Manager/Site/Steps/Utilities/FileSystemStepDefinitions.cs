@@ -57,7 +57,8 @@ namespace Test.Unit.Steps.Utilities
         public void GivenIsAnEmptyPage(string fileName)
         {
             string pageDirectory = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePagesDirectory, fileName);
-            _MockFileSystem.AddFile(pageDirectory, MockFileDataFactory.EmptyFile());
+            MockFileData file = MockFileDataFactory.EmptyFile();
+            _MockFileSystem.AddFile(pageDirectory, file);
         }
 
         [Given("'(.*)' is an empty file:")]
@@ -65,7 +66,8 @@ namespace Test.Unit.Steps.Utilities
         {
             string normalizedFileName = fileName.Replace('/', Path.DirectorySeparatorChar);
             string filePath = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory, normalizedFileName);
-            _MockFileSystem.AddFile(filePath, MockFileDataFactory.EmptyFile());
+            MockFileData file = MockFileDataFactory.EmptyFile();
+            _MockFileSystem.AddFile(filePath, file);
         }
     }
 }
