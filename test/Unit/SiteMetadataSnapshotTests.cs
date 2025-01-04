@@ -25,7 +25,9 @@ namespace Test.Unit
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, new());
+            List<BasePage> items = new();
+            Dictionary<string, object> data = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -38,7 +40,8 @@ namespace Test.Unit
             tagMetaDataCollection.Add(new TagMetaData() { Id = "1" });
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, new());
+            List<BasePage> items = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -57,7 +60,8 @@ namespace Test.Unit
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", new(), buildData, items);
+            Dictionary<string, object> data = new();
+            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
