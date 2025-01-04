@@ -29,28 +29,32 @@ namespace Test.Unit.Steps.Utilities
         public void GivenIsALayoutFileWithTheFollowingContents(string fileName, string contents)
         {
             string layoutFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceLayoutsDirectory, fileName);
-            _MockFileSystem.AddFile(layoutFileName, MockFileDataFactory.PlainFile(contents));
+            MockFileData file = MockFileDataFactory.PlainFile(contents);
+            _MockFileSystem.AddFile(layoutFileName, file);
         }
 
         [Given("'(.*)' is an asset file with the following contents:")]
         public void GivenIsAnAssetFileWithTheFollowingContents(string fileName, string contents)
         {
             string assetFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceAssetsDirectory, fileName);
-            _MockFileSystem.AddFile(assetFileName, MockFileDataFactory.PlainFile(contents));
+            MockFileData file = MockFileDataFactory.PlainFile(contents);
+            _MockFileSystem.AddFile(assetFileName, file);
         }
 
         [Given("'(.*)' is a post with the following contents:")]
         public void GivenIsAPostWithTheFollowingContents(string fileName, string contents)
         {
             string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, fileName);
-            _MockFileSystem.AddFile(postFileName, MockFileDataFactory.PlainFile(contents));
+            MockFileData file = MockFileDataFactory.PlainFile(contents);
+            _MockFileSystem.AddFile(postFileName, file);
         }
 
         [Given("'(.*)' is an empty post:")]
         public void GivenIsAnEmptyPost(string fileName)
         {
             string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, fileName);
-            _MockFileSystem.AddFile(postFileName, MockFileDataFactory.EmptyFile());
+            MockFileData file = MockFileDataFactory.EmptyFile();
+            _MockFileSystem.AddFile(postFileName, file);
         }
 
         [Given("'(.*)' is an empty page:")]
