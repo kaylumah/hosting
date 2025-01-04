@@ -17,7 +17,8 @@ namespace Test.Unit
             ArgumentNullException.ThrowIfNull(table);
             table.ValidateIfMappedCorrectlyTo<Author>();
             AuthorCollection authorCollection = new AuthorCollection();
-            authorCollection.AddRange(table.CreateSet<Author>());
+            System.Collections.Generic.IEnumerable<Author> authors = table.CreateSet<Author>();
+            authorCollection.AddRange(authors);
             return authorCollection;
         }
 
@@ -27,7 +28,8 @@ namespace Test.Unit
             ArgumentNullException.ThrowIfNull(table);
             table.ValidateIfMappedCorrectlyTo<Organization>();
             OrganizationCollection organizationCollection = new OrganizationCollection();
-            organizationCollection.AddRange(table.CreateSet<Organization>());
+            System.Collections.Generic.IEnumerable<Organization> organizations = table.CreateSet<Organization>();
+            organizationCollection.AddRange(organizations);
             return organizationCollection;
         }
 
