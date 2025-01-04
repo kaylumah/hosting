@@ -14,7 +14,8 @@ namespace Test.Unit
         public static void BeforeTestRun()
         {
             // https://docs.specflow.org/projects/specflow/en/latest/Bindings/SpecFlow-Assist-Helpers.html
-            Service.Instance.ValueRetrievers.Register(new NullValueRetriever(Constants.NullIndicator));
+            NullValueRetriever nullValueRetriever = new NullValueRetriever(Constants.NullIndicator);
+            Service.Instance.ValueRetrievers.Register(nullValueRetriever);
         }
     }
 }
