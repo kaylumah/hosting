@@ -94,6 +94,7 @@ namespace Test.E2e
             // settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
+#pragma warning disable IDESIGN103
             settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
             settings.ReplaceMatches(VerifierHelper.TagCloud(), string.Empty);
             await Verifier.Verify(html, "html", settings);
