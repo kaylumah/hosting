@@ -22,7 +22,8 @@ namespace Test.Unit.Steps.Utilities
         public void GivenIsADataFileWithTheFollowingContents(string fileName, string contents)
         {
             string dataFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory, fileName);
-            _MockFileSystem.AddFile(dataFileName, MockFileDataFactory.PlainFile(contents));
+            MockFileData file = MockFileDataFactory.PlainFile(contents);
+            _MockFileSystem.AddFile(dataFileName, file);
         }
 
         [Given("'(.*)' is a layout file with the following contents:")]
