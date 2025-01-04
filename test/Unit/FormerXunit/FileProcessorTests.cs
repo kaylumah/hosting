@@ -362,40 +362,34 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                [$"posts/2021/file.html"] = "---\r\noutputlocation: posts/2021/:name:ext---"
+                 { $"posts/2021/file.html",  "---\r\noutputlocation: posts/2021/:name:ext---" }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
-            MetadataParserOptions metadataParserOptions = new MetadataParserOptions
+
+            DefaultMetadata metaA = new DefaultMetadata();
+            metaA.Path = string.Empty;
+            metaA.Extensions = [".html"];
+            metaA.Values = new FileMetaData();
+            metaA.Values.Layout = "default.html";
+
+            DefaultMetadata metaB = new DefaultMetadata();
+            metaB.Path = "test";
+            metaB.Extensions = [".html"];
+            metaB.Values = new FileMetaData();
+            metaB.Values.Collection = "test";
+
+            MetadataParserOptions metadataParserOptions = new MetadataParserOptions();
+            metadataParserOptions.Defaults = new DefaultMetadatas
             {
-                Defaults = new DefaultMetadatas
-                {
-                    new DefaultMetadata
-                    {
-                        Path = string.Empty,
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Layout = "default.html"
-                        }
-                    },
-                    new DefaultMetadata
-                    {
-                        Path = "test",
-                        Extensions = [".html"],
-                        Values = new FileMetaData
-                        {
-                            Collection = "test"
-                        }
-                    }
-                }
+                metaA,
+                metaB
             };
             FileProcessor sut = CreateFileProcessor(mockFileSystem, metadataParserOptions);
-            IEnumerable<BinaryFile> processResult = await sut.Process(new FileFilterCriteria
-            {
-                RootDirectory = "posts",
-                DirectoriesToSkip = Array.Empty<string>(),
-                FileExtensionsToTarget = new string[] { ".html" }
-            });
+            FileFilterCriteria criteria = new FileFilterCriteria();
+            criteria.RootDirectory = "posts";
+            criteria.DirectoriesToSkip = Array.Empty<string>();
+            criteria.FileExtensionsToTarget = new string[] { ".html" };
+            IEnumerable<BinaryFile> processResult = await sut.Process(criteria);
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
