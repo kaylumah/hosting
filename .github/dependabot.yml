@@ -34,6 +34,10 @@ updates:
         patterns:
           - xunit.runner.visualstudio
           - xunit
+      Verify:
+        patterns:
+          - Verify.XunitV3
+          - Verify.Xunit
     open-pull-requests-limit: 25
 
   - package-ecosystem: dotnet-sdk
