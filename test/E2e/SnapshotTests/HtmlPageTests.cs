@@ -87,11 +87,7 @@ namespace Test.E2e.SnapshotTests
         }
 
         [Theory]
-#pragma warning disable CS3016 // Arrays as attribute arguments is not CLS-compliant
-#pragma warning disable xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
         [MemberData(nameof(GetBlogPages))]
-#pragma warning restore xUnit1042 // The member referenced by the MemberData attribute returns untyped data rows
-#pragma warning restore CS3016 // Arrays as attribute arguments is not CLS-compliant
         public async Task Verify_BlogPostPageHtml_Contents(string path)
         {
             IPage blogPage = await _DesktopFixture.GetPage();
