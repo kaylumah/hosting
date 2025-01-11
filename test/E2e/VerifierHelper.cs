@@ -14,7 +14,6 @@ using Xunit;
 
 namespace Test.E2e
 {
-#pragma warning disable CS3009 // Argument type is not CLS-compliant
     public class ScreenshotFactAttribute : FactAttribute
     {
         public ScreenshotFactAttribute() : base()
