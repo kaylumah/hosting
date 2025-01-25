@@ -200,4 +200,11 @@ namespace Test.Unit
 
         protected override string ConvertToPrimitive(SiteId id) => id;
     }
+
+    public class PageIdTests : StronglyTypedStringIdTests<PageId>
+    {
+        protected override PageId ConvertFromPrimitive(string value) => value;
+
+        protected override string ConvertToPrimitive(PageId id) => id;
+    }
 }
