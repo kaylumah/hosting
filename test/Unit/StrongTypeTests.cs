@@ -21,6 +21,7 @@ namespace Test.Unit
         { get; }
 
         protected abstract TStrongTypedId ConvertFromPrimitive(TPrimitive value);
+
         protected abstract TPrimitive ConvertToPrimitive(TStrongTypedId id);
 
         [Fact]
