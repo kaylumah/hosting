@@ -1,7 +1,7 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
+#pragma warning disable
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text.Json;
@@ -12,7 +12,8 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Test.Unit
 {
-    public abstract class StronglyTypedIdTests<TId, TPrimitive> where TId : struct
+    public abstract class StronglyTypedIdTests<TId, TPrimitive> 
+        where TId : struct
     {
         protected abstract TPrimitive SampleValue
         { get; }
@@ -20,7 +21,7 @@ namespace Test.Unit
         protected abstract TPrimitive EmptyValue
         { get; }
 
-        protected abstract TId ConvertFromPrimitive(TPrimitive value);
+        protected abstract TId ConvertFromPrimitive(TPrimitive? value);
         protected abstract TPrimitive ConvertToPrimitive(TId id);
 
         [Fact]
@@ -55,6 +56,75 @@ namespace Test.Unit
             Assert.NotEqual(id1, id2);
         }
 
+        [Fact]
+        public void DefaultValue_Should_BeHandledCorrectly()
+        {
+            TId defaultId = default;
+            Assert.Equal(ConvertFromPrimitive(EmptyValue), defaultId);
+        }
+        
+        /*
+        [Fact]
+        public void NullString_Should_BeHandledGracefully()
+        {
+            TId id = ConvertFromPrimitive(default);
+            Assert.Equal(ConvertFromPrimitive(null), id);
+        }
+        */
+        
+        [Fact]
+        public void HashCode_Should_BeConsistent()
+        {
+            TId id1 = ConvertFromPrimitive(SampleValue);
+            TId id2 = ConvertFromPrimitive(SampleValue);
+            Assert.Equal(id1.GetHashCode(), id2.GetHashCode());
+        }
+
+        [Fact]
+        public void HashCode_Should_Differ_ForDifferentValues()
+        {
+            TId id1 = ConvertFromPrimitive(SampleValue);
+            TId id2 = ConvertFromPrimitive(EmptyValue);
+            Assert.NotEqual(id1.GetHashCode(), id2.GetHashCode());
+        }
+        
+        /*
+        [Fact]
+        public void CaseSensitivity_Should_BeRespected()
+        {
+            if (SampleValue is string strValue)
+            {
+                TId lower = ConvertFromPrimitive(strValue.ToLower());
+                TId upper = ConvertFromPrimitive(strValue.ToUpper());
+                Assert.NotEqual(lower, upper);
+            }
+        }
+        */
+        
+        [Fact]
+        public void SystemTextJson_Should_Throw_When_DataIsMalformed()
+        {
+            string invalidJson = "{ \"Value\": 12345 }"; // Expecting a string but got an integer
+            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TId>(invalidJson));
+        }
+        
+        [Fact]
+        public void Serialization_Should_BeFast()
+        {
+            TId id = ConvertFromPrimitive(SampleValue);
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+            for (int i = 0; i < 100000; i++)
+            {
+                string json = JsonSerializer.Serialize(id);
+                _ = JsonSerializer.Deserialize<TId>(json);
+            }
+
+            stopwatch.Stop();
+            Assert.True(stopwatch.ElapsedMilliseconds < 2000, "Serialization too slow.");
+        }
+        
+        
         [Fact]
         public void SystemTextJson_Should_SerializeAndDeserialize()
         {
@@ -128,114 +198,4 @@ namespace Test.Unit
 
         protected override string ConvertToPrimitive(AuthorId id) => id;
     }
-
-#pragma warning disable
-
-    /*
-    public class AuthorIdSerializationTests
-    {
-        private const string TestValue = "12345";
-
-        [Fact]
-        public void Performance_Should_BeWithinAcceptableLimits()
-        {
-            var authorId = new AuthorId("performance-test");
-            var iterations = 1000000;
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-            for (int i = 0; i < iterations; i++)
-            {
-                _ = JsonSerializer.Serialize(authorId);
-            }
-
-            stopwatch.Stop();
-            Assert.True(stopwatch.ElapsedMilliseconds < 2000); // Ensure it runs within 2 seconds
-        }
-        
-        // 6. Null string to AuthorId conversion
-        [Fact]
-        public void ImplicitConversion_Should_Handle_NullString_To_AuthorId()
-        {
-            AuthorId authorId = (string)null!;
-            Assert.Equal(null, authorId.Value);
-        }
-
-        // 7. Empty string to AuthorId conversion
-        [Fact]
-        public void ImplicitConversion_Should_Handle_EmptyString_To_AuthorId()
-        {
-            AuthorId authorId = "";
-            Assert.Equal(string.Empty, authorId.Value);
-        }
-
-        // 8. Test value equality for same AuthorId values
-        [Fact]
-        public void AuthorId_Should_BeEqual_When_ValuesAreSame()
-        {
-            AuthorId id1 = "123";
-            AuthorId id2 = "123";
-            Assert.Equal(id1, id2);
-        }
-
-        // 9. Test value inequality for different AuthorId values
-        [Fact]
-        public void AuthorId_Should_NotBeEqual_When_ValuesAreDifferent()
-        {
-            AuthorId id1 = "123";
-            AuthorId id2 = "456";
-            Assert.NotEqual(id1, id2);
-        }
-
-        // 10. Case sensitivity in equality checks
-        [Fact]
-        public void AuthorId_Should_BeCaseSensitive()
-        {
-            AuthorId id1 = "abc";
-            AuthorId id2 = "ABC";
-            Assert.NotEqual(id1, id2);
-        }
-
-        // 11. Check serialization/deserialization of an object containing AuthorId
-        public class Author
-        {
-            public AuthorId Id { get; set; }
-        }
-
-        [Fact]
-        public void SystemTextJson_Should_SerializeAndDeserialize_AuthorClass()
-        {
-            var author = new Author { Id = new AuthorId(TestValue) };
-
-            string json = JsonSerializer.Serialize(author);
-            Console.WriteLine("Serialized Author:\n" + json);
-
-            var deserialized = JsonSerializer.Deserialize<Author>(json);
-            Assert.Equal(author.Id, deserialized!.Id);
-        }
-
-        // 12. Hash code consistency test
-        [Fact]
-        public void AuthorId_Should_Have_Consistent_HashCode()
-        {
-            AuthorId id1 = "12345";
-            AuthorId id2 = "12345";
-            Assert.Equal(id1.GetHashCode(), id2.GetHashCode());
-        }
-
-        // 13. Test default value handling
-        [Fact]
-        public void Default_AuthorId_Should_BeEmpty()
-        {
-            AuthorId defaultId = default;
-            Assert.Equal(null, defaultId.Value);
-        }
-
-        // 14. Test deserialization of malformed JSON
-        [Fact]
-        public void SystemTextJson_Should_Throw_When_DataIsMalformed()
-        {
-            string invalidJson = "{ \"Value\": 12345 }"; // Invalid JSON for string
-            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<AuthorId>(invalidJson));
-        }
-    }*/
 }
