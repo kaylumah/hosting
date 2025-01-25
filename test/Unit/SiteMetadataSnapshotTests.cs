@@ -15,6 +15,7 @@ namespace Test.Unit
     {
         readonly VerifySettings _VerifySettings;
         const string DefaultSiteId = "my-site";
+        const string DefaultPageId = "my-page";
 
         public SiteMetadataSnapshotTests()
         {
@@ -61,6 +62,7 @@ namespace Test.Unit
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
+            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             Dictionary<string, object> data = new();
@@ -87,6 +89,7 @@ namespace Test.Unit
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
+            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -112,6 +115,7 @@ namespace Test.Unit
                 { "tags", new List<object> { "1" } }
             };
             Article pageMetaData = new Article(pageData);
+            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
