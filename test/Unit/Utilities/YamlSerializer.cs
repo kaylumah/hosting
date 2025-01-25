@@ -30,6 +30,8 @@ namespace Test.Unit.Helpers
                 emitter.Emit((ParsingEvent)new Scalar(AnchorName.Empty, TagName.Empty, str!, ScalarStyle.Any, true, false));
             }
         }
+
+        /*
         internal sealed class AuthorIdYamlTypeConverter : IYamlTypeConverter
         {
             static readonly Type _ContentCategoryNodeType;
@@ -57,6 +59,8 @@ namespace Test.Unit.Helpers
                 emitter.Emit(scalar);
             }
         }
+        */
+
         internal sealed class OrganizationIdYamlTypeConverter : IYamlTypeConverter
         {
             static readonly Type _ContentCategoryNodeType;
@@ -87,13 +91,13 @@ namespace Test.Unit.Helpers
         public static ISerializer Create()
         {
             CustomDateTimeYamlTypeConverter timeConverter = new CustomDateTimeYamlTypeConverter();
-            AuthorIdYamlTypeConverter authorIdYamlTypeConverter = new AuthorIdYamlTypeConverter();
+            // AuthorIdYamlTypeConverter authorIdYamlTypeConverter = new AuthorIdYamlTypeConverter();
             OrganizationIdYamlTypeConverter organizationIdYamlTypeConverter = new OrganizationIdYamlTypeConverter();
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull | DefaultValuesHandling.OmitDefaults)
                 .WithTypeConverter(timeConverter)
-                .WithTypeConverter(authorIdYamlTypeConverter)
+                // .WithTypeConverter(authorIdYamlTypeConverter)
                 .WithTypeConverter(organizationIdYamlTypeConverter)
                 .Build();
             return serializer;
