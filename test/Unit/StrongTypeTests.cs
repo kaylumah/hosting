@@ -73,7 +73,7 @@ namespace Test.Unit
             TStrongTypedId id2 = ConvertFromPrimitive(EmptyValue);
             int id1HashCode = id1.GetHashCode();
             int id2HashCode = id2.GetHashCode();
-            Assert.Equal(id1HashCode, id2HashCode);
+            Assert.NotEqual(id1HashCode, id2HashCode);
         }
 
         [Fact]
@@ -198,5 +198,12 @@ namespace Test.Unit
         protected override AuthorId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(AuthorId id) => id;
+    }
+
+    public class OrganizationIdTests : StronglyTypedStringIdTests<OrganizationId>
+    {
+        protected override OrganizationId ConvertFromPrimitive(string value) => value;
+
+        protected override string ConvertToPrimitive(OrganizationId id) => id;
     }
 }
