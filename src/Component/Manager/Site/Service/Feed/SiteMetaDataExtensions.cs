@@ -11,9 +11,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Feed
 {
     public static class SiteMetaDataExtensions
     {
-        public static Dictionary<string, SyndicationCategory> ToCategories(this SiteMetaData source)
+        public static Dictionary<TagId, SyndicationCategory> ToCategories(this SiteMetaData source)
         {
-            Dictionary<string, SyndicationCategory> result;
+            Dictionary<TagId, SyndicationCategory> result;
             if (source.TagMetaData == null)
             {
                 result = new();
