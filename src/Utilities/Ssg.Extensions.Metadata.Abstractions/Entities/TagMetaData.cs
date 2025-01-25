@@ -13,7 +13,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static implicit operator string(TagId tagId) => tagId.Value;
         public static implicit operator TagId(string value) => new(value);
     }
-    
+
     [DebuggerDisplay("TagMetaData '{Name}'")]
     public class TagMetaData
     {
