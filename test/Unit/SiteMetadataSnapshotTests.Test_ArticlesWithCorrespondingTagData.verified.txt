@@ -36,6 +36,9 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1
@@ -50,6 +53,9 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1
@@ -64,6 +70,9 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1
@@ -80,6 +89,9 @@
         SocialShare: false,
         Feed: false,
         Featured: false,
+        Id: {
+          Value: my-page
+        },
         Sitemap: false,
         Tags: [
           1

@@ -138,7 +138,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
             set
             {
-                SetValue(nameof(Id), value);
+                string strValue = value;
+                SetValue(nameof(Id), strValue);
             }
         }
         public string Title => GetString(nameof(Title));
