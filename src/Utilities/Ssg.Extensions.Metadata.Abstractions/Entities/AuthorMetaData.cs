@@ -12,6 +12,7 @@ using System.Text.Json.Serialization;
 namespace Ssg.Extensions.Metadata.Abstractions
 {
 
+    /*
     public sealed class AuthorIdJsonConverter : JsonConverter<AuthorId>
     {
         public override AuthorId Read(
@@ -46,6 +47,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return value;
         }
     }
+    */
 
     public readonly struct AuthorId
     {
