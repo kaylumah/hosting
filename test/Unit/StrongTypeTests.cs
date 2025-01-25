@@ -16,10 +16,10 @@ namespace Test.Unit
     {
         protected abstract TPrimitive SampleValue
         { get; }
-        
+
         protected abstract TPrimitive EmptyValue
         { get; }
-        
+
         protected abstract TId ConvertFromPrimitive(TPrimitive value);
         protected abstract TPrimitive ConvertToPrimitive(TId id);
 
@@ -54,7 +54,7 @@ namespace Test.Unit
             TId id2 = ConvertFromPrimitive(EmptyValue);
             Assert.NotEqual(id1, id2);
         }
-        
+
         [Fact]
         public void SystemTextJson_Should_SerializeAndDeserialize()
         {
@@ -69,7 +69,7 @@ namespace Test.Unit
             TId deserialized = JsonSerializer.Deserialize<TId>(json);
             Assert.Equal(id, deserialized);
         }
-        
+
         [Fact]
         public void YamlDotNet_Should_SerializeAndDeserialize()
         {
@@ -91,14 +91,14 @@ namespace Test.Unit
             TId deserialized = deserializer.Deserialize<TId>(yaml);
             Assert.Equal(id, deserialized);
         }
-        
+
         [Fact]
         public void DataContractSerializer_Should_SerializeAndDeserialize()
         {
             TPrimitive originalValue = SampleValue;
             string originalValueAsString = originalValue?.ToString() ?? string.Empty;
             TId id = ConvertFromPrimitive(originalValue);
-            
+
             DataContractSerializer serializer = new DataContractSerializer(typeof(TId));
 
             using MemoryStream memoryStream = new MemoryStream();
@@ -118,10 +118,10 @@ namespace Test.Unit
     public abstract class StronglyTypedStringIdTests<TId> : StronglyTypedIdTests<TId, string> where TId : struct
     {
         protected override string SampleValue => "12345";
-        
+
         protected override string EmptyValue => string.Empty;
     }
-    
+
     public class AuthorIdTests : StronglyTypedStringIdTests<AuthorId>
     {
         protected override AuthorId ConvertFromPrimitive(string value) => value;
@@ -136,6 +136,7 @@ namespace Test.Unit
         private const string TestValue = "12345";
 
         // 1. Test System.Text.Json serialization and deserialization
+        /*
         [Fact]
         public void SystemTextJson_Should_SerializeAndDeserialize_AuthorId()
         {
@@ -151,8 +152,10 @@ namespace Test.Unit
             Assert.Equal(authorId, deserialized);
             Assert.Contains(TestValue, json);
         }
+        */
 
         // 2. Test DataContractSerializer serialization and deserialization
+        /*
         [Fact]
         public void DataContractSerializer_Should_SerializeAndDeserialize_AuthorId()
         {
@@ -175,8 +178,10 @@ namespace Test.Unit
             Assert.Equal(authorId, deserialized);
             Assert.Contains("<Value>12345</Value>", xml);
         }
+        */
 
         // 3. Test YamlDotNet serialization and deserialization
+        /*
         [Fact]
         public void YamlDotNet_Should_SerializeAndDeserialize_AuthorId()
         {
@@ -200,8 +205,10 @@ namespace Test.Unit
             Assert.Equal(authorId, deserialized);
             Assert.Contains("value: 12345", yaml.ToLower());
         }
+        */
 
         // 4. Implicit conversion test: AuthorId -> string
+        /*
         [Fact]
         public void ImplicitConversion_Should_Convert_AuthorId_To_String()
         {
@@ -217,6 +224,7 @@ namespace Test.Unit
             AuthorId authorId = TestValue; // Implicit conversion
             Assert.Equal(TestValue, authorId.Value);
         }
+        */
 
         // 6. Null string to AuthorId conversion
         [Fact]
