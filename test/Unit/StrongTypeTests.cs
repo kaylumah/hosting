@@ -33,6 +33,28 @@ namespace Test.Unit
             TId deserialized = JsonSerializer.Deserialize<TId>(json);
             Assert.Equal(id, deserialized);
         }
+        
+        [Fact]
+        public void YamlDotNet_Should_SerializeAndDeserialize()
+        {
+            TPrimitive originalValue = SampleValue;
+            string originalValueAsString = originalValue?.ToString() ?? string.Empty;
+            TId id = ConvertFromPrimitive(originalValue);
+
+            ISerializer serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            IDeserializer deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            string yaml = serializer.Serialize(id);
+            Assert.Contains(originalValueAsString, yaml);
+
+            TId deserialized = deserializer.Deserialize<TId>(yaml);
+            Assert.Equal(id, deserialized);
+        }
     }
 
     public class AuthorIdTests : StronglyTypedIdTests<AuthorId, string>
