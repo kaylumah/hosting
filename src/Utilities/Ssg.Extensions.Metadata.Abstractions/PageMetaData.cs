@@ -129,7 +129,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
         }
 
-        public string Id
+        public PageId Id
         {
             get
             {
