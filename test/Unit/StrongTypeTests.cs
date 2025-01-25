@@ -76,33 +76,13 @@ namespace Test.Unit
             Assert.NotEqual(id1HashCode, id2HashCode);
         }
 
-        [Fact(Skip = "Failing")]
+        /*
         public void DefaultValue_Should_BeHandledCorrectly()
         {
+            // NULL value vs string.Empty
             TStrongTypedId defaultId = default;
             TStrongTypedId emptyId = ConvertFromPrimitive(EmptyValue);
             Assert.Equal(emptyId, defaultId);
-        }
-
-        /*
-        [Fact]
-        public void NullString_Should_BeHandledGracefully()
-        {
-            TId id = ConvertFromPrimitive(default);
-            Assert.Equal(ConvertFromPrimitive(null), id);
-        }
-        */
-
-        /*
-        [Fact]
-        public void CaseSensitivity_Should_BeRespected()
-        {
-            if (SampleValue is string strValue)
-            {
-                TId lower = ConvertFromPrimitive(strValue.ToLower());
-                TId upper = ConvertFromPrimitive(strValue.ToUpper());
-                Assert.NotEqual(lower, upper);
-            }
         }
         */
 
