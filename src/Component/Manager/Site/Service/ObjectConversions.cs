@@ -26,12 +26,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _JsonSerializerOptions.Converters.Add(organizationIdJsonConverter);
         }
 
-        public static AuthorId AuthorId(string author)
-        {
-            // TODO why was this needed?
-            return author;
-        }
-
         public static string PublishedTimeAgo(SiteMetaData siteMetaData, Article pageMetaData)
         {
             Debug.Assert(pageMetaData != null);

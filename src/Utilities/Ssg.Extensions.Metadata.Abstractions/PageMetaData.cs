@@ -138,7 +138,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));
-        public string Author => GetString(nameof(Author));
+        public AuthorId Author => GetString(nameof(Author));
         public string Organization => GetString(nameof(Organization));
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
 
