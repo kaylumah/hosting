@@ -14,6 +14,7 @@ namespace Test.Unit
     public class SiteMetadataSnapshotTests
     {
         readonly VerifySettings _VerifySettings;
+        const string DefaultSiteId = "my-site";
 
         public SiteMetadataSnapshotTests()
         {
@@ -27,7 +28,7 @@ namespace Test.Unit
 
             List<BasePage> items = new();
             Dictionary<string, object> data = new();
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -43,7 +44,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
             List<BasePage> items = new();
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -63,7 +64,7 @@ namespace Test.Unit
             items.Add(pageMetaData);
 
             Dictionary<string, object> data = new();
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -88,7 +89,7 @@ namespace Test.Unit
             PageMetaData pageMetaData = new PageMetaData(pageData);
             items.Add(pageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -113,7 +114,7 @@ namespace Test.Unit
             Article pageMetaData = new Article(pageData);
             items.Add(pageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData("", "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
     }

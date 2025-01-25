@@ -1,7 +1,7 @@
 ﻿{
   Build: {},
   Id: {
-    Value: 
+    Value: my-site
   },
   Title: ,
   Description: ,
