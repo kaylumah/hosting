@@ -18,12 +18,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         static ObjectConversions()
         {
-            // AuthorIdJsonConverter authorIdJsonConverter = new AuthorIdJsonConverter();
-            OrganizationIdJsonConverter organizationIdJsonConverter = new OrganizationIdJsonConverter();
             _JsonSerializerOptions = new JsonSerializerOptions();
             _JsonSerializerOptions.WriteIndented = true;
-            // _JsonSerializerOptions.Converters.Add(authorIdJsonConverter);
-            _JsonSerializerOptions.Converters.Add(organizationIdJsonConverter);
         }
 
         public static string PublishedTimeAgo(SiteMetaData siteMetaData, Article pageMetaData)

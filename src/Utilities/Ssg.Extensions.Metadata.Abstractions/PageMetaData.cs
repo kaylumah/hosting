@@ -139,7 +139,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));
         public AuthorId Author => GetString(nameof(Author));
-        public string Organization => GetString(nameof(Organization));
+        public OrganizationId Organization => GetString(nameof(Organization));
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
 
         public string LdJson

@@ -200,12 +200,10 @@ namespace Test.Unit
         protected override string ConvertToPrimitive(AuthorId id) => id;
     }
 
-    /*
     public class OrganizationIdTests : StronglyTypedStringIdTests<OrganizationId>
     {
         protected override OrganizationId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(OrganizationId id) => id;
     }
-    */
 }
