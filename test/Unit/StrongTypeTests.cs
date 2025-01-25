@@ -115,12 +115,15 @@ namespace Test.Unit
         }
     }
 
-    public class AuthorIdTests : StronglyTypedIdTests<AuthorId, string>
+    public abstract class StronglyTypedStringIdTests<TId> : StronglyTypedIdTests<TId, string> where TId : struct
     {
         protected override string SampleValue => "12345";
         
         protected override string EmptyValue => string.Empty;
-
+    }
+    
+    public class AuthorIdTests : StronglyTypedStringIdTests<AuthorId>
+    {
         protected override AuthorId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(AuthorId id) => id;
