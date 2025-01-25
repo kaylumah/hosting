@@ -186,4 +186,11 @@ namespace Test.Unit
 
         protected override string ConvertToPrimitive(OrganizationId id) => id;
     }
+
+    public class TagIdTests : StronglyTypedStringIdTests<TagId>
+    {
+        protected override TagId ConvertFromPrimitive(string value) => value;
+
+        protected override string ConvertToPrimitive(TagId id) => id;
+    }
 }
