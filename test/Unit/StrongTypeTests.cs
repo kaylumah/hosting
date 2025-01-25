@@ -55,6 +55,28 @@ namespace Test.Unit
             TId deserialized = deserializer.Deserialize<TId>(yaml);
             Assert.Equal(id, deserialized);
         }
+        
+        [Fact]
+        public void DataContractSerializer_Should_SerializeAndDeserialize()
+        {
+            TPrimitive originalValue = SampleValue;
+            string originalValueAsString = originalValue?.ToString() ?? string.Empty;
+            TId id = ConvertFromPrimitive(originalValue);
+            
+            DataContractSerializer serializer = new DataContractSerializer(typeof(TId));
+
+            using MemoryStream memoryStream = new MemoryStream();
+            serializer.WriteObject(memoryStream, id);
+            memoryStream.Position = 0;
+
+            string xml = new StreamReader(memoryStream).ReadToEnd();
+            Assert.Contains(originalValueAsString, xml);
+
+            memoryStream.Position = 0;
+            TId? deserialized = (TId?)serializer.ReadObject(memoryStream);
+            Assert.NotNull(deserialized);
+            Assert.Equal(id, deserialized);
+        }
     }
 
     public class AuthorIdTests : StronglyTypedIdTests<AuthorId, string>
