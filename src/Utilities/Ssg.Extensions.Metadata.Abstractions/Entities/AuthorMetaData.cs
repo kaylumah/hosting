@@ -49,6 +49,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
     }
     */
 
+    /*
     public readonly struct AuthorId
     {
         readonly string _AuthorId;
@@ -60,6 +61,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static implicit operator string(AuthorId author) => author._AuthorId;
         public static implicit operator AuthorId(string value) => new AuthorId(value);
+    }
+    */
+
+    public readonly record struct AuthorId(string Value)
+    {
+        public static implicit operator string(AuthorId authorId) => authorId.Value;
+        public static implicit operator AuthorId(string value) => new(value);
     }
 
     [DebuggerDisplay("AuthorMetaData '{FullName}'")]
