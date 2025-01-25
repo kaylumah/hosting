@@ -9,19 +9,11 @@ using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-
 namespace Test.Unit
 {
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct
     {
-        static readonly JsonSerializerOptions _JsonOptions;
-
-        static StronglyTypedIdTests()
-        {
-            _JsonOptions = new JsonSerializerOptions();
-        }
-
         protected abstract TPrimitive SampleValue
         { get; }
 
@@ -80,10 +72,10 @@ namespace Test.Unit
             TStrongTypedId id2 = ConvertFromPrimitive(EmptyValue);
             int id1HashCode = id1.GetHashCode();
             int id2HashCode = id2.GetHashCode();
-            Assert.NotEqual(id1HashCode, id2HashCode);
+            Assert.Equal(id1HashCode, id2HashCode);
         }
 
-        [Fact(Skip = "Failing")]
+        [Fact]
         public void DefaultValue_Should_BeHandledCorrectly()
         {
             TStrongTypedId defaultId = default;
@@ -113,13 +105,6 @@ namespace Test.Unit
         }
         */
 
-        [Fact(Skip = "Not sure if relevant")]
-        public void SystemTextJson_Should_Throw_When_DataIsMalformed()
-        {
-            string invalidJson = "{ \"Value\": 12345 }"; // Expecting a string but got an integer
-            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
-        }
-        
         [Fact]
         public void SystemTextJson_Serialization_Should_BeFast()
         {
@@ -128,12 +113,19 @@ namespace Test.Unit
 
             for (int i = 0; i < 100000; i++)
             {
-                string json = JsonSerializer.Serialize(id, _JsonOptions);
+                string json = JsonSerializer.Serialize(id);
                 _ = JsonSerializer.Deserialize<TStrongTypedId>(json);
             }
 
             stopwatch.Stop();
             Assert.True(stopwatch.ElapsedMilliseconds < 2000, "Serialization too slow.");
+        }
+
+        [Fact(Skip = "Not sure if relevant")]
+        public void SystemTextJson_Should_Throw_When_DataIsMalformed()
+        {
+            string invalidJson = "{ \"Value\": 12345 }"; // Expecting a string but got an integer
+            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
         }
 
         [Fact]
@@ -143,7 +135,7 @@ namespace Test.Unit
 
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
 
-            string json = JsonSerializer.Serialize(id, _JsonOptions);
+            string json = JsonSerializer.Serialize(id);
             Assert.Contains(originalValueAsString, json);
 
             TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
