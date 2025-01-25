@@ -16,9 +16,45 @@ namespace Test.Unit
     {
         protected abstract TPrimitive SampleValue
         { get; }
+        
+        protected abstract TPrimitive EmptyValue
+        { get; }
+        
         protected abstract TId ConvertFromPrimitive(TPrimitive value);
         protected abstract TPrimitive ConvertToPrimitive(TId id);
 
+        [Fact]
+        public void ImplicitConversion_Should_ConvertToPrimitive()
+        {
+            TId id = ConvertFromPrimitive(SampleValue);
+            TPrimitive primitive = ConvertToPrimitive(id);
+            Assert.Equal(SampleValue, primitive);
+        }
+
+        [Fact]
+        public void ImplicitConversion_Should_ConvertFromPrimitive()
+        {
+            TId id = ConvertFromPrimitive(SampleValue);
+            TPrimitive primitive = ConvertToPrimitive(id);
+            Assert.Equal(SampleValue, primitive);
+        }
+
+        [Fact]
+        public void Equality_Should_BeTrue_ForSameValue()
+        {
+            TId id1 = ConvertFromPrimitive(SampleValue);
+            TId id2 = ConvertFromPrimitive(SampleValue);
+            Assert.Equal(id1, id2);
+        }
+
+        [Fact]
+        public void Equality_Should_BeFalse_ForDifferentValues()
+        {
+            TId id1 = ConvertFromPrimitive(SampleValue);
+            TId id2 = ConvertFromPrimitive(EmptyValue);
+            Assert.NotEqual(id1, id2);
+        }
+        
         [Fact]
         public void SystemTextJson_Should_SerializeAndDeserialize()
         {
@@ -82,6 +118,8 @@ namespace Test.Unit
     public class AuthorIdTests : StronglyTypedIdTests<AuthorId, string>
     {
         protected override string SampleValue => "12345";
+        
+        protected override string EmptyValue => string.Empty;
 
         protected override AuthorId ConvertFromPrimitive(string value) => value;
 
