@@ -28,6 +28,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public static AuthorId AuthorId(string author)
         {
+            // TODO why was this needed?
             return author;
         }
 
