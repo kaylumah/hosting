@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Kaylumah.Ssg.Manager.Site.Service;
 using Ssg.Extensions.Metadata.Abstractions;
 using VerifyTests;
 using VerifyXunit;
@@ -120,6 +121,34 @@ namespace Test.Unit
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
+
+        [Fact]
+        public async Task Test_ArticlesWithCorrespondingTagData_AsPreview()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
+            TagMetaDataCollection tagMetaDataCollection = new();
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = "1";
+            tagMetaDataCollection.Add(tagMetaData);
+            Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
+
+            List<BasePage> items = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "example.html"},
+                { "tags", new List<object> { "1" } }
+            };
+            Article pageMetaData = new Article(pageData);
+            pageMetaData.Id = DefaultPageId;
+            items.Add(pageMetaData);
+
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            string html = ObjectConversions.ToDiagnosticHtml(siteMetaData, "json");
+            await Verifier.Verify(html, _VerifySettings);
         }
     }
 }
