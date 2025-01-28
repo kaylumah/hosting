@@ -219,7 +219,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             get
             {
-                List<string> tags = GetStringValues(nameof(Tags));
+                List<string>? tags = GetStringValues(nameof(Tags));
                 return tags;
             }
             set
