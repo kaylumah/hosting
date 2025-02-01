@@ -1,16 +1,123 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+#pragma warning disable
 using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
+using System.Globalization;
 
 namespace Test.Unit
 {
 
-#pragma warning disable
+
+    public class DictionaryExtensionsTests
+    {
+        [Fact]
+        public void GetBoolValue_ShouldReturn_True_WhenValidBooleanString_IgnoringCase()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>
+            {
+                { "Enabled".ToLower(CultureInfo.InvariantCulture), "true" }
+            };
+
+            // Act
+            bool result = dictionary.GetBoolValue("ENABLED"); // Uppercase key
+
+            // Assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void GetBoolValue_ShouldReturn_False_WhenInvalidBooleanString()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>
+            {
+                { "Enabled".ToLower(CultureInfo.InvariantCulture), "notabool" }
+            };
+
+            // Act
+            bool result = dictionary.GetBoolValue("ENABLED");
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void GetBoolValue_ShouldReturn_False_WhenKeyIsMissing()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>();
+
+            // Act
+            bool result = dictionary.GetBoolValue("MissingKey");
+
+            // Assert
+            result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void GetValue_ShouldReturn_ExpectedValue_IgnoringCase()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>
+            {
+                { "Count".ToLower(CultureInfo.InvariantCulture), 42 }
+            };
+
+            // Act
+            int count = dictionary.GetValue<int>("COUNT"); // Uppercase key
+
+            // Assert
+            count.Should().Be(42);
+        }
+
+        [Fact]
+        public void GetValue_ShouldReturn_Default_WhenKeyIsMissing()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>();
+
+            // Act
+            int count = dictionary.GetValue<int>("MissingKey");
+
+            // Assert
+            count.Should().Be(default);
+        }
+
+        [Fact]
+        public void GetStringValues_ShouldReturn_List_WhenKeyExists_IgnoringCase()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>
+            {
+                { "Tags".ToLower(CultureInfo.InvariantCulture), new List<string> { "tag1", "tag2" } }
+            };
+
+            // Act
+            var tags = dictionary.GetStringValues("TAGS"); // Uppercase key
+
+            // Assert
+            tags.Should().Contain(new[] { "tag1", "tag2" });
+        }
+
+        [Fact]
+        public void GetStringValues_ShouldReturn_EmptyList_WhenKeyIsMissing()
+        {
+            // Arrange
+            var dictionary = new Dictionary<string, object?>();
+
+            // Act
+            var tags = dictionary.GetStringValues("MissingTags");
+
+            // Assert
+            tags.Should().BeEmpty();
+        }
+    }
 
     public class PageMetadataTests
     {
