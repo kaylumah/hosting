@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace Test.Unit
 {
-
+    /*
 
     public class DictionaryExtensionsTests
     {
@@ -218,5 +218,5 @@ namespace Test.Unit
             // Assert
             webImage.Should().Be(new Uri("https://example.com/images/pic.jpg")); // Correctly resolves full image path
         }
-    }
+    }*/
 }

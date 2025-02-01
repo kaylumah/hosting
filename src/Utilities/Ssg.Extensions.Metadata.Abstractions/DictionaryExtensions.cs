@@ -18,10 +18,29 @@ namespace System.Collections.Generic
 
         public static List<string> GetStringValues(this Dictionary<string, object?> dictionary, string key)
         {
+#pragma warning disable
+            key = key.ToLower(CultureInfo.InvariantCulture); // Normalize key lookup
+
+            if (dictionary.TryGetValue(key, out object? value))
+            {
+                if (value is List<string> stringList)
+                {
+                    return stringList; // Directly return List<string>
+                }
+
+                if (value is List<object> objectList)
+                {
+                    return objectList.OfType<string>().ToList(); // Convert List<object> to List<string>
+                }
+            }
+
+            return new List<string>(); // Default to empty list
+            /*
             List<object>? internalList = dictionary.GetValue<List<object>>(key);
             List<string>? asStrings = internalList?.Cast<string>()?.ToList();
             List<string> result = asStrings ?? [];
             return result;
+            */
         }
 
         public static T GetValue<T>(this Dictionary<string, object?> dictionary, string key)
