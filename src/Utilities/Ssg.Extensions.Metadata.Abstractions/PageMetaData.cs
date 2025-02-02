@@ -40,7 +40,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected bool GetBoolValue(string key)
         {
-            bool result = _InternalData.GetBoolValue(key);
+            bool result = _InternalData.GetValue<bool>(key);
             return result;
         }
 

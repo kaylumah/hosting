@@ -188,14 +188,6 @@ namespace System.Collections.Generic
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         }
 
-        public static bool GetBoolValue(this Dictionary<string, object?> dictionary, string key)
-        {
-            string? stringValue = dictionary.GetValue<string>(key);
-            bool tryParseOutcome = bool.TryParse(stringValue, out bool parseResult);
-            // if the value is not a boolean, we default to false
-            return tryParseOutcome && parseResult;
-        }
-
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
