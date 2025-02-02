@@ -183,7 +183,7 @@ namespace System.Collections.Generic
             {
                 try
                 {
-                    object? result = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                    object? result = Convert.ChangeType(convertible, targetType, CultureInfo.InvariantCulture);
                     return result;
                 }
                 catch (OverflowException ex)
