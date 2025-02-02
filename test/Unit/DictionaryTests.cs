@@ -187,14 +187,14 @@ namespace Test.Unit
         }
     }
 
-    #pragma warning disable
+#pragma warning disable
     public class DictionaryTests
     {
         // TODO consider other types like
         // - DateTime
         // - TimeSpan
         // - GUID
-        
+
         public static IEnumerable<object[]> GetValuesTestData()
         {
             // TODO bool list
@@ -266,7 +266,7 @@ namespace Test.Unit
             Assert.Equal(deserialized["TagsAsObjectList"].GetType(), typeof(List<object>));
         }
         */
-        
+
         [Theory(Skip = "Fall back no longer implemented")]
         [InlineData("true", true)]
         [InlineData("True", true)]
