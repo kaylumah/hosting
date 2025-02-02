@@ -79,13 +79,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                List<object?> result = this.GetRequiredValue<List<object?>>(nameof(Tags));
-                IEnumerable<string?> strings = result.Cast<string?>();
-                List<string> asList = strings
-                    .Where(x => x != null)
-                    .Select(x => x!)
-                    .ToList();
-                return asList;
+                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
+                List<string> result = values?.ToList() ?? new List<string>();
+                return result;
             }
             set
             {
