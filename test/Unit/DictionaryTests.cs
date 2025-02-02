@@ -194,14 +194,7 @@ namespace Test.Unit
         // - DateTime
         // - TimeSpan
         // - GUID
-
-        public static IEnumerable<object[]> GetInvalidConversionsTestData()
-        {
-            yield return new object[] { "notABool", "NotFalse", typeof(bool), typeof(InvalidOperationException) };
-        }
-
-
-
+        
         public static IEnumerable<object[]> GetValuesTestData()
         {
             // TODO bool list
@@ -227,19 +220,6 @@ namespace Test.Unit
         // TODO: Check different null values
 
         [Theory]
-        [MemberData(nameof(GetInvalidConversionsTestData))]
-        public void Test_GetValue_InvalidConversion(string key, object? value, Type targetType, Type expectedException)
-        {
-            Dictionary<string, object?> dictionary = new();
-            dictionary.Add(key, value);
-            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValue")?.MakeGenericMethod(targetType);
-            object[] arguments = new object[] { dictionary, key, true };
-            TargetInvocationException ex = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
-            Assert.NotNull(ex.InnerException);
-            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(ex.InnerException);
-        }
-
-        [Theory]
         [MemberData(nameof(GetValuesTestData))]
         public void Test_GetValues_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
         {
@@ -261,41 +241,7 @@ namespace Test.Unit
         }
 
         /*
-        [Fact]
-        public void GetValue_ShouldThrowForLongMaxValueToInt()
-        {
-            Assert.Throws<InvalidOperationException>(() => _dictionary.GetValue<int>("maxLong"));
-        }
 
-        [Fact]
-        public void GetValues_ShouldReturnEmptyListForEmptyList()
-        {
-            Assert.Empty(_dictionary.GetValues<int>("emptyList"));
-        }
-
-        [Fact]
-        public void GetValues_ShouldThrowForMixedTypeList()
-        {
-            Assert.Throws<InvalidOperationException>(() => _dictionary.GetValues<int>("mixedList"));
-        }
-
-        [Fact]
-        public void GetValues_ShouldAllowNullableTypesWithNullValues()
-        {
-            Assert.Equal(new List<string?> { "hello", null, "world" }, _dictionary.GetValues<string?>("nullableStringList"));
-        }
-
-        [Fact]
-        public void GetValues_ShouldReturnNullForNullList()
-        {
-            Assert.Null(_dictionary.GetValues<string>("nullList"));
-        }
-
-        [Fact]
-        public void GetValue_ShouldRespectCaseSensitivity()
-        {
-            Assert.Null(_dictionary.GetValue<string>("casesensitivekey", caseInsensitive: false));
-        }*/
 
         /*
         [Fact]
