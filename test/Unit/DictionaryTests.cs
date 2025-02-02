@@ -54,13 +54,18 @@ namespace Test.Unit
         [MemberData(nameof(GetValuesTestData))]
         public void Test_GetValues_CaseInsensitive(string key, object? value, Type targetType)
         {
+            Type genericIEnumerable = typeof(IEnumerable<>);
+            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
+            
             Dictionary<string, object?> dictionary = new();
             dictionary.Add(key, value);
 
             MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValues")?.MakeGenericMethod(targetType);
             object[] arguments = new object[] { dictionary, key, true };
             object? result = method?.Invoke(null, arguments);
-            Type? actualType = result?.GetType();
+            Type? actualType = result.GetType();
+            bool isCorrectEnumerable = actualType.IsAssignableTo(expectedEnumerableType);
+            Assert.True(isCorrectEnumerable);
         }
 
 
