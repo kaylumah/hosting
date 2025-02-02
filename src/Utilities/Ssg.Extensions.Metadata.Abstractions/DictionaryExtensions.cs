@@ -103,8 +103,6 @@ namespace System.Collections.Generic
                 ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
                 : key;
             return lookupKey;
-            // string result = key.ToLower(CultureInfo.InvariantCulture);
-            // return result;
         }
 
         static object? ConvertValue(object? value, Type targetType)
