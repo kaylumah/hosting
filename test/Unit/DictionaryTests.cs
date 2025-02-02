@@ -122,9 +122,6 @@ namespace Test.Unit
         [MemberData(nameof(GetValueTestData))]
         public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
         {
-            // TODO fix the key
-            key = key.ToLower(CultureInfo.InvariantCulture);
-            
             Dictionary<string, object?> dictionary = new();
             dictionary.Add(key, value);
 
