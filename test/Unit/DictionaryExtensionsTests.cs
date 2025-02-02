@@ -158,8 +158,8 @@ namespace Test.Unit
             MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValues")?.MakeGenericMethod(targetType);
             object[] arguments = new object[] { dictionary, key, true };
             object? result = method?.Invoke(null, arguments);
-            Type? actualType = result.GetType();
-            bool isCorrectEnumerable = actualType.IsAssignableTo(expectedEnumerableType);
+            Type? actualType = result?.GetType();
+            bool? isCorrectEnumerable = actualType?.IsAssignableTo(expectedEnumerableType);
             Assert.True(isCorrectEnumerable);
 
             // expected list
