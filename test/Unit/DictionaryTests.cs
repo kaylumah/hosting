@@ -10,7 +10,7 @@ namespace Test.Unit
 {
     public class DictionaryTests
     {
-        public static IEnumerable<object[]> GetValueTestData2()
+        public static IEnumerable<object[]> GetValueTestData()
         {
             yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
             yield return new object[] { "intValue", 42, 42, typeof(int) };
@@ -19,6 +19,15 @@ namespace Test.Unit
             yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
             yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
         }
+
+        public static IEnumerable<object[]> GetValuesTestData()
+        {
+            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
+            yield return new object[] { "stringsAsArrayOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
+            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, typeof(string)};
+            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, typeof(string)};
+        }
+        
         
         // TODO: GetValue where dictionary == null should throw
         // TODO: GetValue where key == null should throw
@@ -26,7 +35,7 @@ namespace Test.Unit
         // TODO: Check different null values
 
         [Theory]
-        [MemberData(nameof(GetValueTestData2))]
+        [MemberData(nameof(GetValueTestData))]
         public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
         {
             Dictionary<string, object?> dictionary = new();
@@ -36,6 +45,19 @@ namespace Test.Unit
             object[] arguments = new object[] { dictionary, key, true };
             object? result = method?.Invoke(null, arguments);
             Assert.Equal(expectedValue, result);
+        }
+        
+        [Theory]
+        [MemberData(nameof(GetValuesTestData))]
+        public void Test_GetValues_CaseInsensitive(string key, object? value, Type targetType)
+        {
+            Dictionary<string, object?> dictionary = new();
+            dictionary.Add(key, value);
+
+            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValues")?.MakeGenericMethod(targetType);
+            object[] arguments = new object[] { dictionary, key, true };
+            object? result = method?.Invoke(null, arguments);
+            Type? actualType = result?.GetType();
         }
         
         
