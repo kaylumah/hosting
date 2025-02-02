@@ -229,6 +229,21 @@ namespace Test.Unit
             Assert.Null(result);
         }
 
+        [Fact]
+        public void Test_GetValues_Exception_NotIEnumerable()
+        {
+            Dictionary<string, object?> dictionary = new()
+            {
+                { "NotAList", 42 }
+            };
+
+            MethodInfo? method = GetValuesMethod(typeof(string));
+            object[] arguments = new object[] { dictionary, "NotAList", true };
+            TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
+            Assert.NotNull(targetInvocationException.InnerException);
+            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
+        }
+
         public static IEnumerable<object[]> StringConversionData()
         {
             yield return new object[] { "true", typeof(bool), true };
