@@ -54,7 +54,7 @@ namespace System.Collections.Generic
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
-        private static object? ConvertValue(object? value, Type targetType)
+        static object? ConvertValue(object? value, Type targetType)
         {
             if (value is null)
             {

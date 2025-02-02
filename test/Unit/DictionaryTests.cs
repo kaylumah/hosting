@@ -11,9 +11,12 @@ using Xunit;
 #pragma warning disable
 namespace Test.Unit
 {
-
     public class ConvertValueTests2
     {
+        class CustomObject {}
+
+        enum TestEnum { Value1, Value2 }
+        
         static readonly MethodInfo _ConvertValueMethod;
 
         static ConvertValueTests2()
@@ -22,69 +25,101 @@ namespace Test.Unit
             _ConvertValueMethod = type.GetMethod("ConvertValue", BindingFlags.NonPublic | BindingFlags.Static);
             Debug.Assert(_ConvertValueMethod != null);
         }
-    }
-
-    public class ConvertValueTests
-    {
-        private static readonly MethodInfo ConvertValueMethod = typeof(DictionaryExtensions)
-            .GetMethod("ConvertValue", BindingFlags.NonPublic | BindingFlags.Static);
-
-        [Theory]
-        [InlineData("true", typeof(bool), true)]
-        [InlineData("false", typeof(bool), false)]
-        [InlineData("42", typeof(int), 42)]
-        [InlineData("550e8400-e29b-41d4-a716-446655440000", typeof(Guid), "550e8400-e29b-41d4-a716-446655440000")]
-        [InlineData("2024-02-01T12:34:56Z", typeof(DateTime), "2024-02-01T12:34:56Z")]
-        [InlineData("02:30:00", typeof(TimeSpan), "02:30:00")]
-        public void ConvertValue_ShouldConvertStringToExpectedType(string input, Type targetType, object expected)
-        {
-            var result = ConvertValueMethod.Invoke(null, new object[] { input, targetType });
-
-            if (targetType == typeof(TimeSpan) && result is TimeSpan tsResult)
-            {
-                Assert.Equal(TimeSpan.Parse(expected.ToString(), CultureInfo.InvariantCulture), tsResult);
-            }
-            else
-            {
-                Assert.Equal(Convert.ChangeType(expected, targetType, CultureInfo.InvariantCulture), result);
-            }
-        }
 
         [Theory]
         [InlineData(null, typeof(string), null)]
-        [InlineData(null, typeof(int), 0)]
-        [InlineData(null, typeof(bool), false)]
-        public void ConvertValue_ShouldHandleNullValues(object input, Type targetType, object expected)
+        [InlineData(null, typeof(int), null)]
+        [InlineData(null, typeof(bool), null)]
+        public void ConvertValue_ShouldHandleNullValues(object? input, Type targetType, object? expected)
         {
-            var result = ConvertValueMethod.Invoke(null, new object[] { input, targetType });
+            object? result = _ConvertValueMethod.Invoke(null, new object[] { input, targetType });
             Assert.Equal(expected, result);
         }
 
+        static IEnumerable<object[]> ConvertStringToExpectedTypeData()
+        {
+            yield return new object[] { "true", typeof(bool), true };
+            yield return new object[] { "false", typeof(bool), false };
+            yield return new object[] { "42", typeof(int), 42 };
+            yield return new object[] { "550e8400-e29b-41d4-a716-446655440000", typeof(Guid), new Guid("550e8400-e29b-41d4-a716-446655440000") };
+            yield return new object[] { "2024-02-01T12:34:56Z", typeof(DateTime), new DateTime(2024,2,1,12,34,56) };
+            yield return new object[] { "02:30:00", typeof(TimeSpan), new TimeSpan(2,30,0) };
+        }
+        
+        [Theory]
+        [MemberData(nameof(ConvertStringToExpectedTypeData))]
+        public void ConvertValue_ShouldConvertStringToExpectedType(string input, Type targetType, object expected)
+        {
+            object? result = _ConvertValueMethod.Invoke(null, new object[] { input, targetType });
+            Assert.Equal(Convert.ChangeType(expected, targetType, CultureInfo.InvariantCulture), result);
+        }
+        
         [Theory]
         [InlineData("NotFalse", typeof(bool))]
         [InlineData("NotANumber", typeof(int))]
         [InlineData("InvalidGuid", typeof(Guid))]
         [InlineData("InvalidDate", typeof(DateTime))]
         [InlineData("InvalidTimeSpan", typeof(TimeSpan))]
-        public void ConvertValue_ShouldThrowInvalidOperationExceptionOnInvalidFormat(string input, Type targetType)
+        public void ConvertValue_ShouldThrowInvalidOperationExceptionOnInvalidConvertStringToExpectedType(string input, Type targetType)
         {
-            var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { input, targetType }));
+            TargetInvocationException exception = Assert.Throws<TargetInvocationException>(() => _ConvertValueMethod.Invoke(null, new object[] { input, targetType }));
             Assert.IsType<InvalidOperationException>(exception.InnerException);
+        }
+        
+        [Theory]
+        [InlineData(42, typeof(int), 42)]
+        [InlineData(42, typeof(double), 42.0)]
+        [InlineData(3.14, typeof(float), 3.14f)]
+        [InlineData(3.14, typeof(decimal), 3.14)]
+        [InlineData(1, typeof(bool), true)]
+        [InlineData(0, typeof(bool), false)]
+        [InlineData(int.MaxValue, typeof(long), (long)int.MaxValue)]
+        [InlineData(int.MinValue, typeof(long), (long)int.MinValue)]
+        public void ConvertValue_ShouldConvertPrimitiveTypes(object input, Type targetType, object expected)
+        {
+            object? result = _ConvertValueMethod.Invoke(null, new object[] { input, targetType });
+            Assert.Equal(Convert.ChangeType(expected, targetType, CultureInfo.InvariantCulture), result);
         }
 
-        [Fact]
-        public void ConvertValue_ShouldThrowInvalidOperationExceptionOnUnsupportedConversion()
-        {
-            var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { new object(), typeof(int) }));
-            Assert.IsType<InvalidOperationException>(exception.InnerException);
-        }
+    }
 
-        [Fact]
-        public void ConvertValue_ShouldThrowInvalidOperationExceptionOnOverflow()
-        {
-            var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { long.MaxValue, typeof(int) }));
-            Assert.IsType<InvalidOperationException>(exception.InnerException);
-        }
+    public class ConvertValueTests
+    {
+        private static readonly MethodInfo ConvertValueMethod = typeof(DictionaryExtensions)
+        .GetMethod("ConvertValue", BindingFlags.NonPublic | BindingFlags.Static);
+
+    private class CustomObject {}
+
+    private enum TestEnum { Value1, Value2 }
+
+    
+    [Fact]
+    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnUnsupportedConversion()
+    {
+        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { new object(), typeof(int) }));
+        Assert.IsType<InvalidOperationException>(exception.InnerException);
+    }
+
+    [Fact]
+    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnOverflow()
+    {
+        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { long.MaxValue, typeof(int) }));
+        Assert.IsType<InvalidOperationException>(exception.InnerException);
+    }
+
+    [Fact]
+    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnNonIConvertibleType()
+    {
+        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { new CustomObject(), typeof(int) }));
+        Assert.IsType<InvalidOperationException>(exception.InnerException);
+    }
+
+    [Fact]
+    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnNonConvertibleEnum()
+    {
+        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { TestEnum.Value1, typeof(DateTime) }));
+        Assert.IsType<InvalidOperationException>(exception.InnerException);
+    }
     }
 
     public class DictionaryTests
