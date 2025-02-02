@@ -165,7 +165,7 @@ namespace Test.Unit
             // expected list
             Assert.Equal(expectedValue, result);
         }
-        
+
         public static IEnumerable<object[]> StringConversionData()
         {
             yield return new object[] { "true", typeof(bool), true };
@@ -206,7 +206,7 @@ namespace Test.Unit
             yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
             yield return new object[] { "boolTrueAsStringValue", "false", false, typeof(bool) };
         }
-        
+
         public static IEnumerable<object[]> GetEnumerableValueTestData()
         {
             // TODO bool list
