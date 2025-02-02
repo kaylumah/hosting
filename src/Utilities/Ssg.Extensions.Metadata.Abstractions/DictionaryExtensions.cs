@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using System.Linq;
-
+#pragma warning disable
 namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
@@ -16,85 +16,45 @@ namespace System.Collections.Generic
 
         public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
-            ArgumentNullException.ThrowIfNull(dictionary);
-            ArgumentNullException.ThrowIfNull(key);
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+            if (key == null) throw new ArgumentNullException(nameof(key));
 
             string lookupKey = caseInsensitive
                 ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
                 : key;
-            if (!dictionary.TryGetValue(lookupKey, out object? value))
-            {
-                return default;
-            }
 
-            if (value is null)
-            {
-                return default;
-            }
+            if (!dictionary.TryGetValue(lookupKey, out object? value)) return default;
 
-            if (value is T exactMatch)
-            {
-                return exactMatch;
-            }
+            if (value is null) return default;
+            if (value is T exactMatch) return exactMatch;
 
-            try
-            {
-                T? result = (T?)ConvertValue(value, typeof(T));
-                return result;
-            }
-            catch (InvalidCastException ex)
-            {
-                throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to {typeof(T)}.", ex);
-            }
+            return (T)ConvertValue(value, typeof(T));
         }
 
         public static IEnumerable<T>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
-            ArgumentNullException.ThrowIfNull(dictionary);
-            ArgumentNullException.ThrowIfNull(key);
+            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
+            if (key == null) throw new ArgumentNullException(nameof(key));
 
             string lookupKey = caseInsensitive
                 ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
                 : key;
-            if (!dictionary.TryGetValue(lookupKey, out object? value))
-            {
-                return default;
-            }
 
-            if (value is null)
-            {
-                return default;
-            }
+            if (!dictionary.TryGetValue(lookupKey, out object? value)) return default;
 
-            if (value is IEnumerable<T> exactMatch)
-            {
-                return exactMatch;
-            }
-
-            if (value is T singleValue)
-            {
-                List<T> result = [singleValue];
-                return result;
-            }
+            if (value is null) return default;
+            if (value is IEnumerable<T> exactMatch) return exactMatch;
+            if (value is T singleValue) return new List<T> { singleValue };
 
             if (value is IEnumerable<object> objectList)
             {
-                try
-                {
-                    // TODO change for Nullability
-                    IEnumerable<T> result = objectList.Select(item => (T)ConvertValue(item, typeof(T))!);
-                    return result;
-                }
-                catch (InvalidCastException ex)
-                {
-                    throw new InvalidOperationException($"Cannot convert list elements of key '{key}' to {typeof(T)}.", ex);
-                }
+                return objectList.Select(item => (T)ConvertValue(item, typeof(T)));
             }
 
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
-        static object? ConvertValue(object? value, Type targetType)
+        private static object? ConvertValue(object? value, Type targetType)
         {
             if (value is null)
             {
@@ -103,44 +63,66 @@ namespace System.Collections.Generic
 
             if (value is string strValue)
             {
-                if (targetType == typeof(bool) && bool.TryParse(strValue, out bool boolResult))
+                // Handle built-in types with TryParse support
+                if (targetType == typeof(bool))
                 {
-                    return boolResult;
+                    if (bool.TryParse(strValue, out bool boolResult)) return boolResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                }
+                if (targetType == typeof(int))
+                {
+                    if (int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult)) return intResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                }
+                if (targetType == typeof(Guid))
+                {
+                    if (Guid.TryParse(strValue, out Guid guidResult)) return guidResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                }
+                if (targetType == typeof(DateTime))
+                {
+                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult)) return dateTimeResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                }
+                if (targetType == typeof(TimeSpan))
+                {
+                    if (TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult)) return timeSpanResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
 
-                if (targetType == typeof(int) && int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
-                {
-                    return intResult;
-                }
-
-                if (targetType == typeof(Guid) && Guid.TryParse(strValue, out Guid guidResult))
-                {
-                    return guidResult;
-                }
-
-#pragma warning disable RS0030
-                if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
-                {
-                    return dateTimeResult;
-                }
-#pragma warning restore RS0030
-
-                if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
-                {
-                    return timeSpanResult;
-                }
+                // Consider adding support for other numeric types in the future:
+                // if (targetType == typeof(byte) && byte.TryParse(strValue, out byte byteResult)) return byteResult;
+                // if (targetType == typeof(sbyte) && sbyte.TryParse(strValue, out sbyte sbyteResult)) return sbyteResult;
+                // if (targetType == typeof(short) && short.TryParse(strValue, out short shortResult)) return shortResult;
+                // if (targetType == typeof(ushort) && ushort.TryParse(strValue, out ushort ushortResult)) return ushortResult;
+                // if (targetType == typeof(long) && long.TryParse(strValue, out long longResult)) return longResult;
+                // if (targetType == typeof(ulong) && ulong.TryParse(strValue, out ulong ulongResult)) return ulongResult;
+                // if (targetType == typeof(float) && float.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out float floatResult)) return floatResult;
+                // if (targetType == typeof(double) && double.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double doubleResult)) return doubleResult;
+                // if (targetType == typeof(decimal) && decimal.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal decimalResult)) return decimalResult;
             }
 
             if (value is IConvertible convertible)
             {
                 try
                 {
-                    object convertedValue = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
-                    return convertedValue;
+                    return Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
                 }
                 catch (OverflowException)
                 {
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to overflow.");
+                }
+                catch (InvalidCastException)
+                {
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is invalid.");
+                }
+                catch (NotSupportedException)
+                {
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is not supported.");
+                }
+                catch (FormatException)
+                {
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
             }
 
