@@ -8,11 +8,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetaData : Dictionary<string, object?>
     {
-        public string Layout
+        public string? Layout
         {
             get
             {
-                string layout = this.GetRequiredValue<string>(nameof(Layout));
+                string? layout = this.GetValue<string>(nameof(Layout));
                 return layout;
             }
             set
