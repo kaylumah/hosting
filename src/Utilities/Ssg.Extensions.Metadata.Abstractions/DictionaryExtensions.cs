@@ -66,27 +66,51 @@ namespace System.Collections.Generic
                 // Handle built-in types with TryParse support
                 if (targetType == typeof(bool))
                 {
-                    if (bool.TryParse(strValue, out bool boolResult)) return boolResult;
+                    if (bool.TryParse(strValue, out bool boolResult))
+                    {
+                        return boolResult;
+                    }
+
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+
                 if (targetType == typeof(int))
                 {
-                    if (int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult)) return intResult;
+                    if (int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
+                    {
+                        return intResult;
+                    }
+
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+
                 if (targetType == typeof(Guid))
                 {
-                    if (Guid.TryParse(strValue, out Guid guidResult)) return guidResult;
+                    if (Guid.TryParse(strValue, out Guid guidResult))
+                    {
+                        return guidResult;
+                    }
+
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+
                 if (targetType == typeof(DateTime))
                 {
-                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult)) return dateTimeResult;
+                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
+                    {
+                        return dateTimeResult;
+                    }
+
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+
                 if (targetType == typeof(TimeSpan))
                 {
-                    if (TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult)) return timeSpanResult;
+                    if (TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
+                    {
+                        return timeSpanResult;
+                    }
+
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
 
@@ -106,7 +130,8 @@ namespace System.Collections.Generic
             {
                 try
                 {
-                    return Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                    object? result = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                    return result;
                 }
                 catch (OverflowException ex)
                 {
@@ -115,10 +140,6 @@ namespace System.Collections.Generic
                 catch (InvalidCastException ex)
                 {
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is invalid.", ex);
-                }
-                catch (NotSupportedException ex)
-                {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is not supported.", ex);
                 }
                 catch (FormatException ex)
                 {

@@ -13,10 +13,6 @@ namespace Test.Unit
 {
     public class ConvertValueTests2
     {
-        class CustomObject { }
-
-        enum TestEnum { Value1, Value2 }
-
         static readonly MethodInfo _ConvertValueMethod;
 
         static ConvertValueTests2()
