@@ -101,11 +101,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string PublishedDate
+        public string? PublishedDate
         {
             get
             {
-                string publishedDate = this.GetRequiredValue<string>(nameof(PublishedDate));
+                string? publishedDate = this.GetValue<string>(nameof(PublishedDate));
                 return publishedDate;
             }
             set
@@ -114,11 +114,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string PublishedTime
+        public string? PublishedTime
         {
             get
             {
-                string publishTime = this.GetRequiredValue<string>(nameof(PublishedTime));
+                string? publishTime = this.GetValue<string>(nameof(PublishedTime));
                 return publishTime;
             }
             set
@@ -140,12 +140,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string ModifiedDate
+        public string? ModifiedDate
         {
             get
             {
-                string modified = this.GetRequiredValue<string>(nameof(ModifiedDate));
-                return modified;
+                string? modifiedDate = this.GetValue<string>(nameof(ModifiedDate));
+                return modifiedDate;
             }
             set
             {
@@ -153,12 +153,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string ModifiedTime
+        public string? ModifiedTime
         {
             get
             {
-                string time = this.GetRequiredValue<string>(nameof(ModifiedTime));
-                return time;
+                string? modifiedTime = this.GetValue<string>(nameof(ModifiedTime));
+                return modifiedTime;
             }
             set
             {
