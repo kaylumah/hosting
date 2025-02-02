@@ -266,5 +266,22 @@ namespace Test.Unit
             Assert.Equal(deserialized["TagsAsObjectList"].GetType(), typeof(List<object>));
         }
         */
+        
+        [Theory(Skip = "Fall back no longer implemented")]
+        [InlineData("true", true)]
+        [InlineData("True", true)]
+        [InlineData("false", false)]
+        [InlineData("False", false)]
+        [InlineData(" ", false)]
+        [InlineData("", false)]
+        [InlineData(null, false)]
+        public void RetrieveBoolValue(string? setValue, bool? expected)
+        {
+            Dictionary<string, object?> dictionary = new();
+            string keyValue = "key";
+            dictionary.SetValue(keyValue, setValue);
+            bool? result = dictionary.GetValue<bool>(keyValue);
+            Assert.Equal(expected, result);
+        }
     }
 }
