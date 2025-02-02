@@ -47,11 +47,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string Collection
+        public string? Collection
         {
             get
             {
-                string collection = this.GetRequiredValue<string>(nameof(Collection));
+                string? collection = this.GetValue<string>(nameof(Collection));
                 return collection;
             }
             set
