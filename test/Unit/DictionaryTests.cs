@@ -13,10 +13,10 @@ namespace Test.Unit
 {
     public class ConvertValueTests2
     {
-        class CustomObject {}
+        class CustomObject { }
 
         enum TestEnum { Value1, Value2 }
-        
+
         static readonly MethodInfo _ConvertValueMethod;
 
         static ConvertValueTests2()
@@ -42,10 +42,10 @@ namespace Test.Unit
             yield return new object[] { "false", typeof(bool), false };
             yield return new object[] { "42", typeof(int), 42 };
             yield return new object[] { "550e8400-e29b-41d4-a716-446655440000", typeof(Guid), new Guid("550e8400-e29b-41d4-a716-446655440000") };
-            yield return new object[] { "2024-02-01T12:34:56Z", typeof(DateTime), new DateTime(2024,2,1,12,34,56) };
-            yield return new object[] { "02:30:00", typeof(TimeSpan), new TimeSpan(2,30,0) };
+            yield return new object[] { "2024-02-01T12:34:56Z", typeof(DateTime), new DateTime(2024, 2, 1, 12, 34, 56) };
+            yield return new object[] { "02:30:00", typeof(TimeSpan), new TimeSpan(2, 30, 0) };
         }
-        
+
         [Theory]
         [MemberData(nameof(ConvertStringToExpectedTypeData))]
         public void ConvertValue_ShouldConvertStringToExpectedType(string input, Type targetType, object expected)
@@ -53,7 +53,7 @@ namespace Test.Unit
             object? result = _ConvertValueMethod.Invoke(null, new object[] { input, targetType });
             Assert.Equal(Convert.ChangeType(expected, targetType, CultureInfo.InvariantCulture), result);
         }
-        
+
         [Theory]
         [InlineData("NotFalse", typeof(bool))]
         [InlineData("NotANumber", typeof(int))]
@@ -65,7 +65,7 @@ namespace Test.Unit
             TargetInvocationException exception = Assert.Throws<TargetInvocationException>(() => _ConvertValueMethod.Invoke(null, new object[] { input, targetType }));
             Assert.IsType<InvalidOperationException>(exception.InnerException);
         }
-        
+
         [Theory]
         [InlineData(42, typeof(int), 42)]
         [InlineData(42, typeof(double), 42.0)]
@@ -82,13 +82,13 @@ namespace Test.Unit
         }
 
         static IEnumerable<object[]> ShouldThrowInvalidOperationExceptionOnInvalidConvertStringToExpectedTypeData()
-        { 
+        {
             yield return new object[] { long.MaxValue, typeof(int), typeof(OverflowException) };
             yield return new object[] { true, typeof(Uri), typeof(InvalidCastException) };
             yield return new object[] { "invalid", typeof(double), typeof(FormatException) };
             yield return new object[] { new object(), typeof(int), null };
         }
-        
+
         [Theory]
         [MemberData(nameof(ShouldThrowInvalidOperationExceptionOnInvalidConvertStringToExpectedTypeData))]
         public void ConvertValue_ShouldThrowInvalidOperationIfConversionFails(object value, Type targetType, Type? exceptionType)
