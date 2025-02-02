@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using System.Linq;
-
+#pragma warning disable RS0030
 namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
@@ -35,7 +35,8 @@ namespace System.Collections.Generic
 
             try
             {
-                return (T)ConvertValue(value, typeof(T));
+                // TODO change for Nullability
+                return (T)ConvertValue(value, typeof(T))!;
             }
             catch (InvalidCastException ex)
             {
@@ -76,7 +77,8 @@ namespace System.Collections.Generic
             {
                 try
                 {
-                    IEnumerable<T> result = objectList.Select(item => (T)ConvertValue(item, typeof(T)));
+                    // TODO change for Nullability
+                    IEnumerable<T> result = objectList.Select(item => (T)ConvertValue(item, typeof(T))!);
                     return result;
                 }
                 catch (InvalidCastException ex)
@@ -88,16 +90,39 @@ namespace System.Collections.Generic
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
-#pragma warning disable
-        private static object ConvertValue(object value, Type targetType)
+        static object? ConvertValue(object? value, Type targetType)
         {
+            if (value is null)
+            {
+                return targetType.IsValueType ? default : null;
+            }
+
             if (value is string strValue)
             {
-                if (targetType == typeof(bool) && bool.TryParse(strValue, out bool boolResult)) return boolResult;
-                if (targetType == typeof(int) && int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult)) return intResult;
-                if (targetType == typeof(Guid) && Guid.TryParse(strValue, out Guid guidResult)) return guidResult;
-                if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult)) return dateTimeResult;
-                if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult)) return timeSpanResult;
+                if (targetType == typeof(bool) && bool.TryParse(strValue, out bool boolResult))
+                {
+                    return boolResult;
+                }
+
+                if (targetType == typeof(int) && int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
+                {
+                    return intResult;
+                }
+
+                if (targetType == typeof(Guid) && Guid.TryParse(strValue, out Guid guidResult))
+                {
+                    return guidResult;
+                }
+
+                if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
+                {
+                    return dateTimeResult;
+                }
+
+                if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
+                {
+                    return timeSpanResult;
+                }
             }
 
             if (value is IConvertible convertible)
