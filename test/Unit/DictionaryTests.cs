@@ -22,6 +22,9 @@ namespace Test.Unit
 
         public static IEnumerable<object[]> GetValuesTestData()
         {
+            // TODO bool list
+            // TODO int list
+            // TODO list of string int
             yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
             yield return new object[] { "stringsAsArrayOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
             yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, typeof(string)};
