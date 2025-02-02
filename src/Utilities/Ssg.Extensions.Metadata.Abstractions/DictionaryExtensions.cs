@@ -8,20 +8,24 @@ namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
     {
-        public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static T GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
 
-            string lookupKey = caseInsensitive ? key.ToLower(CultureInfo.InvariantCulture) : key;
+            string lookupKey = caseInsensitive
+                ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
+                : key;
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
-                return default;
+                // TODO change for Nullability
+                return default!;
             }
 
             if (value is null)
             {
-                return default;
+                // TODO change for Nullability
+                return default!;
             }
 
             if (value is T exactMatch)
@@ -44,7 +48,9 @@ namespace System.Collections.Generic
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
 
-            string lookupKey = caseInsensitive ? key.ToLower(CultureInfo.InvariantCulture) : key;
+            string lookupKey = caseInsensitive
+                ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
+                : key;
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
                 return default;
@@ -62,14 +68,16 @@ namespace System.Collections.Generic
 
             if (value is T singleValue)
             {
-                return new List<T> { singleValue };
+                List<T> result = [singleValue];
+                return result;
             }
 
             if (value is IEnumerable<object> objectList)
             {
                 try
                 {
-                    return objectList.Select(item => (T)ConvertValue(item, typeof(T)));
+                    IEnumerable<T> result = objectList.Select(item => (T)ConvertValue(item, typeof(T)));
+                    return result;
                 }
                 catch (InvalidCastException ex)
                 {
@@ -80,41 +88,34 @@ namespace System.Collections.Generic
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
-        static object ConvertValue(object value, Type targetType)
+#pragma warning disable
+        private static object ConvertValue(object value, Type targetType)
         {
             if (value is string strValue)
             {
-                if (targetType == typeof(bool) && bool.TryParse(strValue, out bool boolResult))
-                {
-                    return boolResult;
-                }
+                if (targetType == typeof(bool) && bool.TryParse(strValue, out bool boolResult)) return boolResult;
+                if (targetType == typeof(int) && int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult)) return intResult;
+                if (targetType == typeof(Guid) && Guid.TryParse(strValue, out Guid guidResult)) return guidResult;
+                if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult)) return dateTimeResult;
+                if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult)) return timeSpanResult;
+            }
 
-                if (targetType == typeof(int) && int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
+            if (value is IConvertible convertible)
+            {
+                try
                 {
-                    return intResult;
+                    object convertedValue = Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+                    return convertedValue;
                 }
-
-                if (targetType == typeof(Guid) && Guid.TryParse(strValue, out Guid guidResult))
+                catch (OverflowException)
                 {
-                    return guidResult;
-                }
-
-                /*
-                if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
-                {
-                    return dateTimeResult;
-                }
-                */
-
-                if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
-                {
-                    return timeSpanResult;
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to overflow.");
                 }
             }
 
-            return Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
+            throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         }
-        
+
         public static bool GetBoolValue(this Dictionary<string, object?> dictionary, string key)
         {
             string? stringValue = dictionary.GetValue<string>(key);
