@@ -87,10 +87,10 @@ namespace System.Collections.Generic
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
-        public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
+        public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value, bool caseInsensitive = true)
         {
-            string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary[lowerKey] = value;
+            string lookupKey = dictionary.LookupKey(key, caseInsensitive);
+            dictionary[lookupKey] = value;
         }
 
         static string LookupKey(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
