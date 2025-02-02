@@ -3,39 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetaData : Dictionary<string, object?>
     {
-        public string Series
-        {
-            get
-            {
-                string series = this.GetRequiredValue<string>(nameof(Series));
-                return series;
-            }
-            set
-            {
-                this.SetValue(nameof(Series), value);
-            }
-        }
-
-        public List<string> Tags
-        {
-            get
-            {
-                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
-                List<string> result = values?.ToList() ?? new List<string>();
-                return result;
-            }
-            set
-            {
-                this.SetValue(nameof(Tags), value);
-            }
-        }
-
         public string Layout
         {
             get
