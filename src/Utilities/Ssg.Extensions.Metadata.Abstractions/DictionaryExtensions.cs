@@ -3,12 +3,12 @@
 
 using System.Globalization;
 using System.Linq;
-#pragma warning disable RS0030
+
 namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
     {
-        public static T GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
@@ -18,14 +18,12 @@ namespace System.Collections.Generic
                 : key;
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
-                // TODO change for Nullability
-                return default!;
+                return default;
             }
 
             if (value is null)
             {
-                // TODO change for Nullability
-                return default!;
+                return default;
             }
 
             if (value is T exactMatch)
@@ -35,8 +33,8 @@ namespace System.Collections.Generic
 
             try
             {
-                // TODO change for Nullability
-                return (T)ConvertValue(value, typeof(T))!;
+                T? result = (T?)ConvertValue(value, typeof(T));
+                return result;
             }
             catch (InvalidCastException ex)
             {
@@ -114,10 +112,12 @@ namespace System.Collections.Generic
                     return guidResult;
                 }
 
+                #pragma warning disable RS0030
                 if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
                 {
                     return dateTimeResult;
                 }
+                #pragma warning restore RS0030
 
                 if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
                 {
