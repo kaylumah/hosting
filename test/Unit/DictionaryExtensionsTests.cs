@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Xunit;
 
@@ -137,7 +138,7 @@ namespace Test.Unit
 
         [Theory]
         [MemberData(nameof(GetValueTestData))]
-        public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
+        public void Test_GetValue(string key, object? value, object? expectedValue, Type targetType)
         {
             Dictionary<string, object?> dictionary = new();
             dictionary.Add(key, value);
@@ -149,8 +150,57 @@ namespace Test.Unit
         }
 
         [Theory]
+        [InlineData(typeof(string), null)]
+        [InlineData(typeof(int), 0)]
+        [InlineData(typeof(bool), false)]
+        public void Test_GetValue_NULL_ReturnsDefault(Type targetType, object? expectedValue)
+        {
+            string key = "my-key";
+            Dictionary<string, object?> dictionary = new()
+            {
+                { key, null }
+            };
+            MethodInfo method = GetValueMethod(targetType);
+            object[] arguments = new object[] { dictionary, key, true };
+            object? result = method?.Invoke(null, arguments);
+            Assert.Equal(expectedValue, result);
+        }
+
+        [Theory]
+        [InlineData(typeof(string), null)]
+        [InlineData(typeof(int), 0)]
+        [InlineData(typeof(bool), false)]
+        public void Test_GetValue_NonExisting_ReturnsDefault(Type targetType, object? expectedValue)
+        {
+            string key = "my-key";
+            Dictionary<string, object?> dictionary = new()
+            {
+                { key, null }
+            };
+            MethodInfo method = GetValueMethod(targetType);
+            string searchKey = key + "-fake";
+            object[] arguments = new object[] { dictionary, searchKey, true };
+            object? result = method?.Invoke(null, arguments);
+            Assert.Equal(expectedValue, result);
+        }
+
+        [Fact]
+        public void Test_GetValues_ThrowOnNull()
+        {
+            Dictionary<string, object?>? target = null;
+            Assert.Throws<ArgumentNullException>(() => target!.GetValues<string>("some-key"));
+        }
+
+        [Fact]
+        public void Test_GetValues_ThrowOnNullKey()
+        {
+            Dictionary<string, object?> target = new();
+            Assert.Throws<ArgumentNullException>(() => target.GetValues<string>(null!));
+        }
+
+        [Theory]
         [MemberData(nameof(GetEnumerableValueTestData))]
-        public void Test_GetValues_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
+        public void Test_GetValues(string key, object? value, object? expectedValue, Type targetType)
         {
             Type genericIEnumerable = typeof(IEnumerable<>);
             Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
@@ -168,6 +218,8 @@ namespace Test.Unit
             // expected list
             Assert.Equal(expectedValue, result);
         }
+
+        // TODO getvalues nULL and not-found
 
         public static IEnumerable<object[]> StringConversionData()
         {
@@ -194,13 +246,12 @@ namespace Test.Unit
 
         public static IEnumerable<object[]> GetValueTestData()
         {
-            // TODO List?
-            // TODO NULL Value
-            // TODO Invalid INT (string? notAnInt)
-            // TODO Invalid Bool
-            // TODO string with Spaces //"  42  "
-            // TODO mixed case bool // "TrUe" 
-            // int.Max - int.MinValue
+            // Considerations for later
+            // - GetValues supports single to List, should we offer the reverse?
+            // - Values with spaces "  42  "
+            // - Values with mixed-casing "TrUe"
+            // - Boundary values, int.MinValue
+
             yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
             yield return new object[] { "intValue", 42, 42, typeof(int) };
             yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
@@ -210,22 +261,15 @@ namespace Test.Unit
             yield return new object[] { "boolTrueAsStringValue", "false", false, typeof(bool) };
         }
 
-        public static IEnumerable<object[]> GetEnumerableValueTestData()
+        public static IEnumerable<object?[]> GetEnumerableValueTestData()
         {
-            // TODO bool list
-            // TODO int list
-            // TODO list of string int
-            // TODO empty list
-            // TODO list with NULL
-
-            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsArrayOfString", new string[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "singleStringAsListOfString", new List<string>() { "a" }, new List<string>() { "a" }, typeof(string) };
-            yield return new object[] { "singleStringAsListOfObject", new List<object>() { "a" }, new List<string>() { "a" }, typeof(string) };
-            yield return new object[] { "singleStringsAsArrayOfString", new string[] { "a" }, new List<string>() { "a" }, typeof(string) };
-            yield return new object[] { "string", "a", new List<string>() { "a" }, typeof(string) };
+            yield return new object?[] { "stringsEmpty", Array.Empty<string>(), Array.Empty<string>(), typeof(string) };
+            // yield return new object?[] { "stringsNull", null, null, typeof(string) };
+            yield return new object?[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object?[] { "stringsAsArrayOfString", new string[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object?[] { "string", "a", new List<string>() { "a" }, typeof(string) };
+            yield return new object?[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object?[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
         }
     }
 }
