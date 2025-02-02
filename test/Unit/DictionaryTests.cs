@@ -25,13 +25,13 @@ namespace Test.Unit
             // TODO bool list
             // TODO int list
             // TODO list of string int
-            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
-            yield return new object[] { "stringsAsArrayOfString", new List<string>() { "a", "b", "c" }, typeof(string)};
-            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, typeof(string)};
-            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, typeof(string)};
+            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsArrayOfString", new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, typeof(string) };
         }
-        
-        
+
+
         // TODO: GetValue where dictionary == null should throw
         // TODO: GetValue where key == null should throw
         // TODO: Test different default values
@@ -49,7 +49,7 @@ namespace Test.Unit
             object? result = method?.Invoke(null, arguments);
             Assert.Equal(expectedValue, result);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetValuesTestData))]
         public void Test_GetValues_CaseInsensitive(string key, object? value, Type targetType)
@@ -62,9 +62,9 @@ namespace Test.Unit
             object? result = method?.Invoke(null, arguments);
             Type? actualType = result?.GetType();
         }
-        
-        
-        
+
+
+
         private readonly Dictionary<string, object?> _dictionary = new()
     {
         { "intValue", 42 },

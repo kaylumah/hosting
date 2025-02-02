@@ -8,6 +8,12 @@ namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
     {
+        public static T GetRequiredValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        {
+            T? result = dictionary.GetValue<T>(key, caseInsensitive);
+            return result!;
+        }
+
         public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
@@ -112,12 +118,12 @@ namespace System.Collections.Generic
                     return guidResult;
                 }
 
-                #pragma warning disable RS0030
+#pragma warning disable RS0030
                 if (targetType == typeof(DateTime) && DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
                 {
                     return dateTimeResult;
                 }
-                #pragma warning restore RS0030
+#pragma warning restore RS0030
 
                 if (targetType == typeof(TimeSpan) && TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
                 {
