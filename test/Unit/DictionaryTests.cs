@@ -10,6 +10,36 @@ namespace Test.Unit
 {
     public class DictionaryTests
     {
+        public static IEnumerable<object[]> GetValueTestData2()
+        {
+            yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
+            yield return new object[] { "intValue", 42, 42, typeof(int) };
+            yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
+            yield return new object[] { "boolFalseValue", false, false, typeof(bool) };
+            yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
+            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
+        }
+        
+        // TODO: GetValue where dictionary == null should throw
+        // TODO: GetValue where key == null should throw
+        // TODO: Test different default values
+        // TODO: Check different null values
+
+        [Theory]
+        [MemberData(nameof(GetValueTestData2))]
+        public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
+        {
+            Dictionary<string, object?> dictionary = new();
+            dictionary.Add(key, value);
+
+            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValue")?.MakeGenericMethod(targetType);
+            object[] arguments = new object[] { dictionary, key, true };
+            object? result = method?.Invoke(null, arguments);
+            Assert.Equal(expectedValue, result);
+        }
+        
+        
+        
         private readonly Dictionary<string, object?> _dictionary = new()
     {
         { "intValue", 42 },
@@ -43,7 +73,7 @@ namespace Test.Unit
         { "stringNumberList", new List<string> { "10", "20", "30" } }
     };
 
-        public static IEnumerable<object[]> GetValueTestData()
+        public static IEnumerable<object[]> GetValueTestDataGPT()
         {
             yield return new object[] { "intValue", 42, typeof(int) };
             yield return new object[] { "boolValue", true, typeof(bool) };
@@ -58,7 +88,7 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(GetValueTestData))]
+        [MemberData(nameof(GetValueTestDataGPT))]
         public void GetValue_ShouldReturnCorrectValue(string key, object expectedValue, Type targetType)
         {
             var method = typeof(DictionaryExtensions).GetMethod("GetValue").MakeGenericMethod(targetType);
@@ -129,29 +159,6 @@ namespace Test.Unit
 
         // List<string>, List<object>
         // Array<string> ..
-        
-        public static IEnumerable<object[]> GetValueTestData2()
-        {
-            yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
-            yield return new object[] { "intValue", 42, 42, typeof(int) };
-            yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
-            yield return new object[] { "boolFalseValue", false, false, typeof(bool) };
-            yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
-            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetValueTestData2))]
-        public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
-        {
-            Dictionary<string, object?> dictionary = new();
-            dictionary.Add(key, value);
-
-            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValue")?.MakeGenericMethod(targetType);
-            object[] arguments = new object[] { dictionary, key, true };
-            object? result = method?.Invoke(null, arguments);
-            Assert.Equal(expectedValue, result);
-        }
 
         /*
         [Fact]
