@@ -38,6 +38,8 @@ namespace Test.Unit
             // TODO bool list
             // TODO int list
             // TODO list of string int
+            // TODO empty list
+            // TODO list with NULL
 
             yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
             yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
