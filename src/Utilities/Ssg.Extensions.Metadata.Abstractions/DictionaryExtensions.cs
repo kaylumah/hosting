@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using System.Linq;
-#pragma warning disable
+
 namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
@@ -16,39 +16,72 @@ namespace System.Collections.Generic
 
         public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
-            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            ArgumentNullException.ThrowIfNull(dictionary);
+            ArgumentNullException.ThrowIfNull(key);
 
             string lookupKey = caseInsensitive
                 ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
                 : key;
 
-            if (!dictionary.TryGetValue(lookupKey, out object? value)) return default;
+            if (!dictionary.TryGetValue(lookupKey, out object? value))
+            {
+                return default;
+            }
 
-            if (value is null) return default;
-            if (value is T exactMatch) return exactMatch;
+            if (value is null)
+            {
+                return default;
+            }
 
-            return (T)ConvertValue(value, typeof(T));
+            if (value is T exactMatch)
+            {
+                return exactMatch;
+            }
+
+            T? result = (T?)ConvertValue(value, typeof(T));
+            return result;
         }
 
-        public static IEnumerable<T>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static IEnumerable<T?>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
-            if (dictionary == null) throw new ArgumentNullException(nameof(dictionary));
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            ArgumentNullException.ThrowIfNull(dictionary);
+            ArgumentNullException.ThrowIfNull(key);
 
             string lookupKey = caseInsensitive
                 ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
                 : key;
 
-            if (!dictionary.TryGetValue(lookupKey, out object? value)) return default;
+            if (!dictionary.TryGetValue(lookupKey, out object? value))
+            {
+                return default;
+            }
 
-            if (value is null) return default;
-            if (value is IEnumerable<T> exactMatch) return exactMatch;
-            if (value is T singleValue) return new List<T> { singleValue };
+            if (value is null)
+            {
+                return default;
+            }
+
+            if (value is IEnumerable<T> exactMatch)
+            {
+                return exactMatch;
+            }
+
+            if (value is T singleValue)
+            {
+                List<T> result = new List<T>() { singleValue };
+                return result;
+            }
 
             if (value is IEnumerable<object> objectList)
             {
-                return objectList.Select(item => (T)ConvertValue(item, typeof(T)));
+                List<T?> result = new List<T?>();
+                foreach (object original in objectList)
+                {
+                    T? converted = (T?)ConvertValue(original, typeof(T));
+                    result.Add(converted);
+                }
+
+                return result;
             }
 
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
@@ -94,6 +127,7 @@ namespace System.Collections.Generic
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
 
+#pragma warning disable RS0030
                 if (targetType == typeof(DateTime))
                 {
                     if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
@@ -103,6 +137,7 @@ namespace System.Collections.Generic
 
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+#pragma warning restore RS0030
 
                 if (targetType == typeof(TimeSpan))
                 {
