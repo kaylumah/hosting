@@ -20,9 +20,7 @@ namespace System.Collections.Generic
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
 
-            string lookupKey = caseInsensitive
-                ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
-                : key;
+            string lookupKey = dictionary.LookupKey(key, caseInsensitive);
 
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
@@ -48,9 +46,7 @@ namespace System.Collections.Generic
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
 
-            string lookupKey = caseInsensitive
-                ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
-                : key;
+            string lookupKey = dictionary.LookupKey(key, caseInsensitive);
 
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
@@ -90,13 +86,23 @@ namespace System.Collections.Generic
 
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
-        
+
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
             dictionary[lowerKey] = value;
         }
-        
+
+        static string LookupKey(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        {
+            ArgumentNullException.ThrowIfNull(dictionary);
+            ArgumentNullException.ThrowIfNull(key);
+            string lookupKey = caseInsensitive
+                ? dictionary.Keys.FirstOrDefault(k => string.Equals(k, key, StringComparison.OrdinalIgnoreCase)) ?? key
+                : key;
+            return lookupKey;
+        }
+
         static object? ConvertValue(object? value, Type targetType)
         {
             if (value is null)
