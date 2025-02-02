@@ -4,6 +4,7 @@
 using System.Globalization;
 using System.Linq;
 
+// ReSharper disable once CheckNamespace
 namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
@@ -89,7 +90,13 @@ namespace System.Collections.Generic
 
             throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
-
+        
+        public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
+        {
+            string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
+            dictionary[lowerKey] = value;
+        }
+        
         static object? ConvertValue(object? value, Type targetType)
         {
             if (value is null)
@@ -186,12 +193,6 @@ namespace System.Collections.Generic
             }
 
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
-        }
-
-        public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
-        {
-            string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
-            dictionary[lowerKey] = value;
         }
     }
 }
