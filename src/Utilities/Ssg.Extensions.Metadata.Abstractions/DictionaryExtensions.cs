@@ -108,21 +108,21 @@ namespace System.Collections.Generic
                 {
                     return Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
                 }
-                catch (OverflowException)
+                catch (OverflowException ex)
                 {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to overflow.");
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to overflow.", ex);
                 }
-                catch (InvalidCastException)
+                catch (InvalidCastException ex)
                 {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is invalid.");
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is invalid.", ex);
                 }
-                catch (NotSupportedException)
+                catch (NotSupportedException ex)
                 {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is not supported.");
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is not supported.", ex);
                 }
-                catch (FormatException)
+                catch (FormatException ex)
                 {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.", ex);
                 }
             }
 

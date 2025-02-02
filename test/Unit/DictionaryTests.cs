@@ -81,45 +81,35 @@ namespace Test.Unit
             Assert.Equal(Convert.ChangeType(expected, targetType, CultureInfo.InvariantCulture), result);
         }
 
-    }
+        static IEnumerable<object[]> ShouldThrowInvalidOperationExceptionOnInvalidConvertStringToExpectedTypeData()
+        { 
+            yield return new object[] { long.MaxValue, typeof(int), typeof(OverflowException) };
+            yield return new object[] { true, typeof(Uri), typeof(InvalidCastException) };
+            yield return new object[] { "invalid", typeof(double), typeof(FormatException) };
+            yield return new object[] { new object(), typeof(int), null };
+        }
+        
+        [Theory]
+        [MemberData(nameof(ShouldThrowInvalidOperationExceptionOnInvalidConvertStringToExpectedTypeData))]
+        public void ConvertValue_ShouldThrowInvalidOperationIfConversionFails(object value, Type targetType, Type? exceptionType)
+        {
+            // Note, we get TargetInvocationException since we use Reflection for invocation
+            TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => _ConvertValueMethod.Invoke(null, new object[] { value, targetType }));
+            Assert.NotNull(targetInvocationException.InnerException);
+            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
+            if (exceptionType == null)
+            {
+                Assert.Null(invalidOperationException.InnerException);
+            }
+            else
+            {
+                Assert.NotNull(invalidOperationException.InnerException);
+                Assert.IsType(exceptionType, invalidOperationException.InnerException);
+            }
 
-    public class ConvertValueTests
-    {
-        private static readonly MethodInfo ConvertValueMethod = typeof(DictionaryExtensions)
-        .GetMethod("ConvertValue", BindingFlags.NonPublic | BindingFlags.Static);
-
-    private class CustomObject {}
-
-    private enum TestEnum { Value1, Value2 }
-
-    
-    [Fact]
-    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnUnsupportedConversion()
-    {
-        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { new object(), typeof(int) }));
-        Assert.IsType<InvalidOperationException>(exception.InnerException);
-    }
-
-    [Fact]
-    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnOverflow()
-    {
-        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { long.MaxValue, typeof(int) }));
-        Assert.IsType<InvalidOperationException>(exception.InnerException);
-    }
-
-    [Fact]
-    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnNonIConvertibleType()
-    {
-        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { new CustomObject(), typeof(int) }));
-        Assert.IsType<InvalidOperationException>(exception.InnerException);
-    }
-
-    [Fact]
-    public void ConvertValue_ShouldThrowInvalidOperationExceptionOnNonConvertibleEnum()
-    {
-        var exception = Assert.Throws<TargetInvocationException>(() => ConvertValueMethod.Invoke(null, new object[] { TestEnum.Value1, typeof(DateTime) }));
-        Assert.IsType<InvalidOperationException>(exception.InnerException);
-    }
+            string message = invalidOperationException.ToString();
+            Assert.Contains(targetType.FullName, message);
+        }
     }
 
     public class DictionaryTests
