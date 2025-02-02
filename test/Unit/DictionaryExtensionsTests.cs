@@ -12,13 +12,13 @@ using Xunit;
 #pragma warning disable RS0030
 namespace Test.Unit
 {
-    public class ConvertValueTests2
+    public class DictionaryExtensionsTests
     {
         static readonly MethodInfo _ConvertValueMethod;
         static readonly MethodInfo _GetValueMethod;
         static readonly ConcurrentDictionary<Type, MethodInfo> _GetValueMethods;
 
-        static ConvertValueTests2()
+        static DictionaryExtensionsTests()
         {
             Type type = typeof(DictionaryExtensions);
             Debug.Assert(type != null);
@@ -145,6 +145,27 @@ namespace Test.Unit
             Assert.Equal(expectedValue, result);
         }
 
+        [Theory]
+        [MemberData(nameof(GetEnumerableValueTestData))]
+        public void Test_GetValues_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
+        {
+            Type genericIEnumerable = typeof(IEnumerable<>);
+            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
+
+            Dictionary<string, object?> dictionary = new();
+            dictionary.Add(key, value);
+
+            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValues")?.MakeGenericMethod(targetType);
+            object[] arguments = new object[] { dictionary, key, true };
+            object? result = method?.Invoke(null, arguments);
+            Type? actualType = result.GetType();
+            bool isCorrectEnumerable = actualType.IsAssignableTo(expectedEnumerableType);
+            Assert.True(isCorrectEnumerable);
+
+            // expected list
+            Assert.Equal(expectedValue, result);
+        }
+        
         public static IEnumerable<object[]> StringConversionData()
         {
             yield return new object[] { "true", typeof(bool), true };
@@ -185,17 +206,8 @@ namespace Test.Unit
             yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
             yield return new object[] { "boolTrueAsStringValue", "false", false, typeof(bool) };
         }
-    }
-
-#pragma warning disable
-    public class DictionaryTests
-    {
-        // TODO consider other types like
-        // - DateTime
-        // - TimeSpan
-        // - GUID
-
-        public static IEnumerable<object[]> GetValuesTestData()
+        
+        public static IEnumerable<object[]> GetEnumerableValueTestData()
         {
             // TODO bool list
             // TODO int list
@@ -211,77 +223,6 @@ namespace Test.Unit
             yield return new object[] { "singleStringAsListOfObject", new List<object>() { "a" }, new List<string>() { "a" }, typeof(string) };
             yield return new object[] { "singleStringsAsArrayOfString", new string[] { "a" }, new List<string>() { "a" }, typeof(string) };
             yield return new object[] { "string", "a", new List<string>() { "a" }, typeof(string) };
-        }
-
-
-        // TODO: GetValue where dictionary == null should throw
-        // TODO: GetValue where key == null should throw
-        // TODO: Test different default values
-        // TODO: Check different null values
-
-        [Theory]
-        [MemberData(nameof(GetValuesTestData))]
-        public void Test_GetValues_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
-        {
-            Type genericIEnumerable = typeof(IEnumerable<>);
-            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
-
-            Dictionary<string, object?> dictionary = new();
-            dictionary.Add(key, value);
-
-            MethodInfo? method = typeof(DictionaryExtensions).GetMethod("GetValues")?.MakeGenericMethod(targetType);
-            object[] arguments = new object[] { dictionary, key, true };
-            object? result = method?.Invoke(null, arguments);
-            Type? actualType = result.GetType();
-            bool isCorrectEnumerable = actualType.IsAssignableTo(expectedEnumerableType);
-            Assert.True(isCorrectEnumerable);
-
-            // expected list
-            Assert.Equal(expectedValue, result);
-        }
-
-        /*
-
-
-        /*
-        [Fact]
-        public void Test1()
-        {
-            Dictionary<string, object?> original = new Dictionary<string, object?>
-            {
-                { "TagsAsStringList", new List<string>() { "a", "b" } },
-                { "TagsAsStringArray", new [] { "c", "d" } },
-                { "TagsAsObjectList", new List<object>() { "e", "f" } }
-            };
-            Assert.Equal(original["TagsAsStringList"].GetType(), typeof(List<string>));
-            Assert.Equal(original["TagsAsStringArray"].GetType(), typeof(string[]));
-            Assert.Equal(original["TagsAsObjectList"].GetType(), typeof(List<object>));
-            
-            YamlDotNet.Serialization.ISerializer serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
-            YamlDotNet.Serialization.IDeserializer deserializer = new YamlDotNet.Serialization.DeserializerBuilder().Build();
-            string yaml = serializer.Serialize(original);
-            Dictionary<string, object?> deserialized = deserializer.Deserialize<Dictionary<string, object?>>(yaml);
-            Assert.Equal(deserialized["TagsAsStringList"].GetType(), typeof(List<object>));
-            Assert.Equal(deserialized["TagsAsStringArray"].GetType(), typeof(List<object>));
-            Assert.Equal(deserialized["TagsAsObjectList"].GetType(), typeof(List<object>));
-        }
-        */
-
-        [Theory(Skip = "Fall back no longer implemented")]
-        [InlineData("true", true)]
-        [InlineData("True", true)]
-        [InlineData("false", false)]
-        [InlineData("False", false)]
-        [InlineData(" ", false)]
-        [InlineData("", false)]
-        [InlineData(null, false)]
-        public void RetrieveBoolValue(string? setValue, bool? expected)
-        {
-            Dictionary<string, object?> dictionary = new();
-            string keyValue = "key";
-            dictionary.SetValue(keyValue, setValue);
-            bool? result = dictionary.GetValue<bool>(keyValue);
-            Assert.Equal(expected, result);
         }
     }
 }
