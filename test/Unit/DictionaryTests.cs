@@ -97,15 +97,17 @@ namespace Test.Unit
         }
 
         [Fact]
-        public void ThrowOnNull()
+        public void Test_GetValue_ThrowOnNull()
         {
-
+            Dictionary<string, object?> target = null;
+            Assert.Throws<ArgumentNullException>(() => target.GetValue<string>("some-key"));
         }
 
         [Fact]
-        public void ThrowOnNullKey()
+        public void Test_GetValue_ThrowOnNullKey()
         {
-
+            Dictionary<string, object?> target = new();
+            Assert.Throws<ArgumentNullException>(() => target.GetValue<string>(null));
         }
 
         [Theory]
