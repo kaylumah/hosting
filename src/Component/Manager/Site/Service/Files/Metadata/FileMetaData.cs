@@ -9,7 +9,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetaData : Dictionary<string, object?>
     {
-
         public string Series
         {
             get
@@ -20,6 +19,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             set
             {
                 this.SetValue(nameof(Series), value);
+            }
+        }
+        
+        public List<string> Tags
+        {
+            get
+            {
+                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
+                List<string> result = values?.ToList() ?? new List<string>();
+                return result;
+            }
+            set
+            {
+                this.SetValue(nameof(Tags), value);
             }
         }
 
@@ -72,20 +85,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             set
             {
                 this.SetValue(nameof(Collection), value);
-            }
-        }
-
-        public List<string> Tags
-        {
-            get
-            {
-                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
-                List<string> result = values?.ToList() ?? new List<string>();
-                return result;
-            }
-            set
-            {
-                this.SetValue(nameof(Tags), value);
             }
         }
 
