@@ -129,9 +129,8 @@ namespace Test.Unit
 
         // List<string>, List<object>
         // Array<string> ..
-
-        /*
-        public static IEnumerable<object[]> GetValueTestData()
+        
+        public static IEnumerable<object[]> GetValueTestData2()
         {
             yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
             yield return new object[] { "intValue", 42, 42, typeof(int) };
@@ -142,7 +141,7 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(GetValueTestData))]
+        [MemberData(nameof(GetValueTestData2))]
         public void Test_GetValue_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
         {
             Dictionary<string, object?> dictionary = new();
@@ -153,7 +152,6 @@ namespace Test.Unit
             object? result = method?.Invoke(null, arguments);
             Assert.Equal(expectedValue, result);
         }
-        */
 
         /*
         [Fact]
