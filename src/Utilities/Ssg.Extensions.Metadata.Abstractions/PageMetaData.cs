@@ -22,7 +22,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected string GetString(string key)
         {
-            string result = _InternalData.GetValue<string>(key);
+            string result = _InternalData.GetRequiredValue<string>(key);
             return result;
         }
 
@@ -40,7 +40,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected bool GetBoolValue(string key)
         {
-            bool result = _InternalData.GetBoolValue(key);
+            bool result = _InternalData.GetValue<bool>(key);
             return result;
         }
 
@@ -52,7 +52,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected List<string> GetStringValues(string key)
         {
-            List<string> result = _InternalData.GetStringValues(key);
+            IEnumerable<string>? values = _InternalData.GetValues<string>(key);
+            List<string> result = values?.ToList() ?? new List<string>();
             return result;
         }
 

@@ -14,7 +14,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string series = this.GetValue<string>(nameof(Series));
+                string series = this.GetRequiredValue<string>(nameof(Series));
                 return series;
             }
             set
@@ -27,7 +27,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string layout = this.GetValue<string>(nameof(Layout));
+                string layout = this.GetRequiredValue<string>(nameof(Layout));
                 return layout;
             }
             set
@@ -40,7 +40,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string outputLocation = this.GetValue<string>(nameof(OutputLocation));
+                string outputLocation = this.GetRequiredValue<string>(nameof(OutputLocation));
                 return outputLocation;
             }
             set
@@ -53,7 +53,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string uri = this.GetValue<string>(nameof(Uri));
+                string uri = this.GetRequiredValue<string>(nameof(Uri));
                 return uri;
             }
             set
@@ -66,7 +66,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string collection = this.GetValue<string>(nameof(Collection));
+                string collection = this.GetRequiredValue<string>(nameof(Collection));
                 return collection;
             }
             set
@@ -79,13 +79,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                List<object?> result = this.GetValue<List<object?>>(nameof(Tags));
-                IEnumerable<string?> strings = result.Cast<string?>();
-                List<string> asList = strings
-                    .Where(x => x != null)
-                    .Select(x => x!)
-                    .ToList();
-                return asList;
+                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
+                List<string> result = values?.ToList() ?? new List<string>();
+                return result;
             }
             set
             {
@@ -110,7 +106,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string publishedDate = this.GetValue<string>(nameof(PublishedDate));
+                string publishedDate = this.GetRequiredValue<string>(nameof(PublishedDate));
                 return publishedDate;
             }
             set
@@ -123,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string publishTime = this.GetValue<string>(nameof(PublishedTime));
+                string publishTime = this.GetRequiredValue<string>(nameof(PublishedTime));
                 return publishTime;
             }
             set
@@ -149,7 +145,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string modified = this.GetValue<string>(nameof(ModifiedDate));
+                string modified = this.GetRequiredValue<string>(nameof(ModifiedDate));
                 return modified;
             }
             set
@@ -162,7 +158,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string time = this.GetValue<string>(nameof(ModifiedTime));
+                string time = this.GetRequiredValue<string>(nameof(ModifiedTime));
                 return time;
             }
             set
