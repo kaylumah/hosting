@@ -21,7 +21,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
                 this.SetValue(nameof(Series), value);
             }
         }
-        
+
         public List<string> Tags
         {
             get
