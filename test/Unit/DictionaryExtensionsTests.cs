@@ -219,7 +219,15 @@ namespace Test.Unit
             Assert.Equal(expectedValue, result);
         }
 
-        // TODO getvalues nULL and not-found
+        [Fact]
+        public void Test_GetValues_NonExisting_ReturnsDefault()
+        {
+            Dictionary<string, object?> dictionary = new();
+            MethodInfo? method = GetValuesMethod(typeof(string));
+            object[] arguments = new object[] { dictionary, "fake-key", true };
+            object? result = method?.Invoke(null, arguments);
+            Assert.Null(result);
+        }
 
         public static IEnumerable<object[]> StringConversionData()
         {
