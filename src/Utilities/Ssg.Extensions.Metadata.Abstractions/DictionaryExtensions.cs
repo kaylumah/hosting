@@ -42,7 +42,7 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public static IEnumerable<T?>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static IEnumerable<T>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
@@ -74,11 +74,14 @@ namespace System.Collections.Generic
 
             if (value is IEnumerable<object> objectList)
             {
-                List<T?> result = new List<T?>();
+                List<T> result = new List<T>();
                 foreach (object original in objectList)
                 {
                     T? converted = (T?)ConvertValue(original, typeof(T));
-                    result.Add(converted);
+                    if (converted != null)
+                    {
+                        result.Add(converted);
+                    }
                 }
 
                 return result;
@@ -191,14 +194,6 @@ namespace System.Collections.Generic
             bool tryParseOutcome = bool.TryParse(stringValue, out bool parseResult);
             // if the value is not a boolean, we default to false
             return tryParseOutcome && parseResult;
-        }
-
-        public static List<string> GetStringValues(this Dictionary<string, object?> dictionary, string key)
-        {
-            List<object>? internalList = dictionary.GetValue<List<object>>(key);
-            List<string>? asStrings = internalList?.Cast<string>()?.ToList();
-            List<string> result = asStrings ?? [];
-            return result;
         }
 
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
