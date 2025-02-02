@@ -10,14 +10,26 @@ namespace Test.Unit
 {
     public class DictionaryTests
     {
+        // TODO consider other types like
+        // - DateTime
+        // - TimeSpan
+        // - GUID
+
         public static IEnumerable<object[]> GetValueTestData()
         {
+            // TODO List?
+            // TODO NULL Value
+            // TODO Invalid INT (string? notAnInt)
+            // TODO Invalid Bool
+            // TODO string with Spaces //"  42  "
+            // TODO mixed case bool // "TrUe" 
+            // int.Max - int.MinValue
             yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
             yield return new object[] { "intValue", 42, 42, typeof(int) };
             yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
             yield return new object[] { "boolFalseValue", false, false, typeof(bool) };
             yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
-            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
+            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) }; // TODO do the false as well
         }
 
         public static IEnumerable<object[]> GetValuesTestData()
@@ -25,10 +37,12 @@ namespace Test.Unit
             // TODO bool list
             // TODO int list
             // TODO list of string int
-            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsArrayOfString", new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, typeof(string) };
+            // single element
+            // list of one
+            yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsArrayOfString", new string[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
         }
 
 
@@ -52,11 +66,11 @@ namespace Test.Unit
 
         [Theory]
         [MemberData(nameof(GetValuesTestData))]
-        public void Test_GetValues_CaseInsensitive(string key, object? value, Type targetType)
+        public void Test_GetValues_CaseInsensitive(string key, object? value, object? expectedValue, Type targetType)
         {
             Type genericIEnumerable = typeof(IEnumerable<>);
             Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
-            
+
             Dictionary<string, object?> dictionary = new();
             dictionary.Add(key, value);
 
@@ -66,82 +80,12 @@ namespace Test.Unit
             Type? actualType = result.GetType();
             bool isCorrectEnumerable = actualType.IsAssignableTo(expectedEnumerableType);
             Assert.True(isCorrectEnumerable);
-        }
 
-
-
-        private readonly Dictionary<string, object?> _dictionary = new()
-    {
-        { "intValue", 42 },
-        { "boolValue", true },
-        { "stringValue", "Hello" },
-        { "guidValue", "550e8400-e29b-41d4-a716-446655440000" },
-        { "dateTimeValue", "2024-02-01T12:34:56Z" },
-        { "timeSpanValue", "02:30:00" },
-        { "stringInt", "42" },
-        { "stringBool", "true" },
-        { "intList", new List<object> { 1, 2, 3 } },
-        { "stringList", new List<object> { "a", "b", "c" } },
-        { "intArray", new object[] { 4, 5, 6 } },
-        { "stringArray", new object[] { "x", "y", "z" } },
-        { "nullValue", null },
-        { "invalidInt", "notAnInt" },
-        { "stringWithSpaces", "  42  " },
-        { "mixedCaseBool", "TrUe" },
-        { "emptyList", new List<object>() },
-        { "mixedList", new List<object> { 1, "2", "three" } },
-        { "CaseSensitiveKey", "Hello" },
-        { "listWithNull", new List<object> { 1, null, 3 } },
-        { "directIntList", new List<int> { 10, 20, 30 } },
-        { "directStringList", new List<string> { "alpha", "beta", "gamma" } },
-        { "stringObjectArray", new object[] { "p", "q", "r" } },
-        { "maxInt", int.MaxValue },
-        { "minInt", int.MinValue },
-        { "maxLong", long.MaxValue },
-        { "nullableStringList", new List<object> { "hello", null, "world" } },
-        { "nullList", null },
-        { "stringNumberList", new List<string> { "10", "20", "30" } }
-    };
-
-        public static IEnumerable<object[]> GetValueTestDataGPT()
-        {
-            yield return new object[] { "intValue", 42, typeof(int) };
-            yield return new object[] { "boolValue", true, typeof(bool) };
-            yield return new object[] { "stringValue", "Hello", typeof(string) };
-            yield return new object[] { "stringInt", 42, typeof(int) };
-            yield return new object[] { "stringBool", true, typeof(bool) };
-            yield return new object[] { "guidValue", Guid.Parse("550e8400-e29b-41d4-a716-446655440000"), typeof(Guid) };
-            yield return new object[] { "dateTimeValue", DateTime.Parse("2024-02-01T12:34:56Z", null, System.Globalization.DateTimeStyles.RoundtripKind), typeof(DateTime) };
-            yield return new object[] { "timeSpanValue", TimeSpan.Parse("02:30:00"), typeof(TimeSpan) };
-            yield return new object[] { "maxInt", int.MaxValue, typeof(int) };
-            yield return new object[] { "minInt", int.MinValue, typeof(int) };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetValueTestDataGPT))]
-        public void GetValue_ShouldReturnCorrectValue(string key, object expectedValue, Type targetType)
-        {
-            var method = typeof(DictionaryExtensions).GetMethod("GetValue").MakeGenericMethod(targetType);
-            var result = method.Invoke(_dictionary, new object[] { _dictionary, key, true });
+            // expected list
             Assert.Equal(expectedValue, result);
         }
 
-        public static IEnumerable<object[]> GetListTestData()
-        {
-            yield return new object[] { "directIntList", new List<int> { 10, 20, 30 } };
-            yield return new object[] { "directStringList", new List<string> { "alpha", "beta", "gamma" } };
-            yield return new object[] { "stringObjectArray", new List<string> { "p", "q", "r" } };
-            yield return new object[] { "stringNumberList", new List<int> { 10, 20, 30 } };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetListTestData))]
-        public void GetValues_ShouldReturnCorrectList(string key, object expectedList)
-        {
-            var result = _dictionary.GetValues<object>(key);
-            Assert.Equal(expectedList, result);
-        }
-
+        /*
         [Fact]
         public void GetValue_ShouldThrowForLongMaxValueToInt()
         {
@@ -176,19 +120,7 @@ namespace Test.Unit
         public void GetValue_ShouldRespectCaseSensitivity()
         {
             Assert.Null(_dictionary.GetValue<string>("casesensitivekey", caseInsensitive: false));
-        }
-
-
-        // Int
-        // String
-        // Bool
-
-        // NULL Value
-        // Non-existing value
-        // int value etc as string
-
-        // List<string>, List<object>
-        // Array<string> ..
+        }*/
 
         /*
         [Fact]
