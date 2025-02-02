@@ -29,7 +29,8 @@ namespace Test.Unit
             yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
             yield return new object[] { "boolFalseValue", false, false, typeof(bool) };
             yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
-            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) }; // TODO do the false as well
+            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
+            yield return new object[] { "boolTrueAsStringValue", "false", false, typeof(bool) };
         }
 
         public static IEnumerable<object[]> GetValuesTestData()
@@ -37,12 +38,15 @@ namespace Test.Unit
             // TODO bool list
             // TODO int list
             // TODO list of string int
-            // single element
-            // list of one
+
             yield return new object[] { "stringsAsListOfString", new List<string>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
-            yield return new object[] { "stringsAsArrayOfString", new string[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
             yield return new object[] { "stringsAsListOfObject", new List<object>() { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "stringsAsArrayOfString", new string[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
             yield return new object[] { "stringsAsArrayOfObject", new object[] { "a", "b", "c" }, new List<string>() { "a", "b", "c" }, typeof(string) };
+            yield return new object[] { "singleStringAsListOfString", new List<string>() { "a" }, new List<string>() { "a" }, typeof(string) };
+            yield return new object[] { "singleStringAsListOfObject", new List<object>() { "a" }, new List<string>() { "a" }, typeof(string) };
+            yield return new object[] { "singleStringsAsArrayOfString", new string[] { "a" }, new List<string>() { "a" }, typeof(string) };
+            yield return new object[] { "string", "a", new List<string>() { "a" }, typeof(string) };
         }
 
 
