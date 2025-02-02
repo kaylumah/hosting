@@ -201,22 +201,6 @@ namespace System.Collections.Generic
             return result;
         }
 
-        /*
-        public static T GetValue<T>(this Dictionary<string, object?> dictionary, string key)
-        {
-            string lowerKey = key; //.ToLower(CultureInfo.InvariantCulture);
-            bool exists = dictionary.TryGetValue(lowerKey, out object? o);
-
-            if (o is T t)
-            {
-                return t;
-            }
-
-            T result = default!;
-            return result;
-        }
-        */
-
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value)
         {
             string lowerKey = key.ToLower(CultureInfo.InvariantCulture);
