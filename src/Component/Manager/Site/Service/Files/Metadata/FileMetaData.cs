@@ -38,7 +38,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string uri = this.GetRequiredValue<string>(nameof(Uri));
+                string? uri = this.GetValue<string>(nameof(Uri));
+                if (uri == null)
+                {
+                    throw new InvalidOperationException("URI is required");
+                }
+
                 return uri;
             }
             set
