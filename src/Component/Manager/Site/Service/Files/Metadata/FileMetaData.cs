@@ -21,11 +21,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string OutputLocation
+        public string? OutputLocation
         {
             get
             {
-                string outputLocation = this.GetRequiredValue<string>(nameof(OutputLocation));
+                string? outputLocation = this.GetValue<string>(nameof(OutputLocation));
                 return outputLocation;
             }
             set
