@@ -300,7 +300,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 
         string DetermineOutputLocation(string fileName, FileMetaData metaData)
         {
-            string permalink = metaData.OutputLocation;
+            string? permalink = metaData.OutputLocation;
+            if (permalink == null)
+            {
+                throw new InvalidOperationException($"Ensure {nameof(metaData.OutputLocation)} is set first");
+            }
+
             string pattern = @"((?<year>\d{4})\-(?<month>\d{2})\-(?<day>\d{2})\-)?(?<filename>[\s\S]*?)\.(?<ext>.*)";
             Match match = Regex.Match(fileName, pattern);
 

@@ -10,12 +10,6 @@ namespace System.Collections.Generic
 {
     public static class DictionaryExtensions
     {
-        public static T GetRequiredValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
-        {
-            T? result = dictionary.GetValue<T>(key, caseInsensitive);
-            return result!;
-        }
-
         public static T? GetValue<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);

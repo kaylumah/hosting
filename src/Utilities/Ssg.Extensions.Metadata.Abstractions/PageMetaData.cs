@@ -22,8 +22,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected string GetString(string key)
         {
-            string result = _InternalData.GetRequiredValue<string>(key);
-            return result;
+            string? result = _InternalData.GetValue<string>(key);
+            // TODO fix NULL suppression
+            return result!;
         }
 
         protected int GetInt(string key)

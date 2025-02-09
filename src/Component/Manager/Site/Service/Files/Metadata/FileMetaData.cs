@@ -3,31 +3,16 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
 {
     public class FileMetaData : Dictionary<string, object?>
     {
-
-        public string Series
+        public string? Layout
         {
             get
             {
-                string series = this.GetRequiredValue<string>(nameof(Series));
-                return series;
-            }
-            set
-            {
-                this.SetValue(nameof(Series), value);
-            }
-        }
-
-        public string Layout
-        {
-            get
-            {
-                string layout = this.GetRequiredValue<string>(nameof(Layout));
+                string? layout = this.GetValue<string>(nameof(Layout));
                 return layout;
             }
             set
@@ -36,11 +21,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string OutputLocation
+        public string? OutputLocation
         {
             get
             {
-                string outputLocation = this.GetRequiredValue<string>(nameof(OutputLocation));
+                string? outputLocation = this.GetValue<string>(nameof(OutputLocation));
                 return outputLocation;
             }
             set
@@ -53,7 +38,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
         {
             get
             {
-                string uri = this.GetRequiredValue<string>(nameof(Uri));
+                string? uri = this.GetValue<string>(nameof(Uri));
+                if (uri == null)
+                {
+                    throw new InvalidOperationException("URI is required");
+                }
+
                 return uri;
             }
             set
@@ -62,30 +52,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string Collection
+        public string? Collection
         {
             get
             {
-                string collection = this.GetRequiredValue<string>(nameof(Collection));
+                string? collection = this.GetValue<string>(nameof(Collection));
                 return collection;
             }
             set
             {
                 this.SetValue(nameof(Collection), value);
-            }
-        }
-
-        public List<string> Tags
-        {
-            get
-            {
-                IEnumerable<string>? values = this.GetValues<string>(nameof(Tags));
-                List<string> result = values?.ToList() ?? new List<string>();
-                return result;
-            }
-            set
-            {
-                this.SetValue(nameof(Tags), value);
             }
         }
 
@@ -102,11 +78,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string PublishedDate
+        public string? PublishedDate
         {
             get
             {
-                string publishedDate = this.GetRequiredValue<string>(nameof(PublishedDate));
+                string? publishedDate = this.GetValue<string>(nameof(PublishedDate));
                 return publishedDate;
             }
             set
@@ -115,11 +91,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string PublishedTime
+        public string? PublishedTime
         {
             get
             {
-                string publishTime = this.GetRequiredValue<string>(nameof(PublishedTime));
+                string? publishTime = this.GetValue<string>(nameof(PublishedTime));
                 return publishTime;
             }
             set
@@ -141,12 +117,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string ModifiedDate
+        public string? ModifiedDate
         {
             get
             {
-                string modified = this.GetRequiredValue<string>(nameof(ModifiedDate));
-                return modified;
+                string? modifiedDate = this.GetValue<string>(nameof(ModifiedDate));
+                return modifiedDate;
             }
             set
             {
@@ -154,12 +130,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Metadata
             }
         }
 
-        public string ModifiedTime
+        public string? ModifiedTime
         {
             get
             {
-                string time = this.GetRequiredValue<string>(nameof(ModifiedTime));
-                return time;
+                string? modifiedTime = this.GetValue<string>(nameof(ModifiedTime));
+                return modifiedTime;
             }
             set
             {
