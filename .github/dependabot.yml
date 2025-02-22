@@ -59,6 +59,7 @@ updates:
       timezone: Europe/Amsterdam
     allow:
       - dependency-type: "direct"
+    lockfile-only: false
     assignees:
       - kaylumah
     groups:
