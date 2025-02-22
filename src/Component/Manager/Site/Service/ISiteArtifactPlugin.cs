@@ -171,7 +171,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (0 < posts.Count)
             {
                 Dictionary<AuthorId, SyndicationPerson> persons = siteMetaData.ToPersons();
-                Dictionary<string, SyndicationCategory> tags = siteMetaData.ToCategories();
+                Dictionary<TagId, SyndicationCategory> tags = siteMetaData.ToCategories();
                 foreach (PageMetaData pageMetaData in posts)
                 {
                     Uri pageUri = pageMetaData.CanonicalUri;
@@ -187,7 +187,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
                     List<SyndicationCategory> itemCategories = pageMetaData
                         .Tags
-                        .Where(tags.ContainsKey)
+                        .Where(tag => tags.ContainsKey(tag))
                         .Select(tag => tags[tag])
                         .ToList();
                     itemCategories.ForEach(item.Categories.Add);

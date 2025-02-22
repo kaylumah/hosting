@@ -1,6 +1,8 @@
 ﻿{
   Build: {},
-  Id: ,
+  Id: {
+    Value: my-site
+  },
   Title: ,
   Description: ,
   Language: ,
@@ -8,6 +10,9 @@
   Url: ,
   Items: [
     {
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1
@@ -19,6 +24,9 @@
   ],
   Pages: [
     {
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1

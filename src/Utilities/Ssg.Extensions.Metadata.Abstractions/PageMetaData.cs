@@ -22,8 +22,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected string GetString(string key)
         {
-            string result = _InternalData.GetValue<string>(key);
-            return result;
+            string? result = _InternalData.GetValue<string>(key);
+            // TODO fix NULL suppression
+            return result!;
         }
 
         protected int GetInt(string key)
@@ -40,7 +41,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected bool GetBoolValue(string key)
         {
-            bool result = _InternalData.GetBoolValue(key);
+            bool result = _InternalData.GetValue<bool>(key);
             return result;
         }
 
@@ -52,7 +53,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected List<string> GetStringValues(string key)
         {
-            List<string> result = _InternalData.GetStringValues(key);
+            IEnumerable<string>? values = _InternalData.GetValues<string>(key);
+            List<string> result = values?.ToList() ?? new List<string>();
             return result;
         }
 
@@ -117,13 +119,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
 
+    public readonly record struct PageId(string Value)
+    {
+        public static implicit operator string(PageId pageId) => pageId.Value;
+        public static implicit operator PageId(string value) => new(value);
+    }
+
     public class PageMetaData : BasePage
     {
         public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
 
-        public string Id
+        public PageId Id
         {
             get
             {
@@ -132,14 +140,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
             set
             {
-                SetValue(nameof(Id), value);
+                string strValue = value;
+                SetValue(nameof(Id), strValue);
             }
         }
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));
-        public string Author => GetString(nameof(Author));
-        public string Organization => GetString(nameof(Organization));
+        public AuthorId Author => GetString(nameof(Author));
+        public OrganizationId Organization => GetString(nameof(Organization));
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
 
         public string LdJson

@@ -1,6 +1,8 @@
 ﻿{
   Build: {},
-  Id: ,
+  Id: {
+    Value: my-site
+  },
   Title: ,
   Description: ,
   Language: ,
@@ -9,22 +11,31 @@
   Data: {
     tags: [
       {
-        Id: 1
+        Id: {
+          Value: 1
+        }
       }
     ]
   },
   TagMetaData: [
     {
-      Id: 1
+      Id: {
+        Value: 1
+      }
     }
   ],
   Tags: {
     1: {
-      Id: 1
+      Id: {
+        Value: 1
+      }
     }
   },
   Items: [
     {
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1
@@ -36,6 +47,9 @@
   ],
   Pages: [
     {
+      Id: {
+        Value: my-page
+      },
       Sitemap: false,
       Tags: [
         1

@@ -7,12 +7,18 @@ using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+    public readonly record struct SiteId(string Value)
+    {
+        public static implicit operator string(SiteId siteId) => siteId.Value;
+        public static implicit operator SiteId(string value) => new(value);
+    }
+
     public class SiteMetaData
     {
         public BuildData Build
         { get; set; }
-        public string Id
-        { get; set; }
+        public SiteId Id
+        { get; }
         public string Title
         { get; set; }
         public string Description
@@ -59,7 +65,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
 
         public SiteMetaData(
-            string id,
+            SiteId id,
             string title,
             string description,
             string language,
