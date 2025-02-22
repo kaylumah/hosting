@@ -57,9 +57,6 @@ updates:
       interval: weekly
       time: '09:00'
       timezone: Europe/Amsterdam
-    allow:
-      - dependency-type: "direct"
-    lockfile-only: false
     assignees:
       - kaylumah
     groups:
