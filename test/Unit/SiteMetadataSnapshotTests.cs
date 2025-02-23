@@ -158,11 +158,12 @@ namespace Test.Unit
 
             PageMetaData? notFound = siteMetaData["123"];
 
-            PageId[] ids = new[] { new PageId("a"), new PageId("b") };
+            PageId[] ids = new[] { new PageId("a"), new PageId("b"), new PageId("d") };
             IEnumerable<PageMetaData> result = siteMetaData[ids];
 
             foreach (PageMetaData item in result)
             {
+                PageId id2 = item.Id;
             }
         }
 
