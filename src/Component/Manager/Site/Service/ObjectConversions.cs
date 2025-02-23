@@ -64,7 +64,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
-            bool tagExists = site.PagesByTags.TryGetValue(tag, out PageMetaData[]? resultForTag);
+            bool tagExists = site.PagesByTags.TryGetValue(tag, out List<PageMetaData>? resultForTag);
             IEnumerable<Article> result;
             if (tagExists && resultForTag != null)
             {

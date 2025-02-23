@@ -60,7 +60,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
+        public SortedDictionary<string, List<PageMetaData>> PagesByTags => GetPagesByTag();
 
         public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
 
@@ -134,29 +134,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        SortedDictionary<string, PageMetaData[]> GetPagesByTag()
-        {
-            SortedDictionary<string, PageMetaData[]> result = new();
-
-            List<PageMetaData> pages = GetPages().ToList();
-            IEnumerable<string> tags = GetTags();
-
-            foreach (string tag in tags)
-            {
-                PageMetaData[] tagFiles = pages
-                    .FromTag(tag)
-                    .ToArray();
-                result.Add(tag, tagFiles);
-            }
-
-            return result;
-        }
-
         List<TagViewModel> GetTagCloud()
         {
-            SortedDictionary<string, PageMetaData[]> tags = PagesByTags;
+            SortedDictionary<string, List<PageMetaData>> tags = PagesByTags;
             List<TagViewModel> result = new List<TagViewModel>();
-            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
+            foreach (KeyValuePair<string, List<PageMetaData>> item in tags)
             {
                 string tag = item.Key;
                 TagViewModel resultForTag = GetTagViewModel(tag);
@@ -180,14 +162,32 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 description = tagData.Description;
             }
 
-            bool hasPageInfo = PagesByTags.TryGetValue(id, out PageMetaData[]? pageInfos);
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageMetaData>? pageInfos);
             if (hasPageInfo && pageInfos != null)
             {
-                size = pageInfos.Length;
+                size = pageInfos.Count;
             }
 
             TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
             return resultForTag;
+        }
+
+        SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
+        {
+            SortedDictionary<string, List<PageMetaData>> result = new();
+
+            List<PageMetaData> pages = GetPages().ToList();
+            IEnumerable<string> tags = GetTags();
+
+            foreach (string tag in tags)
+            {
+                List<PageMetaData> tagFiles = pages
+                    .FromTag(tag)
+                    .ToList();
+                result.Add(tag, tagFiles);
+            }
+
+            return result;
         }
     }
 }
