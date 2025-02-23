@@ -47,12 +47,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static TagViewModel GetTag(SiteMetaData site, string tag)
-        {
-            TagViewModel tagViewModel = site.GetTagViewModel(tag);
-            return tagViewModel;
-        }
-
         public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)
         {
             Uri result = site.AbsoluteUri(relativeUrl);
