@@ -50,7 +50,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
+        public IEnumerable<FacetMetaData> TagCloud => GetTagCloud();
 
         public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
@@ -124,7 +124,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
-        public TagViewModel GetTagViewModel(string tag)
+        public FacetMetaData GetTagViewModel(string tag)
         {
             string id = tag;
             string displayName = tag;
@@ -144,7 +144,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 size = pageInfos.Count;
             }
 
-            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
+            FacetMetaData resultForTag = new FacetMetaData(id, displayName, description, size);
             return resultForTag;
         }
 
@@ -174,14 +174,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        List<TagViewModel> GetTagCloud()
+        List<FacetMetaData> GetTagCloud()
         {
             SortedDictionary<string, List<PageId>> tags = PagesByTags;
-            List<TagViewModel> result = new List<TagViewModel>();
+            List<FacetMetaData> result = new List<FacetMetaData>();
             foreach (KeyValuePair<string, List<PageId>> item in tags)
             {
                 string tag = item.Key;
-                TagViewModel resultForTag = GetTagViewModel(tag);
+                FacetMetaData resultForTag = GetTagViewModel(tag);
                 result.Add(resultForTag);
             }
 

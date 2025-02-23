@@ -41,9 +41,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
+        public static IEnumerable<FacetMetaData> TagCloud(SiteMetaData site)
         {
-            IEnumerable<TagViewModel> result = site.TagCloud;
+            IEnumerable<FacetMetaData> result = site.TagCloud;
             return result;
         }
 
