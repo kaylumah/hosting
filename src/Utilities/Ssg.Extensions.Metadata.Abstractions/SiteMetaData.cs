@@ -203,6 +203,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             SortedDictionary<string, List<PageMetaData>> result = new();
 
+            IEnumerable<Article> articles = GetArticles();
+            foreach (Article article in articles)
+            {
+                List<string> tags = article.Tags;
+                foreach (string tag in tags)
+                {
+                    if (result.ContainsKey(tag) == false)
+                    {
+                        result[tag] = new();
+                    }
+
+                    result[tag].Add(article);
+                }
+            }
+
+            /*
             List<PageMetaData> pages = GetPages().ToList();
             IEnumerable<string> tags = GetTags();
 
@@ -213,6 +229,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     .ToList();
                 result.Add(tag, tagFiles);
             }
+            */
 
             return result;
         }
@@ -220,6 +237,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
             SortedDictionary<int, List<PageId>> result = new();
+
             IEnumerable<Article> articles = GetArticles();
             foreach (Article article in articles)
             {
