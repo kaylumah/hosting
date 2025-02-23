@@ -41,17 +41,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
         public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
-        T? GetData<T>(string key) where T : class
-        {
-            bool hasData = Data.TryGetValue(key, out object? value);
-            if (hasData && value is T result)
-            {
-                return result;
-            }
-
-            return null;
-        }
-
         public List<BasePage> Items
         { get; init; }
 
@@ -135,6 +124,41 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
+        public TagViewModel GetTagViewModel(string tag)
+        {
+            string id = tag;
+            string displayName = tag;
+            string description = string.Empty;
+            int size = 0;
+
+            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
+            if (hasTagMetaData && tagData != null)
+            {
+                displayName = tagData.Name;
+                description = tagData.Description;
+            }
+
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
+            if (hasPageInfo && pageInfos != null)
+            {
+                size = pageInfos.Count;
+            }
+
+            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
+            return resultForTag;
+        }
+
+        T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
+        }
+
         IEnumerable<Article> GetRecentArticles()
         {
             IEnumerable<Article> articles = GetArticles();
@@ -162,30 +186,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
 
             return result;
-        }
-
-        public TagViewModel GetTagViewModel(string tag)
-        {
-            string id = tag;
-            string displayName = tag;
-            string description = string.Empty;
-            int size = 0;
-
-            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
-            if (hasTagMetaData && tagData != null)
-            {
-                displayName = tagData.Name;
-                description = tagData.Description;
-            }
-
-            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
-            if (hasPageInfo && pageInfos != null)
-            {
-                size = pageInfos.Count;
-            }
-
-            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
-            return resultForTag;
         }
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
