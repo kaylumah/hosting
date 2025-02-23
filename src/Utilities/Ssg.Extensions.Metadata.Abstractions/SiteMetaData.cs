@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -64,7 +63,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
 
-        public SortedDictionary<string, List<PageMetaData>> PagesByTags => GetPagesByTag();
+        public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
@@ -99,7 +98,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             get => _Lookup.GetValueOrDefault(pageId);
         }
 
-        public IEnumerable<PageMetaData> this[params PageId[] ids]
+        public IEnumerable<PageMetaData> this[IEnumerable<PageId> ids]
         {
             get
             {
@@ -163,9 +162,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         List<TagViewModel> GetTagCloud()
         {
-            SortedDictionary<string, List<PageMetaData>> tags = PagesByTags;
+            SortedDictionary<string, List<PageId>> tags = PagesByTags;
             List<TagViewModel> result = new List<TagViewModel>();
-            foreach (KeyValuePair<string, List<PageMetaData>> item in tags)
+            foreach (KeyValuePair<string, List<PageId>> item in tags)
             {
                 string tag = item.Key;
                 TagViewModel resultForTag = GetTagViewModel(tag);
@@ -189,7 +188,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 description = tagData.Description;
             }
 
-            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageMetaData>? pageInfos);
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
             if (hasPageInfo && pageInfos != null)
             {
                 size = pageInfos.Count;
@@ -199,9 +198,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return resultForTag;
         }
 
-        SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
+        SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            SortedDictionary<string, List<PageMetaData>> result = new();
+            SortedDictionary<string, List<PageId>> result = new();
 
             IEnumerable<Article> articles = GetArticles();
             foreach (Article article in articles)
@@ -214,7 +213,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                         result[tag] = new();
                     }
 
-                    result[tag].Add(article);
+                    result[tag].Add(article.Id);
                 }
             }
 

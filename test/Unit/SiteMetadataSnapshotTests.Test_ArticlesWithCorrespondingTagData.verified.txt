@@ -92,19 +92,7 @@
   PagesByTags: {
     1: [
       {
-        SocialShare: false,
-        Feed: false,
-        Featured: false,
-        Id: {
-          Value: my-page
-        },
-        Sitemap: false,
-        Tags: [
-          1
-        ],
-        Uri: example.html,
-        BaseUri: http://127.0.0.1,
-        CanonicalUri: http://127.0.0.1/example.html
+        Value: my-page
       }
     ]
   },
