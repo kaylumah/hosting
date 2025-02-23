@@ -124,30 +124,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
-        public FacetMetaData GetTagViewModel(string tag)
-        {
-            string id = tag;
-            string displayName = tag;
-            string description = string.Empty;
-            int size = 0;
-
-            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
-            if (hasTagMetaData && tagData != null)
-            {
-                displayName = tagData.Name;
-                description = tagData.Description;
-            }
-
-            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
-            if (hasPageInfo && pageInfos != null)
-            {
-                size = pageInfos.Count;
-            }
-
-            FacetMetaData resultForTag = new FacetMetaData(id, displayName, description, size);
-            return resultForTag;
-        }
-
         T? GetData<T>(string key) where T : class
         {
             bool hasData = Data.TryGetValue(key, out object? value);
@@ -180,8 +156,25 @@ namespace Ssg.Extensions.Metadata.Abstractions
             List<FacetMetaData> result = new List<FacetMetaData>();
             foreach (KeyValuePair<string, List<PageId>> item in tags)
             {
-                string tag = item.Key;
-                FacetMetaData resultForTag = GetTagViewModel(tag);
+                string id = item.Key;
+                string displayName = item.Key;
+                string description = string.Empty;
+                int size = 0;
+
+                bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
+                if (hasTagMetaData && tagData != null)
+                {
+                    displayName = tagData.Name;
+                    description = tagData.Description;
+                }
+
+                bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
+                if (hasPageInfo && pageInfos != null)
+                {
+                    size = pageInfos.Count;
+                }
+
+                FacetMetaData resultForTag = new FacetMetaData(id, displayName, description, size);
                 result.Add(resultForTag);
             }
 
