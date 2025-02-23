@@ -5,8 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    
+    <!-- Load TailwindCSS v4 from Unpkg with Typography Plugin -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <!-- Inline Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      plugins: [tailwind.typography] // Enable Typography plugin
+    }
+  </script>
+
 </head>
 <body class="bg-gray-100 font-sans leading-relaxed tracking-wide">
 <div class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -76,5 +85,9 @@
         });
     });
 </script>
+
+<script>
+    console.log("TailwindCSS version:", tailwind.version);
+  </script>
 </body>
 </html>
