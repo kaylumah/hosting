@@ -3,7 +3,7 @@
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class TagViewModel
+    public class FacetMetaData
     {
         public string Id
         { get; init; }
@@ -19,7 +19,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         // public string Uri => $"/blog.html?tag={Id}";
 
-        public TagViewModel(string id, string displayName, string description, int size)
+        public FacetMetaData(string id, string displayName, string description, int size)
         {
             Id = id;
             DisplayName = displayName;

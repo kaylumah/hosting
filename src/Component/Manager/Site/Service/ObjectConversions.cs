@@ -41,16 +41,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<TagViewModel> TagCloud(SiteMetaData site)
+        public static IEnumerable<FacetMetaData> TagCloud(SiteMetaData site)
         {
-            IEnumerable<TagViewModel> result = site.TagCloud;
+            IEnumerable<FacetMetaData> result = site.TagCloud;
             return result;
-        }
-
-        public static TagViewModel GetTag(SiteMetaData site, string tag)
-        {
-            TagViewModel tagViewModel = site.GetTagViewModel(tag);
-            return tagViewModel;
         }
 
         public static Uri AbsoluteUri(SiteMetaData site, string relativeUrl)
