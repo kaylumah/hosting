@@ -185,6 +185,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
             get => _Lookup.GetValueOrDefault(pageId);
         }
 
+        public IEnumerable<PageMetaData> this[params PageId[] ids]
+        {
+            get
+            {
+                foreach (PageId id in ids)
+                {
+                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    {
+                        yield return page;
+                    }
+                }
+            }
+        }
+
         public IEnumerable<PageMetaData> GetPagesByIds(params PageId[] ids)
         {
             foreach (PageId id in ids)
