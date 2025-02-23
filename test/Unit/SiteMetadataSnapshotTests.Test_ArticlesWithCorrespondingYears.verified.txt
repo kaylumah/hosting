@@ -172,9 +172,9 @@
   ],
   FeaturedArticles: [],
   PagesByYears: {
-    2023: [
+    2025: [
       {
-        Value: 1
+        Value: 4
       }
     ],
     2024: [
@@ -185,9 +185,9 @@
         Value: 2
       }
     ],
-    2025: [
+    2023: [
       {
-        Value: 4
+        Value: 1
       }
     ]
   }

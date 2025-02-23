@@ -190,7 +190,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            SortedDictionary<string, List<PageId>> result = new();
+            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
 
             IEnumerable<Article> articles = GetArticles();
             foreach (Article article in articles)
@@ -212,7 +212,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            SortedDictionary<int, List<PageId>> result = new();
+            DescendingComparer<int> comparer = new DescendingComparer<int>();
+            SortedDictionary<int, List<PageId>> result = new(comparer);
 
             IEnumerable<Article> articles = GetArticles();
             foreach (Article article in articles)
@@ -227,6 +228,26 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 result[year].Add(article.Id);
             }
 
+            return result;
+        }
+    }
+
+    class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
+    {
+        public int Compare(T? x, T? y)
+        {
+            if (x == null)
+            {
+                return -1;
+            }
+
+            if (y == null)
+            {
+                return 1;
+            }
+
+            // Reverse the comparison for descending order
+            int result = y.CompareTo(x);
             return result;
         }
     }
