@@ -182,5 +182,40 @@
       }
     ]
   },
-  "PagesByYears": {}
+  "PagesByYears": {
+    "1": [
+      {
+        "Id": {
+          "Value": "my-page"
+        },
+        "Title": null,
+        "Description": null,
+        "Language": null,
+        "Author": {
+          "Value": null
+        },
+        "Organization": {
+          "Value": null
+        },
+        "Sitemap": false,
+        "LdJson": null,
+        "MetaTags": null,
+        "Layout": null,
+        "Image": null,
+        "WebImage": null,
+        "Name": null,
+        "Collection": null,
+        "Tags": [
+          "1"
+        ],
+        "Published": "0001-01-01T00:00:00+00:00",
+        "Modified": "0001-01-01T00:00:00+00:00",
+        "Uri": "example.html",
+        "BaseUri": "http://127.0.0.1",
+        "CanonicalUri": "http://127.0.0.1/example.html",
+        "Content": null,
+        "Type": null
+      }
+    ]
+  }
 }</pre>

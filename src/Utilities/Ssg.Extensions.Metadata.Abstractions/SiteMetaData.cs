@@ -195,6 +195,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         SortedDictionary<int, List<PageMetaData>> GetPagesByYear()
         {
             SortedDictionary<int, List<PageMetaData>> result = new();
+            IEnumerable<Article> articles = GetArticles();
+            foreach (Article article in articles)
+            {
+                DateTimeOffset published = article.Published;
+                int year = published.Year;
+                if (result.ContainsKey(year) == false)
+                {
+                    result[year] = new();
+                }
+
+                result[year].Add(article);
+            }
+
             return result;
         }
     }
