@@ -94,6 +94,25 @@ namespace Ssg.Extensions.Metadata.Abstractions
                               value => value);
         }
 
+        public PageMetaData? this[PageId pageId]
+        {
+            get => _Lookup.GetValueOrDefault(pageId);
+        }
+
+        public IEnumerable<PageMetaData> this[params PageId[] ids]
+        {
+            get
+            {
+                foreach (PageId id in ids)
+                {
+                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    {
+                        yield return page;
+                    }
+                }
+            }
+        }
+
         public Uri AbsoluteUri(string relativeUrl)
         {
             Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
@@ -178,37 +197,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
             return resultForTag;
-        }
-
-        public PageMetaData? this[PageId pageId]
-        {
-            get => _Lookup.GetValueOrDefault(pageId);
-        }
-
-        public IEnumerable<PageMetaData> this[params PageId[] ids]
-        {
-            get
-            {
-                foreach (PageId id in ids)
-                {
-                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
-                    {
-                        yield return page;
-                    }
-                }
-            }
-        }
-
-        public IEnumerable<PageMetaData> GetPagesByIds(params PageId[] ids)
-        {
-            foreach (PageId id in ids)
-            {
-                PageMetaData? item = this[id];
-                if (item != null)
-                {
-                    yield return item;
-                }
-            }
         }
 
         SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
