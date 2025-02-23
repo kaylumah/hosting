@@ -185,6 +185,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
             get => _Lookup.GetValueOrDefault(pageId);
         }
 
+        public IEnumerable<PageMetaData> GetPagesByIds(params PageId[] ids)
+        {
+            foreach (PageId id in ids)
+            {
+                PageMetaData? item = this[id];
+                if (item != null)
+                {
+                    yield return item;
+                }
+            }
+        }
+
         SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
         {
             SortedDictionary<string, List<PageMetaData>> result = new();
