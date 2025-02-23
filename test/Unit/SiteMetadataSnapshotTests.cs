@@ -154,6 +154,37 @@ namespace Test.Unit
             await Verifier.Verify(html, _VerifySettings);
         }
 
+        [Fact]
+        public async Task Test_ArticlesWithCorrespondingYears()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            List<BasePage> items = new();
+
+            static Article CreateArticle(string pageId, DateTimeOffset published)
+            {
+                Dictionary<string, object?> pageData = new()
+                {
+                    { "id", pageId },
+                    { "baseuri", "http://127.0.0.1" },
+                    { "uri", "example.html"},
+                    { "published", published }
+                };
+                Article pageMetaData = new Article(pageData);
+                return pageMetaData;
+            }
+
+#pragma warning disable
+            items.Add(CreateArticle("4", new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("3", new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("2", new DateTimeOffset(2024, 2, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("1", new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+#pragma warning restore
+
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
+
         [Fact(Skip = "just for demo")]
         public async Task Test_Scriban_Handles_NewIds()
         {

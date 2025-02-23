@@ -1,0 +1,194 @@
+﻿{
+  Build: {},
+  Id: {
+    Value: my-site
+  },
+  Title: ,
+  Description: ,
+  Language: ,
+  Author: ,
+  Url: ,
+  Items: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 4
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_1,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 3
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_2,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 2
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_3,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 1
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_4,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    }
+  ],
+  Pages: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 4
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_1,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 3
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_2,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 2
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_3,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 1
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_4,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    }
+  ],
+  RecentArticles: [
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 4
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_1,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 2
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_3,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 3
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_2,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    },
+    {
+      SocialShare: false,
+      Feed: false,
+      Featured: false,
+      Id: {
+        Value: 1
+      },
+      Sitemap: false,
+      Published: DateTimeOffset_4,
+      Uri: example.html,
+      BaseUri: http://127.0.0.1,
+      CanonicalUri: http://127.0.0.1/example.html
+    }
+  ],
+  FeaturedArticles: [],
+  PagesByYears: {
+    2023: [
+      {
+        Value: 1
+      }
+    ],
+    2024: [
+      {
+        Value: 3
+      },
+      {
+        Value: 2
+      }
+    ],
+    2025: [
+      {
+        Value: 4
+      }
+    ]
+  }
+}
