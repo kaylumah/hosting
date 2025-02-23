@@ -152,6 +152,7 @@ namespace Test.Unit
             SortedDictionary<int, List<PageMetaData>> years = siteMetaData.PagesByYears;
             PageMetaData pageMetaData = years[2025][0];
             PageId id = pageMetaData.Id;
+            PageMetaData retrievedPage = siteMetaData[id];
 #pragma warning restore
         }
 

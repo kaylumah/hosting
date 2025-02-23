@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -172,6 +173,30 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
             return resultForTag;
+        }
+
+        public PageMetaData this[PageId pageId]
+        {
+            /*
+             *
+             * public PageMetaData? this[Guid id]
+               {
+                   get => _pageLookup.TryGetValue(id, out var page) ? page : null;
+               }
+             */
+
+            get
+            {
+                // Lookup will be more efficient...
+                IEnumerable<PageMetaData> pages = GetPages();
+                PageMetaData? page = pages.SingleOrDefault(x => x.Id == pageId);
+                if (page == null)
+                {
+                    throw new KeyNotFoundException();
+                }
+
+                return page;
+            }
         }
 
         SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
