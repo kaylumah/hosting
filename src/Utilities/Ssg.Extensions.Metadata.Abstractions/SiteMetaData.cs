@@ -16,6 +16,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class SiteMetaData
     {
+        Dictionary<PageId, PageMetaData> _Lookup;
         public BuildData Build
         { get; set; }
         public SiteId Id
@@ -87,6 +88,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Data = data;
             Build = buildData;
             Items = items;
+
+            _Lookup = GetPages()
+                .ToDictionary(key => key.Id,
+                              value => value);
         }
 
         public Uri AbsoluteUri(string relativeUrl)
@@ -175,28 +180,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return resultForTag;
         }
 
-        public PageMetaData this[PageId pageId]
+        public PageMetaData? this[PageId pageId]
         {
-            /*
-             *
-             * public PageMetaData? this[Guid id]
-               {
-                   get => _pageLookup.TryGetValue(id, out var page) ? page : null;
-               }
-             */
-
-            get
-            {
-                // Lookup will be more efficient...
-                IEnumerable<PageMetaData> pages = GetPages();
-                PageMetaData? page = pages.SingleOrDefault(x => x.Id == pageId);
-                if (page == null)
-                {
-                    throw new KeyNotFoundException();
-                }
-
-                return page;
-            }
+            get => _Lookup.GetValueOrDefault(pageId);
         }
 
         SortedDictionary<string, List<PageMetaData>> GetPagesByTag()
