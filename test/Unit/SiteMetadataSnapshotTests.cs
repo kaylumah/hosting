@@ -125,49 +125,6 @@ namespace Test.Unit
         }
 
         [Fact]
-        public async Task Test_ArticlesWithYearData()
-        {
-            await Task.CompletedTask;
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
-            static Article Create(string id, DateTimeOffset published)
-            {
-                Dictionary<string, object?> pageData = new()
-                {
-                    { "id", id },
-                    { "published", published }
-                };
-                Article pageMetaData = new Article(pageData);
-                return pageMetaData;
-            }
-
-#pragma warning disable
-            List<BasePage> items = [
-                Create("a", new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)),
-                Create("b", new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero)),
-                Create("c", new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero))
-            ];
-#pragma warning restore
-            Dictionary<string, object> data = new();
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
-            // await Verifier.Verify(siteMetaData, _VerifySettings);
-            SortedDictionary<int, List<PageMetaData>> years = siteMetaData.PagesByYears;
-            PageMetaData pageMetaData = years[2025][0];
-            PageId id = pageMetaData.Id;
-            PageMetaData? retrievedPage = siteMetaData[id];
-
-            PageMetaData? notFound = siteMetaData["123"];
-
-            PageId[] ids = new[] { new PageId("a"), new PageId("b"), new PageId("d") };
-            IEnumerable<PageMetaData> result = siteMetaData[ids];
-
-            foreach (PageMetaData item in result)
-            {
-                PageId id2 = item.Id;
-            }
-        }
-
-        [Fact]
         public async Task Test_ArticlesWithCorrespondingTagData_AsPreview()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));

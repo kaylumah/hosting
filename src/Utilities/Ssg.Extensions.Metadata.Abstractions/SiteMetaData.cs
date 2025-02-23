@@ -66,7 +66,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public SortedDictionary<string, List<PageMetaData>> PagesByTags => GetPagesByTag();
 
-        public SortedDictionary<int, List<PageMetaData>> PagesByYears => GetPagesByYear();
+        public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
         public SiteMetaData(
             SiteId id,
@@ -217,9 +217,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        SortedDictionary<int, List<PageMetaData>> GetPagesByYear()
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            SortedDictionary<int, List<PageMetaData>> result = new();
+            SortedDictionary<int, List<PageId>> result = new();
             IEnumerable<Article> articles = GetArticles();
             foreach (Article article in articles)
             {
@@ -230,7 +230,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     result[year] = new();
                 }
 
-                result[year].Add(article);
+                result[year].Add(article.Id);
             }
 
             return result;
