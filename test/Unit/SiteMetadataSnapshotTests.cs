@@ -1,10 +1,13 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Scriban.Runtime;
 using Ssg.Extensions.Metadata.Abstractions;
 using VerifyTests;
 using VerifyXunit;
@@ -149,6 +152,78 @@ namespace Test.Unit
 
             string html = ObjectConversions.ToDiagnosticHtml(siteMetaData, "json");
             await Verifier.Verify(html, _VerifySettings);
+        }
+
+        [Fact]
+        public async Task Test_ArticlesWithCorrespondingYears()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            List<BasePage> items = new();
+
+            static Article CreateArticle(string pageId, DateTimeOffset published)
+            {
+                Dictionary<string, object?> pageData = new()
+                {
+                    { "id", pageId },
+                    { "baseuri", "http://127.0.0.1" },
+                    { "uri", "example.html"},
+                    { "published", published }
+                };
+                Article pageMetaData = new Article(pageData);
+                return pageMetaData;
+            }
+
+#pragma warning disable
+            items.Add(CreateArticle("4", new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("3", new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("2", new DateTimeOffset(2024, 2, 1, 0, 0, 0, TimeSpan.Zero)));
+            items.Add(CreateArticle("1", new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+#pragma warning restore
+
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
+
+        [Fact(Skip = "just for demo")]
+        public async Task Test_Scriban_Handles_NewIds()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            object renderData = new { site = siteMetaData };
+
+            string content =
+                """
+                {% assign perYear = site.pagesbyyears[2025] %}
+                {% assign pages = site[perYear] %}
+                {% for tag in pages %}
+                {{ tag.published }}
+                {% endfor %}
+                """;
+            Scriban.Template liquidTemplate = Scriban.Template.ParseLiquid(content);
+            Scriban.LiquidTemplateContext context = new Scriban.LiquidTemplateContext();
+            context.MemberRenamer = member =>
+            {
+                // alternative for the lowercase dictionary
+                string result = member.Name.ToLower(CultureInfo.InvariantCulture);
+                return result;
+            };
+
+            ScriptObject scriptObject = new ScriptObject();
+            scriptObject.Import(renderData);
+            context.PushGlobal(scriptObject);
+
+            string renderedContent = await liquidTemplate.RenderAsync(context);
         }
     }
 }

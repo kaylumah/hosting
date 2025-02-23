@@ -15,6 +15,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class SiteMetaData
     {
+        Dictionary<PageId, PageMetaData> _Lookup;
         public BuildData Build
         { get; set; }
         public SiteId Id
@@ -40,17 +41,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
         public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
-        T? GetData<T>(string key) where T : class
-        {
-            bool hasData = Data.TryGetValue(key, out object? value);
-            if (hasData && value is T result)
-            {
-                return result;
-            }
-
-            return null;
-        }
-
         public List<BasePage> Items
         { get; init; }
 
@@ -60,9 +50,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public SortedDictionary<string, PageMetaData[]> PagesByTags => GetPagesByTag();
-
         public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
+
+        public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
+
+        public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
         public SiteMetaData(
             SiteId id,
@@ -84,6 +76,29 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Data = data;
             Build = buildData;
             Items = items;
+
+            _Lookup = GetPages()
+                .ToDictionary(key => key.Id,
+                              value => value);
+        }
+
+        public PageMetaData? this[PageId pageId]
+        {
+            get => _Lookup.GetValueOrDefault(pageId);
+        }
+
+        public IEnumerable<PageMetaData> this[IEnumerable<PageId> ids]
+        {
+            get
+            {
+                foreach (PageId id in ids)
+                {
+                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    {
+                        yield return page;
+                    }
+                }
+            }
         }
 
         public Uri AbsoluteUri(string relativeUrl)
@@ -109,14 +124,39 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
-        public IEnumerable<string> GetTags()
+        public TagViewModel GetTagViewModel(string tag)
         {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<PageMetaData> taggedArticles = articles.HasTag();
-            IEnumerable<string> tagsFromArticles = taggedArticles.SelectMany(article => article.Tags);
-            HashSet<string> uniqueTags = new HashSet<string>(tagsFromArticles);
-            IEnumerable<string> result = uniqueTags.Order();
-            return result;
+            string id = tag;
+            string displayName = tag;
+            string description = string.Empty;
+            int size = 0;
+
+            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
+            if (hasTagMetaData && tagData != null)
+            {
+                displayName = tagData.Name;
+                description = tagData.Description;
+            }
+
+            bool hasPageInfo = PagesByTags.TryGetValue(id, out List<PageId>? pageInfos);
+            if (hasPageInfo && pageInfos != null)
+            {
+                size = pageInfos.Count;
+            }
+
+            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
+            return resultForTag;
+        }
+
+        T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
         }
 
         IEnumerable<Article> GetRecentArticles()
@@ -134,29 +174,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return featuredAndSortedByPublished;
         }
 
-        SortedDictionary<string, PageMetaData[]> GetPagesByTag()
-        {
-            SortedDictionary<string, PageMetaData[]> result = new();
-
-            List<PageMetaData> pages = GetPages().ToList();
-            IEnumerable<string> tags = GetTags();
-
-            foreach (string tag in tags)
-            {
-                PageMetaData[] tagFiles = pages
-                    .FromTag(tag)
-                    .ToArray();
-                result.Add(tag, tagFiles);
-            }
-
-            return result;
-        }
-
         List<TagViewModel> GetTagCloud()
         {
-            SortedDictionary<string, PageMetaData[]> tags = PagesByTags;
+            SortedDictionary<string, List<PageId>> tags = PagesByTags;
             List<TagViewModel> result = new List<TagViewModel>();
-            foreach (KeyValuePair<string, PageMetaData[]> item in tags)
+            foreach (KeyValuePair<string, List<PageId>> item in tags)
             {
                 string tag = item.Key;
                 TagViewModel resultForTag = GetTagViewModel(tag);
@@ -166,28 +188,67 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public TagViewModel GetTagViewModel(string tag)
+        SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            string id = tag;
-            string displayName = tag;
-            string description = string.Empty;
-            int size = 0;
+            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
 
-            bool hasTagMetaData = TagMetaData.TryGetValue(id, out TagMetaData? tagData);
-            if (hasTagMetaData && tagData != null)
+            IEnumerable<Article> articles = GetArticles();
+            foreach (Article article in articles)
             {
-                displayName = tagData.Name;
-                description = tagData.Description;
+                List<string> tags = article.Tags;
+                foreach (string tag in tags)
+                {
+                    if (result.ContainsKey(tag) == false)
+                    {
+                        result[tag] = new();
+                    }
+
+                    result[tag].Add(article.Id);
+                }
             }
 
-            bool hasPageInfo = PagesByTags.TryGetValue(id, out PageMetaData[]? pageInfos);
-            if (hasPageInfo && pageInfos != null)
+            return result;
+        }
+
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
+        {
+            DescendingComparer<int> comparer = new DescendingComparer<int>();
+            SortedDictionary<int, List<PageId>> result = new(comparer);
+
+            IEnumerable<Article> articles = GetArticles();
+            foreach (Article article in articles)
             {
-                size = pageInfos.Length;
+                DateTimeOffset published = article.Published;
+                int year = published.Year;
+                if (result.ContainsKey(year) == false)
+                {
+                    result[year] = new();
+                }
+
+                result[year].Add(article.Id);
             }
 
-            TagViewModel resultForTag = new TagViewModel(id, displayName, description, size);
-            return resultForTag;
+            return result;
+        }
+    }
+
+    class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
+    {
+        public int Compare(T? x, T? y)
+        {
+            if (x == null)
+            {
+                return -1;
+            }
+
+            if (y == null)
+            {
+                return 1;
+            }
+
+            // Reverse the comparison for descending order
+            int result = y.CompareTo(x);
+            return result;
         }
     }
 }
