@@ -1,60 +1,102 @@
 ---
-layout: 'default.html'
-title: 'Articles from the blog by Max Hamulyák · Kaylumah'
-description: "Welcome to Kaylumah's blog. I blog about things I found helpful in my life as a software engineer."
-tags:
-    - "Developer"
-    - "Blog"
-modifieddate: '2024-04-11'
-type: Collection
 ---
-<div class="flex flex-col items-center gap-1">
-    <h1 class="text-2xl font-extrabold">From the blog</h1>
-    <p class="">
-        Welcome to the blog! Here you can find anything I post.
-    </p>
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed tracking-wide">
+</body>
+<div class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Content -->
+    <main class="lg:col-span-2">
+        <section class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h1 class="text-3xl font-bold mb-4">Recent Blog Posts</h1>
+            <ul class="space-y-6">
+                <li>
+                    <h2 class="text-2xl font-semibold text-gray-800">Post Title 1</h2>
+                    <p class="text-gray-600">This is a brief description or excerpt from post 1 to give readers an idea of the content.</p>
+                    <p class="text-sm text-gray-500">Published on: January 10, 2024</p>
+                    <p class="text-sm text-gray-500">Tags: <span class="text-blue-600">Technology</span>, <span class="text-blue-600">Innovation</span></p>
+                    <a href="/posts/post-1" class="text-blue-600 hover:underline">Read More →</a>
+                </li>
+                <li>
+                    <h2 class="text-2xl font-semibold text-gray-800">Post Title 2</h2>
+                    <p class="text-gray-600">A short description or excerpt from post 2 that teases the content.</p>
+                    <p class="text-sm text-gray-500">Published on: January 5, 2024</p>
+                    <p class="text-sm text-gray-500">Tags: <span class="text-blue-600">Health</span>, <span class="text-blue-600">Wellness</span></p>
+                    <a href="/posts/post-2" class="text-blue-600 hover:underline">Read More →</a>
+                </li>
+                <li>
+                    <h2 class="text-2xl font-semibold text-gray-800">Post Title 3</h2>
+                    <p class="text-gray-600">This is an engaging excerpt from post 3 to entice readers.</p>
+                    <p class="text-sm text-gray-500">Published on: December 30, 2023</p>
+                    <p class="text-sm text-gray-500">Tags: <span class="text-blue-600">Travel</span>, <span class="text-blue-600">Adventure</span></p>
+                    <a href="/posts/post-3" class="text-blue-600 hover:underline">Read More →</a>
+                </li>
+                <li>
+                    <h2 class="text-2xl font-semibold text-gray-800">Post Title 4</h2>
+                    <p class="text-gray-600">A summary from post 4 to highlight the main ideas.</p>
+                    <p class="text-sm text-gray-500">Published on: December 20, 2023</p>
+                    <p class="text-sm text-gray-500">Tags: <span class="text-blue-600">Finance</span>, <span class="text-blue-600">Investing</span></p>
+                    <a href="/posts/post-4" class="text-blue-600 hover:underline">Read More →</a>
+                </li>
+                <li>
+                    <h2 class="text-2xl font-semibold text-gray-800">Post Title 5</h2>
+                    <p class="text-gray-600">Short excerpt from post 5 for quick reader engagement.</p>
+                    <p class="text-sm text-gray-500">Published on: December 15, 2023</p>
+                    <p class="text-sm text-gray-500">Tags: <span class="text-blue-600">Education</span>, <span class="text-blue-600">Learning</span></p>
+                    <a href="/posts/post-5" class="text-blue-600 hover:underline">Read More →</a>
+                </li>
+            </ul>
+            <!-- Link to More Articles -->
+            <div class="mt-6 text-center">
+                <a href="/blog/page/2" class="text-blue-600 hover:underline font-medium">View More Articles →</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar Widgets -->
+    <aside class="space-y-6">
+        <!-- Sponsorship Widget -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold mb-4">Sponsored</h2>
+            <a href="#" class="block">
+                <img src="/images/sponsor-banner.jpg" alt="Sponsor" class="rounded-lg">
+            </a>
+        </div>
+
+        <!-- Recent Posts Widget -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold mb-4">Recent Posts</h2>
+            <ul class="space-y-2">
+                <li><a href="/posts/post-1" class="text-blue-600 hover:underline">Post Title 1</a></li>
+                <li><a href="/posts/post-2" class="text-blue-600 hover:underline">Post Title 2</a></li>
+                <li><a href="/posts/post-3" class="text-blue-600 hover:underline">Post Title 3</a></li>
+                <li><a href="/posts/post-4" class="text-blue-600 hover:underline">Post Title 4</a></li>
+                <li><a href="/posts/post-5" class="text-blue-600 hover:underline">Post Title 5</a></li>
+            </ul>
+        </div>
+
+        <!-- Newsletter Signup -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold mb-4">Subscribe to Our Newsletter</h2>
+            <form action="/subscribe" method="POST" class="space-y-4">
+                <input type="email" name="email" placeholder="Your email" required class="w-full p-2 border rounded-lg">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Subscribe</button>
+            </form>
+        </div>
+    </aside>
 </div>
-<div class="mt-4"></div>
-<div class="flex flex-col gap-8 laptop:flex-row">
-    {% assign posts = site.recentarticles %}
-    <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
-        {% for post in posts %}
-        <li data-tags="{{ post.tags | array.join " " }}" class="flex">
-            {% include 'tiles/post.html' %}
-        </li>
-        {% endfor %}
-    </ul>
-    <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/hero.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/sponsor.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% assign related_article_category_title = "Popular posts" %}
-            {% assign related_articles = site.featuredarticles %}
-            {% include 'tiles/related.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/tag_cloud.html' %}
-        </li>
-    </ul>
-</div>
+
+<!-- Performance Optimizations -->
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let tag = urlParams.get('tag');
-    if (tag)
-    {
-        let blogPostList = document.getElementById("blogPosts");
-        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
-        blogPosts.forEach(blogPost => {
-            const attrs = blogPost.getAttribute("data-tags");
-            let include = attrs.includes(tag);
-            if (include == false)
-            {
-                blogPost.classList.toggle('hidden');
-            }
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('img').forEach(img => {
+            img.loading = 'lazy';
         });
-    }
+    });
 </script>
+</html>
