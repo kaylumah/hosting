@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -121,6 +122,37 @@ namespace Test.Unit
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
+        }
+
+        [Fact]
+        public async Task Test_ArticlesWithYearData()
+        {
+#pragma warning disable
+            await Task.CompletedTask;
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+
+            static Article Create(string id, DateTimeOffset published)
+            {
+                Dictionary<string, object?> pageData = new()
+                {
+                    { "id", id },
+                    { "published", published }
+                };
+                Article pageMetaData = new Article(pageData);
+                return pageMetaData;
+            }
+
+            List<BasePage> items = new()
+            {
+                Create("a", new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero))
+            };
+            Dictionary<string, object> data = new();
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            // await Verifier.Verify(siteMetaData, _VerifySettings);
+            SortedDictionary<int, List<PageMetaData>> years = siteMetaData.PagesByYears;
+            PageMetaData pageMetaData = years[2025][0];
+            PageId id = pageMetaData.Id;
+#pragma warning restore
         }
 
         [Fact]
