@@ -138,6 +138,14 @@
     }
   ],
   "FeaturedArticles": [],
+  "TagCloud": [
+    {
+      "Id": "1",
+      "DisplayName": null,
+      "Description": null,
+      "Size": 1
+    }
+  ],
   "PagesByTags": {
     "1": [
       {
@@ -174,12 +182,5 @@
       }
     ]
   },
-  "TagCloud": [
-    {
-      "Id": "1",
-      "DisplayName": null,
-      "Description": null,
-      "Size": 1
-    }
-  ]
+  "PagesByYears": {}
 }</pre>

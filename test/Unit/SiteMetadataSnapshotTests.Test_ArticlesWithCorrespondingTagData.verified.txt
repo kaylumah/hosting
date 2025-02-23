@@ -83,6 +83,12 @@
     }
   ],
   FeaturedArticles: [],
+  TagCloud: [
+    {
+      Id: 1,
+      Size: 1
+    }
+  ],
   PagesByTags: {
     1: [
       {
@@ -101,11 +107,5 @@
         CanonicalUri: http://127.0.0.1/example.html
       }
     ]
-  },
-  TagCloud: [
-    {
-      Id: 1,
-      Size: 1
-    }
-  ]
+  }
 }

@@ -60,9 +60,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
+        public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
+
         public SortedDictionary<string, List<PageMetaData>> PagesByTags => GetPagesByTag();
 
-        public IEnumerable<TagViewModel> TagCloud => GetTagCloud();
+        public SortedDictionary<int, List<PageMetaData>> PagesByYears => GetPagesByYear();
 
         public SiteMetaData(
             SiteId id,
@@ -187,6 +189,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 result.Add(tag, tagFiles);
             }
 
+            return result;
+        }
+
+        SortedDictionary<int, List<PageMetaData>> GetPagesByYear()
+        {
+            SortedDictionary<int, List<PageMetaData>> result = new();
             return result;
         }
     }
