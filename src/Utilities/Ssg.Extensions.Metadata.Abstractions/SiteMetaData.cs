@@ -218,19 +218,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 }
             }
 
-            /*
-            List<PageMetaData> pages = GetPages().ToList();
-            IEnumerable<string> tags = GetTags();
-
-            foreach (string tag in tags)
-            {
-                List<PageMetaData> tagFiles = pages
-                    .FromTag(tag)
-                    .ToList();
-                result.Add(tag, tagFiles);
-            }
-            */
-
             return result;
         }
 
