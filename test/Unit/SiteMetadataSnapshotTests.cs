@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Scriban.Runtime;
 using Ssg.Extensions.Metadata.Abstractions;
 using VerifyTests;
@@ -185,7 +186,7 @@ namespace Test.Unit
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
-        [Fact(Skip = "just for demo")]
+        [Fact]
         public async Task Test_Scriban_Handles_NewIds()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
@@ -200,8 +201,7 @@ namespace Test.Unit
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            object renderData = new { site = siteMetaData };
-
+            RenderData renderData = new RenderData(siteMetaData, null!);
             string content =
                 """
                 {% assign perYear = site.pagesbyyears[2025] %}
@@ -210,6 +210,12 @@ namespace Test.Unit
                 {{ tag.published }}
                 {% endfor %}
                 """;
+
+            string result = await Render(content, renderData);
+        }
+
+        static async Task<string> Render(string content, RenderData renderData)
+        {
             Scriban.Template liquidTemplate = Scriban.Template.ParseLiquid(content);
             Scriban.LiquidTemplateContext context = new Scriban.LiquidTemplateContext();
             context.MemberRenamer = member =>
@@ -224,6 +230,7 @@ namespace Test.Unit
             context.PushGlobal(scriptObject);
 
             string renderedContent = await liquidTemplate.RenderAsync(context);
+            return renderedContent;
         }
     }
 }
