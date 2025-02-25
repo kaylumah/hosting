@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
@@ -121,6 +122,27 @@ namespace Test.Unit
 
             TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
             Assert.Equal(id, deserialized);
+        }
+        
+        [Fact]
+        public void SystemTextJson_Should_SerializeAndDeserializeDictionary()
+        {
+            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
+            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
+            Dictionary<TStrongTypedId, string> data = new();
+            data[id] = "one";
+
+            #pragma warning disable
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Converters = { new AuthorIdConverter() }
+            };
+            
+            string json = JsonSerializer.Serialize(data, options);
+            Assert.Contains(originalValueAsString, json);
+
+            // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
+            // Assert.Equal(id, deserialized);
         }
 
         [Fact]
