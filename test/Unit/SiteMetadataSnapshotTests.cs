@@ -213,6 +213,30 @@ namespace Test.Unit
 
             string result = await Render(content, renderData);
         }
+        
+        [Fact]
+        public async Task Test_Scriban_Handles_NewIds2()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, null!);
+            string content =
+                """
+                {{ site | to_diagnostic_html }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
 
         static async Task<string> Render(string content, RenderData renderData)
         {
@@ -227,6 +251,7 @@ namespace Test.Unit
 
             ScriptObject scriptObject = new ScriptObject();
             scriptObject.Import(renderData);
+            scriptObject.Import(typeof(ObjectConversions));
             context.PushGlobal(scriptObject);
 
             string renderedContent = await liquidTemplate.RenderAsync(context);
