@@ -135,8 +135,8 @@ namespace Test.Unit
             #pragma warning disable
             JsonSerializerOptions options = new JsonSerializerOptions
             {
-                Converters = { new StringValueRecordStructConverter<TStrongTypedId>(
-                    value => ConvertToPrimitive(value), id => ConvertFromPrimitive(id)) }
+                Converters = { new StringValueRecordStructConverter<AuthorId>(
+                    value => value, id2 => id2) }
             };
             
             string json = JsonSerializer.Serialize(data, options);
