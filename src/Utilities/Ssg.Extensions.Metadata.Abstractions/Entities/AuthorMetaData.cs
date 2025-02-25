@@ -35,6 +35,38 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
     
+    public class StringValueRecordStructConverter<T> : JsonConverter<T> where T : struct
+    {
+        private readonly Func<string, T> _fromString;
+        private readonly Func<T, string> _toString;
+
+        public StringValueRecordStructConverter(Func<string, T> fromString, Func<T, string> toString)
+        {
+            _fromString = fromString;
+            _toString = toString;
+        }
+
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return _fromString(reader.GetString()!);
+        }
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(_toString(value));
+        }
+
+        public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return _fromString(reader.GetString()!);
+        }
+
+        public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            writer.WritePropertyName(_toString(value));
+        }
+    }
+    
     public readonly record struct AuthorId(string Value)
     {
         public static implicit operator string(AuthorId authorId) => authorId.Value;
