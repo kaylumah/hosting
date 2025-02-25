@@ -187,7 +187,7 @@ namespace Test.Unit
         }
 
         [Fact]
-        public async Task Test_Scriban_Handles_NewIds()
+        public async Task Test_Scriban_Handles_CrossSections()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
@@ -215,10 +215,41 @@ namespace Test.Unit
         }
         
         [Fact]
-        public async Task Test_Scriban_Handles_NewIds2()
+        public async Task Test_Scriban_Handles_Diagnostic()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+        
+        [Fact]
+        public async Task Test_Scriban_Handles_DictionaryWithKeys()
+        {
+            AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
+            AuthorMetaData authorMetaData = new AuthorMetaData();
+            authorMetaData.Id = new AuthorId("§");
+            authorMetaDataCollection.Add(authorMetaData);
+            
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["authors"] = authorMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
                 { "uri", "1.html "},
