@@ -221,6 +221,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
@@ -229,10 +230,10 @@ namespace Test.Unit
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            RenderData renderData = new RenderData(siteMetaData, null!);
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
             string content =
                 """
-                {{ site | to_diagnostic_html }}
+                {{ site | to_diagnostic_html "piet" }}
                 """;
 
             string result = await Render(content, renderData);
