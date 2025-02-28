@@ -489,7 +489,19 @@ namespace Test.Unit
 
         const string Json = "json"; //"SystemTextJson";
 
+        static IEnumerable<object[]> SingleValueTestData()
+        {
+            string[] formatters = new string[1];
+
+            foreach (string formatter in formatters)
+            {
+                // Nested foreach
+                yield return new object[] { };
+            }
+        }
+
         [Theory]
+        // [MemberData(nameof(SingleValueTestData))]
         [InlineData(Json)]
         public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
         {
