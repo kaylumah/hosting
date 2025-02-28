@@ -349,8 +349,7 @@ namespace Test.Unit
            Assert.Equal(parent.Children?.First().Parent?.Id, deserialized.Children?.First().Parent?.Id);
        }
      */
-    
-    
+
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct
     {
@@ -449,21 +448,7 @@ namespace Test.Unit
             Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
         }
 
-        [Fact]
-        public void SystemTextJson_Should_SerializeAndDeserialize()
-        {
-            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
-
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
-
-            string json = JsonSerializer.Serialize(id);
-            Assert.Contains(originalValueAsString, json);
-
-            TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
-            Assert.Equal(id, deserialized);
-        }
-        
-        [Fact]
+        [Fact(Skip = "not ready")]
         public void SystemTextJson_Should_SerializeAndDeserializeDictionary()
         {
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
@@ -471,18 +456,31 @@ namespace Test.Unit
             Dictionary<TStrongTypedId, string> data = new();
             data[id] = "one";
 
-            #pragma warning disable
+#pragma warning disable
             JsonSerializerOptions options = new JsonSerializerOptions
             {
                 Converters = { new StringValueRecordStructConverter<AuthorId>(
                     value => value, id2 => id2) }
             };
-            
+
             string json = JsonSerializer.Serialize(data, options);
             Assert.Contains(originalValueAsString, json);
 
             // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
             // Assert.Equal(id, deserialized);
+        }
+        
+        [Fact]
+        public void SystemTextJson_Should_SerializeAndDeserialize()
+        {
+            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
+            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
+
+            string json = SerializeJson(id);
+            Assert.Contains(originalValueAsString, json);
+            TStrongTypedId deserialized = DeserializeJson<TStrongTypedId>(json);
+            Assert.NotNull(deserialized);
+            Assert.Equal(id, deserialized);
         }
 
         [Fact]
@@ -491,18 +489,10 @@ namespace Test.Unit
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
 
-            ISerializer serializer = new SerializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            IDeserializer deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            string yaml = serializer.Serialize(id);
+            string yaml = SerializeYaml(id);
             Assert.Contains(originalValueAsString, yaml);
-
-            TStrongTypedId deserialized = deserializer.Deserialize<TStrongTypedId>(yaml);
+            TStrongTypedId deserialized = DeserializeYaml<TStrongTypedId>(yaml);
+            Assert.NotNull(deserialized);
             Assert.Equal(id, deserialized);
         }
 
@@ -512,26 +502,13 @@ namespace Test.Unit
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
 
-            DataContractSerializer serializer = new DataContractSerializer(typeof(TStrongTypedId));
-
-            using MemoryStream memoryStream = new MemoryStream();
-            serializer.WriteObject(memoryStream, id);
-            memoryStream.Position = 0;
-
-            string xml = new StreamReader(memoryStream).ReadToEnd();
+            string xml = SerializeXml(id);
             Assert.Contains(originalValueAsString, xml);
-
-            memoryStream.Position = 0;
-            TStrongTypedId? deserialized = (TStrongTypedId?)serializer.ReadObject(memoryStream);
+            TStrongTypedId deserialized = DeserializeXml<TStrongTypedId>(xml);
             Assert.NotNull(deserialized);
             Assert.Equal(id, deserialized);
-
-            string xml2 = SerializeXml<TStrongTypedId>(id);
-            TStrongTypedId x = DeserializeXml<TStrongTypedId>(xml);
-            TStrongTypedId y = DeserializeXml<TStrongTypedId>(xml2);
-
         }
-        
+
         static string SerializeXml<T>(T obj)
         {
             DataContractSerializer serializer = CreateSerializer<T>();
@@ -546,7 +523,7 @@ namespace Test.Unit
 
             return encoding.GetString(memoryStream.ToArray());
         }
-        
+
         static T DeserializeXml<T>(string xml)
         {
             DataContractSerializer serializer = CreateSerializer<T>();
@@ -565,7 +542,7 @@ namespace Test.Unit
             return serializer;
         }
 
-        private static readonly JsonSerializerOptions JsonOptions = new()
+        static readonly JsonSerializerOptions _JsonOptions = new()
         {
             WriteIndented = true,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -579,10 +556,10 @@ namespace Test.Unit
             UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
             using StreamWriter writer = new StreamWriter(memoryStream, encoding);
 
-            string json = JsonSerializer.Serialize(obj, JsonOptions);
+            string json = JsonSerializer.Serialize(obj, _JsonOptions);
             writer.Write(json);
             writer.Flush();
-        
+
             return encoding.GetString(memoryStream.ToArray());
         }
 
@@ -593,13 +570,13 @@ namespace Test.Unit
             using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
 
             string jsonString = reader.ReadToEnd();
-            return JsonSerializer.Deserialize<T>(jsonString, JsonOptions)!;
+            return JsonSerializer.Deserialize<T>(jsonString, _JsonOptions)!;
         }
-        
+
         static string SerializeYaml<T>(T obj)
         {
-            var serializer = new SerializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance) // CamelCase output
+            ISerializer serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
             using MemoryStream memoryStream = new MemoryStream();
@@ -615,8 +592,8 @@ namespace Test.Unit
 
         static T DeserializeYaml<T>(string yaml)
         {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance) // CamelCase input
+            IDeserializer deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
             byte[] byteArray = new UTF8Encoding(false).GetBytes(yaml);

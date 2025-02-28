@@ -12,7 +12,7 @@ using System.Text.Json.Serialization;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    #pragma warning disable
+#pragma warning disable
     public class AuthorIdConverter : JsonConverter<AuthorId>
     {
         public override AuthorId Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -35,7 +35,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             writer.WritePropertyName(value.Value);
         }
     }
-    
+
     public class StringValueRecordStructConverter<T> : JsonConverter<T> where T : struct
     {
         private readonly Func<string, T> _fromString;

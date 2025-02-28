@@ -213,7 +213,7 @@ namespace Test.Unit
 
             string result = await Render(content, renderData);
         }
-        
+
         [Fact]
         public async Task Test_Scriban_Handles_Diagnostic()
         {
@@ -238,7 +238,7 @@ namespace Test.Unit
 
             string result = await Render(content, renderData);
         }
-        
+
         [Fact]
         public async Task Test_Scriban_Handles_DictionaryWithKeys()
         {
@@ -246,7 +246,7 @@ namespace Test.Unit
             AuthorMetaData authorMetaData = new AuthorMetaData();
             authorMetaData.Id = new AuthorId("§");
             authorMetaDataCollection.Add(authorMetaData);
-            
+
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             data["authors"] = authorMetaDataCollection;
