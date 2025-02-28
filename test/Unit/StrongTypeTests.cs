@@ -12,6 +12,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+
 namespace Test.Unit
 {
     /*
@@ -543,7 +544,7 @@ namespace Test.Unit
             writer.Flush();
             writer.Close();
 
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            return encoding.GetString(memoryStream.ToArray());
         }
         
         static T DeserializeXml<T>(string xml)
@@ -564,7 +565,67 @@ namespace Test.Unit
             return serializer;
         }
 
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true
+        };
 
+        static string SerializeJson<T>(T obj)
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
+            using StreamWriter writer = new StreamWriter(memoryStream, encoding);
+
+            string json = JsonSerializer.Serialize(obj, JsonOptions);
+            writer.Write(json);
+            writer.Flush();
+        
+            return encoding.GetString(memoryStream.ToArray());
+        }
+
+        static T DeserializeJson<T>(string json)
+        {
+            byte[] byteArray = new UTF8Encoding(false).GetBytes(json);
+            using MemoryStream memoryStream = new MemoryStream(byteArray);
+            using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
+
+            string jsonString = reader.ReadToEnd();
+            return JsonSerializer.Deserialize<T>(jsonString, JsonOptions)!;
+        }
+        
+        static string SerializeYaml<T>(T obj)
+        {
+            var serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance) // CamelCase output
+                .Build();
+
+            using MemoryStream memoryStream = new MemoryStream();
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            using StreamWriter writer = new StreamWriter(memoryStream, encoding);
+
+            string yaml = serializer.Serialize(obj);
+            writer.Write(yaml);
+            writer.Flush();
+
+            return encoding.GetString(memoryStream.ToArray());
+        }
+
+        static T DeserializeYaml<T>(string yaml)
+        {
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance) // CamelCase input
+                .Build();
+
+            byte[] byteArray = new UTF8Encoding(false).GetBytes(yaml);
+            using MemoryStream memoryStream = new MemoryStream(byteArray);
+            using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
+
+            string yamlString = reader.ReadToEnd();
+            return deserializer.Deserialize<T>(yamlString);
+        }
 
     }
 
