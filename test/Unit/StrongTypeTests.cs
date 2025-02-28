@@ -471,7 +471,7 @@ namespace Test.Unit
         }
         
         [Fact]
-        public void SystemTextJson_Should_SerializeAndDeserialize()
+        public void SystemTextJson_Should_SerializeAndDeserialize_SingleValue()
         {
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
@@ -484,7 +484,7 @@ namespace Test.Unit
         }
 
         [Fact]
-        public void YamlDotNet_Should_SerializeAndDeserialize()
+        public void YamlDotNet_Should_SerializeAndDeserialize_SingleValue()
         {
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
@@ -497,7 +497,7 @@ namespace Test.Unit
         }
 
         [Fact]
-        public void DataContractSerializer_Should_SerializeAndDeserialize()
+        public void DataContractSerializer_Should_SerializeAndDeserialize_SingleValue()
         {
             string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
