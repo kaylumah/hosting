@@ -657,6 +657,23 @@ namespace Test.Unit
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
+        
+        
+        [Theory]
+        // [MemberData(nameof(SingleValueTestData))]
+        [InlineData(Json)]
+        public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
+        {
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            
+            string serialized = Serialize(strongTypedId, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
+            
+            TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
+            Assert.Equal(strongTypedId, deserialized);
+        }
     }
 
     public class AuthorIdTests : StronglyTypedStringIdTests<AuthorId>
