@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
 using YamlDotNet.Serialization;
@@ -522,7 +524,48 @@ namespace Test.Unit
             TStrongTypedId? deserialized = (TStrongTypedId?)serializer.ReadObject(memoryStream);
             Assert.NotNull(deserialized);
             Assert.Equal(id, deserialized);
+
+            string xml2 = SerializeXml<TStrongTypedId>(id);
+            TStrongTypedId x = DeserializeXml<TStrongTypedId>(xml);
+            TStrongTypedId y = DeserializeXml<TStrongTypedId>(xml2);
+
         }
+        
+        static string SerializeXml<T>(T obj)
+        {
+            DataContractSerializer serializer = CreateSerializer<T>();
+
+            using MemoryStream memoryStream = new MemoryStream();
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            using XmlWriter writer = XmlWriter.Create(memoryStream, new XmlWriterSettings { Indent = true, Encoding = encoding });
+
+            serializer.WriteObject(writer, obj);
+            writer.Flush();
+            writer.Close();
+
+            return Encoding.UTF8.GetString(memoryStream.ToArray());
+        }
+        
+        static T DeserializeXml<T>(string xml)
+        {
+            DataContractSerializer serializer = CreateSerializer<T>();
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            byte[] byteArray = encoding.GetBytes(xml);
+
+            using MemoryStream memoryStream = new MemoryStream(byteArray);
+            using XmlReader reader = XmlReader.Create(memoryStream);
+
+            return (T)serializer.ReadObject(reader)!;
+        }
+
+        static DataContractSerializer CreateSerializer<T>()
+        {
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+            return serializer;
+        }
+
+
+
     }
 
     public abstract class StronglyTypedStringIdTests<TId> : StronglyTypedIdTests<TId, string> where TId : struct
