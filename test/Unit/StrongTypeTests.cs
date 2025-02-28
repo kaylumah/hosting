@@ -1,6 +1,7 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -468,6 +469,39 @@ namespace Test.Unit
 
             // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
             // Assert.Equal(id, deserialized);
+        }
+
+        string Serialize<T>(T value, string format) => format switch
+        {
+            "json" => SerializeJson(value),
+            "yaml" => SerializeYaml(value),
+            "xml" => SerializeXml(value),
+            _ => throw new ArgumentException("Invalid format", nameof(format))
+        };
+        
+        T Deserialize<T>(string serialized, string format) => format switch
+        {
+            "json" => DeserializeJson<T>(serialized),
+            "yaml" => DeserializeYaml<T>(serialized),
+            "xml" => DeserializeXml<T>(serialized),
+            _ => throw new ArgumentException("Invalid format", nameof(format))
+        };
+
+        const string Json = "json"; //"SystemTextJson";
+
+        [Theory]
+        [InlineData(Json)]
+        public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
+        {
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            
+            string serialized = Serialize(strongTypedId, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
+            
+            TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
+            Assert.Equal(strongTypedId, deserialized);
         }
         
         [Fact]
