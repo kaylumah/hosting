@@ -8,7 +8,7 @@
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
-    <PackageVersion Include="HtmlAgilityPack" Version="1.11.72" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.73" />
     <PackageVersion Include="Markdig" Version="0.40.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
@@ -40,8 +40,8 @@
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.v3" Version="1.1.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
-    <PackageVersion Include="Verify.Xunit" Version="28.12.0" />
-    <PackageVersion Include="Verify.XunitV3" Version="28.12.0" />
+    <PackageVersion Include="Verify.Xunit" Version="28.13.0" />
+    <PackageVersion Include="Verify.XunitV3" Version="28.13.0" />
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="22.0.10" />
     <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
     <PackageVersion Include="Reqnroll.xUnit" Version="2.3.0" />
