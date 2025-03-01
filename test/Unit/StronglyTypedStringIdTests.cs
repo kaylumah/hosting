@@ -135,7 +135,7 @@ namespace Test.Unit
     
     public readonly record struct TestStringId(string Value)
     {
-        public static implicit operator string(TestStringId authorStringId) => authorStringId.Value;
+        public static implicit operator string(TestStringId stringId) => stringId.Value;
         public static implicit operator TestStringId(string value) => new(value);
     }
 
