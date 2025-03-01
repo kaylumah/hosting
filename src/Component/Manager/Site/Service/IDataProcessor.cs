@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using System.Text.Json.Nodes;
 using Ssg.Extensions.Data.Csv;
 using Ssg.Extensions.Data.Json;
 using Ssg.Extensions.Data.Yaml;
@@ -77,7 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public void Execute(Dictionary<string, object> data, IFileSystemInfo file)
         {
-            object result = _JsonParser.Parse<JsonNode>(file);
+            object result = _JsonParser.Parse<System.Text.Json.Nodes.JsonNode>(file);
             string fileName = Path.GetFileNameWithoutExtension(file.Name);
             data[fileName] = result;
         }
