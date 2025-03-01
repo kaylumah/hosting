@@ -12,8 +12,11 @@ namespace Test.Unit
 {
     public abstract class StronglyTypedStringIdTests<TStrongTypedId> : StronglyTypedIdTests<TStrongTypedId, string> where TStrongTypedId : struct
     {
+        readonly ITestOutputHelper _TestOutputHelper;
+        
         protected StronglyTypedStringIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+            _TestOutputHelper = testOutputHelper;
         }
 
         protected override string SampleValue => "12345";
@@ -86,22 +89,19 @@ namespace Test.Unit
             for (int i = 0; i < 100; i++)
             {
                 string randomString = faker.Random.String2(10, 200);
-                TStrongTypedId strongTypedId = ConvertFromPrimitive(randomString);
-                string serialized = Serialize(strongTypedId, serializer);
-                Assert.Contains(randomString, serialized, StringComparison.OrdinalIgnoreCase);
-                TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
-
-                /*
                 try
                 {
-                    var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                    Assert.NotNull(deserialized.Author);
+                    TStrongTypedId strongTypedId = ConvertFromPrimitive(randomString);
+                    string serialized = Serialize(strongTypedId, serializer);
+                    Assert.Contains(randomString, serialized, StringComparison.OrdinalIgnoreCase);
+                    TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
                 }
                 catch (Exception ex)
                 {
-                    Assert.True(false, $"Fuzzing failed for input: {randomString}. Exception: {ex.Message}");
+                    string message = $"Fuzzing failed for input: '{randomString}'. Exception: {ex}";
+                    _TestOutputHelper.WriteLine(message);
+                    Assert.Fail(message);
                 }
-                */
             }
         }
     }
