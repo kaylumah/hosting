@@ -98,7 +98,7 @@ namespace Test.Unit
                 }
                 catch (Exception ex)
                 {
-                    string message = $"Fuzzing failed for input: '{randomString}'. Exception: {ex}";
+                    string message = $"Fuzzing failed for input STRING: '{randomString}'. Exception: {ex}";
                     _TestOutputHelper.WriteLine(message);
                     Assert.Fail(message);
                 }

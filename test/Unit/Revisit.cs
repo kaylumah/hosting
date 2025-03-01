@@ -69,12 +69,5 @@ namespace Test.Unit
                    
                    
                  */
-                
-                /*
-                            string randomString = faker.Random.String2(10, 200);
-                            string randomGuid = faker.Random.Guid().ToString();
-                            int randomInt = faker.Random.Int(int.MinValue, int.MaxValue);
-                            */
-
     }
 }
