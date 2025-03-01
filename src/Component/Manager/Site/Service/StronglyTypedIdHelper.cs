@@ -20,10 +20,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         public Func<T, object> ToObject
         { get; }
-        
+
         public Type UnderlyingType
         { get; }
-        
+
         public StronglyTypedIdHelper()
         {
             Type strongIdType = typeof(T);
@@ -48,7 +48,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 T result = (T)fromMethod.Invoke(null, arguments)!;
                 return result;
             };
-            
+
             ToObject = (T value) =>
             {
                 object[] arguments = new object[] { value };
@@ -56,7 +56,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 return result;
             };
         }
-        
+
         static bool IsImplicitOperator(MethodInfo methodInfo)
         {
             bool result = methodInfo is { IsSpecialName: true, Name: "op_Implicit" };
@@ -74,7 +74,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             bool result = returnTypeMatches && parameterMatches;
             return result;
         }
-        
+
         static Type GetUnderlyingType(Type type)
         {
             ConstructorInfo[] constructors = type.GetConstructors();
@@ -87,23 +87,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
     }
-    
+
     public class StronglyTypedIdJsonConverter<T> : JsonConverter<T> where T : struct
     {
         readonly StronglyTypedIdHelper<T> _StronglyTypedIdHelper;
-        
+
         public StronglyTypedIdJsonConverter()
         {
             _StronglyTypedIdHelper = new StronglyTypedIdHelper<T>();
         }
-        
+
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             Type targetType = _StronglyTypedIdHelper.UnderlyingType;
             object value = targetType switch
             {
                 _ when targetType == typeof(string) => reader.GetString() ?? string.Empty,
-                _ when targetType ==  typeof(Guid) => reader.GetGuid(),
+                _ when targetType == typeof(Guid) => reader.GetGuid(),
                 _ when targetType == typeof(int) => reader.GetInt32(),
                 _ => throw new JsonException($"Unsupported ID type {targetType}.")
             };
@@ -120,16 +120,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             switch (objValue)
             {
                 case string strVal:
-                    writer.WriteStringValue(strVal);
-                    break;
+                writer.WriteStringValue(strVal);
+                break;
                 case Guid guidVal:
-                    writer.WriteStringValue(guidVal);
-                    break;
+                writer.WriteStringValue(guidVal);
+                break;
                 case int intVal:
-                    writer.WriteNumberValue(intVal);
-                    break;
+                writer.WriteNumberValue(intVal);
+                break;
                 default:
-                    throw new JsonException($"Unsupported ID type {targetType}.");
+                throw new JsonException($"Unsupported ID type {targetType}.");
             }
         }
 
@@ -153,16 +153,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             writer.WritePropertyName(xAsString);
         }
     }
-    
+
     public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
     {
         readonly StronglyTypedIdHelper<T> _StronglyTypedIdHelper;
-        
+
         public StronglyTypedIdYamlConverter()
         {
             _StronglyTypedIdHelper = new StronglyTypedIdHelper<T>();
         }
-        
+
         bool IYamlTypeConverter.Accepts(Type type)
         {
             bool result = type == typeof(T);
@@ -175,9 +175,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 throw new YamlException("Invalid or missing YAML scalar value for strongly-typed ID.");
             }
-            
+
             parser.MoveNext();
-            
+
             object result = _StronglyTypedIdHelper.FromObject(scalar.Value);
             return result;
         }
@@ -188,7 +188,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 throw new ArgumentNullException(nameof(value), "Cannot serialize a null strongly-typed ID.");
             }
-            
+
             object convertedValue = _StronglyTypedIdHelper.ToObject((T)value);
             string convertedValueString = convertedValue.ToString() ?? throw new InvalidOperationException("Conversion to string resulted in null.");
             Scalar scalarValue = new Scalar(convertedValueString);

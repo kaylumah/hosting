@@ -240,14 +240,14 @@ namespace Test.Unit
                 Xml => SerializeXml(value),
                 _ => throw new ArgumentException("Invalid format", nameof(format))
             };
-            
+
             bool isEmptyString = string.IsNullOrWhiteSpace(result);
             Assert.False(isEmptyString, "Serialized string should not be empty");
 
             _TestOutputHelper.WriteLine(result);
             return result;
         }
-        
+
         T Deserialize<T>(string serialized, string format) => format switch
         {
             Json => DeserializeJson<T>(serialized),
@@ -287,7 +287,7 @@ namespace Test.Unit
 
             return (T)serializer.ReadObject(reader)!;
         }
-        
+
         string SerializeJson<T>(T obj)
         {
 #pragma warning disable CA1869
@@ -299,7 +299,7 @@ namespace Test.Unit
             StronglyTypedIdJsonConverter<TStrongTypedId> converter = new StronglyTypedIdJsonConverter<TStrongTypedId>();
             jsonOptions.Converters.Add(converter);
 #pragma warning restore CA1869
-            
+
             using MemoryStream memoryStream = new MemoryStream();
             UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
             using StreamWriter writer = new StreamWriter(memoryStream, encoding);
@@ -324,7 +324,7 @@ namespace Test.Unit
             StronglyTypedIdJsonConverter<TStrongTypedId> converter = new StronglyTypedIdJsonConverter<TStrongTypedId>();
             jsonOptions.Converters.Add(converter);
 #pragma warning restore CA1869
-            
+
             byte[] byteArray = new UTF8Encoding(false).GetBytes(json);
             using MemoryStream memoryStream = new MemoryStream(byteArray);
             using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
@@ -381,9 +381,7 @@ namespace Test.Unit
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
-        
-        
-        
+
         // Chinese: 你好世界
         // Emoji 💾📚
         // Escape \u0000
@@ -398,7 +396,7 @@ namespace Test.Unit
          * var faker = new Faker();
            var randomJson = $"{{ \"Author\": \"{faker.Random.AlphaNumeric(50)}\" }}";
          */
-        
+
         /*
          * Fact]
            public void SystemTextJson_Should_Handle_Fuzzed_String_Data_Gracefully()
