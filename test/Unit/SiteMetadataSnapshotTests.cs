@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Manager.Site.Service;
+using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Scriban.Runtime;
 using Ssg.Extensions.Metadata.Abstractions;
 using VerifyTests;
@@ -140,6 +141,8 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "organization", "001" },
+                { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
@@ -185,8 +188,8 @@ namespace Test.Unit
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
-        [Fact(Skip = "just for demo")]
-        public async Task Test_Scriban_Handles_NewIds()
+        [Fact]
+        public async Task Test_Scriban_Handles_CrossSections()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
@@ -200,8 +203,7 @@ namespace Test.Unit
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            object renderData = new { site = siteMetaData };
-
+            RenderData renderData = new RenderData(siteMetaData, null!);
             string content =
                 """
                 {% assign perYear = site.pagesbyyears[2025] %}
@@ -210,6 +212,142 @@ namespace Test.Unit
                 {{ tag.published }}
                 {% endfor %}
                 """;
+
+            string result = await Render(content, renderData);
+        }
+
+        [Fact]
+        public async Task Test_Scriban_Handles_Diagnostic_Minimal()
+        {
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "001" },
+                { "author", "N/A"},
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+
+        [Fact]
+        public async Task Test_Scriban_Handles_AuthorDictionary()
+        {
+            AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
+            AuthorMetaData authorMetaData = new AuthorMetaData();
+            authorMetaData.Id = new AuthorId("§");
+            authorMetaDataCollection.Add(authorMetaData);
+
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["authors"] = authorMetaDataCollection;
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "001" },
+                { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+
+        [Fact]
+        public async Task Test_Scriban_Handles_OrganizationDictionary()
+        {
+            OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
+            OrganizationMetaData organizationMetadata = new OrganizationMetaData();
+            organizationMetadata.Id = new OrganizationId("§");
+            organizationMetaDataCollection.Add(organizationMetadata);
+
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["organizations"] = organizationMetaDataCollection;
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "001" },
+                { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+
+        [Fact]
+        public async Task Test_Scriban_Handles_TagDictionary()
+        {
+            TagMetaDataCollection tagMetaDataCollection = new TagMetaDataCollection();
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = new TagId("§");
+            tagMetaDataCollection.Add(tagMetaData);
+
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["tags"] = tagMetaDataCollection;
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "001" },
+                { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+
+        static async Task<string> Render(string content, RenderData renderData)
+        {
             Scriban.Template liquidTemplate = Scriban.Template.ParseLiquid(content);
             Scriban.LiquidTemplateContext context = new Scriban.LiquidTemplateContext();
             context.MemberRenamer = member =>
@@ -221,9 +359,11 @@ namespace Test.Unit
 
             ScriptObject scriptObject = new ScriptObject();
             scriptObject.Import(renderData);
+            scriptObject.Import(typeof(ObjectConversions));
             context.PushGlobal(scriptObject);
 
             string renderedContent = await liquidTemplate.RenderAsync(context);
+            return renderedContent;
         }
     }
 }

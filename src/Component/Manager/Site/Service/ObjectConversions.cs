@@ -20,6 +20,16 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             _JsonSerializerOptions = new JsonSerializerOptions();
             _JsonSerializerOptions.WriteIndented = true;
+            StronglyTypedIdJsonConverter<AuthorId> authorIdJsonConverter = new StronglyTypedIdJsonConverter<AuthorId>();
+            StronglyTypedIdJsonConverter<OrganizationId> organizationIdJsonConverter = new StronglyTypedIdJsonConverter<OrganizationId>();
+            StronglyTypedIdJsonConverter<TagId> tagIdJsonConverter = new StronglyTypedIdJsonConverter<TagId>();
+            StronglyTypedIdJsonConverter<PageId> pageIdJsonConverter = new StronglyTypedIdJsonConverter<PageId>();
+            StronglyTypedIdJsonConverter<SiteId> siteIdJsonConverter = new StronglyTypedIdJsonConverter<SiteId>();
+            _JsonSerializerOptions.Converters.Add(authorIdJsonConverter);
+            _JsonSerializerOptions.Converters.Add(organizationIdJsonConverter);
+            _JsonSerializerOptions.Converters.Add(tagIdJsonConverter);
+            _JsonSerializerOptions.Converters.Add(pageIdJsonConverter);
+            _JsonSerializerOptions.Converters.Add(siteIdJsonConverter);
         }
 
         public static string PublishedTimeAgo(SiteMetaData siteMetaData, Article pageMetaData)

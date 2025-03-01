@@ -39,6 +39,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
 
         public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
+        public IDictionary<OrganizationId, OrganizationMetaData> Organizations => OrganizationMetaData.Dictionary;
         public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
         public List<BasePage> Items
