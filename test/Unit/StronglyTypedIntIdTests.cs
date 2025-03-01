@@ -34,7 +34,9 @@ namespace Test.Unit
             string[] serializers = new[] { Json, Yaml, Xml };
 
             int[] edgeCases = new int[]
-            {
+            { 
+            // long.MinValue, 
+            // long.MaxValue, 
                int.MinValue,
                -1,
                0,
