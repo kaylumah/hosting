@@ -377,38 +377,19 @@ namespace Test.Unit
         protected override string EmptyValue => string.Empty;
     }
 
-    public class AuthorIdTests : StronglyTypedStringIdTests<AuthorId>
+    public readonly record struct TestId(string Value)
     {
-        protected override AuthorId ConvertFromPrimitive(string value) => value;
-
-        protected override string ConvertToPrimitive(AuthorId id) => id;
+        public static implicit operator string(TestId authorId) => authorId.Value;
+        public static implicit operator TestId(string value) => new(value);
     }
-
-    public class OrganizationIdTests : StronglyTypedStringIdTests<OrganizationId>
+    
+    /// <summary>
+    /// Represent the data structure of AuthorId, OrganizationId, TagId, SiteId, PageId
+    /// </summary>
+    public class TestIdTests : StronglyTypedStringIdTests<TestId>
     {
-        protected override OrganizationId ConvertFromPrimitive(string value) => value;
+        protected override TestId ConvertFromPrimitive(string value) => value;
 
-        protected override string ConvertToPrimitive(OrganizationId id) => id;
-    }
-
-    public class TagIdTests : StronglyTypedStringIdTests<TagId>
-    {
-        protected override TagId ConvertFromPrimitive(string value) => value;
-
-        protected override string ConvertToPrimitive(TagId id) => id;
-    }
-
-    public class SiteIdTests : StronglyTypedStringIdTests<SiteId>
-    {
-        protected override SiteId ConvertFromPrimitive(string value) => value;
-
-        protected override string ConvertToPrimitive(SiteId id) => id;
-    }
-
-    public class PageIdTests : StronglyTypedStringIdTests<PageId>
-    {
-        protected override PageId ConvertFromPrimitive(string value) => value;
-
-        protected override string ConvertToPrimitive(PageId id) => id;
+        protected override string ConvertToPrimitive(TestId id) => id;
     }
 }
