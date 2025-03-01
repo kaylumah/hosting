@@ -33,7 +33,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         object? IYamlTypeConverter.ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
         {
-            if (parser.Current is not Scalar scalar || string.IsNullOrEmpty(scalar.Value))
+            if (parser.Current is not Scalar scalar)
             {
                 throw new YamlException("Invalid or missing YAML scalar value for strongly-typed ID.");
             }

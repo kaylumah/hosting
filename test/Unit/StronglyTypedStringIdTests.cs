@@ -56,7 +56,7 @@ namespace Test.Unit
 
             string[] edgeCases = new string[]
             {
-                // string.Empty, // Completely empty string (fails in YamlDotNet)
+                string.Empty, // Completely empty string
                 "   ",        // Whitespace-only string
                 // "\t\n\r",       // Escape characters (tab, newline, carriage return) (fails in all three)
                 // "<script>alert('XSS')</script>", // Potential serialization issue (fails in DataContract)
