@@ -528,15 +528,14 @@ namespace Test.Unit
 
             _FromObject = (object value) => (T)fromMethod.Invoke(null, new object[] { value })!;
             _ToObject = (T value) => toMethod.Invoke(null, new object[] { value })!;
-            return;
 
-            static bool IsImplicitOperator(MethodInfo methodInfo)
+            bool IsImplicitOperator(MethodInfo methodInfo)
             {
                 bool result = methodInfo is { IsSpecialName: true, Name: "op_Implicit" };
                 return result;
             }
 
-            static bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
+            bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
             {
                 bool returnTypeMatches = methodInfo.ReturnType == returnType;
 
