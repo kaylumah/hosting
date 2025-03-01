@@ -14,7 +14,7 @@ namespace Test.Unit
     public class StronglyTypedStringIdTests : StronglyTypedIdTests<TestStringId, string>
     {
         readonly ITestOutputHelper _TestOutputHelper;
-        
+
         public StronglyTypedStringIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _TestOutputHelper = testOutputHelper;
@@ -23,7 +23,7 @@ namespace Test.Unit
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
-        
+
         protected override TestStringId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
@@ -36,7 +36,7 @@ namespace Test.Unit
             // ル (Ru) → Represents the “lu” sound.
             // マ (Ma) → Represents the “mah” sound.
             // string japaneseKatakana = "ケイルマ";
-            
+
             // Καϊλουμά (Kaïloumá)
             // Κ (Ka) → Closest match to “K” in Greek.
             // α (a) → Represents the short "a" sound.
@@ -55,7 +55,7 @@ namespace Test.Unit
 
             Faker faker = new Faker();
             string[] serializers = new[] { Json, Yaml, Xml };
-            
+
             string[] edgeCases = new string[]
             {
                 string.Empty, // Completely empty string
@@ -64,7 +64,7 @@ namespace Test.Unit
             int numberOfRandomCases = 100 - edgeCases.Length;
             IEnumerable<string> randomCases = Enumerable.Range(0, numberOfRandomCases).Select(_ => faker.Random.String2(10, 200));
             string[] testCases = edgeCases.Concat(randomCases).ToArray();
-            
+
             foreach (string serializer in serializers)
             {
                 foreach (string value in testCases)
@@ -94,7 +94,7 @@ namespace Test.Unit
             }
         }
     }
-    
+
     public readonly record struct TestStringId(string Value)
     {
         public static implicit operator string(TestStringId stringId) => stringId.Value;

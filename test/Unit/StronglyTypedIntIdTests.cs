@@ -14,7 +14,7 @@ namespace Test.Unit
     public class StronglyTypedIntIdTests : StronglyTypedIdTests<TestIntId, int>
     {
         readonly ITestOutputHelper _TestOutputHelper;
-        
+
         public StronglyTypedIntIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _TestOutputHelper = testOutputHelper;
@@ -23,7 +23,7 @@ namespace Test.Unit
         protected override int SampleValue => 3;
 
         protected override int EmptyValue => 0;
-        
+
         protected override TestIntId ConvertFromPrimitive(int value) => value;
 
         protected override int ConvertToPrimitive(TestIntId intId) => intId;
@@ -32,19 +32,19 @@ namespace Test.Unit
         {
             Faker faker = new Faker();
             string[] serializers = new[] { Json, Yaml, Xml };
-            
+
             int[] edgeCases = new int[]
             {
                int.MinValue,
                -1,
                0,
-               1, 
+               1,
                int.MaxValue
             };
             int numberOfRandomCases = 100 - edgeCases.Length;
             IEnumerable<int> randomCases = Enumerable.Range(0, numberOfRandomCases).Select(_ => faker.Random.Int(int.MinValue, int.MaxValue));
             int[] testCases = edgeCases.Concat(randomCases).ToArray();
-            
+
             foreach (string serializer in serializers)
             {
                 foreach (int value in testCases)
@@ -75,7 +75,7 @@ namespace Test.Unit
             }
         }
     }
-    
+
     public readonly record struct TestIntId(int Value)
     {
         public static implicit operator int(TestIntId intId) => intId.Value;

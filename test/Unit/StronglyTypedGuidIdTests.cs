@@ -13,7 +13,7 @@ namespace Test.Unit
     public class StronglyTypedGuidIdTests : StronglyTypedIdTests<TestGuidId, Guid>
     {
         readonly ITestOutputHelper _TestOutputHelper;
-        
+
         public StronglyTypedGuidIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _TestOutputHelper = testOutputHelper;
@@ -22,7 +22,7 @@ namespace Test.Unit
         protected override Guid SampleValue => Guid.Parse("77928f1f-318f-45ca-8bb2-fae02ed62e9f");
 
         protected override Guid EmptyValue => Guid.Empty;
-        
+
         protected override TestGuidId ConvertFromPrimitive(Guid value) => value;
 
         protected override Guid ConvertToPrimitive(TestGuidId guidId) => guidId;
@@ -31,7 +31,7 @@ namespace Test.Unit
         {
             Faker faker = new Faker();
             string[] serializers = new[] { Json, Yaml, Xml };
-            
+
             Guid[] edgeCases = new Guid[]
             {
                 Guid.Empty
@@ -39,7 +39,7 @@ namespace Test.Unit
             int numberOfRandomCases = 100 - edgeCases.Length;
             IEnumerable<Guid> randomCases = Enumerable.Range(0, numberOfRandomCases).Select(_ => faker.Random.Guid());
             Guid[] testCases = edgeCases.Concat(randomCases).ToArray();
-            
+
             foreach (string serializer in serializers)
             {
                 foreach (Guid value in testCases)
