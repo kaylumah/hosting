@@ -447,6 +447,8 @@ namespace Test.Unit
 
         [Theory]
         [InlineData(Json)]
+        [InlineData(Yaml)]
+        [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
         {
             string originalValueAsString = SampleValue.ToString();
@@ -462,6 +464,8 @@ namespace Test.Unit
         
         [Theory]
         [InlineData(Json)]
+        [InlineData(Yaml)]
+        [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_List(string serializer)
         {
             string originalValueAsString = SampleValue.ToString();
@@ -479,6 +483,8 @@ namespace Test.Unit
         
         [Theory]
         [InlineData(Json)]
+        [InlineData(Yaml)]
+        [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_Array(string serializer)
         {
             string originalValueAsString = SampleValue.ToString();
