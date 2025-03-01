@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -100,39 +99,6 @@ namespace Test.Unit
             int id1HashCode = id1.GetHashCode();
             int id2HashCode = id2.GetHashCode();
             Assert.NotEqual(id1HashCode, id2HashCode);
-        }
-
-        /*
-        public void DefaultValue_Should_BeHandledCorrectly()
-        {
-            // NULL value vs string.Empty
-            TStrongTypedId defaultId = default;
-            TStrongTypedId emptyId = ConvertFromPrimitive(EmptyValue);
-            Assert.Equal(emptyId, defaultId);
-        }
-        */
-
-        [Fact(Skip = "Not sure if relevant")]
-        public void SystemTextJson_Serialization_Should_BeFast()
-        {
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
-            Stopwatch stopwatch = Stopwatch.StartNew();
-
-            for (int i = 0; i < 100000; i++)
-            {
-                string json = JsonSerializer.Serialize(id);
-                _ = JsonSerializer.Deserialize<TStrongTypedId>(json);
-            }
-
-            stopwatch.Stop();
-            Assert.True(stopwatch.ElapsedMilliseconds < 2000, "Serialization too slow.");
-        }
-
-        [Fact(Skip = "Not sure if relevant")]
-        public void SystemTextJson_Should_Throw_When_DataIsMalformed()
-        {
-            string invalidJson = "{ \"Value\": 12345 }"; // Expecting a string but got an integer
-            Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
         }
 
         [Theory]
@@ -252,7 +218,7 @@ namespace Test.Unit
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
 
-        static string SerializeXml<T>(T obj)
+        string SerializeXml<T>(T obj)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             UTF8Encoding encoding = new UTF8Encoding(false);
@@ -272,7 +238,7 @@ namespace Test.Unit
             return result;
         }
 
-        static T DeserializeXml<T>(string xml)
+        T DeserializeXml<T>(string xml)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             UTF8Encoding encoding = new UTF8Encoding(false);
@@ -329,7 +295,7 @@ namespace Test.Unit
             return JsonSerializer.Deserialize<T>(jsonString, jsonOptions)!;
         }
 
-        static string SerializeYaml<T>(T obj)
+        string SerializeYaml<T>(T obj)
         {
             StronglyTypedIdYamlConverter<TStrongTypedId> converter = new StronglyTypedIdYamlConverter<TStrongTypedId>();
             ISerializer serializer = new SerializerBuilder()
@@ -350,7 +316,7 @@ namespace Test.Unit
             return result;
         }
 
-        static T DeserializeYaml<T>(string yaml)
+        T DeserializeYaml<T>(string yaml)
         {
             StronglyTypedIdYamlConverter<TStrongTypedId> converter = new StronglyTypedIdYamlConverter<TStrongTypedId>();
             IDeserializer deserializer = new DeserializerBuilder()
