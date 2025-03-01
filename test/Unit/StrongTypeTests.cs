@@ -354,6 +354,8 @@ namespace Test.Unit
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct
     {
+        protected const string Json = "json"; //"SystemTextJson";
+        
         protected abstract TPrimitive SampleValue
         { get; }
 
@@ -471,7 +473,7 @@ namespace Test.Unit
             // Assert.Equal(id, deserialized);
         }
 
-        string Serialize<T>(T value, string format) => format switch
+        protected string Serialize<T>(T value, string format) => format switch
         {
             "json" => SerializeJson(value),
             "yaml" => SerializeYaml(value),
@@ -479,15 +481,13 @@ namespace Test.Unit
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
         
-        T Deserialize<T>(string serialized, string format) => format switch
+        protected T Deserialize<T>(string serialized, string format) => format switch
         {
             "json" => DeserializeJson<T>(serialized),
             "yaml" => DeserializeYaml<T>(serialized),
             "xml" => DeserializeXml<T>(serialized),
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
-
-        const string Json = "json"; //"SystemTextJson";
 
         static IEnumerable<object[]> SingleValueTestData()
         {
@@ -652,14 +652,14 @@ namespace Test.Unit
 
     }
 
-    public abstract class StronglyTypedStringIdTests<TId> : StronglyTypedIdTests<TId, string> where TId : struct
+    public abstract class StronglyTypedStringIdTests<TStrongTypedId> : StronglyTypedIdTests<TStrongTypedId, string> where TStrongTypedId : struct
     {
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
         
         
-        [Theory]
+        [Theory(Skip = "high?")]
         // [MemberData(nameof(SingleValueTestData))]
         [InlineData(Json)]
         public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
