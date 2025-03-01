@@ -29,7 +29,7 @@ namespace Test.Unit
             // Add List of ComplexDto?
         }
 
-        const string Json = "SystemTextJson";
+        protected const string Json = "SystemTextJson";
         const string Yaml = "YamlDotNet";
         const string Xml = "DataContract";
         readonly ITestOutputHelper _TestOutputHelper;
@@ -193,7 +193,7 @@ namespace Test.Unit
             Assert.Equal(strongTypedId, deserialized);
         }
 
-        string Serialize<T>(T value, string format)
+        protected string Serialize<T>(T value, string format)
         {
             string result = format switch
             {
@@ -210,7 +210,7 @@ namespace Test.Unit
             return result;
         }
 
-        T Deserialize<T>(string serialized, string format) => format switch
+        protected T Deserialize<T>(string serialized, string format) => format switch
         {
             Json => DeserializeJson<T>(serialized),
             Yaml => DeserializeYaml<T>(serialized),

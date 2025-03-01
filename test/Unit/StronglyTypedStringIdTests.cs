@@ -1,6 +1,11 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Bogus;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Test.Unit
@@ -15,87 +20,69 @@ namespace Test.Unit
 
         protected override string EmptyValue => string.Empty;
 
-        // Chinese: 你好世界
-        // Emoji 💾📚
-        // Escape \u0000
+        #pragma warning disable CA1000 // static members
+        public static IEnumerable<object[]> StringTestData()
+        {
+            // Kaylumah in Japanese Katakana
+            // ケイルマ (Keiruma)
+            // カ (Ka) → Closest match to “Kay”, but “ケイ (Kei)” is more accurate for the long ‘ay’ sound.
+            // ル (Ru) → Represents the “lu” sound.
+            // マ (Ma) → Represents the “mah” sound.
+            string japaneseKatakana = "ケイルマ";
+            
+            // Καϊλουμά (Kaïloumá)
+            // Κ (Ka) → Closest match to “K” in Greek.
+            // α (a) → Represents the short "a" sound.
+            // ϊ (ï) → The diaeresis (¨) ensures "i" is pronounced separately, making it "Ka-ï" instead of "Kai" as one syllable.
+            // λ (l) → Represents the "l" sound.
+            // ο (o) → Represents the "o" sound, similar to "u" in "lumah".
+            // υ (u) → Represents the "u" sound, which is often pronounced like **"i"** in modern Greek but retains an "u" value in some transliterations.
+            // μ (m) → Represents the "m" sound.
+            // ά (á) → The **accented α** ensures the stress is on the last syllable ("-má").
+            string greek = "Καϊλουμά";
+
+            string emoji = "🔥";
+
+            string whiteSpace = "   ";
+
+            string escape = "\u0000";
+            
+            // "\t\n\r" (Whitespace, escape characters)
+            string[] serializers = new[] { Json };
+            string[] input = new[] { japaneseKatakana, greek, emoji, whiteSpace, escape };
+
+            foreach (string serializer in serializers)
+            {
+                foreach (string value in input)
+                {
+                    object[] arguments = new object[] { serializer, value };
+                    yield return arguments;
+                }
+            }
+        }
+        #pragma warning restore
+        
+        [Theory]
+        [MemberData(nameof(StringTestData))]
+        public void Test1(string serializer, string input)
+        {
+            Debug.Assert(serializer != null);
+            Debug.Assert(input != null);
+        }
+        
         // Int32.MinValue, Int32.MaxValue, Guid.Empty,  "   " 
         // Bool instead of string, number instead of guid
-        // "\t\n\r" (Whitespace, escape characters)
         // NULL value
         // 	List with 100,000+ entries.
         // •	Large Dictionary<ChapterId, string> (100,000+ keys).
         /*
-         Fuzz testing (or fuzzing) is a type of automated testing that provides random, unexpected, or malformed inputs to a system to uncover potential bugs, crashes, or security vulnerabilities.
+         
          * var faker = new Faker();
            var randomJson = $"{{ \"Author\": \"{faker.Random.AlphaNumeric(50)}\" }}";
          */
 
         /*
-         * Fact]
-           public void SystemTextJson_Should_Handle_Fuzzed_String_Data_Gracefully()
-           {
-               var faker = new Faker();
-
-               for (int i = 0; i < 100; i++)
-               {
-                   string randomString = faker.Random.String2(10, 200); // Random string between 10-200 chars
-                   string json = $"{{ \"Author\": \"{randomString}\" }}";
-
-                   try
-                   {
-                       var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                       Assert.NotNull(deserialized.Author);
-                   }
-                   catch (Exception ex)
-                   {
-                       Assert.True(false, $"Fuzzing failed for input: {randomString}. Exception: {ex.Message}");
-                   }
-               }
-           }
-           
-           [Fact]
-           public void SystemTextJson_Should_Handle_Fuzzed_Guids_Gracefully()
-           {
-               var faker = new Faker();
-
-               for (int i = 0; i < 100; i++)
-               {
-                   string randomGuid = faker.Random.Guid().ToString();
-                   string json = $"{{ \"BookId\": \"{randomGuid}\" }}";
-
-                   try
-                   {
-                       var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                       Assert.NotNull(deserialized.BookId);
-                   }
-                   catch (Exception ex)
-                   {
-                       Assert.True(false, $"Fuzzing failed for input: {randomGuid}. Exception: {ex.Message}");
-                   }
-               }
-           }
-
-           [Fact]
-           public void SystemTextJson_Should_Handle_Fuzzed_Numeric_Data_Gracefully()
-           {
-               var faker = new Faker();
-
-               for (int i = 0; i < 100; i++)
-               {
-                   int randomInt = faker.Random.Int(int.MinValue, int.MaxValue);
-                   string json = $"{{ \"ChapterId\": \"{randomInt}\" }}";
-
-                   try
-                   {
-                       var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                       Assert.NotNull(deserialized.ChapterId);
-                   }
-                   catch (Exception ex)
-                   {
-                       Assert.True(false, $"Fuzzing failed for input: {randomInt}. Exception: {ex.Message}");
-                   }
-               }
-           }
+         * 
            
            [Fact]
            public void SystemTextJson_Should_Handle_Fuzzed_Malformed_Data()
@@ -105,52 +92,45 @@ namespace Test.Unit
                for (int i = 0; i < 50; i++)
                {
                    string json = faker.Lorem.Sentence(); // Generates completely random, nonsense JSON
-
-                   try
-                   {
-                       JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                   }
-                   catch (JsonException)
-                   {
-                       // Expected behavior: Should throw a JsonException for invalid format.
-                   }
-                   catch (Exception ex)
-                   {
-                       Assert.True(false, $"Unexpected exception for fuzzed input: {json}. Exception: {ex.Message}");
-                   }
                }
            }
            
-           [Fact]
-           public void SystemTextJson_Should_Handle_Fuzzed_Data()
-           {
-               var faker = new Faker();
-
-               for (int i = 0; i < 100; i++)
-               {
-                   string randomString = faker.Random.String2(10, 200);
-                   string randomGuid = faker.Random.Guid().ToString();
-                   int randomInt = faker.Random.Int(int.MinValue, int.MaxValue);
-
-                   string json = $@"
-                   {{
-                       ""Author"": ""{randomString}"",
-                       ""BookId"": ""{randomGuid}"",
-                       ""ChapterId"": ""{randomInt}""
-                   }}";
-
-                   try
-                   {
-                       var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
-                       Assert.NotNull(deserialized);
-                   }
-                   catch (Exception ex)
-                   {
-                       Assert.True(false, $"Fuzzing failed for input: {json}. Exception: {ex.Message}");
-                   }
-               }
-           }
+           
          */
+        
+        [Fact(Skip = "Unsure if makes sense")]
+        public void SystemTextJson_Should_Handle_Fuzzed_String_Data_Gracefully()
+        {
+            Faker faker = new Faker();
+            /*
+            string randomString = faker.Random.String2(10, 200);
+            string randomGuid = faker.Random.Guid().ToString();
+            int randomInt = faker.Random.Int(int.MinValue, int.MaxValue);
+            */
+
+            for (int i = 0; i < 100; i++)
+            {
+                // faker.Random.AlphaNumeric(50);
+                string randomString = faker.Random.String2(10, 200);
+                // string json = $"\"{randomString}\"";
+                TStrongTypedId strongTypedId = ConvertFromPrimitive(randomString);
+                string serialized = Serialize(strongTypedId, Json);
+                Assert.Contains(randomString, serialized, StringComparison.OrdinalIgnoreCase);
+                TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, Json);
+
+                /*
+                try
+                {
+                    var deserialized = JsonSerializer.Deserialize<Library>(json, jsonOptions);
+                    Assert.NotNull(deserialized.Author);
+                }
+                catch (Exception ex)
+                {
+                    Assert.True(false, $"Fuzzing failed for input: {randomString}. Exception: {ex.Message}");
+                }
+                */
+            }
+        }
     }
     
     public readonly record struct TestStringId(string Value)
