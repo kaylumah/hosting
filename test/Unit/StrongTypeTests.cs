@@ -613,7 +613,6 @@ namespace Test.Unit
         }
     }
     
-#pragma warning disable
     public class TypedIdRecordStructJsonConverter<T> : JsonConverter<T> where T : struct
     {
         readonly TypedIdRecordStruct<T> _Id;
@@ -628,13 +627,14 @@ namespace Test.Unit
             Type targetType = _Id.UnderlyingType;
             object value = targetType switch
             {
-                { } t when t == typeof(string) => reader.GetString(),
-                { } t when t == typeof(Guid) => reader.GetGuid(),
-                { } t when t == typeof(int) => reader.GetInt32(),
+                _ when targetType == typeof(string) => reader.GetString() ?? string.Empty,
+                _ when targetType ==  typeof(Guid) => reader.GetGuid(),
+                _ when targetType == typeof(int) => reader.GetInt32(),
                 _ => throw new JsonException($"Unsupported ID type {targetType}.")
             };
 
-            return _Id.FromObject(value);
+            T result = _Id.FromObject(value);
+            return result;
         }
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
@@ -645,30 +645,35 @@ namespace Test.Unit
             switch (objValue)
             {
                 case string strVal:
-                writer.WriteStringValue(strVal);
-                break;
+                    writer.WriteStringValue(strVal);
+                    break;
                 case Guid guidVal:
-                writer.WriteStringValue(guidVal);
-                break;
+                    writer.WriteStringValue(guidVal);
+                    break;
                 case int intVal:
-                writer.WriteNumberValue(intVal);
-                break;
+                    writer.WriteNumberValue(intVal);
+                    break;
                 default:
-                throw new JsonException($"Unsupported ID type {targetType}.");
+                    throw new JsonException($"Unsupported ID type {targetType}.");
             }
         }
 
         public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return _Id.FromObject(reader.GetString()!);
+            string input = reader.GetString()!;
+            T result = _Id.FromObject(input);
+            return result;
         }
 
         public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            writer.WritePropertyName(_Id.ToObject(value).ToString()!);
+            object x = _Id.ToObject(value);
+            string xAsString = x.ToString()!;
+            writer.WritePropertyName(xAsString);
         }
     }
-    
+
+#pragma warning disable
     public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
     {
         readonly TypedIdRecordStruct<T> _Id;
