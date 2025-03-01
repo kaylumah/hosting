@@ -18,6 +18,7 @@
 
 </head>
 <body class="bg-gray-100 font-sans leading-relaxed tracking-wide">
+{{ page | to_diagnostic_html "post" }}
 <div class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
     <!-- Main Content -->
     <main class="lg:col-span-2">
@@ -33,15 +34,7 @@
 
             <!-- Post Content -->
             <div class="prose prose-lg text-gray-700">
-                <p>Welcome to this blog post. This is where the full content of the article will be displayed. You can include paragraphs, images, lists, and other HTML elements here to provide a rich reading experience.</p>
-                <h2>Subheading Example</h2>
-                <p>This is an additional section within the post to break up content and make it more digestible.</p>
-                <ul>
-                    <li>Key point one in the article</li>
-                    <li>Another interesting fact</li>
-                    <li>Final thought to wrap up this section</li>
-                </ul>
-                <p>Thank you for reading. Stay tuned for more updates!</p>
+                {{ content }}
             </div>
         </article>
     </main>
