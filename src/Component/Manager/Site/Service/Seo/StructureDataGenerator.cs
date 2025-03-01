@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
@@ -34,9 +32,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             // Check https://search.google.com/test/rich-results to validate LDJson
             ArgumentNullException.ThrowIfNull(renderData);
-            JsonSerializerOptions settings = new JsonSerializerOptions();
+            System.Text.Json.JsonSerializerOptions settings = new System.Text.Json.JsonSerializerOptions();
             settings.AllowTrailingCommas = true;
-            settings.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            settings.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
             settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             settings.WriteIndented = true;
 
