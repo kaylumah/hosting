@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml;
-using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -278,7 +277,7 @@ namespace Test.Unit
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             return serializer;
         }
-        
+
         readonly JsonSerializerOptions _JsonOptions = new()
         {
             WriteIndented = true,
@@ -290,10 +289,9 @@ namespace Test.Unit
                 new TypedIdRecordStructConverter<TStrongTypedId>()
             }
         };
-        
+
         string SerializeJson<T>(T obj)
         {
-
             using MemoryStream memoryStream = new MemoryStream();
             UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
             using StreamWriter writer = new StreamWriter(memoryStream, encoding);
@@ -359,14 +357,14 @@ namespace Test.Unit
         public static implicit operator string(TestStringId authorStringId) => authorStringId.Value;
         public static implicit operator TestStringId(string value) => new(value);
     }
-    
+
     public class TestStringIdTests : StronglyTypedStringIdTests<TestStringId>
     {
         protected override TestStringId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
-    
+
     public class TypedIdRecordStructConverter<T> : JsonConverter<T> where T : struct
     {
         readonly Func<object, T> _FromObject;
@@ -404,7 +402,7 @@ namespace Test.Unit
             static bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
             {
                 bool returnTypeMatches = methodInfo.ReturnType == returnType;
-                
+
                 ParameterInfo[] parameterInfos = methodInfo.GetParameters();
                 ParameterInfo parameterInfo = parameterInfos.Single();
                 bool parameterMatches = parameterInfo.ParameterType == parameterType;
@@ -413,7 +411,7 @@ namespace Test.Unit
                 return result;
             }
         }
-        
+
         static Type GetUnderlyingType(Type type)
         {
             ConstructorInfo[] constructors = type.GetConstructors();
@@ -446,16 +444,16 @@ namespace Test.Unit
             switch (objValue)
             {
                 case string strVal:
-                    writer.WriteStringValue(strVal);
-                    break;
+                writer.WriteStringValue(strVal);
+                break;
                 case Guid guidVal:
-                    writer.WriteStringValue(guidVal);
-                    break;
+                writer.WriteStringValue(guidVal);
+                break;
                 case int intVal:
-                    writer.WriteNumberValue(intVal);
-                    break;
+                writer.WriteNumberValue(intVal);
+                break;
                 default:
-                    throw new JsonException($"Unsupported ID type {_UnderlyingType}.");
+                throw new JsonException($"Unsupported ID type {_UnderlyingType}.");
             }
         }
 
