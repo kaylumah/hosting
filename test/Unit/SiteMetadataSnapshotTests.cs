@@ -225,6 +225,7 @@ namespace Test.Unit
             {
                 { "organization", "001" },
                 { "author", "N/A"},
+                { "baseuri", "http://127.0.0.1" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -258,6 +259,7 @@ namespace Test.Unit
             {
                 { "organization", "001" },
                 { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -291,6 +293,7 @@ namespace Test.Unit
             {
                 { "organization", "001" },
                 { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -324,6 +327,7 @@ namespace Test.Unit
             {
                 { "organization", "001" },
                 { "author", "002" },
+                { "baseuri", "http://127.0.0.1" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
