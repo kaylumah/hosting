@@ -20,21 +20,20 @@ namespace Test.Unit
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct
     {
-        
         // ReSharper disable once MemberCanBePrivate.Global
         // Must be public or get system runtime attributes
         public class ComplexDto
         {
             public TStrongTypedId? Id
             { get; set; }
-            
+
             // Add List of ComplexDto?
         }
 
         protected const string Json = "json"; //"SystemTextJson";
         protected const string Yaml = "yaml"; //"YamlDotNet";
         protected const string Xml = "xml"; //"DataContract";
-        
+
         protected abstract TPrimitive SampleValue
         { get; }
 
@@ -151,7 +150,7 @@ namespace Test.Unit
             // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
             // Assert.Equal(id, deserialized);
         }
-        
+
         static IEnumerable<object[]> SingleValueTestData()
         {
             string[] formatters = new string[1];
@@ -171,15 +170,15 @@ namespace Test.Unit
         {
             string originalValueAsString = SampleValue.ToString();
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            
+
             string serialized = Serialize(strongTypedId, serializer);
             Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
-            
+
             TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
             Assert.Equal(strongTypedId, deserialized);
         }
-        
+
         [Theory]
         [InlineData(Json)]
         [InlineData(Yaml)]
@@ -188,8 +187,8 @@ namespace Test.Unit
         {
             string originalValueAsString = SampleValue.ToString();
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            List<TStrongTypedId> list = [ strongTypedId ];
-            
+            List<TStrongTypedId> list = [strongTypedId];
+
             string serialized = Serialize(list, serializer);
             Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
@@ -198,7 +197,7 @@ namespace Test.Unit
             TStrongTypedId deserialized = deserializedList.ElementAt(0);
             Assert.Equal(strongTypedId, deserialized);
         }
-        
+
         [Theory]
         [InlineData(Json)]
         [InlineData(Yaml)]
@@ -207,8 +206,8 @@ namespace Test.Unit
         {
             string originalValueAsString = SampleValue.ToString();
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            TStrongTypedId[] array = [ strongTypedId ];
-            
+            TStrongTypedId[] array = [strongTypedId];
+
             string serialized = Serialize(array, serializer);
             Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
@@ -217,7 +216,7 @@ namespace Test.Unit
             TStrongTypedId deserialized = deserializedArray[0];
             Assert.Equal(strongTypedId, deserialized);
         }
-        
+
         [Theory(Skip = "TODO")]
         [InlineData(Json)]
         [InlineData(Yaml)]
@@ -226,8 +225,8 @@ namespace Test.Unit
         {
             string originalValueAsString = SampleValue.ToString();
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            TStrongTypedId[] array = [ strongTypedId ];
-            
+            TStrongTypedId[] array = [strongTypedId];
+
             string serialized = Serialize(array, serializer);
             Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
@@ -258,6 +257,7 @@ namespace Test.Unit
             TStrongTypedId? deserialized = deserializedDto.Id;
             Assert.Equal(strongTypedId, deserialized);
         }
+
         string Serialize<T>(T value, string format) => format switch
         {
             Json => SerializeJson(value),
@@ -265,7 +265,7 @@ namespace Test.Unit
             Xml => SerializeXml(value),
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
-        
+
         T Deserialize<T>(string serialized, string format) => format switch
         {
             Json => DeserializeJson<T>(serialized),
@@ -273,7 +273,7 @@ namespace Test.Unit
             Xml => DeserializeXml<T>(serialized),
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
-        
+
         static string SerializeXml<T>(T obj)
         {
             DataContractSerializer serializer = CreateSerializer<T>();
@@ -314,7 +314,7 @@ namespace Test.Unit
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             PropertyNameCaseInsensitive = true
         };
-        
+
         static string SerializeJson<T>(T obj)
         {
             using MemoryStream memoryStream = new MemoryStream();
@@ -382,7 +382,7 @@ namespace Test.Unit
         public static implicit operator string(TestId authorId) => authorId.Value;
         public static implicit operator TestId(string value) => new(value);
     }
-    
+
     /// <summary>
     /// Represent the data structure of AuthorId, OrganizationId, TagId, SiteId, PageId
     /// </summary>
