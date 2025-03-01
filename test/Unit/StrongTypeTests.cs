@@ -673,7 +673,6 @@ namespace Test.Unit
         }
     }
 
-#pragma warning disable
     public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
     {
         readonly TypedIdRecordStruct<T> _Id;
@@ -691,14 +690,17 @@ namespace Test.Unit
 
         object? IYamlTypeConverter.ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
         {
-            Scalar? scalar = (YamlDotNet.Core.Events.Scalar)parser.Current;
+            Scalar? scalar = (YamlDotNet.Core.Events.Scalar?)parser.Current;
             parser.MoveNext();
-            return _Id.FromObject(scalar.Value);
+            object? result = _Id.FromObject(scalar!.Value);
+            return result;
         }
 
         void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
         {
-            emitter.Emit(new YamlDotNet.Core.Events.Scalar(_Id.ToObject((T)value).ToString()));
+            string? x = _Id.ToObject((T)value!).ToString()!;
+            Scalar y = new YamlDotNet.Core.Events.Scalar(x);
+            emitter.Emit(y);
         }
     }
 }
