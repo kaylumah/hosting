@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
@@ -17,27 +18,8 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Test.Unit
 {
     /*
-     * [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserializeList()
-       {
-           var list = new List<TStrongTypedId> { ConvertFromPrimitive(SampleValue) };
-
-           string json = JsonSerializer.Serialize(list);
-           List<TStrongTypedId> deserialized = JsonSerializer.Deserialize<List<TStrongTypedId>>(json)!;
-
-           Assert.Equal(list, deserialized);
-       }
-
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserializeArray()
-       {
-           var array = new TStrongTypedId[] { ConvertFromPrimitive(SampleValue) };
-
-           string json = JsonSerializer.Serialize(array);
-           TStrongTypedId[] deserialized = JsonSerializer.Deserialize<TStrongTypedId[]>(json)!;
-
-           Assert.Equal(array, deserialized);
-       }
+     * 
+       
 
        [Fact]
        public void SystemTextJson_Should_SerializeAndDeserializeNestedType()
@@ -74,18 +56,7 @@ namespace Test.Unit
            Assert.Equal(dict.Values.First().Name, deserialized.Values.First().Name);
        }
 
-       [Fact]
-       public void YamlDotNet_Should_SerializeAndDeserializeList()
-       {
-           var list = new List<TStrongTypedId> { ConvertFromPrimitive(SampleValue) };
-           var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-           var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-
-           string yaml = serializer.Serialize(list);
-           List<TStrongTypedId> deserialized = deserializer.Deserialize<List<TStrongTypedId>>(yaml)!;
-
-           Assert.Equal(list, deserialized);
-       }
+       
 
        [Fact]
        public void YamlDotNet_Should_SerializeAndDeserializeNestedType()
@@ -101,19 +72,7 @@ namespace Test.Unit
            Assert.Equal(obj.Name, deserialized.Name);
        }
 
-       [Fact]
-       public void DataContractSerializer_Should_SerializeAndDeserializeList()
-       {
-           var list = new List<TStrongTypedId> { ConvertFromPrimitive(SampleValue) };
-           var serializer = new DataContractSerializer(typeof(List<TStrongTypedId>));
-
-           using MemoryStream memoryStream = new MemoryStream();
-           serializer.WriteObject(memoryStream, list);
-           memoryStream.Position = 0;
-
-           List<TStrongTypedId> deserialized = (List<TStrongTypedId>)serializer.ReadObject(memoryStream)!;
-           Assert.Equal(list, deserialized);
-       }
+       
 
        [Fact]
        public void DataContractSerializer_Should_SerializeAndDeserializeNestedType()
@@ -355,6 +314,8 @@ namespace Test.Unit
         where TStrongTypedId : struct
     {
         protected const string Json = "json"; //"SystemTextJson";
+        protected const string Yaml = "yaml"; //"YamlDotNet";
+        protected const string Xml = "xml"; //"DataContract";
         
         protected abstract TPrimitive SampleValue
         { get; }
@@ -472,23 +433,7 @@ namespace Test.Unit
             // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
             // Assert.Equal(id, deserialized);
         }
-
-        protected string Serialize<T>(T value, string format) => format switch
-        {
-            "json" => SerializeJson(value),
-            "yaml" => SerializeYaml(value),
-            "xml" => SerializeXml(value),
-            _ => throw new ArgumentException("Invalid format", nameof(format))
-        };
         
-        protected T Deserialize<T>(string serialized, string format) => format switch
-        {
-            "json" => DeserializeJson<T>(serialized),
-            "yaml" => DeserializeYaml<T>(serialized),
-            "xml" => DeserializeXml<T>(serialized),
-            _ => throw new ArgumentException("Invalid format", nameof(format))
-        };
-
         static IEnumerable<object[]> SingleValueTestData()
         {
             string[] formatters = new string[1];
@@ -501,7 +446,6 @@ namespace Test.Unit
         }
 
         [Theory]
-        // [MemberData(nameof(SingleValueTestData))]
         [InlineData(Json)]
         public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
         {
@@ -516,45 +460,56 @@ namespace Test.Unit
             Assert.Equal(strongTypedId, deserialized);
         }
         
-        [Fact]
-        public void SystemTextJson_Should_SerializeAndDeserialize_SingleValue()
+        [Theory]
+        [InlineData(Json)]
+        public void Serializer_Should_SerializeAndDeserialize_List(string serializer)
         {
-            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            List<TStrongTypedId> list = [ strongTypedId ];
+            
+            string serialized = Serialize(list, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
-            string json = SerializeJson(id);
-            Assert.Contains(originalValueAsString, json);
-            TStrongTypedId deserialized = DeserializeJson<TStrongTypedId>(json);
-            Assert.NotNull(deserialized);
-            Assert.Equal(id, deserialized);
+            List<TStrongTypedId> deserializedList = Deserialize<List<TStrongTypedId>>(serialized, serializer);
+            TStrongTypedId deserialized = deserializedList.ElementAt(0);
+            Assert.Equal(strongTypedId, deserialized);
+        }
+        
+        [Theory]
+        [InlineData(Json)]
+        public void Serializer_Should_SerializeAndDeserialize_Array(string serializer)
+        {
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            TStrongTypedId[] array = [ strongTypedId ];
+            
+            string serialized = Serialize(array, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
+
+            TStrongTypedId[] deserializedArray = Deserialize<TStrongTypedId[]>(serialized, serializer);
+            TStrongTypedId deserialized = deserializedArray[0];
+            Assert.Equal(strongTypedId, deserialized);
         }
 
-        [Fact]
-        public void YamlDotNet_Should_SerializeAndDeserialize_SingleValue()
+        protected string Serialize<T>(T value, string format) => format switch
         {
-            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
-
-            string yaml = SerializeYaml(id);
-            Assert.Contains(originalValueAsString, yaml);
-            TStrongTypedId deserialized = DeserializeYaml<TStrongTypedId>(yaml);
-            Assert.NotNull(deserialized);
-            Assert.Equal(id, deserialized);
-        }
-
-        [Fact]
-        public void DataContractSerializer_Should_SerializeAndDeserialize_SingleValue()
+            Json => SerializeJson(value),
+            Yaml => SerializeYaml(value),
+            Xml => SerializeXml(value),
+            _ => throw new ArgumentException("Invalid format", nameof(format))
+        };
+        
+        protected T Deserialize<T>(string serialized, string format) => format switch
         {
-            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
-
-            string xml = SerializeXml(id);
-            Assert.Contains(originalValueAsString, xml);
-            TStrongTypedId deserialized = DeserializeXml<TStrongTypedId>(xml);
-            Assert.NotNull(deserialized);
-            Assert.Equal(id, deserialized);
-        }
-
+            Json => DeserializeJson<T>(serialized),
+            Yaml => DeserializeYaml<T>(serialized),
+            Xml => DeserializeXml<T>(serialized),
+            _ => throw new ArgumentException("Invalid format", nameof(format))
+        };
+        
         static string SerializeXml<T>(T obj)
         {
             DataContractSerializer serializer = CreateSerializer<T>();
@@ -595,7 +550,7 @@ namespace Test.Unit
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             PropertyNameCaseInsensitive = true
         };
-
+        
         static string SerializeJson<T>(T obj)
         {
             using MemoryStream memoryStream = new MemoryStream();
