@@ -147,8 +147,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 throw new JsonException("Property name cannot be null or empty.");
             }
 
-            // TODO what happens if its not a string?
-            T result = _StronglyTypedIdHelper.FromObject(input);
+            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
+            object? converted = input.ConvertValue(targetType);
+            Debug.Assert(converted != null);
+
+            T result = _StronglyTypedIdHelper.FromObject(converted);
             return result;
         }
 
