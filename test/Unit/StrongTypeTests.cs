@@ -538,13 +538,18 @@ namespace Test.Unit
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
 
-    public static class TypedIdRecordStruct<T> where T : struct
+    public class TypedIdRecordStruct<T> where T : struct
     {
-        public static readonly Func<object, T> FromObject;
-        public static readonly Func<T, object> ToObject;
-        public static readonly Type UnderlyingType;
+        public Func<object, T> FromObject
+        { get; }
+
+        public Func<T, object> ToObject
+        { get; }
         
-        static TypedIdRecordStruct()
+        public Type UnderlyingType
+        { get; }
+        
+        public TypedIdRecordStruct()
         {
             Type strongIdType = typeof(T);
             UnderlyingType = GetUnderlyingType(strongIdType);
@@ -611,9 +616,16 @@ namespace Test.Unit
 #pragma warning disable
     public class TypedIdRecordStructJsonConverter<T> : JsonConverter<T> where T : struct
     {
+        readonly TypedIdRecordStruct<T> _Id;
+        
+        public TypedIdRecordStructJsonConverter()
+        {
+            _Id = new TypedIdRecordStruct<T>();
+        }
+        
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            Type targetType = TypedIdRecordStruct<T>.UnderlyingType;
+            Type targetType = _Id.UnderlyingType;
             object value = targetType switch
             {
                 { } t when t == typeof(string) => reader.GetString(),
@@ -622,13 +634,13 @@ namespace Test.Unit
                 _ => throw new JsonException($"Unsupported ID type {targetType}.")
             };
 
-            return TypedIdRecordStruct<T>.FromObject(value);
+            return _Id.FromObject(value);
         }
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            Type targetType = TypedIdRecordStruct<T>.UnderlyingType;
-            object objValue = TypedIdRecordStruct<T>.ToObject(value);
+            Type targetType = _Id.UnderlyingType;
+            object objValue = _Id.ToObject(value);
 
             switch (objValue)
             {
@@ -648,17 +660,24 @@ namespace Test.Unit
 
         public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return TypedIdRecordStruct<T>.FromObject(reader.GetString()!);
+            return _Id.FromObject(reader.GetString()!);
         }
 
         public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            writer.WritePropertyName(TypedIdRecordStruct<T>.ToObject(value).ToString()!);
+            writer.WritePropertyName(_Id.ToObject(value).ToString()!);
         }
     }
     
     public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
     {
+        readonly TypedIdRecordStruct<T> _Id;
+        
+        public StronglyTypedIdYamlConverter()
+        {
+            _Id = new TypedIdRecordStruct<T>();
+        }
+        
         bool IYamlTypeConverter.Accepts(Type type)
         {
             bool result = type == typeof(T);
@@ -669,12 +688,12 @@ namespace Test.Unit
         {
             Scalar? scalar = (YamlDotNet.Core.Events.Scalar)parser.Current;
             parser.MoveNext();
-            return TypedIdRecordStruct<T>.FromObject(scalar.Value);
+            return _Id.FromObject(scalar.Value);
         }
 
         void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
         {
-            emitter.Emit(new YamlDotNet.Core.Events.Scalar(TypedIdRecordStruct<T>.ToObject((T)value).ToString()));
+            emitter.Emit(new YamlDotNet.Core.Events.Scalar(_Id.ToObject((T)value).ToString()));
         }
     }
 }
