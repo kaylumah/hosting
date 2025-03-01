@@ -13,6 +13,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml;
 using Xunit;
+using Xunit.Abstractions;
+using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 #pragma warning disable
@@ -34,6 +37,12 @@ namespace Test.Unit
         protected const string Json = "json"; //"SystemTextJson";
         protected const string Yaml = "yaml"; //"YamlDotNet";
         protected const string Xml = "xml"; //"DataContract";
+        protected readonly ITestOutputHelper _TestOutputHelper;
+
+        protected StronglyTypedIdTests(ITestOutputHelper testOutputHelper)
+        {
+            _TestOutputHelper = testOutputHelper;
+        }
 
         protected abstract TPrimitive SampleValue
         { get; }
@@ -229,14 +238,20 @@ namespace Test.Unit
             Assert.Equal(strongTypedId, deserialized);
         }
 
-        string Serialize<T>(T value, string format) => format switch
+        string Serialize<T>(T value, string format)
         {
-            Json => SerializeJson(value),
-            Yaml => SerializeYaml(value),
-            Xml => SerializeXml(value),
-            _ => throw new ArgumentException("Invalid format", nameof(format))
-        };
+            string result = format switch
+            {
+                Json => SerializeJson(value),
+                Yaml => SerializeYaml(value),
+                Xml => SerializeXml(value),
+                _ => throw new ArgumentException("Invalid format", nameof(format))
+            };
 
+            _TestOutputHelper.WriteLine(result);
+            return result;
+        }
+        
         T Deserialize<T>(string serialized, string format) => format switch
         {
             Json => DeserializeJson<T>(serialized),
@@ -286,7 +301,7 @@ namespace Test.Unit
             PropertyNameCaseInsensitive = true,
             Converters =
             {
-                new TypedIdRecordStructConverter<TStrongTypedId>()
+                new TypedIdRecordStructJsonConverter<TStrongTypedId>()
             }
         };
 
@@ -347,9 +362,15 @@ namespace Test.Unit
 
     public abstract class StronglyTypedStringIdTests<TStrongTypedId> : StronglyTypedIdTests<TStrongTypedId, string> where TStrongTypedId : struct
     {
+        protected StronglyTypedStringIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+        }
+
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
+        
+        
         
         // Chinese: 你好世界
         // Emoji 💾📚
@@ -497,18 +518,22 @@ namespace Test.Unit
 
     public class TestStringIdTests : StronglyTypedStringIdTests<TestStringId>
     {
+        public TestStringIdTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+        }
+
         protected override TestStringId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
 
-    public class TypedIdRecordStructConverter<T> : JsonConverter<T> where T : struct
+    public static class TypedIdRecordStruct<T> where T : struct
     {
-        readonly Func<object, T> _FromObject;
-        readonly Func<T, object> _ToObject;
-        readonly Type _UnderlyingType;
-
-        public TypedIdRecordStructConverter()
+        public static readonly Func<object, T> _FromObject;
+        public static readonly Func<T, object> _ToObject;
+        public static readonly Type _UnderlyingType;
+        
+        static TypedIdRecordStruct()
         {
             Type strongIdType = typeof(T);
             _UnderlyingType = GetUnderlyingType(strongIdType);
@@ -528,26 +553,26 @@ namespace Test.Unit
 
             _FromObject = (object value) => (T)fromMethod.Invoke(null, new object[] { value })!;
             _ToObject = (T value) => toMethod.Invoke(null, new object[] { value })!;
-
-            bool IsImplicitOperator(MethodInfo methodInfo)
-            {
-                bool result = methodInfo is { IsSpecialName: true, Name: "op_Implicit" };
-                return result;
-            }
-
-            bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
-            {
-                bool returnTypeMatches = methodInfo.ReturnType == returnType;
-
-                ParameterInfo[] parameterInfos = methodInfo.GetParameters();
-                ParameterInfo parameterInfo = parameterInfos.Single();
-                bool parameterMatches = parameterInfo.ParameterType == parameterType;
-
-                bool result = returnTypeMatches && parameterMatches;
-                return result;
-            }
+        }
+        
+        static bool IsImplicitOperator(MethodInfo methodInfo)
+        {
+            bool result = methodInfo is { IsSpecialName: true, Name: "op_Implicit" };
+            return result;
         }
 
+        static bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
+        {
+            bool returnTypeMatches = methodInfo.ReturnType == returnType;
+
+            ParameterInfo[] parameterInfos = methodInfo.GetParameters();
+            ParameterInfo parameterInfo = parameterInfos.Single();
+            bool parameterMatches = parameterInfo.ParameterType == parameterType;
+
+            bool result = returnTypeMatches && parameterMatches;
+            return result;
+        }
+        
         static Type GetUnderlyingType(Type type)
         {
             ConstructorInfo[] constructors = type.GetConstructors();
@@ -559,23 +584,28 @@ namespace Test.Unit
             Type result = parameterInfo.ParameterType;
             return result;
         }
-
+    }
+    
+    public class TypedIdRecordStructJsonConverter<T> : JsonConverter<T> where T : struct
+    {
         public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            object value = _UnderlyingType switch
+            Type targetType = TypedIdRecordStruct<T>._UnderlyingType;
+            object value = targetType switch
             {
                 { } t when t == typeof(string) => reader.GetString(),
                 { } t when t == typeof(Guid) => reader.GetGuid(),
                 { } t when t == typeof(int) => reader.GetInt32(),
-                _ => throw new JsonException($"Unsupported ID type {_UnderlyingType}.")
+                _ => throw new JsonException($"Unsupported ID type {targetType}.")
             };
 
-            return _FromObject(value);
+            return TypedIdRecordStruct<T>._FromObject(value);
         }
 
         public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            object objValue = _ToObject(value);
+            Type targetType = TypedIdRecordStruct<T>._UnderlyingType;
+            object objValue = TypedIdRecordStruct<T>._ToObject(value);
 
             switch (objValue)
             {
@@ -589,18 +619,39 @@ namespace Test.Unit
                 writer.WriteNumberValue(intVal);
                 break;
                 default:
-                throw new JsonException($"Unsupported ID type {_UnderlyingType}.");
+                throw new JsonException($"Unsupported ID type {targetType}.");
             }
         }
 
         public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return _FromObject(reader.GetString()!);
+            return TypedIdRecordStruct<T>._FromObject(reader.GetString()!);
         }
 
         public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
         {
-            writer.WritePropertyName(_ToObject(value).ToString()!);
+            writer.WritePropertyName(TypedIdRecordStruct<T>._ToObject(value).ToString()!);
+        }
+    }
+    
+    public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
+    {
+        bool IYamlTypeConverter.Accepts(Type type)
+        {
+            bool result = type == typeof(T);
+            return result;
+        }
+
+        object? IYamlTypeConverter.ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
+        {
+            Scalar? scalar = (YamlDotNet.Core.Events.Scalar)parser.Current;
+            parser.MoveNext();
+            return TypedIdRecordStruct<T>._FromObject(scalar.Value);
+        }
+
+        void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
+        {
+            emitter.Emit(new YamlDotNet.Core.Events.Scalar(TypedIdRecordStruct<T>._ToObject((T)value).ToString()));
         }
     }
 }
