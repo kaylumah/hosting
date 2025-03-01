@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -183,7 +184,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             parser.MoveNext();
 
-            object result = _StronglyTypedIdHelper.FromObject(scalar.Value);
+            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
+            object? converted = scalar.Value.ConvertValue(targetType);
+            Debug.Assert(converted != null);
+
+            object result = _StronglyTypedIdHelper.FromObject(converted);
             return result;
         }
 
