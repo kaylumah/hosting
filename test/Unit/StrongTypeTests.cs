@@ -30,8 +30,8 @@ namespace Test.Unit
         }
 
         protected const string Json = "SystemTextJson";
-        const string Yaml = "YamlDotNet";
-        const string Xml = "DataContract";
+        protected const string Yaml = "YamlDotNet";
+        protected const string Xml = "DataContract";
         readonly ITestOutputHelper _TestOutputHelper;
 
         protected StronglyTypedIdTests(ITestOutputHelper testOutputHelper)

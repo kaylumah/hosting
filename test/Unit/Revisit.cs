@@ -41,5 +41,40 @@ namespace Test.Unit
             Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
         }
         */
+        
+        // Int32.MinValue, Int32.MaxValue, Guid.Empty,  "   " 
+                // Bool instead of string, number instead of guid
+                // NULL value
+                // 	List with 100,000+ entries.
+                // •	Large Dictionary<ChapterId, string> (100,000+ keys).
+                /*
+                 
+                 * var faker = new Faker();
+                   var randomJson = $"{{ \"Author\": \"{faker.Random.AlphaNumeric(50)}\" }}";
+                 */
+        
+                /*
+                 * 
+                   
+                   [Fact]
+                   public void SystemTextJson_Should_Handle_Fuzzed_Malformed_Data()
+                   {
+                       var faker = new Faker();
+        
+                       for (int i = 0; i < 50; i++)
+                       {
+                           string json = faker.Lorem.Sentence(); // Generates completely random, nonsense JSON
+                       }
+                   }
+                   
+                   
+                 */
+                
+                /*
+                            string randomString = faker.Random.String2(10, 200);
+                            string randomGuid = faker.Random.Guid().ToString();
+                            int randomInt = faker.Random.Int(int.MinValue, int.MaxValue);
+                            */
+
     }
 }
