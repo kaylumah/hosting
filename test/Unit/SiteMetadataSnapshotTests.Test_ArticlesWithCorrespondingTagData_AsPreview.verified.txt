@@ -10,9 +10,7 @@
     "ShortGitHash": null,
     "Time": "0001-01-01T00:00:00+00:00"
   },
-  "Id": {
-    "Value": "my-site"
-  },
+  "Id": "my-site",
   "Title": "",
   "Description": "",
   "Language": "",
@@ -21,9 +19,7 @@
   "Data": {
     "tags": [
       {
-        "Id": {
-          "Value": "1"
-        },
+        "Id": "1",
         "Name": null,
         "Description": null,
         "Icon": null
@@ -32,9 +28,7 @@
   },
   "TagMetaData": [
     {
-      "Id": {
-        "Value": "1"
-      },
+      "Id": "1",
       "Name": null,
       "Description": null,
       "Icon": null
@@ -43,11 +37,10 @@
   "AuthorMetaData": [],
   "OrganizationMetaData": [],
   "Authors": null,
+  "Organizations": null,
   "Tags": {
     "1": {
-      "Id": {
-        "Value": "1"
-      },
+      "Id": "1",
       "Name": null,
       "Description": null,
       "Icon": null
@@ -64,16 +57,12 @@
   ],
   "Pages": [
     {
-      "Id": {
-        "Value": "my-page"
-      },
+      "Id": "my-page",
       "Title": null,
       "Description": null,
       "Language": null,
       "Author": "N/A ",
-      "Organization": {
-        "Value": null
-      },
+      "Organization": "\u00A7",
       "Sitemap": false,
       "LdJson": null,
       "MetaTags": null,
@@ -103,16 +92,12 @@
       "Series": null,
       "NumberOfWords": 0,
       "Duration": "00:00:00",
-      "Id": {
-        "Value": "my-page"
-      },
+      "Id": "my-page",
       "Title": null,
       "Description": null,
       "Language": null,
       "Author": "N/A ",
-      "Organization": {
-        "Value": null
-      },
+      "Organization": "\u00A7",
       "Sitemap": false,
       "LdJson": null,
       "MetaTags": null,
@@ -144,16 +129,12 @@
   ],
   "PagesByTags": {
     "1": [
-      {
-        "Value": "my-page"
-      }
+      "my-page"
     ]
   },
   "PagesByYears": {
     "1": [
-      {
-        "Value": "my-page"
-      }
+      "my-page"
     ]
   }
 }</pre>

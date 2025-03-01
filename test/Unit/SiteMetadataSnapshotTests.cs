@@ -141,6 +141,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "organization", "§" },
                 { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
@@ -216,12 +217,13 @@ namespace Test.Unit
         }
 
         [Fact]
-        public async Task Test_Scriban_Handles_Diagnostic()
+        public async Task Test_Scriban_Handles_Diagnostic_Minimal()
         {
             BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "organization", "§" },
                 { "author", "N/A"},
                 { "uri", "1.html "},
                 { "id", "1" },
@@ -242,7 +244,7 @@ namespace Test.Unit
         }
 
         [Fact]
-        public async Task Test_Scriban_Handles_DictionaryWithKeys()
+        public async Task Test_Scriban_Handles_AuthorDictionary()
         {
             AuthorMetaDataCollection authorMetaDataCollection = new AuthorMetaDataCollection();
             AuthorMetaData authorMetaData = new AuthorMetaData();
@@ -254,6 +256,73 @@ namespace Test.Unit
             data["authors"] = authorMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
+                { "organization", "§" },
+                { "author", "§" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+        
+        [Fact]
+        public async Task Test_Scriban_Handles_OrganizationDictionary()
+        {
+            OrganizationMetaDataCollection organizationMetaDataCollection = new OrganizationMetaDataCollection();
+            OrganizationMetaData organizationMetadata = new OrganizationMetaData();
+            organizationMetadata.Id = new OrganizationId("§");
+            organizationMetaDataCollection.Add(organizationMetadata);
+
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["organizations"] = organizationMetaDataCollection;
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "§" },
+                { "author", "§" },
+                { "uri", "1.html "},
+                { "id", "1" },
+                { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
+            };
+            Article pageMetaData = new Article(pageData);
+            List<BasePage> items = new List<BasePage>();
+            items.Add(pageMetaData);
+            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+
+            RenderData renderData = new RenderData(siteMetaData, pageMetaData);
+            string content =
+                """
+                {{ site | to_diagnostic_html "piet" }}
+                """;
+
+            string result = await Render(content, renderData);
+        }
+        
+        [Fact]
+        public async Task Test_Scriban_Handles_TagDictionary()
+        {
+            TagMetaDataCollection tagMetaDataCollection = new TagMetaDataCollection();
+            TagMetaData tagMetaData = new TagMetaData();
+            tagMetaData.Id = new TagId("§");
+            tagMetaDataCollection.Add(tagMetaData);
+
+            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            Dictionary<string, object> data = new();
+            data["tags"] = tagMetaDataCollection;
+            Dictionary<string, object?> pageData = new()
+            {
+                { "organization", "§" },
                 { "author", "§" },
                 { "uri", "1.html "},
                 { "id", "1" },
