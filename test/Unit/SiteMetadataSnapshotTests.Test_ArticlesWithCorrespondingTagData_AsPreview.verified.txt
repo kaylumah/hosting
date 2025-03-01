@@ -70,9 +70,7 @@
       "Title": null,
       "Description": null,
       "Language": null,
-      "Author": {
-        "Value": null
-      },
+      "Author": "N/A ",
       "Organization": {
         "Value": null
       },
@@ -111,9 +109,7 @@
       "Title": null,
       "Description": null,
       "Language": null,
-      "Author": {
-        "Value": null
-      },
+      "Author": "N/A ",
       "Organization": {
         "Value": null
       },

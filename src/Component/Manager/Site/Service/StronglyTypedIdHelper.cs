@@ -116,6 +116,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         {
             Type targetType = _StronglyTypedIdHelper.UnderlyingType;
             object objValue = _StronglyTypedIdHelper.ToObject(value);
+            
+            if (objValue is null)
+            {
+                throw new ArgumentNullException(nameof(value), "Cannot serialize a null strongly-typed ID.");
+            }
 
             switch (objValue)
             {

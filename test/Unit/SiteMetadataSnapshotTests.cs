@@ -141,6 +141,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
@@ -221,6 +222,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "author", "N/A"},
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -252,6 +254,7 @@ namespace Test.Unit
             data["authors"] = authorMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
+                { "author", "§" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
