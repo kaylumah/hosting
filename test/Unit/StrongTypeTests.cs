@@ -217,7 +217,7 @@ namespace Test.Unit
             Assert.Equal(strongTypedId, deserialized);
         }
 
-        [Theory(Skip = "TODO")]
+        [Theory]
         [InlineData(Json)]
         [InlineData(Yaml)]
         [InlineData(Xml)]
@@ -225,14 +225,17 @@ namespace Test.Unit
         {
             string originalValueAsString = SampleValue.ToString();
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            TStrongTypedId[] array = [strongTypedId];
+            Dictionary<TStrongTypedId, string> dictionary = new Dictionary<TStrongTypedId, string>
+            {
+                { strongTypedId, "abc" }
+            };
 
-            string serialized = Serialize(array, serializer);
+            string serialized = Serialize(dictionary, serializer);
             Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
-            TStrongTypedId[] deserializedArray = Deserialize<TStrongTypedId[]>(serialized, serializer);
-            TStrongTypedId deserialized = deserializedArray[0];
+            Dictionary<TStrongTypedId, string> deserializedDictionary = Deserialize<Dictionary<TStrongTypedId, string>>(serialized, serializer);
+            TStrongTypedId? deserialized = deserializedDictionary.Keys.FirstOrDefault();
             Assert.Equal(strongTypedId, deserialized);
         }
 
