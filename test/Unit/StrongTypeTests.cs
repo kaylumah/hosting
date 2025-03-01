@@ -696,17 +696,26 @@ namespace Test.Unit
 
         object? IYamlTypeConverter.ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
         {
-            Scalar? scalar = (YamlDotNet.Core.Events.Scalar?)parser.Current;
-            parser.MoveNext();
-            object? result = _StronglyTypedIdHelper.FromObject(scalar!.Value);
+            if (parser.Current is not Scalar scalar || string.IsNullOrEmpty(scalar.Value))
+            {
+                throw new YamlException("Invalid or missing YAML scalar value for strongly-typed ID.");
+            }
+            
+            object result = _StronglyTypedIdHelper.FromObject(scalar.Value);
             return result;
         }
 
         void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
         {
-            string? x = _StronglyTypedIdHelper.ToObject((T)value!).ToString()!;
-            Scalar y = new YamlDotNet.Core.Events.Scalar(x);
-            emitter.Emit(y);
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value), "Cannot serialize a null strongly-typed ID.");
+            }
+            
+            object convertedValue = _StronglyTypedIdHelper.ToObject((T)value);
+            string convertedValueString = convertedValue.ToString() ?? throw new InvalidOperationException("Conversion to string resulted in null.");
+            Scalar scalarValue = new Scalar(convertedValueString);
+            emitter.Emit(scalarValue);
         }
     }
 }
