@@ -174,6 +174,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         bool IYamlTypeConverter.Accepts(Type type)
         {
+            Type? nullableType = Nullable.GetUnderlyingType(type);
+            if (nullableType == typeof(T))
+            {
+                return true;
+            }
+
             bool result = type == typeof(T);
             return result;
         }

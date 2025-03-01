@@ -23,7 +23,7 @@ namespace Test.Unit
         // Must be public or get system runtime attributes
         public class ComplexDto
         {
-            public TStrongTypedId Id
+            public TStrongTypedId? Id
             { get; set; }
 
             // Add List of ComplexDto?
