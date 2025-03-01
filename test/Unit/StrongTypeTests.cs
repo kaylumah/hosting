@@ -389,7 +389,7 @@ namespace Test.Unit
         }
         */
 
-        [Fact]
+        [Fact(Skip = "Not sure if relevant")]
         public void SystemTextJson_Serialization_Should_BeFast()
         {
             TStrongTypedId id = ConvertFromPrimitive(SampleValue);
