@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Events;
-using YamlDotNet.Serialization;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -86,132 +80,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             Type result = parameterInfo.ParameterType;
             return result;
-        }
-    }
-
-    public class StronglyTypedIdJsonConverter<T> : JsonConverter<T> where T : struct
-    {
-        readonly StronglyTypedIdHelper<T> _StronglyTypedIdHelper;
-
-        public StronglyTypedIdJsonConverter()
-        {
-            _StronglyTypedIdHelper = new StronglyTypedIdHelper<T>();
-        }
-
-        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
-            object value = targetType switch
-            {
-                _ when targetType == typeof(string) => reader.GetString() ?? string.Empty,
-                _ when targetType == typeof(Guid) => reader.GetGuid(),
-                _ when targetType == typeof(int) => reader.GetInt32(),
-                _ => throw new JsonException($"Unsupported ID type {targetType}.")
-            };
-
-            T result = _StronglyTypedIdHelper.FromObject(value);
-            return result;
-        }
-
-        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
-            object objValue = _StronglyTypedIdHelper.ToObject(value);
-
-            if (objValue is null)
-            {
-                throw new ArgumentNullException(nameof(value), "Cannot serialize a null strongly-typed ID.");
-            }
-
-            switch (objValue)
-            {
-                case string strVal:
-                writer.WriteStringValue(strVal);
-                break;
-                case Guid guidVal:
-                writer.WriteStringValue(guidVal);
-                break;
-                case int intVal:
-                writer.WriteNumberValue(intVal);
-                break;
-                default:
-                throw new JsonException($"Unsupported ID type {targetType}.");
-            }
-        }
-
-        public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            string? input = reader.GetString();
-            if (string.IsNullOrEmpty(input))
-            {
-                throw new JsonException("Property name cannot be null or empty.");
-            }
-
-            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
-            object? converted = input.ConvertValue(targetType);
-            Debug.Assert(converted != null);
-
-            T result = _StronglyTypedIdHelper.FromObject(converted);
-            return result;
-        }
-
-        public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
-        {
-            object x = _StronglyTypedIdHelper.ToObject(value);
-            string xAsString = x.ToString()!;
-            writer.WritePropertyName(xAsString);
-        }
-    }
-
-    public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
-    {
-        readonly StronglyTypedIdHelper<T> _StronglyTypedIdHelper;
-
-        public StronglyTypedIdYamlConverter()
-        {
-            _StronglyTypedIdHelper = new StronglyTypedIdHelper<T>();
-        }
-
-        bool IYamlTypeConverter.Accepts(Type type)
-        {
-            Type? nullableType = Nullable.GetUnderlyingType(type);
-            if (nullableType == typeof(T))
-            {
-                return true;
-            }
-
-            bool result = type == typeof(T);
-            return result;
-        }
-
-        object? IYamlTypeConverter.ReadYaml(IParser parser, Type type, ObjectDeserializer rootDeserializer)
-        {
-            if (parser.Current is not Scalar scalar || string.IsNullOrEmpty(scalar.Value))
-            {
-                throw new YamlException("Invalid or missing YAML scalar value for strongly-typed ID.");
-            }
-
-            parser.MoveNext();
-
-            Type targetType = _StronglyTypedIdHelper.UnderlyingType;
-            object? converted = scalar.Value.ConvertValue(targetType);
-            Debug.Assert(converted != null);
-
-            object result = _StronglyTypedIdHelper.FromObject(converted);
-            return result;
-        }
-
-        void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
-        {
-            if (value is null)
-            {
-                throw new ArgumentNullException(nameof(value), "Cannot serialize a null strongly-typed ID.");
-            }
-
-            object convertedValue = _StronglyTypedIdHelper.ToObject((T)value);
-            string convertedValueString = convertedValue.ToString() ?? throw new InvalidOperationException("Conversion to string resulted in null.");
-            Scalar scalarValue = new Scalar(convertedValueString);
-            emitter.Emit(scalarValue);
         }
     }
 }
