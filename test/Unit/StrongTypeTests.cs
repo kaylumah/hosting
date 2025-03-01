@@ -354,20 +354,17 @@ namespace Test.Unit
         protected override string EmptyValue => string.Empty;
     }
 
-    public readonly record struct TestId(string Value)
+    public readonly record struct TestStringId(string Value)
     {
-        public static implicit operator string(TestId authorId) => authorId.Value;
-        public static implicit operator TestId(string value) => new(value);
+        public static implicit operator string(TestStringId authorStringId) => authorStringId.Value;
+        public static implicit operator TestStringId(string value) => new(value);
     }
-
-    /// <summary>
-    /// Represent the data structure of AuthorId, OrganizationId, TagId, SiteId, PageId
-    /// </summary>
-    public class TestIdTests : StronglyTypedStringIdTests<TestId>
+    
+    public class TestStringIdTests : StronglyTypedStringIdTests<TestStringId>
     {
-        protected override TestId ConvertFromPrimitive(string value) => value;
+        protected override TestStringId ConvertFromPrimitive(string value) => value;
 
-        protected override string ConvertToPrimitive(TestId id) => id;
+        protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
     
     public class TypedIdRecordStructConverter<T> : JsonConverter<T> where T : struct
