@@ -18,7 +18,6 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-#pragma warning disable
 namespace Test.Unit
 {
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
@@ -34,10 +33,10 @@ namespace Test.Unit
             // Add List of ComplexDto?
         }
 
-        protected const string Json = "json"; //"SystemTextJson";
-        protected const string Yaml = "yaml"; //"YamlDotNet";
-        protected const string Xml = "xml"; //"DataContract";
-        protected readonly ITestOutputHelper _TestOutputHelper;
+        const string Json = "json"; //"SystemTextJson";
+        const string Yaml = "yaml"; //"YamlDotNet";
+        const string Xml = "xml"; //"DataContract";
+        readonly ITestOutputHelper _TestOutputHelper;
 
         protected StronglyTypedIdTests(ITestOutputHelper testOutputHelper)
         {
@@ -145,11 +144,10 @@ namespace Test.Unit
         [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
         {
-            string originalValueAsString = SampleValue.ToString();
+            string originalValueAsString = SampleValue?.ToString() ?? throw new InvalidOperationException("Sample Value must be set");
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
 
             string serialized = Serialize(strongTypedId, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
             TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
@@ -162,12 +160,11 @@ namespace Test.Unit
         [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_List(string serializer)
         {
-            string originalValueAsString = SampleValue.ToString();
+            string originalValueAsString = SampleValue?.ToString() ?? throw new InvalidOperationException("Sample Value must be set");
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
             List<TStrongTypedId> list = [strongTypedId];
 
             string serialized = Serialize(list, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
             List<TStrongTypedId> deserializedList = Deserialize<List<TStrongTypedId>>(serialized, serializer);
@@ -181,12 +178,11 @@ namespace Test.Unit
         [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_Array(string serializer)
         {
-            string originalValueAsString = SampleValue.ToString();
+            string originalValueAsString = SampleValue?.ToString() ?? throw new InvalidOperationException("Sample Value must be set");
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
             TStrongTypedId[] array = [strongTypedId];
 
             string serialized = Serialize(array, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
             TStrongTypedId[] deserializedArray = Deserialize<TStrongTypedId[]>(serialized, serializer);
@@ -200,7 +196,7 @@ namespace Test.Unit
         [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_Dictionary(string serializer)
         {
-            string originalValueAsString = SampleValue.ToString();
+            string originalValueAsString = SampleValue?.ToString() ?? throw new InvalidOperationException("Sample Value must be set");
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
             Dictionary<TStrongTypedId, string> dictionary = new Dictionary<TStrongTypedId, string>
             {
@@ -208,7 +204,6 @@ namespace Test.Unit
             };
 
             string serialized = Serialize(dictionary, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
             Dictionary<TStrongTypedId, string> deserializedDictionary = Deserialize<Dictionary<TStrongTypedId, string>>(serialized, serializer);
@@ -222,15 +217,12 @@ namespace Test.Unit
         [InlineData(Xml)]
         public void Serializer_Should_SerializeAndDeserialize_Dto(string serializer)
         {
-            string originalValueAsString = SampleValue.ToString();
+            string originalValueAsString = SampleValue?.ToString() ?? throw new InvalidOperationException("Sample Value must be set");
             TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            ComplexDto dto = new ComplexDto
-            {
-                Id = strongTypedId
-            };
+            ComplexDto dto = new ComplexDto();
+            dto.Id = strongTypedId;
 
             string serialized = Serialize(dto, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
             Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
             ComplexDto deserializedDto = Deserialize<ComplexDto>(serialized, serializer);
@@ -247,6 +239,9 @@ namespace Test.Unit
                 Xml => SerializeXml(value),
                 _ => throw new ArgumentException("Invalid format", nameof(format))
             };
+            
+            bool isEmptyString = string.IsNullOrWhiteSpace(result);
+            Assert.False(isEmptyString, "Serialized string should not be empty");
 
             _TestOutputHelper.WriteLine(result);
             return result;
@@ -262,22 +257,27 @@ namespace Test.Unit
 
         static string SerializeXml<T>(T obj)
         {
-            DataContractSerializer serializer = CreateSerializer<T>();
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
+            UTF8Encoding encoding = new UTF8Encoding(false);
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
+            xmlWriterSettings.Indent = true;
+            xmlWriterSettings.Encoding = encoding;
 
             using MemoryStream memoryStream = new MemoryStream();
-            UTF8Encoding encoding = new UTF8Encoding(false);
-            using XmlWriter writer = XmlWriter.Create(memoryStream, new XmlWriterSettings { Indent = true, Encoding = encoding });
+            using XmlWriter writer = XmlWriter.Create(memoryStream, xmlWriterSettings);
 
             serializer.WriteObject(writer, obj);
             writer.Flush();
             writer.Close();
 
-            return encoding.GetString(memoryStream.ToArray());
+            byte[] bytes = memoryStream.ToArray();
+            string result = encoding.GetString(bytes);
+            return result;
         }
 
         static T DeserializeXml<T>(string xml)
         {
-            DataContractSerializer serializer = CreateSerializer<T>();
+            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             UTF8Encoding encoding = new UTF8Encoding(false);
             byte[] byteArray = encoding.GetBytes(xml);
 
@@ -286,53 +286,58 @@ namespace Test.Unit
 
             return (T)serializer.ReadObject(reader)!;
         }
-
-        static DataContractSerializer CreateSerializer<T>()
-        {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(T));
-            return serializer;
-        }
-
-        readonly JsonSerializerOptions _JsonOptions = new()
-        {
-            WriteIndented = true,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true,
-            Converters =
-            {
-                new TypedIdRecordStructJsonConverter<TStrongTypedId>()
-            }
-        };
-
+        
         string SerializeJson<T>(T obj)
         {
+#pragma warning disable CA1869
+            JsonSerializerOptions jsonOptions = new();
+            jsonOptions.WriteIndented = true;
+            jsonOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            jsonOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            jsonOptions.PropertyNameCaseInsensitive = true;
+            TypedIdRecordStructJsonConverter<TStrongTypedId> converter = new TypedIdRecordStructJsonConverter<TStrongTypedId>();
+            jsonOptions.Converters.Add(converter);
+#pragma warning restore CA1869
+            
             using MemoryStream memoryStream = new MemoryStream();
             UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
             using StreamWriter writer = new StreamWriter(memoryStream, encoding);
 
-            string json = JsonSerializer.Serialize(obj, _JsonOptions);
+            string json = JsonSerializer.Serialize(obj, jsonOptions);
             writer.Write(json);
             writer.Flush();
 
-            return encoding.GetString(memoryStream.ToArray());
+            byte[] bytes = memoryStream.ToArray();
+            string result = encoding.GetString(bytes);
+            return result;
         }
 
         T DeserializeJson<T>(string json)
         {
+#pragma warning disable CA1869
+            JsonSerializerOptions jsonOptions = new();
+            jsonOptions.WriteIndented = true;
+            jsonOptions.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            jsonOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            jsonOptions.PropertyNameCaseInsensitive = true;
+            TypedIdRecordStructJsonConverter<TStrongTypedId> converter = new TypedIdRecordStructJsonConverter<TStrongTypedId>();
+            jsonOptions.Converters.Add(converter);
+#pragma warning restore CA1869
+            
             byte[] byteArray = new UTF8Encoding(false).GetBytes(json);
             using MemoryStream memoryStream = new MemoryStream(byteArray);
             using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
 
             string jsonString = reader.ReadToEnd();
-            return JsonSerializer.Deserialize<T>(jsonString, _JsonOptions)!;
+            return JsonSerializer.Deserialize<T>(jsonString, jsonOptions)!;
         }
 
         static string SerializeYaml<T>(T obj)
         {
+            StronglyTypedIdYamlConverter<TestStringId> converter = new StronglyTypedIdYamlConverter<TestStringId>();
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .WithTypeConverter(new StronglyTypedIdYamlConverter<TestStringId>())
+                .WithTypeConverter(converter)
                 .Build();
 
             using MemoryStream memoryStream = new MemoryStream();
@@ -343,14 +348,17 @@ namespace Test.Unit
             writer.Write(yaml);
             writer.Flush();
 
-            return encoding.GetString(memoryStream.ToArray());
+            byte[] bytes = memoryStream.ToArray();
+            string result = encoding.GetString(bytes);
+            return result;
         }
 
         static T DeserializeYaml<T>(string yaml)
         {
+            StronglyTypedIdYamlConverter<TestStringId> converter = new StronglyTypedIdYamlConverter<TestStringId>();
             IDeserializer deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .WithTypeConverter(new StronglyTypedIdYamlConverter<TestStringId>())
+                .WithTypeConverter(converter)
                 .Build();
 
             byte[] byteArray = new UTF8Encoding(false).GetBytes(yaml);
@@ -358,7 +366,8 @@ namespace Test.Unit
             using StreamReader reader = new StreamReader(memoryStream, Encoding.UTF8);
 
             string yamlString = reader.ReadToEnd();
-            return deserializer.Deserialize<T>(yamlString);
+            T result = deserializer.Deserialize<T>(yamlString);
+            return result;
         }
     }
 
@@ -529,6 +538,7 @@ namespace Test.Unit
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
 
+#pragma warning disable
     public static class TypedIdRecordStruct<T> where T : struct
     {
         public static readonly Func<object, T> _FromObject;
