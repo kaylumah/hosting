@@ -6,15 +6,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml;
 using Ssg.Extensions.Metadata.Abstractions;
 using Xunit;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-
+#pragma warning disable
 namespace Test.Unit
 {
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
@@ -127,39 +129,6 @@ namespace Test.Unit
         {
             string invalidJson = "{ \"Value\": 12345 }"; // Expecting a string but got an integer
             Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<TStrongTypedId>(invalidJson));
-        }
-
-        [Fact(Skip = "not ready")]
-        public void SystemTextJson_Should_SerializeAndDeserializeDictionary()
-        {
-            string originalValueAsString = SampleValue?.ToString() ?? string.Empty;
-            TStrongTypedId id = ConvertFromPrimitive(SampleValue);
-            Dictionary<TStrongTypedId, string> data = new();
-            data[id] = "one";
-
-#pragma warning disable
-            JsonSerializerOptions options = new JsonSerializerOptions
-            {
-                Converters = { new StringValueRecordStructConverter<AuthorId>(
-                    value => value, id2 => id2) }
-            };
-
-            string json = JsonSerializer.Serialize(data, options);
-            Assert.Contains(originalValueAsString, json);
-
-            // TStrongTypedId deserialized = JsonSerializer.Deserialize<TStrongTypedId>(json);
-            // Assert.Equal(id, deserialized);
-        }
-
-        static IEnumerable<object[]> SingleValueTestData()
-        {
-            string[] formatters = new string[1];
-
-            foreach (string formatter in formatters)
-            {
-                // Nested foreach
-                yield return new object[] { };
-            }
         }
 
         [Theory]
@@ -309,17 +278,22 @@ namespace Test.Unit
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
             return serializer;
         }
-
-        static readonly JsonSerializerOptions _JsonOptions = new()
+        
+        readonly JsonSerializerOptions _JsonOptions = new()
         {
             WriteIndented = true,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            Converters =
+            {
+                new TypedIdRecordStructConverter<TStrongTypedId>()
+            }
         };
-
-        static string SerializeJson<T>(T obj)
+        
+        string SerializeJson<T>(T obj)
         {
+
             using MemoryStream memoryStream = new MemoryStream();
             UTF8Encoding encoding = new UTF8Encoding(false); // Prevent BOM
             using StreamWriter writer = new StreamWriter(memoryStream, encoding);
@@ -331,7 +305,7 @@ namespace Test.Unit
             return encoding.GetString(memoryStream.ToArray());
         }
 
-        static T DeserializeJson<T>(string json)
+        T DeserializeJson<T>(string json)
         {
             byte[] byteArray = new UTF8Encoding(false).GetBytes(json);
             using MemoryStream memoryStream = new MemoryStream(byteArray);
@@ -394,5 +368,108 @@ namespace Test.Unit
         protected override TestId ConvertFromPrimitive(string value) => value;
 
         protected override string ConvertToPrimitive(TestId id) => id;
+    }
+    
+    public class TypedIdRecordStructConverter<T> : JsonConverter<T> where T : struct
+    {
+        readonly Func<object, T> _FromObject;
+        readonly Func<T, object> _ToObject;
+        readonly Type _UnderlyingType;
+
+        public TypedIdRecordStructConverter()
+        {
+            Type strongIdType = typeof(T);
+            _UnderlyingType = GetUnderlyingType(strongIdType);
+
+            MethodInfo[] methods = strongIdType.GetMethods(BindingFlags.Public | BindingFlags.Static);
+            IEnumerable<MethodInfo> implicitOperatorMethods = methods.Where(IsImplicitOperator).ToList();
+
+            MethodInfo? fromMethod = implicitOperatorMethods
+                .SingleOrDefault(method => IsSpecificOperator(method, strongIdType, _UnderlyingType));
+            MethodInfo? toMethod = implicitOperatorMethods
+                .SingleOrDefault(method => IsSpecificOperator(method, _UnderlyingType, strongIdType));
+
+            if (fromMethod == null || toMethod == null)
+            {
+                throw new InvalidOperationException($"Type {strongIdType.Name} must have implicit conversions to and from {_UnderlyingType}.");
+            }
+
+            _FromObject = (object value) => (T)fromMethod.Invoke(null, new object[] { value })!;
+            _ToObject = (T value) => toMethod.Invoke(null, new object[] { value })!;
+            return;
+
+            static bool IsImplicitOperator(MethodInfo methodInfo)
+            {
+                bool result = methodInfo is { IsSpecialName: true, Name: "op_Implicit" };
+                return result;
+            }
+
+            static bool IsSpecificOperator(MethodInfo methodInfo, Type returnType, Type parameterType)
+            {
+                bool returnTypeMatches = methodInfo.ReturnType == returnType;
+                
+                ParameterInfo[] parameterInfos = methodInfo.GetParameters();
+                ParameterInfo parameterInfo = parameterInfos.Single();
+                bool parameterMatches = parameterInfo.ParameterType == parameterType;
+
+                bool result = returnTypeMatches && parameterMatches;
+                return result;
+            }
+        }
+        
+        static Type GetUnderlyingType(Type type)
+        {
+            ConstructorInfo[] constructors = type.GetConstructors();
+            ConstructorInfo constructor = constructors.Single();
+
+            ParameterInfo[] parameters = constructor.GetParameters();
+            ParameterInfo parameterInfo = parameters.Single();
+
+            Type result = parameterInfo.ParameterType;
+            return result;
+        }
+
+        public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            object value = _UnderlyingType switch
+            {
+                { } t when t == typeof(string) => reader.GetString(),
+                { } t when t == typeof(Guid) => reader.GetGuid(),
+                { } t when t == typeof(int) => reader.GetInt32(),
+                _ => throw new JsonException($"Unsupported ID type {_UnderlyingType}.")
+            };
+
+            return _FromObject(value);
+        }
+
+        public override void Write(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            object objValue = _ToObject(value);
+
+            switch (objValue)
+            {
+                case string strVal:
+                    writer.WriteStringValue(strVal);
+                    break;
+                case Guid guidVal:
+                    writer.WriteStringValue(guidVal);
+                    break;
+                case int intVal:
+                    writer.WriteNumberValue(intVal);
+                    break;
+                default:
+                    throw new JsonException($"Unsupported ID type {_UnderlyingType}.");
+            }
+        }
+
+        public override T ReadAsPropertyName(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return _FromObject(reader.GetString()!);
+        }
+
+        public override void WriteAsPropertyName(Utf8JsonWriter writer, T value, JsonSerializerOptions options)
+        {
+            writer.WritePropertyName(_ToObject(value).ToString()!);
+        }
     }
 }
