@@ -141,7 +141,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
-                { "organization", "§" },
+                { "organization", "001" },
                 { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
@@ -223,7 +223,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
-                { "organization", "§" },
+                { "organization", "001" },
                 { "author", "N/A"},
                 { "uri", "1.html "},
                 { "id", "1" },
@@ -256,8 +256,8 @@ namespace Test.Unit
             data["authors"] = authorMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
-                { "organization", "§" },
-                { "author", "§" },
+                { "organization", "001" },
+                { "author", "002" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -275,7 +275,7 @@ namespace Test.Unit
 
             string result = await Render(content, renderData);
         }
-        
+
         [Fact]
         public async Task Test_Scriban_Handles_OrganizationDictionary()
         {
@@ -289,8 +289,8 @@ namespace Test.Unit
             data["organizations"] = organizationMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
-                { "organization", "§" },
-                { "author", "§" },
+                { "organization", "001" },
+                { "author", "002" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
@@ -308,7 +308,7 @@ namespace Test.Unit
 
             string result = await Render(content, renderData);
         }
-        
+
         [Fact]
         public async Task Test_Scriban_Handles_TagDictionary()
         {
@@ -322,8 +322,8 @@ namespace Test.Unit
             data["tags"] = tagMetaDataCollection;
             Dictionary<string, object?> pageData = new()
             {
-                { "organization", "§" },
-                { "author", "§" },
+                { "organization", "001" },
+                { "author", "002" },
                 { "uri", "1.html "},
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
