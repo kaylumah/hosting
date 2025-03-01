@@ -604,7 +604,6 @@ namespace Test.Unit
             string yamlString = reader.ReadToEnd();
             return deserializer.Deserialize<T>(yamlString);
         }
-
     }
 
     public abstract class StronglyTypedStringIdTests<TStrongTypedId> : StronglyTypedIdTests<TStrongTypedId, string> where TStrongTypedId : struct
