@@ -176,6 +176,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 throw new YamlException("Invalid or missing YAML scalar value for strongly-typed ID.");
             }
             
+            parser.MoveNext();
+            
             object result = _StronglyTypedIdHelper.FromObject(scalar.Value);
             return result;
         }

@@ -335,7 +335,7 @@ namespace Test.Unit
 
         static string SerializeYaml<T>(T obj)
         {
-            StronglyTypedIdYamlConverter<TestStringId> converter = new StronglyTypedIdYamlConverter<TestStringId>();
+            StronglyTypedIdYamlConverter<TStrongTypedId> converter = new StronglyTypedIdYamlConverter<TStrongTypedId>();
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .WithTypeConverter(converter)
@@ -356,7 +356,7 @@ namespace Test.Unit
 
         static T DeserializeYaml<T>(string yaml)
         {
-            StronglyTypedIdYamlConverter<TestStringId> converter = new StronglyTypedIdYamlConverter<TestStringId>();
+            StronglyTypedIdYamlConverter<TStrongTypedId> converter = new StronglyTypedIdYamlConverter<TStrongTypedId>();
             IDeserializer deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .WithTypeConverter(converter)
