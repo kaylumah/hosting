@@ -538,7 +538,7 @@ namespace Test.Unit
         protected override string ConvertToPrimitive(TestStringId stringId) => stringId;
     }
     
-     public class StronglyTypedIdHelper<T> where T : struct
+    public class StronglyTypedIdHelper<T> where T : struct
     {
         public Func<object, T> FromObject
         { get; }
@@ -681,11 +681,11 @@ namespace Test.Unit
     
     public class StronglyTypedIdYamlConverter<T> : IYamlTypeConverter where T : struct
     {
-        readonly StronglyTypedIdHelper<T> _Id;
+        readonly StronglyTypedIdHelper<T> _StronglyTypedIdHelper;
         
         public StronglyTypedIdYamlConverter()
         {
-            _Id = new StronglyTypedIdHelper<T>();
+            _StronglyTypedIdHelper = new StronglyTypedIdHelper<T>();
         }
         
         bool IYamlTypeConverter.Accepts(Type type)
@@ -698,13 +698,13 @@ namespace Test.Unit
         {
             Scalar? scalar = (YamlDotNet.Core.Events.Scalar?)parser.Current;
             parser.MoveNext();
-            object? result = _Id.FromObject(scalar!.Value);
+            object? result = _StronglyTypedIdHelper.FromObject(scalar!.Value);
             return result;
         }
 
         void IYamlTypeConverter.WriteYaml(IEmitter emitter, object? value, Type type, ObjectSerializer serializer)
         {
-            string? x = _Id.ToObject((T)value!).ToString()!;
+            string? x = _StronglyTypedIdHelper.ToObject((T)value!).ToString()!;
             Scalar y = new YamlDotNet.Core.Events.Scalar(x);
             emitter.Emit(y);
         }
