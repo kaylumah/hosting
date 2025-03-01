@@ -17,302 +17,20 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Test.Unit
 {
-    /*
-     * 
-       
-
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserializeNestedType()
-       {
-           var obj = new ComplexType<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Test"
-           };
-
-           string json = JsonSerializer.Serialize(obj);
-           ComplexType<TStrongTypedId> deserialized = JsonSerializer.Deserialize<ComplexType<TStrongTypedId>>(json)!;
-
-           Assert.Equal(obj.Id, deserialized.Id);
-           Assert.Equal(obj.Name, deserialized.Name);
-       }
-
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserializeDeeplyNestedDictionary()
-       {
-           var dict = new Dictionary<TStrongTypedId, ComplexType<TStrongTypedId>>
-           {
-               { ConvertFromPrimitive(SampleValue), new ComplexType<TStrongTypedId> { Id = ConvertFromPrimitive(SampleValue), Name = "Nested Test" } }
-           };
-
-           var options = new JsonSerializerOptions();
-           StronglyTypedIdConverterRegistrar.RegisterAllIdConverters(options);
-
-           string json = JsonSerializer.Serialize(dict, options);
-           Dictionary<TStrongTypedId, ComplexType<TStrongTypedId>> deserialized = JsonSerializer.Deserialize<Dictionary<TStrongTypedId, ComplexType<TStrongTypedId>>>(json, options)!;
-
-           Assert.Equal(dict.Keys, deserialized.Keys);
-           Assert.Equal(dict.Values.First().Id, deserialized.Values.First().Id);
-           Assert.Equal(dict.Values.First().Name, deserialized.Values.First().Name);
-       }
-
-       
-
-       [Fact]
-       public void YamlDotNet_Should_SerializeAndDeserializeNestedType()
-       {
-           var obj = new ComplexType<TStrongTypedId> { Id = ConvertFromPrimitive(SampleValue), Name = "Test" };
-           var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-           var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-
-           string yaml = serializer.Serialize(obj);
-           ComplexType<TStrongTypedId> deserialized = deserializer.Deserialize<ComplexType<TStrongTypedId>>(yaml)!;
-
-           Assert.Equal(obj.Id, deserialized.Id);
-           Assert.Equal(obj.Name, deserialized.Name);
-       }
-
-       
-
-       [Fact]
-       public void DataContractSerializer_Should_SerializeAndDeserializeNestedType()
-       {
-           var obj = new ComplexType<TStrongTypedId> { Id = ConvertFromPrimitive(SampleValue), Name = "Test" };
-           var serializer = new DataContractSerializer(typeof(ComplexType<TStrongTypedId>));
-
-           using MemoryStream memoryStream = new MemoryStream();
-           serializer.WriteObject(memoryStream, obj);
-           memoryStream.Position = 0;
-
-           ComplexType<TStrongTypedId> deserialized = (ComplexType<TStrongTypedId>)serializer.ReadObject(memoryStream)!;
-           Assert.Equal(obj.Id, deserialized.Id);
-           Assert.Equal(obj.Name, deserialized.Name);
-       }
-       
-       [DataContract]
-       public class ComplexType<TStrongTypedId>
-       {
-           [DataMember]
-           public TStrongTypedId Id { get; set; }
-       
-           [DataMember]
-           public string Name { get; set; }
-       }
-       
-       [DataContract]
-       public class StronglyTypedDto<TStrongTypedId>
-       {
-           [DataMember]
-           public TStrongTypedId Id { get; set; }
-       
-           [DataMember]
-           public string Name { get; set; }
-       
-           [DataMember]
-           public DateTime CreatedAt { get; set; }
-       
-           public override bool Equals(object? obj)
-           {
-               return obj is StronglyTypedDto<TStrongTypedId> dto &&
-                      EqualityComparer<TStrongTypedId>.Default.Equals(Id, dto.Id) &&
-                      Name == dto.Name &&
-                      CreatedAt == dto.CreatedAt;
-           }
-       
-           public override int GetHashCode()
-           {
-               return HashCode.Combine(Id, Name, CreatedAt);
-           }
-       }
-       
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserialize_Dto()
-       {
-           var dto = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Test DTO",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var options = new JsonSerializerOptions();
-           StronglyTypedIdConverterRegistrar.RegisterAllIdConverters(options);
-       
-           string json = JsonSerializer.Serialize(dto, options);
-           StronglyTypedDto<TStrongTypedId> deserialized = JsonSerializer.Deserialize<StronglyTypedDto<TStrongTypedId>>(json, options)!;
-       
-           Assert.Equal(dto, deserialized);
-       }
-       
-       [Fact]
-       public void YamlDotNet_Should_SerializeAndDeserialize_Dto()
-       {
-           var dto = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Test DTO",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-           var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-       
-           string yaml = serializer.Serialize(dto);
-           StronglyTypedDto<TStrongTypedId> deserialized = deserializer.Deserialize<StronglyTypedDto<TStrongTypedId>>(yaml)!;
-       
-           Assert.Equal(dto, deserialized);
-       }
-       
-       [Fact]
-       public void DataContractSerializer_Should_SerializeAndDeserialize_Dto()
-       {
-           var dto = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Test DTO",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var serializer = new DataContractSerializer(typeof(StronglyTypedDto<TStrongTypedId>));
-       
-           using MemoryStream memoryStream = new MemoryStream();
-           serializer.WriteObject(memoryStream, dto);
-           memoryStream.Position = 0;
-       
-           StronglyTypedDto<TStrongTypedId> deserialized = (StronglyTypedDto<TStrongTypedId>)serializer.ReadObject(memoryStream)!;
-       
-           Assert.Equal(dto, deserialized);
-       }
-       
-       [DataContract]
-       public class NestedDto<TStrongTypedId>
-       {
-           [DataMember]
-           public StronglyTypedDto<TStrongTypedId> Parent { get; set; }
-       
-           [DataMember]
-           public List<StronglyTypedDto<TStrongTypedId>> Children { get; set; } = new();
-       }
-       
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserialize_NestedDto()
-       {
-           var parent = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Parent",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var child = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(EmptyValue),
-               Name = "Child",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var nestedDto = new NestedDto<TStrongTypedId> { Parent = parent, Children = new List<StronglyTypedDto<TStrongTypedId>> { child } };
-       
-           var options = new JsonSerializerOptions();
-           StronglyTypedIdConverterRegistrar.RegisterAllIdConverters(options);
-       
-           string json = JsonSerializer.Serialize(nestedDto, options);
-           NestedDto<TStrongTypedId> deserialized = JsonSerializer.Deserialize<NestedDto<TStrongTypedId>>(json, options)!;
-       
-           Assert.Equal(nestedDto.Parent, deserialized.Parent);
-           Assert.Equal(nestedDto.Children, deserialized.Children);
-       }
-       
-       [DataContract]
-       public class StronglyTypedDto<TStrongTypedId>
-       {
-           [DataMember]
-           public TStrongTypedId Id { get; set; }
-       
-           [DataMember]
-           public string Name { get; set; }
-       
-           [DataMember]
-           public DateTime CreatedAt { get; set; }
-       
-           [DataMember]
-           public StronglyTypedDto<TStrongTypedId>? Parent { get; set; }  // Nullable Parent
-       
-           [DataMember]
-           public List<StronglyTypedDto<TStrongTypedId>>? Children { get; set; } // Nullable Children
-       
-           public override bool Equals(object? obj)
-           {
-               return obj is StronglyTypedDto<TStrongTypedId> dto &&
-                      EqualityComparer<TStrongTypedId>.Default.Equals(Id, dto.Id) &&
-                      Name == dto.Name &&
-                      CreatedAt == dto.CreatedAt &&
-                      EqualityComparer<StronglyTypedDto<TStrongTypedId>?>.Default.Equals(Parent, dto.Parent) &&
-                      EqualityComparer<List<StronglyTypedDto<TStrongTypedId>>?>.Default.Equals(Children, dto.Children);
-           }
-       
-           public override int GetHashCode()
-           {
-               return HashCode.Combine(Id, Name, CreatedAt, Parent, Children);
-           }
-       }
-       
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserialize_Dto()
-       {
-           var dto = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Test DTO",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var options = new JsonSerializerOptions();
-           StronglyTypedIdConverterRegistrar.RegisterAllIdConverters(options);
-       
-           string json = JsonSerializer.Serialize(dto, options);
-           StronglyTypedDto<TStrongTypedId> deserialized = JsonSerializer.Deserialize<StronglyTypedDto<TStrongTypedId>>(json, options)!;
-       
-           Assert.Equal(dto, deserialized);
-       }
-       
-       [Fact]
-       public void SystemTextJson_Should_SerializeAndDeserialize_NestedDto()
-       {
-           var parent = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(SampleValue),
-               Name = "Parent",
-               CreatedAt = DateTime.UtcNow
-           };
-       
-           var child = new StronglyTypedDto<TStrongTypedId>
-           {
-               Id = ConvertFromPrimitive(EmptyValue),
-               Name = "Child",
-               CreatedAt = DateTime.UtcNow,
-               Parent = parent
-           };
-       
-           parent.Children = new List<StronglyTypedDto<TStrongTypedId>> { child };
-       
-           var options = new JsonSerializerOptions();
-           StronglyTypedIdConverterRegistrar.RegisterAllIdConverters(options);
-       
-           string json = JsonSerializer.Serialize(parent, options);
-           StronglyTypedDto<TStrongTypedId> deserialized = JsonSerializer.Deserialize<StronglyTypedDto<TStrongTypedId>>(json, options)!;
-       
-           Assert.Equal(parent.Id, deserialized.Id);
-           Assert.Equal(parent.Name, deserialized.Name);
-           Assert.Equal(parent.CreatedAt, deserialized.CreatedAt);
-           Assert.Equal(parent.Children?.First().Id, deserialized.Children?.First().Id);
-           Assert.Equal(parent.Children?.First().Parent?.Id, deserialized.Children?.First().Parent?.Id);
-       }
-     */
-
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct
     {
+        
+        // ReSharper disable once MemberCanBePrivate.Global
+        // Must be public or get system runtime attributes
+        public class ComplexDto
+        {
+            public TStrongTypedId? Id
+            { get; set; }
+            
+            // Add List of ComplexDto?
+        }
+
         protected const string Json = "json"; //"SystemTextJson";
         protected const string Yaml = "yaml"; //"YamlDotNet";
         protected const string Xml = "xml"; //"DataContract";
@@ -499,8 +217,48 @@ namespace Test.Unit
             TStrongTypedId deserialized = deserializedArray[0];
             Assert.Equal(strongTypedId, deserialized);
         }
+        
+        [Theory(Skip = "TODO")]
+        [InlineData(Json)]
+        [InlineData(Yaml)]
+        [InlineData(Xml)]
+        public void Serializer_Should_SerializeAndDeserialize_Dictionary(string serializer)
+        {
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            TStrongTypedId[] array = [ strongTypedId ];
+            
+            string serialized = Serialize(array, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
 
-        protected string Serialize<T>(T value, string format) => format switch
+            TStrongTypedId[] deserializedArray = Deserialize<TStrongTypedId[]>(serialized, serializer);
+            TStrongTypedId deserialized = deserializedArray[0];
+            Assert.Equal(strongTypedId, deserialized);
+        }
+
+        [Theory]
+        [InlineData(Json)]
+        [InlineData(Yaml)]
+        [InlineData(Xml)]
+        public void Serializer_Should_SerializeAndDeserialize_Dto(string serializer)
+        {
+            string originalValueAsString = SampleValue.ToString();
+            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
+            ComplexDto dto = new ComplexDto
+            {
+                Id = strongTypedId
+            };
+
+            string serialized = Serialize(dto, serializer);
+            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
+            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
+
+            ComplexDto deserializedDto = Deserialize<ComplexDto>(serialized, serializer);
+            TStrongTypedId? deserialized = deserializedDto.Id;
+            Assert.Equal(strongTypedId, deserialized);
+        }
+        string Serialize<T>(T value, string format) => format switch
         {
             Json => SerializeJson(value),
             Yaml => SerializeYaml(value),
@@ -508,7 +266,7 @@ namespace Test.Unit
             _ => throw new ArgumentException("Invalid format", nameof(format))
         };
         
-        protected T Deserialize<T>(string serialized, string format) => format switch
+        T Deserialize<T>(string serialized, string format) => format switch
         {
             Json => DeserializeJson<T>(serialized),
             Yaml => DeserializeYaml<T>(serialized),
@@ -617,23 +375,6 @@ namespace Test.Unit
         protected override string SampleValue => "12345";
 
         protected override string EmptyValue => string.Empty;
-        
-        
-        [Theory(Skip = "high?")]
-        // [MemberData(nameof(SingleValueTestData))]
-        [InlineData(Json)]
-        public void Serializer_Should_SerializeAndDeserialize_SingleValue(string serializer)
-        {
-            string originalValueAsString = SampleValue.ToString();
-            TStrongTypedId strongTypedId = ConvertFromPrimitive(SampleValue);
-            
-            string serialized = Serialize(strongTypedId, serializer);
-            Assert.False(string.IsNullOrWhiteSpace(serialized), "Serialized string should not be empty");
-            Assert.Contains(originalValueAsString, serialized, StringComparison.OrdinalIgnoreCase);
-            
-            TStrongTypedId deserialized = Deserialize<TStrongTypedId>(serialized, serializer);
-            Assert.Equal(strongTypedId, deserialized);
-        }
     }
 
     public class AuthorIdTests : StronglyTypedStringIdTests<AuthorId>
