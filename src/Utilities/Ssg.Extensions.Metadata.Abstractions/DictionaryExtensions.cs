@@ -99,7 +99,7 @@ namespace System.Collections.Generic
             return lookupKey;
         }
 
-        static object? ConvertValue(object? value, Type targetType)
+        public static object? ConvertValue(this object? value, Type targetType)
         {
             if (value is null)
             {

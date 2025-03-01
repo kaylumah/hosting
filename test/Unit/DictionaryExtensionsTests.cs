@@ -24,7 +24,7 @@ namespace Test.Unit
         {
             Type type = typeof(DictionaryExtensions);
             Debug.Assert(type != null);
-            _ConvertValueMethod = type.GetMethod("ConvertValue", BindingFlags.NonPublic | BindingFlags.Static)!;
+            _ConvertValueMethod = type.GetMethod("ConvertValue", BindingFlags.Public | BindingFlags.Static)!;
             Debug.Assert(_ConvertValueMethod != null);
             _GetValueMethod = type.GetMethod("GetValue")!;
             Debug.Assert(_GetValueMethod != null);
