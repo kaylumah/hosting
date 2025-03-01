@@ -14,7 +14,7 @@ namespace Test.Unit
 
         protected override int SampleValue => 3;
 
-        protected override int EmptyValue => default;
+        protected override int EmptyValue => 0;
     }
     
     public readonly record struct TestIntId(int Value)
