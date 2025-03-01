@@ -332,6 +332,7 @@ namespace Test.Unit
         {
             ISerializer serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .WithTypeConverter(new StronglyTypedIdYamlConverter<TestStringId>())
                 .Build();
 
             using MemoryStream memoryStream = new MemoryStream();
@@ -349,6 +350,7 @@ namespace Test.Unit
         {
             IDeserializer deserializer = new DeserializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .WithTypeConverter(new StronglyTypedIdYamlConverter<TestStringId>())
                 .Build();
 
             byte[] byteArray = new UTF8Encoding(false).GetBytes(yaml);
