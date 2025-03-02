@@ -2,24 +2,17 @@
 layout: column.html
 ---
 <article class="prose max-w-none">
-    <header class="mb-4 pb-2">
-        <h1 class="text-3xl font-bold text-gray-900">Fix VSCode Markdown Preview</h1>
-        <p class="text-gray-500 text-sm mt-1">
-            Published on <time datetime="2024-03-02">March 2, 2024</time> by
-            <span class="font-semibold text-gray-800">Author Name</span>
-        </p>
-        <div class="mt-2 flex flex-wrap gap-2">
-            <a href="/tags/markdown" class="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-200 font-mono rounded-md hover:bg-gray-300 transition">
-                #Markdown
-            </a>
-            <a href="/tags/vscode" class="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-200 font-mono rounded-md hover:bg-gray-300 transition">
-                #VSCode
-            </a>
-            <a href="/tags/troubleshooting" class="px-2 py-1 text-xs font-medium text-gray-700 bg-gray-200 font-mono rounded-md hover:bg-gray-300 transition">
-                #Troubleshooting
-            </a>
+    <header class="mb-4 border-b border-gray-300 pb-4">
+        <h1 class="text-3xl font-bold">Fix VSCode Markdown Preview</h1>
+        <div class="flex flex-wrap items-center text-gray-600 text-sm mt-2 gap-2">
+            <span>Published on <time datetime="2024-03-02">March 2, 2024</time></span>
+            <span>by <strong>Author Name</strong></span>
         </div>
-        <hr class="mt-4 mb-1 border-gray-300">
+        <div class="flex gap-2 mt-2">
+            <a href="/blog.html?tag=markdown" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#Markdown</a>
+            <a href="/blog.html?tag=vscode" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#VSCode</a>
+            <a href="/blog.html?tag=troubleshooting" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#Troubleshooting</a>
+        </div>
     </header>
     <section>
         {{ content }}
