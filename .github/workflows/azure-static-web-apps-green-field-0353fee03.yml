@@ -194,7 +194,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ format('tailwind-{0}', 'ubuntu-latest') }}
-          path: tools
+          path: tailwind
 
       - name: Use Node.js v20
         uses: actions/setup-node@v4
