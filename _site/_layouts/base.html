@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans leading-relaxed tracking-wide min-h-screen flex flex-col">
+<header class="bg-white shadow-md fixed top-0 left-0 w-full z-50 h-[var(--header-height)]">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold text-gray-800">My Blog</a>
+        <nav class="hidden lg:flex space-x-6">
+            <a href="/" class="text-gray-700 hover:text-blue-600">Home</a>
+            <a href="/blog" class="text-gray-700 hover:text-blue-600">Blog</a>
+            <a href="/about" class="text-blue-600 font-semibold">About</a>
+            <a href="/contact" class="text-gray-700 hover:text-blue-600">Contact</a>
+        </nav>
+        <button id="mobile-menu-btn" class="lg:hidden text-gray-700 focus:outline-none">☰</button>
+    </div>
+    <nav id="mobile-menu" class="hidden bg-white lg:hidden px-4 py-3 space-y-2">
+        <a href="/" class="block text-gray-700 hover:text-blue-600">Home</a>
+        <a href="/blog" class="block text-gray-700 hover:text-blue-600">Blog</a>
+        <a href="/about" class="block text-blue-600 font-semibold">About</a>
+        <a href="/contact" class="block text-gray-700 hover:text-blue-600">Contact</a>
+    </nav>
+</header>
+<div class="flex-1 container mx-auto px-4 py-8 pt-[var(--header-spacing)]">
+    {{ content }}
+</div>
+<footer class="bg-gray-900 text-white py-4 mt-12 text-center text-sm">
+    <p class="text-gray-400">© 2024 My Blog. All Rights Reserved.</p>
+</footer>
+
+<script>
+    document.getElementById("mobile-menu-btn").addEventListener("click", function() {
+        document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+</script>
+</body>
+</html>
