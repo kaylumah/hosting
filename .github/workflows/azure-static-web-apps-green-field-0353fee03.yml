@@ -186,11 +186,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Run npm steps
-        shell: pwsh
-        run: |
-          npm i --prefix dist
-          npm run build:prod --prefix dist
+     #  - name: Run npm steps
+     #    shell: pwsh
+     #    run: |
+     #      npm i --prefix dist
+     #      npm run build:prod --prefix dist
 
       - name: Cleanup
         shell: pwsh
