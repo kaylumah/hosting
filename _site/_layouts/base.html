@@ -13,41 +13,52 @@
     
     <link href="/output.css?v={{ build.shortgithash }}" rel="stylesheet">
 
-    <!-- Begin Kaylumah SEO tag v{{ build.shortgithash }} -->
-    {{ page.metatags }}
-    {{ page.ldjson }}
-    <!-- End Kaylumah SEO tag -->
+    {% include 'seo.html' %}
     {% include 'banner.html' %}
+    {% include 'analytics.html' %}
 </head>
 <body class="bg-gray-100 font-sans leading-relaxed tracking-wide min-h-screen flex flex-col">
 <header class="bg-white shadow-md fixed top-0 left-0 w-full z-50 h-[var(--header-height)]">
-    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <!-- Logo Only (No Text) -->
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Logo -->
         <a href="/" class="flex items-center">
             <img data-testid="NavLogo" class="h-12 w-auto" src="/assets/logo.svg" alt="Kaylumah">
         </a>
 
         <!-- Desktop Navigation -->
-        <nav class="hidden lg:flex space-x-6 text-lg">
-            <a href="/" class="text-gray-700 hover:text-gray-900">Home</a>
-            <a href="/blog" class="text-gray-700 hover:text-gray-900">Blog</a>
-            <a href="/about" class="text-gray-900 font-semibold border-b-2 border-gray-900">About</a>
-            <a href="/contact" class="text-gray-700 hover:text-gray-900">Contact</a>
+        <nav class="hidden lg:flex space-x-6">
+            {% for page in site.data.navigation.pages %}
+            <a href="{{ page.url }}" class="text-gray-700 hover:text-gray-900">{{ page.title }}</a>
+            {% endfor %}
         </nav>
 
         <!-- Mobile Menu Button -->
         <button id="mobile-menu-btn" class="lg:hidden text-gray-700 focus:outline-none">
-            ☰
+            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
         </button>
     </div>
 
     <!-- Mobile Navigation -->
-    <nav id="mobile-menu" class="hidden bg-white lg:hidden px-4 py-3 space-y-2">
-        <a href="/" class="block text-gray-700 hover:text-gray-900">Home</a>
-        <a href="/blog" class="block text-gray-700 hover:text-gray-900">Blog</a>
-        <a href="/about" class="block text-gray-900 font-semibold border-b-2 border-gray-900">About</a>
-        <a href="/contact" class="block text-gray-700 hover:text-gray-900">Contact</a>
+    <nav id="mobile-menu" class="hidden bg-white lg:hidden px-4 py-3 space-y-2 shadow-md">
+        {% for page in site.data.navigation.pages %}
+        <a href="{{ page.url }}" class="block text-gray-700 hover:text-gray-900">{{ page.title }}</a>
+        {% endfor %}
     </nav>
+
+    <script>
+        document.getElementById('mobile-menu-btn').onclick = function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const navIcons = document.getElementsByClassName('toggle');
+            for (let i = 0; i < navIcons.length; i++) {
+                navIcons[i].classList.toggle('hidden');
+            }
+        };
+    </script>
 </header>
 <div class="flex-1 container mx-auto px-4 py-8 pt-[var(--header-spacing)]">
     {{ content }}
@@ -95,12 +106,6 @@
     if (window.getCookieConsent() !== "unknown") {
         window.hideCookieBanner();
     }
-</script>
-
-<script>
-    document.getElementById("mobile-menu-btn").addEventListener("click", function() {
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-    });
 </script>
 </body>
 </html>
