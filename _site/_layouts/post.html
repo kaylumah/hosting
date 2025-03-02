@@ -1,18 +1,30 @@
 ---
 layout: column.html
 ---
-<article>
-    <!-- Title -->
-    <h1 class="text-4xl font-bold text-gray-800 mb-4">Post Title Goes Here</h1>
+<article class="prose max-w-none">
+    <header class="mb-6 border-b pb-4">
+        <h1 class="text-3xl font-bold text-gray-900">Fix VSCode Markdown Preview</h1>
 
-    <!-- Metadata -->
-    <div class="text-sm text-gray-500 mb-4">
-        <p>By <span class="font-medium text-gray-700">Author Name</span> | Published on: <time datetime="2024-01-10">January 10, 2024</time></p>
-        <p>Tags: <span class="text-blue-600">Technology</span>, <span class="text-blue-600">Innovation</span></p>
-    </div>
-    
-    <!-- Post Content -->
-    <div class="prose prose-lg">
+        <!-- Metadata (Date & Author) -->
+        <p class="text-gray-600 text-sm mt-1">
+            Published on <time datetime="2024-03-02">March 2, 2024</time> by
+            <span class="font-semibold text-gray-800">Author Name</span>
+        </p>
+
+        <!-- Tags Section -->
+        <div class="mt-2 flex flex-wrap gap-2">
+            <a href="/tags/markdown" class="px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                #Markdown
+            </a>
+            <a href="/tags/vscode" class="px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                #VSCode
+            </a>
+            <a href="/tags/troubleshooting" class="px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400">
+                #Troubleshooting
+            </a>
+        </div>
+    </header>
+    <section>
         {{ content }}
-    </div>
+    </section>
 </article>
