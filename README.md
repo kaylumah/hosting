@@ -75,3 +75,6 @@ This repo (including Blog content) is licensed under the [MIT License](LICENSE)
 
 <!-- https://giscus.app -->
 <!-- https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md -->
+
+green: '#4cae50',
+purple: '#55557b'
