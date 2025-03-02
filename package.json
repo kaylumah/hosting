@@ -1,7 +1,7 @@
 {
     "scripts": {
         "start": "FUNCTIONS_WORKER_RUNTIME=node swa start --app-location dist --api-location blog-api",
-        "tailwind": "tailwindcss -i ./tailwind.css -o ./dist/output.css"
+        "tailwind": "tailwindcss -i ./tailwind.css -o ../dist/output.css"
     },
     "devDependencies": {
         "@azure/static-web-apps-cli": "^2.0.4",

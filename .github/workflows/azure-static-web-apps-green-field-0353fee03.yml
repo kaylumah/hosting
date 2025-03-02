@@ -205,7 +205,7 @@ jobs:
         shell: pwsh
         run: |
           npm i --prefix tailwind
-          npx tailwindcss -i ./tailwind.css -o ../dist/output.css --prefix tailwind
+          npm run --prefix tailwind
 
       - name: Cleanup
         shell: pwsh
