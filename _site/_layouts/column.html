@@ -71,29 +71,9 @@ layout: base.html
         </div>
 
         <script>
-            var words = [
-                { "Id": "azure", "DisplayName": "Azure", "Description": "Microsoft Azure Platform", "Size": 2 },
-                { "Id": "code-quality", "DisplayName": "Code Quality", "Description": "Code Quality", "Size": 1 },
-                { "Id": "configuration", "DisplayName": "Configuration", "Description": "Application configuration", "Size": 1 },
-                { "Id": "csharp", "DisplayName": "C#", "Description": "for the C# programming language", "Size": 9 },
-                { "Id": "git", "DisplayName": "Git", "Description": "for the Git version control system", "Size": 1 },
-                { "Id": "markdown", "DisplayName": "Markdown", "Description": "for the Markdown language", "Size": 1 },
-                { "Id": "moq", "DisplayName": "Moq", "Description": "for the Moq mocking library in .NET", "Size": 1 },
-                { "Id": "msbuild", "DisplayName": "MSBuild", "Description": "for the Microsoft Build Engine", "Size": 2 },
-                { "Id": "nswag", "DisplayName": "NSwag", "Description": "for the NSwag swagger tooling in .NET", "Size": 2 },
-                { "Id": "nuget", "DisplayName": "NuGet", "Description": "for the .NET package manager", "Size": 1 },
-                { "Id": "openapi", "DisplayName": "OpenAPI", "Description": "for the OpenAPI Specification", "Size": 2 },
-                { "Id": "reqnroll", "DisplayName": "Reqnroll", "Description": "Cucumber runner for .NET", "Size": 1 },
-                { "Id": "rider", "DisplayName": "Rider", "Description": "for the JetBrains Rider IDE", "Size": 1 },
-                { "Id": "swashbuckle", "DisplayName": "Swashbuckle", "Description": "for the Swashbuckle swagger tooling in .NET", "Size": 2 },
-                { "Id": "testing", "DisplayName": "Testing", "Description": "for test related matters", "Size": 4 },
-                { "Id": "visualstudio", "DisplayName": "Visual Studio", "Description": "for the Microsoft Visual Studio IDE", "Size": 1 },
-                { "Id": "visualstudio2019", "DisplayName": "Visual Studio 2019", "Description": "for the Microsoft Visual Studio IDE", "Size": 1 },
-                { "Id": "vscode", "DisplayName": "VS Code", "Description": "for the Microsoft VS Code IDE", "Size": 2 },
-                { "Id": "xunit", "DisplayName": "Xunit", "Description": "for the Xunit test framework", "Size": 2 }
-            ];
+            const words = {{ site | tag_cloud | to_json }};
 
-            var container = document.getElementById('word-cloud');
+            const container = document.getElementById('word-cloud');
 
             words.forEach(word => {
                 const li = document.createElement('li');

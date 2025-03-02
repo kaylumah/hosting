@@ -1,8 +1,12 @@
 {
     "scripts": {
-        "start": "swa start --app-location dist --api-location blog-api"
+        "start": "swa start --app-location dist --api-location blog-api",
+        "tailwind": "tailwindcss -i ./tailwind.css -o ./dist/output.css"
     },
     "devDependencies": {
-        "@azure/static-web-apps-cli": "^2.0.4"
+        "@azure/static-web-apps-cli": "^2.0.4",
+        "@tailwindcss/cli": "^4.0.9",
+        "@tailwindcss/typography": "^0.5.16",
+        "tailwindcss": "^4.0.9"
     }
 }
