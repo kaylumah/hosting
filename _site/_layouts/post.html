@@ -2,6 +2,16 @@
 layout: column.html
 ---
 <article>
+    <!-- Title -->
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">Post Title Goes Here</h1>
+
+    <!-- Metadata -->
+    <div class="text-sm text-gray-500 mb-4">
+        <p>By <span class="font-medium text-gray-700">Author Name</span> | Published on: <time datetime="2024-01-10">January 10, 2024</time></p>
+        <p>Tags: <span class="text-blue-600">Technology</span>, <span class="text-blue-600">Innovation</span></p>
+    </div>
+    
+    <!-- Post Content -->
     <div class="prose prose-lg">
         {{ content }}
     </div>
