@@ -132,6 +132,15 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Upload Tailwind
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ format('tailwind-{0}', matrix.os) }}
+          path: |
+            package.json
+            package-lock.json
+            tailwind.css
+
       #  Enable the following to do something with snapshot result(s)
       # - name: Check Verify Results
       #   if: always()
@@ -181,6 +190,12 @@ jobs:
           name: ${{ format('api-{0}', 'ubuntu-latest') }}
           path: api
 
+      - name: Download tailwind artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ format('tailwind-{0}', 'ubuntu-latest') }}
+          path: tailwind
+
       - name: Use Node.js v20
         uses: actions/setup-node@v4
         with:
@@ -189,8 +204,8 @@ jobs:
       - name: Run npm steps
         shell: pwsh
         run: |
-          npm i --prefix dist
-          npm run build:prod --prefix dist
+          npm i --prefix tailwind
+          npm run tailwind --prefix tailwind
 
       - name: Cleanup
         shell: pwsh

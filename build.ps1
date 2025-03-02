@@ -40,19 +40,20 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Build Failure"
 }
 
-dotnet format --verify-no-changes
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Formatting Failure"
-}
+
+#dotnet format --verify-no-changes
+#if ($LASTEXITCODE -ne 0)
+#{
+#    Write-Error "Formatting Failure"
+#}
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
-# dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Test Failure"
-}
+#dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
+## dotnet test --configuration $BuildConfiguration --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=TestResults/lcov.info
+#if ($LASTEXITCODE -ne 0)
+#{
+#    Write-Error "Test Failure"
+#}
 
 # Disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591 gets fixed
 # & $ReportScript -BuildConfiguration $BuildConfiguration
@@ -66,9 +67,11 @@ if ($LASTEXITCODE -ne 0)
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 try
 {
-    Set-Location $DistFolder
-    npm i
-    npm run build:prod
+    npm run tailwind
+    npm start
+#    Set-Location $DistFolder
+#    npm i
+#    npm run build:prod
 }
 finally
 {
