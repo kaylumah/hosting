@@ -1,0 +1,60 @@
+---
+layout: 'default.html'
+title: 'Articles from the blog by Max Hamulyák · Kaylumah'
+description: "Welcome to Kaylumah's blog. I blog about things I found helpful in my life as a software engineer."
+tags:
+    - "Developer"
+    - "Blog"
+modifieddate: '2024-04-11'
+type: Collection
+---
+<div class="flex flex-col items-center gap-1">
+    <h1 class="text-2xl font-extrabold">From the blog</h1>
+    <p class="">
+        Welcome to the blog! Here you can find anything I post.
+    </p>
+</div>
+<div class="mt-4"></div>
+<div class="flex flex-col gap-8 laptop:flex-row">
+    {% assign posts = site.recentarticles %}
+    <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
+        {% for post in posts %}
+        <li data-tags="{{ post.tags | array.join " " }}" class="flex">
+            {% include 'tiles/post.html' %}
+        </li>
+        {% endfor %}
+    </ul>
+    <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
+        <li class="w-full laptop:w-64">
+            {% include 'tiles/hero.html' %}
+        </li>
+        <li class="w-full laptop:w-64">
+            {% include 'tiles/sponsor.html' %}
+        </li>
+        <li class="w-full laptop:w-64">
+            {% assign related_article_category_title = "Popular posts" %}
+            {% assign related_articles = site.featuredarticles %}
+            {% include 'tiles/related.html' %}
+        </li>
+        <li class="w-full laptop:w-64">
+            {% include 'tiles/tag_cloud.html' %}
+        </li>
+    </ul>
+</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let tag = urlParams.get('tag');
+    if (tag)
+    {
+        let blogPostList = document.getElementById("blogPosts");
+        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+        blogPosts.forEach(blogPost => {
+            const attrs = blogPost.getAttribute("data-tags");
+            let include = attrs.includes(tag);
+            if (include == false)
+            {
+                blogPost.classList.toggle('hidden');
+            }
+        });
+    }
+</script>

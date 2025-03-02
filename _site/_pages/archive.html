@@ -1,0 +1,65 @@
+---
+---
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    </head>
+    <body class="bg-gray-100 font-sans leading-relaxed tracking-wide">
+    <div class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <main class="lg:col-span-2">
+            <section class="bg-white rounded-2xl border border-gray-200 p-6">
+                <h1 class="text-3xl font-bold mb-4">Blog Archive</h1>
+                <!-- Articles grouped by year -->
+                <div class="space-y-8">
+                    {% for pageByYear in site.pagesbyyears %}
+                    {% assign year = pageByYear.key %}
+                    {% assign posts = site[pageByYear.value] %}
+                    <!-- {{ year }} -->
+                    <div>
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">{{ year }}</h2>
+                        <ul class="space-y-2">
+                            {% for post in posts %}
+                            <li><a href="{{post.uri}}" class="text-blue-600 hover:underline">{{ post.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+        <!-- Sidebar Widgets -->
+        <aside class="space-y-6">
+            <!-- Sponsorship Widget -->
+            <div class="bg-white rounded-2xl border border-gray-200 p-6">
+                <h2 class="text-xl font-semibold mb-4">Sponsored</h2>
+                <a href="#" class="block">
+                    <img src="/images/sponsor-banner.jpg" alt="Sponsor" class="rounded-lg">
+                </a>
+            </div>
+
+            <!-- Newsletter Signup -->
+            <div class="bg-white rounded-2xl border border-gray-200 p-6">
+                <h2 class="text-xl font-semibold mb-4">Subscribe to Our Newsletter</h2>
+                <form action="/subscribe" method="POST" class="space-y-4">
+                    <input type="email" name="email" placeholder="Your email" required class="w-full p-2 border rounded-lg">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Subscribe</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Performance Optimizations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('img').forEach(img => {
+                img.loading = 'lazy';
+            });
+        });
+    </script>
+    </body>
+</html>
