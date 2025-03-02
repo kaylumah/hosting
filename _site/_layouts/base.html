@@ -41,6 +41,47 @@
 <footer class="bg-white border-t border-gray-200 py-6 text-center text-gray-500 text-sm">
     © 2024 My Blog. All Rights Reserved.
 </footer>
+<div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-50 bg-white shadow-md border-t border-gray-200 p-4 tablet:p-6 flex flex-col tablet:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-gray-900 leading-6">
+        This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies.
+        Learn more in our
+        <a class="font-semibold text-primary hover:underline" href="/privacy">cookie policy</a>.
+    </p>
+    <div class="flex items-center gap-4">
+        <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
+            Accept all
+        </button>
+        <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
+            Reject all
+        </button>
+    </div>
+</div>
+
+<script>
+    window.hideCookieBanner = function() {
+        let cookieBanner = document.getElementById("cookie-banner");
+        if (cookieBanner) {
+            cookieBanner.classList.add("hidden");
+        }
+    };
+
+    window.handleCookieConsentGranted = function() {
+        window.setCookieConsent("granted");
+        window.setGtagConsentStatus("update", "granted");
+        window.hideCookieBanner();
+    };
+
+    window.handleCookieConsentDenied = function() {
+        window.setCookieConsent("denied");
+        window.setGtagConsentStatus("update", "denied");
+        window.hideCookieBanner();
+    };
+
+    // Check if consent has already been given
+    if (window.getCookieConsent() !== "unknown") {
+        window.hideCookieBanner();
+    }
+</script>
 
 <script>
     document.getElementById("mobile-menu-btn").addEventListener("click", function() {
