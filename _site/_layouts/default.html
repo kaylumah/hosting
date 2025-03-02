@@ -24,23 +24,8 @@
             <a href="/contact" class="block text-gray-700 hover:text-blue-600">Contact</a>
         </nav>
     </header>
-    <div class="container mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 pt-[var(--header-spacing)] flex-1">
-        <!-- Main Content -->
-        <main class="lg:col-span-2">
-            <section class="bg-white rounded-2xl border border-gray-200 p-6">
-                {{ content }}
-            </section>
-        </main>
-        <!-- Sidebar Widgets -->
-        <aside class="lg:col-span-1 space-y-6">
-            <!-- Sponsorship Widget -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6">
-                <h2 class="text-xl font-semibold mb-4">Sponsored</h2>
-                <a href="#" class="block">
-                    <img src="/images/sponsor-banner.jpg" alt="Sponsor" class="rounded-lg">
-                </a>
-            </div>
-        </aside>
+    <div class="flex-1 container mx-auto px-4 py-8 pt-[var(--header-spacing)]">
+        {{ content }}
     </div>
     <footer class="bg-gray-900 text-white py-4 mt-12 text-center text-sm">
         <p class="text-gray-400">© 2024 My Blog. All Rights Reserved.</p>

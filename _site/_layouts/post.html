@@ -1,3 +1,21 @@
 ---
 layout: default.html
 ---
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Content -->
+    <main class="lg:col-span-2">
+        <section class="bg-white rounded-2xl border border-gray-200 p-6">
+            {{ content }}
+        </section>
+    </main>
+    <!-- Sidebar Widgets -->
+    <aside class="lg:col-span-1 space-y-6">
+        <!-- Sponsorship Widget -->
+        <div class="bg-white rounded-2xl border border-gray-200 p-6">
+            <h2 class="text-xl font-semibold mb-4">Sponsored</h2>
+            <a href="#" class="block">
+                <img src="/images/sponsor-banner.jpg" alt="Sponsor" class="rounded-lg">
+            </a>
+        </div>
+    </aside>
+</div>
