@@ -30,6 +30,14 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
     npx terser $file --compress --mangle --output $file
 }
 
+Write-Output "⚡ Minifying CSS files..."
+Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
+    $file = $_.FullName
+    Write-Output "🔹 Minifying CSS: $file"
+    npx csso-cli "$file" --output "$file"
+}
+Write-Output "✅ CSS minification completed."
+
 # Optimize HTML Files (One by One)
 Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
     $file = $_.FullName
