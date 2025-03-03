@@ -26,11 +26,15 @@ const path = require('path');
 
     console.log(`Saving screenshots in: ${folderPath}`);
 
+    // const url = "http://localhost:4280";
+    // const url = "http://localhost:4280/blog.html";
+    const url = "http://localhost:4280/2024/08/06/fix-vscode-markdown-preview.html";
+
     for (let width of breakpoints) {
         await page.setViewport({ width, height: 1080 });
-        await page.goto('http://localhost:4280'); // Change to your local URL
+        await page.goto(url); // Change to your local URL
         const screenshotPath = path.join(folderPath, `screenshot-${width}px.png`);
-        await page.screenshot({ path: screenshotPath, fullPage: true });
+        await page.screenshot({ path: screenshotPath, fullPage: false });
         console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
     }
 
