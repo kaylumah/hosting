@@ -44,17 +44,26 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
     $file = $_.File
     $beforeSize = $_."Size (KB)"
     $afterFile = $sizeAfterList | Where-Object { $_.File -eq $file }
+
     if ($afterFile) {
+        # File exists after optimization
         $afterSize = $afterFile."Size (KB)"
         $reduction = $beforeSize - $afterSize
         $reductionPercent = ($reduction / $beforeSize) * 100
-        [PSCustomObject]@{
-            File = $file
-            "Size Before (KB)" = $beforeSize
-            "Size After (KB)" = $afterSize
-            "Reduction (KB)" = [math]::Round($reduction, 2)
-            "Reduction (%)" = [math]::Round($reductionPercent, 2)
-        }
+    } 
+    else {
+        # File was deleted (assume full reduction)
+        $afterSize = 0
+        $reduction = $beforeSize
+        $reductionPercent = 100
+    }
+
+    [PSCustomObject]@{
+        File = $file
+        "Size Before (KB)" = $beforeSize
+        "Size After (KB)" = $afterSize
+        "Reduction (KB)" = [math]::Round($reduction, 2)
+        "Reduction (%)" = [math]::Round($reductionPercent, 2)
     }
 }
 
