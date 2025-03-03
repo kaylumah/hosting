@@ -1,5 +1,3 @@
-$startTime = Get-Date
-
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
         # Convert bytes to KB
@@ -11,6 +9,7 @@ function Get-FolderSize($path) {
     }
 }
 
+$startTime = Get-Date
 $sizeBeforeList = Get-FolderSize "dist"
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
