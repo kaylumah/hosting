@@ -207,6 +207,7 @@ jobs:
         run: |
           npm i --prefix tailwind
           npm run --prefix tailwind
+          tree tailwind
 
       - name: Cleanup
         shell: pwsh
