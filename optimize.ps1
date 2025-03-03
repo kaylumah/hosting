@@ -1,3 +1,7 @@
+# TODO
+# - check if we can use purifycss dist/**/*.css dist/**/*.html dist/**/*.js --info
+# - check Get-ChildItem -Path "dist" -Recurse -Filter "*.js" | Sort-Object Length -Descending | Format-Table Name, Length -AutoSize
+
 # Function to get size of each file in KB
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
