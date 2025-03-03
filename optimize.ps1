@@ -9,49 +9,69 @@ function Get-FolderSize($path) {
     }
 }
 
+function Clean-JsFiles()
+{
+    Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
+        $file = $_.FullName
+        Write-Output "⚡ Minifying JS: $file"
+        npx terser $file --compress --mangle --output $file
+    }
+}
+
+function Clean-CssFiles()
+{
+    Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
+        $file = $_.FullName
+        Write-Output "🔹 Minifying CSS: $file"
+        # npx csso-cli "$file" --output "$file"
+    }
+}
+
+function Clean-HtmlFiles()
+{
+    Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
+        $file = $_.FullName
+        Write-Output "⚡ Minifying HTML: $file"
+        # --minify-inline-svg true
+        npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
+    }
+}
+
+function Clean-XmlFiles()
+{
+    Get-ChildItem -Path "dist" -Recurse -Filter "*.xml" -File | ForEach-Object {
+        $file = $_.FullName
+        Write-Output "⚡ Minifying XML: $file"
+        npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext xml
+    }
+}
+
+function Clean-PngFiles()
+{
+    Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
+        $pngFile = $_.FullName
+        Write-Output "🎨 Compressing PNG: $pngFile"
+        npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
+
+        # npx svgo --multipass --pretty --disable=removeViewBox --enable=removeMetadata --enable=removeComments --enable=collapseGroups "dist/**/*.svg"
+        # npx mozjpeg -quality 75 -outfile "$file" "$file"
+        # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
+        # if (Test-Path $webpFile) {
+        #    Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
+        #    Remove-Item -Path $pngFile -Force
+        # }
+    }
+}
+
 $startTime = Get-Date
 $sizeBeforeList = Get-FolderSize "dist"
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
-Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
-    $file = $_.FullName
-    Write-Output "⚡ Minifying JS: $file"
-    # npx terser $file --compress --mangle --output $file
-}
-
-Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
-    $file = $_.FullName
-    Write-Output "🔹 Minifying CSS: $file"
-    # npx csso-cli "$file" --output "$file"
-}
-
-Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
-    $file = $_.FullName
-    Write-Output "⚡ Minifying HTML: $file"
-    # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --minify-inline-svg true --input-dir dist --output-dir dist --file-ext html
-    # current selected:
-    # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
-}
-
-Get-ChildItem -Path "dist" -Recurse -Filter "*.xml" -File | ForEach-Object {
-    $file = $_.FullName
-    Write-Output "⚡ Minifying XML: $file"
-    npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext xml
-}
-
-Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
-    $pngFile = $_.FullName
-    # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
-    Write-Output "🎨 Compressing PNG: $pngFile"
-    # npx svgo --multipass --pretty --disable=removeViewBox --enable=removeMetadata --enable=removeComments --enable=collapseGroups "dist/**/*.svg"
-    # npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
-    # npx mozjpeg -quality 75 -outfile "$file" "$file"
-    #}
-    # if (Test-Path $webpFile) {
-    #    Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
-    #    Remove-Item -Path $pngFile -Force
-    # }
-}
+Clean-JsFiles
+Clean-CssFiles
+Clean-HtmlFiles
+Clean-XmlFiles
+Clean-PngFiles
 
 $sizeAfterList = Get-FolderSize "dist"
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
