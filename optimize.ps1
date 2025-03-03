@@ -33,6 +33,17 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
     npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
 }
 
+# Delete PNG files if a matching WebP exists
+Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
+    $pngFile = $_.FullName
+    $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
+
+    if (Test-Path $webpFile) {
+        Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
+        Remove-Item -Path $pngFile -Force
+    }
+}
+
 # Measure Size After
 $sizeAfterList = Get-FolderSize "dist"
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
@@ -40,8 +51,10 @@ Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB):"
 # $sizeAfterList | Format-Table -AutoSize
 
 # Calculate Reduction Per File
+$distPath = (Resolve-Path "dist").Path
 $optimizationResults = $sizeBeforeList | ForEach-Object {
     $file = $_.File
+    $fileName = $file -replace [regex]::Escape($distPath), "/dist"
     $beforeSize = $_."Size (KB)"
     $afterFile = $sizeAfterList | Where-Object { $_.File -eq $file }
 
@@ -59,7 +72,7 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
     }
 
     [PSCustomObject]@{
-        File = $file
+        File = $fileName
         "Size Before (KB)" = $beforeSize
         "Size After (KB)" = $afterSize
         "Reduction (KB)" = [math]::Round($reduction, 2)
@@ -68,9 +81,9 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
 }
 
 # Export to CSV
-$csvFile = "dist_optimization_report.csv"
-$optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
-Write-Output "📂 CSV Report Saved: $csvFile"
+# $csvFile = "dist_optimization_report.csv"
+# $optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
+# Write-Output "📂 CSV Report Saved: $csvFile"
 
 # Display results in PowerShell
 Write-Output "📉 Size Reduction Per File:"
