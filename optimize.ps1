@@ -52,6 +52,8 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
     # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
     Write-Output "🎨 Compressing PNG: $pngFile"
     npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
+    # npx mozjpeg -quality 75 -outfile "$file" "$file"
+    #}
     # if (Test-Path $webpFile) {
     #    Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
     #    Remove-Item -Path $pngFile -Force
