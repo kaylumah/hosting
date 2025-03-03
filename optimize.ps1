@@ -2,6 +2,10 @@
 # - check if we can use purifycss dist/**/*.css dist/**/*.html dist/**/*.js --info
 # - check Get-ChildItem -Path "dist" -Recurse -Filter "*.js" | Sort-Object Length -Descending | Format-Table Name, Length -AutoSize
 
+# $startTime = Get-Date
+# $endTime = Get-Date
+# Write-Output "⏱ Optimization completed in $((New-TimeSpan -Start $startTime -End $endTime).TotalSeconds) seconds."
+
 # Function to get size of each file in KB
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
@@ -36,12 +40,13 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
 # Delete PNG files if a matching WebP exists
 Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
     $pngFile = $_.FullName
-    $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
-
-    if (Test-Path $webpFile) {
-        Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
-        Remove-Item -Path $pngFile -Force
-    }
+    # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
+    Write-Output "🎨 Compressing PNG: $pngFile"
+    npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
+    # if (Test-Path $webpFile) {
+    #    Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
+    #    Remove-Item -Path $pngFile -Force
+    # }
 }
 
 # Measure Size After
@@ -81,8 +86,8 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
 }
 
 # Export to CSV
-# $csvFile = "dist_optimization_report.csv"
-# $optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
+$csvFile = "dist_optimization_report.csv"
+$optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
 # Write-Output "📂 CSV Report Saved: $csvFile"
 
 # Display results in PowerShell
