@@ -1,15 +1,9 @@
-# TODO
-# - check if we can use purifycss dist/**/*.css dist/**/*.html dist/**/*.js --info
-# - check Get-ChildItem -Path "dist" -Recurse -Filter "*.js" | Sort-Object Length -Descending | Format-Table Name, Length -AutoSize
+$startTime = Get-Date
 
-# $startTime = Get-Date
-# $endTime = Get-Date
-# Write-Output "⏱ Optimization completed in $((New-TimeSpan -Start $startTime -End $endTime).TotalSeconds) seconds."
-
-# Function to get size of each file in KB
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
-        $fileSize = $_.Length / 1KB  # Convert bytes to KB
+        # Convert bytes to KB
+        $fileSize = $_.Length / 1KB  
         [PSCustomObject]@{
             File = $_.FullName
             "Size (KB)" = [math]::Round($fileSize, 2)  # Round to 2 decimal places
@@ -17,43 +11,36 @@ function Get-FolderSize($path) {
     }
 }
 
-# Measure Size Before
 $sizeBeforeList = Get-FolderSize "dist"
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
-Write-Output "🔍 Size Before Optimization (Total: $sizeBeforeTotal KB):"
-# $sizeBeforeList | Format-Table -AutoSize
 
-# Optimize JavaScript Files (One by One)
 Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
     $file = $_.FullName
     Write-Output "⚡ Minifying JS: $file"
-    npx terser $file --compress --mangle --output $file
+    # npx terser $file --compress --mangle --output $file
 }
 
-Write-Output "⚡ Minifying CSS files..."
 Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
     $file = $_.FullName
     Write-Output "🔹 Minifying CSS: $file"
-    npx csso-cli "$file" --output "$file"
+    # npx csso-cli "$file" --output "$file"
 }
-Write-Output "✅ CSS minification completed."
 
-# Optimize HTML Files (One by One)
 Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
     $file = $_.FullName
     Write-Output "⚡ Minifying HTML: $file"
-    # npx svgo --multipass --pretty --disable=removeViewBox --enable=removeMetadata --enable=removeComments --enable=collapseGroups "dist/**/*.svg"
     # npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir dist --output-dir dist --file-ext html --file-ext xml
     # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --minify-inline-svg true --input-dir dist --output-dir dist --file-ext html
-    npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
+    # current selected:
+    # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
 }
 
-# Delete PNG files if a matching WebP exists
 Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
     $pngFile = $_.FullName
     # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
     Write-Output "🎨 Compressing PNG: $pngFile"
-    npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
+    # npx svgo --multipass --pretty --disable=removeViewBox --enable=removeMetadata --enable=removeComments --enable=collapseGroups "dist/**/*.svg"
+    # npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
     # npx mozjpeg -quality 75 -outfile "$file" "$file"
     #}
     # if (Test-Path $webpFile) {
@@ -62,13 +49,9 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
     # }
 }
 
-# Measure Size After
 $sizeAfterList = Get-FolderSize "dist"
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
-Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB):"
-# $sizeAfterList | Format-Table -AutoSize
 
-# Calculate Reduction Per File
 $distPath = (Resolve-Path "dist").Path
 $optimizationResults = $sizeBeforeList | ForEach-Object {
     $file = $_.File
@@ -98,15 +81,15 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
     }
 }
 
-# Export to CSV
-$csvFile = "dist_optimization_report.csv"
-$optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
-# Write-Output "📂 CSV Report Saved: $csvFile"
+# $optimizationResults | Export-Csv -Path "dist_optimization_report.csv" -NoTypeInformation
 
-# Display results in PowerShell
 Write-Output "📉 Size Reduction Per File:"
 $optimizationResults | Format-Table -AutoSize
 
 # Total Reduction Percentage
 $percentageSaved = (($sizeBeforeTotal - $sizeAfterTotal) / $sizeBeforeTotal) * 100
+$endTime = Get-Date
+Write-Output "🔍 Size Before Optimization (Total: $sizeBeforeTotal KB)"
+Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB)"
 Write-Output "📉 Total Reduction: $([math]::Round($sizeBeforeTotal - $sizeAfterTotal, 2)) KB saved ($([math]::Round($percentageSaved, 2))%)"
+Write-Output "⏱ Optimization completed in $((New-TimeSpan -Start $startTime -End $endTime).TotalSeconds) seconds."
