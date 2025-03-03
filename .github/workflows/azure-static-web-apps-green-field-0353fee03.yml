@@ -171,7 +171,17 @@ jobs:
     needs: build_and_test      
     steps:
       # Needed until dotnet is publsihed...
-      # - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      
+      - name: Use Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
 
       - name: Download site artifact
         uses: actions/download-artifact@v4
@@ -196,11 +206,6 @@ jobs:
         with:
           name: ${{ format('tailwind-{0}', 'ubuntu-latest') }}
           path: .
-
-      - name: Use Node.js v20
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       - name: Run npm steps
         shell: pwsh
@@ -230,11 +235,6 @@ jobs:
           output_location: ""
           skip_app_build: true
           skip_api_build: false
-
-      # - name: Setup .NET Core
-      #  uses: actions/setup-dotnet@v4
-      #  with:
-      #    global-json-file: global.json
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
