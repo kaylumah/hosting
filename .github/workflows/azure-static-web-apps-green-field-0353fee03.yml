@@ -171,7 +171,7 @@ jobs:
     needs: build_and_test      
     steps:
       # Needed until dotnet is publsihed...
-      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v4
 
       - name: Download site artifact
         uses: actions/download-artifact@v4
@@ -231,10 +231,10 @@ jobs:
           skip_app_build: true
           skip_api_build: false
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: global.json
+      # - name: Setup .NET Core
+      #  uses: actions/setup-dotnet@v4
+      #  with:
+      #    global-json-file: global.json
 
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
