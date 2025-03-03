@@ -35,6 +35,12 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
     # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
 }
 
+Get-ChildItem -Path "dist" -Recurse -Filter "*.xml" -File | ForEach-Object {
+    $file = $_.FullName
+    Write-Output "⚡ Minifying XML: $file"
+    npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext xml
+}
+
 Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
     $pngFile = $_.FullName
     # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
