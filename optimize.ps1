@@ -63,15 +63,16 @@ function Clean-PngFiles()
     }
 }
 
-$startTime = Get-Date
 $sizeBeforeList = Get-FolderSize "dist"
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
+$startTime = Get-Date
 Clean-JsFiles
 Clean-CssFiles
 Clean-HtmlFiles
 Clean-XmlFiles
 Clean-PngFiles
+$endTime = Get-Date
 
 $sizeAfterList = Get-FolderSize "dist"
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
@@ -110,9 +111,7 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
 Write-Output "📉 Size Reduction Per File:"
 $optimizationResults | Format-Table -AutoSize
 
-# Total Reduction Percentage
 $percentageSaved = (($sizeBeforeTotal - $sizeAfterTotal) / $sizeBeforeTotal) * 100
-$endTime = Get-Date
 Write-Output "🔍 Size Before Optimization (Total: $sizeBeforeTotal KB)"
 Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB)"
 Write-Output "📉 Total Reduction: $([math]::Round($sizeBeforeTotal - $sizeAfterTotal, 2)) KB saved ($([math]::Round($percentageSaved, 2))%)"
