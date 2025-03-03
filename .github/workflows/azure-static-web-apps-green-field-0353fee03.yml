@@ -195,7 +195,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ format('tailwind-{0}', 'ubuntu-latest') }}
-          path: tailwind
+          path: .
 
       - name: Use Node.js v20
         uses: actions/setup-node@v4
@@ -205,9 +205,8 @@ jobs:
       - name: Run npm steps
         shell: pwsh
         run: |
-          npm i --prefix tailwind
-          npm run tailwind --prefix tailwind
-          tree tailwind -I "node_modules"
+          npm i
+          npm run tailwind
 
       - name: Cleanup
         shell: pwsh
