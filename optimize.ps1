@@ -13,7 +13,7 @@ function Get-FolderSize($path) {
 $sizeBeforeList = Get-FolderSize "dist"
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 Write-Output "🔍 Size Before Optimization (Total: $sizeBeforeTotal KB):"
-$sizeBeforeList | Format-Table -AutoSize
+# $sizeBeforeList | Format-Table -AutoSize
 
 # Optimize JavaScript Files (One by One)
 Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
@@ -33,11 +33,10 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
 $sizeAfterList = Get-FolderSize "dist"
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
 Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB):"
-$sizeAfterList | Format-Table -AutoSize
+# $sizeAfterList | Format-Table -AutoSize
 
 # Calculate Reduction Per File
-Write-Output "📉 Size Reduction Per File:"
-$sizeBeforeList | ForEach-Object {
+$optimizationResults = $sizeBeforeList | ForEach-Object {
     $file = $_.File
     $beforeSize = $_."Size (KB)"
     $afterFile = $sizeAfterList | Where-Object { $_.File -eq $file }
@@ -53,7 +52,16 @@ $sizeBeforeList | ForEach-Object {
             "Reduction (%)" = [math]::Round($reductionPercent, 2)
         }
     }
-} | Format-Table -AutoSize
+}
+
+# Export to CSV
+$csvFile = "dist_optimization_report.csv"
+$optimizationResults | Export-Csv -Path $csvFile -NoTypeInformation
+Write-Output "📂 CSV Report Saved: $csvFile"
+
+# Display results in PowerShell
+Write-Output "📉 Size Reduction Per File:"
+$optimizationResults | Format-Table -AutoSize
 
 # Total Reduction Percentage
 $percentageSaved = (($sizeBeforeTotal - $sizeAfterTotal) / $sizeBeforeTotal) * 100
