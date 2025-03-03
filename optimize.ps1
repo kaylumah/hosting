@@ -29,7 +29,6 @@ Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
 Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
     $file = $_.FullName
     Write-Output "⚡ Minifying HTML: $file"
-    # npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir dist --output-dir dist --file-ext html --file-ext xml
     # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --minify-inline-svg true --input-dir dist --output-dir dist --file-ext html
     # current selected:
     # npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
