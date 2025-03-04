@@ -106,6 +106,7 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
 }
 
 Write-Output "Size Reduction Per File:"
+# consider | Where-Object { $_."Reduction (KB)" -gt 0 }
 $optimizationResults | Sort-Object "Reduction (KB)" | Format-Table -AutoSize
 
 $percentageSaved = (($sizeBeforeTotal - $sizeAfterTotal) / $sizeBeforeTotal) * 100
