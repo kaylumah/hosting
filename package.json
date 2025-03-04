@@ -1,7 +1,6 @@
 {
     "scripts": {
         "start": "FUNCTIONS_WORKER_RUNTIME=node swa start --app-location dist --api-location blog-api",
-        "tailwind": "tailwindcss -i ./tailwind.css -o ./dist/compiled.css",
         "build:tailwind": "tailwindcss -i tailwind.css -o dist/compiled.css",
         "build:tailwind:prod": "TAILWIND_MODE=build TAILWIND_DISABLE_TOUCH=1 npm run build:tailwind -- --minify",
         "build:prod": "NODE_ENV=production npm run build && npm run build:tailwind:prod",
