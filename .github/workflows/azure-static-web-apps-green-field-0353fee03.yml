@@ -165,8 +165,8 @@ jobs:
         shell: pwsh
         run: |
           npm i
-          npm run build:tailwind
-        #  ./optimize.ps1
+          npm run build:prod
+          ./optimize.ps1
 
       - name: Print site
         shell: pwsh
