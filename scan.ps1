@@ -1,6 +1,7 @@
 $directoryPath = "dist"  # Change this to your directory
-$approvedDomains = @("kaylumah.nl")  # List of approved domains
+$approvedDomains = @("kaylumah.nl", "localhost:4280")  # List of approved domains
 $results = @()
+$assetList = @()
 
 function Normalize-Url {
     param ($url)
@@ -44,7 +45,23 @@ $HtmlFiles | ForEach-Object {
     }
 }
 
-# $results = $results | Sort-Object -Unique
+# Get asset files
+$assetFiles = Get-ChildItem -Path "$directoryPath/assets" -Recurse | Where-Object { $_.Mode -notmatch "d" }
+$assetFiles | ForEach-Object {
+    $relativePath = $_.FullName -replace "^$([regex]::Escape((Get-Item $directoryPath).FullName))", ""
+    $relativePath = $relativePath -replace "\\", "/"  # Normalize path separators
+    $assetList += $relativePath
+}
 
-$AssetFiles = Get-ChildItem -Path "dist/assets" -Recurse -File | ForEach-Object { $_.FullName -replace [regex]::Escape((Resolve-Path "dist").Path), "" }
-$AssetFiles
+# Find items in results that are NOT in the assets list
+$missingFromAssets = $results | Where-Object { $_ -notin $assetList }
+
+# Find items in assets that are NOT in the results list
+$missingFromResults = $assetList | Where-Object { $_ -notin $results }
+
+# Output missing items
+Write-Output "Items in results but not in assets:"
+$missingFromAssets | Sort-Object -Unique
+
+Write-Output "Items in assets but not in results:"
+$missingFromResults | Sort-Object -Unique
