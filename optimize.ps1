@@ -47,7 +47,7 @@ function Clean-HtmlFiles()
     foreach ($file in $files) {
         Write-Output "⚡ Minifying HTML: $( $file.RelativePath )"
         # --minify-inline-svg true
-        npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file.FullName) --output-dir (Split-Path -Path $file.FullName) --file-ext html
+        npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --minify-json true --input-dir (Split-Path -Path $file.FullName) --output-dir (Split-Path -Path $file.FullName) --file-ext html
     }
 }
 
