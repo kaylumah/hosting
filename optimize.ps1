@@ -73,11 +73,11 @@ $sizeBeforeList = Get-FolderSize $distFolder
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
 $startTime = Get-Date
-Clean-JsFiles
-Clean-CssFiles
-Clean-HtmlFiles
-Clean-XmlFiles
-Clean-PngFiles
+# Clean-JsFiles
+# Clean-CssFiles
+# Clean-HtmlFiles
+# Clean-XmlFiles
+# Clean-PngFiles
 $endTime = Get-Date
 
 $sizeAfterList = Get-FolderSize $distFolder
