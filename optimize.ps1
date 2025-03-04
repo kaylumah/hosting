@@ -85,7 +85,6 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
     $afterFile = $sizeAfterList | Where-Object { $_.File -eq $file }
 
     if ($afterFile) {
-        # File exists after optimization
         $afterSize = $afterFile."Size (KB)"
         $reduction = $beforeSize - $afterSize
         $reductionPercent = ($reduction / $beforeSize) * 100
