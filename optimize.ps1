@@ -106,9 +106,7 @@ $optimizationResults = $sizeBeforeList | ForEach-Object {
     }
 }
 
-# $optimizationResults | Export-Csv -Path "dist_optimization_report.csv" -NoTypeInformation
-
-Write-Output "📉 Size Reduction Per File:"
+Write-Output "Size Reduction Per File:"
 $optimizationResults | Format-Table -AutoSize
 
 $percentageSaved = (($sizeBeforeTotal - $sizeAfterTotal) / $sizeBeforeTotal) * 100
@@ -116,3 +114,4 @@ Write-Output "🔍 Size Before Optimization (Total: $sizeBeforeTotal KB)"
 Write-Output "✅ Size After Optimization (Total: $sizeAfterTotal KB)"
 Write-Output "📉 Total Reduction: $([math]::Round($sizeBeforeTotal - $sizeAfterTotal, 2)) KB saved ($([math]::Round($percentageSaved, 2))%)"
 Write-Output "⏱ Optimization completed in $((New-TimeSpan -Start $startTime -End $endTime).TotalSeconds) seconds."
+# $optimizationResults | Export-Csv -Path "dist_optimization_report.csv" -NoTypeInformation
