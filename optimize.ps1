@@ -1,7 +1,16 @@
 $BlockList = @(
-# Size increases when compressing
     "/dist/assets/images/posts/20200801/welcome/cover_alt.png"
 )
+
+$distFolder = "dist"
+$distRoot = (Resolve-Path $distFolder).Path
+$allFiles = Get-ChildItem -Path $distFolder -Recurse -File | Where-Object {
+    $relativePath = $_.FullName -replace [regex]::Escape($distRoot), "/$distFolder"
+    if ($BlockList -notcontains $relativePath) {
+        $_ | Add-Member -MemberType NoteProperty -Name "RelativePath" -Value $relativePath -Force
+        $_  # ✅ Only return the item if it's NOT in the blocklist
+    }
+}
 
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
@@ -16,63 +25,50 @@ function Get-FolderSize($path) {
 
 function Clean-JsFiles()
 {
-    Get-ChildItem -Path "dist" -Recurse -Filter "*.js" -File | ForEach-Object {
-        $file = $_.FullName
-        Write-Output "⚡ Minifying JS: $file"
-        npx terser $file --compress --mangle --output $file
+    $files = $allFiles | Where-Object { $_.Extension -eq ".js" }
+    foreach ($file in $files) {
+        Write-Output "⚡ Minifying JS: $( $file.RelativePath )"
+        npx terser $file.FullName --compress --mangle --output $file.FullName
     }
 }
 
 function Clean-CssFiles()
 {
-    Get-ChildItem -Path "dist" -Recurse -Filter "*.css" | ForEach-Object {
-        $file = $_.FullName
-        Write-Output "🔹 Minifying CSS: $file"
-        # npx csso-cli "$file" --output "$file"
+    $files = $allFiles | Where-Object { $_.Extension -eq ".css" }
+    foreach ($file in $files) {
+        Write-Output "⚡ Minifying CSS: $( $file.RelativePath )"
+        # npx csso-cli $file.FullName --output $file.FullName
     }
 }
 
 function Clean-HtmlFiles()
 {
-    Get-ChildItem -Path "dist" -Recurse -Filter "*.html" -File | ForEach-Object {
-        $file = $_.FullName
-        Write-Output "⚡ Minifying HTML: $file"
+    $files = $allFiles | Where-Object { $_.Extension -eq ".html" }
+    foreach ($file in $files) {
+        Write-Output "⚡ Minifying HTML: $( $file.RelativePath )"
         # --minify-inline-svg true
-        npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext html
+        npx html-minifier-terser --collapse-whitespace --remove-comments --minify-css true --minify-js true --input-dir (Split-Path -Path $file.FullName) --output-dir (Split-Path -Path $file.FullName) --file-ext html
     }
 }
 
 function Clean-XmlFiles()
 {
-    Get-ChildItem -Path "dist" -Recurse -Filter "*.xml" -File | ForEach-Object {
-        $file = $_.FullName
-        Write-Output "⚡ Minifying XML: $file"
-        npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir (Split-Path -Path $file) --output-dir (Split-Path -Path $file) --file-ext xml
+    $files = $allFiles | Where-Object { $_.Extension -eq ".xml" }
+    foreach ($file in $files) {
+        Write-Output "⚡ Minifying XML: $( $file.RelativePath )"
+        npx html-minifier-terser --collapse-whitespace --remove-comments --input-dir (Split-Path -Path $file.FullName) --output-dir (Split-Path -Path $file.FullName) --file-ext xml
     }
 }
 
 function Clean-PngFiles()
 {
-    Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
-        $pngFile = $_.FullName
-
-        $relativePath = $pngFile -replace [regex]::Escape((Resolve-Path "dist").Path), "/dist"
-
-        if ($BlockList -contains $relativePath) {
-            Write-Output "🚫 Skipping blocked file: $relativePath"
-            return
-        }
-
-        Write-Output "🎨 Compressing PNG: $pngFile"
-        npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
-
+    $files = $allFiles | Where-Object { $_.Extension -eq ".png" }
+    foreach ($file in $files) {
+        Write-Output "🎨 Compressing PNG: $( $file.RelativePath )"
+        # If webp exists, delete?
+        npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $file.FullName
         # npx svgo --multipass --pretty --disable=removeViewBox --enable=removeMetadata --enable=removeComments --enable=collapseGroups "dist/**/*.svg"
         # npx mozjpeg -quality 75 -outfile "$file" "$file"
-        # $webpFile = "$pngFile.webp"  # WebP file follows .png.webp naming convention
-        # if (Test-Path $webpFile) {
-        #    Write-Output "🗑️ Deleting PNG: $pngFile (WebP exists: $webpFile)"
-        #    Remove-Item -Path $pngFile -Force
-        # }
     }
 }
 
