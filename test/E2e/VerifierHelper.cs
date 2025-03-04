@@ -56,6 +56,49 @@ namespace Test.E2e
 
     public static class HtmlPageVerifier
     {
+        public static async Task VerifyHead(HtmlPage page, string? methodName = null)
+        {
+            string? html = await page.GetHead() ?? string.Empty;
+            html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
+            Dictionary<string, string?> metaTags = await page.GetMetaTags();
+
+            string? commitHash = metaTags["kaylumah:commit"];
+            string shortCommitHash = string.IsNullOrEmpty(commitHash) ? string.Empty : commitHash[..7];
+            // string version = metaTags["kaylumah:version"];
+            string? buildId = metaTags["kaylumah:buildId"];
+            string? buildNumber = metaTags["kaylumah:buildNumber"];
+
+            Regex baseUrlRegex = VerifierHelper.BaseUrl();
+            VerifySettings settings = new VerifySettings();
+            if (methodName != null)
+            {
+                // settings.UseMethodName(methodName);
+            }
+
+            Regex buildNumberRegex = new Regex($"(?<before>(content=\"[0-9.]*|>))(?<val>{buildNumber})(?<after>(\"|<))");
+
+            settings.ReplaceMatches(baseUrlRegex, "BaseUrl_1");
+            settings.ScrubInlineGuids();
+            settings.ScrubInlineDateTimeOffsets("yyyy-MM-dd HH:mm:ss zzz");
+            settings.AddScrubber(_ => _.Replace(shortCommitHash, "[SHORT-COMMIT-HASH]"));
+            if (commitHash != null)
+            {
+                settings.AddScrubber(_ => _.Replace(commitHash, "[COMMIT-HASH]"));
+            }
+
+            if (buildId != null)
+            {
+                settings.AddScrubber(_ => _.Replace(buildId, "[BUILD-ID]"));
+            }
+            // settings.AddScrubber(_ => _.Replace(buildNumber, "[BUILD-Number]"));
+            // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
+            settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
+#pragma warning disable IDESIGN103
+            settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
+            settings.ReplaceMatches(VerifierHelper.TagCloud(), string.Empty);
+            await Verifier.Verify(html, "html", settings);
+        }
+        
         public static async Task Verify(HtmlPage page, string? methodName = null)
         {
             string? html = await page.GetContent() ?? string.Empty;

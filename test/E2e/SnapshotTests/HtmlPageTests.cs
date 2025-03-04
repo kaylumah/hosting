@@ -97,7 +97,7 @@ namespace Test.E2e.SnapshotTests
                 .Replace("/", "_")
                 .Replace(".html", "");
             string methodName = $"{nameof(Verify_BlogPostPageHtml_Contents)}_{testParameter}";
-            await HtmlPageVerifier.Verify(blogItemPage, methodName);
+            await HtmlPageVerifier.VerifyHead(blogItemPage, methodName);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
