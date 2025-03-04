@@ -231,6 +231,17 @@ jobs:
           skip_app_build: true
           skip_api_build: false
 
+      - name: Post or Update Deployment URL in PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          header: release
+          message: |
+            🚀 **Static Web App Deployed!**  
+            Release ${{ github.sha }}
+            🌍 URL: [${{ steps.deploy.outputs.static_web_app_url }}](${{ steps.deploy.outputs.static_web_app_url }})  
+            🔄 This comment updates with new deployments.
+
       # Dotnet build is needed so we can use the playwright install
       - name: Run E2e
         shell: pwsh
