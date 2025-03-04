@@ -166,7 +166,7 @@ jobs:
         run: |
           npm i
           npm run build:tailwind
-          ./optimize.ps1
+        #  ./optimize.ps1
 
       - name: Print site
         shell: pwsh
