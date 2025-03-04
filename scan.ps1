@@ -28,6 +28,8 @@ function Normalize-Url {
 $regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg))(?=["''])'
 
 $HtmlFiles = Get-ChildItem -Path $directoryPath -Recurse -Filter "*.html"
+$HtmlFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.webmanifest"
+
 $HtmlFiles | ForEach-Object {
     $htmlPath = $_.FullName
     $htmlContent = Get-Content -Path $htmlPath -Raw
@@ -44,6 +46,8 @@ $HtmlFiles | ForEach-Object {
         }
     }
 }
+
+$results += "/assets/images/site.webmanifest"
 
 # Get asset files
 $assetFiles = Get-ChildItem -Path "$directoryPath/assets" -Recurse | Where-Object { $_.Mode -notmatch "d" }
