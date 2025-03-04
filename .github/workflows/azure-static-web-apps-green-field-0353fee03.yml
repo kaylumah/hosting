@@ -213,11 +213,6 @@ jobs:
           npm i
           npm run tailwind
 
-      - name: Cleanup
-        shell: pwsh
-        run: |
-          ./tools/Clean-Dist.ps1
-
       - name: Print site
         shell: pwsh
         run: |
