@@ -72,7 +72,7 @@ namespace Test.E2e.SnapshotTests
 
             await HtmlPageVerifier.Verify(privacyPage);
         }
-        
+
         [Fact]
         public async Task Verify_ArchivePageHtml_Contents()
         {
