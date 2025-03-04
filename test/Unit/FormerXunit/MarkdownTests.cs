@@ -20,7 +20,7 @@ namespace Test.Unit.FormerXunit
     public class MarkdownTests
     {
 
-        [Theory(Skip = "tep")]
+        [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_HtmlContents(string path)
         {
@@ -40,7 +40,7 @@ namespace Test.Unit.FormerXunit
             await Verifier.Verify(html, "html", settings);
         }
 
-        [Theory(Skip = "tep")]
+        [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_TxtContents(string path)
         {
