@@ -217,6 +217,15 @@ namespace Test.E2e
         public override string PagePath => "privacy.html";
     }
 
+    public class ArchivePage : HtmlPage
+    {
+        public ArchivePage(IPage page) : base(page)
+        {
+        }
+
+        public override string PagePath => "archive.html";
+    }
+
     public class NotFoundPage : HtmlPage
     {
         public NotFoundPage(IPage page) : base(page)

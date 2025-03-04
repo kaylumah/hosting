@@ -1,0 +1,20 @@
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/typography";
+
+@source "dist";
+@theme {
+    --header-height: 74px;
+    --header-spacing: calc(var(--header-height) + 1rem);
+}
+
+/* Override default typography styles */
+@layer components {
+    .prose a {
+        text-decoration: none !important; /* Force remove underline */
+        color: inherit; /* Keep link color same as text */
+    }
+
+    .prose a:hover {
+        text-decoration: none !important; /* Ensure no underline on hover */
+    }
+}
