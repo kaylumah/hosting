@@ -65,7 +65,8 @@ if ($LASTEXITCODE -ne 0)
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 try
 {
-    npm run build:tailwind
+    # npm run build:tailwind
+    npm run build:prod
     & "./optimize.ps1"
 }
 finally

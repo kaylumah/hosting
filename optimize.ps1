@@ -34,8 +34,9 @@ function Clean-CssFiles()
 {
     $files = $allFiles | Where-Object { $_.Extension -eq ".css" }
     foreach ($file in $files) {
-        Write-Output "⚡ Minifying CSS: $( $file.RelativePath )"
-        npx csso-cli $file.FullName --output $file.FullName
+        # Tailwind already does some parts
+        # Write-Output "⚡ Minifying CSS: $( $file.RelativePath )"
+        # npx csso-cli $file.FullName --output $file.FullName
     }
 }
 
