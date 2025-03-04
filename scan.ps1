@@ -1,6 +1,5 @@
 $directoryPath = "dist"  # Change this to your directory
 $approvedDomains = @("kaylumah.nl")  # List of approved domains
-
 $results = @()
 
 function Normalize-Url {
@@ -45,4 +44,7 @@ $HtmlFiles | ForEach-Object {
     }
 }
 
-$results | Sort-Object -Unique
+# $results = $results | Sort-Object -Unique
+
+$AssetFiles = Get-ChildItem -Path "dist/assets" -Recurse -File | ForEach-Object { $_.FullName -replace [regex]::Escape((Resolve-Path "dist").Path), "" }
+$AssetFiles
