@@ -1,3 +1,8 @@
+$BlockList = @(
+# Size increases when compressing
+    "/dist/assets/images/posts/20200801/welcome/cover_alt.png"
+)
+
 function Get-FolderSize($path) {
     Get-ChildItem -Path $path -Recurse -File | ForEach-Object {
         # Convert bytes to KB
@@ -50,6 +55,14 @@ function Clean-PngFiles()
 {
     Get-ChildItem -Path "dist" -Recurse -Filter "*.png" | ForEach-Object {
         $pngFile = $_.FullName
+
+        $relativePath = $pngFile -replace [regex]::Escape((Resolve-Path "dist").Path), "/dist"
+
+        if ($BlockList -contains $relativePath) {
+            Write-Output "🚫 Skipping blocked file: $relativePath"
+            return
+        }
+
         Write-Output "🎨 Compressing PNG: $pngFile"
         npx pngquant --quality=65-80 --speed 1 --force --ext .png -- $pngFile
 
