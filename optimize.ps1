@@ -72,7 +72,7 @@ function Clean-PngFiles()
     }
 }
 
-$sizeBeforeList = Get-FolderSize "dist"
+$sizeBeforeList = Get-FolderSize $distFolder
 $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
 $startTime = Get-Date
@@ -83,13 +83,12 @@ Clean-XmlFiles
 Clean-PngFiles
 $endTime = Get-Date
 
-$sizeAfterList = Get-FolderSize "dist"
+$sizeAfterList = Get-FolderSize $distFolder
 $sizeAfterTotal = ($sizeAfterList | Measure-Object -Property "Size (KB)" -Sum).Sum
 
-$distPath = (Resolve-Path "dist").Path
 $optimizationResults = $sizeBeforeList | ForEach-Object {
     $file = $_.File
-    $fileName = $file -replace [regex]::Escape($distPath), "/dist"
+    $fileName = $file -replace [regex]::Escape($distRoot), "/$distFolder"
     $beforeSize = $_."Size (KB)"
     $afterFile = $sizeAfterList | Where-Object { $_.File -eq $file }
 
