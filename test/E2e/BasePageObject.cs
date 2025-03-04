@@ -97,6 +97,19 @@ namespace Test.E2e
         {
         }
 
+        public async Task<string?> GetHead()
+        {
+            IElementHandle? headElement = await Page.QuerySelectorAsync("head");
+
+            if (headElement == null)
+            {
+                return null;
+            }
+
+            string headHtml = await headElement.InnerHTMLAsync();
+            return headHtml;
+        }
+
         public async Task<Dictionary<string, string?>> GetMetaTags()
         {
             Dictionary<string, string?> result = new Dictionary<string, string?>();
