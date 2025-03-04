@@ -1,6 +1,4 @@
-$BlockList = @(
-    "/dist/assets/images/posts/20200801/welcome/cover_alt.png"
-)
+$BlockList = @()
 
 $distFolder = "dist"
 $distRoot = (Resolve-Path $distFolder).Path
