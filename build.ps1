@@ -2,9 +2,7 @@ param(
     [Parameter()]
     [string] $BuildId = (Get-Date).ToString("yyyyMMddhhmmss"),
     [Parameter()]
-    [string] $BuildNumber = 2810,
-    [Parameter()]
-    [switch] $CleanDevDependencies
+    [string] $BuildNumber = 2810
 )
 
 $ErrorActionPreference = "Stop"
@@ -68,6 +66,7 @@ if ($LASTEXITCODE -ne 0)
 try
 {
     npm run build:tailwind
+    & "./optimize.ps1"
 }
 finally
 {

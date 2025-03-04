@@ -35,7 +35,7 @@ function Clean-CssFiles()
     $files = $allFiles | Where-Object { $_.Extension -eq ".css" }
     foreach ($file in $files) {
         Write-Output "⚡ Minifying CSS: $( $file.RelativePath )"
-        # npx csso-cli $file.FullName --output $file.FullName
+        npx csso-cli $file.FullName --output $file.FullName
     }
 }
 
@@ -74,7 +74,7 @@ $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum)
 
 $startTime = Get-Date
 # Clean-JsFiles
-# Clean-CssFiles
+Clean-CssFiles
 # Clean-HtmlFiles
 # Clean-XmlFiles
 # Clean-PngFiles
