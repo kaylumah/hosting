@@ -98,7 +98,7 @@ namespace Test.E2e
             settings.ReplaceMatches(VerifierHelper.TagCloud(), string.Empty);
             await Verifier.Verify(html, "html", settings);
         }
-        
+
         public static async Task Verify(HtmlPage page, string? methodName = null)
         {
             string? html = await page.GetContent() ?? string.Empty;

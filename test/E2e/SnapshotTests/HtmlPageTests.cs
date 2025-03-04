@@ -95,7 +95,7 @@ namespace Test.E2e.SnapshotTests
             await blogItemPage.NavigateAsync();
             await HtmlPageVerifier.Verify(blogItemPage);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_BlogPostPageHtml_Contents(string path)
