@@ -100,6 +100,16 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.Verify(blogPage);
         }
 
+        [Fact]
+        public async Task Verify_BlogPostPageHtml_FullPage()
+        {
+            IPage blogPage = await _DesktopFixture.GetPage();
+            string path = "2022/02/21/working-with-azure-sdk-for-dotnet.html";
+            BlogItemPage blogItemPage = new BlogItemPage(path, blogPage);
+            await blogItemPage.NavigateAsync();
+            await HtmlPageVerifier.Verify(blogItemPage);
+        }
+
         [Theory]
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_BlogPostPageHtml_Contents(string path)
@@ -111,7 +121,7 @@ namespace Test.E2e.SnapshotTests
                 .Replace("/", "_")
                 .Replace(".html", "");
             string methodName = $"{nameof(Verify_BlogPostPageHtml_Contents)}_{testParameter}";
-            await HtmlPageVerifier.Verify(blogItemPage, methodName);
+            await HtmlPageVerifier.VerifyHead(blogItemPage, methodName);
         }
 
         public static IEnumerable<object[]> GetBlogPages()
