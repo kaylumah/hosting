@@ -10,9 +10,9 @@ type: Collection
     <!-- {{ year }} -->
     <section class="py-6 border-b border-gray-200">
         <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ year }}</h2>
-        <ul class="space-y-2">
+        <ul id="blogPosts" class="space-y-2">
             {% for post in posts %}
-            <li>
+            <li data-tags="{{ post.tags | array.join " " }}">
                 <a href="{{ post.uri }}"
                    class="text-gray-800 hover:text-gray-900 hover:underline transition">
                     {{ post.title }}
@@ -23,3 +23,20 @@ type: Collection
     </section>
     {% endfor %}
 </div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let tag = urlParams.get('tag');
+    if (tag)
+    {
+        let blogPostList = document.getElementById("blogPosts");
+        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+        blogPosts.forEach(blogPost => {
+            const attrs = blogPost.getAttribute("data-tags");
+            let include = attrs.includes(tag);
+            if (include == false)
+            {
+                blogPost.classList.toggle('hidden');
+            }
+        });
+    }
+</script>
