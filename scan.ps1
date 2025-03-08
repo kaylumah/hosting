@@ -26,7 +26,6 @@ function Normalize-Url {
 
 # Regex to capture asset URLs (including JS, CSS, images, fonts, media)
 $regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg|ico|webmanifest))(?=["''])'
-
 $ContentFiles = @()
 $ContentFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.html"
 $ContentFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.webmanifest"
@@ -47,6 +46,9 @@ $ContentFiles| ForEach-Object {
         }
     }
 }
+
+# used in feed.xml
+$results += "/assets/logo_alt.svg"
 
 # Get asset files
 $assetFiles = Get-ChildItem -Path "$directoryPath/assets" -Recurse | Where-Object { $_.Mode -notmatch "d" }
