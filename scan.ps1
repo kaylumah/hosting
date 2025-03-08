@@ -25,7 +25,7 @@ function Normalize-Url {
 }
 
 # Regex to capture asset URLs (including JS, CSS, images, fonts, media)
-$regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg))(?=["''])'
+$regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg|ico|webmanifest))(?=["''])'
 
 $ContentFiles = @()
 $ContentFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.html"
