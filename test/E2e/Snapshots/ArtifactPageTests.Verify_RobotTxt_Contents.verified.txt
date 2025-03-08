@@ -1,1 +1,1 @@
-﻿Sitemap: https://BaseUrl_1/sitemap.xml
+﻿Sitemap: https://BaseUrl_1/sitemap_index.xml

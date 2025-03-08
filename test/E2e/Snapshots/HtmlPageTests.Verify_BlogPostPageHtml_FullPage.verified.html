@@ -256,9 +256,9 @@
         </div>
         <div class="flex gap-2 mt-2">
             
-                        <a href="/blog.html?tag=csharp" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#C#</a>
+                        <a href="/archive.html?tag=csharp" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#C#</a>
                         
-                        <a href="/blog.html?tag=azure" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#Azure</a>
+                        <a href="/archive.html?tag=azure" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#Azure</a>
                         
         </div>
     </header>
@@ -642,7 +642,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
             words.forEach(word => {
                 const li = document.createElement('li');
                 const anchor = document.createElement('a');
-                anchor.href = `/blog.html?tag=${word.Id}`;
+                anchor.href = `/archive.html?tag=${word.Id}`;
                 anchor.title = word.Description;
                 anchor.textContent = `${word.DisplayName} (${word.Size})`;
                 anchor.classList.add("inline-flex", "hover:underline", "transition");
