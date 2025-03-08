@@ -47,8 +47,6 @@ $HtmlFiles | ForEach-Object {
     }
 }
 
-$results += "/assets/images/site.webmanifest"
-
 # Get asset files
 $assetFiles = Get-ChildItem -Path "$directoryPath/assets" -Recurse | Where-Object { $_.Mode -notmatch "d" }
 $assetFiles | ForEach-Object {
