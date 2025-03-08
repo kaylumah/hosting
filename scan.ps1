@@ -25,19 +25,19 @@ function Normalize-Url {
 }
 
 # Regex to capture asset URLs (including JS, CSS, images, fonts, media)
-$regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg))(?=["''])'
+$regexPattern = '(?<=["''])(?:https?:\/\/[^\/]+)?(\/[^"'']+\.(?:png|jpg|jpeg|gif|webp|svg|ico|webmanifest))(?=["''])'
+$ContentFiles = @()
+$ContentFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.html"
+$ContentFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.webmanifest"
 
-$HtmlFiles = Get-ChildItem -Path $directoryPath -Recurse -Filter "*.html"
-$HtmlFiles += Get-ChildItem -Path $directoryPath -Recurse -Filter "*.webmanifest"
+$ContentFiles| ForEach-Object {
+    $filePath = $_.FullName
+    $fileContent = Get-Content -Path $filePath -Raw
 
-$HtmlFiles | ForEach-Object {
-    $htmlPath = $_.FullName
-    $htmlContent = Get-Content -Path $htmlPath -Raw
-
-    $htmlContent = [regex]::Replace($htmlContent, '<script type=["'']application/ld\+json["''].*?>.*?</script>', '', 'Singleline')
+    $fileContent = [regex]::Replace($fileContent, '<script type=["'']application/ld\+json["''].*?>.*?</script>', '', 'Singleline')
 
     # Extract URLs using regex
-    $matches = [regex]::Matches($htmlContent, $regexPattern) | ForEach-Object { $_.Value }
+    $matches = [regex]::Matches($fileContent, $regexPattern) | ForEach-Object { $_.Value }
 
     foreach ($url in $matches) {
         if ($url) {
@@ -47,7 +47,8 @@ $HtmlFiles | ForEach-Object {
     }
 }
 
-$results += "/assets/images/site.webmanifest"
+# used in feed.xml
+$results += "/assets/logo_alt.svg"
 
 # Get asset files
 $assetFiles = Get-ChildItem -Path "$directoryPath/assets" -Recurse | Where-Object { $_.Mode -notmatch "d" }
