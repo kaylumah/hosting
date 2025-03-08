@@ -10,7 +10,7 @@ type: Collection
     <!-- {{ year }} -->
     <section class="py-6 border-b border-gray-200">
         <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ year }}</h2>
-        <ul id="blogPosts" class="space-y-2">
+        <ul data-blog-list class="space-y-2">
             {% for post in posts %}
             <li data-tags="{{ post.tags | array.join " " }}">
                 <a href="{{ post.uri }}"
@@ -26,17 +26,21 @@ type: Collection
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     let tag = urlParams.get('tag');
+    // TODO what if Tag is unknown
     if (tag)
     {
-        let blogPostList = document.getElementById("blogPosts");
-        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
-        blogPosts.forEach(blogPost => {
-            const attrs = blogPost.getAttribute("data-tags");
-            let include = attrs.includes(tag);
-            if (include == false)
-            {
-                blogPost.classList.toggle('hidden');
-            }
+        let blogPostLists = Array.from(document.querySelectorAll("[data-blog-list]"));
+
+        blogPostLists.forEach(blogPostList => {
+            let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+            blogPosts.forEach(blogPost => {
+                const attrs = blogPost.getAttribute("data-tags");
+                let include = attrs.includes(tag);
+                if (include == false)
+                {
+                    blogPost.classList.toggle('hidden');
+                }
+            });
         });
     }
 </script>
