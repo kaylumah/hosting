@@ -11,7 +11,7 @@ layout: column.html
         </div>
         <div class="flex gap-2 mt-2">
             {% for tag in post.tags %}
-            <a href="/blog.html?tag={{ tag }}" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#{{ site.tags[tag].name }}</a>
+            <a href="/archive.html?tag={{ tag }}" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">#{{ site.tags[tag].name }}</a>
             {% endfor %}
         </div>
     </header>
