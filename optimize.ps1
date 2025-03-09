@@ -75,7 +75,7 @@ $sizeBeforeTotal = ($sizeBeforeList | Measure-Object -Property "Size (KB)" -Sum)
 
 $startTime = Get-Date
 # Clean-JsFiles
-Clean-CssFiles
+# Clean-CssFiles
 # Clean-HtmlFiles
 # Clean-XmlFiles
 # Clean-PngFiles
