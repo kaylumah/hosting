@@ -12,9 +12,9 @@ type: Collection
 {% assign posts = site.recentarticles %}
 {% for post in posts %}
 <article class="flex flex-col gap-2 py-6 border-b border-gray-200">
-    <h3 class="text-lg font-semibold leading-tight">
+    <h2 class="text-lg font-semibold leading-tight">
         <a href="{{ post.uri }}" class="hover:underline">{{ post.title }}</a>
-    </h3>
+    </h2>
     <div class="text-sm text-gray-600">
         <span>Published on <time datetime="{{ post.published | date_to_pattern 'yyyy-MM-dd' }}">{{ post.published | date_to_pattern 'yyyy/MM/dd' }}</time> by <strong>{{ site.authors[post.author].fullname }}</strong></span>
     </div>
