@@ -2,9 +2,7 @@ param(
     [Parameter()]
     [string] $BuildId = (Get-Date).ToString("yyyyMMddhhmmss"),
     [Parameter()]
-    [string] $BuildNumber = 2810,
-    [Parameter()]
-    [switch] $CleanDevDependencies
+    [string] $BuildNumber = 2810
 )
 
 $ErrorActionPreference = "Stop"
@@ -40,6 +38,7 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Build Failure"
 }
 
+
 dotnet format --verify-no-changes
 if ($LASTEXITCODE -ne 0)
 {
@@ -66,16 +65,11 @@ if ($LASTEXITCODE -ne 0)
 # https://docs.microsoft.com/en-us/powershell/scripting/samples/managing-current-location?view=powershell-7.2
 try
 {
-    Set-Location $DistFolder
-    npm i
+    # npm run build:tailwind
     npm run build:prod
+    & "./optimize.ps1"
 }
 finally
 {
     Set-Location $RepoRoot
-}
-
-if ($CleanDevDependencies)
-{
-    & "./tools/Clean-Dist.ps1"
 }

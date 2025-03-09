@@ -1,0 +1,52 @@
+---
+layout: column.html
+title: 'Archive of all blog posts by Kaylumah'
+description: "Welcome to Kaylumah's archive."
+tags:
+- "Developer"
+- "Blog"
+modifieddate: '2025-03-09'
+type: Collection
+---
+<h1 class="text-2xl font-bold mb-4">Archive</h1>
+<div class="space-y-8">
+    {% for pageByYear in site.pagesbyyears %}
+    {% assign year = pageByYear.key %}
+    {% assign posts = site[pageByYear.value] %}
+    <!-- {{ year }} -->
+    <section class="py-6 border-b border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ year }}</h2>
+        <ul data-blog-list class="space-y-2">
+            {% for post in posts %}
+            <li data-tags="{{ post.tags | array.join " " }}">
+                <a href="{{ post.uri }}"
+                   class="text-gray-800 hover:text-gray-900 hover:underline transition">
+                    {{ post.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endfor %}
+</div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    let tag = urlParams.get('tag');
+    // TODO what if Tag is unknown
+    if (tag)
+    {
+        let blogPostLists = Array.from(document.querySelectorAll("[data-blog-list]"));
+
+        blogPostLists.forEach(blogPostList => {
+            let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
+            blogPosts.forEach(blogPost => {
+                const attrs = blogPost.getAttribute("data-tags");
+                let include = attrs.includes(tag);
+                if (include == false)
+                {
+                    blogPost.classList.toggle('hidden');
+                }
+            });
+        });
+    }
+</script>

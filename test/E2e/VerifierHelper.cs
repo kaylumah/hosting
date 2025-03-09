@@ -36,7 +36,7 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 -]*)(?<after> ago<)")]
         public static partial Regex TimeAgo();
 
-        [GeneratedRegex(@"(?<before>var words = \[)(?<val>(.|\n)*)(?<after>];)")]
+        [GeneratedRegex(@"(?<before>const words = \[)(?<val>(.|\n)*)(?<after>];)")]
         public static partial Regex TagCloud();
     }
 

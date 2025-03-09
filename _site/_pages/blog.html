@@ -1,60 +1,34 @@
 ---
-layout: 'default.html'
+layout: column.html
 title: 'Articles from the blog by Max Hamulyák · Kaylumah'
 description: "Welcome to Kaylumah's blog. I blog about things I found helpful in my life as a software engineer."
 tags:
-    - "Developer"
-    - "Blog"
-modifieddate: '2024-04-11'
+- "Developer"
+- "Blog"
+modifieddate: '2025-03-09'
 type: Collection
 ---
-<div class="flex flex-col items-center gap-1">
-    <h1 class="text-2xl font-extrabold">From the blog</h1>
-    <p class="">
-        Welcome to the blog! Here you can find anything I post.
-    </p>
-</div>
-<div class="mt-4"></div>
-<div class="flex flex-col gap-8 laptop:flex-row">
-    {% assign posts = site.recentarticles %}
-    <ul id="blogPosts" class="flex-1 grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
-        {% for post in posts %}
-        <li data-tags="{{ post.tags | array.join " " }}" class="flex">
-            {% include 'tiles/post.html' %}
-        </li>
+<h1 class="text-2xl font-bold mb-4">Recent Blog Posts</h1>
+{% assign posts = site.recentarticles %}
+{% for post in posts %}
+<article class="flex flex-col gap-2 py-6 border-b border-gray-200">
+    <h2 class="text-lg font-semibold leading-tight">
+        <a href="{{ post.uri }}" class="hover:underline">{{ post.title }}</a>
+    </h2>
+    <div class="text-sm text-gray-600">
+        <span>Published on <time datetime="{{ post.published | date_to_pattern 'yyyy-MM-dd' }}">{{ post.published | date_to_pattern 'yyyy/MM/dd' }}</time> by <strong>{{ site.authors[post.author].fullname }}</strong></span>
+    </div>
+    <div class="flex flex-wrap gap-2">
+        {% for tag in post.tags %}
+        <a href="/archive.html?tag={{ tag }}" class="text-xs font-medium text-gray-700 bg-gray-100 rounded px-2 py-1">#{{ site.tags[tag].name }}</a>
         {% endfor %}
-    </ul>
-    <ul id="tiles" class="flex-none flex flex-col items-center gap-4">
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/hero.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/sponsor.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% assign related_article_category_title = "Popular posts" %}
-            {% assign related_articles = site.featuredarticles %}
-            {% include 'tiles/related.html' %}
-        </li>
-        <li class="w-full laptop:w-64">
-            {% include 'tiles/tag_cloud.html' %}
-        </li>
-    </ul>
+    </div>
+    <p class="text-gray-700">
+        {{ post.description }}
+    </p>
+</article>
+{% endfor %}
+
+<div class="mt-6 text-center">
+    <a href="/archive.html" class="text-gray-700 font-medium hover:underline">View More Articles →</a>
 </div>
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let tag = urlParams.get('tag');
-    if (tag)
-    {
-        let blogPostList = document.getElementById("blogPosts");
-        let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
-        blogPosts.forEach(blogPost => {
-            const attrs = blogPost.getAttribute("data-tags");
-            let include = attrs.includes(tag);
-            if (include == false)
-            {
-                blogPost.classList.toggle('hidden');
-            }
-        });
-    }
-</script>

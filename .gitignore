@@ -500,3 +500,4 @@ LivingDoc.html
 
 # Verify snapshot testing
 *.received.*
+tools/node/swa-screenshot/screenshots-*/

@@ -2,6 +2,6 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://BaseUrl_1/sitemap.xml</loc>
-    <lastmod>2024-08-06T17:30:00+02:00</lastmod>
+    <lastmod>2025-03-09T00:00:00+01:00</lastmod>
   </sitemap>
 </sitemapindex>

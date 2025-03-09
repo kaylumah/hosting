@@ -15,8 +15,19 @@ const path = require('path');
         1440,   // Large Laptop
         1920,   // Standard Desktop
         2560,   // QHD / Ultra-Wide Monitor
-        3200,   // 3K Monitor
-        3840    // 4K Display
+        // 3200,   // 3K Monitor
+        // 3840    // 4K Display
+    ];
+
+    const baseUrl = "http://localhost:4280";
+    const pages = [
+        { key: "01_home", path: `${baseUrl}` },
+        { key: "02_about", path: `${baseUrl}/about.html` },
+        { key: "03_blog", path: `${baseUrl}/blog.html` },
+        { key: "04_archive", path: `${baseUrl}/archive.html` },
+        { key: "05_post", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview.html` },
+        { key: "06_post_404", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview2.html` },
+        { key: "07_404", path: `${baseUrl}/unknown.html` }
     ];
 
     // Create a timestamped folder
@@ -25,17 +36,17 @@ const path = require('path');
     fs.mkdirSync(folderPath, { recursive: true });
 
     console.log(`Saving screenshots in: ${folderPath}`);
-
-    // const url = "http://localhost:4280";
-    // const url = "http://localhost:4280/blog.html";
-    const url = "http://localhost:4280/2024/08/06/fix-vscode-markdown-preview.html";
-
-    for (let width of breakpoints) {
-        await page.setViewport({ width, height: 1080 });
-        await page.goto(url); // Change to your local URL
-        const screenshotPath = path.join(folderPath, `screenshot-${width}px.png`);
-        await page.screenshot({ path: screenshotPath, fullPage: false });
-        console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
+    
+    for (let item of pages) {
+        let url = item.path;
+        let key = item.key;
+        for (let width of breakpoints) {
+            await page.setViewport({width, height: 1080});
+            await page.goto(url); // Change to your local URL
+            const screenshotPath = path.join(folderPath, `screenshot-${key}-${width}px.png`);
+            await page.screenshot({path: screenshotPath, fullPage: false});
+            console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
+        }
     }
 
     await browser.close();

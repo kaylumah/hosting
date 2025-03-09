@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="{{ language }}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="{{ '/assets/images/favicon.ico' }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/images/apple-touch-icon.png' }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/assets/images/favicon-16x16.png' }}" />
+    <link rel="manifest" href="{{ '/assets/images/site.webmanifest' }}" />
+    <link rel="mask-icon" href="{{ '/assets/images/safari-pinned-tab.svg' }}" color="DarkGreen" />
+
+    <link href="/compiled.css?v={{ build.shortgithash }}" rel="stylesheet" />
+
+    {% include 'seo.html' %}
+    {% include 'banner.html' %}
+    {% include 'analytics.html' %}
+</head>
+
+<body class="bg-gray-100 font-sans leading-relaxed tracking-wide min-h-screen flex flex-col">
+<header class="bg-white shadow-md fixed top-0 left-0 w-full z-50 h-[var(--header-height)]">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="/" class="flex items-center">
+            <img data-testid="NavLogo" class="h-12 w-auto" height="48" width="80" src="/assets/logo.svg" alt="Kaylumah">
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex space-x-6">
+            {% for page in site.data.navigation.pages %}
+            <a href="{{ page.url }}" class="text-gray-700 hover:text-gray-900">{{ page.title }}</a>
+            {% endfor %}
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden text-gray-700 focus:outline-none" aria-label="Toggle mobile menu">
+            <svg class="toggle block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg class="toggle hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav id="mobile-menu" class="hidden bg-white lg:hidden px-4 py-3 space-y-2 shadow-md">
+        {% for page in site.data.navigation.pages %}
+        <a href="{{ page.url }}" class="block text-gray-700 hover:text-gray-900">{{ page.title }}</a>
+        {% endfor %}
+    </nav>
+
+    <script>
+        document.getElementById('mobile-menu-btn').onclick = function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const navIcons = document.getElementsByClassName('toggle');
+            for (let i = 0; i < navIcons.length; i++) {
+                navIcons[i].classList.toggle('hidden');
+            }
+        };
+    </script>
+</header>
+<div class="flex-1 container mx-auto px-4 py-8 pt-[var(--header-spacing)]">
+    {{ content }}
+</div>
+<footer class="bg-white border-t border-gray-200 py-6 text-center text-gray-500 text-sm">
+    {{ build.copyright }}
+</footer>
+<div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-50 bg-white shadow-md border-t border-gray-200 p-4 tablet:p-6 flex flex-col tablet:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-gray-900 leading-6">
+        This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies.
+        Learn more in our
+        <a class="font-semibold text-primary hover:underline" href="/privacy">cookie policy</a>.
+    </p>
+    <div class="flex items-center gap-4">
+        <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
+            Accept all
+        </button>
+        <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
+            Reject all
+        </button>
+    </div>
+</div>
+
+<script>
+    window.hideCookieBanner = function() {
+        let cookieBanner = document.getElementById("cookie-banner");
+        if (cookieBanner) {
+            cookieBanner.classList.add("hidden");
+        }
+    };
+
+    window.handleCookieConsentGranted = function() {
+        window.setCookieConsent("granted");
+        window.setGtagConsentStatus("update", "granted");
+        window.hideCookieBanner();
+    };
+
+    window.handleCookieConsentDenied = function() {
+        window.setCookieConsent("denied");
+        window.setGtagConsentStatus("update", "denied");
+        window.hideCookieBanner();
+    };
+
+    // Check if consent has already been given
+    if (window.getCookieConsent() !== "unknown") {
+        window.hideCookieBanner();
+    }
+</script>
+
+</body>
+</html>
