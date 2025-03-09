@@ -44,7 +44,7 @@ const path = require('path');
             await page.setViewport({width, height: 1080});
             await page.goto(url); // Change to your local URL
             const screenshotPath = path.join(folderPath, `screenshot-${key}-${width}px.png`);
-            await page.screenshot({path: screenshotPath, fullPage: true});
+            await page.screenshot({path: screenshotPath, fullPage: false});
             console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
         }
     }
