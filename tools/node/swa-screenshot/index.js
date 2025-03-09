@@ -15,8 +15,8 @@ const path = require('path');
         1440,   // Large Laptop
         1920,   // Standard Desktop
         2560,   // QHD / Ultra-Wide Monitor
-        3200,   // 3K Monitor
-        3840    // 4K Display
+        // 3200,   // 3K Monitor
+        // 3840    // 4K Display
     ];
 
     const baseUrl = "http://localhost:4280";
