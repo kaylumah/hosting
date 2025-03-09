@@ -257,15 +257,44 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected override DateTimeOffset GetPublishedDate()
         {
+            // if there is a published date it should win? otherwise fall back on the oldest page
             PageMetaData? firstPublishedPage = _Pages.LastOrDefault();
-            DateTimeOffset result = firstPublishedPage?.Published ?? base.GetPublishedDate();
+            DateTimeOffset basePublishedDate = base.GetPublishedDate();
+            DateTimeOffset? firstPublishedDate = firstPublishedPage?.Published;
+            DateTimeOffset result = firstPublishedDate ?? basePublishedDate;
             return result;
         }
 
         protected override DateTimeOffset GetModifiedDate()
         {
+            // if there is a newer published date it should win? otherwise fall back on newest page
             PageMetaData? lastPublishedPage = _Pages.FirstOrDefault();
-            DateTimeOffset result = lastPublishedPage?.Published ?? base.GetPublishedDate();
+            // DateTimeOffset defaultDate = DateTimeOffset.MinValue;
+            DateTimeOffset baseModifiedDate = base.GetModifiedDate();
+            DateTimeOffset? lastPublishedDate = lastPublishedPage?.Published;
+
+            DateTimeOffset result;
+            /*
+            if (lastPublishedDate == null || lastPublishedDate == defaultDate)
+            {
+                result = baseModifiedDate;
+            }
+
+            if (baseModifiedDate == defaultDate)
+            {
+                // return lastPublishedDate
+            }
+            */
+
+            if (baseModifiedDate < lastPublishedDate)
+            {
+                result = lastPublishedDate.Value;
+            }
+            else
+            {
+                result = baseModifiedDate;
+            }
+
             return result;
         }
     }
