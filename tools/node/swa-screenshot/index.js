@@ -25,7 +25,7 @@ const path = require('path');
         { key: "02_about", path: `${baseUrl}/about.html` },
         { key: "03_blog", path: `${baseUrl}/blog.html` },
         { key: "04_archive", path: `${baseUrl}/archive.html` },
-        { key: "05_post", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview.html` }
+        { key: "05_post", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview.html` },
         { key: "06_post_404", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview2.html` },
         { key: "07_404", path: `${baseUrl}/unknown.html` }
     ];
