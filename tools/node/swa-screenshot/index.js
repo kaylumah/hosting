@@ -19,23 +19,32 @@ const path = require('path');
         3840    // 4K Display
     ];
 
+    const baseUrl = "http://localhost:4280";
+    const pages = [
+        { key: "home", path: `${baseUrl}` },
+        { key: "about", path: `${baseUrl}/about.html` },
+        { key: "blog", path: `${baseUrl}/blog.html` },
+        { key: "archive", path: `${baseUrl}/archive.html` },
+        { key: "post", path: `${baseUrl}/2024/08/06/fix-vscode-markdown-preview.html` }
+    ];
+
     // Create a timestamped folder
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-'); // Format safe for filenames
     const folderPath = path.join(__dirname, `screenshots-${timestamp}`);
     fs.mkdirSync(folderPath, { recursive: true });
 
     console.log(`Saving screenshots in: ${folderPath}`);
-
-    // const url = "http://localhost:4280";
-    // const url = "http://localhost:4280/blog.html";
-    const url = "http://localhost:4280/2024/08/06/fix-vscode-markdown-preview.html";
-
-    for (let width of breakpoints) {
-        await page.setViewport({ width, height: 1080 });
-        await page.goto(url); // Change to your local URL
-        const screenshotPath = path.join(folderPath, `screenshot-${width}px.png`);
-        await page.screenshot({ path: screenshotPath, fullPage: false });
-        console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
+    
+    for (let item of pages) {
+        let url = item.path;
+        let key = item.key;
+        for (let width of breakpoints) {
+            await page.setViewport({width, height: 1080});
+            await page.goto(url); // Change to your local URL
+            const screenshotPath = path.join(folderPath, `screenshot-${key}-${width}px.png`);
+            await page.screenshot({path: screenshotPath, fullPage: true});
+            console.log(`Captured screenshot at ${width}px → ${screenshotPath}`);
+        }
     }
 
     await browser.close();
