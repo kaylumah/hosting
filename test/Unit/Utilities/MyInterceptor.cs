@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
@@ -42,7 +43,8 @@ namespace Test.Unit
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             InternalIntercept(invocation);
-            Task task = (Task)invocation.ReturnValue;
+            Task? task = (Task?)invocation.ReturnValue;
+            Debug.Assert(task != null);
             await task.ConfigureAwait(false);
         }
 
@@ -50,7 +52,8 @@ namespace Test.Unit
         {
             _ = invocation ?? throw new ArgumentNullException(nameof(invocation));
             InternalIntercept(invocation);
-            Task<TResult> task = (Task<TResult>)invocation.ReturnValue;
+            Task<TResult>? task = (Task<TResult>?)invocation.ReturnValue;
+            Debug.Assert(task != null);
             TResult returnValue = await task.ConfigureAwait(false);
             // ValidateReturnValue(invocation, returnValue);
             return returnValue;
@@ -78,7 +81,7 @@ namespace Test.Unit
             _ReqnrollOutputHelper.WriteLine(test);
             if (invocation.Arguments is { Length: > 0 })
             {
-                object first = invocation.Arguments[0];
+                object? first = invocation.Arguments[0];
                 string json = JsonConvert.SerializeObject(first);
                 _ReqnrollOutputHelper.WriteLine(json);
             }

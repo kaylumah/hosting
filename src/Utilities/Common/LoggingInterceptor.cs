@@ -29,7 +29,8 @@ namespace Kaylumah.Ssg.Utilities.Common
             try
             {
                 invocation.Proceed(); // Execute the original method
-                Task? task = (Task)invocation.ReturnValue;
+                Task? task = (Task?)invocation.ReturnValue;
+                Debug.Assert(task != null);
                 await task.ConfigureAwait(false); // Await the task's completion
             }
             finally
@@ -50,7 +51,8 @@ namespace Kaylumah.Ssg.Utilities.Common
             try
             {
                 invocation.Proceed(); // Execute the original method
-                Task<TResult>? task = (Task<TResult>)invocation.ReturnValue;
+                Task<TResult>? task = (Task<TResult>?)invocation.ReturnValue;
+                Debug.Assert(task != null);
                 return await task.ConfigureAwait(false); // Await the task's completion and return its result
             }
             finally
