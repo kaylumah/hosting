@@ -16,10 +16,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class SiteMetaData
     {
         readonly Dictionary<PageId, PageMetaData> _Lookup;
-        public BuildData Build
-        { get; set; }
         public SiteId Id
         { get; }
+        public BuildData Build
+        { get; set; }
         public string Title
         { get; set; }
         public string Description
