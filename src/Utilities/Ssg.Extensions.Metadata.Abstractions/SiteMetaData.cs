@@ -51,11 +51,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
 
-        public IEnumerable<FacetMetaData> TagCloud => GetTagCloud();
-
         public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
+        
+        public IEnumerable<FacetMetaData> TagCloud => GetTagCloud();
 
         public SiteMetaData(
             SiteId id,
