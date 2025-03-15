@@ -1,4 +1,10 @@
 (function() {
+
+    let commentId = window.COMMENT_ID || null;
+    if (!commentId || typeof commentId !== "string") {
+        return;
+    }
+    
     let commentSection = document.getElementById("comment-section");
     if (commentSection) {
         let observer = new IntersectionObserver((entries) => {
@@ -10,7 +16,7 @@
                     script.setAttribute("data-repo", "kaylumah/hosting");
                     script.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnkzMzgyNzg4MzU=");
                     script.setAttribute("data-mapping", "number");
-                    script.setAttribute("data-term", "{{page.commentid}}");
+                    script.setAttribute("data-term", commentId);
                     script.setAttribute("data-reactions-enabled", "1");
                     script.setAttribute("data-emit-metadata", "0");
                     script.setAttribute("data-input-position", "top");

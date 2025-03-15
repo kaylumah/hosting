@@ -108,6 +108,8 @@
 
 <script src="/comments.js" defer></script>
 <script>
+    window.GA_ID = "G-MEQZVWN0D7";
+    window.COMMENT_ID = "{{page.commentid}}";
     const analyticsScriptId = "google-analytics-script";
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
@@ -144,7 +146,6 @@
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
-            window.GA_ID = "G-MEQZVWN0D7";
             let gaScript = document.createElement("script");
             gaScript.id = analyticsScriptId;
             gaScript.async = true;
