@@ -252,6 +252,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
         public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
@@ -259,15 +261,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
             _Pages = pages.ByRecentlyPublished();
         }
 
-        public IEnumerable<PageMetaData> GetPages()
+        IEnumerable<PageMetaData> GetPages()
         {
             return _Pages;
         }
 
-        public IEnumerable<Article> GetArticles()
+        IEnumerable<Article> GetArticles()
         {
             IEnumerable<Article> articles = _Pages.OfType<Article>();
             return articles;
+        }
+
+        IEnumerable<Article> GetRecentArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
+            return sortedByPublished;
         }
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
@@ -371,7 +380,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
         }
     }
-    
+
     public static class PageMetaDataExtensions
     {
         public static readonly Func<PageMetaData, bool> Tags;
