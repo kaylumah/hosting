@@ -86,73 +86,29 @@
     `;
       console.log(consoleSignatureText, consoleSignatureStyle);
     </script>
+
     <script>
-      window.getCookieConsent = function() {
-          try {
-              const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
-              return consent;
-          } catch (error) {
-              console.log("failed to retrieve consent", error);
-              return "unknown";
-          }
-      };
-    
-      window.setCookieConsent = function(status) {
-    
-        if (status != "denied" && status != "granted") {
-          throw new Error(`Status ${status} is not supported!`);
-        }
-    
-        let today = new Date();
-        let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-        document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
-      }
-    
+        window.getCookieConsent = function() {
+            try {
+                let match = document.cookie.match(/cookie-consent=([^;]+)/);
+                let result =  match ? match[1] : "unknown";
+                return result;
+            } catch (error) {
+                console.log("failed to retrieve consent", error);
+                return "unknown";
+            }
+        };
+
+        window.setCookieConsent = function(status) {
+            if (status !== "denied" && status !== "granted") {
+                throw new Error(`Status ${status} is not supported!`);
+            }
+
+            document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            document.dispatchEvent(new CustomEvent("cookieConsentUpdated", {detail: status}));
+        };
     </script>
-    <script>
-      // Define dataLayer and the gtag function.
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
     
-      window.setGtagConsentStatus = function(mode, status) {
-    
-        if (mode != "update" && mode != "default") {
-          throw new Error(`Mode ${mode} is not supported!`);
-        }
-    
-        if (status != "denied" && status != "granted") {
-          throw new Error(`Status ${status} is not supported!`);
-        }
-    
-        gtag('consent', mode, {
-          'ad_storage': status,
-          'ad_user_data': status,
-          'ad_personalization': status,
-          'analytics_storage': status
-        });
-      }
-    
-      let currentStatus = window.getCookieConsent();
-      let cookiesAllowed = currentStatus == "granted";
-    
-      if (cookiesAllowed) {
-        console.log("cookies already approved");
-        window.setGtagConsentStatus("default", "granted");
-      } else {
-        console.log("assume cookies are denied");
-        window.setGtagConsentStatus("default", "denied");
-      }
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEQZVWN0D7">
-    </script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-    
-      gtag('js', new Date());
-      gtag('config', 'G-MEQZVWN0D7');
-    </script>
 </head>
 
 <body class="bg-gray-100 font-sans leading-relaxed tracking-wide min-h-screen flex flex-col">
@@ -283,38 +239,72 @@
         <a class="font-semibold text-primary hover:underline" href="/privacy">cookie policy</a>.
     </p>
     <div class="flex items-center gap-4">
-        <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
+        <button id="accept-cookies" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
             Accept all
         </button>
-        <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
+        <button id="reject-cookies" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
             Reject all
         </button>
     </div>
 </div>
 
 <script>
-    window.hideCookieBanner = function() {
-        let cookieBanner = document.getElementById("cookie-banner");
-        if (cookieBanner) {
-            cookieBanner.classList.add("hidden");
+    const analyticsScriptId = "google-analytics-script";
+    document.addEventListener("DOMContentLoaded", function() {
+        let banner = document.getElementById("cookie-banner");
+        let currentConsent = window.getCookieConsent();
+
+        if (currentConsent === "granted") {
+            addGoogleAnalytics();
+            banner.classList.add("hidden");
+        } else if (currentConsent === "denied") {
+            removeGoogleAnalytics();
+            banner.classList.add("hidden");
         }
-    };
 
-    window.handleCookieConsentGranted = function() {
-        window.setCookieConsent("granted");
-        window.setGtagConsentStatus("update", "granted");
-        window.hideCookieBanner();
-    };
+        document.getElementById("accept-cookies").addEventListener("click", function() {
+            window.setCookieConsent("granted");
+            banner.classList.add("hidden");
+        });
 
-    window.handleCookieConsentDenied = function() {
-        window.setCookieConsent("denied");
-        window.setGtagConsentStatus("update", "denied");
-        window.hideCookieBanner();
-    };
+        document.getElementById("reject-cookies").addEventListener("click", function() {
+            window.setCookieConsent("denied");
+            banner.classList.add("hidden");
+        });
+    });
 
-    // Check if consent has already been given
-    if (window.getCookieConsent() !== "unknown") {
-        window.hideCookieBanner();
+    document.addEventListener("cookieConsentUpdated", function(event) {
+        let newConsent = event.detail;
+        if (newConsent === "granted") {
+            addGoogleAnalytics();
+        } else if (event.detail === "denied") {
+            removeGoogleAnalytics();
+        }
+    });
+
+    function addGoogleAnalytics() {
+        let analyticsScript = document.getElementById(analyticsScriptId);
+        if (!analyticsScript) {
+            window.GA_ID = "G-MEQZVWN0D7";
+            let gaScript = document.createElement("script");
+            gaScript.id = analyticsScriptId;
+            gaScript.async = true;
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
+            document.head.appendChild(gaScript);
+
+            gaScript.onload = function () {
+                let trackingScript = document.createElement("script");
+                trackingScript.async = true;
+                trackingScript.src = "analytics.js";
+                document.head.appendChild(trackingScript);
+            }
+        }
+    }
+    function removeGoogleAnalytics() {
+        let analyticsScript = document.getElementById(analyticsScriptId);
+        if (analyticsScript) {
+            analyticsScript.remove();
+        }
     }
 </script>
 
