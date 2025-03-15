@@ -9,7 +9,7 @@ modifieddate: '2025-03-09'
 type: Collection
 ---
 <h1 class="text-2xl font-bold mb-4">Recent Blog Posts</h1>
-{% assign posts = site.recentarticles %}
+{% assign posts = page.pages %}
 {% for post in posts %}
 <article class="flex flex-col gap-2 py-6 border-b border-gray-200">
     <h2 class="text-lg font-semibold leading-tight">
