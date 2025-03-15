@@ -15,7 +15,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class SiteMetaData
     {
-        Dictionary<PageId, PageMetaData> _Lookup;
+        readonly Dictionary<PageId, PageMetaData> _Lookup;
         public BuildData Build
         { get; set; }
         public SiteId Id
