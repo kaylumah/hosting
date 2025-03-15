@@ -1,5 +1,4 @@
 ﻿{
-  Build: {},
   Id: {
     Value: my-site
   },
@@ -8,6 +7,7 @@
   Language: ,
   Author: ,
   Url: ,
+  Build: {},
   Items: [
     {
       SocialShare: false,

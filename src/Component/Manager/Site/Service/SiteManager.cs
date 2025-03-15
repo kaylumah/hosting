@@ -161,7 +161,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
         {
-            IEnumerable<BasePage> pages = siteMetadata.GetItems();
+            IEnumerable<BasePage> pages = siteMetadata.Items;
             MetadataRenderRequest[] requests = pages
                             .Select(basePage =>
                             {
@@ -365,13 +365,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             if (hasCollections && collection != null)
             {
                 IEnumerable<Article> articlePages = result.OfType<Article>();
+                List<BasePage> collectionArticles = new List<BasePage>(articlePages);
 
                 foreach (TextFile file in collection)
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
 
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData, articlePages);
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, collectionArticles);
                     result.Add(collectionPage);
                 }
             }

@@ -1,5 +1,4 @@
 ﻿{
-  Build: {},
   Id: {
     Value: my-site
   },
@@ -8,6 +7,7 @@
   Language: ,
   Author: ,
   Url: ,
+  Build: {},
   Data: {
     tags: [
       {
@@ -83,12 +83,6 @@
     }
   ],
   FeaturedArticles: [],
-  TagCloud: [
-    {
-      Id: 1,
-      Size: 1
-    }
-  ],
   PagesByTags: {
     1: [
       {
@@ -102,5 +96,11 @@
         Value: my-page
       }
     ]
-  }
+  },
+  TagCloud: [
+    {
+      Id: 1,
+      Size: 1
+    }
+  ]
 }

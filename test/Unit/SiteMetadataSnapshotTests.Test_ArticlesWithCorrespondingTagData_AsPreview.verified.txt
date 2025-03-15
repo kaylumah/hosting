@@ -1,4 +1,10 @@
 ﻿<pre id="json">{
+  "Id": "my-site",
+  "Title": "",
+  "Description": "",
+  "Language": "",
+  "Author": "",
+  "Url": "",
   "Build": {
     "BuildId": null,
     "BuildNumber": null,
@@ -10,12 +16,6 @@
     "ShortGitHash": null,
     "Time": "0001-01-01T00:00:00+00:00"
   },
-  "Id": "my-site",
-  "Title": "",
-  "Description": "",
-  "Language": "",
-  "Author": "",
-  "Url": "",
   "Data": {
     "tags": [
       {
@@ -34,10 +34,6 @@
       "Icon": null
     }
   ],
-  "AuthorMetaData": [],
-  "OrganizationMetaData": [],
-  "Authors": null,
-  "Organizations": null,
   "Tags": {
     "1": {
       "Id": "1",
@@ -46,6 +42,10 @@
       "Icon": null
     }
   },
+  "AuthorMetaData": [],
+  "Authors": null,
+  "OrganizationMetaData": [],
+  "Organizations": null,
   "Items": [
     {
       "Uri": "example.html",
@@ -119,14 +119,6 @@
     }
   ],
   "FeaturedArticles": [],
-  "TagCloud": [
-    {
-      "Id": "1",
-      "DisplayName": null,
-      "Description": null,
-      "Size": 1
-    }
-  ],
   "PagesByTags": {
     "1": [
       "my-page"
@@ -136,5 +128,13 @@
     "1": [
       "my-page"
     ]
-  }
+  },
+  "TagCloud": [
+    {
+      "Id": "1",
+      "DisplayName": null,
+      "Description": null,
+      "Size": 1
+    }
+  ]
 }</pre>
