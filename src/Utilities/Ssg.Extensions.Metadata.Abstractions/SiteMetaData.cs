@@ -102,17 +102,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public Uri AbsoluteUri(string relativeUrl)
-        {
-            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
-            return uri;
-        }
-
         public IEnumerable<BasePage> GetItems()
         {
             return Items;
         }
-
+        
         public IEnumerable<PageMetaData> GetPages()
         {
             IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
@@ -124,6 +118,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> articles = Items.OfType<Article>();
             return articles;
         }
+        
+        public Uri AbsoluteUri(string relativeUrl)
+        {
+            Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
+            return uri;
+        }
+
+
+
+        
 
         T? GetData<T>(string key) where T : class
         {
