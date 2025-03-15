@@ -83,6 +83,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
                               value => value);
         }
 
+        #region Indexers
+
         public PageMetaData? this[PageId pageId]
         {
             get => _Lookup.GetValueOrDefault(pageId);
@@ -101,6 +103,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 }
             }
         }
+
+        #endregion
 
         public Uri AbsoluteUri(string relativeUrl)
         {
