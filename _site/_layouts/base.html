@@ -29,17 +29,13 @@
         };
 
         window.setCookieConsent = function(status) {
-            try {
-                if (status !== "denied" && status !== "granted") {
-                    throw new Error(`Status ${status} is not supported!`);
-                }
-
-                document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
-                document.dispatchEvent(new CustomEvent("cookieConsentUpdated", {detail: status}));
-            } catch (error) {
-                console.error("Error setting cookie consent:", error);
+            if (status !== "denied" && status !== "granted") {
+                throw new Error(`Status ${status} is not supported!`);
             }
-        }
+
+            document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            document.dispatchEvent(new CustomEvent("cookieConsentUpdated", {detail: status}));
+        };
     </script>
     
 </head>
