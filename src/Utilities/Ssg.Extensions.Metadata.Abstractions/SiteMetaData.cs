@@ -184,64 +184,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
-
             IEnumerable<Article> articles = GetArticles();
-            foreach (Article article in articles)
-            {
-                List<string> tags = article.Tags;
-                foreach (string tag in tags)
-                {
-                    if (result.ContainsKey(tag) == false)
-                    {
-                        result[tag] = new();
-                    }
-
-                    result[tag].Add(article.Id);
-                }
-            }
-
+            SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
             return result;
         }
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            DescendingComparer<int> comparer = new DescendingComparer<int>();
-            SortedDictionary<int, List<PageId>> result = new(comparer);
-
             IEnumerable<Article> articles = GetArticles();
-            foreach (Article article in articles)
-            {
-                DateTimeOffset published = article.Published;
-                int year = published.Year;
-                if (result.ContainsKey(year) == false)
-                {
-                    result[year] = new();
-                }
-
-                result[year].Add(article.Id);
-            }
-
-            return result;
-        }
-    }
-
-    class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
-    {
-        public int Compare(T? x, T? y)
-        {
-            if (x == null)
-            {
-                return -1;
-            }
-
-            if (y == null)
-            {
-                return 1;
-            }
-
-            // Reverse the comparison for descending order
-            int result = y.CompareTo(x);
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
             return result;
         }
     }

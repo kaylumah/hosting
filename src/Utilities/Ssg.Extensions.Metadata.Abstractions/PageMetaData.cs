@@ -250,9 +250,40 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         readonly IEnumerable<PageMetaData> _Pages;
 
+        public IEnumerable<PageMetaData> Pages => GetPages();
+
+        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+
+        public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
+
         public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
         {
             _Pages = pages.ByRecentlyPublished();
+        }
+
+        IEnumerable<PageMetaData> GetPages()
+        {
+            return _Pages;
+        }
+
+        IEnumerable<Article> GetArticles()
+        {
+            IEnumerable<Article> articles = _Pages.OfType<Article>();
+            return articles;
+        }
+
+        IEnumerable<Article> GetRecentArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
+            return sortedByPublished;
+        }
+
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            return result;
         }
 
         protected override DateTimeOffset GetPublishedDate()
@@ -404,8 +435,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PageMetaData> source, string tag)
         {
             IEnumerable<PageMetaData> result = source
-                    .HasTag()
-                    .Where(page => page.Tags.Contains(tag));
+                .HasTag()
+                .Where(page => page.Tags.Contains(tag));
             return result;
         }
 
@@ -418,8 +449,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<Article> FromSeries(this IEnumerable<Article> source, string series)
         {
             IEnumerable<Article> result = source
-                    .HasSeries()
-                    .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
+                .HasSeries()
+                .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
             return result;
         }
 
@@ -468,6 +499,45 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
         {
             IOrderedEnumerable<PageMetaData> result = source.OrderByDescending(x => x.Published);
+            return result;
+        }
+
+        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<Article> source)
+        {
+            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
+            foreach (Article article in source)
+            {
+                List<string> tags = article.Tags;
+                foreach (string tag in tags)
+                {
+                    if (result.ContainsKey(tag) == false)
+                    {
+                        result[tag] = new();
+                    }
+
+                    result[tag].Add(article.Id);
+                }
+            }
+
+            return result;
+        }
+
+        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<Article> source)
+        {
+            DescendingComparer<int> comparer = new DescendingComparer<int>();
+            SortedDictionary<int, List<PageId>> result = new(comparer);
+            foreach (Article article in source)
+            {
+                DateTimeOffset published = article.Published;
+                int year = published.Year;
+                if (result.ContainsKey(year) == false)
+                {
+                    result[year] = new();
+                }
+
+                result[year].Add(article.Id);
+            }
+
             return result;
         }
     }
