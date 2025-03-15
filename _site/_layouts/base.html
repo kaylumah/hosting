@@ -20,8 +20,8 @@
     <script>
         window.getCookieConsent = function() {
             try {
-                const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
-                return consent;
+                let match = document.cookie.match(/cookie-consent=([^;]+)/);
+                return  match ? match[1] : "unknown";
             } catch (error) {
                 console.log("failed to retrieve consent", error);
                 return "unknown";
@@ -29,16 +29,16 @@
         };
 
         window.setCookieConsent = function(status) {
+            try {
+                if (status !== "denied" && status !== "granted") {
+                    throw new Error(`Status ${status} is not supported!`);
+                }
 
-            if (status !== "denied" && status !== "granted") {
-                throw new Error(`Status ${status} is not supported!`);
+                document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
+                document.dispatchEvent(new CustomEvent("cookieConsentUpdated", {detail: status}));
+            } catch (error) {
+                console.error("Error setting cookie consent:", error);
             }
-
-            // let today = new Date();
-            // let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-            // document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
-            document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
-            document.dispatchEvent(new CustomEvent("cookieConsentUpdated", { detail: status }));
         }
     </script>
     
@@ -100,15 +100,64 @@
         <a class="font-semibold text-primary hover:underline" href="/privacy">cookie policy</a>.
     </p>
     <div class="flex items-center gap-4">
-        <button onclick="handleCookieConsentGranted()" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
+        <button id="accept-cookies" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
             Accept all
         </button>
-        <button onclick="handleCookieConsentDenied()" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
+        <button id="reject-cookies" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
             Reject all
         </button>
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let banner = document.getElementById("cookie-banner");
+        let currentConsent = window.getCookieConsent();
+        if (currentConsent === "unknown") {
+            alert("Cookie consent unknown");
+            // banner.classList.remove("hidden");
+        }
+
+        document.getElementById("accept-cookies").addEventListener("click", function() {
+            window.setCookieConsent("granted");
+            // banner.classList.add("hidden");
+        });
+
+        document.getElementById("reject-cookies").addEventListener("click", function() {
+            window.setCookieConsent("denied");
+            // banner.classList.add("hidden");
+        });
+    });
+
+    document.addEventListener("cookieConsentUpdated", function(event) {
+        let newConsent = event.detail;
+        const analyticsScriptId = "google-analytics-script";
+        let analyticsScript = document.getElementById(analyticsScriptId);
+
+        if (newConsent === "granted") {
+            if (analyticsScript) {
+                console.log("script already exists...");
+            }
+            else {
+                let script = document.createElement("script");
+                script.id = analyticsScriptId;
+                script.src = "suggestions.js";
+                script.async = true;
+                document.head.appendChild(script);
+                console.log("Google Analytics script added after consent granted.");
+            }
+        } else if (event.detail === "denied") {
+            if (analyticsScript) {
+                console.log("script exists remove...");
+                analyticsScript.remove();
+            }
+            else {
+                console.log("script was never added");
+            }
+        }
+    });
+</script>
+<!-- 
 <script>
     window.hideCookieBanner = function() {
         let cookieBanner = document.getElementById("cookie-banner");
@@ -134,6 +183,7 @@
         window.hideCookieBanner();
     }
 </script>
+-->
 
 </body>
 </html>
