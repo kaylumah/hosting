@@ -94,7 +94,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ToDiagnosticHtml(object o, string id)
+        public static string ToDiagnosticHtml(object o, string id = "preview")
         {
             string json = ToJson(o);
             StringBuilder sb = new StringBuilder();
