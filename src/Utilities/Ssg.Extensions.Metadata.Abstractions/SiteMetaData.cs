@@ -54,7 +54,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
-        
+
         public IEnumerable<FacetMetaData> TagCloud => GetTagCloud();
 
         public SiteMetaData(
@@ -106,7 +106,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             return Items;
         }
-        
+
         public IEnumerable<PageMetaData> GetPages()
         {
             IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
@@ -118,16 +118,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> articles = Items.OfType<Article>();
             return articles;
         }
-        
+
         public Uri AbsoluteUri(string relativeUrl)
         {
             Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
             return uri;
         }
-
-
-
-        
 
         T? GetData<T>(string key) where T : class
         {
@@ -139,6 +135,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             return null;
         }
+
+        #region Collections
 
         IEnumerable<Article> GetRecentArticles()
         {
@@ -154,6 +152,26 @@ namespace Ssg.Extensions.Metadata.Abstractions
             IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
             return featuredAndSortedByPublished;
         }
+
+        #endregion
+
+        #region CrossSections
+
+        SortedDictionary<string, List<PageId>> GetPagesByTag()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
+            return result;
+        }
+
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            return result;
+        }
+
+        #endregion
 
         List<FacetMetaData> GetTagCloud()
         {
@@ -183,20 +201,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 result.Add(resultForTag);
             }
 
-            return result;
-        }
-
-        SortedDictionary<string, List<PageId>> GetPagesByTag()
-        {
-            IEnumerable<Article> articles = GetArticles();
-            SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
-            return result;
-        }
-
-        SortedDictionary<int, List<PageId>> GetPagesByYear()
-        {
-            IEnumerable<Article> articles = GetArticles();
-            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
             return result;
         }
     }
