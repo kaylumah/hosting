@@ -129,6 +129,26 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<Article> source)
+        {
+            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
+            foreach (Article article in source)
+            {
+                List<string> tags = article.Tags;
+                foreach (string tag in tags)
+                {
+                    if (result.ContainsKey(tag) == false)
+                    {
+                        result[tag] = new();
+                    }
+
+                    result[tag].Add(article.Id);
+                }
+            }
+
+            return result;
+        }
+
         public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<Article> source)
         {
             DescendingComparer<int> comparer = new DescendingComparer<int>();

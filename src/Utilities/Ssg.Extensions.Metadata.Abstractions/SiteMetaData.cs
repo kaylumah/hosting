@@ -184,23 +184,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
-
             IEnumerable<Article> articles = GetArticles();
-            foreach (Article article in articles)
-            {
-                List<string> tags = article.Tags;
-                foreach (string tag in tags)
-                {
-                    if (result.ContainsKey(tag) == false)
-                    {
-                        result[tag] = new();
-                    }
-
-                    result[tag].Add(article.Id);
-                }
-            }
-
+            SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
             return result;
         }
 
