@@ -18,8 +18,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         readonly Dictionary<PageId, PageMetaData> _Lookup;
         public SiteId Id
         { get; }
-        public BuildData Build
-        { get; set; }
         public string Title
         { get; set; }
         public string Description
@@ -30,7 +28,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
         public string Url
         { get; set; }
-
+        public BuildData Build
+        { get; set; }
         public Dictionary<string, object> Data
         { get; set; }
 
