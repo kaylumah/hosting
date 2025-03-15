@@ -161,7 +161,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
         {
-            IEnumerable<BasePage> pages = siteMetadata.GetItems();
+            IEnumerable<BasePage> pages = siteMetadata.Items;
             MetadataRenderRequest[] requests = pages
                             .Select(basePage =>
                             {

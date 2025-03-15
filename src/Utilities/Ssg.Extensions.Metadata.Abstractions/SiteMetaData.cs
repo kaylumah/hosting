@@ -42,7 +42,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
         public IDictionary<OrganizationId, OrganizationMetaData> Organizations => OrganizationMetaData.Dictionary;
 
-        public List<BasePage> Items
+        public IEnumerable<BasePage> Items
         { get; }
 
         public IEnumerable<PageMetaData> Pages => GetPages();
@@ -102,28 +102,27 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public IEnumerable<BasePage> GetItems()
-        {
-            return Items;
-        }
-
-        public IEnumerable<PageMetaData> GetPages()
-        {
-            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
-            return pages;
-        }
-
-        public IEnumerable<Article> GetArticles()
-        {
-            IEnumerable<Article> articles = Items.OfType<Article>();
-            return articles;
-        }
-
         public Uri AbsoluteUri(string relativeUrl)
         {
             Uri uri = RenderHelperFunctions.AbsoluteUri(Url, relativeUrl);
             return uri;
         }
+
+        #region PageTypes
+
+        IEnumerable<PageMetaData> GetPages()
+        {
+            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
+            return pages;
+        }
+
+        IEnumerable<Article> GetArticles()
+        {
+            IEnumerable<Article> articles = Items.OfType<Article>();
+            return articles;
+        }
+
+        #endregion
 
         #region Collections
 
@@ -172,7 +171,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             return null;
         }
-        
+
         List<FacetMetaData> GetTagCloud()
         {
             SortedDictionary<string, List<PageId>> tags = PagesByTags;
