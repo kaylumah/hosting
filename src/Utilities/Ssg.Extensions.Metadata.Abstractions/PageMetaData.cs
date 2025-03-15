@@ -249,9 +249,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         readonly IEnumerable<PageMetaData> _Pages;
 
+        public IEnumerable<PageMetaData> Pages => GetPages();
+
         public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
         {
             _Pages = pages.ByRecentlyPublished();
+        }
+
+        public IEnumerable<PageMetaData> GetPages()
+        {
+            return _Pages;
         }
 
         protected override DateTimeOffset GetPublishedDate()
