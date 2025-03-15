@@ -110,21 +110,6 @@
      You found 🧸                                      
                                                        
     -->
-    
-    <script>
-    
-      const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
-      const consoleSignatureStyle = `
-      font-size: 16px;
-      background: #4cae50;
-      color: white;
-      text-align: center;
-      padding: 10px 15px;
-      width: 100%;
-      border-radius: 20px;
-    `;
-      console.log(consoleSignatureText, consoleSignatureStyle);
-    </script>
 
     <script>
         window.getCookieConsent = function() {
@@ -650,6 +635,19 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
     window.GA_ID = "G-MEQZVWN0D7";
     window.COMMENT_ID = "138";
     const analyticsScriptId = "google-analytics-script";
+
+    const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
+    const consoleSignatureStyle =
+    `
+      font-size: 16px;
+      background: #4cae50;
+      color: white;
+      text-align: center;
+      padding: 10px 15px;
+      width: 100%;
+      border-radius: 20px;
+    `;
+    console.log(consoleSignatureText, consoleSignatureStyle);
 
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
