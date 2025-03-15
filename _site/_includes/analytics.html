@@ -1,27 +1,4 @@
 <script>
-  window.getCookieConsent = function() {
-      try {
-          const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
-          return consent;
-      } catch (error) {
-          console.log("failed to retrieve consent", error);
-          return "unknown";
-      }
-  };
-
-  window.setCookieConsent = function(status) {
-
-    if (status != "denied" && status != "granted") {
-      throw new Error(`Status ${status} is not supported!`);
-    }
-
-    let today = new Date();
-    let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-    document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
-  }
-
-</script>
-<script>
   // Define dataLayer and the gtag function.
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
