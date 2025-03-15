@@ -122,70 +122,26 @@
     `;
       console.log(consoleSignatureText, consoleSignatureStyle);
     </script>
+
     <script>
-      window.getCookieConsent = function() {
-          try {
-              const consent = document.cookie.match(/cookie-consent=([^;]+)/)[1];
-              return consent;
-          } catch (error) {
-              console.log("failed to retrieve consent", error);
-              return "unknown";
-          }
-      };
-    
-      window.setCookieConsent = function(status) {
-    
-        if (status != "denied" && status != "granted") {
-          throw new Error(`Status ${status} is not supported!`);
-        }
-    
-        let today = new Date();
-        let expiryDate = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
-        document.cookie = `cookie-consent=${status}; expires=${expiryDate}; path=/`;
-      }
-    
+        window.getCookieConsent = function() {
+            try {
+                let match = document.cookie.match(/cookie-consent=([^;]+)/);
+                let result =  match ? match[1] : "unknown";
+                return result;
+            } catch (error) {
+                console.log("failed to retrieve consent", error);
+                return "unknown";
+            }
+        };
+
+        window.setCookieConsent = function(status) {
+            if (status !== "denied" && status !== "granted") {
+                throw new Error(`Status ${status} is not supported!`);
+            }
+
+            document.cookie = `cookie-consent=${status}; path=/; max-age=${60 * 60 * 24 * 365}`;
+            document.dispatchEvent(new CustomEvent("cookieConsentUpdated", {detail: status}));
+        };
     </script>
-    <script>
-      // Define dataLayer and the gtag function.
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
     
-      window.setGtagConsentStatus = function(mode, status) {
-    
-        if (mode != "update" && mode != "default") {
-          throw new Error(`Mode ${mode} is not supported!`);
-        }
-    
-        if (status != "denied" && status != "granted") {
-          throw new Error(`Status ${status} is not supported!`);
-        }
-    
-        gtag('consent', mode, {
-          'ad_storage': status,
-          'ad_user_data': status,
-          'ad_personalization': status,
-          'analytics_storage': status
-        });
-      }
-    
-      let currentStatus = window.getCookieConsent();
-      let cookiesAllowed = currentStatus == "granted";
-    
-      if (cookiesAllowed) {
-        console.log("cookies already approved");
-        window.setGtagConsentStatus("default", "granted");
-      } else {
-        console.log("assume cookies are denied");
-        window.setGtagConsentStatus("default", "denied");
-      }
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-MEQZVWN0D7">
-    </script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-    
-      gtag('js', new Date());
-      gtag('config', 'G-MEQZVWN0D7');
-    </script>
