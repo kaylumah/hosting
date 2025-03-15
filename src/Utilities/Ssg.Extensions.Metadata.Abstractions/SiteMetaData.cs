@@ -211,24 +211,4 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
     }
-
-    class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
-    {
-        public int Compare(T? x, T? y)
-        {
-            if (x == null)
-            {
-                return -1;
-            }
-
-            if (y == null)
-            {
-                return 1;
-            }
-
-            // Reverse the comparison for descending order
-            int result = y.CompareTo(x);
-            return result;
-        }
-    }
 }
