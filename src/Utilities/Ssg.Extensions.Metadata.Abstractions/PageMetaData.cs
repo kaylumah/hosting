@@ -317,7 +317,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         IEnumerable<Article> GetArticles()
         {
-            IEnumerable<Article> articles = Items.OfType<Article>();
+            IEnumerable<Article> articles = Items.OfType<Article>()
+                .ByRecentlyPublished();
             return articles;
         }
 
