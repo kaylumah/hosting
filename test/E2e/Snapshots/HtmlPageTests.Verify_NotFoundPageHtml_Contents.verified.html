@@ -193,8 +193,12 @@
     </div>
 </div>
 
+<script src="/comments.js" defer></script>
 <script>
+    window.GA_ID = "G-MEQZVWN0D7";
+    window.COMMENT_ID = "";
     const analyticsScriptId = "google-analytics-script";
+
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
@@ -230,7 +234,6 @@
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
-            window.GA_ID = "G-MEQZVWN0D7";
             let gaScript = document.createElement("script");
             gaScript.id = analyticsScriptId;
             gaScript.async = true;
@@ -240,7 +243,7 @@
             gaScript.onload = function () {
                 let trackingScript = document.createElement("script");
                 trackingScript.async = true;
-                trackingScript.src = "analytics.js";
+                trackingScript.src = "/analytics.js";
                 document.head.appendChild(trackingScript);
             }
         }
