@@ -311,7 +311,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         IEnumerable<PageMetaData> GetPages()
         {
-            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
+            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>()
+                .ByRecentlyPublished();
             return pages;
         }
 
