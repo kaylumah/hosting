@@ -21,7 +21,8 @@
         window.getCookieConsent = function() {
             try {
                 let match = document.cookie.match(/cookie-consent=([^;]+)/);
-                return  match ? match[1] : "unknown";
+                let result =  match ? match[1] : "unknown";
+                return result;
             } catch (error) {
                 console.log("failed to retrieve consent", error);
                 return "unknown";
@@ -110,18 +111,17 @@
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
         if (currentConsent === "unknown") {
-            alert("Cookie consent unknown");
-            // banner.classList.remove("hidden");
+            banner.classList.remove("hidden");
         }
 
         document.getElementById("accept-cookies").addEventListener("click", function() {
             window.setCookieConsent("granted");
-            // banner.classList.add("hidden");
+            banner.classList.add("hidden");
         });
 
         document.getElementById("reject-cookies").addEventListener("click", function() {
             window.setCookieConsent("denied");
-            // banner.classList.add("hidden");
+            banner.classList.add("hidden");
         });
     });
 
@@ -131,10 +131,7 @@
         let analyticsScript = document.getElementById(analyticsScriptId);
 
         if (newConsent === "granted") {
-            if (analyticsScript) {
-                console.log("script already exists...");
-            }
-            else {
+            if (!analyticsScript) {
                 window.GA_ID = "G-MEQZVWN0D7";
                 let gaScript = document.createElement("script");
                 gaScript.id = analyticsScriptId;
@@ -144,21 +141,14 @@
                 
                 gaScript.onload = function () {
                     let trackingScript = document.createElement("script");
-                    trackingScript.id = "tracking-handler-script";
                     trackingScript.async = true;
                     trackingScript.src = "analytics.js";
                     document.head.appendChild(trackingScript);
                 }
-
-                console.log("Google Analytics script added after consent granted.");
             }
         } else if (event.detail === "denied") {
             if (analyticsScript) {
-                console.log("script exists remove...");
                 analyticsScript.remove();
-            }
-            else {
-                console.log("script was never added");
             }
         }
     });

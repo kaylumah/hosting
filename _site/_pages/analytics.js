@@ -1,7 +1,6 @@
 (function() {
     let googleAnalyticsID = window.GA_ID;
     if (googleAnalyticsID !== undefined) {
-
         window.dataLayer = window.dataLayer || [];
         function gtag(){ dataLayer.push(arguments); }
 
