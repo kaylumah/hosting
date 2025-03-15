@@ -135,11 +135,21 @@
                 console.log("script already exists...");
             }
             else {
-                let script = document.createElement("script");
-                script.id = analyticsScriptId;
-                script.src = "analytics.js";
-                script.async = true;
-                document.head.appendChild(script);
+                window.GA_ID = "G-MEQZVWN0D7";
+                let gaScript = document.createElement("script");
+                gaScript.id = analyticsScriptId;
+                gaScript.async = true;
+                gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
+                document.head.appendChild(gaScript);
+                
+                gaScript.onload = function () {
+                    let trackingScript = document.createElement("script");
+                    trackingScript.id = "tracking-handler-script";
+                    trackingScript.async = true;
+                    trackingScript.src = "analytics.js";
+                    document.head.appendChild(trackingScript);
+                }
+
                 console.log("Google Analytics script added after consent granted.");
             }
         } else if (event.detail === "denied") {
