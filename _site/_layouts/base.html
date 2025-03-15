@@ -107,11 +107,16 @@
 </div>
 
 <script>
+    const analyticsScriptId = "google-analytics-script";
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
 
-        if (currentConsent !== "unknown") {
+        if (currentConsent === "granted") {
+            addGoogleAnalytics();
+            banner.classList.add("hidden");
+        } else if (currentConsent === "denied") {
+            removeGoogleAnalytics();
             banner.classList.add("hidden");
         }
 
@@ -128,31 +133,37 @@
 
     document.addEventListener("cookieConsentUpdated", function(event) {
         let newConsent = event.detail;
-        const analyticsScriptId = "google-analytics-script";
-        let analyticsScript = document.getElementById(analyticsScriptId);
-
         if (newConsent === "granted") {
-            if (!analyticsScript) {
-                window.GA_ID = "G-MEQZVWN0D7";
-                let gaScript = document.createElement("script");
-                gaScript.id = analyticsScriptId;
-                gaScript.async = true;
-                gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
-                document.head.appendChild(gaScript);
-                
-                gaScript.onload = function () {
-                    let trackingScript = document.createElement("script");
-                    trackingScript.async = true;
-                    trackingScript.src = "analytics.js";
-                    document.head.appendChild(trackingScript);
-                }
-            }
+            addGoogleAnalytics();
         } else if (event.detail === "denied") {
-            if (analyticsScript) {
-                analyticsScript.remove();
-            }
+            removeGoogleAnalytics();
         }
     });
+
+    function addGoogleAnalytics() {
+        let analyticsScript = document.getElementById(analyticsScriptId);
+        if (!analyticsScript) {
+            window.GA_ID = "G-MEQZVWN0D7";
+            let gaScript = document.createElement("script");
+            gaScript.id = analyticsScriptId;
+            gaScript.async = true;
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
+            document.head.appendChild(gaScript);
+
+            gaScript.onload = function () {
+                let trackingScript = document.createElement("script");
+                trackingScript.async = true;
+                trackingScript.src = "analytics.js";
+                document.head.appendChild(trackingScript);
+            }
+        }
+    }
+    function removeGoogleAnalytics() {
+        let analyticsScript = document.getElementById(analyticsScriptId);
+        if (analyticsScript) {
+            analyticsScript.remove();
+        }
+    }
 </script>
 
 </body>
