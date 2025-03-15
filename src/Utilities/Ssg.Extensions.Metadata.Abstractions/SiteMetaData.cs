@@ -34,15 +34,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
         { get; set; }
 
         public TagMetaDataCollection TagMetaData => GetData<TagMetaDataCollection>("tags") ?? new();
-        public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
-        public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
-
-        public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
-        public IDictionary<OrganizationId, OrganizationMetaData> Organizations => OrganizationMetaData.Dictionary;
         public IDictionary<string, TagMetaData> Tags => TagMetaData.Dictionary;
 
+        public AuthorMetaDataCollection AuthorMetaData => GetData<AuthorMetaDataCollection>("authors") ?? new();
+        public IDictionary<AuthorId, AuthorMetaData> Authors => AuthorMetaData.Dictionary;
+
+        public OrganizationMetaDataCollection OrganizationMetaData => GetData<OrganizationMetaDataCollection>("organizations") ?? new();
+        public IDictionary<OrganizationId, OrganizationMetaData> Organizations => OrganizationMetaData.Dictionary;
+
         public List<BasePage> Items
-        { get; init; }
+        { get; }
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
