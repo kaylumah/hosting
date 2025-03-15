@@ -125,17 +125,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return uri;
         }
 
-        T? GetData<T>(string key) where T : class
-        {
-            bool hasData = Data.TryGetValue(key, out object? value);
-            if (hasData && value is T result)
-            {
-                return result;
-            }
-
-            return null;
-        }
-
         #region Collections
 
         IEnumerable<Article> GetRecentArticles()
@@ -173,6 +162,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #endregion
 
+        T? GetData<T>(string key) where T : class
+        {
+            bool hasData = Data.TryGetValue(key, out object? value);
+            if (hasData && value is T result)
+            {
+                return result;
+            }
+
+            return null;
+        }
+        
         List<FacetMetaData> GetTagCloud()
         {
             SortedDictionary<string, List<PageId>> tags = PagesByTags;
