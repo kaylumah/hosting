@@ -110,8 +110,9 @@
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
-        if (currentConsent === "unknown") {
-            banner.classList.remove("hidden");
+
+        if (currentConsent !== "unknown") {
+            banner.classList.add("hidden");
         }
 
         document.getElementById("accept-cookies").addEventListener("click", function() {
