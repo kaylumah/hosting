@@ -251,6 +251,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
+        public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
+
         public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
         {
             _Pages = pages.ByRecentlyPublished();
@@ -259,6 +261,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IEnumerable<PageMetaData> GetPages()
         {
             return _Pages;
+        }
+
+        public IEnumerable<Article> GetArticles()
+        {
+            IEnumerable<Article> articles = _Pages.OfType<Article>();
+            return articles;
+        }
+
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            return result;
         }
 
         protected override DateTimeOffset GetPublishedDate()
