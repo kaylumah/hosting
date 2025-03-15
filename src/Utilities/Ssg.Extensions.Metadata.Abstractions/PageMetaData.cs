@@ -248,7 +248,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class CollectionPage : PageMetaData
     {
-        readonly IEnumerable<PageMetaData> _Pages;
+        public IEnumerable<BasePage> Items
+        { get; }
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
@@ -256,21 +257,28 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
-        public CollectionPage(PageMetaData internalData, IEnumerable<PageMetaData> pages) : base(internalData)
+        public CollectionPage(PageMetaData internalData, List<BasePage> items) : base(internalData)
         {
-            _Pages = pages.ByRecentlyPublished();
+            Items = items;
+
+            // _Pages = pages.ByRecentlyPublished();
         }
+
+        #region PageTypes
 
         IEnumerable<PageMetaData> GetPages()
         {
-            return _Pages;
+            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
+            return pages;
         }
 
         IEnumerable<Article> GetArticles()
         {
-            IEnumerable<Article> articles = _Pages.OfType<Article>();
+            IEnumerable<Article> articles = Items.OfType<Article>();
             return articles;
         }
+
+        #endregion
 
         IEnumerable<Article> GetRecentArticles()
         {
@@ -288,8 +296,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected override DateTimeOffset GetPublishedDate()
         {
+            IEnumerable<PageMetaData> pages = GetPages();
             // if there is a published date it should win? otherwise fall back on the oldest page
-            PageMetaData? firstPublishedPage = _Pages.LastOrDefault();
+            PageMetaData? firstPublishedPage = pages.LastOrDefault();
             DateTimeOffset basePublishedDate = base.GetPublishedDate();
             DateTimeOffset? firstPublishedDate = firstPublishedPage?.Published;
             DateTimeOffset result = firstPublishedDate ?? basePublishedDate;
@@ -298,8 +307,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected override DateTimeOffset GetModifiedDate()
         {
+            IEnumerable<PageMetaData> pages = GetPages();
             // if there is a newer published date it should win? otherwise fall back on newest page
-            PageMetaData? lastPublishedPage = _Pages.FirstOrDefault();
+            PageMetaData? lastPublishedPage = pages.FirstOrDefault();
             // DateTimeOffset defaultDate = DateTimeOffset.MinValue;
             DateTimeOffset baseModifiedDate = base.GetModifiedDate();
             DateTimeOffset? lastPublishedDate = lastPublishedPage?.Published;
