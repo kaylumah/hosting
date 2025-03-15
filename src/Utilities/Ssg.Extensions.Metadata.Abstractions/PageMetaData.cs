@@ -248,6 +248,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
     public class CollectionPage : PageMetaData
     {
+        readonly Dictionary<PageId, PageMetaData> _Lookup;
+
         public IEnumerable<BasePage> Items
         { get; }
 
@@ -260,7 +262,34 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public CollectionPage(PageMetaData internalData, List<BasePage> items) : base(internalData)
         {
             Items = items;
+
+            _Lookup = GetPages()
+                .ToDictionary(key => key.Id,
+                    value => value);
         }
+
+        #region Indexers
+
+        public PageMetaData? this[PageId pageId]
+        {
+            get => _Lookup.GetValueOrDefault(pageId);
+        }
+
+        public IEnumerable<PageMetaData> this[IEnumerable<PageId> ids]
+        {
+            get
+            {
+                foreach (PageId id in ids)
+                {
+                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    {
+                        yield return page;
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         protected override DateTimeOffset GetPublishedDate()
         {
