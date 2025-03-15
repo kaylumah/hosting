@@ -260,38 +260,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public CollectionPage(PageMetaData internalData, List<BasePage> items) : base(internalData)
         {
             Items = items;
-
-            // _Pages = pages.ByRecentlyPublished();
-        }
-
-        #region PageTypes
-
-        IEnumerable<PageMetaData> GetPages()
-        {
-            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
-            return pages;
-        }
-
-        IEnumerable<Article> GetArticles()
-        {
-            IEnumerable<Article> articles = Items.OfType<Article>();
-            return articles;
-        }
-
-        #endregion
-
-        IEnumerable<Article> GetRecentArticles()
-        {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
-            return sortedByPublished;
-        }
-
-        SortedDictionary<int, List<PageId>> GetPagesByYear()
-        {
-            IEnumerable<Article> articles = GetArticles();
-            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
-            return result;
         }
 
         protected override DateTimeOffset GetPublishedDate()
@@ -338,6 +306,44 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             return result;
         }
+
+        #region PageTypes
+
+        IEnumerable<PageMetaData> GetPages()
+        {
+            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>();
+            return pages;
+        }
+
+        IEnumerable<Article> GetArticles()
+        {
+            IEnumerable<Article> articles = Items.OfType<Article>();
+            return articles;
+        }
+
+        #endregion
+
+        #region Collections
+
+        IEnumerable<Article> GetRecentArticles()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
+            return sortedByPublished;
+        }
+
+        #endregion
+
+        #region CrossSections
+
+        SortedDictionary<int, List<PageId>> GetPagesByYear()
+        {
+            IEnumerable<Article> articles = GetArticles();
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            return result;
+        }
+
+        #endregion
     }
 
     public class Article : PageMetaData
