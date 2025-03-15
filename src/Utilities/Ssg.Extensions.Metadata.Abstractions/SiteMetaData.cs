@@ -206,22 +206,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            DescendingComparer<int> comparer = new DescendingComparer<int>();
-            SortedDictionary<int, List<PageId>> result = new(comparer);
-
             IEnumerable<Article> articles = GetArticles();
-            foreach (Article article in articles)
-            {
-                DateTimeOffset published = article.Published;
-                int year = published.Year;
-                if (result.ContainsKey(year) == false)
-                {
-                    result[year] = new();
-                }
-
-                result[year].Add(article.Id);
-            }
-
+            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
             return result;
         }
     }
