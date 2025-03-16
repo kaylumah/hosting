@@ -50,6 +50,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page is CollectionPage collectionPage && "blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
             {
+                // TODO include archive?
                 List<Article> articles = renderData.Site.FeaturedArticles.ToList();
                 Blog blog = ToBlog(collectionPage, articles, authors, organizations);
                 string ldjson = blog.ToString(settings);

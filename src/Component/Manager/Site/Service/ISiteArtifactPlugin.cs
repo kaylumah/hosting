@@ -148,6 +148,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             SyndicationLink selfLink = BuildLink(feedUri, "self", "application/atom+xml");
             feed.Links.Add(selfLink);
 
+            // TODO include archive?
             Uri blogUri = siteMetaData.AbsoluteUri("blog.html");
             SyndicationLink alternateLink = BuildLink(blogUri, "alternate", "text/html");
             feed.Links.Add(alternateLink);
