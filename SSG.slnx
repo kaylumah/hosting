@@ -14,8 +14,6 @@
     <File Path="global.json" />
     <File Path="nuget.config" />
     <File Path="README.md" />
-  </Folder>
-  <Folder Name="/Solution Items/.config/">
     <File Path=".config/dotnet-tools.json" />
   </Folder>
   <Folder Name="/src/">
