@@ -171,8 +171,8 @@
             script.onload = function () {
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
-                    let adParent = ad.closest("div");
-                    if (adParent) {
+                    let adParent = ad.parentElement;
+                    if (adParent && adParent.id === "ad-container") {
                         adParent.classList.remove("hidden");
                     }
                 });
