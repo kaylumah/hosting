@@ -20,9 +20,9 @@
             throw new Error(`Status ${status} is not supported!`);
         }
         gtag('consent', mode, {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
+            'ad_storage': status,
+            'ad_user_data': status,
+            'ad_personalization': status,
             'analytics_storage': status
         });
     };
