@@ -111,6 +111,7 @@
     window.GA_ID = "G-MEQZVWN0D7";
     window.COMMENT_ID = "{{page.commentid}}";
     const analyticsScriptId = "google-analytics-script";
+    const adsenseScriptId = "google-adsense-script";
 
     const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
     const consoleSignatureStyle =
@@ -126,6 +127,9 @@
     console.log(consoleSignatureText, consoleSignatureStyle);
 
     document.addEventListener("DOMContentLoaded", function() {
+        // Always load, so we can at least have non-personalized ads
+        addGoogleAdSense();
+
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
 
@@ -149,6 +153,7 @@
     });
 
     document.addEventListener("cookieConsentUpdated", function(event) {
+        reloadGoogleAdSense();
         let newConsent = event.detail;
         if (newConsent === "granted") {
             addGoogleAnalytics();
@@ -157,16 +162,47 @@
         }
     });
 
+    function addGoogleAdSense() {
+        let adsenseScript = document.getElementById(adsenseScriptId);
+        if (!adsenseScript) {
+            let script = document.createElement("script");
+            script.id = adsenseScriptId;
+            script.async = true;
+            script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
+            document.head.appendChild(script);
+            script.onload = function () {
+                reloadGoogleAdSense();
+            }
+        }
+    }
+    
+    function reloadGoogleAdSense()
+    {
+        let consent = window.getCookieConsent();
+        let adElements = document.querySelectorAll(".adsbygoogle");
+        adElements.forEach(ad => {
+            if (consent === "granted") {
+                delete ad.dataset.adPersonalization;
+            } else {
+                ad.dataset.adPersonalization = "0";
+            }
+
+            if (!ad.dataset.adsbygoogleStatus) {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+        });
+    }
+
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
-            let gaScript = document.createElement("script");
-            gaScript.id = analyticsScriptId;
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
-            document.head.appendChild(gaScript);
+            let script = document.createElement("script");
+            script.id = analyticsScriptId;
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
+            document.head.appendChild(script);
 
-            gaScript.onload = function () {
+            script.onload = function () {
                 let trackingScript = document.createElement("script");
                 trackingScript.async = true;
                 trackingScript.src = "/analytics.js";
