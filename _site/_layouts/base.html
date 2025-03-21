@@ -186,7 +186,9 @@
             } else {
                 ad.dataset.adPersonalization = "0";
             }
-            if (!ad.dataset.adsbygoogleStatus) {
+
+            if (window.adsbygoogle) {
+                ad.innerHTML = "";
                 (adsbygoogle = window.adsbygoogle || []).push({});
             }
         });
