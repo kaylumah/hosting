@@ -187,8 +187,7 @@
                 ad.dataset.adPersonalization = "0";
             }
 
-            if (window.adsbygoogle) {
-                ad.innerHTML = "";
+            if (!ad.dataset.adsbygoogleStatus) {
                 (adsbygoogle = window.adsbygoogle || []).push({});
             }
         });
