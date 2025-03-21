@@ -127,14 +127,12 @@
     console.log(consoleSignatureText, consoleSignatureStyle);
 
     document.addEventListener("DOMContentLoaded", function() {
-        // Always load, so we can at least have non-personalized ads
-        addGoogleAdSense();
-
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
 
         if (currentConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAdSense();
             banner.classList.add("hidden");
         } else if (currentConsent === "denied") {
             removeGoogleAnalytics();
@@ -153,10 +151,10 @@
     });
 
     document.addEventListener("cookieConsentUpdated", function(event) {
-        reloadGoogleAdSense();
         let newConsent = event.detail;
         if (newConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAdSense();
         } else if (event.detail === "denied") {
             removeGoogleAnalytics();
         }
@@ -171,11 +169,17 @@
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
             document.head.appendChild(script);
             script.onload = function () {
-                reloadGoogleAdSense();
-            }
+                let adElements = document.querySelectorAll(".adsbygoogle");
+                adElements.forEach(ad => {
+                    ad.classList.remove("hidden"); // Show ads only after script loads
+                });
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            };
         }
     }
     
+    /*
     function reloadGoogleAdSense()
     {
         let consent = window.getCookieConsent();
@@ -192,6 +196,7 @@
             }
         });
     }
+    */
 
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
