@@ -549,6 +549,11 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
             </ul>
         </div>
 
+        <!-- Google AdSense Sidebar Ad -->
+        <div id="ad-container" class="bg-white rounded-2xl border border-gray-200 p-6 hidden">
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="6139717147" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        </div>
+        
         <!-- Popular Widget -->
         <div class="bg-white rounded-2xl border border-gray-200 p-6">
             <h2 class="text-xl font-semibold mb-4">Popular posts</h2>
@@ -635,6 +640,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
     window.GA_ID = "G-MEQZVWN0D7";
     window.COMMENT_ID = "138";
     const analyticsScriptId = "google-analytics-script";
+    const adsenseScriptId = "google-adsense-script";
 
     const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
     const consoleSignatureStyle =
@@ -655,6 +661,7 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
 
         if (currentConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAdSense();
             banner.classList.add("hidden");
         } else if (currentConsent === "denied") {
             removeGoogleAnalytics();
@@ -676,21 +683,44 @@ az role assignment create --assignee $UserIdentity --role &quot;Azure Service Bu
         let newConsent = event.detail;
         if (newConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAdSense();
         } else if (event.detail === "denied") {
             removeGoogleAnalytics();
         }
     });
 
+    function addGoogleAdSense() {
+        let adsenseScript = document.getElementById(adsenseScriptId);
+        if (!adsenseScript) {
+            let script = document.createElement("script");
+            script.id = adsenseScriptId;
+            script.async = true;
+            script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
+            document.head.appendChild(script);
+            script.onload = function () {
+                let adElements = document.querySelectorAll(".adsbygoogle");
+                adElements.forEach(ad => {
+                    let adParent = ad.parentElement;
+                    if (adParent && adParent.id === "ad-container") {
+                        adParent.classList.remove("hidden");
+                    }
+                });
+
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            };
+        }
+    }
+
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
-            let gaScript = document.createElement("script");
-            gaScript.id = analyticsScriptId;
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
-            document.head.appendChild(gaScript);
+            let script = document.createElement("script");
+            script.id = analyticsScriptId;
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${window.GA_ID}`;
+            document.head.appendChild(script);
 
-            gaScript.onload = function () {
+            script.onload = function () {
                 let trackingScript = document.createElement("script");
                 trackingScript.async = true;
                 trackingScript.src = "/analytics.js";
