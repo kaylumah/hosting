@@ -171,32 +171,16 @@
             script.onload = function () {
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
-                    ad.classList.remove("hidden"); // Show ads only after script loads
+                    let adParent = ad.closest("div");
+                    if (adParent) {
+                        adParent.classList.remove("hidden");
+                    }
                 });
 
                 (adsbygoogle = window.adsbygoogle || []).push({});
             };
         }
     }
-    
-    /*
-    function reloadGoogleAdSense()
-    {
-        let consent = window.getCookieConsent();
-        let adElements = document.querySelectorAll(".adsbygoogle");
-        adElements.forEach(ad => {
-            if (consent === "granted") {
-                delete ad.dataset.adPersonalization;
-            } else {
-                ad.dataset.adPersonalization = "0";
-            }
-
-            if (!ad.dataset.adsbygoogleStatus) {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            }
-        });
-    }
-    */
 
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
