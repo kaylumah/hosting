@@ -131,9 +131,11 @@
 
         if (currentConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAdSense();
             banner.classList.add("hidden");
         } else if (currentConsent === "denied") {
             removeGoogleAnalytics();
+            removeGoogleAdSense();
             banner.classList.add("hidden");
         }
 
@@ -152,10 +154,21 @@
         let newConsent = event.detail;
         if (newConsent === "granted") {
             addGoogleAnalytics();
+            addGoogleAnalytics();
         } else if (event.detail === "denied") {
             removeGoogleAnalytics();
+            removeGoogleAdSense();
         }
     });
+
+    function addGoogleAdSense() {
+        /* https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386 */
+        console.log("add AdSense")
+    }
+
+    function removeGoogleAdSense() {
+        console.log("remove AdSense")
+    }
 
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
