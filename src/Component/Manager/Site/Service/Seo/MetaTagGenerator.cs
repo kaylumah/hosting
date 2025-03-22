@@ -138,7 +138,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
                 if (string.IsNullOrEmpty(formattedTags) == false)
                 {
-                    CreateMetaTag("keywords", formattedTags);
+                    string tag = CreateMetaTag("keywords", formattedTags);
+                    result.Add(tag);
                 }
 
                 if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
