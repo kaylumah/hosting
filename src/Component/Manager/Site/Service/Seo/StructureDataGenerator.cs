@@ -39,7 +39,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
-            
+
             if (renderData.Page is Article article)
             {
                 LogLdJson(article.Uri, article.Type);
