@@ -192,7 +192,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 List<string> result = new List<string>
         {
             CreateMetaTag("twitter:card", "summary_large_image"),
-            CreateMetaTag("twitter:title", pageMetaData.Title),
+            CreateMetaTag("twitter:title", renderData.Title),
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
@@ -245,7 +245,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateOpenGraphMetaTag("og:type", pageMetaData.IsArticle() ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
-            CreateOpenGraphMetaTag("og:title", pageMetaData.Title),
+            CreateOpenGraphMetaTag("og:title", renderData.Title),
             CreateOpenGraphMetaTag("og:url", pageUrl),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };
