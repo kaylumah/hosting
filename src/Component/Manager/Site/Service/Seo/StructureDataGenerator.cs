@@ -40,25 +40,38 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
 
-            if (renderData.Page is Article article)
+            if (renderData.Page is PageMetaData page)
+            {
+                WebSite scheme = new WebSite();
+                scheme.Name = renderData.Site.Title;
+                scheme.Url = new Uri(renderData.Site.Url);
+                WebPage webPageScheme = new WebPage();
+                webPageScheme.Name = page.Title;
+                webPageScheme.Url = page.CanonicalUri;
+                webPageScheme.Description = page.Description;
+                webPageScheme.IsPartOf = scheme;
+                string webPageSchemeJson = webPageScheme.ToString(settings);
+                return webPageSchemeJson;
+            }
+            else if (renderData.Page is Article article)
             {
                 LogLdJson(article.Uri, article.Type);
-                BlogPosting blogPost = ToBlogPosting(article, authors, organizations);
-                string blogPostJson = blogPost.ToString(settings);
-                return blogPostJson;
+                BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
+                string blogPostSchemeJson = blogPostScheme.ToString(settings);
+                return blogPostSchemeJson;
             }
             else if (renderData.Page is CollectionPage collectionPage)
             {
                 if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
                 {
-                    Blog blog = ToBlog(collectionPage, authors, organizations);
-                    string blogJson = blog.ToString(settings);
-                    return blogJson;
+                    Blog blogScheme = ToBlog(collectionPage, authors, organizations);
+                    string blogSchemeJson = blogScheme.ToString(settings);
+                    return blogSchemeJson;
                 }
 
-                Schema.NET.CollectionPage itemList = ToCollectionPage(collectionPage);
-                string itemListJson = itemList.ToString(settings);
-                return itemListJson;
+                Schema.NET.CollectionPage collectionScheme = ToCollectionPage(collectionPage);
+                string collectionSchemeJson = collectionScheme.ToString(settings);
+                return collectionSchemeJson;
             }
 
             string result = string.Empty;
