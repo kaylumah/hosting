@@ -101,6 +101,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blog.Url = page.CanonicalUri;
             blog.Name = page.Title;
             blog.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            blog.Keywords = keywords;
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
             blog.DatePublished = page.Published;
             blog.DateModified = page.Modified;
