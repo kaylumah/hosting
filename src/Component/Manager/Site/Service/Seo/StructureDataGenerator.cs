@@ -70,7 +70,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             Blog blog = new Blog();
-            blog.Url = pageUri;
+            blog.Url = page.CanonicalUri;
+            blog.Name = page.Title;
+            blog.Description = page.Description;
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
             blog.DatePublished = page.Published;
             blog.DateModified = page.Modified;
