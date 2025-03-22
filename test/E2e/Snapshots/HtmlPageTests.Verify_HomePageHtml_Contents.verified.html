@@ -284,6 +284,19 @@
                     let adParent = ad.parentElement;
                     if (adParent && adParent.id === "ad-container") {
                         adParent.classList.remove("hidden");
+
+                        let checkAdStatus = setInterval(() => {
+                            let adStatus = ad.getAttribute("data-ad-status");
+                            
+                            if (adStatus !== null) {
+                                clearInterval(checkAdStatus);
+
+                                if (adStatus === "unfilled") {
+                                    adParent.classList.add("hidden");
+                                }
+                            }
+     
+                        }, 500);
                     }
                 });
 
