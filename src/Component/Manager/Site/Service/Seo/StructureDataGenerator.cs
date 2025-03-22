@@ -56,7 +56,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     return blogJson;
                 }
 
-                ItemList itemList = ToItemList(collectionPage);
+                Schema.NET.CollectionPage itemList = ToCollectionPage(collectionPage);
                 string itemListJson = itemList.ToString(settings);
                 return itemListJson;
             }
@@ -64,32 +64,27 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             string result = string.Empty;
             return result;
         }
-        
-        ItemList ToItemList(CollectionPage page)
+
+        Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
         {
-            List<ListItem> items = new List<ListItem>();
-            int position = 1;
-
-            foreach (Article article in page.RecentArticles)
+            List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
+            IEnumerable<Article> articles = page.RecentArticles;
+            foreach (Article article in articles)
             {
-                ListItem listItem = new ListItem();
-                listItem.Position = position++;
-                listItem.Url = article.CanonicalUri;
-                listItem.Name = article.Title;
- 
-                items.Add(listItem);
+                BlogPosting blogPosting = new BlogPosting();
+                blogPosting.Headline = article.Title;
+                blogPosting.Url = article.CanonicalUri;
+                creativeWorks.Add(blogPosting);
             }
-
-            ItemList itemList = new ItemList();
-            itemList.Url = page.CanonicalUri;
-            itemList.Name = page.Title;
-            itemList.Description = page.Description;
-            OneOrMany<IListItem> listItemWrapper = new OneOrMany<IListItem>(items);
-            itemList.ItemListElement = new Values<IListItem, string, IThing>(listItemWrapper);
-
-            return itemList;
+            
+            Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
+            collectionPage.Url = page.CanonicalUri;
+            collectionPage.Name = page.Title;
+            collectionPage.Description = page.Description;
+            collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
+            return collectionPage;
         }
-        
+
         Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             List<BlogPosting> posts = new List<BlogPosting>();

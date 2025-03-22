@@ -251,7 +251,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         readonly Dictionary<PageId, PageMetaData> _Lookup;
 
         public int Take => GetInt(nameof(Take));
-        
+
         public IEnumerable<BasePage> Items
         { get; }
 
@@ -349,7 +349,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             {
                 pages = pages.Take(Take);
             }
-            
+
             return pages;
         }
 
@@ -357,12 +357,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             IEnumerable<Article> articles = Items.OfType<Article>()
                 .ByRecentlyPublished();
-            
+
             if (0 < Take)
             {
                 articles = articles.Take(Take);
             }
-            
+
             return articles;
         }
 
