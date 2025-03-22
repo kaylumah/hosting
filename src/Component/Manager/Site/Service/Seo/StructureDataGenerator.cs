@@ -44,8 +44,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             {
                 LogLdJson(article.Uri, article.Type);
                 BlogPosting blogPost = ToBlogPosting(article, authors, organizations);
-                string ldjson = blogPost.ToString(settings);
-                return ldjson;
+                string blogPostJson = blogPost.ToString(settings);
+                return blogPostJson;
             }
             else if (renderData.Page is CollectionPage collectionPage)
             {
