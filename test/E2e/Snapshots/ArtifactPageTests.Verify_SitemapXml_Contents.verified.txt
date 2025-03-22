@@ -70,11 +70,11 @@
   </url>
   <url>
     <loc>https://BaseUrl_1/archive.html</loc>
-    <lastmod>2025-03-09T00:00:00+01:00</lastmod>
+    <lastmod>2025-03-22T00:00:00+01:00</lastmod>
   </url>
   <url>
     <loc>https://BaseUrl_1/blog.html</loc>
-    <lastmod>2025-03-09T00:00:00+01:00</lastmod>
+    <lastmod>2025-03-22T00:00:00+01:00</lastmod>
   </url>
   <url>
     <loc>https://BaseUrl_1/privacy.html</loc>

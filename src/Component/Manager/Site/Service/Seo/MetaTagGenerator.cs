@@ -133,9 +133,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     CreateLinkTag("sitemap", sitemapUri, "application/xml", $"{renderData.Site.Title} Sitemap"),
                     CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
                     CreateMetaTag("description", renderData.Description),
-                    CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-                    CreateMetaTag("keywords", formattedTags)
+                    CreateMetaTag("copyright", renderData.Site.Build.Copyright)
                 };
+
+                if (string.IsNullOrEmpty(formattedTags) == false)
+                {
+                    string tag = CreateMetaTag("keywords", formattedTags);
+                    result.Add(tag);
+                }
+
                 if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                 {
                     AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
@@ -192,7 +198,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 List<string> result = new List<string>
         {
             CreateMetaTag("twitter:card", "summary_large_image"),
-            CreateMetaTag("twitter:title", pageMetaData.Title),
+            CreateMetaTag("twitter:title", renderData.Title),
             CreateMetaTag("twitter:description", renderData.Description)
         };
 
@@ -245,7 +251,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             CreateOpenGraphMetaTag("og:type", pageMetaData.IsArticle() ? "article" : "website"),
             CreateOpenGraphMetaTag("og:locale", renderData.Language),
             CreateOpenGraphMetaTag("og:site_name", renderData.Site.Title),
-            CreateOpenGraphMetaTag("og:title", pageMetaData.Title),
+            CreateOpenGraphMetaTag("og:title", renderData.Title),
             CreateOpenGraphMetaTag("og:url", pageUrl),
             CreateOpenGraphMetaTag("og:description", renderData.Description)
         };

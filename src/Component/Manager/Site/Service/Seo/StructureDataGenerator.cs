@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
@@ -44,26 +43,67 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             if (renderData.Page is Article article)
             {
                 LogLdJson(article.Uri, article.Type);
-                BlogPosting blogPost = ToBlogPosting(article, authors, organizations);
-                string ldjson = blogPost.ToString(settings);
-                return ldjson;
+                BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
+                string blogPostSchemeJson = blogPostScheme.ToString(settings);
+                return blogPostSchemeJson;
             }
-            else if (renderData.Page is CollectionPage collectionPage && "blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+            else if (renderData.Page is CollectionPage collectionPage)
             {
-                List<Article> articles = renderData.Site.FeaturedArticles.ToList();
-                Blog blog = ToBlog(collectionPage, articles, authors, organizations);
-                string ldjson = blog.ToString(settings);
-                return ldjson;
+                if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+                {
+                    Blog blogScheme = ToBlog(collectionPage, authors, organizations);
+                    string blogSchemeJson = blogScheme.ToString(settings);
+                    return blogSchemeJson;
+                }
+
+                Schema.NET.CollectionPage collectionScheme = ToCollectionPage(collectionPage);
+                string collectionSchemeJson = collectionScheme.ToString(settings);
+                return collectionSchemeJson;
+            }
+            else if (renderData.Page is PageMetaData page)
+            {
+                WebSite scheme = new WebSite();
+                scheme.Name = renderData.Site.Title;
+                scheme.Url = new Uri(renderData.Site.Url);
+                WebPage webPageScheme = new WebPage();
+                webPageScheme.Name = page.Title;
+                webPageScheme.Url = page.CanonicalUri;
+                webPageScheme.Description = page.Description;
+                webPageScheme.IsPartOf = scheme;
+                string webPageSchemeJson = webPageScheme.ToString(settings);
+                return webPageSchemeJson;
             }
 
             string result = string.Empty;
             return result;
         }
 
-        Blog ToBlog(PageMetaData page, List<Article> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
         {
-            Uri pageUri = page.CanonicalUri;
+            List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
+            IEnumerable<Article> articles = page.RecentArticles;
+            foreach (Article article in articles)
+            {
+                BlogPosting blogPosting = new BlogPosting();
+                blogPosting.Headline = article.Title;
+                blogPosting.Url = article.CanonicalUri;
+                creativeWorks.Add(blogPosting);
+            }
+
+            Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
+            collectionPage.Url = page.CanonicalUri;
+            collectionPage.Name = page.Title;
+            collectionPage.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            collectionPage.Keywords = keywords;
+            collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
+            return collectionPage;
+        }
+
+        Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
             List<BlogPosting> posts = new List<BlogPosting>();
+            IEnumerable<Article> articles = page.RecentArticles;
             foreach (Article article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
@@ -71,7 +111,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             Blog blog = new Blog();
-            blog.Url = pageUri;
+            blog.Url = page.CanonicalUri;
+            blog.Name = page.Title;
+            blog.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            blog.Keywords = keywords;
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
             blog.DatePublished = page.Published;
             blog.DateModified = page.Modified;
