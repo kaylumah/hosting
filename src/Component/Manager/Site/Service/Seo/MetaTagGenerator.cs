@@ -133,9 +133,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     CreateLinkTag("sitemap", sitemapUri, "application/xml", $"{renderData.Site.Title} Sitemap"),
                     CreateMetaTag("generator", $"Kaylumah v{renderData.Site.Build.ShortGitHash}"),
                     CreateMetaTag("description", renderData.Description),
-                    CreateMetaTag("copyright", renderData.Site.Build.Copyright),
-                    CreateMetaTag("keywords", formattedTags)
+                    CreateMetaTag("copyright", renderData.Site.Build.Copyright)
                 };
+
+                if (string.IsNullOrEmpty(formattedTags) == false)
+                {
+                    CreateMetaTag("keywords", formattedTags);
+                }
+
                 if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                 {
                     AuthorMetaData author = renderData.Site.AuthorMetaData[pageMetaData.Author];
