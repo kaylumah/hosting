@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
@@ -50,9 +49,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page is CollectionPage collectionPage && "blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
             {
-                // TODO include archive?
-                List<Article> articles = renderData.Site.FeaturedArticles.ToList();
-                Blog blog = ToBlog(collectionPage, articles, authors, organizations);
+                Blog blog = ToBlog(collectionPage, authors, organizations);
                 string ldjson = blog.ToString(settings);
                 return ldjson;
             }
@@ -61,10 +58,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return result;
         }
 
-        Blog ToBlog(PageMetaData page, List<Article> articles, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = page.CanonicalUri;
             List<BlogPosting> posts = new List<BlogPosting>();
+            IEnumerable<Article> articles = page.RecentArticles;
             foreach (Article article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
