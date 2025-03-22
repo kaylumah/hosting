@@ -76,7 +76,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPosting.Url = article.CanonicalUri;
                 creativeWorks.Add(blogPosting);
             }
-            
+
             Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
             collectionPage.Url = page.CanonicalUri;
             collectionPage.Name = page.Title;
