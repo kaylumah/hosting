@@ -81,6 +81,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             collectionPage.Url = page.CanonicalUri;
             collectionPage.Name = page.Title;
             collectionPage.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            collectionPage.Keywords = keywords;
             collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
             return collectionPage;
         }
