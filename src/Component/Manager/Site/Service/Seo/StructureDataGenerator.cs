@@ -47,20 +47,51 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 string ldjson = blogPost.ToString(settings);
                 return ldjson;
             }
-            else if (renderData.Page is CollectionPage collectionPage && "blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+            else if (renderData.Page is CollectionPage collectionPage)
             {
-                Blog blog = ToBlog(collectionPage, authors, organizations);
-                string ldjson = blog.ToString(settings);
-                return ldjson;
+                if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+                {
+                    Blog blog = ToBlog(collectionPage, authors, organizations);
+                    string blogJson = blog.ToString(settings);
+                    return blogJson;
+                }
+
+                ItemList itemList = ToItemList(collectionPage);
+                string itemListJson = itemList.ToString(settings);
+                return itemListJson;
             }
 
             string result = string.Empty;
             return result;
         }
+        
+        ItemList ToItemList(CollectionPage page)
+        {
+            List<ListItem> items = new List<ListItem>();
+            int position = 1;
 
+            foreach (Article article in page.RecentArticles)
+            {
+                ListItem listItem = new ListItem();
+                listItem.Position = position++;
+                listItem.Url = article.CanonicalUri;
+                listItem.Name = article.Title;
+ 
+                items.Add(listItem);
+            }
+
+            ItemList itemList = new ItemList();
+            itemList.Url = page.CanonicalUri;
+            itemList.Name = page.Title;
+            itemList.Description = page.Description;
+            OneOrMany<IListItem> listItemWrapper = new OneOrMany<IListItem>(items);
+            itemList.ItemListElement = new Values<IListItem, string, IThing>(listItemWrapper);
+
+            return itemList;
+        }
+        
         Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            Uri pageUri = page.CanonicalUri;
             List<BlogPosting> posts = new List<BlogPosting>();
             IEnumerable<Article> articles = page.RecentArticles;
             foreach (Article article in articles)
