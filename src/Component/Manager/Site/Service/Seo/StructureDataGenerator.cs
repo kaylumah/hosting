@@ -39,21 +39,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
-
-            if (renderData.Page is PageMetaData page)
-            {
-                WebSite scheme = new WebSite();
-                scheme.Name = renderData.Site.Title;
-                scheme.Url = new Uri(renderData.Site.Url);
-                WebPage webPageScheme = new WebPage();
-                webPageScheme.Name = page.Title;
-                webPageScheme.Url = page.CanonicalUri;
-                webPageScheme.Description = page.Description;
-                webPageScheme.IsPartOf = scheme;
-                string webPageSchemeJson = webPageScheme.ToString(settings);
-                return webPageSchemeJson;
-            }
-            else if (renderData.Page is Article article)
+            
+            if (renderData.Page is Article article)
             {
                 LogLdJson(article.Uri, article.Type);
                 BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
@@ -72,6 +59,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 Schema.NET.CollectionPage collectionScheme = ToCollectionPage(collectionPage);
                 string collectionSchemeJson = collectionScheme.ToString(settings);
                 return collectionSchemeJson;
+            }
+            else if (renderData.Page is PageMetaData page)
+            {
+                WebSite scheme = new WebSite();
+                scheme.Name = renderData.Site.Title;
+                scheme.Url = new Uri(renderData.Site.Url);
+                WebPage webPageScheme = new WebPage();
+                webPageScheme.Name = page.Title;
+                webPageScheme.Url = page.CanonicalUri;
+                webPageScheme.Description = page.Description;
+                webPageScheme.IsPartOf = scheme;
+                string webPageSchemeJson = webPageScheme.ToString(settings);
+                return webPageSchemeJson;
             }
 
             string result = string.Empty;
