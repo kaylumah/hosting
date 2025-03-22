@@ -95,7 +95,7 @@ namespace Test.E2e.SnapshotTests
             await blogPage.NavigateAsync();
             Dictionary<string, string>? headers = await blogPage.GetHeaders();
             string title = await page.TitleAsync();
-            title.Should().Be("Articles from the blog by Max Hamulyák · Kaylumah");
+            title.Should().Be("Kaylumah Blog · C#, Testing, Software Quality by Max Hamulyák");
 
             await HtmlPageVerifier.Verify(blogPage);
         }
