@@ -171,8 +171,6 @@
             script.onload = function () {
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                    /*
                     let adParent = ad.parentElement;
                     if (adParent && adParent.hasAttribute("ad-container")) {
                         adParent.classList.remove("hidden");
@@ -190,7 +188,6 @@
      
                         }, 500);
                     }
-                   */
                 });
             };
         }
