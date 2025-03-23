@@ -180,15 +180,15 @@
             }
 
             oldAd.remove();
-            (adsbygoogle = window.adsbygoogle || []).push({});
             checkAdStatus(newAd);
         });
     }
     
     function checkAdStatus(ad) {
         let isAd = ad.hasAttribute("data-ad-slot");
-        if (isAd)
+        if (isAd && ad.offsetWidth > 0)
         {
+            (adsbygoogle = window.adsbygoogle || []).push({});
             let checkAdStatus = setInterval(() => {
                 let adStatus = ad.getAttribute("data-ad-status");
 
@@ -196,10 +196,8 @@
                     clearInterval(checkAdStatus);
                     if (adStatus === "unfilled") {
                         ad.style.display = "none";
-                        ad.setAttribute("data-ad-hidden", "true");
                     } else {
                         ad.style.display = "block";
-                        ad.removeAttribute("data-ad-hidden");
                     }
                 }
             }, 500);
@@ -217,7 +215,6 @@
             script.onload = function () {
                 let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
                 adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
-                    (adsbygoogle = window.adsbygoogle || []).push({});
                     checkAdStatus(ad);
                 });
             };
