@@ -172,7 +172,7 @@
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
                     let adParent = ad.parentElement;
-                    if (adParent && adParent.id === "ad-container") {
+                    if (adParent && adParent.hasAttribute("ad-container")) {
                         adParent.classList.remove("hidden");
 
                         let checkAdStatus = setInterval(() => {
