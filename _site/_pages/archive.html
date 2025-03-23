@@ -33,7 +33,7 @@ type: Collection
         </ul>
     </section>
     {% endfor %}
-    <div class="mt-6 text-center">
+    <div id="load-more" class="mt-6 text-center hidden">
         <a href="/archive.html" class="text-gray-700 font-medium hover:underline">View More Articles →</a>
     </div>
 </div>
@@ -43,6 +43,8 @@ type: Collection
     // TODO what if Tag is unknown
     if (tag)
     {
+        let loadMoreElement = document.getElementById("load-more");
+        loadMoreElement.classList.remove("hidden");
         let blogPostLists = Array.from(document.querySelectorAll("[data-blog-list]"));
 
         blogPostLists.forEach(blogPostList => {
