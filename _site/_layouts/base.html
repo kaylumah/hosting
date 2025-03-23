@@ -174,7 +174,7 @@
                     let adParent = ad.parentElement;
                     if (adParent && adParent.hasAttribute("ad-container")) {
                         adParent.classList.remove("hidden");
-
+                        (adsbygoogle = window.adsbygoogle || []).push({});
                         let checkAdStatus = setInterval(() => {
                             let adStatus = ad.getAttribute("data-ad-status");
                             
@@ -189,8 +189,6 @@
                         }, 500);
                     }
                 });
-
-                (adsbygoogle = window.adsbygoogle || []).push({});
             };
         }
     }
