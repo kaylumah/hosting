@@ -327,9 +327,9 @@
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
                     let adParent = ad.parentElement;
-                    if (adParent && adParent.id === "ad-container") {
+                    if (adParent && adParent.hasAttribute("data-ad-container")) {
                         adParent.classList.remove("hidden");
-
+                        (adsbygoogle = window.adsbygoogle || []).push({});
                         let checkAdStatus = setInterval(() => {
                             let adStatus = ad.getAttribute("data-ad-status");
                             
@@ -344,8 +344,6 @@
                         }, 500);
                     }
                 });
-
-                (adsbygoogle = window.adsbygoogle || []).push({});
             };
         }
     }

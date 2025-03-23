@@ -469,8 +469,7 @@
         </div>
 
         <!-- Google AdSense Sidebar Ad -->
-        <div id="ad-container" class="bg-white rounded-2xl border border-gray-200 p-6 hidden">
-            <h2 class="text-xl font-semibold mb-4">Advertisement</h2>
+        <div data-ad-container="true" class="bg-white rounded-2xl border border-gray-200 p-6 hidden">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="6139717147" data-ad-format="auto" data-full-width-responsive="true"></ins>
         </div>
         
@@ -534,6 +533,10 @@
         </script>
         
     </aside>
+    <!-- Ad Bar -->
+    <div data-ad-container="true" class="lg:col-span-3 bg-white rounded-2xl border border-gray-200 p-6 text-center hidden lg:block">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="1382385929" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
 </div>
 </div>
 <footer class="bg-white border-t border-gray-200 py-6 text-center text-gray-500 text-sm">
@@ -621,9 +624,9 @@
                 let adElements = document.querySelectorAll(".adsbygoogle");
                 adElements.forEach(ad => {
                     let adParent = ad.parentElement;
-                    if (adParent && adParent.id === "ad-container") {
+                    if (adParent && adParent.hasAttribute("data-ad-container")) {
                         adParent.classList.remove("hidden");
-
+                        (adsbygoogle = window.adsbygoogle || []).push({});
                         let checkAdStatus = setInterval(() => {
                             let adStatus = ad.getAttribute("data-ad-status");
                             
@@ -638,8 +641,6 @@
                         }, 500);
                     }
                 });
-
-                (adsbygoogle = window.adsbygoogle || []).push({});
             };
         }
     }
