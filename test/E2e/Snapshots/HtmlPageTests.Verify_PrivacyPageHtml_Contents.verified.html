@@ -315,6 +315,71 @@
         }
     });
 
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+
+    window.addEventListener("resize", function() {
+        clearTimeout(window.adResizeTimer);
+
+        window.adResizeTimer = setTimeout(() => {
+            let currentWidth = window.innerWidth;
+            let currentHeight = window.innerHeight;
+
+            let widthDelta = Math.abs(currentWidth - lastWidth);
+            let heightDelta = Math.abs(currentHeight - lastHeight);
+
+            if (widthDelta > 100 || heightDelta > 50) {
+                refreshAds();
+                lastWidth = currentWidth;
+                lastHeight = currentHeight;
+            }
+        }, 500);
+    });
+    
+    function refreshAds() {
+        let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
+        adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(oldAd => {
+            const allowedAttributes = ["class", "style", "data-ad-client", "data-ad-slot", "data-ad-format", "data-full-width-responsive"];
+            let newAd = document.createElement("ins");
+            allowedAttributes.forEach(attr => {
+                if (oldAd.hasAttribute(attr)) {
+                    newAd.setAttribute(attr, oldAd.getAttribute(attr));
+                }
+            });
+            
+            if (oldAd.nextElementSibling) {
+                oldAd.nextElementSibling.before(newAd);
+            } else if (oldAd.previousElementSibling) {
+                oldAd.previousElementSibling.after(newAd);
+            } else if (oldAd.parentElement) {
+                oldAd.parentElement.appendChild(newAd);
+            }
+
+            oldAd.remove();
+            checkAdStatus(newAd);
+        });
+    }
+    
+    function checkAdStatus(ad) {
+        let isAd = ad.hasAttribute("data-ad-slot");
+        if (isAd && ad.offsetWidth > 0)
+        {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            let checkAdStatus = setInterval(() => {
+                let adStatus = ad.getAttribute("data-ad-status");
+
+                if (adStatus !== null) {
+                    clearInterval(checkAdStatus);
+                    if (adStatus === "unfilled") {
+                        ad.style.display = "none";
+                    } else {
+                        ad.style.display = "block";
+                    }
+                }
+            }, 500);
+        }
+    }
+    
     function addGoogleAdSense() {
         let adsenseScript = document.getElementById(adsenseScriptId);
         if (!adsenseScript) {
@@ -324,25 +389,9 @@
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
             document.head.appendChild(script);
             script.onload = function () {
-                let adElements = document.querySelectorAll(".adsbygoogle");
-                adElements.forEach(ad => {
-                    let adParent = ad.parentElement;
-                    if (adParent && adParent.hasAttribute("data-ad-container")) {
-                        adParent.classList.remove("hidden");
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                        let checkAdStatus = setInterval(() => {
-                            let adStatus = ad.getAttribute("data-ad-status");
-                            
-                            if (adStatus !== null) {
-                                clearInterval(checkAdStatus);
-
-                                if (adStatus === "unfilled") {
-                                    adParent.classList.add("hidden");
-                                }
-                            }
-     
-                        }, 500);
-                    }
+                let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
+                adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
+                    checkAdStatus(ad);
                 });
             };
         }
@@ -365,6 +414,7 @@
             }
         }
     }
+    
     function removeGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (analyticsScript) {

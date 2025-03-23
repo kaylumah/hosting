@@ -469,9 +469,7 @@
         </div>
 
         <!-- Google AdSense Sidebar Ad -->
-        <div data-ad-container="true" class="bg-white rounded-2xl border border-gray-200 p-6 hidden">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="6139717147" data-ad-format="auto" data-full-width-responsive="true"></ins>
-        </div>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="6139717147" data-ad-format="auto" data-full-width-responsive="true"></ins>
         
         <!-- Popular Widget -->
         <div class="bg-white rounded-2xl border border-gray-200 p-6">
@@ -499,119 +497,46 @@
 
         <script>
             const words = [];
-
-            const container = document.getElementById('word-cloud');
-
-            words.forEach(word => {
-                const li = document.createElement('li');
-                const anchor = document.createElement('a');
-                anchor.href = `/archive.html?tag=${word.Id}`;
-                anchor.title = word.Description;
-                anchor.textContent = `${word.DisplayName} (${word.Size})`;
-                anchor.classList.add("inline-flex", "hover:underline", "transition");
-
-                // Apply font sizes based on word frequency
-                const x = word.Size;
-                switch (true) {
-                    case (x < 2):
-                        anchor.classList.add("text-sm", "text-gray-600", "opacity-80");
-                        break;
-                    case (x < 4):
-                        anchor.classList.add("text-base", "font-medium", "text-gray-700");
-                        break;
-                    case (x < 6):
-                        anchor.classList.add("text-lg", "font-semibold", "text-gray-800");
-                        break;
-                    default:
-                        anchor.classList.add("text-2xl", "font-bold", "text-gray-900");
-                        break;
+            let newAd = document.createElement("ins");
+            allowedAttributes.forEach(attr => {
+                if (oldAd.hasAttribute(attr)) {
+                    newAd.setAttribute(attr, oldAd.getAttribute(attr));
                 }
-
-                li.appendChild(anchor);
-                container.appendChild(li);
             });
-        </script>
-        
-    </aside>
-    <!-- Ad Bar -->
-    <div data-ad-container="true" class="lg:col-span-3 bg-white rounded-2xl border border-gray-200 p-6 text-center hidden lg:block">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="1382385929" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    </div>
-</div>
-</div>
-<footer class="bg-white border-t border-gray-200 py-6 text-center text-gray-500 text-sm">
-    © Kaylumah. All rights reserved.
-</footer>
-<div id="cookie-banner" class="fixed inset-x-0 bottom-0 z-50 bg-white shadow-md border-t border-gray-200 p-4 tablet:p-6 flex flex-col tablet:flex-row items-center justify-between gap-4">
-    <p class="text-sm text-gray-900 leading-6">
-        This website uses cookies to enhance your browsing experience, analyze site traffic, and serve better user experiences. By continuing to use this site, you consent to our use of cookies.
-        Learn more in our
-        <a class="font-semibold text-primary hover:underline" href="/privacy">cookie policy</a>.
-    </p>
-    <div class="flex items-center gap-4">
-        <button id="accept-cookies" type="button" class="rounded-md bg-gray-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-700">
-            Accept all
-        </button>
-        <button id="reject-cookies" type="button" class="text-sm font-semibold text-gray-900 hover:text-gray-700">
-            Reject all
-        </button>
-    </div>
-</div>
+            
+            if (oldAd.nextElementSibling) {
+                oldAd.nextElementSibling.before(newAd);
+            } else if (oldAd.previousElementSibling) {
+                oldAd.previousElementSibling.after(newAd);
+            } else if (oldAd.parentElement) {
+                oldAd.parentElement.appendChild(newAd);
+            }
 
-<script src="/comments.js" defer></script>
-<script>
-    window.GA_ID = "G-MEQZVWN0D7";
-    window.COMMENT_ID = "";
-    const analyticsScriptId = "google-analytics-script";
-    const adsenseScriptId = "google-adsense-script";
-
-    const consoleSignatureText = '%c👨‍💻 Thank you for your visit to my little spot on the internet, be welcome! 🧸';
-    const consoleSignatureStyle =
-    `
-      font-size: 16px;
-      background: #4cae50;
-      color: white;
-      text-align: center;
-      padding: 10px 15px;
-      width: 100%;
-      border-radius: 20px;
-    `;
-    console.log(consoleSignatureText, consoleSignatureStyle);
-
-    document.addEventListener("DOMContentLoaded", function() {
-        let banner = document.getElementById("cookie-banner");
-        let currentConsent = window.getCookieConsent();
-
-        if (currentConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
-            banner.classList.add("hidden");
-        } else if (currentConsent === "denied") {
-            removeGoogleAnalytics();
-            banner.classList.add("hidden");
-        }
-
-        document.getElementById("accept-cookies").addEventListener("click", function() {
-            window.setCookieConsent("granted");
-            banner.classList.add("hidden");
+            oldAd.remove();
+            checkAdStatus(newAd);
         });
+    }
+    
+    function checkAdStatus(ad) {
+        let isAd = ad.hasAttribute("data-ad-slot");
+        if (isAd && ad.offsetWidth > 0)
+        {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            let checkAdStatus = setInterval(() => {
+                let adStatus = ad.getAttribute("data-ad-status");
 
-        document.getElementById("reject-cookies").addEventListener("click", function() {
-            window.setCookieConsent("denied");
-            banner.classList.add("hidden");
-        });
-    });
-
-    document.addEventListener("cookieConsentUpdated", function(event) {
-        let newConsent = event.detail;
-        if (newConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
-        } else if (event.detail === "denied") {
-            removeGoogleAnalytics();
+                if (adStatus !== null) {
+                    clearInterval(checkAdStatus);
+                    if (adStatus === "unfilled") {
+                        ad.style.display = "none";
+                    } else {
+                        ad.style.display = "block";
+                    }
+                }
+            }, 500);
         }
-    });
-
+    }
+    
     function addGoogleAdSense() {
         let adsenseScript = document.getElementById(adsenseScriptId);
         if (!adsenseScript) {
@@ -621,25 +546,9 @@
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
             document.head.appendChild(script);
             script.onload = function () {
-                let adElements = document.querySelectorAll(".adsbygoogle");
-                adElements.forEach(ad => {
-                    let adParent = ad.parentElement;
-                    if (adParent && adParent.hasAttribute("data-ad-container")) {
-                        adParent.classList.remove("hidden");
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                        let checkAdStatus = setInterval(() => {
-                            let adStatus = ad.getAttribute("data-ad-status");
-                            
-                            if (adStatus !== null) {
-                                clearInterval(checkAdStatus);
-
-                                if (adStatus === "unfilled") {
-                                    adParent.classList.add("hidden");
-                                }
-                            }
-     
-                        }, 500);
-                    }
+                let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
+                adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
+                    checkAdStatus(ad);
                 });
             };
         }
@@ -662,6 +571,7 @@
             }
         }
     }
+    
     function removeGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (analyticsScript) {
