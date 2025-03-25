@@ -14,6 +14,7 @@
         Value: my-page
       },
       Sitemap: false,
+      Ads: false,
       Tags: [
         1
       ],
@@ -28,6 +29,7 @@
         Value: my-page
       },
       Sitemap: false,
+      Ads: false,
       Tags: [
         1
       ],
