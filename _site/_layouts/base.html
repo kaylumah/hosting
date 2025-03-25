@@ -126,16 +126,28 @@
     `;
     console.log(consoleSignatureText, consoleSignatureStyle);
 
+    function consentGranted()
+    {
+        addGoogleAnalytics();
+        {%- if page.ads %}
+        addGoogleAdSense();
+        {%- endif %}
+    }
+
+    function consentDenied()
+    {
+        removeGoogleAnalytics();
+    }
+    
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
 
         if (currentConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
+            consentGranted();
             banner.classList.add("hidden");
         } else if (currentConsent === "denied") {
-            removeGoogleAnalytics();
+            consentDenied();
             banner.classList.add("hidden");
         }
 
@@ -153,13 +165,13 @@
     document.addEventListener("cookieConsentUpdated", function(event) {
         let newConsent = event.detail;
         if (newConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
+            consentGranted();
         } else if (event.detail === "denied") {
-            removeGoogleAnalytics();
+            consentDenied();
         }
     });
 
+    {%- if page.ads %}
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
@@ -241,7 +253,7 @@
             };
         }
     }
-
+    {%- endif %}
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {

@@ -467,7 +467,6 @@
                 </li>
             </ul>
         </div>
-
         <!-- Google AdSense Sidebar Ad -->
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="6139717147" data-ad-format="auto" data-full-width-responsive="true"></ins>
         
@@ -534,7 +533,7 @@
     <!-- Ad Bar -->
     <div class="lg:col-span-3 text-center hidden lg:block">
         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3130074590591386" data-ad-slot="1382385929" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    </div>
+    </div> 
 </div>
 </div>
 <footer class="bg-white border-t border-gray-200 py-6 text-center text-gray-500 text-sm">
@@ -576,16 +575,26 @@
     `;
     console.log(consoleSignatureText, consoleSignatureStyle);
 
+    function consentGranted()
+    {
+        addGoogleAnalytics();
+        addGoogleAdSense();
+    }
+
+    function consentDenied()
+    {
+        removeGoogleAnalytics();
+    }
+    
     document.addEventListener("DOMContentLoaded", function() {
         let banner = document.getElementById("cookie-banner");
         let currentConsent = window.getCookieConsent();
 
         if (currentConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
+            consentGranted();
             banner.classList.add("hidden");
         } else if (currentConsent === "denied") {
-            removeGoogleAnalytics();
+            consentDenied();
             banner.classList.add("hidden");
         }
 
@@ -603,13 +612,11 @@
     document.addEventListener("cookieConsentUpdated", function(event) {
         let newConsent = event.detail;
         if (newConsent === "granted") {
-            addGoogleAnalytics();
-            addGoogleAdSense();
+            consentGranted();
         } else if (event.detail === "denied") {
-            removeGoogleAnalytics();
+            consentDenied();
         }
     });
-
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
@@ -691,7 +698,6 @@
             };
         }
     }
-
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
