@@ -171,6 +171,7 @@
         }
     });
 
+    {% if page.ads %}
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
@@ -252,7 +253,7 @@
             };
         }
     }
-
+    {% endif %}
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
