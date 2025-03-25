@@ -269,7 +269,6 @@
     function consentGranted()
     {
         addGoogleAnalytics();
-        
     }
 
     function consentDenied()
@@ -308,8 +307,6 @@
             consentDenied();
         }
     });
-
-    
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
