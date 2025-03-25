@@ -129,9 +129,9 @@
     function consentGranted()
     {
         addGoogleAnalytics();
-        {% if page.ads %}
+        {%- if page.ads %}
         addGoogleAdSense();
-        {% endif %}
+        {%- endif %}
     }
 
     function consentDenied()
