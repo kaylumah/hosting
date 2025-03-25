@@ -36,7 +36,7 @@ namespace Test.E2e
         [GeneratedRegex(@"(?<before>>)(?<val>[a-zA-Z0-9 -]*)(?<after> ago<)")]
         public static partial Regex TimeAgo();
 
-        [GeneratedRegex(@"(?<before>const words = \[)(?<val>(.|\n)*)(?<after>];)")]
+        [GeneratedRegex(@"(?<before>const words = \[)(?<val>[\s\S]*?)(?<after>];)")]
         public static partial Regex TagCloud();
     }
 
@@ -137,7 +137,7 @@ namespace Test.E2e
             // settings.AddScrubber(_ => _.Replace(version, "[BUILD-Version]"));
             settings.ScrubMatches(buildNumberRegex, "BuildNumber_");
 #pragma warning disable IDESIGN103
-            settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
+            // settings.ReplaceMatches(VerifierHelper.TimeAgo(), "Time_Unit");
             settings.ReplaceMatches(VerifierHelper.TagCloud(), string.Empty);
             await Verifier.Verify(html, "html", settings);
         }
