@@ -150,6 +150,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public AuthorId Author => GetString(nameof(Author));
         public OrganizationId Organization => GetString(nameof(Organization));
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
+        public bool Ads => GetBoolValue(nameof(Ads));
 
         public string LdJson
         {
