@@ -171,7 +171,7 @@
         }
     });
 
-    {% if page.ads %}
+    {%- if page.ads %}
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
@@ -253,7 +253,7 @@
             };
         }
     }
-    {% endif %}
+    {%- endif %}
     function addGoogleAnalytics() {
         let analyticsScript = document.getElementById(analyticsScriptId);
         if (!analyticsScript) {
