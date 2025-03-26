@@ -6,7 +6,7 @@
     "explorer.fileNesting.patterns": {
         "*.feature": "$(capture).feature.cs"
     },
-    "dotnet.defaultSolution": "SSG.slnx",
+    "dotnet.defaultSolution": "SSG.sln",
     "cSpell.words": [
         "Kaylumah",
         "testid"
