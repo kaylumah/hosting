@@ -10,7 +10,7 @@
       <!-- <PowerShellExecutionPolicy>Restricted</PowerShellExecutionPolicy> -->
       <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
       <OutdatedScript>$(MSBuildProjectDirectory)/tools/Outdated.ps1</OutdatedScript>
-      <TargetProject>$(MSBuildProjectDirectory)/SSG.slnx</TargetProject>
+      <TargetProject>$(MSBuildProjectDirectory)/SSG.sln</TargetProject>
     </PropertyGroup>
     <Exec Command="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" />
   </Target>
