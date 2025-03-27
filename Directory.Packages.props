@@ -47,7 +47,7 @@
     <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
     <PackageVersion Include="Reqnroll.xUnit" Version="2.4.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
-    <PackageVersion Include="FluentAssertions" Version="[7.0.0, 7.0.0]" />
+    <PackageVersion Include="FluentAssertions" Version="[7.0.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.51.0" />
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
     <!--<PackageVersion Include="ReportGenerator" Version="5.1.20"/>-->
