@@ -12,11 +12,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public static readonly Func<PageMetaData, bool> Tags;
 
-        public static readonly Func<Article, bool> Series;
+        public static readonly Func<ArticleMetaData, bool> Series;
 
         public static readonly Func<PageMetaData, bool> Html;
 
-        public static readonly Func<Article, bool> Featured;
+        public static readonly Func<ArticleMetaData, bool> Featured;
 
         static PageMetaDataExtensions()
         {
@@ -67,15 +67,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<Article> HasSeries(this IEnumerable<Article> source)
+        public static IEnumerable<ArticleMetaData> HasSeries(this IEnumerable<ArticleMetaData> source)
         {
-            IEnumerable<Article> result = source.Where(Series);
+            IEnumerable<ArticleMetaData> result = source.Where(Series);
             return result;
         }
 
-        public static IEnumerable<Article> FromSeries(this IEnumerable<Article> source, string series)
+        public static IEnumerable<ArticleMetaData> FromSeries(this IEnumerable<ArticleMetaData> source, string series)
         {
-            IEnumerable<Article> result = source
+            IEnumerable<ArticleMetaData> result = source
                 .HasSeries()
                 .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
             return result;
@@ -111,28 +111,28 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<Article> IsFeatured(this IEnumerable<Article> source)
+        public static IEnumerable<ArticleMetaData> IsFeatured(this IEnumerable<ArticleMetaData> source)
         {
-            IEnumerable<Article> result = source.Where(Featured);
+            IEnumerable<ArticleMetaData> result = source.Where(Featured);
             return result;
         }
 
-        public static IEnumerable<Article> ByRecentlyPublished(this IEnumerable<Article> source)
+        public static IEnumerable<ArticleMetaData> ByRecentlyPublished(this IEnumerable<ArticleMetaData> source)
         {
-            IOrderedEnumerable<Article> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<ArticleMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
 
-        public static IEnumerable<PageMetaData> ByRecentlyPublished(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<PublicationMetaData> ByRecentlyPublished(this IEnumerable<PublicationMetaData> source)
         {
-            IOrderedEnumerable<PageMetaData> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<PublicationMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
 
-        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<Article> source)
+        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<ArticleMetaData> source)
         {
             SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
-            foreach (Article article in source)
+            foreach (ArticleMetaData article in source)
             {
                 List<string> tags = article.Tags;
                 foreach (string tag in tags)
@@ -149,11 +149,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<Article> source)
+        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<ArticleMetaData> source)
         {
             DescendingComparer<int> comparer = new DescendingComparer<int>();
             SortedDictionary<int, List<PageId>> result = new(comparer);
-            foreach (Article article in source)
+            foreach (ArticleMetaData article in source)
             {
                 DateTimeOffset published = article.Published;
                 int year = published.Year;

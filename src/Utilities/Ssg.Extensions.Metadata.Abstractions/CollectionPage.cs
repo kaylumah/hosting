@@ -9,42 +9,40 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class CollectionPage : PageMetaData
     {
-        readonly Dictionary<PageId, PageMetaData> _Lookup;
+        readonly Dictionary<PageId, PublicationMetaData> _Lookup;
 
         public int Take => GetInt(nameof(Take));
 
-        public IEnumerable<BasePage> Items
+        public IEnumerable<PublicationMetaData> Items
         { get; }
 
-        public IEnumerable<PageMetaData> Pages => GetPages();
-
-        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+        public IEnumerable<ArticleMetaData> RecentArticles => GetRecentArticles();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
-        public CollectionPage(PageMetaData internalData, List<BasePage> items) : base(internalData)
+        public CollectionPage(PageMetaData internalData, List<PublicationMetaData> items) : base(internalData)
         {
-            Items = items;
+            Items = items.ByRecentlyPublished();
 
-            _Lookup = GetPages()
+            _Lookup = Items
                 .ToDictionary(key => key.Id,
                     value => value);
         }
 
         #region Indexers
 
-        public PageMetaData? this[PageId pageId]
+        public PublicationMetaData? this[PageId pageId]
         {
             get => _Lookup.GetValueOrDefault(pageId);
         }
 
-        public IEnumerable<PageMetaData> this[IEnumerable<PageId> ids]
+        public IEnumerable<PublicationMetaData> this[IEnumerable<PageId> ids]
         {
             get
             {
                 foreach (PageId id in ids)
                 {
-                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    if (_Lookup.TryGetValue(id, out PublicationMetaData? page))
                     {
                         yield return page;
                     }
@@ -56,9 +54,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected override DateTimeOffset GetPublishedDate()
         {
-            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PublicationMetaData> pages = Items;
             // if there is a published date it should win? otherwise fall back on the oldest page
-            PageMetaData? firstPublishedPage = pages.LastOrDefault();
+            PublicationMetaData? firstPublishedPage = pages.LastOrDefault();
             DateTimeOffset basePublishedDate = base.GetPublishedDate();
             DateTimeOffset? firstPublishedDate = firstPublishedPage?.Published;
             DateTimeOffset result = firstPublishedDate ?? basePublishedDate;
@@ -67,9 +65,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected override DateTimeOffset GetModifiedDate()
         {
-            IEnumerable<PageMetaData> pages = GetPages();
+            IEnumerable<PublicationMetaData> pages = Items;
             // if there is a newer published date it should win? otherwise fall back on newest page
-            PageMetaData? lastPublishedPage = pages.FirstOrDefault();
+            PublicationMetaData? lastPublishedPage = pages.FirstOrDefault();
             // DateTimeOffset defaultDate = DateTimeOffset.MinValue;
             DateTimeOffset baseModifiedDate = base.GetModifiedDate();
             DateTimeOffset? lastPublishedDate = lastPublishedPage?.Published;
@@ -100,24 +98,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         #region PageTypes
-
-        IEnumerable<PageMetaData> GetPages()
+        IEnumerable<ArticleMetaData> GetArticles()
         {
-            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>()
-                .ByRecentlyPublished();
-
-            if (0 < Take)
-            {
-                pages = pages.Take(Take);
-            }
-
-            return pages;
-        }
-
-        IEnumerable<Article> GetArticles()
-        {
-            IEnumerable<Article> articles = Items.OfType<Article>()
-                .ByRecentlyPublished();
+            IEnumerable<ArticleMetaData> articles = Items.OfType<ArticleMetaData>();
 
             if (0 < Take)
             {
@@ -131,10 +114,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region Collections
 
-        IEnumerable<Article> GetRecentArticles()
+        IEnumerable<ArticleMetaData> GetRecentArticles()
         {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
+            IEnumerable<ArticleMetaData> sortedByPublished = articles.ByRecentlyPublished();
             return sortedByPublished;
         }
 
@@ -144,7 +127,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
             SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
             return result;
         }

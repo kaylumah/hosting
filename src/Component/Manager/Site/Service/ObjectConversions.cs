@@ -32,7 +32,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _JsonSerializerOptions.Converters.Add(siteIdJsonConverter);
         }
 
-        public static string PublishedTimeAgo(SiteMetaData siteMetaData, Article pageMetaData)
+        public static string PublishedTimeAgo(SiteMetaData siteMetaData, ArticleMetaData pageMetaData)
         {
             Debug.Assert(pageMetaData != null);
             Debug.Assert(siteMetaData != null);
@@ -44,7 +44,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ReadingTime(Article pageMetaData)
+        public static string ReadingTime(ArticleMetaData pageMetaData)
         {
             TimeSpan duration = pageMetaData.Duration;
             string result = duration.ToReadableDuration();
@@ -63,17 +63,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<Article> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
+        public static IEnumerable<ArticleMetaData> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
             bool tagExists = site.PagesByTags.TryGetValue(tag, out List<PageId>? idsForTag);
-            IEnumerable<Article> result;
+            IEnumerable<ArticleMetaData> result;
             if (tagExists && idsForTag != null)
             {
                 IEnumerable<PageMetaData> resultForTag = site[idsForTag];
-                IEnumerable<Article> asArticles = resultForTag.OfType<Article>();
+                IEnumerable<ArticleMetaData> asArticles = resultForTag.OfType<ArticleMetaData>();
                 result = asArticles.ByRecentlyPublished();
                 if (take != null)
                 {
@@ -82,7 +82,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
             else
             {
-                result = Enumerable.Empty<Article>();
+                result = Enumerable.Empty<ArticleMetaData>();
             }
 
             return result;

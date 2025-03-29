@@ -7,7 +7,6 @@ using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
-using Article = Ssg.Extensions.Metadata.Abstractions.Article;
 using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
@@ -40,7 +39,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
             Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
 
-            if (renderData.Page is Article article)
+            if (renderData.Page is ArticleMetaData article)
             {
                 LogLdJson(article.Uri, article.Type);
                 BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
@@ -81,8 +80,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
         {
             List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
-            IEnumerable<Article> articles = page.RecentArticles;
-            foreach (Article article in articles)
+            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
+            foreach (ArticleMetaData article in articles)
             {
                 BlogPosting blogPosting = new BlogPosting();
                 blogPosting.Headline = article.Title;
@@ -103,8 +102,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             List<BlogPosting> posts = new List<BlogPosting>();
-            IEnumerable<Article> articles = page.RecentArticles;
-            foreach (Article article in articles)
+            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
+            foreach (ArticleMetaData article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
                 posts.Add(blogPosting);
@@ -124,7 +123,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return blog;
         }
 
-        BlogPosting ToBlogPosting(Article page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        BlogPosting ToBlogPosting(ArticleMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
