@@ -7,12 +7,6 @@ using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public readonly record struct SiteId(string Value)
-    {
-        public static implicit operator string(SiteId siteId) => siteId.Value;
-        public static implicit operator SiteId(string value) => new(value);
-    }
-
     public class SiteMetaData
     {
         readonly Dictionary<PageId, PageMetaData> _Lookup;
