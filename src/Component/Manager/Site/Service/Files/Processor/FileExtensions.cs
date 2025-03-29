@@ -18,6 +18,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
+        internal static StaticContent ToStatic(this TextFile file)
+        {
+            Dictionary<string, object?> data = file.ToDictionary();
+            StaticContent result = new StaticContent(data);
+            return result;
+        }
+
         internal static PageMetaData ToPage(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
@@ -25,10 +32,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static Article ToArticle(this TextFile file)
+        internal static ArticleMetaData ToArticle(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
-            Article result = new Article(data);
+            ArticleMetaData result = new ArticleMetaData(data);
             string content = result.Content;
             (int numberOfWords, TimeSpan duration) readingData = content.ToReadingData();
             result.NumberOfWords = readingData.numberOfWords;
@@ -63,9 +70,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return page;
         }
 
-        public static Article ToArticle(this TextFile file, Guid siteGuid)
+        public static ArticleMetaData ToArticle(this TextFile file, Guid siteGuid)
         {
-            Article page = file.ToArticle();
+            ArticleMetaData page = file.ToArticle();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }

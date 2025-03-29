@@ -41,9 +41,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
-        public IEnumerable<Article> RecentArticles => GetRecentArticles();
+        public IEnumerable<ArticleMetaData> RecentArticles => GetRecentArticles();
 
-        public IEnumerable<Article> FeaturedArticles => GetFeaturedArticles();
+        public IEnumerable<ArticleMetaData> FeaturedArticles => GetFeaturedArticles();
 
         public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
@@ -114,9 +114,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return pages;
         }
 
-        IEnumerable<Article> GetArticles()
+        IEnumerable<ArticleMetaData> GetArticles()
         {
-            IEnumerable<Article> articles = Items.OfType<Article>();
+            IEnumerable<ArticleMetaData> articles = Items.OfType<ArticleMetaData>();
             return articles;
         }
 
@@ -124,18 +124,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region Collections
 
-        IEnumerable<Article> GetRecentArticles()
+        IEnumerable<ArticleMetaData> GetRecentArticles()
         {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<Article> sortedByPublished = articles.ByRecentlyPublished();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
+            IEnumerable<ArticleMetaData> sortedByPublished = articles.ByRecentlyPublished();
             return sortedByPublished;
         }
 
-        IEnumerable<Article> GetFeaturedArticles()
+        IEnumerable<ArticleMetaData> GetFeaturedArticles()
         {
-            IEnumerable<Article> articles = GetArticles();
-            IEnumerable<Article> featuredArticles = articles.IsFeatured();
-            IEnumerable<Article> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
+            IEnumerable<ArticleMetaData> featuredArticles = articles.IsFeatured();
+            IEnumerable<ArticleMetaData> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
             return featuredAndSortedByPublished;
         }
 
@@ -145,14 +145,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
             SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
             return result;
         }
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            IEnumerable<Article> articles = GetArticles();
+            IEnumerable<ArticleMetaData> articles = GetArticles();
             SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
             return result;
         }

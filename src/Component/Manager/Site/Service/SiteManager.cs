@@ -313,76 +313,59 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .ToDictionary(group => group.Key, group => group.ToList());
 
             bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
-            bool hasTalks = data.TryGetValue("Talk", out List<TextFile>? talks);
             bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
             bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
             bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
             bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
 
-            List<TextFile> regularFiles = new List<TextFile>();
-            List<TextFile> articleFiles = new List<TextFile>();
-            List<TextFile> staticFiles = new List<TextFile>();
-            if (hasPages && pages != null)
-            {
-                regularFiles.AddRange(pages);
-            }
-
-            if (hasAnnouncements && announcements != null)
-            {
-                regularFiles.AddRange(announcements);
-            }
-
-            if (hasArticles && articles != null)
-            {
-                articleFiles.AddRange(articles);
-            }
+            List<BasePage> result = new List<BasePage>();
 
             if (hasStatics && statics != null)
             {
-                staticFiles.AddRange(statics);
+                foreach (TextFile textFile in statics)
+                {
+                    StaticContent staticContent = textFile.ToStatic();
+                    result.Add(staticContent);
+                }
             }
 
-            List<BasePage> result = new List<BasePage>();
-
-            if (hasTalks && talks != null)
+            if (hasPages && pages != null)
             {
-                foreach (TextFile file in talks)
+                foreach (TextFile textFile in pages)
                 {
-                    Talk pageMetaData = file.ToTalk(siteGuid);
+                    PageMetaData pageMetaData = textFile.ToPage(siteGuid);
                     result.Add(pageMetaData);
                 }
             }
 
-            foreach (TextFile file in regularFiles)
+            if (hasAnnouncements && announcements != null)
             {
-                PageMetaData pageMetaData = file.ToPage(siteGuid);
-                result.Add(pageMetaData);
+                foreach (TextFile textFile in announcements)
+                {
+                    PageMetaData pageMetaData = textFile.ToPage(siteGuid);
+                    result.Add(pageMetaData);
+                }
             }
 
-            foreach (TextFile file in articleFiles)
+            if (hasArticles && articles != null)
             {
-                Article pageMetaData = file.ToArticle(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            foreach (TextFile file in staticFiles)
-            {
-                Dictionary<string, object?> fileAsData = file.ToDictionary();
-                StaticContent pageMetaData = new StaticContent(fileAsData);
-                result.Add(pageMetaData);
+                foreach (TextFile textFile in articles)
+                {
+                    ArticleMetaData articleMetaData = textFile.ToArticle(siteGuid);
+                    result.Add(articleMetaData);
+                }
             }
 
             if (hasCollections && collection != null)
             {
-                IEnumerable<Article> articlePages = result.OfType<Article>();
-                List<BasePage> collectionArticles = new List<BasePage>(articlePages);
-
+                IEnumerable<PublicationMetaData> publicationMetaDataItems = result.OfType<PublicationMetaData>();
+                List<PublicationMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
                 foreach (TextFile file in collection)
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
 
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData, collectionArticles);
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, publicationMetaDatas);
                     result.Add(collectionPage);
                 }
             }
