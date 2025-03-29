@@ -313,6 +313,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .ToDictionary(group => group.Key, group => group.ToList());
 
             bool hasArticles = data.TryGetValue("Article", out List<TextFile>? articles);
+            bool hasTalks = data.TryGetValue("Talk", out List<TextFile>? talks);
             bool hasPages = data.TryGetValue("Page", out List<TextFile>? pages);
             bool hasStatics = data.TryGetValue("Static", out List<TextFile>? statics);
             bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
@@ -342,6 +343,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             List<BasePage> result = new List<BasePage>();
+
+            if (hasTalks && talks != null)
+            {
+                foreach (TextFile file in talks)
+                {
+                    Talk pageMetaData = file.ToTalk(siteGuid);
+                    result.Add(pageMetaData);
+                }
+            }
 
             foreach (TextFile file in regularFiles)
             {
