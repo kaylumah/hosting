@@ -352,8 +352,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 foreach (TextFile textFile in articles)
                 {
-                    Article article = textFile.ToArticle(siteGuid);
-                    result.Add(article);
+                    ArticleMetaData articleMetaData = textFile.ToArticle(siteGuid);
+                    result.Add(articleMetaData);
                 }
             }
 

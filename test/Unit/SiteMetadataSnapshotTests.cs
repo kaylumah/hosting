@@ -119,7 +119,7 @@ namespace Test.Unit
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
@@ -147,7 +147,7 @@ namespace Test.Unit
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
@@ -164,7 +164,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new();
             List<BasePage> items = new();
 
-            static Article CreateArticle(string pageId, DateTimeOffset published)
+            static ArticleMetaData CreateArticle(string pageId, DateTimeOffset published)
             {
                 Dictionary<string, object?> pageData = new()
                 {
@@ -173,7 +173,7 @@ namespace Test.Unit
                     { "uri", "example.html"},
                     { "published", published }
                 };
-                Article pageMetaData = new Article(pageData);
+                ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
                 return pageMetaData;
             }
 
@@ -198,7 +198,7 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -230,7 +230,7 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -264,7 +264,7 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -298,7 +298,7 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -332,7 +332,7 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            Article pageMetaData = new Article(pageData);
+            ArticleMetaData pageMetaData = new ArticleMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
