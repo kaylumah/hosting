@@ -46,6 +46,37 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 string blogPostSchemeJson = blogPostScheme.ToString(settings);
                 return blogPostSchemeJson;
             }
+            else if (renderData.Page is TalkMetaData talk)
+            {
+                PresentationDigitalDocument document = new PresentationDigitalDocument();
+                document.Name = "Modern Microservices Slide Deck";
+                document.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
+                document.EncodingFormat = "text/html";
+
+                Place place = new Place();
+                place.Name = "Ilionx Dev Days 2023";
+                // place.Address
+
+                Event eventScheme = new Event();
+
+                eventScheme.Url = talk.CanonicalUri;
+                eventScheme.Name = talk.Title;
+                eventScheme.Description = talk.Description;
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+                eventScheme.StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero);
+#pragma warning restore RS0030
+
+                if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? person))
+                {
+                    eventScheme.Performer = person;
+                }
+
+                eventScheme.Location = place;
+
+                eventScheme.WorkPerformed = new OneOrMany<ICreativeWork>(document);
+                string eventSchemeJson = eventScheme.ToString(settings);
+                return eventSchemeJson;
+            }
             else if (renderData.Page is CollectionPage collectionPage)
             {
                 if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
