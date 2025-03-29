@@ -129,10 +129,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<ArticleMetaData> source)
+        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<PublicationMetaData> source)
         {
             SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
-            foreach (ArticleMetaData article in source)
+            foreach (PublicationMetaData article in source)
             {
                 List<string> tags = article.Tags;
                 foreach (string tag in tags)
@@ -149,11 +149,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<ArticleMetaData> source)
+        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<PublicationMetaData> source)
         {
             DescendingComparer<int> comparer = new DescendingComparer<int>();
             SortedDictionary<int, List<PageId>> result = new(comparer);
-            foreach (ArticleMetaData article in source)
+            foreach (PublicationMetaData article in source)
             {
                 DateTimeOffset published = article.Published;
                 int year = published.Year;

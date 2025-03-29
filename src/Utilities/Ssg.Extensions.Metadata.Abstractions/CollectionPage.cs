@@ -127,8 +127,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            IEnumerable<PublicationMetaData> items = Items;
+            SortedDictionary<int, List<PageId>> result = items.GetPagesByYear();
             return result;
         }
 
