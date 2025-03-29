@@ -18,6 +18,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
+        internal static StaticContent ToStatic(this TextFile file)
+        {
+            Dictionary<string, object?> data = file.ToDictionary();
+            StaticContent result = new StaticContent(data);
+            return result;
+        }
+
         internal static PageMetaData ToPage(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();

@@ -320,22 +320,21 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             List<BasePage> result = new List<BasePage>();
 
+            if (hasStatics && statics != null)
+            {
+                foreach (TextFile textFile in statics)
+                {
+                    StaticContent staticContent = textFile.ToStatic();
+                    result.Add(staticContent);
+                }
+            }
+
             if (hasPages && pages != null)
             {
                 foreach (TextFile textFile in pages)
                 {
                     PageMetaData pageMetaData = textFile.ToPage(siteGuid);
                     result.Add(pageMetaData);
-                }
-            }
-
-            if (hasStatics && statics != null)
-            {
-                foreach (TextFile textFile in statics)
-                {
-                    Dictionary<string, object?> fileAsData = textFile.ToDictionary();
-                    StaticContent staticContent = new StaticContent(fileAsData);
-                    result.Add(staticContent);
                 }
             }
 
