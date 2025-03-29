@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class Talk : PageMetaData
+    public class TalkMetaData : PageMetaData
     {
-        public Talk(Dictionary<string, object?> internalData) : base(internalData)
+        public TalkMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
     }

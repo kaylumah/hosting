@@ -43,10 +43,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static Talk ToTalk(this TextFile file)
+        internal static TalkMetaData ToTalk(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
-            Talk result = new Talk(data);
+            TalkMetaData result = new TalkMetaData(data);
             return result;
         }
 
@@ -77,9 +77,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return page;
         }
 
-        public static Talk ToTalk(this TextFile file, Guid siteGuid)
+        public static TalkMetaData ToTalk(this TextFile file, Guid siteGuid)
         {
-            Talk page = file.ToTalk();
+            TalkMetaData page = file.ToTalk();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }
