@@ -42,7 +42,7 @@
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="22.0.12" />
     <PackageVersion Include="Reqnroll.xUnit" Version="2.4.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
-    <PackageVersion Include="FluentAssertions" Version="[7.0.0, 8.0.0)" />
+    <PackageVersion Include="FluentAssertions" Version="[7.2.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.51.0" />
     <!-- Analyzers -->
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
