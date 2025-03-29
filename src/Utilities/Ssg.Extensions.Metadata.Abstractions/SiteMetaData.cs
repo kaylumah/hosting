@@ -120,6 +120,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return articles;
         }
 
+        IEnumerable<PublicationMetaData> GetPublications()
+        {
+            IEnumerable<PublicationMetaData> items = Items.OfType<PublicationMetaData>();
+            return items;
+        }
+
         #endregion
 
         #region Collections
@@ -145,15 +151,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         SortedDictionary<string, List<PageId>> GetPagesByTag()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            SortedDictionary<string, List<PageId>> result = articles.GetPagesByTag();
+            IEnumerable<PublicationMetaData> items = GetPublications();
+            SortedDictionary<string, List<PageId>> result = items.GetPagesByTag();
             return result;
         }
 
         SortedDictionary<int, List<PageId>> GetPagesByYear()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            SortedDictionary<int, List<PageId>> result = articles.GetPagesByYear();
+            IEnumerable<PublicationMetaData> items = GetPublications();
+            SortedDictionary<int, List<PageId>> result = items.GetPagesByYear();
             return result;
         }
 
