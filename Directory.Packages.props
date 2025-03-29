@@ -26,7 +26,6 @@
     <PackageVersion Include="Scriban" Version="6.0.0" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.12" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.3" />
-    <PackageVersion Include="System.Text.Json" Version="9.0.1" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- Test packages -->
     <PackageVersion Include="Bogus" Version="35.6.2" />
