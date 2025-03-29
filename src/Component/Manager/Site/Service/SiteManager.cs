@@ -356,7 +356,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                     result.Add(articleMetaData);
                 }
             }
-            
+
             if (hasTalks && talks != null)
             {
                 foreach (TextFile textFile in talks)

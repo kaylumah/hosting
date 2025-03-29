@@ -18,16 +18,16 @@ ads: true
 <div class="space-y-8">
     {% for pageByYear in page.pagesbyyears %}
     {% assign year = pageByYear.key %}
-    {% assign posts = site[pageByYear.value] %}
+    {% assign items = page[pageByYear.value] %}
     <!-- {{ year }} -->
     <section class="py-6 border-b border-gray-200">
         <h2 class="text-xl font-semibold text-gray-800 mb-3">{{ year }}</h2>
         <ul data-blog-list class="space-y-2">
-            {% for post in posts %}
-            <li data-tags="{{ post.tags | array.join " " }}">
-                <a href="{{ post.uri }}"
+            {% for item in items %}
+            <li data-tags="{{ item.tags | array.join " " }}">
+                <a href="{{ item.uri }}"
                    class="text-gray-800 hover:text-gray-900 hover:underline transition">
-                    {{ post.title }}
+                    {{ item.title }}
                 </a>
             </li>
             {% endfor %}
