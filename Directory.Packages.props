@@ -5,13 +5,11 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-    <PackageVersion Include="Bogus" Version="35.6.2" />
     <PackageVersion Include="Castle.Core" Version="5.2.1" />
     <PackageVersion Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.12.0" />
     <PackageVersion Include="Markdig" Version="0.40.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.3" />
@@ -26,15 +24,15 @@
     <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.3" />
-    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.3.0" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="6.0.0" />
-    <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.12" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.3" />
     <PackageVersion Include="System.Text.Json" Version="9.0.1" />
-    <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
+    <!-- Test packages -->
+    <PackageVersion Include="Bogus" Version="35.6.2" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.3.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
@@ -43,13 +41,18 @@
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />
     <PackageVersion Include="Verify.Xunit" Version="28.16.0" />
     <PackageVersion Include="Verify.XunitV3" Version="28.16.0" />
+    <PackageVersion Include="Verify.ImageHash" Version="2.1.1" />
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="22.0.12" />
-    <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
     <PackageVersion Include="Reqnroll.xUnit" Version="2.4.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="FluentAssertions" Version="[7.0.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.51.0" />
+    <!-- Analyzers -->
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
-    <!--<PackageVersion Include="ReportGenerator" Version="5.1.20"/>-->
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+    <!-- No longer used? -->
+    <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
+    <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
+    <!-- <PackageVersion Include="ReportGenerator" Version="5.1.20"/> -->
   </ItemGroup>
 </Project>
