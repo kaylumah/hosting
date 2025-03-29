@@ -10,8 +10,6 @@
     <ProjectReference Include="..\..\..\..\Utilities\Common\Kaylumah.Ssg.Utilities.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <!-- Needed to fix https://learn.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1901-nu1904 inside Schema.NET -->
-    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Schema.NET" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Options" />
