@@ -1,0 +1,45 @@
+---
+title: "Temporary"
+description: "Short description"
+tags:
+- csharp
+---
+Hello World
+
+https://kaylumah.github.io/ilionx-devdays2023-specflow?showNotes=true
+
+<div class="flex gap-4 flex-wrap mb-4">
+    <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow" target="_blank"
+       class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
+        Open Presentation
+    </a>
+    <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow/?showNotes=true" target="_blank"
+       class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition">
+        View with Speaker Notes
+    </a>
+    <button id="toggle-embed"
+            class="inline-flex items-center px-4 py-2 border border-blue-500 text-blue-700 text-sm font-medium rounded-lg hover:bg-blue-50 transition">
+        ▶ Preview Inline
+    </button>
+</div>
+
+<!-- Hidden iframe by default -->
+<div id="iframe-container" class="hidden">
+    <iframe
+            src="https://kaylumah.github.io/ilionx-devdays2023-specflow"
+            class="w-full h-[600px]"
+            allow="fullscreen"
+            allowfullscreen
+            loading="lazy"
+    ></iframe>
+</div>
+
+<script>
+    document.getElementById("toggle-embed").addEventListener("click", function () {
+        const container = document.getElementById("iframe-container");
+        const isHidden = container.classList.contains("hidden");
+
+        container.classList.toggle("hidden");
+        this.textContent = isHidden ? "✖ Hide Preview" : "▶ Preview Inline";
+    });
+</script>

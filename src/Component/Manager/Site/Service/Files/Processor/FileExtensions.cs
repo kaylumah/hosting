@@ -43,6 +43,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
+        internal static TalkMetaData ToTalk(this TextFile file)
+        {
+            Dictionary<string, object?> data = file.ToDictionary();
+            TalkMetaData result = new TalkMetaData(data);
+            return result;
+        }
+
         internal static string ToPageId(this TextFile file, Guid siteGuid)
         {
             Guid pageGuid = file.ToPageGuid(siteGuid);
@@ -66,6 +73,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         public static ArticleMetaData ToArticle(this TextFile file, Guid siteGuid)
         {
             ArticleMetaData page = file.ToArticle();
+            page.Id = file.ToPageId(siteGuid);
+            return page;
+        }
+
+        public static TalkMetaData ToTalk(this TextFile file, Guid siteGuid)
+        {
+            TalkMetaData page = file.ToTalk();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }
