@@ -318,48 +318,43 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             bool hasAnnouncements = data.TryGetValue("Announcement", out List<TextFile>? announcements);
             bool hasCollections = data.TryGetValue("Collection", out List<TextFile>? collection);
 
-            List<TextFile> regularFiles = new List<TextFile>();
-            List<TextFile> articleFiles = new List<TextFile>();
-            List<TextFile> staticFiles = new List<TextFile>();
+            List<BasePage> result = new List<BasePage>();
+
             if (hasPages && pages != null)
             {
-                regularFiles.AddRange(pages);
-            }
-
-            if (hasAnnouncements && announcements != null)
-            {
-                regularFiles.AddRange(announcements);
-            }
-
-            if (hasArticles && articles != null)
-            {
-                articleFiles.AddRange(articles);
+                foreach (TextFile textFile in pages)
+                {
+                    PageMetaData pageMetaData = textFile.ToPage(siteGuid);
+                    result.Add(pageMetaData);
+                }
             }
 
             if (hasStatics && statics != null)
             {
-                staticFiles.AddRange(statics);
+                foreach (TextFile textFile in statics)
+                {
+                    Dictionary<string, object?> fileAsData = textFile.ToDictionary();
+                    StaticContent staticContent = new StaticContent(fileAsData);
+                    result.Add(staticContent);
+                }
             }
 
-            List<BasePage> result = new List<BasePage>();
-
-            foreach (TextFile file in regularFiles)
+            if (hasAnnouncements && announcements != null)
             {
-                PageMetaData pageMetaData = file.ToPage(siteGuid);
-                result.Add(pageMetaData);
+                foreach (TextFile textFile in announcements)
+                {
+                    PageMetaData pageMetaData = textFile.ToPage(siteGuid);
+                    result.Add(pageMetaData);
+                }
             }
 
-            foreach (TextFile file in articleFiles)
+            if (hasArticles && articles != null)
             {
-                Article pageMetaData = file.ToArticle(siteGuid);
-                result.Add(pageMetaData);
-            }
-
-            foreach (TextFile file in staticFiles)
-            {
-                Dictionary<string, object?> fileAsData = file.ToDictionary();
-                StaticContent pageMetaData = new StaticContent(fileAsData);
-                result.Add(pageMetaData);
+                foreach (TextFile textFile in articles)
+                {
+                    Article article = textFile.ToArticle(siteGuid);
+                    result.Add(article);
+                }
             }
 
             if (hasCollections && collection != null)
