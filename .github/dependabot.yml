@@ -57,9 +57,9 @@ updates:
       interval: weekly
       time: '09:00'
       timezone: Europe/Amsterdam
-    allow:
-      - dependency-type: "production"
-      - dependency-type: "development"
+    ignore:
+      - dependency-name: "axios"
+      - dependency-name: "tar-fs"
     assignees:
       - kaylumah
     groups:
