@@ -9,20 +9,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
 {
     public class CollectionPage : PageMetaData
     {
-        readonly Dictionary<PageId, PageMetaData> _Lookup;
+        readonly Dictionary<PageId, PublicationMetaData> _Lookup;
 
         public int Take => GetInt(nameof(Take));
 
-        public IEnumerable<BasePage> Items
+        public IEnumerable<PublicationMetaData> Items
         { get; }
 
-        public IEnumerable<PageMetaData> Pages => GetPages();
+        public IEnumerable<PublicationMetaData> Pages => GetPages();
 
         public IEnumerable<Article> RecentArticles => GetRecentArticles();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
-        public CollectionPage(PageMetaData internalData, List<BasePage> items) : base(internalData)
+        public CollectionPage(PageMetaData internalData, List<PublicationMetaData> items) : base(internalData)
         {
             Items = items;
 
@@ -33,18 +33,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region Indexers
 
-        public PageMetaData? this[PageId pageId]
+        public PublicationMetaData? this[PageId pageId]
         {
             get => _Lookup.GetValueOrDefault(pageId);
         }
 
-        public IEnumerable<PageMetaData> this[IEnumerable<PageId> ids]
+        public IEnumerable<PublicationMetaData> this[IEnumerable<PageId> ids]
         {
             get
             {
                 foreach (PageId id in ids)
                 {
-                    if (_Lookup.TryGetValue(id, out PageMetaData? page))
+                    if (_Lookup.TryGetValue(id, out PublicationMetaData? page))
                     {
                         yield return page;
                     }
@@ -101,10 +101,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region PageTypes
 
-        IEnumerable<PageMetaData> GetPages()
+        IEnumerable<PublicationMetaData> GetPages()
         {
-            IEnumerable<PageMetaData> pages = Items.OfType<PageMetaData>()
-                .ByRecentlyPublished();
+            IEnumerable<PublicationMetaData> pages = Items.ByRecentlyPublished();
 
             if (0 < Take)
             {

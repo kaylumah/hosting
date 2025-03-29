@@ -359,15 +359,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (hasCollections && collection != null)
             {
-                IEnumerable<Article> articlePages = result.OfType<Article>();
-                List<BasePage> collectionArticles = new List<BasePage>(articlePages);
-
+                IEnumerable<PublicationMetaData> publicationMetaDataItems = result.OfType<PublicationMetaData>();
+                List<PublicationMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
                 foreach (TextFile file in collection)
                 {
                     // Some parts are regular page data
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
 
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData, collectionArticles);
+                    CollectionPage collectionPage = new CollectionPage(pageMetaData, publicationMetaDatas);
                     result.Add(collectionPage);
                 }
             }
