@@ -130,7 +130,7 @@ foreach ($Project in $Projects)
                         
                         $NewVersion = $allVersions | Sort-Object -Descending | Select-Object -First 1
                         if ($ResolvedVersion -eq $NewVersion) {
-                            $Description = "No new version on NuGet"
+                            $Description = "No new allowed version on NuGet"
                         } else {
                             $Description = "Found version in range on NuGet"
                         }
