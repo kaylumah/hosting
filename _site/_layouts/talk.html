@@ -1,0 +1,53 @@
+---
+layout: column.html
+---
+{% assign post = page %}
+<article class="prose max-w-none">
+    <header class="mb-4 border-b border-gray-300 pb-4">
+        <h1 class="text-3xl font-bold">{{ post.title }}</h1>
+        <div class="flex flex-wrap items-center text-gray-600 text-sm mt-2 gap-2">
+            <span>Published talk on <time datetime="{{ post.published | date_to_pattern 'yyyy-MM-dd' }}">{{ post.published | date_to_pattern 'yyyy/MM/dd' }}</time></span>
+            <span>by <strong>{{ site.authors[post.author].fullname }}</strong></span>
+        </div>
+        <div class="flex gap-2 mt-2">
+            {% for tag in post.tags %}
+            <a href="/archive.html?tag={{ tag }}" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">{{ site.tags[tag].name }}</a>
+            {% endfor %}
+        </div>
+    </header>
+    <section>
+        {{ content }}
+        <div class="flex gap-4 flex-wrap mb-4">
+            <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow/?showNotes=true" target="_blank"
+               class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
+                Open Presentation
+            </a>
+            <button id="toggle-embed"
+               class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition">
+                ▶ Preview Inline
+            </button>
+        </div>
+
+        <!-- Hidden iframe by default -->
+        <div id="iframe-container" class="hidden">
+            <iframe
+                    src="https://kaylumah.github.io/ilionx-devdays2023-specflow"
+                    class="w-full h-[600px]"
+                    allow="fullscreen"
+                    loading="lazy"
+            ></iframe>
+        </div>
+
+        allow="fullscreen"
+        allowfullscreen
+        <script>
+            document.getElementById("toggle-embed").addEventListener("click", function () {
+                const container = document.getElementById("iframe-container");
+                const isHidden = container.classList.contains("hidden");
+
+                container.classList.toggle("hidden");
+                this.textContent = isHidden ? "✖ Hide Preview" : "▶ Preview Inline";
+            });
+        </script>
+    </section>
+</article>
