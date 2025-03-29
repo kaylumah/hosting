@@ -17,6 +17,11 @@ layout: column.html
     </header>
     <section>
         {{ content }}
+        
+        {{ page.PresentationUri }}
+
+        {{ page | to_diagnostic_html }}
+        
         <div class="flex gap-4 flex-wrap mb-4">
             <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow/?showNotes=true" target="_blank"
                class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
