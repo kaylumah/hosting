@@ -48,17 +48,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page is TalkMetaData talk)
             {
+                /*
                 PresentationDigitalDocument document = new PresentationDigitalDocument();
                 document.Name = "Modern Microservices Slide Deck";
                 document.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
                 document.EncodingFormat = "text/html";
 
                 Place place = new Place();
-                place.Name = "Ilionx Dev Days 2023";
+                // place.Name = "Ilionx Dev Days 2023";
                 // place.Address
 
                 Event eventScheme = new Event();
-
                 eventScheme.Url = talk.CanonicalUri;
                 eventScheme.Name = talk.Title;
                 eventScheme.Description = talk.Description;
@@ -76,6 +76,41 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 eventScheme.WorkPerformed = new OneOrMany<ICreativeWork>(document);
                 string eventSchemeJson = eventScheme.ToString(settings);
                 return eventSchemeJson;
+                */
+#pragma warning disable
+                var conference = new Event
+                {
+                    Name = "TechConf 2025",
+                    StartDate = new DateTimeOffset(2025, 5, 21, 9, 0, 0, TimeSpan.Zero),
+                    EndDate = new DateTimeOffset(2025, 5, 23, 17, 0, 0, TimeSpan.Zero),
+                    Location = new Place
+                    {
+                        Name = "Amsterdam RAI Conference Centre",
+                        Address = new PostalAddress
+                        {
+                            AddressLocality = "Amsterdam",
+                            AddressCountry = "NL"
+                        }
+                    }
+                };
+
+                var talkData = new Event
+                {
+                    Name = "Modern Microservices",
+                    // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero), // specific to your talk
+                    Url = new Uri("https://kaylumah.nl/talks/modern-microservices.html"),
+                    Description = "Talk presented at TechConf 2025.",
+                    Performer = new Person { Name = "Your Name" },
+                    SuperEvent = conference,
+                    WorkPerformed = new PresentationDigitalDocument
+                    {
+                        Name = "Slide Deck",
+                        Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html"),
+                        EncodingFormat = "text/html"
+                    }
+                };
+                return talkData.ToString(settings);
+#pragma warning restore
             }
             else if (renderData.Page is CollectionPage collectionPage)
             {
