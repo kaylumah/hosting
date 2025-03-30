@@ -24,15 +24,16 @@ layout: column.html
         property_exists_in_yaml: {{ page.presentationuri2 }}
         <br />
         3        <br />
-        property_exists_dictionary_lower: {{ page["presentationuri2"] }}
+        property_exists_dictionary_lower: {{ page | get_value "presentationuri2" }}
         <br />
         4        <br />
-        property_exists_dictionary_mixed: {{ page["PresentationUri2"] }}
+        property_exists_dictionary_mixed: {{ page | get_value "PresentationUri2" }}
         <br />
         5        <br />
-        property_exists_dictionary_unknown: {{ page["PresentationUri3"] }}
+        property_exists_dictionary_unknown: {{ page | get_value "PresentationUri3" }}
         <br />
         6        <br />
+        property_exists_dictionary_lower: {{ page | get_value "presentationuri2" }}
         {{ page | to_diagnostic_html }}
         
         <div class="flex gap-4 flex-wrap mb-4">

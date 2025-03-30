@@ -44,6 +44,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
+        public static object? GetValue(BasePage basePage, string key)
+        {
+            Dictionary<string, object?> dictionary = basePage;
+            object? result = dictionary.GetValue<object?>(key);
+            return result;
+        }
+
         public static string ReadingTime(ArticleMetaData pageMetaData)
         {
             TimeSpan duration = pageMetaData.Duration;
