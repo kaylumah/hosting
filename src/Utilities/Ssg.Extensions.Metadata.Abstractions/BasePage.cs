@@ -19,6 +19,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
             _InternalData = internalData;
         }
 
+        #region Indexers
+        public object? this[string key]
+        {
+            get => _InternalData.GetValue<object>(key);
+        }
+        #endregion
+
         protected string GetString(string key)
         {
             string? result = _InternalData.GetValue<string>(key);

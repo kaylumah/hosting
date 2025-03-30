@@ -17,10 +17,22 @@ layout: column.html
     </header>
     <section>
         {{ content }}
-        
-        {{ page.presentationuri }}
-        {{ page.presentationuri2 }}
-
+        1        <br />
+        property_exists: {{ page.presentationuri }}
+        <br />
+        2        <br />
+        property_exists_in_yaml: {{ page.presentationuri2 }}
+        <br />
+        3        <br />
+        property_exists_dictionary_lower: {{ page["presentationuri2"] }}
+        <br />
+        4        <br />
+        property_exists_dictionary_mixed: {{ page["PresentationUri2"] }}
+        <br />
+        5        <br />
+        property_exists_dictionary_unknown: {{ page["PresentationUri3"] }}
+        <br />
+        6        <br />
         {{ page | to_diagnostic_html }}
         
         <div class="flex gap-4 flex-wrap mb-4">
