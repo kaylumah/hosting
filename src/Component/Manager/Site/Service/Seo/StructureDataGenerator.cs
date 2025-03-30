@@ -78,11 +78,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 return eventSchemeJson;
                 */
 #pragma warning disable
-                var conference = new Event
+                var talkData = new Event
                 {
-                    Name = "TechConf 2025",
-                    StartDate = new DateTimeOffset(2025, 5, 21, 9, 0, 0, TimeSpan.Zero),
-                    EndDate = new DateTimeOffset(2025, 5, 23, 17, 0, 0, TimeSpan.Zero),
+                    Name = "Modern Microservices",
+                    StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
+                    EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero),
+                    Url = new Uri("https://kaylumah.nl/talks/modern-microservices.html"),
+                    Description = "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices.",
+                    Performer = new Person
+                    {
+                        Name = "Your Name",
+                        Url = new Uri("https://kaylumah.nl/about")
+                    },
                     Location = new Place
                     {
                         Name = "Amsterdam RAI Conference Centre",
@@ -90,23 +97,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                         {
                             AddressLocality = "Amsterdam",
                             AddressCountry = "NL"
+                        },
+                        Geo = new GeoCoordinates
+                        {
+                            Latitude = 52.3411,
+                            Longitude = 4.8884
                         }
-                    }
-                };
-
-                var talkData = new Event
-                {
-                    Name = "Modern Microservices",
-                    // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero), // specific to your talk
-                    Url = new Uri("https://kaylumah.nl/talks/modern-microservices.html"),
-                    Description = "Talk presented at TechConf 2025.",
-                    Performer = new Person { Name = "Your Name" },
-                    SuperEvent = conference,
+                    },
+                    // EventAttendanceMode = EventAttendanceMode.MixedEventAttendanceMode,
+                    EventStatus = EventStatusType.EventScheduled,
                     WorkPerformed = new PresentationDigitalDocument
                     {
-                        Name = "Slide Deck",
+                        Name = "Slide Deck for Modern Microservices",
                         Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html"),
-                        EncodingFormat = "text/html"
+                        EncodingFormat = "text/html",
+                        Encoding = new MediaObject
+                        {
+                            ContentUrl = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.pdf"),
+                            EncodingFormat = "application/pdf"
+                        }
                     }
                 };
                 return talkData.ToString(settings);
