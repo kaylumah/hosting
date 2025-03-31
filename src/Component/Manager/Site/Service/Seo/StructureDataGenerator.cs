@@ -78,47 +78,45 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 return eventSchemeJson;
                 */
 #pragma warning disable
-                var talkData = new Event
-                {
-                    Name = "Modern Microservices",
-                    StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
-                    EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero),
-                    Url = new Uri("https://kaylumah.nl/talks/modern-microservices.html"),
-                    Description = "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices.",
-                    Performer = new Person
-                    {
-                        Name = "Your Name",
-                        Url = new Uri("https://kaylumah.nl/about")
-                    },
-                    Location = new Place
-                    {
-                        Name = "Amsterdam RAI Conference Centre",
-                        Address = new PostalAddress
-                        {
-                            AddressLocality = "Amsterdam",
-                            AddressCountry = "NL"
-                        },
-                        Geo = new GeoCoordinates
-                        {
-                            Latitude = 52.3411,
-                            Longitude = 4.8884
-                        }
-                    },
-                    // EventAttendanceMode = EventAttendanceMode.MixedEventAttendanceMode,
-                    EventStatus = EventStatusType.EventScheduled,
-                    WorkPerformed = new PresentationDigitalDocument
-                    {
-                        Name = "Slide Deck for Modern Microservices",
-                        Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html"),
-                        EncodingFormat = "text/html",
-                        Encoding = new MediaObject
-                        {
-                            ContentUrl = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.pdf"),
-                            EncodingFormat = "application/pdf"
-                        }
-                    }
-                };
-                return talkData.ToString(settings);
+
+                PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
+                presentationScheme.Name = "Slide Deck for Modern Microservices";
+                presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
+                presentationScheme.EncodingFormat = "text/html";
+                
+                Event eventScheme = new Event();
+                eventScheme.Url = talk.CanonicalUri; // new Uri("https://kaylumah.nl/talks/modern-microservices.html")
+                eventScheme.Name = talk.Name; // "Modern Microservices"
+                eventScheme.Description = talk.Description; // "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices."
+                string keywords = string.Join(',', talk.Tags);
+                eventScheme.Keywords = keywords;
+                eventScheme.WorkPerformed = presentationScheme;
+                // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
+                // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
+                /*
+                 * Performer = new Person
+                   {
+                       Name = "Your Name",
+                       Url = new Uri("https://kaylumah.nl/about")
+                   }
+                   Location = new Place
+                   {
+                       Name = "Amsterdam RAI Conference Centre",
+                       Address = new PostalAddress
+                       {
+                           AddressLocality = "Amsterdam",
+                           AddressCountry = "NL"
+                       },
+                       Geo = new GeoCoordinates
+                       {
+                           Latitude = 52.3411,
+                           Longitude = 4.8884
+                       }
+                   }
+                 */
+                
+                string eventSchemeJson =  eventScheme.ToString(settings);
+                return eventSchemeJson;
 #pragma warning restore
             }
             else if (renderData.Page is CollectionPage collectionPage)
