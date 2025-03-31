@@ -48,41 +48,15 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
             else if (renderData.Page is TalkMetaData talk)
             {
-                /*
-                PresentationDigitalDocument document = new PresentationDigitalDocument();
-                document.Name = "Modern Microservices Slide Deck";
-                document.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
-                document.EncodingFormat = "text/html";
-
-                Place place = new Place();
-                // place.Name = "Ilionx Dev Days 2023";
-                // place.Address
-
-                Event eventScheme = new Event();
-                eventScheme.Url = talk.CanonicalUri;
-                eventScheme.Name = talk.Title;
-                eventScheme.Description = talk.Description;
-#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
-                eventScheme.StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero);
-#pragma warning restore RS0030
-
-                if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? person))
-                {
-                    eventScheme.Performer = person;
-                }
-
-                eventScheme.Location = place;
-
-                eventScheme.WorkPerformed = new OneOrMany<ICreativeWork>(document);
-                string eventSchemeJson = eventScheme.ToString(settings);
-                return eventSchemeJson;
-                */
 #pragma warning disable
 
                 PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
                 presentationScheme.Name = "Slide Deck for Modern Microservices";
                 presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
                 presentationScheme.EncodingFormat = "text/html";
+                
+                Place placeScheme = new Place();
+                // place.Name = "Ilionx Dev Days 2023";
                 
                 Event eventScheme = new Event();
                 eventScheme.Url = talk.CanonicalUri; // new Uri("https://kaylumah.nl/talks/modern-microservices.html")
@@ -91,14 +65,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 string keywords = string.Join(',', talk.Tags);
                 eventScheme.Keywords = keywords;
                 eventScheme.WorkPerformed = presentationScheme;
+                eventScheme.Location = placeScheme;
                 // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
                 // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
+                
+                if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
+                {
+                    eventScheme.Performer = personScheme;
+                }
+                
                 /*
-                 * Performer = new Person
-                   {
-                       Name = "Your Name",
-                       Url = new Uri("https://kaylumah.nl/about")
-                   }
+                 * 
                    Location = new Place
                    {
                        Name = "Amsterdam RAI Conference Centre",
