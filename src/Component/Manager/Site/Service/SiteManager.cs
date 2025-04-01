@@ -299,6 +299,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid, string baseUrl)
         {
+            const string fallback = "Unknown";
+            const string collectionType = "Collection";
+
             foreach (TextFile textFile in files)
             {
                 textFile.MetaData.SetValue(nameof(PageMetaData.BaseUri), baseUrl);
@@ -307,8 +310,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
             {
                 string? type = file.MetaData.GetValue<string?>("type");
-                return type ?? "unknown" + siteGuid;
+                return type ?? fallback;
             });
+
             Dictionary<string, List<TextFile>> data = filesGroupedByType
                 .ToDictionary(group => group.Key, group => group.ToList());
 
@@ -323,8 +327,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             HashSet<string> knownTypes = pageParsers.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
             HashSet<string> seenTypes = data.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            seenTypes.Remove("Collection");
-            seenTypes.Remove("unknown");
+            seenTypes.Remove(collectionType);
+            seenTypes.Remove(fallback);
             List<string> unknownTypes = seenTypes.Except(knownTypes).ToList();
 
             if (0 < unknownTypes.Count)
@@ -344,7 +348,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 }
             }
 
-            if (data.TryGetValue("Collection", out List<TextFile>? collections))
+            if (data.TryGetValue(collectionType, out List<TextFile>? collections))
             {
                 IEnumerable<PublicationMetaData> publicationMetaDataItems = result.OfType<PublicationMetaData>();
                 List<PublicationMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
