@@ -4,13 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Kaylumah.Ssg.Utilities;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
+using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    public static partial class SiteMetaDataExtensions
+    public static class SiteMetaDataExtensions
     {
         public static Dictionary<AuthorId, Person> ToPersons(this SiteMetaData source)
         {
@@ -101,6 +101,92 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             return result;
 
+        }
+
+        public static Schema.NET.CollectionPage ToCollectionPage(this CollectionPage page)
+        {
+            List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
+            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
+            foreach (ArticleMetaData article in articles)
+            {
+                BlogPosting blogPosting = new BlogPosting();
+                blogPosting.Headline = article.Title;
+                blogPosting.Url = article.CanonicalUri;
+                creativeWorks.Add(blogPosting);
+            }
+
+            Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
+            collectionPage.Url = page.CanonicalUri;
+            collectionPage.Name = page.Title;
+            collectionPage.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            collectionPage.Keywords = keywords;
+            collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
+            return collectionPage;
+        }
+
+        public static Blog ToBlog(this CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            List<BlogPosting> posts = new List<BlogPosting>();
+            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
+            foreach (ArticleMetaData article in articles)
+            {
+                BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
+                posts.Add(blogPosting);
+            }
+
+            Blog blog = new Blog();
+            blog.Url = page.CanonicalUri;
+            blog.Name = page.Title;
+            blog.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            blog.Keywords = keywords;
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            blog.DatePublished = page.Published;
+            blog.DateModified = page.Modified;
+#pragma warning restore RS0030
+            blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
+            return blog;
+        }
+
+        public static BlogPosting ToBlogPosting(this ArticleMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            Uri pageUri = page.CanonicalUri;
+            BlogPosting blogPost = new BlogPosting();
+
+            blogPost.MainEntityOfPage = pageUri;
+            blogPost.Url = pageUri;
+
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            blogPost.DatePublished = page.Published;
+            blogPost.DateModified = page.Modified;
+#pragma warning restore RS0030
+
+            blogPost.Headline = page.Title;
+            blogPost.Description = page.Description;
+            string keywords = string.Join(',', page.Tags);
+            blogPost.Keywords = keywords;
+
+            if (page.WebImage != null)
+            {
+                blogPost.Image = new Values<IImageObject, Uri>(page.WebImage);
+            }
+
+            if (!string.IsNullOrEmpty(page.Author) && authors.TryGetValue(page.Author, out Person? person))
+            {
+                blogPost.Author = person;
+            }
+
+            if (!string.IsNullOrEmpty(page.Organization) && organizations.TryGetValue(page.Organization, out Organization? organization))
+            {
+                blogPost.Publisher = organization;
+            }
+
+            // blogPost.Name = page.Title;
+            blogPost.InLanguage = page.Language;
+            blogPost.WordCount = page.NumberOfWords;
+            blogPost.TimeRequired = page.Duration;
+            return blogPost;
         }
     }
 }
