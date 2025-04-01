@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
@@ -36,45 +37,156 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
             settings.WriteIndented = true;
 
-            Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
-            Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
+            Dictionary<AuthorId, Person> authors = ToPersons(renderData.Site);
+            Dictionary<OrganizationId, Organization> organizations = ToOrganizations(renderData.Site);
 
-            if (renderData.Page is ArticleMetaData article)
+            Type pageType = renderData.Page.GetType();
+            LogLdJson(renderData.Page.Uri, renderData.Page.Type);
+            Dictionary<Type, Func<BasePage, Thing>> pageParsers = new();
+            pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
+            pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
+            pageParsers[typeof(ArticleMetaData)] = Safe((ArticleMetaData page) => ToBlogPosting(page, authors, organizations));
+
+            bool hasConverter = pageParsers.TryGetValue(pageType, out Func<BasePage, Thing>? parser);
+            if (hasConverter && parser != null)
             {
-                LogLdJson(article.Uri, article.Type);
-                BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
-                string blogPostSchemeJson = blogPostScheme.ToString(settings);
-                return blogPostSchemeJson;
+                Thing scheme = parser(renderData.Page);
+                string json = scheme.ToString(settings);
+                return json;
             }
-            else if (renderData.Page is CollectionPage collectionPage)
+
+            return string.Empty;
+        }
+
+        static Func<BasePage, Thing> Safe<TPage>(Func<TPage, Thing> handler)
+            where TPage : BasePage
+        {
+            return page =>
             {
-                if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
+                if (page is not TPage typed)
                 {
-                    Blog blogScheme = ToBlog(collectionPage, authors, organizations);
-                    string blogSchemeJson = blogScheme.ToString(settings);
-                    return blogSchemeJson;
+                    throw new InvalidCastException(
+                        $"Expected page of type {typeof(TPage).Name}, but got {page.GetType().Name}");
                 }
 
-                Schema.NET.CollectionPage collectionScheme = ToCollectionPage(collectionPage);
-                string collectionSchemeJson = collectionScheme.ToString(settings);
-                return collectionSchemeJson;
-            }
-            else if (renderData.Page is PageMetaData page)
+                Thing result = handler(typed);
+                return result;
+            };
+        }
+
+        Dictionary<AuthorId, Person> ToPersons(SiteMetaData source)
+        {
+            Dictionary<AuthorId, Person> result;
+
+            if (source.AuthorMetaData == null)
             {
-                WebSite scheme = new WebSite();
-                scheme.Name = renderData.Site.Title;
-                scheme.Url = new Uri(renderData.Site.Url);
-                WebPage webPageScheme = new WebPage();
-                webPageScheme.Name = page.Title;
-                webPageScheme.Url = page.CanonicalUri;
-                webPageScheme.Description = page.Description;
-                webPageScheme.IsPartOf = scheme;
-                string webPageSchemeJson = webPageScheme.ToString(settings);
-                return webPageSchemeJson;
+                result = [];
+            }
+            else
+            {
+                result = source.AuthorMetaData
+                    .ToDictionary(x => x.Id, x =>
+                    {
+                        List<Uri> uris = new List<Uri>();
+
+                        if (!string.IsNullOrEmpty(x.Links.Linkedin))
+                        {
+                            Uri linkedinUri = new Uri(x.Links.LinkedinProfileUrl!);
+                            uris.Add(linkedinUri);
+                        }
+
+                        if (!string.IsNullOrEmpty(x.Links.Twitter))
+                        {
+                            Uri twitterUri = new Uri(x.Links.TwitterProfileUrl!);
+                            uris.Add(twitterUri);
+                        }
+
+                        Person person = new Person();
+                        person.Name = x.FullName;
+                        person.Email = x.Email;
+                        person.SameAs = new OneOrMany<Uri>(uris);
+
+                        if (!string.IsNullOrEmpty(x.Uri))
+                        {
+                            Uri personUri = source.AbsoluteUri(x.Uri);
+                            person.Url = personUri;
+                        }
+
+                        if (!string.IsNullOrEmpty(x.Picture))
+                        {
+                            Uri image = source.AbsoluteUri(x.Picture);
+                            person.Image = new Values<IImageObject, Uri>(image);
+                        }
+
+                        return person;
+                    });
             }
 
-            string result = string.Empty;
             return result;
+        }
+
+        Dictionary<OrganizationId, Organization> ToOrganizations(SiteMetaData source)
+        {
+            Dictionary<OrganizationId, Organization> result;
+            if (source.OrganizationMetaData == null)
+            {
+                result = [];
+            }
+            else
+            {
+                result = source.OrganizationMetaData
+                    .ToDictionary(x => x.Id, x =>
+                    {
+
+                        List<Uri> uris = new List<Uri>
+                        {
+                            new Uri($"https://www.linkedin.com/company/{x.Linkedin}")
+                        };
+
+                        Organization organization = new Organization();
+                        organization.Name = x.FullName;
+#pragma warning disable RS0030 // not time based
+                        organization.FoundingDate = x.Founded.Date;
+#pragma warning restore RS0030
+                        organization.SameAs = new OneOrMany<Uri>(uris);
+
+                        if (!string.IsNullOrEmpty(x.Logo))
+                        {
+                            Uri logoUri = source.AbsoluteUri(x.Logo);
+                            organization.Logo =
+                                new Values<IImageObject, Uri>(logoUri);
+                        }
+
+                        return organization;
+                    });
+            }
+
+            return result;
+        }
+
+        WebPage ToWebPage(PageMetaData pageMetaData, SiteMetaData site)
+        {
+            WebSite scheme = new WebSite();
+            scheme.Name = site.Title;
+            scheme.Url = new Uri(site.Url);
+            WebPage webPageScheme = new WebPage();
+            webPageScheme.Name = pageMetaData.Title;
+            webPageScheme.Url = pageMetaData.CanonicalUri;
+            webPageScheme.Description = pageMetaData.Description;
+            webPageScheme.IsPartOf = scheme;
+            return webPageScheme;
+        }
+
+        Thing ToCollectionPage(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            if (page.Uri == "blog.html")
+            {
+                Blog blog = ToBlog(page, authors, organizations);
+                return blog;
+            }
+
+            Schema.NET.CollectionPage collectionResult = ToCollectionPage(page);
+            return collectionResult;
         }
 
         Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
