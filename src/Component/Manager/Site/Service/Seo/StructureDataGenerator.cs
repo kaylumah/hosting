@@ -5,14 +5,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
+using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
 using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    public class StructureDataGenerator
+    public partial class StructureDataGenerator
     {
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Trace,
+            Message = "Attempting LdJson `{Path}` and `{Type}`")]
+        private partial void LogLdJson(string path, string type);
+
+        readonly ILogger _Logger;
+
+        public StructureDataGenerator(ILogger<StructureDataGenerator> logger)
+        {
+            _Logger = logger;
+        }
+
         public string ToLdJson(RenderData renderData)
         {
             // Check https://search.google.com/test/rich-results to validate LDJson
@@ -27,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Dictionary<OrganizationId, Organization> organizations = ToOrganizations(renderData.Site);
 
             Type pageType = renderData.Page.GetType();
-
+            LogLdJson(renderData.Page.Uri, renderData.Page.Type);
             Dictionary<Type, Func<BasePage, Thing>> pageParsers = new();
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
             pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
