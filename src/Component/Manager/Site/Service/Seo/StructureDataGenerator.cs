@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
@@ -11,123 +13,164 @@ using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    public partial class StructureDataGenerator
+    public interface ILdJsonRenderer
     {
-        [LoggerMessage(
-            EventId = 0,
-            Level = LogLevel.Trace,
-            Message = "Attempting LdJson `{Path}` and `{Type}`")]
-        private partial void LogLdJson(string path, string type);
+        Thing ToLdJson(BasePage page);
+    }
 
-        readonly ILogger _Logger;
+    public class CollectionPageLdJsonRenderer : ILdJsonRenderer
+    {
+        readonly Dictionary<AuthorId, Person> _Authors;
+        readonly Dictionary<OrganizationId, Organization> _Organizations;
 
-        public StructureDataGenerator(ILogger<StructureDataGenerator> logger)
+        public CollectionPageLdJsonRenderer(Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            _Logger = logger;
+            _Authors = authors;
+            _Organizations = organizations;
         }
 
-        public string ToLdJson(RenderData renderData)
+        Thing ILdJsonRenderer.ToLdJson(BasePage page)
         {
-            // Check https://search.google.com/test/rich-results to validate LDJson
-            ArgumentNullException.ThrowIfNull(renderData);
-            System.Text.Json.JsonSerializerOptions settings = new System.Text.Json.JsonSerializerOptions();
-            settings.AllowTrailingCommas = true;
-            settings.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
-            settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            settings.WriteIndented = true;
-
-            Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
-            Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
-
-            if (renderData.Page is ArticleMetaData article)
+            if (page is not CollectionPage collectionPage)
             {
-                LogLdJson(article.Uri, article.Type);
-                BlogPosting blogPostScheme = ToBlogPosting(article, authors, organizations);
-                string blogPostSchemeJson = blogPostScheme.ToString(settings);
-                return blogPostSchemeJson;
+                throw new InvalidOperationException();
             }
-            else if (renderData.Page is TalkMetaData talk)
+
+            if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
             {
+                Blog blogScheme = collectionPage.ToBlog(_Authors, _Organizations);
+                return blogScheme;
+            }
+
+            Schema.NET.CollectionPage collectionScheme = collectionPage.ToCollectionPage();
+            return collectionScheme;
+        }
+    }
+
+    public class ArticleMetaDataLdJsonRenderer : ILdJsonRenderer
+    {
+        readonly Dictionary<AuthorId, Person> _Authors;
+        readonly Dictionary<OrganizationId, Organization> _Organizations;
+
+        public ArticleMetaDataLdJsonRenderer(Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            _Authors = authors;
+            _Organizations = organizations;
+        }
+
+        Thing ILdJsonRenderer.ToLdJson(BasePage page)
+        {
+            if (page is not ArticleMetaData article)
+            {
+                throw new InvalidOperationException();
+            }
+
+            BlogPosting blogPostScheme = article.ToBlogPosting(_Authors, _Organizations);
+            return blogPostScheme;
+        }
+    }
+
+    public class TalkMetaDataLdJsonRenderer : ILdJsonRenderer
+    {
+        readonly Dictionary<AuthorId, Person> _Authors;
+        readonly Dictionary<OrganizationId, Organization> _Organizations;
+
+        public TalkMetaDataLdJsonRenderer(Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            _Authors = authors;
+            _Organizations = organizations;
+        }
+
+        Thing ILdJsonRenderer.ToLdJson(BasePage page)
+        {
+            if (page is not TalkMetaData talk)
+            {
+                throw new InvalidOperationException();
+            }
+
 #pragma warning disable
 
-                PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
-                presentationScheme.Name = "Slide Deck for Modern Microservices";
-                presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
-                presentationScheme.EncodingFormat = "text/html";
-                
-                Place placeScheme = new Place();
-                // place.Name = "Ilionx Dev Days 2023";
-                
-                Event eventScheme = new Event();
-                eventScheme.Url = talk.CanonicalUri; // new Uri("https://kaylumah.nl/talks/modern-microservices.html")
-                eventScheme.Name = talk.Name; // "Modern Microservices"
-                eventScheme.Description = talk.Description; // "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices."
-                string keywords = string.Join(',', talk.Tags);
-                eventScheme.Keywords = keywords;
-                eventScheme.WorkPerformed = presentationScheme;
-                eventScheme.Location = placeScheme;
-                // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
-                // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
-                
-                if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
-                {
-                    eventScheme.Performer = personScheme;
-                }
-                
-                /*
-                 * 
-                   Location = new Place
+            PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
+            presentationScheme.Name = "Slide Deck for Modern Microservices";
+            presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
+            presentationScheme.EncodingFormat = "text/html";
+
+            Place placeScheme = new Place();
+            // place.Name = "Ilionx Dev Days 2023";
+
+            Event eventScheme = new Event();
+            eventScheme.Url = talk.CanonicalUri; // new Uri("https://kaylumah.nl/talks/modern-microservices.html")
+            eventScheme.Name = talk.Name; // "Modern Microservices"
+            eventScheme.Description =
+                talk.Description; // "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices."
+            string keywords = string.Join(',', talk.Tags);
+            eventScheme.Keywords = keywords;
+            eventScheme.WorkPerformed = presentationScheme;
+            eventScheme.Location = placeScheme;
+            // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
+            // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
+
+            if (!string.IsNullOrEmpty(talk.Author) && _Authors.TryGetValue(talk.Author, out Person? personScheme))
+            {
+                eventScheme.Performer = personScheme;
+            }
+
+            /*
+             *
+               Location = new Place
+               {
+                   Name = "Amsterdam RAI Conference Centre",
+                   Address = new PostalAddress
                    {
-                       Name = "Amsterdam RAI Conference Centre",
-                       Address = new PostalAddress
-                       {
-                           AddressLocality = "Amsterdam",
-                           AddressCountry = "NL"
-                       },
-                       Geo = new GeoCoordinates
-                       {
-                           Latitude = 52.3411,
-                           Longitude = 4.8884
-                       }
+                       AddressLocality = "Amsterdam",
+                       AddressCountry = "NL"
+                   },
+                   Geo = new GeoCoordinates
+                   {
+                       Latitude = 52.3411,
+                       Longitude = 4.8884
                    }
-                 */
-                
-                string eventSchemeJson =  eventScheme.ToString(settings);
-                return eventSchemeJson;
+               }
+             */
+
+            return eventScheme;
 #pragma warning restore
-            }
-            else if (renderData.Page is CollectionPage collectionPage)
-            {
-                if ("blog.html".Equals(collectionPage.Uri, StringComparison.Ordinal))
-                {
-                    Blog blogScheme = ToBlog(collectionPage, authors, organizations);
-                    string blogSchemeJson = blogScheme.ToString(settings);
-                    return blogSchemeJson;
-                }
+        }
+    }
 
-                Schema.NET.CollectionPage collectionScheme = ToCollectionPage(collectionPage);
-                string collectionSchemeJson = collectionScheme.ToString(settings);
-                return collectionSchemeJson;
-            }
-            else if (renderData.Page is PageMetaData page)
-            {
-                WebSite scheme = new WebSite();
-                scheme.Name = renderData.Site.Title;
-                scheme.Url = new Uri(renderData.Site.Url);
-                WebPage webPageScheme = new WebPage();
-                webPageScheme.Name = page.Title;
-                webPageScheme.Url = page.CanonicalUri;
-                webPageScheme.Description = page.Description;
-                webPageScheme.IsPartOf = scheme;
-                string webPageSchemeJson = webPageScheme.ToString(settings);
-                return webPageSchemeJson;
-            }
+    public class PageMetaDataLdJsonRenderer : ILdJsonRenderer
+    {
+        readonly Dictionary<AuthorId, Person> _Authors;
+        readonly Dictionary<OrganizationId, Organization> _Organizations;
 
-            string result = string.Empty;
-            return result;
+        public PageMetaDataLdJsonRenderer(Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            _Authors = authors;
+            _Organizations = organizations;
         }
 
-        Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
+        Thing ILdJsonRenderer.ToLdJson(BasePage page)
+        {
+            if (page is not PageMetaData pageMetaData)
+            {
+                throw new InvalidOperationException();
+            }
+
+            WebSite scheme = new WebSite();
+            scheme.Name = pageMetaData.Title;
+            // scheme.Url = new Uri(renderData.Site.Url);
+            WebPage webPageScheme = new WebPage();
+            webPageScheme.Name = pageMetaData.Title;
+            webPageScheme.Url = page.CanonicalUri;
+            webPageScheme.Description = pageMetaData.Description;
+            webPageScheme.IsPartOf = scheme;
+            return webPageScheme;
+        }
+    }
+
+    public static partial class SiteMetaDataExtensions
+    {
+        public static Schema.NET.CollectionPage ToCollectionPage(this CollectionPage page)
         {
             List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
             IEnumerable<ArticleMetaData> articles = page.RecentArticles;
@@ -149,7 +192,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return collectionPage;
         }
 
-        Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        public static Blog ToBlog(this CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             List<BlogPosting> posts = new List<BlogPosting>();
             IEnumerable<ArticleMetaData> articles = page.RecentArticles;
@@ -173,7 +216,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return blog;
         }
 
-        BlogPosting ToBlogPosting(ArticleMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        public static BlogPosting ToBlogPosting(this ArticleMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
@@ -211,6 +254,66 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blogPost.WordCount = page.NumberOfWords;
             blogPost.TimeRequired = page.Duration;
             return blogPost;
+        }
+    }
+
+    public partial class StructureDataGenerator
+    {
+        [LoggerMessage(
+            EventId = 0,
+            Level = LogLevel.Trace,
+            Message = "Attempting LdJson `{Path}` and `{Type}`")]
+        private partial void LogLdJson(string path, string type);
+
+        readonly IServiceProvider _ServiceProvider;
+        readonly ILogger _Logger;
+
+        static readonly Dictionary<Type, Type> _Map;
+
+        static StructureDataGenerator()
+        {
+            _Map = new Dictionary<Type, Type>();
+            _Map[typeof(PageMetaData)] = typeof(PageMetaDataLdJsonRenderer);
+            _Map[typeof(ArticleMetaData)] = typeof(ArticleMetaDataLdJsonRenderer);
+            _Map[typeof(CollectionPage)] = typeof(CollectionPageLdJsonRenderer);
+        }
+
+        public StructureDataGenerator(IServiceProvider serviceProvider, ILogger<StructureDataGenerator> logger)
+        {
+            _ServiceProvider = serviceProvider;
+            _Logger = logger;
+        }
+
+        public string ToLdJson(RenderData renderData)
+        {
+            // Check https://search.google.com/test/rich-results to validate LDJson
+            ArgumentNullException.ThrowIfNull(renderData);
+            System.Text.Json.JsonSerializerOptions settings = new System.Text.Json.JsonSerializerOptions();
+            settings.AllowTrailingCommas = true;
+            settings.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault;
+            settings.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            settings.WriteIndented = true;
+
+            Dictionary<AuthorId, Person> authors = renderData.Site.ToPersons();
+            Dictionary<OrganizationId, Organization> organizations = renderData.Site.ToOrganizations();
+
+            Type pageType = renderData.Page.GetType();
+            bool hasConverter = _Map.TryGetValue(pageType, out Type? converterType);
+            if (hasConverter && converterType != null)
+            {
+                bool implementsILdJsonRenderer = typeof(ILdJsonRenderer).IsAssignableFrom(converterType);
+                Debug.Assert(implementsILdJsonRenderer);
+                object[] arguments = [authors, organizations];
+                object renderer = ActivatorUtilities.CreateInstance(_ServiceProvider, converterType, arguments);
+                if (renderer is ILdJsonRenderer ldJsonRenderer)
+                {
+                    Thing scheme = ldJsonRenderer.ToLdJson(renderData.Page);
+                    string json = scheme.ToString(settings);
+                    return json;
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

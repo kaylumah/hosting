@@ -10,7 +10,7 @@ using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
-    public static class SiteMetaDataExtensions
+    public static partial class SiteMetaDataExtensions
     {
         public static Dictionary<AuthorId, Person> ToPersons(this SiteMetaData source)
         {
