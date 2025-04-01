@@ -332,6 +332,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 throw new InvalidOperationException($"Unmapped metadata types found: {string.Join(", ", unknownTypes)}");
             }
 
+            foreach ((string type, Func<TextFile, BasePage> parser) in pageParsers)
+            {
+                if (data.TryGetValue(type, out List<TextFile>? filesForType))
+                {
+                    foreach (TextFile file in filesForType)
+                    {
+                        BasePage page = parser(file);
+                        result.Add(page);
+                    }
+                }
+            }
+
             if (data.TryGetValue("Collection", out List<TextFile>? collections))
             {
                 IEnumerable<PublicationMetaData> publicationMetaDataItems = result.OfType<PublicationMetaData>();
