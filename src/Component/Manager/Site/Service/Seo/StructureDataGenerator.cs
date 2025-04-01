@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,24 @@ using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    public sealed class LdJsonTargetAttribute : Attribute
+    {
+        public Type TargetType
+        { get; }
+
+        public LdJsonTargetAttribute(Type targetType)
+        {
+            TargetType = targetType;
+        }
+    }
+
     public interface ILdJsonRenderer
     {
         Thing ToLdJson(BasePage page);
     }
 
+    [LdJsonTarget(typeof(CollectionPage))]
     public class CollectionPageLdJsonRenderer : ILdJsonRenderer
     {
         readonly Dictionary<AuthorId, Person> _Authors;
@@ -47,6 +61,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         }
     }
 
+    [LdJsonTarget(typeof(ArticleMetaData))]
     public class ArticleMetaDataLdJsonRenderer : ILdJsonRenderer
     {
         readonly Dictionary<AuthorId, Person> _Authors;
@@ -70,6 +85,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         }
     }
 
+    [LdJsonTarget(typeof(TalkMetaData))]
     public class TalkMetaDataLdJsonRenderer : ILdJsonRenderer
     {
         readonly Dictionary<AuthorId, Person> _Authors;
@@ -138,6 +154,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         }
     }
 
+    [LdJsonTarget(typeof(PageMetaData))]
     public class PageMetaDataLdJsonRenderer : ILdJsonRenderer
     {
         readonly Dictionary<AuthorId, Person> _Authors;
@@ -272,10 +289,20 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         static StructureDataGenerator()
         {
+            Type type = typeof(ILdJsonRenderer);
+            Assembly assembly = type.Assembly;
+            Type[] types = assembly.GetImplementationsForType(type);
+
             _Map = new Dictionary<Type, Type>();
-            _Map[typeof(PageMetaData)] = typeof(PageMetaDataLdJsonRenderer);
-            _Map[typeof(ArticleMetaData)] = typeof(ArticleMetaDataLdJsonRenderer);
-            _Map[typeof(CollectionPage)] = typeof(CollectionPageLdJsonRenderer);
+            foreach (Type ldJsonRendererType in types)
+            {
+                LdJsonTargetAttribute? attribute = ldJsonRendererType.GetCustomAttribute<LdJsonTargetAttribute>();
+                if (attribute != null)
+                {
+                    Type pageType = attribute.TargetType;
+                    _Map.Add(pageType, ldJsonRendererType);
+                }
+            }
         }
 
         public StructureDataGenerator(IServiceProvider serviceProvider, ILogger<StructureDataGenerator> logger)
