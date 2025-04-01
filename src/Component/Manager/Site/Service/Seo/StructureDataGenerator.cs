@@ -168,7 +168,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         WebPage ToWebPage(PageMetaData pageMetaData, SiteMetaData site)
         {
             WebSite scheme = new WebSite();
-            scheme.Name = pageMetaData.Title;
+            scheme.Name = site.Title;
             scheme.Url = new Uri(site.Url);
             WebPage webPageScheme = new WebPage();
             webPageScheme.Name = pageMetaData.Title;
