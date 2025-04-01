@@ -30,10 +30,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Dictionary<Type, Func<BasePage, Thing>> pageParsers = new();
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
-            pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) =>
-                page.Uri == "blog.html"
-                    ? ToBlog(page, authors, organizations)
-                    : ToCollectionPage(page));
+            pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
             pageParsers[typeof(ArticleMetaData)] = Safe((ArticleMetaData page) => ToBlogPosting(page, authors, organizations));
             pageParsers[typeof(TalkMetaData)] = Safe((TalkMetaData page) => ToEvent(page, authors));
 
@@ -165,6 +162,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             webPageScheme.Description = pageMetaData.Description;
             webPageScheme.IsPartOf = scheme;
             return webPageScheme;
+        }
+
+        Thing ToCollectionPage(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        {
+            if (page.Uri == "blog.html")
+            {
+                Blog blog = ToBlog(page, authors, organizations);
+                return blog;
+            }
+
+            Schema.NET.CollectionPage collectionResult = ToCollectionPage(page);
+            return collectionResult;
         }
 
         Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
