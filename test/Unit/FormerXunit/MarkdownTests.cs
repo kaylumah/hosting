@@ -62,7 +62,7 @@ namespace Test.Unit.FormerXunit
 
         public static IEnumerable<object[]> GetBlogPages()
         {
-            string[] fileNames = Directory.GetFiles("assets", "*.md");
+            string[] fileNames = Directory.GetFiles("assets/posts", "*.md");
             foreach (string fileName in fileNames)
             {
                 yield return new object[] { fileName };
