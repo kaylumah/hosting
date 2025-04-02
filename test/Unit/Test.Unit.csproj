@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <Content Include="..\..\_site\_posts\*.md">
-      <TargetPath>assets\%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
+      <TargetPath>assets\posts\%(RecursiveDir)\%(Filename)%(Extension)</TargetPath>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
