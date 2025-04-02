@@ -17,19 +17,16 @@ layout: column.html
     </header>
     <section>
         {{ content }}
-    </section>
-    <section>
         <div class="flex gap-4 flex-wrap mt-4 mb-4">
             <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow/?showNotes=true" target="_blank"
                class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
                 Open Presentation
             </a>
             <button id="toggle-embed"
-               class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition">
+                    class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition">
                 ▶ Preview Inline
             </button>
         </div>
-
         <!-- Hidden iframe by default -->
         <div id="iframe-container" class="hidden">
             <iframe
@@ -48,5 +45,8 @@ layout: column.html
                 this.textContent = isHidden ? "✖ Hide Preview" : "▶ Preview Inline";
             });
         </script>
+    </section>
+    <section>
+        
     </section>
 </article>
