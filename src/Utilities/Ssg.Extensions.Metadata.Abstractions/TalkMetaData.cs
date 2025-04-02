@@ -9,8 +9,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
     public class TalkMetaData : PublicationMetaData
     {
         public Uri PresentationUri => GetPresentationUri();
-        
+
         public string Location => GetString(nameof(Location));
+
+        public DateTime EventDate => GetDateTimeValue(nameof(EventDate));
 
         public TalkMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {

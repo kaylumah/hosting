@@ -250,6 +250,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 #pragma warning restore RS0030
 
             blogPost.Headline = page.Title;
+            // blogPost.Name = page.Title;
             blogPost.Description = page.Description;
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
@@ -269,7 +270,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
-            // blogPost.Name = page.Title;
             blogPost.InLanguage = page.Language;
             blogPost.WordCount = page.NumberOfWords;
             blogPost.TimeRequired = page.Duration;
@@ -284,30 +284,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             }
 
             PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
-            presentationScheme.Name = "Slide Deck for Modern Microservices";
+            presentationScheme.Name = talk.Title; //"Slide Deck for Modern Microservices";
             presentationScheme.Url = talk.PresentationUri;
             presentationScheme.EncodingFormat = "text/html";
 
             Place placeScheme = new Place();
             placeScheme.Name = talk.Location;
-
-            /*
-             *
-               Location = new Place
-               {
-                   Name = "Amsterdam RAI Conference Centre",
-                   Address = new PostalAddress
-                   {
-                       AddressLocality = "Amsterdam",
-                       AddressCountry = "NL"
-                   },
-                   Geo = new GeoCoordinates
-                   {
-                       Latitude = 52.3411,
-                       Longitude = 4.8884
-                   }
-               }
-             */
 
             Event eventScheme = new Event();
             eventScheme.Url = talk.CanonicalUri;
@@ -317,8 +299,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             eventScheme.Keywords = keywords;
             eventScheme.WorkPerformed = presentationScheme;
             eventScheme.Location = placeScheme;
-            // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
-            // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
+
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            eventScheme.StartDate = talk.EventDate;
+#pragma warning restore RS0030
 
             if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
             {

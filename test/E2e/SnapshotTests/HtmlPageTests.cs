@@ -123,7 +123,7 @@ namespace Test.E2e.SnapshotTests
             string methodName = $"{nameof(Verify_BlogPostPageHtml_Contents)}_{testParameter}";
             await HtmlPageVerifier.VerifyHead(blogItemPage, methodName);
         }
-        
+
         [Fact]
         public async Task Verify_TalkPageHtml_FullPage()
         {
@@ -133,7 +133,7 @@ namespace Test.E2e.SnapshotTests
             await talkItemPage.NavigateAsync();
             await HtmlPageVerifier.Verify(talkItemPage);
         }
-        
+
         [Theory]
         [MemberData(nameof(GetTalkPages))]
         public async Task Verify_TalkPageHtml_Contents(string path)
@@ -152,7 +152,7 @@ namespace Test.E2e.SnapshotTests
         {
             yield return new object[] { "2024/08/06/fix-vscode-markdown-preview.html" };
         }
-        
+
         public static IEnumerable<object[]> GetBlogPages()
         {
             yield return new object[] { "2024/08/06/fix-vscode-markdown-preview.html" };
