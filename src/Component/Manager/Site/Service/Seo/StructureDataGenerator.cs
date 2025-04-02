@@ -283,8 +283,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 throw new InvalidOperationException();
             }
 
-#pragma warning disable
-
             PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
             presentationScheme.Name = "Slide Deck for Modern Microservices";
             presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
@@ -292,24 +290,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             Place placeScheme = new Place();
             // place.Name = "Ilionx Dev Days 2023";
-
-            Event eventScheme = new Event();
-            eventScheme.Url = talk.CanonicalUri; // new Uri("https://kaylumah.nl/talks/modern-microservices.html")
-            eventScheme.Name = talk.Name; // "Modern Microservices"
-            eventScheme.Description =
-                talk.Description; // "Talk presented at TechConf 2025 in Amsterdam about migrating .NET monoliths to cloud-native microservices."
-            string keywords = string.Join(',', talk.Tags);
-            eventScheme.Keywords = keywords;
-            eventScheme.WorkPerformed = presentationScheme;
-            eventScheme.Location = placeScheme;
-            // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
-            // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
-
-            if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
-            {
-                eventScheme.Performer = personScheme;
-            }
-
             /*
              *
                Location = new Place
@@ -328,8 +308,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                }
              */
 
+            Event eventScheme = new Event();
+            eventScheme.Url = talk.CanonicalUri;
+            eventScheme.Name = talk.Name;
+            eventScheme.Description = talk.Description;
+            string keywords = string.Join(',', talk.Tags);
+            eventScheme.Keywords = keywords;
+            eventScheme.WorkPerformed = presentationScheme;
+            eventScheme.Location = placeScheme;
+            // StartDate = new DateTimeOffset(2025, 5, 21, 14, 30, 0, TimeSpan.Zero),
+            // EndDate = new DateTimeOffset(2025, 5, 21, 15, 15, 0, TimeSpan.Zero)
+
+            if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
+            {
+                eventScheme.Performer = personScheme;
+            }
+
             return eventScheme;
-#pragma warning restore
         }
     }
 }
