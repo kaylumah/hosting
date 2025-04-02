@@ -128,7 +128,7 @@ namespace Test.E2e.SnapshotTests
         public async Task Verify_TalkPageHtml_FullPage()
         {
             IPage blogPage = await _DesktopFixture.GetPage();
-            string path = "2024/08/06/fix-vscode-markdown-preview.html";
+            string path = "2023/05/12/gherkin-testing-in-dotnet.html";
             TalkItemPage talkItemPage = new TalkItemPage(path, blogPage);
             await talkItemPage.NavigateAsync();
             await HtmlPageVerifier.Verify(talkItemPage);
@@ -150,7 +150,7 @@ namespace Test.E2e.SnapshotTests
 
         public static IEnumerable<object[]> GetTalkPages()
         {
-            yield return new object[] { "2024/08/06/fix-vscode-markdown-preview.html" };
+            yield return new object[] { "2023/05/12/gherkin-testing-in-dotnet.html" };
         }
 
         public static IEnumerable<object[]> GetBlogPages()
