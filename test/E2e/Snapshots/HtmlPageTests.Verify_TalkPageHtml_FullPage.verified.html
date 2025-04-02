@@ -17,33 +17,28 @@
     <!-- Begin Kaylumah SEO tag v[SHORT-COMMIT-HASH] -->
     
     <!-- Common Meta Tags -->
-    <title>Fixing VSCode Markdown preview with symbolic links!</title>
-    <link rel="canonical" href="https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html" />
+    <title>Gherkin testing in .NET</title>
+    <link rel="canonical" href="https://BaseUrl_1/2023/05/12/gherkin-testing-in-dotnet.html" />
     <link rel="alternate" type="application/atom+xml" href="https://BaseUrl_1/feed.xml" title="Max Hamulyák · Kaylumah RSS Feed" />
     <link rel="sitemap" type="application/xml" href="https://BaseUrl_1/sitemap.xml" title="Max Hamulyák · Kaylumah Sitemap" />
     <meta name="generator" content="Kaylumah v[SHORT-COMMIT-HASH]" />
-    <meta name="description" content="Render images from everywhere inside VSCode's markdown preview" />
+    <meta name="description" content="Talk presented at the ilionx DevDays 2023 in Arnhem about using Gherkin to write human-readable tests in dotnet" />
     <meta name="copyright" content="© Kaylumah. All rights reserved." />
-    <meta name="keywords" content="vscode, markdown" />
+    <meta name="keywords" content="testing, specflow, gherkin" />
     
     <!-- OpenGraph Meta Tags -->
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="website" />
     <meta property="og:locale" content="en" />
     <meta property="og:site_name" content="Max Hamulyák · Kaylumah" />
-    <meta property="og:title" content="Fixing VSCode Markdown preview with symbolic links!" />
-    <meta property="og:url" content="https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html" />
-    <meta property="og:description" content="Render images from everywhere inside VSCode's markdown preview" />
+    <meta property="og:title" content="Gherkin testing in .NET" />
+    <meta property="og:url" content="https://BaseUrl_1/2023/05/12/gherkin-testing-in-dotnet.html" />
+    <meta property="og:description" content="Talk presented at the ilionx DevDays 2023 in Arnhem about using Gherkin to write human-readable tests in dotnet" />
     <meta property="og:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
-    <meta property="article:author" content="Max Hamulyák" />
-    <meta property="article:published_time" content="2024-08-06T17:30:00.0000000+02:00" />
-    <meta property="article:modified_time" content="2024-08-06T17:30:00.0000000+02:00" />
-    <meta property="article:tag" content="vscode" />
-    <meta property="article:tag" content="markdown" />
     
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Fixing VSCode Markdown preview with symbolic links!" />
-    <meta name="twitter:description" content="Render images from everywhere inside VSCode's markdown preview" />
+    <meta name="twitter:title" content="Gherkin testing in .NET" />
+    <meta name="twitter:description" content="Talk presented at the ilionx DevDays 2023 in Arnhem about using Gherkin to write human-readable tests in dotnet" />
     <meta name="twitter:image" content="https://BaseUrl_1/assets/images/social_preview.png" />
     <meta name="twitter:site" content="@kaylumah" />
     <meta name="twitter:creator" content="@kaylumah" />
@@ -64,12 +59,17 @@
     <!-- LdJson Meta Tags -->
     <script type="application/ld+json">{
       "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "description": "Render images from everywhere inside VSCode's markdown preview",
-      "image": "https://BaseUrl_1/assets/images/social_preview.png",
-      "mainEntityOfPage": "https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html",
-      "url": "https://BaseUrl_1/2024/08/06/fix-vscode-markdown-preview.html",
-      "author": {
+      "@type": "Event",
+      "name": "gherkin-testing-in-dotnet.html",
+      "description": "Talk presented at the ilionx DevDays 2023 in Arnhem about using Gherkin to write human-readable tests in dotnet",
+      "url": "https://BaseUrl_1/2023/05/12/gherkin-testing-in-dotnet.html",
+      "keywords": "testing,specflow,gherkin",
+      "location": {
+        "@context": "https://schema.org",
+        "@type": "Place",
+        "name": "Van Der Valk, Arnhem"
+      },
+      "performer": {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Max Hamulyák",
@@ -80,21 +80,14 @@
         ],
         "email": "max@kaylumah.nl"
       },
-      "dateModified": "2024-08-06T17:30:00+02:00",
-      "datePublished": "2024-08-06T17:30:00+02:00",
-      "headline": "Fixing VSCode Markdown preview with symbolic links!",
-      "inLanguage": "en",
-      "keywords": "vscode,markdown",
-      "publisher": {
+      "startDate": "2023-05-12",
+      "workPerformed": {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "kaylumah",
-        "sameAs": "https://www.linkedin.com/company/kaylumah",
-        "foundingDate": "2020-01-01",
-        "logo": "https://BaseUrl_1/assets/logo.svg"
-      },
-      "timeRequired": "PT2M",
-      "wordCount": 360
+        "@type": "PresentationDigitalDocument",
+        "name": "Gherkin testing in .NET",
+        "url": "https://kaylumah.github.io/ilionx-devdays2023-specflow",
+        "encodingFormat": "text/html"
+      }
     }</script>
     
     <!-- End Kaylumah SEO tag -->
@@ -190,54 +183,50 @@
             
 <article class="prose max-w-none">
     <header class="mb-4 border-b border-gray-300 pb-4">
-        <h1 class="text-3xl font-bold">Fixing VSCode Markdown preview with symbolic links!</h1>
+        <h1 class="text-3xl font-bold">Gherkin testing in .NET</h1>
         <div class="flex flex-wrap items-center text-gray-600 text-sm mt-2 gap-2">
-            <span>Published on <time datetime="2024-08-06">2024/08/06</time></span>
+            <span>Published talk on <time datetime="2023-05-12">2023/05/12</time></span>
             <span>by <strong>Max Hamulyák</strong></span>
         </div>
         <div class="flex gap-2 mt-2">
             
-                        <a href="/archive.html?tag=vscode" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">VS Code</a>
+                        <a href="/archive.html?tag=testing" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">Testing</a>
                         
-                        <a href="/archive.html?tag=markdown" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">Markdown</a>
+                        <a href="/archive.html?tag=specflow" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">specflow</a>
+                        
+                        <a href="/archive.html?tag=gherkin" class="text-gray-700 text-xs bg-gray-200 px-2 py-1 rounded">gherkin</a>
                         
         </div>
     </header>
     <section>
-        <p>Many static website generators support writing blogs in Markdown. Jekyll and several other generators organize content, such as blog posts, and assets, like images and CSS files, into separate directories.</p>
-<p>My favorite editor for writing Markdown is VSCode. While this separation is useful for organization, it can be somewhat cumbersome when editing and previewing Markdown.</p>
-<p>To illustrate this point, let’s look at an example. A typical directory structure looks like this:</p>
-<pre><code class="language-sh"># generated with the command tree -L 2
-.
-├── _posts
-│   └── hello-world.md
-├── assets
-│   └── logo.svg
-└── index.html
-</code></pre>
-<p>Using the Markdown preview feature of VSCode that would look like this:</p>
-<!-- code --profile "Blog" . -->
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/001_RootPreview.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/001_RootPreview.png" width="2272" height="1760" alt="Markdown preview from project root" /></picture></p>
-<h2 id="the-issue"><a href="#the-issue">The issue</a></h2>
-<p>If you’re like me, your project contains many more files than the few shown in the example. In such cases, I prefer working inside the _posts folder. Unfortunately, as the screenshot below shows, this breaks the image preview functionality.</p>
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/002_FolderPreview.png" width="2272" height="1760" alt="Markdown preview from subfolder" /></picture></p>
-<p>Instead of displaying my logo, the preview now shows a broken image icon. Technically, this behavior is correct because, relative to our “hello-world.md” post, there is no “assets” directory. You might think that changing the path to “../assets/” would solve the issue, since that’s where the folder exists on disk. However, VSCode does not allow this due to <a href="https://github.com/Microsoft/vscode/issues/64685#issuecomment-446414622" class="external">security concerns</a>. Even if it did work, it would create the issue that the preview would no longer function correctly when opened from the root directory.</p>
-<h2 id="the-solution"><a href="#the-solution">The solution</a></h2>
-<p>To my knowledge, there is no built-in function in VSCode to address this issue. However, there is an operating system-level solution: using symbolic links.</p>
-<p>We can create a symlink by running the following command inside the &quot;_posts&quot; directory</p>
-<pre><code class="language-sh">ln -s ../assets assets
-</code></pre>
-<p>From the filesystem perspective the &quot;_posts&quot; folder now has a subfolder called posts. If we now open it inside VSCode it renders the image correctly.</p>
-<p><picture><source type="image/webp" srcset="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png.webp" /><img loading="lazy" src="https://BaseUrl_1/assets/images/posts/20240806/markdown-preview/003_SymlinkPreview.png" width="2272" height="1760" alt="Markdown preview with symlink" /></picture></p>
-<h2 id="to-consider"><a href="#to-consider">To consider</a></h2>
-<p>Personally, I believe its a nice workaround for an issue that irritated me.
-Before you leave I like to leave you with some final thoughts.</p>
-<ul>
-<li>This behavior is disabled by default, to prevent opening untrusted content. So don't blindly apply this solution everywhere</li>
-<li>If your blog is under source control via GIT you can <a href="https://stackoverflow.com/questions/954560/how-does-git-handle-symbolic-links/18791647#18791647" class="external">include those symlinks</a> in GIT so your teammates have the same benefits. If you are using Git for Windows you may need <a href="https://stackoverflow.com/questions/5917249/git-symbolic-links-in-windows/59761201#59761201" class="external">additional steps to support symlinks</a></li>
-</ul>
+        At the 11th edition of the ilionx DevDays in Arnhem, I gave an introductory session on using Gherkin-based testing in .NET with SpecFlow.
+I shared practical insights with colleagues and peers on how SpecFlow helps structure tests, making them more human-readable and reusable.
+The talk served as an introduction to the Gherkin language and demonstrated how to implement its principles using the SpecFlow framework.
+        <div class="flex gap-4 flex-wrap mt-4 mb-4">
+            <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow" target="_blank" class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
+                Open Presentation
+            </a>
+            <button id="toggle-embed" class="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition">
+                ▶ Preview Inline
+            </button>
+        </div>
+        <!-- Hidden iframe by default -->
+        <div id="iframe-container" class="hidden">
+            <iframe src="https://kaylumah.github.io/ilionx-devdays2023-specflow" class="w-full h-[600px]" allow="fullscreen" loading="lazy"></iframe>
+        </div>
+        <script>
+            document.getElementById("toggle-embed").addEventListener("click", function () {
+                const container = document.getElementById("iframe-container");
+                const isHidden = container.classList.contains("hidden");
+
+                container.classList.toggle("hidden");
+                this.textContent = isHidden ? "✖ Hide Preview" : "▶ Preview Inline";
+            });
+        </script>
     </section>
-    
+    <section>
+        
+    </section>
 </article>
 
         </section>
