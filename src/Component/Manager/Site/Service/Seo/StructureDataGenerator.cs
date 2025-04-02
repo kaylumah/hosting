@@ -289,7 +289,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             presentationScheme.EncodingFormat = "text/html";
 
             Place placeScheme = new Place();
-            // place.Name = "Ilionx Dev Days 2023";
+            placeScheme.Name = talk.Location;
+
             /*
              *
                Location = new Place
