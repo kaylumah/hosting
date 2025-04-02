@@ -285,7 +285,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
             PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
             presentationScheme.Name = "Slide Deck for Modern Microservices";
-            presentationScheme.Url = new Uri("https://cdn.kaylumah.nl/slides/modern-microservices.html");
+            presentationScheme.Url = talk.PresentationUri;
             presentationScheme.EncodingFormat = "text/html";
 
             Place placeScheme = new Place();
