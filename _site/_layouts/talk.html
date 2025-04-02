@@ -18,7 +18,7 @@ layout: column.html
     <section>
         {{ content }}
         <div class="flex gap-4 flex-wrap mt-4 mb-4">
-            <a href="https://kaylumah.github.io/ilionx-devdays2023-specflow/?showNotes=true" target="_blank"
+            <a href="{{ page.presentationuri }}" target="_blank"
                class="inline-flex items-center px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
                 Open Presentation
             </a>
@@ -30,7 +30,7 @@ layout: column.html
         <!-- Hidden iframe by default -->
         <div id="iframe-container" class="hidden">
             <iframe
-                    src="https://kaylumah.github.io/ilionx-devdays2023-specflow"
+                    src="{{ page.presentationuri }}"
                     class="w-full h-[600px]"
                     allow="fullscreen"
                     loading="lazy"
