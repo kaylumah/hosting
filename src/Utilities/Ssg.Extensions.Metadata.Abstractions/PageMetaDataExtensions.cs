@@ -12,11 +12,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public static readonly Func<PageMetaData, bool> Tags;
 
-        public static readonly Func<ArticleMetaData, bool> Series;
+        public static readonly Func<ArticlePublicationMetaData, bool> Series;
 
         public static readonly Func<PageMetaData, bool> Html;
 
-        public static readonly Func<ArticleMetaData, bool> Featured;
+        public static readonly Func<ArticlePublicationMetaData, bool> Featured;
 
         static PageMetaDataExtensions()
         {
@@ -67,15 +67,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> HasSeries(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationMetaData> HasSeries(this IEnumerable<ArticlePublicationMetaData> source)
         {
-            IEnumerable<ArticleMetaData> result = source.Where(Series);
+            IEnumerable<ArticlePublicationMetaData> result = source.Where(Series);
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> FromSeries(this IEnumerable<ArticleMetaData> source, string series)
+        public static IEnumerable<ArticlePublicationMetaData> FromSeries(this IEnumerable<ArticlePublicationMetaData> source, string series)
         {
-            IEnumerable<ArticleMetaData> result = source
+            IEnumerable<ArticlePublicationMetaData> result = source
                 .HasSeries()
                 .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
             return result;
@@ -111,15 +111,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> IsFeatured(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationMetaData> IsFeatured(this IEnumerable<ArticlePublicationMetaData> source)
         {
-            IEnumerable<ArticleMetaData> result = source.Where(Featured);
+            IEnumerable<ArticlePublicationMetaData> result = source.Where(Featured);
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> ByRecentlyPublished(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationMetaData> ByRecentlyPublished(this IEnumerable<ArticlePublicationMetaData> source)
         {
-            IOrderedEnumerable<ArticleMetaData> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<ArticlePublicationMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
 

@@ -41,9 +41,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public IEnumerable<PageMetaData> Pages => GetPages();
 
-        public IEnumerable<ArticleMetaData> RecentArticles => GetRecentArticles();
+        public IEnumerable<ArticlePublicationMetaData> RecentArticles => GetRecentArticles();
 
-        public IEnumerable<ArticleMetaData> FeaturedArticles => GetFeaturedArticles();
+        public IEnumerable<ArticlePublicationMetaData> FeaturedArticles => GetFeaturedArticles();
 
         public SortedDictionary<string, List<PageId>> PagesByTags => GetPagesByTag();
 
@@ -114,9 +114,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return pages;
         }
 
-        IEnumerable<ArticleMetaData> GetArticles()
+        IEnumerable<ArticlePublicationMetaData> GetArticles()
         {
-            IEnumerable<ArticleMetaData> articles = Items.OfType<ArticleMetaData>();
+            IEnumerable<ArticlePublicationMetaData> articles = Items.OfType<ArticlePublicationMetaData>();
             return articles;
         }
 
@@ -130,18 +130,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region Collections
 
-        IEnumerable<ArticleMetaData> GetRecentArticles()
+        IEnumerable<ArticlePublicationMetaData> GetRecentArticles()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            IEnumerable<ArticleMetaData> sortedByPublished = articles.ByRecentlyPublished();
+            IEnumerable<ArticlePublicationMetaData> articles = GetArticles();
+            IEnumerable<ArticlePublicationMetaData> sortedByPublished = articles.ByRecentlyPublished();
             return sortedByPublished;
         }
 
-        IEnumerable<ArticleMetaData> GetFeaturedArticles()
+        IEnumerable<ArticlePublicationMetaData> GetFeaturedArticles()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            IEnumerable<ArticleMetaData> featuredArticles = articles.IsFeatured();
-            IEnumerable<ArticleMetaData> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
+            IEnumerable<ArticlePublicationMetaData> articles = GetArticles();
+            IEnumerable<ArticlePublicationMetaData> featuredArticles = articles.IsFeatured();
+            IEnumerable<ArticlePublicationMetaData> featuredAndSortedByPublished = featuredArticles.ByRecentlyPublished();
             return featuredAndSortedByPublished;
         }
 

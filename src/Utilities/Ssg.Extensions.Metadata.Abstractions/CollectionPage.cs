@@ -16,7 +16,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public IEnumerable<PublicationMetaData> Items
         { get; }
 
-        public IEnumerable<ArticleMetaData> RecentArticles => GetRecentArticles();
+        public IEnumerable<ArticlePublicationMetaData> RecentArticles => GetRecentArticles();
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
@@ -98,9 +98,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         #region PageTypes
-        IEnumerable<ArticleMetaData> GetArticles()
+        IEnumerable<ArticlePublicationMetaData> GetArticles()
         {
-            IEnumerable<ArticleMetaData> articles = Items.OfType<ArticleMetaData>();
+            IEnumerable<ArticlePublicationMetaData> articles = Items.OfType<ArticlePublicationMetaData>();
 
             if (0 < Take)
             {
@@ -114,10 +114,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         #region Collections
 
-        IEnumerable<ArticleMetaData> GetRecentArticles()
+        IEnumerable<ArticlePublicationMetaData> GetRecentArticles()
         {
-            IEnumerable<ArticleMetaData> articles = GetArticles();
-            IEnumerable<ArticleMetaData> sortedByPublished = articles.ByRecentlyPublished();
+            IEnumerable<ArticlePublicationMetaData> articles = GetArticles();
+            IEnumerable<ArticlePublicationMetaData> sortedByPublished = articles.ByRecentlyPublished();
             return sortedByPublished;
         }
 
