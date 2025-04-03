@@ -57,6 +57,10 @@
     <lastmod>2023-04-14T00:00:00+02:00</lastmod>
   </url>
   <url>
+    <loc>https://BaseUrl_1/2023/05/12/gherkin-testing-in-dotnet.html</loc>
+    <lastmod>2023-05-12T00:00:00+02:00</lastmod>
+  </url>
+  <url>
     <loc>https://BaseUrl_1/2024/02/09/long-live-reqnroll.html</loc>
     <lastmod>2024-02-09T21:00:00+01:00</lastmod>
   </url>

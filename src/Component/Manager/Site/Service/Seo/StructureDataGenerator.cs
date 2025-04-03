@@ -46,6 +46,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
             pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
             pageParsers[typeof(ArticleMetaData)] = Safe((ArticleMetaData page) => ToBlogPosting(page, authors, organizations));
+            pageParsers[typeof(TalkMetaData)] = Safe((TalkMetaData page) => ToEvent(page, authors));
 
             bool hasConverter = pageParsers.TryGetValue(pageType, out Func<BasePage, Thing>? parser);
             if (hasConverter && parser != null)
@@ -249,6 +250,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 #pragma warning restore RS0030
 
             blogPost.Headline = page.Title;
+            // blogPost.Name = page.Title;
             blogPost.Description = page.Description;
             string keywords = string.Join(',', page.Tags);
             blogPost.Keywords = keywords;
@@ -268,11 +270,46 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 blogPost.Publisher = organization;
             }
 
-            // blogPost.Name = page.Title;
             blogPost.InLanguage = page.Language;
             blogPost.WordCount = page.NumberOfWords;
             blogPost.TimeRequired = page.Duration;
             return blogPost;
+        }
+
+        Event ToEvent(BasePage page, Dictionary<AuthorId, Person> authors)
+        {
+            if (page is not TalkMetaData talk)
+            {
+                throw new InvalidOperationException();
+            }
+
+            PresentationDigitalDocument presentationScheme = new PresentationDigitalDocument();
+            presentationScheme.Name = talk.Title; //"Slide Deck for Modern Microservices";
+            presentationScheme.Url = talk.PresentationUri;
+            presentationScheme.EncodingFormat = "text/html";
+
+            Place placeScheme = new Place();
+            placeScheme.Name = talk.Location;
+
+            Event eventScheme = new Event();
+            eventScheme.Url = talk.CanonicalUri;
+            eventScheme.Name = talk.Name;
+            eventScheme.Description = talk.Description;
+            string keywords = string.Join(',', talk.Tags);
+            eventScheme.Keywords = keywords;
+            eventScheme.WorkPerformed = presentationScheme;
+            eventScheme.Location = placeScheme;
+
+#pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
+            eventScheme.StartDate = talk.EventDate;
+#pragma warning restore RS0030
+
+            if (!string.IsNullOrEmpty(talk.Author) && authors.TryGetValue(talk.Author, out Person? personScheme))
+            {
+                eventScheme.Performer = personScheme;
+            }
+
+            return eventScheme;
         }
     }
 }

@@ -254,4 +254,15 @@ namespace Test.E2e
         public override string PagePath
         { get; }
     }
+
+    public class TalkItemPage : HtmlPage
+    {
+        public TalkItemPage(string pagePath, IPage page) : base(page)
+        {
+            PagePath = pagePath;
+        }
+
+        public override string PagePath
+        { get; }
+    }
 }

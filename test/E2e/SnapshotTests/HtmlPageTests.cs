@@ -124,6 +124,35 @@ namespace Test.E2e.SnapshotTests
             await HtmlPageVerifier.VerifyHead(blogItemPage, methodName);
         }
 
+        [Fact]
+        public async Task Verify_TalkPageHtml_FullPage()
+        {
+            IPage blogPage = await _DesktopFixture.GetPage();
+            string path = "2023/05/12/gherkin-testing-in-dotnet.html";
+            TalkItemPage talkItemPage = new TalkItemPage(path, blogPage);
+            await talkItemPage.NavigateAsync();
+            await HtmlPageVerifier.Verify(talkItemPage);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetTalkPages))]
+        public async Task Verify_TalkPageHtml_Contents(string path)
+        {
+            IPage blogPage = await _DesktopFixture.GetPage();
+            TalkItemPage talkItemPage = new TalkItemPage(path, blogPage);
+            await talkItemPage.NavigateAsync();
+            string testParameter = path
+                .Replace("/", "_")
+                .Replace(".html", "");
+            string methodName = $"{nameof(Verify_BlogPostPageHtml_Contents)}_{testParameter}";
+            await HtmlPageVerifier.VerifyHead(talkItemPage, methodName);
+        }
+
+        public static IEnumerable<object[]> GetTalkPages()
+        {
+            yield return new object[] { "2023/05/12/gherkin-testing-in-dotnet.html" };
+        }
+
         public static IEnumerable<object[]> GetBlogPages()
         {
             yield return new object[] { "2024/08/06/fix-vscode-markdown-preview.html" };

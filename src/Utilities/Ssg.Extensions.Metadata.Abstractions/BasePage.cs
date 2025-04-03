@@ -44,6 +44,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
+        protected DateTime GetDateTimeValue(string key)
+        {
+            DateTime result = _InternalData.GetValue<DateTime>(key);
+            return result;
+        }
+
         protected DateTimeOffset GetDateTimeOffsetValue(string key)
         {
             DateTimeOffset result = _InternalData.GetValue<DateTimeOffset>(key);
