@@ -350,8 +350,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             if (data.TryGetValue(collectionType, out List<TextFile>? collections))
             {
-                IEnumerable<PublicationMetaData> publicationMetaDataItems = result.OfType<PublicationMetaData>();
-                List<PublicationMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
+                IEnumerable<PublicationPageMetaData> publicationMetaDataItems = result.OfType<PublicationPageMetaData>();
+                List<PublicationPageMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
                 foreach (TextFile file in collections)
                 {
                     PageMetaData pageMetaData = file.ToPage(siteGuid);

@@ -45,8 +45,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             Dictionary<Type, Func<BasePage, Thing>> pageParsers = new();
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
             pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
-            pageParsers[typeof(ArticlePublicationMetaData)] = Safe((ArticlePublicationMetaData page) => ToBlogPosting(page, authors, organizations));
-            pageParsers[typeof(TalkMetaData)] = Safe((TalkMetaData page) => ToEvent(page, authors));
+            pageParsers[typeof(ArticlePublicationPageMetaData)] = Safe((ArticlePublicationPageMetaData page) => ToBlogPosting(page, authors, organizations));
+            pageParsers[typeof(TalkPageMetaData)] = Safe((TalkPageMetaData page) => ToEvent(page, authors));
 
             bool hasConverter = pageParsers.TryGetValue(pageType, out Func<BasePage, Thing>? parser);
             if (hasConverter && parser != null)
@@ -193,8 +193,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
         {
             List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
-            IEnumerable<ArticlePublicationMetaData> articles = page.RecentArticles;
-            foreach (ArticlePublicationMetaData article in articles)
+            IEnumerable<ArticlePublicationPageMetaData> articles = page.RecentArticles;
+            foreach (ArticlePublicationPageMetaData article in articles)
             {
                 BlogPosting blogPosting = new BlogPosting();
                 blogPosting.Headline = article.Title;
@@ -215,8 +215,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             List<BlogPosting> posts = new List<BlogPosting>();
-            IEnumerable<ArticlePublicationMetaData> articles = page.RecentArticles;
-            foreach (ArticlePublicationMetaData article in articles)
+            IEnumerable<ArticlePublicationPageMetaData> articles = page.RecentArticles;
+            foreach (ArticlePublicationPageMetaData article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
                 posts.Add(blogPosting);
@@ -236,7 +236,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return blog;
         }
 
-        BlogPosting ToBlogPosting(ArticlePublicationMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        BlogPosting ToBlogPosting(ArticlePublicationPageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
@@ -278,7 +278,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         Event ToEvent(BasePage page, Dictionary<AuthorId, Person> authors)
         {
-            if (page is not TalkMetaData talk)
+            if (page is not TalkPageMetaData talk)
             {
                 throw new InvalidOperationException();
             }

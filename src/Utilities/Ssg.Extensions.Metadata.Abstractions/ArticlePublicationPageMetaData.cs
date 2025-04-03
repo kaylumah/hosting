@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class ArticlePublicationMetaData : PublicationMetaData
+    public class ArticlePublicationPageMetaData : PublicationPageMetaData
     {
         public bool SocialShare => GetBoolValue(nameof(SocialShare));
         public bool Feed => GetBoolValue(nameof(Feed));
@@ -52,7 +52,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             }
         }
 
-        public ArticlePublicationMetaData(Dictionary<string, object?> internalData) : base(internalData)
+        public ArticlePublicationPageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
     }

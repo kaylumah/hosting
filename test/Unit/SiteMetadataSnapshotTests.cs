@@ -119,9 +119,9 @@ namespace Test.Unit
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
-            pagePublicationMetaData.Id = DefaultPageId;
-            items.Add(pagePublicationMetaData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
+            pagePublicationPageMetaData.Id = DefaultPageId;
+            items.Add(pagePublicationPageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
@@ -147,9 +147,9 @@ namespace Test.Unit
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
-            pagePublicationMetaData.Id = DefaultPageId;
-            items.Add(pagePublicationMetaData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
+            pagePublicationPageMetaData.Id = DefaultPageId;
+            items.Add(pagePublicationPageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
@@ -164,7 +164,7 @@ namespace Test.Unit
             Dictionary<string, object> data = new();
             List<BasePage> items = new();
 
-            static ArticlePublicationMetaData CreateArticle(string pageId, DateTimeOffset published)
+            static ArticlePublicationPageMetaData CreateArticle(string pageId, DateTimeOffset published)
             {
                 Dictionary<string, object?> pageData = new()
                 {
@@ -173,8 +173,8 @@ namespace Test.Unit
                     { "uri", "example.html"},
                     { "published", published }
                 };
-                ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
-                return pagePublicationMetaData;
+                ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
+                return pagePublicationPageMetaData;
             }
 
 #pragma warning disable
@@ -198,9 +198,9 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
-            items.Add(pagePublicationMetaData);
+            items.Add(pagePublicationPageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
             RenderData renderData = new RenderData(siteMetaData, null!);
@@ -230,12 +230,12 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
-            items.Add(pagePublicationMetaData);
+            items.Add(pagePublicationPageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            RenderData renderData = new RenderData(siteMetaData, pagePublicationMetaData);
+            RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
                 {{ site | to_diagnostic_html "piet" }}
@@ -264,12 +264,12 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
-            items.Add(pagePublicationMetaData);
+            items.Add(pagePublicationPageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            RenderData renderData = new RenderData(siteMetaData, pagePublicationMetaData);
+            RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
                 {{ site | to_diagnostic_html "piet" }}
@@ -298,12 +298,12 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
-            items.Add(pagePublicationMetaData);
+            items.Add(pagePublicationPageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            RenderData renderData = new RenderData(siteMetaData, pagePublicationMetaData);
+            RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
                 {{ site | to_diagnostic_html "piet" }}
@@ -332,12 +332,12 @@ namespace Test.Unit
                 { "id", "1" },
                 { "published", new DateTimeOffset(2025,1,1, 0, 0,0, TimeSpan.Zero) }
             };
-            ArticlePublicationMetaData pagePublicationMetaData = new ArticlePublicationMetaData(pageData);
+            ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
-            items.Add(pagePublicationMetaData);
+            items.Add(pagePublicationPageMetaData);
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
 
-            RenderData renderData = new RenderData(siteMetaData, pagePublicationMetaData);
+            RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
                 {{ site | to_diagnostic_html "piet" }}
