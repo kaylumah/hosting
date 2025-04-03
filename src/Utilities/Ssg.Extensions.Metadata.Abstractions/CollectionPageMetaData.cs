@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class CollectionPage : PageMetaData
+    public class CollectionPageMetaData : PageMetaData
     {
         readonly Dictionary<PageId, PublicationPageMetaData> _Lookup;
 
@@ -20,7 +20,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public SortedDictionary<int, List<PageId>> PagesByYears => GetPagesByYear();
 
-        public CollectionPage(PageMetaData internalData, List<PublicationPageMetaData> items) : base(internalData)
+        public CollectionPageMetaData(PageMetaData internalData, List<PublicationPageMetaData> items) : base(internalData)
         {
             Items = items.ByRecentlyPublished();
 

@@ -356,8 +356,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 {
                     PageMetaData pageMetaData = file.ToPage(siteGuid);
 
-                    CollectionPage collectionPage = new CollectionPage(pageMetaData, publicationMetaDatas);
-                    result.Add(collectionPage);
+                    CollectionPageMetaData collectionPageMetaData = new CollectionPageMetaData(pageMetaData, publicationMetaDatas);
+                    result.Add(collectionPageMetaData);
                 }
             }
 
