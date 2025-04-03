@@ -46,7 +46,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
             pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
             pageParsers[typeof(ArticlePublicationPageMetaData)] = Safe((ArticlePublicationPageMetaData page) => ToBlogPosting(page, authors, organizations));
-            pageParsers[typeof(TalkPageMetaData)] = Safe((TalkPageMetaData page) => ToEvent(page, authors));
+            pageParsers[typeof(TalkPublicationPageMetaData)] = Safe((TalkPublicationPageMetaData page) => ToEvent(page, authors));
 
             bool hasConverter = pageParsers.TryGetValue(pageType, out Func<BasePage, Thing>? parser);
             if (hasConverter && parser != null)
@@ -278,7 +278,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         Event ToEvent(BasePage page, Dictionary<AuthorId, Person> authors)
         {
-            if (page is not TalkPageMetaData talk)
+            if (page is not TalkPublicationPageMetaData talk)
             {
                 throw new InvalidOperationException();
             }
