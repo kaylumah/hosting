@@ -32,10 +32,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static ArticleMetaData ToArticle(this TextFile file)
+        internal static ArticlePublicationPageMetaData ToArticle(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
-            ArticleMetaData result = new ArticleMetaData(data);
+            ArticlePublicationPageMetaData result = new ArticlePublicationPageMetaData(data);
             string content = result.Content;
             (int numberOfWords, TimeSpan duration) readingData = content.ToReadingData();
             result.NumberOfWords = readingData.numberOfWords;
@@ -43,10 +43,10 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static TalkMetaData ToTalk(this TextFile file)
+        internal static TalkPublicationPageMetaData ToTalk(this TextFile file)
         {
             Dictionary<string, object?> data = file.ToDictionary();
-            TalkMetaData result = new TalkMetaData(data);
+            TalkPublicationPageMetaData result = new TalkPublicationPageMetaData(data);
             return result;
         }
 
@@ -70,18 +70,18 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return page;
         }
 
-        public static ArticleMetaData ToArticle(this TextFile file, Guid siteGuid)
+        public static ArticlePublicationPageMetaData ToArticle(this TextFile file, Guid siteGuid)
         {
-            ArticleMetaData page = file.ToArticle();
+            ArticlePublicationPageMetaData page = file.ToArticle();
             page.Id = file.ToPageId(siteGuid);
             return page;
         }
 
-        public static TalkMetaData ToTalk(this TextFile file, Guid siteGuid)
+        public static TalkPublicationPageMetaData ToTalk(this TextFile file, Guid siteGuid)
         {
-            TalkMetaData page = file.ToTalk();
-            page.Id = file.ToPageId(siteGuid);
-            return page;
+            TalkPublicationPageMetaData publicationPage = file.ToTalk();
+            publicationPage.Id = file.ToPageId(siteGuid);
+            return publicationPage;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public class TalkMetaData : PublicationMetaData
+    public class TalkPublicationPageMetaData : PublicationPageMetaData
     {
         public Uri PresentationUri => GetPresentationUri();
 
@@ -14,7 +14,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public DateTime EventDate => GetDateTimeValue(nameof(EventDate));
 
-        public TalkMetaData(Dictionary<string, object?> internalData) : base(internalData)
+        public TalkPublicationPageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
 

@@ -32,14 +32,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             _JsonSerializerOptions.Converters.Add(siteIdJsonConverter);
         }
 
-        public static string PublishedTimeAgo(SiteMetaData siteMetaData, ArticleMetaData pageMetaData)
+        public static string PublishedTimeAgo(SiteMetaData siteMetaData, ArticlePublicationPageMetaData pagePublicationPageMetaData)
         {
-            Debug.Assert(pageMetaData != null);
+            Debug.Assert(pagePublicationPageMetaData != null);
             Debug.Assert(siteMetaData != null);
             Debug.Assert(siteMetaData.Build != null);
             BuildData buildData = siteMetaData.Build;
             DateTimeOffset buildTime = buildData.Time;
-            DateTimeOffset publishedTime = pageMetaData.Published;
+            DateTimeOffset publishedTime = pagePublicationPageMetaData.Published;
             string result = buildTime.ToReadableRelativeTime(publishedTime);
             return result;
         }
@@ -51,9 +51,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static string ReadingTime(ArticleMetaData pageMetaData)
+        public static string ReadingTime(ArticlePublicationPageMetaData pagePublicationPageMetaData)
         {
-            TimeSpan duration = pageMetaData.Duration;
+            TimeSpan duration = pagePublicationPageMetaData.Duration;
             string result = duration.ToReadableDuration();
             return result;
         }
@@ -70,17 +70,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
+        public static IEnumerable<ArticlePublicationPageMetaData> ArticlesForTag(SiteMetaData site, string tag, int? take = null)
         {
             ArgumentNullException.ThrowIfNull(site);
             ArgumentNullException.ThrowIfNull(tag);
 
             bool tagExists = site.PagesByTags.TryGetValue(tag, out List<PageId>? idsForTag);
-            IEnumerable<ArticleMetaData> result;
+            IEnumerable<ArticlePublicationPageMetaData> result;
             if (tagExists && idsForTag != null)
             {
                 IEnumerable<PageMetaData> resultForTag = site[idsForTag];
-                IEnumerable<ArticleMetaData> asArticles = resultForTag.OfType<ArticleMetaData>();
+                IEnumerable<ArticlePublicationPageMetaData> asArticles = resultForTag.OfType<ArticlePublicationPageMetaData>();
                 result = asArticles.ByRecentlyPublished();
                 if (take != null)
                 {
@@ -89,7 +89,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
             else
             {
-                result = Enumerable.Empty<ArticleMetaData>();
+                result = Enumerable.Empty<ArticlePublicationPageMetaData>();
             }
 
             return result;

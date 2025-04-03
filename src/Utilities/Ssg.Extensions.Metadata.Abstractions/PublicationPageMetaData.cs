@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
-    public abstract class PublicationMetaData : PageMetaData
+    public abstract class PublicationPageMetaData : PageMetaData
     {
-        public PublicationMetaData(Dictionary<string, object?> internalData) : base(internalData)
+        public PublicationPageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }
     }

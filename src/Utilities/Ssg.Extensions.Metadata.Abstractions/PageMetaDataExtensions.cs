@@ -12,11 +12,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
     {
         public static readonly Func<PageMetaData, bool> Tags;
 
-        public static readonly Func<ArticleMetaData, bool> Series;
+        public static readonly Func<ArticlePublicationPageMetaData, bool> Series;
 
         public static readonly Func<PageMetaData, bool> Html;
 
-        public static readonly Func<ArticleMetaData, bool> Featured;
+        public static readonly Func<ArticlePublicationPageMetaData, bool> Featured;
 
         static PageMetaDataExtensions()
         {
@@ -67,15 +67,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> HasSeries(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationPageMetaData> HasSeries(this IEnumerable<ArticlePublicationPageMetaData> source)
         {
-            IEnumerable<ArticleMetaData> result = source.Where(Series);
+            IEnumerable<ArticlePublicationPageMetaData> result = source.Where(Series);
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> FromSeries(this IEnumerable<ArticleMetaData> source, string series)
+        public static IEnumerable<ArticlePublicationPageMetaData> FromSeries(this IEnumerable<ArticlePublicationPageMetaData> source, string series)
         {
-            IEnumerable<ArticleMetaData> result = source
+            IEnumerable<ArticlePublicationPageMetaData> result = source
                 .HasSeries()
                 .Where(page => page.Series.Equals(series, StringComparison.Ordinal));
             return result;
@@ -111,28 +111,28 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> IsFeatured(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationPageMetaData> IsFeatured(this IEnumerable<ArticlePublicationPageMetaData> source)
         {
-            IEnumerable<ArticleMetaData> result = source.Where(Featured);
+            IEnumerable<ArticlePublicationPageMetaData> result = source.Where(Featured);
             return result;
         }
 
-        public static IEnumerable<ArticleMetaData> ByRecentlyPublished(this IEnumerable<ArticleMetaData> source)
+        public static IEnumerable<ArticlePublicationPageMetaData> ByRecentlyPublished(this IEnumerable<ArticlePublicationPageMetaData> source)
         {
-            IOrderedEnumerable<ArticleMetaData> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<ArticlePublicationPageMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
 
-        public static IEnumerable<PublicationMetaData> ByRecentlyPublished(this IEnumerable<PublicationMetaData> source)
+        public static IEnumerable<PublicationPageMetaData> ByRecentlyPublished(this IEnumerable<PublicationPageMetaData> source)
         {
-            IOrderedEnumerable<PublicationMetaData> result = source.OrderByDescending(x => x.Published);
+            IOrderedEnumerable<PublicationPageMetaData> result = source.OrderByDescending(x => x.Published);
             return result;
         }
 
-        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<PublicationMetaData> source)
+        public static SortedDictionary<string, List<PageId>> GetPagesByTag(this IEnumerable<PublicationPageMetaData> source)
         {
             SortedDictionary<string, List<PageId>> result = new(StringComparer.OrdinalIgnoreCase);
-            foreach (PublicationMetaData article in source)
+            foreach (PublicationPageMetaData article in source)
             {
                 List<string> tags = article.Tags;
                 foreach (string tag in tags)
@@ -149,11 +149,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<PublicationMetaData> source)
+        public static SortedDictionary<int, List<PageId>> GetPagesByYear(this IEnumerable<PublicationPageMetaData> source)
         {
             DescendingComparer<int> comparer = new DescendingComparer<int>();
             SortedDictionary<int, List<PageId>> result = new(comparer);
-            foreach (PublicationMetaData article in source)
+            foreach (PublicationPageMetaData article in source)
             {
                 DateTimeOffset published = article.Published;
                 int year = published.Year;

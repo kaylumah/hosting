@@ -8,7 +8,6 @@ using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
 using Ssg.Extensions.Metadata.Abstractions;
-using CollectionPage = Ssg.Extensions.Metadata.Abstractions.CollectionPage;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
@@ -44,9 +43,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             LogLdJson(renderData.Page.Uri, renderData.Page.Type);
             Dictionary<Type, Func<BasePage, Thing>> pageParsers = new();
             pageParsers[typeof(PageMetaData)] = Safe((PageMetaData page) => ToWebPage(page, renderData.Site));
-            pageParsers[typeof(CollectionPage)] = Safe((CollectionPage page) => ToCollectionPage(page, authors, organizations));
-            pageParsers[typeof(ArticleMetaData)] = Safe((ArticleMetaData page) => ToBlogPosting(page, authors, organizations));
-            pageParsers[typeof(TalkMetaData)] = Safe((TalkMetaData page) => ToEvent(page, authors));
+            pageParsers[typeof(CollectionPageMetaData)] = Safe((CollectionPageMetaData page) => ToCollectionPage(page, authors, organizations));
+            pageParsers[typeof(ArticlePublicationPageMetaData)] = Safe((ArticlePublicationPageMetaData page) => ToBlogPosting(page, authors, organizations));
+            pageParsers[typeof(TalkPublicationPageMetaData)] = Safe((TalkPublicationPageMetaData page) => ToEvent(page, authors));
 
             bool hasConverter = pageParsers.TryGetValue(pageType, out Func<BasePage, Thing>? parser);
             if (hasConverter && parser != null)
@@ -178,23 +177,23 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             return webPageScheme;
         }
 
-        Thing ToCollectionPage(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        Thing ToCollectionPage(CollectionPageMetaData pageMetaData, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
-            if (page.Uri == "blog.html")
+            if (pageMetaData.Uri == "blog.html")
             {
-                Blog blog = ToBlog(page, authors, organizations);
+                Blog blog = ToBlog(pageMetaData, authors, organizations);
                 return blog;
             }
 
-            Schema.NET.CollectionPage collectionResult = ToCollectionPage(page);
+            CollectionPage collectionResult = ToCollectionPage(pageMetaData);
             return collectionResult;
         }
 
-        Schema.NET.CollectionPage ToCollectionPage(CollectionPage page)
+        CollectionPage ToCollectionPage(CollectionPageMetaData pageMetaData)
         {
             List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
-            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
-            foreach (ArticleMetaData article in articles)
+            IEnumerable<ArticlePublicationPageMetaData> articles = pageMetaData.RecentArticles;
+            foreach (ArticlePublicationPageMetaData article in articles)
             {
                 BlogPosting blogPosting = new BlogPosting();
                 blogPosting.Headline = article.Title;
@@ -202,41 +201,41 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 creativeWorks.Add(blogPosting);
             }
 
-            Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
-            collectionPage.Url = page.CanonicalUri;
-            collectionPage.Name = page.Title;
-            collectionPage.Description = page.Description;
-            string keywords = string.Join(',', page.Tags);
+            CollectionPage collectionPage = new CollectionPage();
+            collectionPage.Url = pageMetaData.CanonicalUri;
+            collectionPage.Name = pageMetaData.Title;
+            collectionPage.Description = pageMetaData.Description;
+            string keywords = string.Join(',', pageMetaData.Tags);
             collectionPage.Keywords = keywords;
             collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
             return collectionPage;
         }
 
-        Blog ToBlog(CollectionPage page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        Blog ToBlog(CollectionPageMetaData pageMetaData, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             List<BlogPosting> posts = new List<BlogPosting>();
-            IEnumerable<ArticleMetaData> articles = page.RecentArticles;
-            foreach (ArticleMetaData article in articles)
+            IEnumerable<ArticlePublicationPageMetaData> articles = pageMetaData.RecentArticles;
+            foreach (ArticlePublicationPageMetaData article in articles)
             {
                 BlogPosting blogPosting = ToBlogPosting(article, authors, organizations);
                 posts.Add(blogPosting);
             }
 
             Blog blog = new Blog();
-            blog.Url = page.CanonicalUri;
-            blog.Name = page.Title;
-            blog.Description = page.Description;
-            string keywords = string.Join(',', page.Tags);
+            blog.Url = pageMetaData.CanonicalUri;
+            blog.Name = pageMetaData.Title;
+            blog.Description = pageMetaData.Description;
+            string keywords = string.Join(',', pageMetaData.Tags);
             blog.Keywords = keywords;
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
-            blog.DatePublished = page.Published;
-            blog.DateModified = page.Modified;
+            blog.DatePublished = pageMetaData.Published;
+            blog.DateModified = pageMetaData.Modified;
 #pragma warning restore RS0030
             blog.BlogPost = new OneOrMany<IBlogPosting>(posts);
             return blog;
         }
 
-        BlogPosting ToBlogPosting(ArticleMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
+        BlogPosting ToBlogPosting(ArticlePublicationPageMetaData page, Dictionary<AuthorId, Person> authors, Dictionary<OrganizationId, Organization> organizations)
         {
             Uri pageUri = page.CanonicalUri;
             BlogPosting blogPost = new BlogPosting();
@@ -278,7 +277,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 
         Event ToEvent(BasePage page, Dictionary<AuthorId, Person> authors)
         {
-            if (page is not TalkMetaData talk)
+            if (page is not TalkPublicationPageMetaData talk)
             {
                 throw new InvalidOperationException();
             }
