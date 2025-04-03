@@ -185,11 +185,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 return blog;
             }
 
-            Schema.NET.CollectionPage collectionResult = ToCollectionPage(pageMetaData);
+            CollectionPage collectionResult = ToCollectionPage(pageMetaData);
             return collectionResult;
         }
 
-        Schema.NET.CollectionPage ToCollectionPage(CollectionPageMetaData pageMetaData)
+        CollectionPage ToCollectionPage(CollectionPageMetaData pageMetaData)
         {
             List<ICreativeWork> creativeWorks = new List<ICreativeWork>();
             IEnumerable<ArticlePublicationPageMetaData> articles = pageMetaData.RecentArticles;
@@ -201,7 +201,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 creativeWorks.Add(blogPosting);
             }
 
-            Schema.NET.CollectionPage collectionPage = new Schema.NET.CollectionPage();
+            CollectionPage collectionPage = new CollectionPage();
             collectionPage.Url = pageMetaData.CanonicalUri;
             collectionPage.Name = pageMetaData.Title;
             collectionPage.Description = pageMetaData.Description;
