@@ -282,6 +282,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Assert.Null(ex.InnerException); // because you're throwing directly, not wrapping
             Assert.Equal($"Cannot convert value '{value}' to {targetType}.", ex.Message);
         }
+
+        public static string GetSampleValue(Type type)
+        {
+            Type t = Nullable.GetUnderlyingType(type) ?? type;
+
+            return t switch
+            {
+                _ when t == typeof(string) => "",
+                _ => throw new NotSupportedException($"No fuzz input for {type}")
+            };
+        }
         
         public static object? DefaultForType(Type targetType)
         {
