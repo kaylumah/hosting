@@ -101,9 +101,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
             object? actual = ConvertValue(input, type);
             Assert.Equal(expected, actual);
         }
-        
 
+        public static IEnumerable<object?[]> ParsedValueForStringValueTestData3()
+        {
+            yield return [typeof(bool), "NotABool", typeof(FormatException)];
+        }
         
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringValueTestData3))]
+        public void Test1(Type type, string input, Type expectedExceptionType)
+        {
+            Func<object?> x = () => ConvertValue(input, type);
+            Exception  ex = Assert.Throws(expectedExceptionType, x);
+        }
         
         // "abc" -> streqam / object
         
