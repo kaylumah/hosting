@@ -115,14 +115,10 @@ namespace Test.Unit
             yield return [typeof(TimeSpan), "abc", typeof(FormatException)];
         }
 
-        public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
+        public static IEnumerable<object?[]> ObjectValueThrowsTestData()
         {
             yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
             yield return [typeof(Uri), true, typeof(InvalidCastException)];
-            // yield return [typeof(int), new object(), typeof(OverflowException)];
-            // long.MaxValue, typeof(int)
-            // true, typeof(Uri)
-            // new object(), typeof(int)
         }
 
         [Fact]
@@ -198,7 +194,7 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
+        [MemberData(nameof(ObjectValueThrowsTestData))]
         public void Test_ConvertValue_ObjectValueThrowsExceptionOnConversionFailure(Type type, object input, Type expectedExceptionType)
         {
             InvalidOperationException outerException = Assert.Throws<InvalidOperationException>(() => ConvertValue(input, type));
