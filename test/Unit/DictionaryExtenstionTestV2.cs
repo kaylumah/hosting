@@ -6,16 +6,69 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using Guid = System.Guid;
+using System.Text;
 using Xunit;
 
 namespace Ssg.Extensions.Metadata.Abstractions
 {
+    static class ConversionCapabilityHelper
+    {
+        static readonly Type _StringType;
+        
+        static ConversionCapabilityHelper()
+        {
+            _StringType = typeof(string);
+        }
+        
+        public static bool CanConvertFromString(Type type)
+        {
+            ArgumentNullException.ThrowIfNull(type);
+
+            Type actualType = Nullable.GetUnderlyingType(type) ?? type;
+            TypeConverter converter = TypeDescriptor.GetConverter(actualType);
+            bool canConvert = converter.CanConvertFrom(_StringType);
+            return canConvert;
+        }
+        
+        public static bool ImplementsIConvertible(Type type)
+        {
+            ArgumentNullException.ThrowIfNull(type);
+
+            Type actualType = Nullable.GetUnderlyingType(type) ?? type;
+            bool result = typeof(IConvertible).IsAssignableFrom(actualType);
+            return result;
+        }
+        
+        public static string GetTypeCompatibilityMatrix(params Type[] types)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // Header
+            sb.AppendLine(CultureInfo.InvariantCulture, $"{ "Type",-30} { "TypeConverter",-15} { "IConvertible",-15}");
+
+            // Rows
+            foreach (Type type in types)
+            {
+                bool canConvert = CanConvertFromString(type);
+                bool convertible = ImplementsIConvertible(type);
+
+                sb.AppendLine(CultureInfo.InvariantCulture, $"{ type.Name,-30} {(canConvert ? "✅" : "❌"),-15} {(convertible ? "✅" : "❌"),-15}");
+            }
+
+            string result = sb.ToString();
+            return result;
+        }
+    }
+    
     public class DictionaryExtenstionTestV2
     {
         static readonly Dictionary<Type, object?> _KnownTypes;
         
         static DictionaryExtenstionTestV2()
         {
+            Type[] types = [ typeof(string) ];
+            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(types);
+            
             _KnownTypes = new Dictionary<Type, object?>
             {
                 { typeof(string), null },
