@@ -1,0 +1,190 @@
+// Copyright (c) Kaylumah, 2025. All rights reserved.
+// See LICENSE file in the project root for full license information.
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using Xunit;
+
+namespace Ssg.Extensions.Metadata.Abstractions
+{
+    public class DictionaryExtenstionTestV2
+    {
+        static readonly Dictionary<Type, object?> _KnownTypes;
+        
+        static DictionaryExtenstionTestV2()
+        {
+            _KnownTypes = new Dictionary<Type, object?>
+            {
+                { typeof(string), null }
+            };
+        }
+
+        public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
+        {
+            foreach (KeyValuePair<Type, object?> x in _KnownTypes)
+            {
+                object?[] result = [x.Key, x.Value];
+                yield return result;
+            }
+        }
+        
+        public static IEnumerable<object?[]> DefaultValueForEmptyStringValueTestData()
+        {
+            string[] values = [
+                string.Empty,
+                " ",
+                "   "
+            ];
+
+            foreach (string value in values)
+            {
+                foreach (KeyValuePair<Type, object?> x in _KnownTypes)
+                {
+                    object?[] result = [x.Key, value, x.Value];
+                    yield return result;
+                } 
+            }
+        }
+
+        public static IEnumerable<object?[]> ParsedValueForStringValueTestData()
+        {
+            #pragma warning disable
+            // TODO 1 and 0?
+            // TODO Yes and No?
+            // [InlineData(typeof(bool), "true", true)]
+            // [InlineData(typeof(bool), "false", false)]
+            // [InlineData(typeof(int), "42", 42)]
+            // [InlineData(typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]
+            yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56)];
+            yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
+        }
+        
+        public static IEnumerable<object?[]> ParsedValueForStringValueTestData2()
+        {
+            yield return [typeof(double), 42, 42.0];
+            yield return [typeof(bool), 0, 42.0];
+            yield return [typeof(bool), 1, 42.0];
+            // double 3.14 -> int
+            // DateTime -> string
+        }
+        
+        [Theory]
+        [MemberData(nameof(DefaultValueForNullValueTestData))]
+        public void Test_NullValue_ReturnsDefault(Type type, object? expected)
+        {
+            object? actual = ConvertValue(null, type);
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
+        public void Test_EmptyStringValue_ReturnsDefault(Type type, string input, object? expected)
+        {
+            object? actual = ConvertValue(input, type);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringValueTestData))]
+        public void Test_StringValue_ReturnsParsedValue(Type type, string input, object? expected)
+        {
+            object? actual = ConvertValue(input, type);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringValueTestData2))]
+        public void Test_ObjectValue_ReturnsParsedValue(Type type, object input, object expected)
+        {
+            object? actual = ConvertValue(input, type);
+            Assert.Equal(expected, actual);
+        }
+        
+
+        
+        
+        // "abc" -> streqam / object
+        
+        /*
+        [Fact]
+        public void Throws_For_TargetTypeIsNull()
+        {
+            Assert.Throws<ArgumentNullException>(() => ConvertValue(null, null!));
+        }
+        
+        [Fact]
+        public void Throws_InvalidOperationException_For_StringToUnsupportedType()
+        {
+            Assert.Throws<InvalidOperationException>(() => ConvertValue("test", typeof(object)));
+        }
+        */
+
+        public static object? DefaultForType(Type targetType)
+        {
+            Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
+            bool isValueType = targetType.IsValueType;
+            bool isNonNullableType = nullableTargetType is null;
+            bool returnDefault = isValueType && isNonNullableType;
+            
+            if (returnDefault)
+            {
+                object? result = Activator.CreateInstance(targetType);
+                return result;
+            }
+
+            return null;
+        }
+        
+        public static object? ConvertValue(object? value, Type targetType)
+        {
+            ArgumentNullException.ThrowIfNull(targetType);
+
+            Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
+            Type actualType = nullableTargetType ?? targetType;
+
+            if (value is null)
+            {
+                object? result = DefaultForType(targetType);
+                return result;
+            }
+            
+            if (value is string strValue)
+            {
+                if (string.IsNullOrWhiteSpace(strValue))
+                {
+                    object? result = DefaultForType(targetType);
+                    return result;
+                }
+                
+                TypeConverter converter = TypeDescriptor.GetConverter(actualType);
+                bool canConvert = converter.CanConvertFrom(typeof(string));
+
+                if (canConvert)
+                {
+                    object? result = converter.ConvertFrom(strValue);
+                    return result;
+                }
+                
+                throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as no TypeConverter exists.");
+            }
+
+            if (value is IConvertible convertible)
+            {
+                // throw new Exception("not string");
+
+                try
+                {
+                    return Convert.ChangeType(convertible, actualType, CultureInfo.InvariantCulture);
+                }
+                catch (Exception ex) when (ex is OverflowException or InvalidCastException or FormatException)
+                {
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via IConvertible.", ex);
+                }
+            }
+            
+            throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
+        } 
+    }
+}
