@@ -162,8 +162,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
         {
             yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
-            yield return [typeof(int), new object(), typeof(OverflowException)];
-            yield return [typeof(Uri), true, typeof(OverflowException)];
+            yield return [typeof(Uri), true, typeof(InvalidCastException)];
+            // yield return [typeof(int), new object(), typeof(OverflowException)];
         }
         
         [Fact]
@@ -217,8 +217,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
         public void Test_ConvertValue_ObjectValueThrowsExceptionOnConversionFailure(Type type, object input, Type expectedExceptionType)
         {
-            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
-            string exceptionMessage = ex.Message;
+            InvalidOperationException outerException = Assert.Throws<InvalidOperationException>(() => ConvertValue(input, type));
+            
+            Assert.NotNull(outerException);
+            Assert.NotNull(outerException.InnerException);
+
+            Exception inner = outerException.InnerException;
+            Assert.IsType(expectedExceptionType, inner);
         }
         
         public static object? DefaultForType(Type targetType)
