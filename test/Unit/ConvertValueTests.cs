@@ -33,7 +33,9 @@ namespace Test.Unit
                 "   "
             ];
 
-            Type[] types = [typeof(int), typeof(bool)];
+            Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
+                [typeof(int), typeof(bool)]
+            );
             foreach (Type type in types)
             {
                 object? defaultValue = type.DefaultForType();
@@ -204,7 +206,7 @@ namespace Test.Unit
         }
 
         [Fact]
-        public void ConvertValue_UnsupportedType_ThrowsFinalFallback()
+        public void Test_ConvertValue_UnsupportedType_ThrowsFinalFallback()
         {
             object value = new object(); // not convertible
             Type targetType = typeof(Uri); // non-IConvertible, won't work with Convert.ChangeType either
