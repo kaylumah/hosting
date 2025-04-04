@@ -55,7 +55,7 @@ namespace Test.Unit
 
             return methodInfo;
         }
-        
+
         [Fact]
         public void Test_GetValue_ThrowOnNull()
         {
