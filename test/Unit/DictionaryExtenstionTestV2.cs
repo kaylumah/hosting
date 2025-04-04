@@ -151,6 +151,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             #pragma warning restore RS0030
 
             yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
+
+            yield return [typeof(Uri), "https://kaylumah.nl", new Uri("https://kaylumah.nl")];
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
