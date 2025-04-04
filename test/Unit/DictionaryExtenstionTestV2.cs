@@ -21,21 +21,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
             _StringType = typeof(string);
         }
         
-        public static HashSet<Type> WithNullableCounterparts(IEnumerable<Type> types)
+        public static Type[] WithNullableCounterparts(IEnumerable<Type> types)
         {
-            HashSet<Type> result = new HashSet<Type>();
+            HashSet<Type> set = new HashSet<Type>();
 
             foreach (Type type in types)
             {
-                result.Add(type);
+                set.Add(type);
 
                 if (type.IsValueType && type != typeof(void))
                 {
                     Type nullableType = typeof(Nullable<>).MakeGenericType(type);
-                    result.Add(nullableType);
+                    set.Add(nullableType);
                 }
             }
 
+            Type[] result = set.ToArray();
             return result;
         }
         
@@ -101,10 +102,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 typeof(int),
                 typeof(bool)
             ];
-            HashSet<Type> x = ConversionCapabilityHelper.WithNullableCounterparts(types);
+            Type[] allTypes = ConversionCapabilityHelper.WithNullableCounterparts(types);
             
             #pragma warning disable
-            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(x.ToArray());
+            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(allTypes);
             #pragma warning restore
             _KnownTypes = new Dictionary<Type, object?>
             {
@@ -302,7 +303,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // 2. Already the correct type
             if (value.GetType() == actualType)
             {
-                return value;
+                // return value;
             }
             
             // 3. String input
