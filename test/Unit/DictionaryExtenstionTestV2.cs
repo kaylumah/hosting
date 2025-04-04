@@ -153,6 +153,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
 
             yield return [typeof(Uri), "https://kaylumah.nl", new Uri("https://kaylumah.nl")];
+            
+            yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
