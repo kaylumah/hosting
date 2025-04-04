@@ -152,9 +152,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
         {
             yield return [typeof(bool), "NotABool", typeof(FormatException)];
-            yield return [typeof(int), "NotABool", typeof(FormatException)];
+            yield return [typeof(int), "NotABool", typeof(ArgumentException)];
             yield return [typeof(Guid), "NotABool", typeof(FormatException)];
-            yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
+            yield return [typeof(DateTime), "NotABool", typeof(InvalidOperationException)];
             yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
             // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
         }
