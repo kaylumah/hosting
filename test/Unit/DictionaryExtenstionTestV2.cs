@@ -149,9 +149,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         [Theory]
         [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
-        public void Test_ConvertValue_EmptyStringValueReturnsDefault(Type type, string input, object? expected)
+        public void Test_ConvertValue_EmptyStringValueReturnsDefault(Type targetType, string input, object? expected)
         {
-            object? actual = ConvertValue(input, type);
+            object? actual = ConvertValue(input, targetType);
             Assert.Equal(expected, actual);
         }
         
