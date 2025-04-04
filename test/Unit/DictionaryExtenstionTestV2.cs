@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using Guid = System.Guid;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -18,6 +19,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
         static ConversionCapabilityHelper()
         {
             _StringType = typeof(string);
+        }
+        
+        public static HashSet<Type> WithNullableCounterparts(IEnumerable<Type> types)
+        {
+            HashSet<Type> result = new HashSet<Type>();
+
+            foreach (Type type in types)
+            {
+                result.Add(type);
+
+                if (type.IsValueType && type != typeof(void))
+                {
+                    Type nullableType = typeof(Nullable<>).MakeGenericType(type);
+                    result.Add(nullableType);
+                }
+            }
+
+            return result;
         }
         
         public static bool CanConvertFromString(Type type)
@@ -39,6 +58,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
         
+        static string GetFriendlyTypeName(Type type)
+        {
+            if (Nullable.GetUnderlyingType(type) is Type underlying)
+            {
+                return $"{underlying.Name}?";
+            }
+
+            return type.Name;
+        }
+        
         public static string GetTypeCompatibilityMatrix(params Type[] types)
         {
             StringBuilder sb = new StringBuilder();
@@ -49,10 +78,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // Rows
             foreach (Type type in types)
             {
+                string displayName = GetFriendlyTypeName(type);
                 bool canConvert = CanConvertFromString(type);
                 bool convertible = ImplementsIConvertible(type);
 
-                sb.AppendLine(CultureInfo.InvariantCulture, $"{ type.Name,-30} {(canConvert ? "✅" : "❌"),-15} {(convertible ? "✅" : "❌"),-15}");
+                sb.AppendLine(CultureInfo.InvariantCulture, $"{ displayName,-30} {(canConvert ? "✅" : "❌"),-15} {(convertible ? "✅" : "❌"),-15}");
             }
 
             string result = sb.ToString();
@@ -66,9 +96,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         static DictionaryExtenstionTestV2()
         {
-            Type[] types = [ typeof(string) ];
-            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(types);
+            Type[] types = [ 
+                typeof(string),
+                typeof(int),
+                typeof(bool)
+            ];
+            HashSet<Type> x = ConversionCapabilityHelper.WithNullableCounterparts(types);
             
+            #pragma warning disable
+            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(x.ToArray());
+            #pragma warning restore
             _KnownTypes = new Dictionary<Type, object?>
             {
                 { typeof(string), null },
