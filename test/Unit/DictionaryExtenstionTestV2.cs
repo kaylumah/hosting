@@ -132,11 +132,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static IEnumerable<object?[]> ParsedValueForStringValueTestData()
         {
-            #pragma warning disable
-            // TODO 1 and 0?
-            // TODO Yes and No?
-            // [InlineData(typeof(bool), "true", true)]
-            // [InlineData(typeof(bool), "false", false)]
+            yield return [typeof(bool), "true", true];
+            yield return [typeof(bool), "True", true];
+            // yield return [typeof(bool), "yes", true]; (does not work...)
+            // yield return [typeof(bool), "1", true]; (does not work...)
+            
+            yield return [typeof(bool), "false", false];
+            yield return [typeof(bool), "False", false];
+            // yield return [typeof(bool), "no", false]; (does not work...)
+            // yield return [typeof(bool), "0", false]; (does not work...)
+
+#pragma warning disable
             // [InlineData(typeof(int), "42", 42)]
             // [InlineData(typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]
             // yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc)];
