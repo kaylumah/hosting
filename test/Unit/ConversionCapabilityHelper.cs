@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Test.Unit
 {
     static class ConversionCapabilityHelper
     {

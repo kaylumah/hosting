@@ -13,7 +13,9 @@ namespace Test.Unit
     {
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
-            Type[] types = [typeof(string), typeof(int), typeof(bool)];
+            Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
+                [typeof(string), typeof(int), typeof(bool)]
+            );
             foreach (Type type in types)
             {
                 object? defaultValue = type.DefaultForType();
