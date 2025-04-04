@@ -186,6 +186,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         public static object? ConvertValue(object? value, Type targetType)
         {
+            // IConvertible
+            // bool, byte, char, short, int, long, float, double, decimal, string, DateTime, Enum
+            
+            // TypeConverter
+            // string, bool, int, double, DateTime, TimeSpan, Guid, Uri, Version ,CultureInfo, Enum, Nullable<T>
+
             ArgumentNullException.ThrowIfNull(targetType);
 
             Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
