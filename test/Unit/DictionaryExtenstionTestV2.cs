@@ -84,8 +84,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
         {
-            // yield return [typeof(bool), "NotABool", typeof(FormatException)];
-            yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
+            yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
             // int, double, guid, DateTime, TimeSpan
         }
         
@@ -132,14 +132,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [MemberData(nameof(ParsedValueForStringThrowsTestData))]
         public void Test_StringValue_ThrowsException(Type type, string input, Type expectedExceptionType)
         {
-            Func<object?> x = () => ConvertValue(input, type);
-            Exception  ex = Assert.Throws(expectedExceptionType, x);
+            Exception  ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
             string exceptionMessage = ex.Message;
         }
         
         [Theory]
         [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
-        public void Test1(Type type, object input, Type expectedExceptionType)
+        public void Test_ObjectValue_ThrowsException(Type type, object input, Type expectedExceptionType)
         {
             Func<object?> x = () => ConvertValue(input, type);
             Exception  ex = Assert.Throws(expectedExceptionType, x);
