@@ -99,16 +99,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(int), new object(), typeof(OverflowException)];
             yield return [typeof(Uri), true, typeof(OverflowException)];
         }
-        
-        
-        
-        [Theory]
-        [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
-        public void Test_EmptyStringValue_ReturnsDefault(Type type, string input, object? expected)
-        {
-            object? actual = ConvertValue(input, type);
-            Assert.Equal(expected, actual);
-        }
 
         [Theory]
         [MemberData(nameof(ParsedValueForStringValueTestData))]
@@ -157,6 +147,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Assert.Equal(expected, actual);
         }
 
+        [Theory]
+        [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
+        public void Test_ConvertValue_EmptyStringValueReturnsDefault(Type type, string input, object? expected)
+        {
+            object? actual = ConvertValue(input, type);
+            Assert.Equal(expected, actual);
+        }
+        
         public static object? DefaultForType(Type targetType)
         {
             Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
