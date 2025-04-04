@@ -33,7 +33,7 @@ namespace System.Collections.Generic
                 return exactMatch;
             }
 
-            T? result = (T?)ConvertValue(value, typeof(T));
+            T? result = (T?)value.ConvertValue(typeof(T));
             return result;
         }
 
@@ -70,7 +70,7 @@ namespace System.Collections.Generic
                 List<T> result = new List<T>();
                 foreach (object original in objectList)
                 {
-                    T? converted = (T?)ConvertValue(original, typeof(T));
+                    T? converted = (T?)original.ConvertValue(typeof(T));
                     if (converted != null)
                     {
                         result.Add(converted);
@@ -99,102 +99,148 @@ namespace System.Collections.Generic
                 : key;
             return lookupKey;
         }
+    }
 
+    public static class ObjectExtensions
+    {
+        /*
+           if (bool.TryParse(strValue, out bool boolResult))
+           {
+               return boolResult;
+           }
+           
+           if (int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
+           {
+               return intResult;
+           }
+
+           if (Guid.TryParse(strValue, out Guid guidResult))
+           {
+               return guidResult;
+           }
+           
+           if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
+           {
+               return dateTimeResult;
+           }
+           
+           if (TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
+           {
+               return timeSpanResult;
+           }
+           
+           // if (targetType == typeof(byte) && byte.TryParse(strValue, out byte byteResult)) return byteResult;
+           // if (targetType == typeof(sbyte) && sbyte.TryParse(strValue, out sbyte sbyteResult)) return sbyteResult;
+           // if (targetType == typeof(short) && short.TryParse(strValue, out short shortResult)) return shortResult;
+           // if (targetType == typeof(ushort) && ushort.TryParse(strValue, out ushort ushortResult)) return ushortResult;
+           // if (targetType == typeof(long) && long.TryParse(strValue, out long longResult)) return longResult;
+           // if (targetType == typeof(ulong) && ulong.TryParse(strValue, out ulong ulongResult)) return ulongResult;
+           // if (targetType == typeof(float) && float.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out float floatResult)) return floatResult;
+           // if (targetType == typeof(double) && double.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double doubleResult)) return doubleResult;
+           // if (targetType == typeof(decimal) && decimal.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal decimalResult)) return decimalResult;
+           
+         */
+        
+        public static object? DefaultForType(this Type targetType)
+        {
+            Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
+            bool isValueType = targetType.IsValueType;
+            bool isNonNullableType = nullableTargetType is null;
+            bool returnDefault = isValueType && isNonNullableType;
+            
+            if (returnDefault)
+            {
+                object? result = Activator.CreateInstance(targetType);
+                return result;
+            }
+
+            return null;
+        }
+        
         public static object? ConvertValue(this object? value, Type targetType)
         {
+            // IConvertible
+            // bool, byte, char, short, int, long, float, double, decimal, string, DateTime, Enum
+
+            // TypeConverter
+            // string, bool, int, double, DateTime, TimeSpan, Guid, Uri, Version ,CultureInfo, Enum, Nullable<T>
+
+            ArgumentNullException.ThrowIfNull(targetType);
+
+            Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
+            Type actualType = nullableTargetType ?? targetType;
+
+            // 1. Null case
             if (value is null)
             {
-                return targetType.IsValueType ? default : null;
+                object? result = DefaultForType(targetType);
+                return result;
             }
 
+            // 2. Already the correct type
+            if (value.GetType() == actualType)
+            {
+                return value;
+            }
+
+            // 3. String input
             if (value is string strValue)
             {
-                // Handle built-in types with TryParse support
-                if (targetType == typeof(bool))
+                if (string.IsNullOrWhiteSpace(strValue))
                 {
-                    if (bool.TryParse(strValue, out bool boolResult))
+                    object? result = DefaultForType(targetType);
+                    return result;
+                }
+                
+                #pragma warning disable RS0030
+                if (actualType == typeof(DateTime))
+                {
+                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
+                            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                            out DateTime parsedDateTime))
                     {
-                        return boolResult;
+                        return parsedDateTime;
                     }
 
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
+                #pragma warning restore RS0030
+                
+                TypeConverter converter = TypeDescriptor.GetConverter(actualType);
+                bool canConvert = converter.CanConvertFrom(typeof(string));
 
-                if (targetType == typeof(int))
+                if (canConvert)
                 {
-                    if (int.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out int intResult))
+                    try
                     {
-                        return intResult;
+                        // converter.ConvertFrom?
+                        object? result = converter.ConvertFromInvariantString(strValue);
+                        return result;
                     }
-
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via TypeConverter.", ex);
+                    }
                 }
 
-                if (targetType == typeof(Guid))
-                {
-                    if (Guid.TryParse(strValue, out Guid guidResult))
-                    {
-                        return guidResult;
-                    }
-
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
-                }
-
-#pragma warning disable RS0030
-                if (targetType == typeof(DateTime))
-                {
-                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out DateTime dateTimeResult))
-                    {
-                        return dateTimeResult;
-                    }
-
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
-                }
-#pragma warning restore RS0030
-
-                if (targetType == typeof(TimeSpan))
-                {
-                    if (TimeSpan.TryParse(strValue, CultureInfo.InvariantCulture, out TimeSpan timeSpanResult))
-                    {
-                        return timeSpanResult;
-                    }
-
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
-                }
-
-                // Consider adding support for other numeric types in the future:
-                // if (targetType == typeof(byte) && byte.TryParse(strValue, out byte byteResult)) return byteResult;
-                // if (targetType == typeof(sbyte) && sbyte.TryParse(strValue, out sbyte sbyteResult)) return sbyteResult;
-                // if (targetType == typeof(short) && short.TryParse(strValue, out short shortResult)) return shortResult;
-                // if (targetType == typeof(ushort) && ushort.TryParse(strValue, out ushort ushortResult)) return ushortResult;
-                // if (targetType == typeof(long) && long.TryParse(strValue, out long longResult)) return longResult;
-                // if (targetType == typeof(ulong) && ulong.TryParse(strValue, out ulong ulongResult)) return ulongResult;
-                // if (targetType == typeof(float) && float.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out float floatResult)) return floatResult;
-                // if (targetType == typeof(double) && double.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double doubleResult)) return doubleResult;
-                // if (targetType == typeof(decimal) && decimal.TryParse(strValue, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal decimalResult)) return decimalResult;
+                throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as no TypeConverter exists.");
             }
 
+            // 4. IConvertible fallback
             if (value is IConvertible convertible)
             {
                 try
                 {
-                    object? result = Convert.ChangeType(convertible, targetType, CultureInfo.InvariantCulture);
+                    object? result = Convert.ChangeType(convertible, actualType, CultureInfo.InvariantCulture);
                     return result;
                 }
-                catch (OverflowException ex)
+                catch (Exception ex) when (ex is OverflowException or InvalidCastException or FormatException)
                 {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to overflow.", ex);
-                }
-                catch (InvalidCastException ex)
-                {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as the conversion is invalid.", ex);
-                }
-                catch (FormatException ex)
-                {
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.", ex);
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via IConvertible.", ex);
                 }
             }
 
+            // Conversion failed
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         }
     }
