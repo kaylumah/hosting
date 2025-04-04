@@ -64,23 +64,21 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
         {
+            // TODO int -> int?
+            // TODO DateTime -> string
+            
+            // Int conversions
             yield return [typeof(double), 42, 42.0];
-            yield return [typeof(bool), 0, 42.0];
-            yield return [typeof(bool), 1, 42.0];
-            // double 3.14 -> int
-            // DateTime -> string
+            yield return [typeof(bool), 0, false];
+            yield return [typeof(bool), 1, true];
+            yield return [typeof(long), int.MinValue, (long) int.MinValue];
+            yield return [typeof(long), int.MaxValue, (long) int.MaxValue];
             
-            
-            /*
-             * [InlineData(42, typeof(int), 42)]
-               [InlineData(42, typeof(double), 42.0)]
-               [InlineData(3.14, typeof(float), 3.14f)]
-               // [InlineData(3.14, typeof(decimal), 3.14)]
-               [InlineData(1, typeof(bool), true)]
-               [InlineData(0, typeof(bool), false)]
-               [InlineData(int.MaxValue, typeof(long), (long)int.MaxValue)]
-               [InlineData(int.MinValue, typeof(long), (long)int.MinValue)]
-             */
+            // Double conversions
+            yield return [typeof(int), 3.14, 3];
+            yield return [typeof(int), 3.95, 4];
+            yield return [typeof(float), 3.14, 3.14f];
+            yield return [typeof(decimal), 3.14, (decimal) 3.14];
         }
         
         public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
