@@ -18,7 +18,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             _KnownTypes = new Dictionary<Type, object?>
             {
-                { typeof(string), null }
+                { typeof(string), null },
+                // TODO
+                /*
+                { typeof(int), 0 },
+                { typeof(int?), null },
+                { typeof(DateTime), default(DateTime) },
+                { typeof(DateTime?), null },
+                { typeof(bool), false },
+                { typeof(bool?), null }
+                */
+                
+                /*
+                 * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
+                   [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
+                   [InlineData("en-US", typeof(CultureInfo), "en-US")]
+                 */
             };
         }
 
