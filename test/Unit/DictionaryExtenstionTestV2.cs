@@ -93,11 +93,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
     
     public class DictionaryExtenstionTestV2
     {
-        /*
- * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
-   [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
-   [InlineData("en-US", typeof(CultureInfo), "en-US")]
- */
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
             Type[] types = [ typeof(string), typeof(int), typeof(bool) ];
