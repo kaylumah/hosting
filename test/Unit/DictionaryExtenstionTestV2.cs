@@ -255,6 +255,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             Exception inner = outerException.InnerException;
             Assert.IsType(expectedExceptionType, inner);
+
+            string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} via TypeConverter.";
+            Assert.Equal(expectedErrorMessage, outerException.Message);
         }
         
         [Theory]
@@ -276,6 +279,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
             Exception inner = outerException.InnerException;
             Assert.IsType(expectedExceptionType, inner);
+            
+            string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} via IConvertible.";
+            Assert.Equal(expectedErrorMessage, outerException.Message);
         }
         
         public static object? DefaultForType(Type targetType)
