@@ -295,7 +295,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Assert.Equal($"Cannot convert value '{value}' to {targetType}.", ex.Message);
         }
 
-        public static string GetSampleValue(Type type)
+        static string GetSampleValue(Type type)
         {
             // todo faker?
             Type t = Nullable.GetUnderlyingType(type) ?? type;
