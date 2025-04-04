@@ -76,6 +76,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // int, double, guid, DateTime, TimeSpan
         }
         
+        public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
+        {
+            yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
+            yield return [typeof(int), new object(), typeof(OverflowException)];
+            yield return [typeof(Uri), true, typeof(OverflowException)];
+        }
+        
         [Theory]
         [MemberData(nameof(DefaultValueForNullValueTestData))]
         public void Test_NullValue_ReturnsDefault(Type type, object? expected)
@@ -117,15 +124,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             string exceptionMessage = ex.Message;
         }
         
-        public static IEnumerable<object?[]> ParsedValueForStringValueTestData4()
-        {
-            yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
-            yield return [typeof(int), new object(), typeof(OverflowException)];
-            yield return [typeof(Uri), true, typeof(OverflowException)];
-        }
-        
         [Theory]
-        [MemberData(nameof(ParsedValueForStringValueTestData4))]
+        [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
         public void Test1(Type type, object input, Type expectedExceptionType)
         {
             Func<object?> x = () => ConvertValue(input, type);
