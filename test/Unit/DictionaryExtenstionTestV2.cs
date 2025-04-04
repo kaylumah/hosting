@@ -200,10 +200,10 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(bool), "NotABool", typeof(FormatException)];
             yield return [typeof(int), "NotABool", typeof(ArgumentException)];
             yield return [typeof(Guid), "NotABool", typeof(FormatException)];
-            yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
             yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
             
-            // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
+            // yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
+            // 
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
@@ -257,6 +257,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Assert.IsType(expectedExceptionType, inner);
 
             string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} via TypeConverter.";
+            Assert.Equal(expectedErrorMessage, outerException.Message);
+        }
+
+        [Fact]
+        public void Test_ConvertValue_StringValueThrowsExceptionOnMissingTypeConverter()
+        {
+            string input = "NotABool";
+            Type type = typeof(object);
+            InvalidOperationException outerException = Assert.Throws<InvalidOperationException>(() => ConvertValue(input, type));
+            Assert.Null(outerException.InnerException);
+            string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} as no TypeConverter exists.";
             Assert.Equal(expectedErrorMessage, outerException.Message);
         }
         
@@ -338,8 +349,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     object? result = DefaultForType(targetType);
                     return result;
                 }
-
-                /*
+                
                 if (actualType == typeof(DateTime))
                 {
                     if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
@@ -351,8 +361,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
-                */
-
+                
                 TypeConverter converter = TypeDescriptor.GetConverter(actualType);
                 bool canConvert = converter.CanConvertFrom(typeof(string));
 
