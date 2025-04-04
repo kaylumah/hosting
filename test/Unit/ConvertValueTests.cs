@@ -7,7 +7,7 @@ using System.Globalization;
 using Guid = System.Guid;
 using Xunit;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Test.Unit
 {
     public class ConvertValueTests
     {
