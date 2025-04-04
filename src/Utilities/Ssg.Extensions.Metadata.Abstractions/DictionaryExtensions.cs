@@ -26,7 +26,7 @@ namespace System.Collections.Generic
 
             return null;
         }
-        
+
         public static object? ConvertValue(object? value, Type targetType)
         {
             // Original method
