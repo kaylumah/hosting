@@ -104,13 +104,29 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static IEnumerable<object?[]> ParsedValueForStringValueTestData3()
         {
-            // yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            yield return [typeof(bool), "NotABool", typeof(FormatException)];
             // int, double, guid, DateTime, TimeSpan
         }
         
         [Theory]
         [MemberData(nameof(ParsedValueForStringValueTestData3))]
         public void Test1(Type type, string input, Type expectedExceptionType)
+        {
+            Func<object?> x = () => ConvertValue(input, type);
+            Exception  ex = Assert.Throws(expectedExceptionType, x);
+            string exceptionMessage = ex.Message;
+        }
+        
+        public static IEnumerable<object?[]> ParsedValueForStringValueTestData4()
+        {
+            yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
+            yield return [typeof(int), new object(), typeof(OverflowException)];
+            yield return [typeof(Uri), true, typeof(OverflowException)];
+        }
+        
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringValueTestData4))]
+        public void Test1(Type type, object input, Type expectedExceptionType)
         {
             Func<object?> x = () => ConvertValue(input, type);
             Exception  ex = Assert.Throws(expectedExceptionType, x);
