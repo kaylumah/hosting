@@ -68,12 +68,24 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(bool), 1, 42.0];
             // double 3.14 -> int
             // DateTime -> string
+            
+            
+            /*
+             * [InlineData(42, typeof(int), 42)]
+               [InlineData(42, typeof(double), 42.0)]
+               [InlineData(3.14, typeof(float), 3.14f)]
+               // [InlineData(3.14, typeof(decimal), 3.14)]
+               [InlineData(1, typeof(bool), true)]
+               [InlineData(0, typeof(bool), false)]
+               [InlineData(int.MaxValue, typeof(long), (long)int.MaxValue)]
+               [InlineData(int.MinValue, typeof(long), (long)int.MinValue)]
+             */
         }
         
         public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
         {
             // yield return [typeof(bool), "NotABool", typeof(FormatException)];
-            yield return [typeof(object), "NotABool", typeof(FormatException)];
+            yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
             // int, double, guid, DateTime, TimeSpan
         }
         
@@ -134,21 +146,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
             string exceptionMessage = ex.Message;
         }
         
-        // "abc" -> streqam / object
-        
-        /*
         [Fact]
         public void Throws_For_TargetTypeIsNull()
         {
             Assert.Throws<ArgumentNullException>(() => ConvertValue(null, null!));
         }
-        
-        [Fact]
-        public void Throws_InvalidOperationException_For_StringToUnsupportedType()
-        {
-            Assert.Throws<InvalidOperationException>(() => ConvertValue("test", typeof(object)));
-        }
-        */
 
         public static object? DefaultForType(Type targetType)
         {
