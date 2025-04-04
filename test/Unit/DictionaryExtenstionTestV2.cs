@@ -295,6 +295,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Assert.Equal(expectedErrorMessage, outerException.Message);
         }
         
+        [Fact]
+        public void ConvertValue_UnsupportedType_ThrowsFinalFallback()
+        {
+            object value = new object(); // not convertible
+            Type targetType = typeof(Uri); // non-IConvertible, won't work with Convert.ChangeType either
+
+            InvalidOperationException ex = Assert.Throws<InvalidOperationException>(() => ConvertValue(value, targetType));
+
+            Assert.Null(ex.InnerException); // because you're throwing directly, not wrapping
+            Assert.Equal($"Cannot convert value '{value}' to {targetType}.", ex.Message);
+        }
+        
         public static object? DefaultForType(Type targetType)
         {
             Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
