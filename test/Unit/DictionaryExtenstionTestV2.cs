@@ -99,22 +99,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(int), new object(), typeof(OverflowException)];
             yield return [typeof(Uri), true, typeof(OverflowException)];
         }
-
-        [Theory]
-        [MemberData(nameof(ParsedValueForObjectValueTestData))]
-        public void Test_ObjectValue_ReturnsParsedValue(Type type, object input, object expected)
-        {
-            object? actual = ConvertValue(input, type);
-            Assert.Equal(expected, actual);
-        }
-        
-        [Theory]
-        [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
-        public void Test_ObjectValue_ThrowsException(Type type, object input, Type expectedExceptionType)
-        {
-            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
-            string exceptionMessage = ex.Message;
-        }
         
         [Fact]
         public void Test_ConvertValue_ThrowsForTargetTypeIsNull()
@@ -150,6 +134,22 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [Theory]
         [MemberData(nameof(ParsedValueForStringThrowsTestData))]
         public void Test_ConvertValue_StringValueThrowsExceptionOnConversionFailure(Type type, string input, Type expectedExceptionType)
+        {
+            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
+            string exceptionMessage = ex.Message;
+        }
+        
+        [Theory]
+        [MemberData(nameof(ParsedValueForObjectValueTestData))]
+        public void Test_ConvertValue_ObjectValueReturnsParsedValue(Type type, object input, object expected)
+        {
+            object? actual = ConvertValue(input, type);
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
+        public void Test_ConvertValue_ObjectValueThrowsExceptionOnConversionFailure(Type type, object input, Type expectedExceptionType)
         {
             Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
             string exceptionMessage = ex.Message;
