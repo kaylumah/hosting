@@ -138,6 +138,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // yield return [typeof(bool), "0", false]; (does not work...)
             
             yield return [typeof(int), "42", 42];
+            
+            yield return [typeof(double), "42.0", 42.0];
 
             yield return [typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")];
 
@@ -177,9 +179,12 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(int), "NotABool", typeof(ArgumentException)];
             yield return [typeof(Guid), "NotABool", typeof(FormatException)];
             yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
+            // not DateTime
+            // not double
             
-            // yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
-            // 
+            // long.MaxValue, typeof(int)
+            // true, typeof(Uri)
+            // new object(), typeof(int)
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
@@ -370,8 +375,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 {
                     try
                     {
-                        // converter.ConvertFromInvariantString?
-                        object? result = converter.ConvertFrom(strValue);
+                        // converter.ConvertFrom?
+                        object? result = converter.ConvertFromInvariantString(strValue);
                         return result;
                     }
                     catch (Exception ex)
