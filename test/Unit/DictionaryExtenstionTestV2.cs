@@ -144,8 +144,9 @@ namespace Ssg.Extensions.Metadata.Abstractions
             
             yield return [typeof(int), "42", 42];
 
+            yield return [typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")];
+
 #pragma warning disable
-            // [InlineData(typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]
             // yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc)];
             // yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
         }
