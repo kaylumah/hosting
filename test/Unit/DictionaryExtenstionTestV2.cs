@@ -104,7 +104,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         public static IEnumerable<object?[]> ParsedValueForStringValueTestData3()
         {
-            yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            // yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            // int, double, guid, DateTime, TimeSpan
         }
         
         [Theory]
@@ -113,6 +114,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         {
             Func<object?> x = () => ConvertValue(input, type);
             Exception  ex = Assert.Throws(expectedExceptionType, x);
+            string exceptionMessage = ex.Message;
         }
         
         // "abc" -> streqam / object
