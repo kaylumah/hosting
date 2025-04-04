@@ -91,7 +91,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
     }
     
-    public class DictionaryExtenstionTestV2
+    public class ConvertValueTests
     {
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
