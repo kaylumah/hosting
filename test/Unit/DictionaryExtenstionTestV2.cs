@@ -269,6 +269,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     return result;
                 }
                 
+                if (actualType == typeof(string))
+                {
+                    return strValue;
+                }
+                
                 if (actualType == typeof(DateTime))
                 {
                     if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
