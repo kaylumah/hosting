@@ -109,14 +109,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
         
         [Theory]
-        [MemberData(nameof(ParsedValueForStringThrowsTestData))]
-        public void Test_StringValue_ThrowsException(Type type, string input, Type expectedExceptionType)
-        {
-            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
-            string exceptionMessage = ex.Message;
-        }
-        
-        [Theory]
         [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
         public void Test_ObjectValue_ThrowsException(Type type, object input, Type expectedExceptionType)
         {
@@ -149,10 +141,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         [Theory]
         [MemberData(nameof(ParsedValueForStringValueTestData))]
-        public void Test_ConvertValue_StringValueReturnsParsedValue(Type type, string input, object? expected)
+        public void Test_ConvertValue_StringValueReturnsParsedValue(Type targetType, string input, object? expected)
         {
-            object? actual = ConvertValue(input, type);
+            object? actual = ConvertValue(input, targetType);
             Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringThrowsTestData))]
+        public void Test_ConvertValue_StringValueThrowsExceptionOnConversionFailure(Type type, string input, Type expectedExceptionType)
+        {
+            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
+            string exceptionMessage = ex.Message;
         }
         
         public static object? DefaultForType(Type targetType)
