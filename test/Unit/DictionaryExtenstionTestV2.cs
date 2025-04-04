@@ -255,12 +255,20 @@ namespace Ssg.Extensions.Metadata.Abstractions
             Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
             Type actualType = nullableTargetType ?? targetType;
 
+            // 1. Null case
             if (value is null)
             {
                 object? result = DefaultForType(targetType);
                 return result;
             }
+
+            // 2. Already the correct type
+            if (value.GetType() == actualType)
+            {
+                return value;
+            }
             
+            // 3. String input
             if (value is string strValue)
             {
                 if (string.IsNullOrWhiteSpace(strValue))
@@ -298,6 +306,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as no TypeConverter exists.");
             }
 
+            // 4. IConvertible fallback
             if (value is IConvertible convertible)
             {
                 // throw new Exception("not string");
@@ -312,6 +321,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 }
             }
             
+            // Conversion failed
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         } 
     }
