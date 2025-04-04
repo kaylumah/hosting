@@ -202,6 +202,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(Guid), "NotABool", typeof(FormatException)];
             yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
             yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
+            
             // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
         }
         
