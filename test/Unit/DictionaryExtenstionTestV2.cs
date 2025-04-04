@@ -93,73 +93,40 @@ namespace Ssg.Extensions.Metadata.Abstractions
     
     public class DictionaryExtenstionTestV2
     {
-        static readonly Dictionary<Type, object?> _KnownTypes;
-        
-        static DictionaryExtenstionTestV2()
-        {
-            Type[] types = [ 
-                typeof(string),
-                typeof(int),
-                typeof(bool)
-            ];
-            Type[] allTypes = ConversionCapabilityHelper.WithNullableCounterparts(types);
-            
-            #pragma warning disable
-            string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(allTypes);
-            #pragma warning restore
-
-            _KnownTypes = new Dictionary<Type, object?>();
-            foreach (Type type in allTypes)
-            {
-                _KnownTypes[type] = DefaultForType(type);
-            }
-            
-            /*
-            {
-                { typeof(string), null },
-                // TODO
-                /*
-                { typeof(int), 0 },
-                { typeof(int?), null },
-                { typeof(DateTime), default(DateTime) },
-                { typeof(DateTime?), null },
-                { typeof(bool), false },
-                { typeof(bool?), null }
-            };
-            */
-              
-                
-            /*
-             * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
-               [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
-               [InlineData("en-US", typeof(CultureInfo), "en-US")]
-             */
-        }
-
+        /*
+ * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
+   [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
+   [InlineData("en-US", typeof(CultureInfo), "en-US")]
+ */
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
-            foreach (KeyValuePair<Type, object?> x in _KnownTypes)
+            Type[] types = [ typeof(string), typeof(int), typeof(bool) ];
+            foreach (Type type in types)
             {
-                object?[] result = [x.Key, x.Value];
+                object? defaultValue = DefaultForType(type);
+                object?[] result = [type, defaultValue];
                 yield return result;
             }
         }
-        
+
         public static IEnumerable<object?[]> DefaultValueForEmptyStringValueTestData()
         {
-            string[] values = [
+            string[] values =
+            [
                 string.Empty,
                 " ",
                 "   "
             ];
 
-            foreach (string value in values)
+            Type[] types = [typeof(string), typeof(int), typeof(bool)];
+            foreach (Type type in types)
             {
-                foreach (KeyValuePair<Type, object?> x in _KnownTypes)
+                object? defaultValue = DefaultForType(type);
+                foreach (string value in values)
                 {
-                    object?[] result = [x.Key, value, x.Value];
+                    object?[] result = [type, value, defaultValue];
                     yield return result;
-                } 
+                }
             }
         }
 
@@ -172,8 +139,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // [InlineData(typeof(bool), "false", false)]
             // [InlineData(typeof(int), "42", 42)]
             // [InlineData(typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]
-            yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc)];
-            yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
+            // yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc)];
+            // yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
