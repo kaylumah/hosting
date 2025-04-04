@@ -101,14 +101,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForStringValueTestData))]
-        public void Test_StringValue_ReturnsParsedValue(Type type, string input, object? expected)
-        {
-            object? actual = ConvertValue(input, type);
-            Assert.Equal(expected, actual);
-        }
-
-        [Theory]
         [MemberData(nameof(ParsedValueForObjectValueTestData))]
         public void Test_ObjectValue_ReturnsParsedValue(Type type, object input, object expected)
         {
@@ -141,7 +133,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         [Theory]
         [MemberData(nameof(DefaultValueForNullValueTestData))]
-        public void Test_ConvertValue_NullValueReturnsDefault(Type targetType, object? expected)
+        public void Test_ConvertValue_NullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             object? actual = ConvertValue(null, targetType);
             Assert.Equal(expected, actual);
@@ -149,9 +141,17 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         [Theory]
         [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
-        public void Test_ConvertValue_EmptyStringValueReturnsDefault(Type targetType, string input, object? expected)
+        public void Test_ConvertValue_EmptyStringValueReturnsDefaultValue(Type targetType, string input, object? expected)
         {
             object? actual = ConvertValue(input, targetType);
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(ParsedValueForStringValueTestData))]
+        public void Test_ConvertValue_StringValueReturnsParsedValue(Type type, string input, object? expected)
+        {
+            object? actual = ConvertValue(input, type);
             Assert.Equal(expected, actual);
         }
         
