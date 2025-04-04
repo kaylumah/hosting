@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using Guid = System.Guid;
 using Xunit;
 
 namespace Ssg.Extensions.Metadata.Abstractions
@@ -85,8 +86,11 @@ namespace Ssg.Extensions.Metadata.Abstractions
         public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
         {
             yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            yield return [typeof(int), "NotABool", typeof(FormatException)];
+            yield return [typeof(Guid), "NotABool", typeof(FormatException)];
+            yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
+            yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
             // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
-            // int, double, guid, DateTime, TimeSpan
         }
         
         public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
@@ -132,7 +136,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [MemberData(nameof(ParsedValueForStringThrowsTestData))]
         public void Test_StringValue_ThrowsException(Type type, string input, Type expectedExceptionType)
         {
-            Exception  ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
+            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
             string exceptionMessage = ex.Message;
         }
         
@@ -140,8 +144,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [MemberData(nameof(ParsedValueForObjectThrowsTestData))]
         public void Test_ObjectValue_ThrowsException(Type type, object input, Type expectedExceptionType)
         {
-            Func<object?> x = () => ConvertValue(input, type);
-            Exception  ex = Assert.Throws(expectedExceptionType, x);
+            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
             string exceptionMessage = ex.Message;
         }
         
