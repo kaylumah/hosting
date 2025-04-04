@@ -113,7 +113,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 "   "
             ];
 
-            Type[] types = [typeof(string), typeof(int), typeof(bool)];
+            Type[] types = [typeof(int), typeof(bool)];
             foreach (Type type in types)
             {
                 object? defaultValue = DefaultForType(type);
@@ -122,6 +122,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     object?[] result = [type, value, defaultValue];
                     yield return result;
                 }
+            }
+            
+            Type stringType = typeof(string);
+            foreach (string value in values)
+            {
+                object?[] result = [stringType, value, value];
+                yield return result;
             }
         }
 
@@ -342,7 +349,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             // 2. Already the correct type
             if (value.GetType() == actualType)
             {
-                // return value;
+                return value;
             }
 
             // 3. String input
