@@ -107,7 +107,14 @@ namespace Ssg.Extensions.Metadata.Abstractions
             #pragma warning disable
             string matrix = ConversionCapabilityHelper.GetTypeCompatibilityMatrix(allTypes);
             #pragma warning restore
-            _KnownTypes = new Dictionary<Type, object?>
+
+            _KnownTypes = new Dictionary<Type, object?>();
+            foreach (Type type in allTypes)
+            {
+                _KnownTypes[type] = DefaultForType(type);
+            }
+            
+            /*
             {
                 { typeof(string), null },
                 // TODO
@@ -118,14 +125,15 @@ namespace Ssg.Extensions.Metadata.Abstractions
                 { typeof(DateTime?), null },
                 { typeof(bool), false },
                 { typeof(bool?), null }
-                */
-                
-                /*
-                 * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
-                   [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
-                   [InlineData("en-US", typeof(CultureInfo), "en-US")]
-                 */
             };
+            */
+              
+                
+            /*
+             * [InlineData("https://kaylumah.nl", typeof(Uri), "https://kaylumah.nl")]
+               [InlineData("1.2.3.4", typeof(Version), "1.2.3.4")]
+               [InlineData("en-US", typeof(CultureInfo), "en-US")]
+             */
         }
 
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
@@ -192,7 +200,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(bool), "NotABool", typeof(FormatException)];
             yield return [typeof(int), "NotABool", typeof(ArgumentException)];
             yield return [typeof(Guid), "NotABool", typeof(FormatException)];
-            yield return [typeof(DateTime), "NotABool", typeof(InvalidOperationException)];
+            yield return [typeof(DateTime), "NotABool", typeof(FormatException)];
             yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
             // yield return [typeof(object), "NotABool", typeof(InvalidOperationException)];
         }
@@ -239,8 +247,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         [MemberData(nameof(ParsedValueForStringThrowsTestData))]
         public void Test_ConvertValue_StringValueThrowsExceptionOnConversionFailure(Type type, string input, Type expectedExceptionType)
         {
-            Exception ex = Assert.Throws(expectedExceptionType, () => ConvertValue(input, type));
-            string exceptionMessage = ex.Message;
+            InvalidOperationException outerException = Assert.Throws<InvalidOperationException>(() => ConvertValue(input, type));
+            
+            Assert.NotNull(outerException);
+            Assert.NotNull(outerException.InnerException);
+
+            Exception inner = outerException.InnerException;
+            Assert.IsType(expectedExceptionType, inner);
         }
         
         [Theory]
@@ -282,9 +295,13 @@ namespace Ssg.Extensions.Metadata.Abstractions
         
         public static object? ConvertValue(object? value, Type targetType)
         {
+            // Original method
+            // object? result = value.ConvertValue(targetType);
+            // return result;
+            
             // IConvertible
             // bool, byte, char, short, int, long, float, double, decimal, string, DateTime, Enum
-            
+
             // TypeConverter
             // string, bool, int, double, DateTime, TimeSpan, Guid, Uri, Version ,CultureInfo, Enum, Nullable<T>
 
@@ -305,7 +322,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             {
                 // return value;
             }
-            
+
             // 3. String input
             if (value is string strValue)
             {
@@ -314,12 +331,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     object? result = DefaultForType(targetType);
                     return result;
                 }
-                
-                if (actualType == typeof(string))
-                {
-                    return strValue;
-                }
-                
+
+                /*
                 if (actualType == typeof(DateTime))
                 {
                     if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
@@ -331,24 +344,31 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
                 }
-                
+                */
+
                 TypeConverter converter = TypeDescriptor.GetConverter(actualType);
                 bool canConvert = converter.CanConvertFrom(typeof(string));
 
                 if (canConvert)
                 {
-                    object? result = converter.ConvertFrom(strValue);
-                    return result;
+                    try
+                    {
+                        // converter.ConvertFromInvariantString?
+                        object? result = converter.ConvertFrom(strValue);
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via TypeConverter.", ex);
+                    }
                 }
-                
+
                 throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} as no TypeConverter exists.");
             }
 
             // 4. IConvertible fallback
             if (value is IConvertible convertible)
             {
-                // throw new Exception("not string");
-
                 try
                 {
                     return Convert.ChangeType(convertible, actualType, CultureInfo.InvariantCulture);
@@ -358,7 +378,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
                     throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via IConvertible.", ex);
                 }
             }
-            
+
             // Conversion failed
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         } 
