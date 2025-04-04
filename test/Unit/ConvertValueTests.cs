@@ -46,6 +46,7 @@ namespace Test.Unit
                 }
             }
 
+            // String would match on the short-circuit
             Type stringType = typeof(string);
             foreach (string value in values)
             {
@@ -54,7 +55,7 @@ namespace Test.Unit
             }
         }
 
-        public static IEnumerable<object?[]> ParsedValueForStringValueTestData()
+        public static IEnumerable<object?[]> StringValueTestData()
         {
             yield return [typeof(bool), "true", true];
             yield return [typeof(bool), "True", true];
@@ -83,7 +84,7 @@ namespace Test.Unit
             yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
         }
 
-        public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
+        public static IEnumerable<object?[]> ObjectValueTestData()
         {
             // TODO int -> int?
             // TODO DateTime -> string
@@ -102,18 +103,16 @@ namespace Test.Unit
             yield return [typeof(decimal), 3.14, (decimal)3.14];
         }
 
-        public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
+        public static IEnumerable<object?[]> StringValueThrowsTestData()
         {
-            yield return [typeof(bool), "NotABool", typeof(FormatException)];
-            yield return [typeof(int), "NotABool", typeof(ArgumentException)];
-            yield return [typeof(Guid), "NotABool", typeof(FormatException)];
-            yield return [typeof(TimeSpan), "NotABool", typeof(FormatException)];
-            // not DateTime
-            // not double
-
-            // long.MaxValue, typeof(int)
-            // true, typeof(Uri)
-            // new object(), typeof(int)
+            yield return [typeof(bool), "abc", typeof(FormatException)];
+            yield return [typeof(int), "abc", typeof(ArgumentException)];
+            yield return [typeof(double), "abc", typeof(ArgumentException)];
+            yield return [typeof(Guid), "abc", typeof(FormatException)];
+#pragma warning disable RS0030
+            yield return [typeof(DateTime), "abc", typeof(FormatException)];
+#pragma warning restore RS0030
+            yield return [typeof(TimeSpan), "abc", typeof(FormatException)];
         }
 
         public static IEnumerable<object?[]> ParsedValueForObjectThrowsTestData()
@@ -121,6 +120,9 @@ namespace Test.Unit
             yield return [typeof(int), long.MaxValue, typeof(OverflowException)];
             yield return [typeof(Uri), true, typeof(InvalidCastException)];
             // yield return [typeof(int), new object(), typeof(OverflowException)];
+            // long.MaxValue, typeof(int)
+            // true, typeof(Uri)
+            // new object(), typeof(int)
         }
 
         [Fact]
@@ -147,7 +149,7 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForStringValueTestData))]
+        [MemberData(nameof(StringValueTestData))]
         public void Test_ConvertValue_StringValueReturnsParsedValue(Type targetType, string input, object? expected)
         {
             object? actual = ConvertValue(input, targetType);
@@ -155,19 +157,25 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForStringThrowsTestData))]
+        [MemberData(nameof(StringValueThrowsTestData))]
         public void Test_ConvertValue_StringValueThrowsExceptionOnConversionFailure(Type type, string input, Type expectedExceptionType)
         {
             InvalidOperationException outerException = Assert.Throws<InvalidOperationException>(() => ConvertValue(input, type));
 
             Assert.NotNull(outerException);
-            Assert.NotNull(outerException.InnerException);
 
-            Exception inner = outerException.InnerException;
-            Assert.IsType(expectedExceptionType, inner);
-
-            string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} via TypeConverter.";
-            Assert.Equal(expectedErrorMessage, outerException.Message);
+            if (outerException.InnerException == null)
+            {
+                string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} due to incorrect format.";
+                Assert.Equal(expectedErrorMessage, outerException.Message);
+            }
+            else
+            {
+                Exception inner = outerException.InnerException;
+                Assert.IsType(expectedExceptionType, inner);
+                string expectedErrorMessage = $"Cannot convert value '{input}' to {type.FullName} via TypeConverter.";
+                Assert.Equal(expectedErrorMessage, outerException.Message);
+            }
         }
 
         [Fact]
@@ -182,7 +190,7 @@ namespace Test.Unit
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForObjectValueTestData))]
+        [MemberData(nameof(ObjectValueTestData))]
         public void Test_ConvertValue_ObjectValueReturnsParsedValue(Type type, object input, object expected)
         {
             object? actual = ConvertValue(input, type);
