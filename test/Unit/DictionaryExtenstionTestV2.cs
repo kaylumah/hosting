@@ -100,13 +100,7 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(Uri), true, typeof(OverflowException)];
         }
         
-        [Theory]
-        [MemberData(nameof(DefaultValueForNullValueTestData))]
-        public void Test_NullValue_ReturnsDefault(Type type, object? expected)
-        {
-            object? actual = ConvertValue(null, type);
-            Assert.Equal(expected, actual);
-        }
+        
         
         [Theory]
         [MemberData(nameof(DefaultValueForEmptyStringValueTestData))]
@@ -149,9 +143,18 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
         
         [Fact]
-        public void Throws_For_TargetTypeIsNull()
+        public void Test_ConvertValue_ThrowsForTargetTypeIsNull()
         {
+            // Null suppression on purpose
             Assert.Throws<ArgumentNullException>(() => ConvertValue(null, null!));
+        }
+        
+        [Theory]
+        [MemberData(nameof(DefaultValueForNullValueTestData))]
+        public void Test_ConvertValue_NullValueReturnsDefault(Type targetType, object? expected)
+        {
+            object? actual = ConvertValue(null, targetType);
+            Assert.Equal(expected, actual);
         }
 
         public static object? DefaultForType(Type targetType)
