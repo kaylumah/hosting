@@ -61,13 +61,19 @@ namespace Ssg.Extensions.Metadata.Abstractions
             yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
         }
         
-        public static IEnumerable<object?[]> ParsedValueForStringValueTestData2()
+        public static IEnumerable<object?[]> ParsedValueForObjectValueTestData()
         {
             yield return [typeof(double), 42, 42.0];
             yield return [typeof(bool), 0, 42.0];
             yield return [typeof(bool), 1, 42.0];
             // double 3.14 -> int
             // DateTime -> string
+        }
+        
+        public static IEnumerable<object?[]> ParsedValueForStringThrowsTestData()
+        {
+            yield return [typeof(bool), "NotABool", typeof(FormatException)];
+            // int, double, guid, DateTime, TimeSpan
         }
         
         [Theory]
@@ -95,22 +101,16 @@ namespace Ssg.Extensions.Metadata.Abstractions
         }
 
         [Theory]
-        [MemberData(nameof(ParsedValueForStringValueTestData2))]
+        [MemberData(nameof(ParsedValueForObjectValueTestData))]
         public void Test_ObjectValue_ReturnsParsedValue(Type type, object input, object expected)
         {
             object? actual = ConvertValue(input, type);
             Assert.Equal(expected, actual);
         }
-
-        public static IEnumerable<object?[]> ParsedValueForStringValueTestData3()
-        {
-            yield return [typeof(bool), "NotABool", typeof(FormatException)];
-            // int, double, guid, DateTime, TimeSpan
-        }
         
         [Theory]
-        [MemberData(nameof(ParsedValueForStringValueTestData3))]
-        public void Test1(Type type, string input, Type expectedExceptionType)
+        [MemberData(nameof(ParsedValueForStringThrowsTestData))]
+        public void Test_StringValue_ThrowsException(Type type, string input, Type expectedExceptionType)
         {
             Func<object?> x = () => ConvertValue(input, type);
             Exception  ex = Assert.Throws(expectedExceptionType, x);
