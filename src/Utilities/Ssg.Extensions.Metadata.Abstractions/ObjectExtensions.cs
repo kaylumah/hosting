@@ -62,6 +62,23 @@ namespace System.Collections.Generic
             return null;
         }
 
+        public static bool TryGetConverter(
+            Type targetType,
+            Type inputType,
+            [Diagnostics.CodeAnalysis.NotNullWhen(true)] out TypeConverter? converter)
+        {
+            TypeConverter candidate = TypeDescriptor.GetConverter(targetType);
+
+            if (candidate.CanConvertFrom(inputType))
+            {
+                converter = candidate;
+                return true;
+            }
+
+            converter = null;
+            return false;
+        }
+
         public static object? ConvertValue(this object? value, Type targetType)
         {
             // IConvertible
@@ -111,15 +128,11 @@ namespace System.Collections.Generic
                 }
 #pragma warning restore RS0030
 
-                TypeConverter converter = TypeDescriptor.GetConverter(actualType);
-                bool canConvert = converter.CanConvertFrom(typeof(string));
-
-                if (canConvert)
+                if (TryGetConverter(actualType, typeof(string), out TypeConverter? stringConverter))
                 {
                     try
                     {
-                        // converter.ConvertFrom?
-                        object? result = converter.ConvertFromInvariantString(strValue);
+                        object? result = stringConverter.ConvertFromInvariantString(strValue);
                         return result;
                     }
                     catch (Exception ex)
