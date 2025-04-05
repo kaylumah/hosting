@@ -266,4 +266,27 @@ WARNING: The following dependencies have newer versions available:
  - FluentAssertions: 7.2.0 → 7.2.0 (No new allowed version on NuGet)
 ```
 
-## Run always
+## Next steps: ensure the script always runs
+
+For the blog I took it one step further.
+I included a `Directory.Solution.props`, which triggers a custom target post build.
+In my case I installed PowerShell as a dotnet tool.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CheckDependencies" AfterTargets="Build">
+    <PropertyGroup>
+      <PowerShellCommand>dotnet pwsh</PowerShellCommand>
+      <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
+      <OutdatedScript>$(MSBuildProjectDirectory)/tools/Outdated.ps1</OutdatedScript>
+      <TargetProject>$(MSBuildProjectDirectory)/SSG.sln</TargetProject>
+    </PropertyGroup>
+    <Exec Command="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" />
+  </Target>
+</Project>
+```
+
+If you are on `net9.0` you will probably not see any output.
+This is due changes in MSBuild output, where the output from the script gets suppressed.
+Running `dotnet build --verbosity detailed` will provide the output.
