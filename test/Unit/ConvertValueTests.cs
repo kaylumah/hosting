@@ -14,7 +14,17 @@ namespace Test.Unit
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
             Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
-                [typeof(string), typeof(int), typeof(bool)]
+                [
+                    typeof(string),
+                    typeof(int),
+                    typeof(bool),
+                    typeof(Guid),
+#pragma warning disable RS0030
+                    typeof(DateTime),
+#pragma warning restore RS0030
+                    typeof(Uri)
+
+                ]
             );
             foreach (Type type in types)
             {
