@@ -87,6 +87,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<BinaryFile> collectionBoundFiles = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
             result.AddRange(collectionBoundFiles);
 
+            bool Filter(BinaryFile binaryFile)
+            {
+                bool? output = binaryFile.MetaData.GetValue<bool?>("output");
+                if (output is null or true)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            result = result.Where(Filter).ToList();
+
             return result;
         }
 
