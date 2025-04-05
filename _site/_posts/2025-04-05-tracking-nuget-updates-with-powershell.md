@@ -16,7 +16,7 @@ In this post I will share a script I wrote that extends the dotnet SDK to provid
 
 The dotnet SDK comes with a built-in command to [list the packages for a project/solution](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-list).
 Even if you execute the command for a `.sln` file, you get the outdated packages per project.
-The version shown will always be the latest available.
+The package version shown will always be the latest available.
 However, ever since central package management was introduced, most projects in a SLN would have the same version of a package.
 For this purpose we can create a very simple helper script using PowerShell.
 
