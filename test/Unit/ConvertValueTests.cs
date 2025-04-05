@@ -86,65 +86,34 @@ namespace Test.Unit
             // yield return [typeof(bool), "no", false]; (does not work...)
             // yield return [typeof(bool), "0", false]; (does not work...)
 
+            yield return [typeof(int), "-1", -1];
+            yield return [typeof(int), "0", 0];
+            yield return [typeof(int), " 3 ", 3];
             yield return [typeof(int), "42", 42];
+            // yield return [typeof(int), "9.99", 10];
 
-            yield return [typeof(double), "42.0", 42.0];
+            yield return [typeof(double), "-0.001", -0.001];
+            yield return [typeof(double), "0", (double)0];
+            yield return [typeof(double), "42", 42.0];
+            yield return [typeof(double), "3.14", 3.14];
 
             yield return [typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")];
+            yield return [typeof(Guid), "550E8400E29B41D4A716446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]; // no hyphens (valid)
+            yield return [typeof(Guid), "550E8400-E29B-41D4-A716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]; // uppercase
 
 #pragma warning disable RS0030
             yield return [typeof(DateTime), "2024-02-01T12:34:56Z", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc)];
 #pragma warning restore RS0030
 
             yield return [typeof(TimeSpan), "02:30:00", new TimeSpan(2, 30, 0)];
+            yield return [typeof(TimeSpan), "0:00", TimeSpan.FromMinutes(0)];
+            yield return [typeof(TimeSpan), "1:00", TimeSpan.FromHours(1)];
 
             yield return [typeof(Uri), "https://kaylumah.nl", new Uri("https://kaylumah.nl")];
+            yield return [typeof(Uri), "http://example.com", new Uri("http://example.com")];
 
             yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
-
-            // int
-            // "0", "-1", " 42 " (trailing/leading spaces)
-
-            // double
-            // "3.14", "-0.001", "42" (no decimal)
-
-            // guid
-            // Uppercase string, compact format (no hyphens)
-
-            // CultureInfo
-            // nl
-
-            /*
-             * // int
-               yield return [typeof(int), "0", 0];
-               yield return [typeof(int), "-1", -1];
-               yield return [typeof(int), " 42 ", 42];
-               
-               // double
-               yield return [typeof(double), "3.14", 3.14];
-               yield return [typeof(double), "42", 42.0];
-               
-               // Guid
-               yield return [typeof(Guid), "550E8400E29B41D4A716446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]; // no hyphens (valid)
-               yield return [typeof(Guid), "550E8400-E29B-41D4-A716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]; // uppercase
-               
-               // TimeSpan
-               yield return [typeof(TimeSpan), "0:00", TimeSpan.FromMinutes(0)];
-               yield return [typeof(TimeSpan), "1:00", TimeSpan.FromHours(1)];
-               
-               // DateTime
-               yield return [typeof(DateTime), "2024-02-01T12:34:56", new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Unspecified)];
-               yield return [typeof(DateTime), "2024-02-01T12:34:56+00:00", DateTime.Parse("2024-02-01T12:34:56+00:00", null, DateTimeStyles.RoundtripKind)];
-               
-               // CultureInfo
-               yield return [typeof(CultureInfo), "en", new CultureInfo("en")];
-               
-               // Uri
-               yield return [typeof(Uri), "http://example.com", new Uri("http://example.com")];
-               
-               // Version
-               yield return [typeof(Version), "1.2.3.4", new Version("1.2.3.4")];
-             */
+            yield return [typeof(CultureInfo), "nl", new CultureInfo("nl")];
         }
 
         public static IEnumerable<object?[]> ObjectValueTestData()
