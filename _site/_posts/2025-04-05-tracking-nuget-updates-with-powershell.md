@@ -6,7 +6,7 @@ tags:
   - nuget
 ---
 Most of the time managing NuGet dependencies in .NET projects is very simple.
-Wether you believe in "don't fix what's not broken" or "always update", there is always value in knowing about outdated packages.
+Whether you believe in "don't fix what's not broken" or "always update", there is always value in knowing about outdated packages.
 You need to be able to make an informed decision either way.
 While some tools, like Dependabot, automate the process for you, sometimes I prefer more control.
 In this post I will share a script I wrote that extends the dotnet SDK to provide this information.
@@ -83,11 +83,11 @@ WARNING: The following dependencies have newer versions available:
 
 The script shared above has one big shortcoming, it does not handle pinned versions.
 Sometimes, for whatever reason, you want to prevent a package from being bumped.
-The example I prefer to give is locking a `Microsoft.Extensions.*` package to it's corresponding `.NET` framework version.
+The example I prefer to give is locking a `Microsoft.Extensions.*` package to its corresponding `.NET` framework version.
 More recently in the .NET open source community there are other cases, 
 My first thought was `Moq` with SponsorLink (2023), then `FluentAssertions` with the new paid license model (January 2025).
 Then this week `Automapper`, `Mediator` and `MassTransit` joined the club. Nudging me to finally finish this article.
-Even though the announcement seems to coincide with Aprils Fool's day, it does not seem to be a joke.
+Even though the announcement seems to coincide with Aprils Fool's Day, it does not seem to be a joke.
 While I fully support and understand the need for these maintainers to earn money for their hard work, depending on how the update
 is handled it opens you up for liabilities.
 
@@ -105,7 +105,7 @@ The challenge is, that at the time of writing FluentAssertions has the following
 This means we resolve `7.0.0`, dotnet list package reports `8.2.0` which violates the version range, and we don't know about `7.2.0` package that would be a valid upgrade.
 
 We make the following changes to the script.
-Check via RegEX if we detect a version range (min, max package versions), and handle the following cases
+Check via regex if we detect a version range (min, max package versions), and handle the following cases
 1. `Min == Max` => no update, version pinned.
 2. `Latest < Max` => update, latest version within range.
 3. `Latest > Max` => check NuGet, there might be a version. 
@@ -288,5 +288,5 @@ In my case I installed PowerShell as a dotnet tool.
 ```
 
 If you are on `net9.0` you will probably not see any output.
-This is due changes in MSBuild output, where the output from the script gets suppressed.
+This is due to changes in MSBuild output, where the output from the script gets suppressed.
 Running `dotnet build --verbosity detailed` will provide the output.
