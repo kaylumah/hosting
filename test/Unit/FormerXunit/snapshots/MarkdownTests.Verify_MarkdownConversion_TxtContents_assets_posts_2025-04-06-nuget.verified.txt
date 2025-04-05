@@ -1,0 +1,64 @@
+﻿Create a helper script
+The dotnet SDK comes with a built-in command to list the packages for a project/solution.
+Even if you execute the command for a .sln file, you get the outdated packages per project.
+However, ever since central package management was introduced, most projects in a SLN would have the same version of a package.
+For this purpose we can create a very simple helper script using PowerShell.
+param (
+    [Parameter(Mandatory=$true, HelpMessage = The path to the project file)]
+    [string] $ProjectPath
+)
+
+$OutdatedOutput = dotnet list $ProjectPath package --outdated --format json
+$OutdatedOutputAsJson = $OutdatedOutput | ConvertFrom-json
+$Projects = $OutdatedOutputAsJson.Projects
+
+$Result = @{}
+foreach ($Project in $Projects)
+{
+    $Frameworks = $Project.Frameworks
+    if ($Frameworks -ne $null)
+    {
+        $Framework = $Frameworks[0]
+        $TopLevelPackages = $Framework.TopLevelPackages
+        foreach ($Package in $TopLevelPackages)
+        {
+            $PackageId = $Package.Id
+
+            if ($Result.ContainsKey($PackageId))
+            {
+                Write-Verbose Skipping '$PackageId' already processed
+                continue
+            }
+
+            $Result[$PackageId] = [pscustomobject]@{
+                Id               = $PackageId
+                From             = $Package.ResolvedVersion
+                To               = $LatestVersion
+            }
+        }
+    }
+}
+
+$Outdated = $Result.Values
+if ($Outdated.Count -gt 0) {
+    $sb = [System.Text.StringBuilder]::new()
+    [void]$sb.AppendLine(The following dependencies have newer versions available:)
+    foreach ($entry in $Outdated) {
+        [void]$sb.AppendLine( - $($entry.Id): $($entry.From) → $($entry.To))
+    }
+    $sb | Write-Warning
+}
+Where example output looks like this
+WARNING: The following dependencies have newer versions available:
+ - FluentAssertions: 7.2.0 → 8.2.0
+Lock versions
+The script shared above has one big shortcoming, it does not handle pinned versions.
+Sometimes, for whatever reason, you want to prevent a package from being bumped.
+The example I prefer to give is locking a Microsoft.Extensions.* package to it's corresponding .NET framework version.
+More recently in the .NET open source community there are other cases,
+My first thought was Moq with SponsorLink (2023), then FluentAssertions with the new paid license model (January 2025).
+Then this week Automapper, Mediator and MassTransit joined the club. Nudging me to finally finish this article.
+Even though the announcement seems to coincide with Aprils Fool's day, it does not seem to be a joke.
+While I fully support and understand the need for these maintainers to earn money for their hard work, depending on how the update
+is handled it opens you up for liabilities.
+Run always

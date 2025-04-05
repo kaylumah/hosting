@@ -1,0 +1,66 @@
+﻿<h2 id="create-a-helper-script"><a href="#create-a-helper-script">Create a helper script</a></h2>
+<p>The dotnet SDK comes with a built-in command to <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-list" class="external">list the packages for a project/solution</a>.
+Even if you execute the command for a <code>.sln</code> file, you get the outdated packages per project.
+However, ever since central package management was introduced, most projects in a SLN would have the same version of a package.
+For this purpose we can create a very simple helper script using PowerShell.</p>
+<pre><code class="language-powershell">param (
+    [Parameter(Mandatory=$true, HelpMessage = &quot;The path to the project file&quot;)]
+    [string] $ProjectPath
+)
+
+$OutdatedOutput = dotnet list $ProjectPath package --outdated --format json
+$OutdatedOutputAsJson = $OutdatedOutput | ConvertFrom-json
+$Projects = $OutdatedOutputAsJson.Projects
+
+$Result = @{}
+foreach ($Project in $Projects)
+{
+    $Frameworks = $Project.Frameworks
+    if ($Frameworks -ne $null)
+    {
+        $Framework = $Frameworks[0]
+        $TopLevelPackages = $Framework.TopLevelPackages
+        foreach ($Package in $TopLevelPackages)
+        {
+            $PackageId = $Package.Id
+
+            if ($Result.ContainsKey($PackageId))
+            {
+                Write-Verbose &quot;Skipping '$PackageId' already processed&quot;
+                continue
+            }
+
+            $Result[$PackageId] = [pscustomobject]@{
+                Id               = $PackageId
+                From             = $Package.ResolvedVersion
+                To               = $LatestVersion
+            }
+        }
+    }
+}
+
+$Outdated = $Result.Values
+if ($Outdated.Count -gt 0) {
+    $sb = [System.Text.StringBuilder]::new()
+    [void]$sb.AppendLine(&quot;The following dependencies have newer versions available:&quot;)
+    foreach ($entry in $Outdated) {
+        [void]$sb.AppendLine(&quot; - $($entry.Id): $($entry.From) → $($entry.To)&quot;)
+    }
+    $sb | Write-Warning
+}
+</code></pre>
+<p>Where example output looks like this</p>
+<pre><code class="language-shell">WARNING: The following dependencies have newer versions available:
+ - FluentAssertions: 7.2.0 → 8.2.0
+</code></pre>
+<h2 id="lock-versions"><a href="#lock-versions">Lock versions</a></h2>
+<p>The script shared above has one big shortcoming, it does not handle pinned versions.
+Sometimes, for whatever reason, you want to prevent a package from being bumped.
+The example I prefer to give is locking a <code>Microsoft.Extensions.*</code> package to it's corresponding <code>.NET</code> framework version.
+More recently in the .NET open source community there are other cases,
+My first thought was <code>Moq</code> with SponsorLink (2023), then <code>FluentAssertions</code> with the new paid license model (January 2025).
+Then this week <code>Automapper</code>, <code>Mediator</code> and <code>MassTransit</code> joined the club. Nudging me to finally finish this article.
+Even though the announcement seems to coincide with Aprils Fool's day, it does not seem to be a joke.
+While I fully support and understand the need for these maintainers to earn money for their hard work, depending on how the update
+is handled it opens you up for liabilities.</p>
+<h2 id="run-always"><a href="#run-always">Run always</a></h2>
