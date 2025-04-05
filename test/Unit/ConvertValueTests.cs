@@ -49,7 +49,7 @@ namespace Test.Unit
                     typeof(bool),
                     typeof(Guid),
 #pragma warning disable RS0030
-                    // typeof(DateTime),
+                    typeof(DateTime),
 #pragma warning restore RS0030
                     typeof(Uri)
 
@@ -162,14 +162,14 @@ namespace Test.Unit
 
         public static IEnumerable<object?[]> StringValueThrowsTestData()
         {
-            // yield return [typeof(bool), "abc", typeof(FormatException)];
-            // yield return [typeof(int), "abc", typeof(ArgumentException)];
-            // yield return [typeof(double), "abc", typeof(ArgumentException)];
-            // yield return [typeof(Guid), "abc", typeof(FormatException)];
+            yield return [typeof(bool), "abc", typeof(FormatException)];
+            yield return [typeof(int), "abc", typeof(ArgumentException)];
+            yield return [typeof(double), "abc", typeof(ArgumentException)];
+            yield return [typeof(Guid), "abc", typeof(FormatException)];
 #pragma warning disable RS0030
             yield return [typeof(DateTime), "abc", typeof(InvalidOperationException)];
 #pragma warning restore RS0030
-            // yield return [typeof(TimeSpan), "abc", typeof(FormatException)];
+            yield return [typeof(TimeSpan), "abc", typeof(FormatException)];
         }
 
         public static IEnumerable<object?[]> ObjectValueThrowsTestData()

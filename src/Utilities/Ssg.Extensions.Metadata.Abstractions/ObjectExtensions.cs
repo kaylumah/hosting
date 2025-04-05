@@ -56,7 +56,8 @@ namespace System.Collections.Generic
             {
                 if (value is not string strValue || string.IsNullOrWhiteSpace(strValue))
                 {
-                    return null;
+                    object? result = DefaultForType(typeof(DateTime));
+                    return result;
                 }
 
                 if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
@@ -132,7 +133,7 @@ namespace System.Collections.Generic
                 return value;
             }
 
-            if (_Converters.TryGetValue((sourceType, actualType), out Func<object, object?>? converter))
+            if (_Converters.TryGetValue((sourceType, targetType), out Func<object, object?>? converter))
             {
                 try
                 {
