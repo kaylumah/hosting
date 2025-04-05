@@ -269,7 +269,7 @@ WARNING: The following dependencies have newer versions available:
 
 ## Next steps: ensure the script always runs
 
-For the blog I took it one step further.
+For my blog's repo I took it one step further.
 I included a `Directory.Solution.props`, which triggers a custom target post build.
 In my case I installed PowerShell as a dotnet tool.
 
