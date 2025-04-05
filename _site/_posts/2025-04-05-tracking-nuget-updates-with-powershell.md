@@ -5,10 +5,10 @@ tags:
   - powershell
   - nuget
 ---
-Most of the time managing NuGet dependencies in .NET projects is very simple.
+Most of the time, managing NuGet dependencies in .NET projects is straightforward.
 Whether you believe in "don't fix what's not broken" or "always update", there is always value in knowing about outdated packages.
 You need to be able to make an informed decision either way.
-While some tools, like Dependabot, automate the process for you, sometimes I prefer more control.
+While tools like Dependabot can automate this process, I sometimes prefer more control.
 In this post I will share a script I wrote that extends the dotnet SDK to provide this information.
 
 ## Create a helper script
@@ -84,25 +84,25 @@ WARNING: The following dependencies have newer versions available:
 The script shared above has one big shortcoming, it does not handle pinned versions.
 Sometimes, for whatever reason, you want to prevent a package from being bumped.
 The example I prefer to give is locking a `Microsoft.Extensions.*` package to its corresponding `.NET` framework version.
-More recently in the .NET open source community there are other cases, 
+More recently, in the .NET open source community, there have been other cases:
 My first thought was `Moq` with SponsorLink (2023), then `FluentAssertions` with the new paid license model (January 2025).
-Then this week `Automapper`, `Mediator` and `MassTransit` joined the club. Nudging me to finally finish this article.
-Even though the announcement seems to coincide with Aprils Fool's Day, it does not seem to be a joke.
+This week, AutoMapper, Mediator, and MassTransit joined the club. Nudging me to finally finish this article.
+Even though the announcement coincided with April Fool’s Day, it didn’t appear to be a joke.
 While I fully support and understand the need for these maintainers to earn money for their hard work, depending on how the update
 is handled it opens you up for liabilities.
 
 Luckily we can pin a package version using [version ranges](https://learn.microsoft.com/en-us/nuget/concepts/package-versioning?tabs=semver20sort#version-ranges).
-We can set a inclusive boundary by using `[` or `]` and an exclusive boundary by using `(` or `)`.
+We can set an inclusive boundary by using `[` or `]` and an exclusive boundary by using `(` or `)`.
 Following this logic
 - `Moq` can be pinned with `[4.18.2]` or the equivalent `[4.18.2, 4.18.2]`
 - `FluentAssertions` can receive update until the next major version with `[7.0.0, 8.0.0)`
 
-We now need to update the script to parse these version ranges. If the latest version is higher than resolved, but within range
-we need to update. Also keep in mind that NuGet will always resolve the earliest possible resolution.
+We now need to update the script to parse these version ranges. If the latest version is higher than the resolved one but still within range, we should update.
+Also keep in mind that NuGet will always resolve the earliest possible resolution.
 In this case that means we get version `7.0.0`. 
 
 The challenge is, that at the time of writing FluentAssertions has the following versions available `(7.0.0, ..., 7.2.0, 8.0.0, ..., 8.2.0)`.
-This means we resolve `7.0.0`, dotnet list package reports `8.2.0` which violates the version range, and we don't know about `7.2.0` package that would be a valid upgrade.
+This means NuGet resolves to 7.0.0, while dotnet list package reports 8.2.0 which violates the version range, and we don't know about `7.2.0` package that would be a valid upgrade.
 
 We make the following changes to the script.
 Check via regex if we detect a version range (min, max package versions), and handle the following cases
