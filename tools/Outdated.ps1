@@ -113,6 +113,8 @@ foreach ($Project in $Projects)
                     {
                         Write-Verbose "Since $ResolvedVersion <= $LatestVersion >= $max check NuGet"
                         $url = "https://api.nuget.org/v3-flatcontainer/$packageId/index.json"
+                        Write-Verbose "Url $url"
+                        
                         $response = Invoke-RestMethod -Uri $url -ErrorAction Stop
                         $allVersions = $response.versions | Where-Object { $_ -notmatch "-" } | ForEach-Object { [version]$_ }
 
