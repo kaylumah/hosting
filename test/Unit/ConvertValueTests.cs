@@ -44,7 +44,16 @@ namespace Test.Unit
             ];
 
             Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
-                [typeof(int), typeof(bool)]
+                [
+                    typeof(int),
+                    typeof(bool),
+                    typeof(Guid),
+#pragma warning disable RS0030
+                    typeof(DateTime),
+#pragma warning restore RS0030
+                    typeof(Uri)
+
+                ]
             );
             foreach (Type type in types)
             {
