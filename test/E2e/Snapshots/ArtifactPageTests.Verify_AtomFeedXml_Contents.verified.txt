@@ -29,7 +29,7 @@ In this post I will share a script I wrote that extends the dotnet SDK to provid
 <h2 id="create-a-helper-script"><a href="#create-a-helper-script">Create a helper script</a></h2>
 <p>The dotnet SDK comes with a built-in command to <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-package-list" class="external">list the packages for a project/solution</a>.
 Even if you execute the command for a <code>.sln</code> file, you get the outdated packages per project.
-The version shown will always be the latest available.
+The package version shown will always be the latest available.
 However, ever since central package management was introduced, most projects in a SLN would have the same version of a package.
 For this purpose we can create a very simple helper script using PowerShell.</p>
 <ol>
@@ -266,7 +266,7 @@ if ($Outdated.Count -gt 0) {
  - FluentAssertions: 7.2.0 → 7.2.0 (No new allowed version on NuGet)
 </code></pre>
 <h2 id="next-steps-ensure-the-script-always-runs"><a href="#next-steps-ensure-the-script-always-runs">Next steps: ensure the script always runs</a></h2>
-<p>For the blog I took it one step further.
+<p>For my blog's repo I took it one step further.
 I included a <code>Directory.Solution.props</code>, which triggers a custom target post build.
 In my case I installed PowerShell as a dotnet tool.</p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
