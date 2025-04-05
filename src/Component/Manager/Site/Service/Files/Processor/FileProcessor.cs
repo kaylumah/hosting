@@ -99,7 +99,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             }
 
             result = result.Where(Filter).ToList();
-            
+
             return result;
         }
 
