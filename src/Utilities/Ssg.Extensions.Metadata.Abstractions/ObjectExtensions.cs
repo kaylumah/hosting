@@ -158,6 +158,21 @@ namespace System.Collections.Generic
                 }
             }
 
+            // 5. Handle to string?
+            if (targetType == typeof(string))
+            {
+                string? result = value?.ToString();
+                return result;
+            }
+
+            /*
+            // ?. Try using Converter
+            if (TryGetConverter(actualType, value.GetType(), out TypeConverter? converter))
+            {
+                
+            }
+            */
+
             // Conversion failed
             throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType}.");
         }

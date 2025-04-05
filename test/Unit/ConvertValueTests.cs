@@ -121,6 +121,8 @@ namespace Test.Unit
 
         public static IEnumerable<object?[]> ObjectValueTestData()
         {
+            yield return [typeof(int), DayOfWeek.Sunday, 0];
+
             // Int conversions
             yield return [typeof(double), 42, 42.0];
             yield return [typeof(bool), 0, false];
@@ -146,8 +148,8 @@ namespace Test.Unit
 #pragma warning restore RS0030
 
             // Guid conversions (not supported)
-            // Guid g = Guid.Parse("550e8400-e29b-41d4-a716-446655440000");
-            // yield return [typeof(string), g, "550e8400-e29b-41d4-a716-446655440000"];
+            Guid g = Guid.Parse("550e8400-e29b-41d4-a716-446655440000");
+            yield return [typeof(string), g, "550e8400-e29b-41d4-a716-446655440000"];
 
             /*
                // Int to nullable int
