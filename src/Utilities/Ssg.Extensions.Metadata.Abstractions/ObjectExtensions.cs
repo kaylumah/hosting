@@ -46,6 +46,31 @@ namespace System.Collections.Generic
            
          */
 
+        static readonly Dictionary<(Type from, Type to), Func<object, object?>> _Converters;
+
+        static ObjectExtensions()
+        {
+            _Converters = new();
+#pragma warning disable RS0030
+            _Converters[(typeof(string), typeof(DateTime))] = (value) =>
+            {
+                if (value is not string strValue || string.IsNullOrWhiteSpace(strValue))
+                {
+                    return null;
+                }
+
+                if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                        out DateTime parsedDateTime))
+                {
+                    return parsedDateTime;
+                }
+
+                throw new InvalidOperationException($"Cannot convert value '{value}' to {typeof(DateTime)} due to incorrect format.");
+            };
+#pragma warning restore RS0030
+        }
+
         public static object? DefaultForType(this Type targetType)
         {
             Type? nullableTargetType = Nullable.GetUnderlyingType(targetType);
@@ -99,10 +124,26 @@ namespace System.Collections.Generic
                 return result;
             }
 
+            Type sourceType = value.GetType();
+
             // 2. Already the correct type
-            if (value.GetType() == actualType)
+            if (sourceType == actualType)
             {
                 return value;
+            }
+
+            if (_Converters.TryGetValue((sourceType, actualType), out Func<object, object?>? converter))
+            {
+                try
+                {
+                    object? result = converter(value);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} via TypeConverter.", ex);
+                    // throw new InvalidOperationException($"Custom conversion from {value.GetType()} to {actualType} failed.", ex);
+                }
             }
 
             // 3. String input
@@ -113,20 +154,6 @@ namespace System.Collections.Generic
                     object? result = DefaultForType(targetType);
                     return result;
                 }
-
-#pragma warning disable RS0030
-                if (actualType == typeof(DateTime))
-                {
-                    if (DateTime.TryParse(strValue, CultureInfo.InvariantCulture,
-                            DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
-                            out DateTime parsedDateTime))
-                    {
-                        return parsedDateTime;
-                    }
-
-                    throw new InvalidOperationException($"Cannot convert value '{value}' to {targetType} due to incorrect format.");
-                }
-#pragma warning restore RS0030
 
                 if (TryGetConverter(actualType, typeof(string), out TypeConverter? stringConverter))
                 {
