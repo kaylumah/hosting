@@ -6,7 +6,7 @@ In this post I will share a script I wrote that extends the dotnet SDK to provid
 Create a helper script
 The dotnet SDK comes with a built-in command to list the packages for a project/solution.
 Even if you execute the command for a .sln file, you get the outdated packages per project.
-The version shown will always be the latest available.
+The package version shown will always be the latest available.
 However, ever since central package management was introduced, most projects in a SLN would have the same version of a package.
 For this purpose we can create a very simple helper script using PowerShell.
 List packages for solution in JSON format
@@ -232,7 +232,7 @@ After upgrading the range to [7.2.0, 8.0.0) we get the following output:
 WARNING: The following dependencies have newer versions available:
  - FluentAssertions: 7.2.0 → 7.2.0 (No new allowed version on NuGet)
 Next steps: ensure the script always runs
-For the blog I took it one step further.
+For my blog's repo I took it one step further.
 I included a Directory.Solution.props, which triggers a custom target post build.
 In my case I installed PowerShell as a dotnet tool.
 ?xml version=1.0 encoding=utf-8?
