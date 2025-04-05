@@ -18,17 +18,6 @@ namespace Test.Unit.Steps
             _SiteInfo = siteInfo;
         }
 
-        [Given("the following collections:")]
-        public void GivenTheFollowingCollections(Table table)
-        {
-            IEnumerable<Collection> collections = table.CreateSet<Collection>();
-            _SiteInfo.Collections = new Kaylumah.Ssg.Manager.Site.Service.Collections();
-            foreach (Collection collection in collections)
-            {
-                _SiteInfo.Collections.Add(collection);
-            }
-        }
-
         [Given("the following site info:")]
         public void GivenTheFollowingSiteInfo(Table table)
         {

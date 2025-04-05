@@ -270,7 +270,7 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                { $"{Root}/test/file.html", "---\r\noutputlocation: test/:name:ext---" }
+                { $"{Root}/_test/file.html", "---\r\noutputlocation: test/:name:ext---" }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
 
@@ -317,7 +317,7 @@ namespace Test.Unit.FormerXunit
         {
             Dictionary<string, MockFileData> files = new()
             {
-                { $"{Root}/test/file.html",  "---\r\noutputlocation: test/:name:ext---" }
+                { $"{Root}/_test/file.html",  "---\r\noutputlocation: test/:name:ext---" }
             };
             MockFileSystem mockFileSystem = new MockFileSystem(files);
 
@@ -395,11 +395,13 @@ namespace Test.Unit.FormerXunit
             BinaryFile targetFile = processResult.Single();
             FileMetaData result = targetFile.MetaData;
             result.Should().NotBeNull();
-            result.Count.Should().Be(2, "Defaults = 1 + Applied Config = 1, Makes 2 values");
+            result.Count.Should().Be(3, "Defaults = 1 + Applied Config = 1, Makes 2 values");
             result.Uri.Should().NotBeNull();
             result.Uri.Should().Be("posts/2021/file.html");
             result.Layout.Should().NotBeNull();
             result.Layout.Should().Be("default.html");
+            result.Collection.Should().NotBeNull();
+            result.Collection.Should().Be("021");
         }
 
         FileProcessor CreateFileProcessor(MockFileSystem mockFileSystem, MetadataParserOptions metadataParserOptions,

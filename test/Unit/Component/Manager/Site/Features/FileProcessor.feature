@@ -81,9 +81,6 @@ Feature: File Processor Tests
     Given the following defaults:
       | Scope | Path | Key    | Value |
       | posts |      | author | Max   |
-    Given the following collections:
-      | Name  | Output | TreatAs |
-      | posts | true   | <null>  |
     Given '001.md' is an empty post:
     And '002.md' is an empty page:
     And the following extension mapping:
