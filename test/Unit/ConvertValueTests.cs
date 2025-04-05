@@ -90,12 +90,13 @@ namespace Test.Unit
             yield return [typeof(int), "0", 0];
             yield return [typeof(int), " 3 ", 3];
             yield return [typeof(int), "42", 42];
-            // yield return [typeof(int), "9.99", 10];
+            // yield return [typeof(int), "9.99", 10]; (does not work...)
 
             yield return [typeof(double), "-0.001", -0.001];
             yield return [typeof(double), "0", (double)0];
             yield return [typeof(double), "42", 42.0];
             yield return [typeof(double), "3.14", 3.14];
+            yield return [typeof(double), " 9.99 ", 9.99];
 
             yield return [typeof(Guid), "550e8400-e29b-41d4-a716-446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")];
             yield return [typeof(Guid), "550E8400E29B41D4A716446655440000", new Guid("550e8400-e29b-41d4-a716-446655440000")]; // no hyphens (valid)
@@ -110,7 +111,9 @@ namespace Test.Unit
             yield return [typeof(TimeSpan), "1:00", TimeSpan.FromHours(1)];
 
             yield return [typeof(Uri), "https://kaylumah.nl", new Uri("https://kaylumah.nl")];
+            yield return [typeof(Uri), "https://www.kaylumah.nl", new Uri("https://www.kaylumah.nl")];
             yield return [typeof(Uri), "http://example.com", new Uri("http://example.com")];
+            yield return [typeof(Uri), "http://www.example.com", new Uri("http://www.example.com")];
 
             yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
             yield return [typeof(CultureInfo), "nl", new CultureInfo("nl")];
