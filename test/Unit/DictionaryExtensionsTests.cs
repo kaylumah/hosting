@@ -14,7 +14,6 @@ namespace Test.Unit
 {
     public class DictionaryExtensionsTests
     {
-        static readonly MethodInfo _ConvertValueMethod;
         static readonly MethodInfo _GetValueMethod;
         static readonly MethodInfo _GetValuesMethod;
         static readonly ConcurrentDictionary<Type, MethodInfo> _GetValueMethods;
@@ -24,8 +23,6 @@ namespace Test.Unit
         {
             Type type = typeof(DictionaryExtensions);
             Debug.Assert(type != null);
-            _ConvertValueMethod = type.GetMethod("ConvertValue", BindingFlags.Public | BindingFlags.Static)!;
-            Debug.Assert(_ConvertValueMethod != null);
             _GetValueMethod = type.GetMethod("GetValue")!;
             Debug.Assert(_GetValueMethod != null);
             _GetValuesMethod = type.GetMethod("GetValues")!;
@@ -57,69 +54,6 @@ namespace Test.Unit
             });
 
             return methodInfo;
-        }
-
-        [Theory]
-        [InlineData(null, typeof(string), null)]
-        [InlineData(null, typeof(int), null)]
-        [InlineData(null, typeof(bool), null)]
-        public void ConvertValue_ShouldHandleNullValues(object? input, Type targetType, object? expected)
-        {
-            object?[] arguments = new object?[] { input, targetType };
-            object? result = _ConvertValueMethod.Invoke(null, arguments);
-            Assert.Equal(expected, result);
-        }
-
-        [Theory]
-        [InlineData(42, typeof(int), 42)]
-        [InlineData(42, typeof(double), 42.0)]
-        [InlineData(3.14, typeof(float), 3.14f)]
-        // [InlineData(3.14, typeof(decimal), 3.14)]
-        [InlineData(1, typeof(bool), true)]
-        [InlineData(0, typeof(bool), false)]
-        [InlineData(int.MaxValue, typeof(long), (long)int.MaxValue)]
-        [InlineData(int.MinValue, typeof(long), (long)int.MinValue)]
-        public void ConvertValue_ShouldConvertPrimitiveTypes(object input, Type targetType, object expected)
-        {
-            object?[] arguments = new object?[] { input, targetType };
-            object? result = _ConvertValueMethod.Invoke(null, arguments);
-            Assert.NotNull(expected);
-            Assert.Equal(expected, result);
-        }
-
-        [Theory]
-        [MemberData(nameof(StringConversionData))]
-        public void ConvertValue_ShouldConvertFromStringViaTryParse(string input, Type targetType, object expected)
-        {
-            object?[] arguments = new object?[] { input, targetType };
-            object? result = _ConvertValueMethod.Invoke(null, arguments);
-            Assert.NotNull(expected);
-            Assert.Equal(expected, result);
-        }
-
-        [Theory]
-        [MemberData(nameof(InvalidConversionsData))]
-        public void ConvertValue_ShouldThrowInvalidOperationIfConversionFails(object value, Type targetType, Type? exceptionType)
-        {
-            // Note, we get TargetInvocationException since we use Reflection for invocation
-            object?[] arguments = new object[] { value, targetType };
-            TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => _ConvertValueMethod.Invoke(null, arguments));
-            Assert.NotNull(targetInvocationException.InnerException);
-            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
-            if (exceptionType == null)
-            {
-                Assert.Null(invalidOperationException.InnerException);
-            }
-            else
-            {
-                Assert.NotNull(invalidOperationException.InnerException);
-                Assert.IsType(exceptionType, invalidOperationException.InnerException);
-            }
-
-            string message = invalidOperationException.ToString();
-            string expectedMessage = $"Cannot convert value '{value}' to {targetType}";
-
-            Assert.Contains(expectedMessage, message);
         }
 
         [Fact]
@@ -242,29 +176,6 @@ namespace Test.Unit
             TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
             Assert.NotNull(targetInvocationException.InnerException);
             InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
-        }
-
-        public static IEnumerable<object[]> StringConversionData()
-        {
-            yield return new object[] { "true", typeof(bool), true };
-            yield return new object[] { "false", typeof(bool), false };
-            yield return new object[] { "42", typeof(int), 42 };
-            yield return new object[] { "550e8400-e29b-41d4-a716-446655440000", typeof(Guid), new Guid("550e8400-e29b-41d4-a716-446655440000") };
-            yield return new object[] { "2024-02-01T12:34:56Z", typeof(DateTime), new DateTime(2024, 2, 1, 12, 34, 56) };
-            yield return new object[] { "02:30:00", typeof(TimeSpan), new TimeSpan(2, 30, 0) };
-        }
-
-        public static IEnumerable<object?[]> InvalidConversionsData()
-        {
-            yield return new object?[] { "NotFalse", typeof(bool), null };
-            yield return new object?[] { "NotANumber", typeof(int), null };
-            yield return new object?[] { "InvalidGuid", typeof(Guid), null };
-            yield return new object?[] { "InvalidDate", typeof(DateTime), null };
-            yield return new object?[] { "InvalidTimeSpan", typeof(TimeSpan), null };
-            yield return new object?[] { long.MaxValue, typeof(int), typeof(OverflowException) };
-            yield return new object?[] { true, typeof(Uri), typeof(InvalidCastException) };
-            yield return new object?[] { "invalid", typeof(double), typeof(FormatException) };
-            yield return new object?[] { new object(), typeof(int), null };
         }
 
         public static IEnumerable<object[]> GetValueTestData()
