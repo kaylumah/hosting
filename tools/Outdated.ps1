@@ -112,7 +112,7 @@ foreach ($Project in $Projects)
                     elseif ($LatestVersion -gt $max -and $ResolvedVersion -lt $max)
                     {
                         Write-Verbose "Since $ResolvedVersion <= $LatestVersion >= $max check NuGet"
-                        $url = "https://api.nuget.org/v3-flatcontainer/$packageId/index.json"
+                        $url = "https://api.nuget.org/v3-flatcontainer/$packageId/index.json".ToLower()
                         Write-Verbose "Url $url"
                         
                         $response = Invoke-RestMethod -Uri $url -ErrorAction Stop
