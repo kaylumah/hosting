@@ -81,36 +81,6 @@ namespace Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static bool IsContentType(this PageMetaData page, string contentType)
-        {
-            bool result = page.Type != null && page.Type.Equals(contentType, StringComparison.OrdinalIgnoreCase);
-            return result;
-        }
-
-        public static bool IsArticle(this PageMetaData page)
-        {
-            bool result = page.IsContentType("Article");
-            return result;
-        }
-
-        public static bool IsPage(this PageMetaData page)
-        {
-            bool result = page.IsContentType("Page");
-            return result;
-        }
-
-        public static bool IsCollection(this PageMetaData page)
-        {
-            bool result = page.IsContentType("Collection");
-            return result;
-        }
-
-        public static IEnumerable<PageMetaData> IsArticle(this IEnumerable<PageMetaData> source)
-        {
-            IEnumerable<PageMetaData> result = source.Where(IsArticle);
-            return result;
-        }
-
         public static IEnumerable<ArticlePublicationPageMetaData> IsFeatured(this IEnumerable<ArticlePublicationPageMetaData> source)
         {
             IEnumerable<ArticlePublicationPageMetaData> result = source.Where(Featured);
