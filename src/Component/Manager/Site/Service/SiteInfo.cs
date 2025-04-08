@@ -15,8 +15,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
         { get; set; } = null!;
         public string Description
         { get; set; } = null!;
-        public Collections Collections
-        { get; set; } = new Collections();
         public HashSet<string> SupportedFileExtensions
         { get; set; } = new HashSet<string>();
         public HashSet<string> SupportedDataFileExtensions

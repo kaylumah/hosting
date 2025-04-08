@@ -208,8 +208,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
-            IEnumerable<ArticleMetaData> articles = siteMetaData.RecentArticles;
-            IEnumerable<ArticleMetaData> feed = articles.Where(x => x.Feed);
+            IEnumerable<ArticlePublicationPageMetaData> articles = siteMetaData.RecentArticles;
+            IEnumerable<ArticlePublicationPageMetaData> feed = articles.Where(x => x.Feed);
 
             return feed;
         }

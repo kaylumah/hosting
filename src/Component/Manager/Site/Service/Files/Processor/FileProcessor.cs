@@ -87,6 +87,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             List<BinaryFile> collectionBoundFiles = await ProcessDirectories(criteria, directoriesToProcessAsCollection).ConfigureAwait(false);
             result.AddRange(collectionBoundFiles);
 
+            bool Filter(BinaryFile binaryFile)
+            {
+                bool? output = binaryFile.MetaData.GetValue<bool?>("output");
+                if (output is null or true)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            result = result.Where(Filter).ToList();
+
             return result;
         }
 
@@ -113,30 +126,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         {
             string directoryName = directory.Name;
             using IDisposable? logScope = _Logger.BeginScope($"[Directory: '{directoryName}']");
-            bool outputScopeDetails = false;
             string scope = directoryName[1..];
-            bool exists = _SiteInfo.Collections.TryGetValue(scope, out Collection? collectionSettings);
-            if (exists && collectionSettings != null)
-            {
-                outputScopeDetails = collectionSettings.Output;
-                if (string.IsNullOrWhiteSpace(collectionSettings.TreatAs) == false)
-                {
-                    scope = collectionSettings.TreatAs;
-                }
-            }
 
             IFileInfo[] filesForDirectory = directory.GetFiles();
             List<BinaryFile> files = await ProcessFilesInScope(criteria, filesForDirectory, scope).ConfigureAwait(false);
-            if (outputScopeDetails)
-            {
-                files = files
-                    .Select(x =>
-                    {
-                        x.MetaData.Collection = scope;
-                        return x;
-                    })
-                    .ToList();
-            }
+            files = files
+                .Select(x =>
+                {
+                    x.MetaData.Collection = scope;
+                    return x;
+                })
+                .ToList();
 
             return files;
         }

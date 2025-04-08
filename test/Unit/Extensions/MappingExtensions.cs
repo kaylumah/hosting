@@ -47,7 +47,7 @@ namespace Test.Unit.Extensions
 #pragma warning restore
             pageDictionary.SetValue(nameof(PageMetaData.Type), "Article");
             pageDictionary.SetValue(nameof(PageMetaData.Collection), "posts");
-            pageDictionary.SetValue(nameof(ArticleMetaData.Feed), "true");
+            pageDictionary.SetValue(nameof(ArticlePublicationPageMetaData.Feed), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
             pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
