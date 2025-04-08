@@ -32,7 +32,7 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Restore Failure"
 }
 
-dotnet build --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
+dotnet build --verbosity detailed --no-restore --configuration $BuildConfiguration /p:BuildId=$BuildId /p:BuildNumber=$BuildNumber /p:Version=1.0.0.$BuildNumber
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Build Failure"
