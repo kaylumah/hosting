@@ -434,27 +434,65 @@
     </div>
 </div>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    let tag = urlParams.get('tag');
-    // TODO what if Tag is unknown
-    if (tag)
-    {
-        let loadMoreElement = document.getElementById("load-more");
-        loadMoreElement.classList.remove("hidden");
-        let blogPostLists = Array.from(document.querySelectorAll("[data-blog-list]"));
+    document.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tag = urlParams.get("tag")?.toLowerCase().trim();
 
-        blogPostLists.forEach(blogPostList => {
-            let blogPosts = Array.from(blogPostList.getElementsByTagName("li"));
-            blogPosts.forEach(blogPost => {
-                const attrs = blogPost.getAttribute("data-tags");
-                let include = attrs.includes(tag);
-                if (include == false)
-                {
-                    blogPost.classList.toggle('hidden');
+        const loadMoreElement = document.getElementById("load-more");
+        if (loadMoreElement && (tag)) {
+            loadMoreElement.classList.remove("hidden");
+        }
+
+        const blogPostLists = Array.from(document.querySelectorAll("[data-blog-list]"));
+        const allPosts = [];
+        blogPostLists.forEach(list => {
+            const posts = Array.from(list.querySelectorAll("li"));
+            posts.forEach(post => allPosts.push(post));
+        });
+
+        function getMatchingUrlsFromAttributes(posts, { tag }) {
+            const matches = new Set();
+
+            posts.forEach(post => {
+                const tags = post.getAttribute("data-tags")?.toLowerCase() || "";
+                const matchesTag = tag ? tags.includes(tag) : true;
+
+                if (matchesTag) {
+                    const href = post.querySelector("a")?.getAttribute("href");
+                    if (href) {
+                        const path = new URL(href, location.origin).pathname;
+                        matches.add(path);
+                    }
                 }
             });
+
+            return matches;
+        }
+        
+        const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { tag });
+        blogPostLists.forEach(list => {
+            const posts = Array.from(list.querySelectorAll("li"));
+            let anyVisible = false;
+
+            posts.forEach(post => {
+                const href = post.querySelector("a")?.getAttribute("href");
+                const path = href ? new URL(href, location.origin).pathname : null;
+                const isMatch = path && matchingUrls.has(path);
+
+                if (isMatch) {
+                    post.classList.remove("hidden");
+                    anyVisible = true;
+                } else {
+                    post.classList.add("hidden");
+                }
+            });
+
+            const section = list.closest("section");
+            if (!anyVisible && section) {
+                section.classList.add("hidden");
+            }
         });
-    }
+    });
 </script>
         </section>
     </main>
