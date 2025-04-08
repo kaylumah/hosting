@@ -104,7 +104,10 @@ ads: true
             console.log("initial results", results);
 
             if (tag) {
-                results = results.filter(r => r.meta?.tags?.includes(tag));
+                results = results.filter(r => { 
+                    console.log("r.tags", r.meta);
+                    return r.meta?.tags?.includes(tag);
+                });
                 console.log("tag", results);
             }
 
