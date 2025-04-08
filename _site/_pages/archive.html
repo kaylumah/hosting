@@ -101,19 +101,16 @@ ads: true
             const resultObj = await pagefind.search(search);
 
             let results = resultObj.results;
-            console.log("initial results", results);
-
-            if (tag) {
-                results = results.filter(r => { 
-                    console.log("r.tags", r.meta);
-                    return r.meta?.tags?.includes(tag);
-                });
-                console.log("tag", results);
-            }
+            console.log("results", results);
 
             const dataResults = await Promise.all(results.map(r => r.data()));
-            console.log("data", dataResults);
-            return new Set(dataResults.map(d => new URL(d.url, location.origin).pathname));
+            console.log("dataResults", dataResults);
+
+            // filter based on meta.tags (after loading data)
+            const filtered = tag
+                ? dataResults.filter(d => d.meta?.tags?.includes(tag))
+                : dataResults;
+            return new Set(filtered.map(d => new URL(d.url, location.origin).pathname));
         }
 
         // 🔁 Use this line now:
