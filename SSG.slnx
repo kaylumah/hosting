@@ -1,0 +1,56 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".runsettings" />
+    <File Path="BannedSymbols.txt" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path=".config/dotnet-tools.json" />
+  </Folder>
+  <Folder Name="/src/">
+    <File Path="src/Directory.Build.props" />
+    <File Path="src/Directory.Build.targets" />
+  </Folder>
+  <Folder Name="/src/Component/" />
+  <Folder Name="/src/Component/Access/" />
+  <Folder Name="/src/Component/Access/Artifact/">
+    <Project Path="src/Component/Access/Artifact/Hosting/Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
+    <Project Path="src/Component/Access/Artifact/Interface/Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
+    <Project Path="src/Component/Access/Artifact/Service/Kaylumah.Ssg.Access.Artifact.Service.csproj" />
+  </Folder>
+  <Folder Name="/src/Component/Client/">
+    <Project Path="src/Component/Client/SiteGenerator/Kaylumah.Ssg.Client.SiteGenerator.csproj" />
+    <Project Path="src/Component/Client/SiteValidator/Kaylumah.Ssg.Client.SiteValidator.csproj" />
+  </Folder>
+  <Folder Name="/src/Component/Manager/" />
+  <Folder Name="/src/Component/Manager/Site/">
+    <Project Path="src/Component/Manager/Site/Hosting/Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
+    <Project Path="src/Component/Manager/Site/Interface/Kaylumah.Ssg.Manager.Site.Interface.csproj" />
+    <Project Path="src/Component/Manager/Site/Service/Kaylumah.Ssg.Manager.Site.Service.csproj" />
+  </Folder>
+  <Folder Name="/src/Utilities/">
+    <Project Path="src/Utilities/AssemblyData/Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
+    <Project Path="src/Utilities/Common/Kaylumah.Ssg.Utilities.Common.csproj" />
+    <Project Path="src/Utilities/Configuration/Kaylumah.Ssg.Utilities.Configuration.csproj" />
+    <Project Path="src/Utilities/Files/Kaylumah.Ssg.Utilities.Files.csproj" />
+    <Project Path="src/Utilities/Identifiers/Kaylumah.Ssg.Utilities.Identifiers.csproj" />
+    <Project Path="src/Utilities/Ssg.Extensions.Data/Ssg.Extensions.Data.csproj" />
+    <Project Path="src/Utilities/Ssg.Extensions.Metadata.Abstractions/Ssg.Extensions.Metadata.Abstractions.csproj" />
+    <Project Path="src/Utilities/Ssg.Extensions.Metadata.YamlFrontMatter/Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <File Path="test/Directory.Build.props" />
+    <File Path="test/Directory.Build.targets" />
+    <Project Path="test/E2e/Test.E2e.csproj" />
+    <Project Path="test/Unit/Test.Unit.csproj" />
+  </Folder>
+</Solution>
