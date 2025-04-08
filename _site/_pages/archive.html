@@ -16,16 +16,6 @@ ads: true
 ---
 <h1 class="text-2xl font-bold mb-4">Archive</h1>
 <div class="space-y-8">
-    <form id="search-form" class="mb-6 flex gap-2">
-        <input
-                type="text"
-                id="search-input"
-                name="q"
-                class="w-full px-4 py-2 border rounded-md"
-                placeholder="Search blog posts..."
-        />
-        <button type="submit" class="px-4 py-2 bg-gray-800 text-white rounded-md">Search</button>
-    </form>
     {% for pageByYear in page.pagesbyyears %}
     {% assign year = pageByYear.key %}
     {% assign items = page[pageByYear.value] %}
@@ -49,10 +39,8 @@ ads: true
     </div>
 </div>
 <script>
-    
     document.addEventListener("DOMContentLoaded", async () => {
         const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get("q")?.toLowerCase().trim();
         const tag = urlParams.get("tag")?.toLowerCase().trim();
 
         const loadMoreElement = document.getElementById("load-more");
@@ -67,21 +55,14 @@ ads: true
             posts.forEach(post => allPosts.push(post));
         });
 
-        // 👇 Current: Match posts using data-* attributes
         function getMatchingUrlsFromAttributes(posts, { query, tag }) {
             const matches = new Set();
 
             posts.forEach(post => {
-                const title = post.getAttribute("data-title")?.toLowerCase() || "";
-                const description = post.getAttribute("data-description")?.toLowerCase() || "";
                 const tags = post.getAttribute("data-tags")?.toLowerCase() || "";
-
                 const matchesTag = tag ? tags.includes(tag) : true;
-                const matchesQuery = query
-                    ? title.includes(query) || description.includes(query) || tags.includes(query)
-                    : true;
 
-                if (matchesTag && matchesQuery) {
+                if (matchesTag) {
                     const href = post.querySelector("a")?.getAttribute("href");
                     if (href) {
                         const path = new URL(href, location.origin).pathname;
@@ -92,39 +73,8 @@ ads: true
 
             return matches;
         }
-
-        // 👇 Future Option: Use Pagefind to get matching URLs
-        async function getMatchingUrlsFromPagefind(query, tag) {
-            const pagefind = await import("/pagefind/pagefind.js");
-            const search = query || "";
-            console.log("search", search);
-            const resultObj = await pagefind.search(search);
-
-            let results = resultObj.results;
-            console.log("results", results);
-
-            const dataResults = await Promise.all(results.map(r => r.data()));
-            console.log("dataResults", dataResults);
-
-            for (const r of dataResults) {
-                console.log("meta keys:", Object.keys(r.meta || {}));
-                console.log("tags:", r.meta?.tags);
-            }
-
-            // filter based on meta.tags (after loading data)
-            const filtered = tag
-                ? dataResults.filter(d => d.meta?.tags?.includes(tag))
-                : dataResults;
-            return new Set(filtered.map(d => new URL(d.url, location.origin).pathname));
-        }
-
-        // 🔁 Use this line now:
-        // const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { query, tag });
-
-        // ✅ Swap to Pagefind in the future with:
-        const matchingUrls = await getMatchingUrlsFromPagefind(query, tag);
-
-        // 🔍 Filter posts and hide unmatched
+        
+        const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { query, tag });
         blogPostLists.forEach(list => {
             const posts = Array.from(list.querySelectorAll("li"));
             let anyVisible = false;
@@ -146,23 +96,6 @@ ads: true
             if (!anyVisible && section) {
                 section.classList.add("hidden");
             }
-        });
-
-        // Optional: pre-fill search input
-        const searchInput = document.getElementById("search-input");
-        if (searchInput && query) {
-            searchInput.value = query;
-        }
-
-        // Optional: search form handling
-        document.getElementById("search-form")?.addEventListener("submit", e => {
-            e.preventDefault();
-            const value = searchInput?.value.trim();
-            const newUrl = new URL(location.href);
-            if (value) newUrl.searchParams.set("q", value);
-            else newUrl.searchParams.delete("q");
-            if (tag) newUrl.searchParams.set("tag", tag);
-            window.location.href = newUrl.toString();
         });
     });
 </script>
