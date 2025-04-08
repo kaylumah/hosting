@@ -55,7 +55,7 @@ ads: true
             posts.forEach(post => allPosts.push(post));
         });
 
-        function getMatchingUrlsFromAttributes(posts, { query, tag }) {
+        function getMatchingUrlsFromAttributes(posts, { tag }) {
             const matches = new Set();
 
             posts.forEach(post => {
@@ -74,7 +74,7 @@ ads: true
             return matches;
         }
         
-        const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { query, tag });
+        const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { tag });
         blogPostLists.forEach(list => {
             const posts = Array.from(list.querySelectorAll("li"));
             let anyVisible = false;
