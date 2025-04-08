@@ -48,8 +48,8 @@ ads: true
         <a href="/archive.html" class="text-gray-700 font-medium hover:underline">View More Content →</a>
     </div>
 </div>
-<script src="/_pagefind/pagefind.js"></script>
 <script>
+    
     document.addEventListener("DOMContentLoaded", async () => {
         const urlParams = new URLSearchParams(window.location.search);
         const query = urlParams.get("q")?.toLowerCase().trim();
@@ -94,23 +94,30 @@ ads: true
         }
 
         // 👇 Future Option: Use Pagefind to get matching URLs
-        /*
         async function getMatchingUrlsFromPagefind(query, tag) {
-          const pagefind = await window.pagefind();
-          let results = await pagefind.search(query || "");
-          if (tag) {
-            results = results.filter(r => r.meta?.tags?.includes(tag));
-          }
-          const dataResults = await Promise.all(results.map(r => r.data()));
-          return new Set(dataResults.map(d => new URL(d.url, location.origin).pathname));
+            const pagefind = await import("/pagefind/pagefind.js");
+            const search = query || "";
+            console.log("search", search);
+            const resultObj = await pagefind.search(search);
+
+            let results = resultObj.results;
+            console.log("initial results", results);
+
+            if (tag) {
+                results = results.filter(r => r.meta?.tags?.includes(tag));
+                console.log("tag", results);
+            }
+
+            const dataResults = await Promise.all(results.map(r => r.data()));
+            console.log("data", dataResults);
+            return new Set(dataResults.map(d => new URL(d.url, location.origin).pathname));
         }
-        */
 
         // 🔁 Use this line now:
-        const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { query, tag });
+        // const matchingUrls = getMatchingUrlsFromAttributes(allPosts, { query, tag });
 
         // ✅ Swap to Pagefind in the future with:
-        // const matchingUrls = await getMatchingUrlsFromPagefind(query, tag);
+        const matchingUrls = await getMatchingUrlsFromPagefind(query, tag);
 
         // 🔍 Filter posts and hide unmatched
         blogPostLists.forEach(list => {
