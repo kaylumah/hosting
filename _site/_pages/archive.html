@@ -44,7 +44,7 @@ ads: true
         const tag = urlParams.get("tag")?.toLowerCase().trim();
 
         const loadMoreElement = document.getElementById("load-more");
-        if (loadMoreElement && (query || tag)) {
+        if (loadMoreElement && (tag)) {
             loadMoreElement.classList.remove("hidden");
         }
 
