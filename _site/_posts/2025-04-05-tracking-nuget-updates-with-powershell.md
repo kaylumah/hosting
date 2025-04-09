@@ -5,6 +5,7 @@ tags:
   - powershell
   - nuget
 publishedtime: '17:30'
+commentid: '1110' 
 ---
 Most of the time, managing NuGet dependencies in .NET projects is straightforward.
 Whether you believe in "don't fix what's not broken" or "always update", there is always value in knowing about outdated packages.
