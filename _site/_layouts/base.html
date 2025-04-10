@@ -217,7 +217,7 @@
         });
     }
 
-    function createAdFallback() {
+    function createAdFallback2() {
         const wrapper = document.createElement("div");
         wrapper.className = "bg-white rounded-2xl border border-gray-200 p-6 text-center";
 
@@ -271,6 +271,51 @@
         wrapper.appendChild(title);
         wrapper.appendChild(description);
         wrapper.appendChild(shareRow);
+
+        return wrapper;
+    }
+
+    function createAdFallback() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "bg-white rounded-2xl border border-gray-200 p-6 text-center";
+
+        const heading = document.createElement("p");
+        heading.className = "text-lg font-semibold text-gray-900 mb-2";
+        heading.textContent = "Ad blocked? Totally fine.";
+
+        const subtext = document.createElement("p");
+        subtext.className = "text-gray-700 mb-4";
+        subtext.textContent = "If you like my content, consider supporting me:";
+
+        const links = document.createElement("div");
+        links.className = "flex justify-center gap-4";
+
+        const supportLinks = [
+            {
+                href: "https://www.buymeacoffee.com/kaylumah",
+                title: "Buy Me A Coffee",
+                svg: `<svg class="h-8 w-8" role="img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><title>Buy Me A Coffee</title><path fill="#FFDD00" d="..."/></svg>`
+            },
+            {
+                href: "https://github.com/sponsors/kaylumah",
+                title: "GitHub Sponsors",
+                svg: `<svg class="h-8 w-8" role="img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><title>GitHub Sponsors</title><path fill="#EA4AAA" d="..."/></svg>`
+            }
+        ];
+
+        supportLinks.forEach(({ href, title, svg }) => {
+            const a = document.createElement("a");
+            a.href = href;
+            a.target = "_blank";
+            a.title = title;
+            a.innerHTML = svg;
+            a.className = "hover:opacity-80";
+            links.appendChild(a);
+        });
+
+        wrapper.appendChild(heading);
+        wrapper.appendChild(subtext);
+        wrapper.appendChild(links);
 
         return wrapper;
     }
