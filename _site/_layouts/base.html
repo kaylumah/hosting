@@ -219,12 +219,32 @@
     
     function checkAdStatus(ad) {
         let isAd = ad.hasAttribute("data-ad-slot");
+
+        if (typeof window.adsbygoogle === "undefined") {
+            console.warn("Ad blocker detected (no adsbygoogle), hiding ad");
+            ad.style.display = "none";
+            return;
+        }
+
+        /*
+        if (ad.offsetHeight === 0) {
+            console.warn("Ad blocker detected (via hidden testAd)!");
+            ad.style.display = "none";
+            return;
+        }
+
+        if (ad.offsetWidth === 0) {
+            console.warn("Ad blocker detected (via hidden testAd)!");
+            const fallback = createAdFallback();
+            ad.replaceWith(fallback);
+        }
+        */
+        
         if (isAd && ad.offsetWidth > 0)
         {
             (adsbygoogle = window.adsbygoogle || []).push({});
             let checkAdStatus = setInterval(() => {
                 let adStatus = ad.getAttribute("data-ad-status");
-
                 if (adStatus !== null) {
                     clearInterval(checkAdStatus);
                     if (adStatus === "unfilled") {
@@ -240,17 +260,25 @@
     function addGoogleAdSense() {
         let adsenseScript = document.getElementById(adsenseScriptId);
         if (!adsenseScript) {
+            
             let script = document.createElement("script");
             script.id = adsenseScriptId;
             script.async = true;
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
-            document.head.appendChild(script);
+
             script.onload = function () {
                 let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
                 adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
                     checkAdStatus(ad);
                 });
             };
+
+            script.onerror = function () {
+                // Blocked script (i.e. via PiHole)
+                console.warn("Ad script failed to load");
+            };
+
+            document.head.appendChild(script);
         }
     }
     {%- endif %}
