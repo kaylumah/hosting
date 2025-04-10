@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Kaylumah.Ssg.Client.SiteGenerator.Development": {
+    "Kaylumah.Ssg.Client.SiteGenerator.Development.Http": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
@@ -8,7 +8,27 @@
         "Kaylumah_LOGGING__Console__LOGLEVEL__Kaylumah": "Trace",
         "TEST": "$(RootDirectory)"
       },
-      "commandLineArgs": ""
+      "commandLineArgs": "Site:Url=http://localhost:4280"
+    },
+    "Kaylumah.Ssg.Client.SiteGenerator.Development.Https": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "DEVELOPER_MODE": "true",
+        "Kaylumah_LOGGING__Console__LOGLEVEL__Kaylumah": "Trace",
+        "TEST": "$(RootDirectory)"
+      },
+      "commandLineArgs": "Site:Url=https://localhost:4280"
+    },
+    "Kaylumah.Ssg.Client.SiteGenerator.Development.LocalDns": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "DEVELOPER_MODE": "true",
+        "Kaylumah_LOGGING__Console__LOGLEVEL__Kaylumah": "Trace",
+        "TEST": "$(RootDirectory)"
+      },
+      "commandLineArgs": "Site:Url=https://local.kaylumah.nl:4280"
     }
   }
 }

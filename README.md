@@ -69,6 +69,38 @@ classDiagram
     with some convenience properties"
 ```
 
+## Run Locally
+
+For local testing we emulate the Static WebApp via [Static Web Apps CLI](https://azure.github.io/static-web-apps-cli/docs/cli/swa-start/) ; the dependency gets installed by running `npm i` in the root directory of this repository.
+
+### HTTP
+
+```sh
+npm start
+```
+
+### HTTPS
+
+For a local SSL certificate we use [mkcert](https://github.com/FiloSottile/mkcert)
+```sh
+# Install if not installed
+brew install mkcert      # macOS
+choco install mkcert     # Windows
+sudo apt install mkcert  # Linux
+
+# Install the local CA:
+mkcert -install
+
+# Generate the certificate
+mkcert localhost 127.0.0.1 local.kaylumah.nl
+```
+
+Ensure `/etc/hosts/` has the following line `127.0.0.1 local.kaylumah.nl`
+
+```sh
+npm start:ssl
+```
+
 ## License
 
 This repo (including Blog content) is licensed under the [MIT License](LICENSE)
