@@ -108,6 +108,23 @@
 
 <script src="/comments.js" defer></script>
 <script>
+    /*
+    const style = document.createElement("style");
+    style.textContent = `.adsbygoogle { display: none !important; }`;
+    document.head.appendChild(style);
+    */
+
+    function createAdFallback() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "ad-fallback bg-white border border-gray-200 rounded-xl p-4 text-center";
+        wrapper.innerHTML = `
+        <p class="text-sm text-gray-700 mb-2">Ad blocked? It's okay.</p>
+        <a href="/sponsor" class="text-blue-600 underline text-sm font-medium">Support this site instead ❤️</a>
+    `;
+        return wrapper;
+    }
+    
+    
     window.GA_ID = "G-MEQZVWN0D7";
     window.COMMENT_ID = "{{page.commentid}}";
     const analyticsScriptId = "google-analytics-script";
@@ -219,12 +236,33 @@
     
     function checkAdStatus(ad) {
         let isAd = ad.hasAttribute("data-ad-slot");
+
+        if (typeof window.adsbygoogle === "undefined") {
+            console.warn("Ad blocker detected (no adsbygoogle), hiding ad");
+            ad.style.display = "none";
+            return;
+        }
+
+        /*
+        if (ad.offsetHeight === 0) {
+            console.warn("Ad blocker detected (via hidden testAd)!");
+            ad.style.display = "none";
+            return;
+        }
+        */
+
+        if (ad.offsetWidth === 0) {
+            console.warn("Ad blocker detected (via hidden testAd)!");
+            const fallback = createAdFallback();
+            ad.replaceWith(fallback);
+        }
+        
         if (isAd && ad.offsetWidth > 0)
         {
             (adsbygoogle = window.adsbygoogle || []).push({});
             let checkAdStatus = setInterval(() => {
                 let adStatus = ad.getAttribute("data-ad-status");
-
+                console.log("adStatus is set", adStatus);
                 if (adStatus !== null) {
                     clearInterval(checkAdStatus);
                     if (adStatus === "unfilled") {
@@ -240,17 +278,26 @@
     function addGoogleAdSense() {
         let adsenseScript = document.getElementById(adsenseScriptId);
         if (!adsenseScript) {
+            
             let script = document.createElement("script");
             script.id = adsenseScriptId;
             script.async = true;
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
-            document.head.appendChild(script);
+
             script.onload = function () {
                 let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
+                console.log("adsense onload", adElements);
                 adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
                     checkAdStatus(ad);
                 });
             };
+
+            script.onerror = function () {
+                // Blocked script (i.e. via PiHole)
+                console.warn("Ad script failed to load");
+            };
+
+            document.head.appendChild(script);
         }
     }
     {%- endif %}
