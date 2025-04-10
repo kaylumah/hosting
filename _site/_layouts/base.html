@@ -216,13 +216,78 @@
             checkAdStatus(newAd);
         });
     }
+
+    function createAdFallback() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "bg-white rounded-2xl border border-gray-200 p-6 text-center";
+
+        const title = document.createElement("p");
+        title.className = "text-lg font-semibold text-gray-900";
+        title.textContent = "Ad blocking? It's okay.";
+
+        const description = document.createElement("p");
+        description.className = "text-gray-700 mb-4";
+        description.textContent = "Please share to support us:";
+
+        const shareRow = document.createElement("div");
+        shareRow.className = "flex justify-center gap-4";
+
+        const links = [
+            {
+                href: "https://www.facebook.com/sharer/sharer.php?u=YOUR_URL",
+                icon: "/assets/icons/facebook.svg",
+                alt: "Facebook"
+            },
+            {
+                href: "https://twitter.com/intent/tweet?url=YOUR_URL&text=Check%20this%20out!",
+                icon: "/assets/icons/twitter.svg",
+                alt: "Twitter"
+            },
+            {
+                href: "https://www.linkedin.com/sharing/share-offsite/?url=YOUR_URL",
+                icon: "/assets/icons/linkedin.svg",
+                alt: "LinkedIn"
+            },
+            {
+                href: "https://www.reddit.com/submit?url=YOUR_URL&title=Check%20this%20out!",
+                icon: "/assets/icons/reddit.svg",
+                alt: "Reddit"
+            }
+        ];
+
+        links.forEach(link => {
+            const a = document.createElement("a");
+            a.href = link.href;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            const img = document.createElement("img");
+            img.src = link.icon;
+            img.alt = link.alt;
+            img.className = "h-6 w-6";
+            a.appendChild(img);
+            shareRow.appendChild(a);
+        });
+
+        wrapper.appendChild(title);
+        wrapper.appendChild(description);
+        wrapper.appendChild(shareRow);
+
+        return wrapper;
+    }
+    
+    function replaceWithFallback(ad) {
+        // (ad.tagName === "INS" && ad.hasAttribute("data-ad-slot") && ad.hasAttribute("data-ad-client"));
+        // ad.style.display = "none";
+        const fallback = createAdFallback();
+        ad.replaceWith(fallback);
+    }
     
     function checkAdStatus(ad) {
         let isAd = ad.hasAttribute("data-ad-slot");
 
         if (typeof window.adsbygoogle === "undefined") {
             console.warn("Ad blocker detected (no adsbygoogle), hiding ad");
-            ad.style.display = "none";
+            replaceWithFallback(ad)
             return;
         }
 
@@ -276,6 +341,11 @@
             script.onerror = function () {
                 // Blocked script (i.e. via PiHole)
                 console.warn("Ad script failed to load");
+                let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
+                console.log("ads", adElements);
+                adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
+                    checkAdStatus(ad);
+                });
             };
 
             document.head.appendChild(script);
