@@ -2,6 +2,7 @@
     "origins": [ "https://kaylumah.nl" ],
     "originsRegex": [
         "http://localhost:[0-9]+",
-        "https://green-field-0353fee03-[0-9]+.westeurope.1.azurestaticapps.net"
+        "https://green-field-0353fee03-[0-9]+.westeurope.1.azurestaticapps.net",
+        "^https://[a-z0-9-]+\\.kaylumah\\.nl$"
     ]
 }
