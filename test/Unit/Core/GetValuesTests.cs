@@ -110,7 +110,7 @@ namespace Test.Unit.Core
 
             // ArrayList to int?
             System.Collections.ArrayList arrayList = new System.Collections.ArrayList { "1", "2", null };
-            // yield return [ typeof(int?), arrayList, new int?[] { 1, 2, null } ];
+            yield return [ typeof(int?), arrayList, new int?[] { 1, 2, null } ];
         }
         
         [Theory]
