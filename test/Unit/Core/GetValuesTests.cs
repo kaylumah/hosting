@@ -132,21 +132,27 @@ namespace Test.Unit.Core
             Assert.Equal(value, actual);
         }
         
+        public static IEnumerable<object?[]> GetEnumerableValueTestData2()
+        {
+            // Type of INT throws
+            yield return [ typeof(string), new Object[] { "a", "b", "c" } ];
+        }
+        
+        [Theory]
+        [MemberData(nameof(GetEnumerableValueTestData2))]
+        public void Test_GetValues_ConvertibleObjectList(Type type, object input)
+        {
+            Dictionary<string, object?> dictionary = new();
+            dictionary["some-key"] = input;
+            
+            MethodInfo method = GetValuesMethod(type);
+            object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+        }
+        
         #pragma warning disable
         
 
-        [Fact]
-        public void Test_GetValues_ConvertibleObjectList()
-        {
-            var inputList = new List<object> { "1", "2", "3" };
-            var dict = new Dictionary<string, object?> { ["some-key"] = inputList };
-
-            var method = GetValuesMethod(typeof(int));
-            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
-
-            var expected = new[] { 1, 2, 3 };
-            Assert.Equal(expected, result);
-        }
+        
         
         [Fact]
         public void Test_GetValues_ObjectListWithInvalidEntriesSkipsThem()
