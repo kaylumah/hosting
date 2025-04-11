@@ -22,9 +22,10 @@ namespace Test.Unit
         static DictionaryExtensionsTests()
         {
             Type type = typeof(DictionaryExtensions);
-            Debug.Assert(type != null);
+
             _GetValueMethod = type.GetMethod("GetValue")!;
             Debug.Assert(_GetValueMethod != null);
+
             _GetValuesMethod = type.GetMethod("GetValues")!;
             Debug.Assert(_GetValuesMethod != null);
 
@@ -36,7 +37,7 @@ namespace Test.Unit
 
         static MethodInfo GetValueMethod(Type target)
         {
-            MethodInfo methodInfo = _GetValueMethods.GetOrAdd(target, (Type cacheKey) =>
+            MethodInfo methodInfo = _GetValueMethods.GetOrAdd(target, (cacheKey) =>
             {
                 MethodInfo result = _GetValueMethod.MakeGenericMethod(cacheKey);
                 return result;
@@ -47,7 +48,7 @@ namespace Test.Unit
 
         static MethodInfo GetValuesMethod(Type target)
         {
-            MethodInfo methodInfo = _GetValuesMethods.GetOrAdd(target, (Type cacheKey) =>
+            MethodInfo methodInfo = _GetValuesMethods.GetOrAdd(target, (cacheKey) =>
             {
                 MethodInfo result = _GetValuesMethod.MakeGenericMethod(cacheKey);
                 return result;
