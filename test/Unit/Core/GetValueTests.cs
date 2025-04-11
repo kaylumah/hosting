@@ -75,6 +75,18 @@ namespace Test.Unit.Core
         
         [Theory]
         [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
+        public void Test_GetValue_NonExistingKeyReturnsDefaultValue(Type targetType, object? expected)
+        {
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            MethodInfo getValueMethod = GetValueMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+            Assert.Equal(expected, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             string key = "some-key";
