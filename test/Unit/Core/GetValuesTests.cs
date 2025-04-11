@@ -123,8 +123,13 @@ namespace Test.Unit.Core
         [MemberData(nameof(GetEnumerableValueTestData))]
         public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
         {
-            // Type genericIEnumerable = typeof(IEnumerable<>);
-            // Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
+            Type genericIEnumerable = typeof(IEnumerable<>);
+            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
+            Type valueType = value.GetType();
+            bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
+            Assert.True(isEnumerable);
+            
+            
             // Assert.IsType(expectedEnumerableType, value);
             
             // bool isExpectedArray = value is Array array && array.GetType().GetElementType() == type;
