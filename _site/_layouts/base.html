@@ -218,18 +218,15 @@
     }
 
     function createAdFallback() {
-
+        /*
         const url = encodeURIComponent(window.location.href);
         const title = encodeURIComponent(document.title);
-        
-        console.log("original url", window.location.href);
-        console.log("encoded url", url);
-        
         console.log("facebook", `https://www.facebook.com/sharer/sharer.php?u=${url}`);
         console.log("twitter/x", `https://twitter.com/intent/tweet?url=${url}&text=${title}`);
         console.log("linkedin", `https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
         console.log("reddit", `https://www.reddit.com/submit?url=${url}&title=${title}`);
         console.log("email", `mailto:?subject=${title}&body=Check this out: ${url}`);
+        */
         
         const supportLinks = [
             {
@@ -278,10 +275,12 @@
         const adSlotAttr = "data-ad-slot";
         if (ad.tagName === "INS" && ad.hasAttribute(adSlotAttr))
         {
-            // ad.style.display = "none";
-            const fallback = createAdFallback();
-            fallback.setAttribute(adSlotAttr, ad.getAttribute(adSlotAttr));
-            ad.replaceWith(fallback);
+            ad.style.display = "none";
+            
+            // Move over to the fallback once full design is finished
+            // const fallback = createAdFallback();
+            // fallback.setAttribute(adSlotAttr, ad.getAttribute(adSlotAttr));
+            // ad.replaceWith(fallback);
         }
     }
     
