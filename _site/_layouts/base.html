@@ -175,37 +175,6 @@
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
-    function insertSecondaryAd() {
-        if (window.innerWidth < 1024) return;
-
-        const sidebar = document.querySelector("aside");
-        if (!sidebar) return;
-
-        const sidebarHeight = sidebar.offsetHeight;
-        console.log("sidebarHeight", sidebarHeight);
-
-        const widgets = Array.from(document.querySelectorAll("aside > .bg-white, aside > ins.adsbygoogle"));
-        const widgetsTotalHeight = widgets.reduce((sum, el) => sum + el.offsetHeight, 0);
-        console.log("widgets", widgets);
-        console.log("widgetsTotalHeight", widgetsTotalHeight);
-
-        if (sidebarHeight - widgetsTotalHeight > 400) {
-            console.log("we have space for more ads");
-            console.log("widgets.length", widgets.length);
-            const lastWidget = widgets[widgets.length - 1];
-            console.log(lastWidget);
-
-            const newAd = document.createElement("ins");
-            newAd.className = "adsbygoogle";
-            newAd.style.display = "block";
-            newAd.setAttribute("data-ad-client", "ca-pub-3130074590591386");
-            newAd.setAttribute("data-ad-slot", "1234567890"); // replace
-            newAd.setAttribute("data-ad-format", "auto");
-            newAd.setAttribute("data-full-width-responsive", "true");
-            lastWidget.after(newAd);
-        }
-    }
-
     window.addEventListener("resize", function() {
         clearTimeout(window.adResizeTimer);
 
@@ -225,7 +194,6 @@
     });
     
     function refreshAds() {
-        console.log("refreshAds");
         let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
         adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(oldAd => {
             const allowedAttributes = ["class", "style", "data-ad-client", "data-ad-slot", "data-ad-format", "data-full-width-responsive"];
@@ -353,6 +321,37 @@
                     }
                 }
             }, 500);
+        }
+    }
+
+    function insertSecondaryAd() {
+        if (window.innerWidth < 1024) return;
+
+        const sidebar = document.querySelector("aside");
+        if (!sidebar) return;
+
+        const sidebarHeight = sidebar.offsetHeight;
+        console.log("sidebarHeight", sidebarHeight);
+
+        const widgets = Array.from(document.querySelectorAll("aside > .bg-white, aside > ins.adsbygoogle"));
+        const widgetsTotalHeight = widgets.reduce((sum, el) => sum + el.offsetHeight, 0);
+        console.log("widgets", widgets);
+        console.log("widgetsTotalHeight", widgetsTotalHeight);
+
+        if (sidebarHeight - widgetsTotalHeight > 400) {
+            console.log("we have space for more ads");
+            console.log("widgets.length", widgets.length);
+            const lastWidget = widgets[widgets.length - 1];
+            console.log(lastWidget);
+
+            const newAd = document.createElement("ins");
+            newAd.className = "adsbygoogle";
+            newAd.style.display = "block";
+            newAd.setAttribute("data-ad-client", "ca-pub-3130074590591386");
+            newAd.setAttribute("data-ad-slot", "1234567890"); // replace
+            newAd.setAttribute("data-ad-format", "auto");
+            newAd.setAttribute("data-full-width-responsive", "true");
+            lastWidget.after(newAd);
         }
     }
     
