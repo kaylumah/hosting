@@ -152,10 +152,13 @@ namespace Test.Unit.Core
             
             MethodInfo method = GetValuesMethod(type);
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+            
+            /*
             bool isListOfExpectedType = actual != null &&
                 actual.GetType().IsGenericType &&
                                         actual.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
                                         actual.GetType().GetGenericArguments()[0] == type;
+                                        */
             
             /*
              * Type genericIEnumerable = typeof(IEnumerable<>);
