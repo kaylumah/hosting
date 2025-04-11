@@ -345,6 +345,9 @@
             const lastWidget = widgets[widgets.length - 1];
             console.log(lastWidget);
 
+            const wrapper = document.createElement("div");
+            wrapper.className = "hidden lg:block";
+
             const newAd = document.createElement("ins");
             newAd.className = "adsbygoogle";
             newAd.style.display = "block";
@@ -352,7 +355,9 @@
             newAd.setAttribute("data-ad-slot", "1234567890"); // replace
             newAd.setAttribute("data-ad-format", "auto");
             newAd.setAttribute("data-full-width-responsive", "true");
-            lastWidget.after(newAd);
+
+            wrapper.appendChild(newAd);
+            lastWidget.after(wrapper);
         }
     }
     
