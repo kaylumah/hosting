@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -116,7 +115,7 @@ namespace Test.Unit.Core
         {
             yield return [ typeof(string), Array.Empty<string>() ];
             yield return [ typeof(string), new string[] { "a", "b", "c" } ];
-            yield return [ typeof(string), new System.Collections.Generic.List<string> { "a", "b", "c" } ];
+            yield return [ typeof(string), new List<string> { "a", "b", "c" } ];
         }
 
         [Theory]
@@ -159,10 +158,10 @@ namespace Test.Unit.Core
             
             MethodInfo method = GetValuesMethod(type);
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
-            bool isListOfExpectedType = actual is IList list &&
-                                        list.GetType().IsGenericType &&
-                                        list.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
-                                        list.GetType().GetGenericArguments()[0] == type;
+            bool isListOfExpectedType = actual != null &&
+                actual.GetType().IsGenericType &&
+                                        actual.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
+                                        actual.GetType().GetGenericArguments()[0] == type;
             
             /*
              * Type genericIEnumerable = typeof(IEnumerable<>);
