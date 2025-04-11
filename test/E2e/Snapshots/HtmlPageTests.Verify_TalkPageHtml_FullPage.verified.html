@@ -449,16 +449,8 @@ The talk served as an introduction to the Gherkin language and demonstrated how 
                     newAd.setAttribute(attr, oldAd.getAttribute(attr));
                 }
             });
-            
-            if (oldAd.nextElementSibling) {
-                oldAd.nextElementSibling.before(newAd);
-            } else if (oldAd.previousElementSibling) {
-                oldAd.previousElementSibling.after(newAd);
-            } else if (oldAd.parentElement) {
-                oldAd.parentElement.appendChild(newAd);
-            }
 
-            oldAd.remove();
+            oldAd.replaceWith(newAd);
             checkAdStatus(newAd);
         });
     }
@@ -569,6 +561,36 @@ The talk served as an introduction to the Gherkin language and demonstrated how 
             }, 500);
         }
     }
+
+    function tryAddSecondaryAd() {
+        if (window.innerWidth < 1024) return;
+
+        const sidebar = document.querySelector("aside");
+        if (!sidebar || document.getElementById("secondary-ad-wrapper")) return;
+
+        const sidebarHeight = sidebar.offsetHeight;
+
+        const widgets = Array.from(document.querySelectorAll("aside > .bg-white, aside > ins.adsbygoogle"));
+        const widgetsTotalHeight = widgets.reduce((sum, el) => sum + el.offsetHeight, 0);
+
+        if (sidebarHeight - widgetsTotalHeight > 400) {
+            const lastWidget = widgets[widgets.length - 1];
+            const wrapper = document.createElement("div");
+            wrapper.id = "secondary-ad-wrapper";
+            wrapper.className = "hidden lg:block";
+
+            const newAd = document.createElement("ins");
+            newAd.className = "adsbygoogle";
+            newAd.style.display = "block";
+            newAd.setAttribute("data-ad-client", "ca-pub-3130074590591386");
+            newAd.setAttribute("data-ad-slot", "5786327497");
+            newAd.setAttribute("data-ad-format", "auto");
+            newAd.setAttribute("data-full-width-responsive", "true");
+
+            wrapper.appendChild(newAd);
+            lastWidget.after(wrapper);
+        }
+    }
     
     function addGoogleAdSense() {
         let adsenseScript = document.getElementById(adsenseScriptId);
@@ -580,6 +602,7 @@ The talk served as an introduction to the Gherkin language and demonstrated how 
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
 
             script.onload = function () {
+                tryAddSecondaryAd();
                 let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
                 adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
                     checkAdStatus(ad);
