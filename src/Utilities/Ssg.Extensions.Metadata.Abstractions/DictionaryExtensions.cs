@@ -57,14 +57,11 @@ namespace System.Collections.Generic
             {
                 return exactMatch;
             }
-
-            // if (value is IEnumerable enumerable)
-            // T? converted = item is null ? default : (T?)item.ConvertValue(typeof(T));
-            // Broaden support to any enumerable type (even ArrayList)
-            if (value is IEnumerable<object> objectList)
+            
+            if (value is IEnumerable enumerable and not string)
             {
                 List<T?> result = new List<T?>();
-                foreach (object original in objectList)
+                foreach (object original in enumerable)
                 {
                     T? converted = (T?)original.ConvertValue(typeof(T));
                     result.Add(converted);
@@ -77,8 +74,6 @@ namespace System.Collections.Generic
             T? singleValue = dictionary.GetValue<T>(key, caseInsensitive);
             List<T?> single = [singleValue];
             return single;
-
-            // throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value, bool caseInsensitive = true)
