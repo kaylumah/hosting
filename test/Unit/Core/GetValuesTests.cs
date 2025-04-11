@@ -2,6 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -147,6 +148,11 @@ namespace Test.Unit.Core
             
             MethodInfo method = GetValuesMethod(type);
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+            bool isListOfExpectedType = actual is IList list &&
+                                        list.GetType().IsGenericType &&
+                                        list.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
+                                        list.GetType().GetGenericArguments()[0] == type;
+
         }
         
         #pragma warning disable
