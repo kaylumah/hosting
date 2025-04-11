@@ -50,7 +50,32 @@ namespace Test.Unit.Core
             Dictionary<string, object?> target = new();
             Assert.Throws<ArgumentNullException>(() => target.GetValues<string>(null!));
         }
+        
+        [Fact]
+        public void Test_GetValues_NonExistingKeyReturnsDefaultValue()
+        {
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            Type targetType = typeof(string);
+            MethodInfo getValueMethod = GetValuesMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+            Assert.Null(actual);
+        }
 
+        [Fact]
+        public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue()
+        {
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            dictionary[key] = null;
+            Type targetType = typeof(string);
+            MethodInfo getValueMethod = GetValuesMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+            Assert.Null(actual);
+        }
+        
         [Fact]
         public void Test_GetValues_PrimitiveOfTargetTypeReturnsList()
         {
@@ -82,30 +107,9 @@ namespace Test.Unit.Core
             string expectedErrorMessage = $"Cannot convert value of key '{key}' from System.Int32 to IEnumerable<System.String>.";
             Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
         }
-
-        [Fact]
-        public void X()
-        {
-            // Default Value is NULL
-            string key = "some-key";
-            Dictionary<string, object?> dictionary = new();
-            Type targetType = typeof(string);
-            MethodInfo getValueMethod = GetValuesMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
-            object? actual = getValueMethod?.Invoke(null, arguments);
-        }
         
-        [Fact]
-        public void Y()
-        {
-            // Empty list
-            string key = "some-key";
-            Dictionary<string, object?> dictionary = new();
-            Type targetType = typeof(string);
-            MethodInfo getValueMethod = GetValuesMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
-            object? actual = getValueMethod?.Invoke(null, arguments);
-        }
+        // TODO exact match
+        // TODO object list
         
         /*
         [Fact]
