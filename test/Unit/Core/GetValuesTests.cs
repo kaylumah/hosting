@@ -114,20 +114,22 @@ namespace Test.Unit.Core
 
         public static IEnumerable<object?[]> GetEnumerableValueTestData()
         {
+            yield return [ typeof(string), Array.Empty<string>() ];
             yield return [ typeof(string), new string[] { "a", "b", "c" } ];
+            yield return [ typeof(string), new System.Collections.Generic.List<string> { "a", "b", "c" } ];
         }
-        
+
         [Theory]
         [MemberData(nameof(GetEnumerableValueTestData))]
         public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
         {
-            bool isExpectedArray = value is Array array && array.GetType().GetElementType() == type;
-            Assert.True(isExpectedArray);
+            // bool isExpectedArray = value is Array array && array.GetType().GetElementType() == type;
+            // Assert.True(isExpectedArray);
 
             Dictionary<string, object?> dictionary = new();
             dictionary["some-key"] = value;
             
-            MethodInfo method = GetValuesMethod(typeof(string));
+            MethodInfo method = GetValuesMethod(type);
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
 
             Assert.Equal(value, actual);
