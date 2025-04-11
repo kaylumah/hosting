@@ -190,7 +190,19 @@
         console.log("widgetsTotalHeight", widgetsTotalHeight);
 
         if (sidebarHeight - widgetsTotalHeight > 400) {
-            console.log("we have space for more ads")
+            console.log("we have space for more ads");
+            console.log("widgets.length", widgets.length);
+            const lastWidget = widgets[widgets.length - 1];
+            console.log(lastWidget);
+
+            const newAd = document.createElement("ins");
+            newAd.className = "adsbygoogle";
+            newAd.style.display = "block";
+            newAd.setAttribute("data-ad-client", "ca-pub-3130074590591386");
+            newAd.setAttribute("data-ad-slot", "YOUR_SECOND_SLOT_ID");
+            newAd.setAttribute("data-ad-format", "auto");
+            newAd.setAttribute("data-full-width-responsive", "true");
+            lastWidget.after(newAd);
         }
     }
 
