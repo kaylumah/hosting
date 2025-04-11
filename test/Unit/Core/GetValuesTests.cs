@@ -142,7 +142,7 @@ namespace Test.Unit.Core
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
         {
             // Type of INT throws
-            yield return [ typeof(string), new Object[] { "a", "b", "c" } ];
+            yield return [ typeof(string), new object[] { "a", "b", "c" } ];
         }
         
         [Theory]
