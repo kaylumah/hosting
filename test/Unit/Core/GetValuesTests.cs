@@ -122,11 +122,7 @@ namespace Test.Unit.Core
         [MemberData(nameof(GetEnumerableValueTestData))]
         public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
         {
-            Type genericIEnumerable = typeof(IEnumerable<>);
-            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
-            Type valueType = value.GetType();
-            bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
-            Assert.True(isEnumerable);
+            AssertEnumerableOfT(type, value);
 
             Dictionary<string, object?> dictionary = new();
             dictionary["some-key"] = value;
@@ -135,6 +131,15 @@ namespace Test.Unit.Core
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
 
             Assert.Equal(value, actual);
+        }
+
+        void AssertEnumerableOfT(Type type, object value)
+        {
+            Type genericIEnumerable = typeof(IEnumerable<>);
+            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
+            Type valueType = value.GetType();
+            bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
+            Assert.True(isEnumerable, $"Expected {expectedEnumerableType} but was {valueType}");
         }
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
@@ -148,24 +153,15 @@ namespace Test.Unit.Core
         [MemberData(nameof(GetEnumerableValueTestData2))]
         public void Test_GetValues_ConvertibleObjectList(Type type, object input)
         {
+            AssertEnumerableOfT(typeof(object), input);
+
             Dictionary<string, object?> dictionary = new();
             dictionary["some-key"] = input;
             
             MethodInfo method = GetValuesMethod(type);
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
-            
-            /*
-            bool isListOfExpectedType = actual != null &&
-                actual.GetType().IsGenericType &&
-                                        actual.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
-                                        actual.GetType().GetGenericArguments()[0] == type;
-                                        */
-            
-            /*
-             * Type genericIEnumerable = typeof(IEnumerable<>);
-               Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
-             */
-
+            Assert.NotNull(actual);
+            AssertEnumerableOfT(type, actual);
         }
         
         /*
