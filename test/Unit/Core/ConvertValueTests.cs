@@ -278,18 +278,6 @@ namespace Test.Unit.Core
             Assert.Equal($"Cannot convert value '{value}' to {targetType}.", ex.Message);
         }
 
-        static string GetSampleValue(Type type)
-        {
-            // todo faker?
-            Type t = Nullable.GetUnderlyingType(type) ?? type;
-
-            return t switch
-            {
-                _ when t == typeof(string) => "",
-                _ => throw new NotSupportedException($"No fuzz input for {type}")
-            };
-        }
-
         static object? ConvertValue(object? value, Type targetType)
         {
             object? result = value.ConvertValue(targetType);

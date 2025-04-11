@@ -12,6 +12,34 @@ namespace Test.Unit.Core
 {
     public static class SharedTestData
     {
+        static object GetSampleValue(Type type)
+        {
+            // todo faker?
+            Type t = Nullable.GetUnderlyingType(type) ?? type;
+
+            return t switch
+            {
+                _ when t == typeof(string) => "Value",
+                _ when t == typeof(int) => 42,
+                _ => throw new NotSupportedException($"No fuzz input for {type}")
+            };
+        }
+
+        public static IEnumerable<object?[]> ValueForTypeTestData()
+        {
+            Type[] types = ConversionCapabilityHelper.WithNullableCounterparts([
+                typeof(string),
+                typeof(int)
+            ]);
+
+            foreach (Type type in types)
+            {
+                object value = GetSampleValue(type);
+                object?[] result = [type, value];
+                yield return result;
+            }
+        }
+        
         public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
         {
             Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
@@ -27,6 +55,7 @@ namespace Test.Unit.Core
 
                 ]
             );
+
             foreach (Type type in types)
             {
                 object? defaultValue = type.DefaultForType();
@@ -73,6 +102,20 @@ namespace Test.Unit.Core
             return methodInfo;
         }
         
+        [Fact]
+        public void Test_GetValue_ArgumentNullExceptionForNullDictionary()
+        {
+            Dictionary<string, object?>? target = null;
+            Assert.Throws<ArgumentNullException>(() => target!.GetValue<string>("some-key"));
+        }
+
+        [Fact]
+        public void Test_GetValue_ArgumentNullExceptionForNullKey()
+        {
+            Dictionary<string, object?> target = new();
+            Assert.Throws<ArgumentNullException>(() => target.GetValue<string>(null!));
+        }
+        
         [Theory]
         [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_NonExistingKeyReturnsDefaultValue(Type targetType, object? expected)
@@ -92,6 +135,19 @@ namespace Test.Unit.Core
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = null;
+            MethodInfo getValueMethod = GetValueMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
+        public void Test_GetValue_ExactMatchReturnsValue(Type targetType, object? expected)
+        {
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            dictionary[key] = expected;
             MethodInfo getValueMethod = GetValueMethod(targetType);
             object[] arguments = [ dictionary, key, true ];
             object? actual = getValueMethod?.Invoke(null, arguments);
