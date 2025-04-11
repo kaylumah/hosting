@@ -110,6 +110,26 @@ namespace Test.Unit.Core
             string expectedErrorMessage = $"Cannot convert value of key '{key}' from System.Int32 to IEnumerable<System.String>.";
             Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
         }
+        
+        [Theory]
+        [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
+        public void Test_GetValues_SingleConvertibleValueReturnsList(Type targetType, object? inputValue)
+        {
+            // Arrange
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            dictionary[key] = inputValue;
+
+            MethodInfo method = GetValuesMethod(targetType);
+            object? result = method.Invoke(null, [ dictionary, key, true ]);
+
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<System.Collections.IList>(result);
+
+            System.Collections.IList collection = (System.Collections.IList)result;
+            object? item = collection[0];
+            Assert.Equal(inputValue, item);
+        }
 
         public static IEnumerable<object?[]> GetEnumerableValueTestData()
         {

@@ -58,12 +58,9 @@ namespace System.Collections.Generic
                 return exactMatch;
             }
 
-            if (value is T singleValue)
-            {
-                List<T> result = new List<T>() { singleValue };
-                return result;
-            }
-
+            // if (value is IEnumerable enumerable)
+            // T? converted = item is null ? default : (T?)item.ConvertValue(typeof(T));
+            // Broaden support to any enumerable type (even ArrayList)
             if (value is IEnumerable<object> objectList)
             {
                 List<T> result = new List<T>();
@@ -78,8 +75,13 @@ namespace System.Collections.Generic
 
                 return result;
             }
+            
+            // Fallback: delegate to GetValue<T?> and wrap in list
+            T? singleValue = dictionary.GetValue<T>(key, caseInsensitive);
+            List<T?> single = [singleValue];
+            return single;
 
-            throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
+            // throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
         }
 
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value, bool caseInsensitive = true)
