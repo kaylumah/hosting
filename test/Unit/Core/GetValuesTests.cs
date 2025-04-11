@@ -127,12 +127,6 @@ namespace Test.Unit.Core
             Type valueType = value.GetType();
             bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
             Assert.True(isEnumerable);
-            
-            
-            // Assert.IsType(expectedEnumerableType, value);
-            
-            // bool isExpectedArray = value is Array array && array.GetType().GetElementType() == type;
-            // Assert.True(isExpectedArray);
 
             Dictionary<string, object?> dictionary = new();
             dictionary["some-key"] = value;
