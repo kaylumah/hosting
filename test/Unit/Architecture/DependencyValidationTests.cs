@@ -15,7 +15,7 @@ using Xunit;
 
 #nullable enable
 
-namespace Test.Unit.Core
+namespace Test.Unit.Architecture
 {
     public class ServiceDependencyValidatorOptions : ServiceProviderOptions
     {

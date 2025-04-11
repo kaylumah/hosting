@@ -7,7 +7,7 @@ using System.Globalization;
 using Guid = System.Guid;
 using Xunit;
 
-namespace Test.Unit
+namespace Test.Unit.Core
 {
     public class ConvertValueTests
     {
