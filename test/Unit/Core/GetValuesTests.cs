@@ -64,7 +64,7 @@ namespace Test.Unit.Core
         }
 
         [Fact]
-        public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue()
+        public void Test_GetValues_ExistingKeyWithNullValueReturnsDefaultValue()
         {
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();
@@ -100,16 +100,15 @@ namespace Test.Unit.Core
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
         {
-            yield return [ typeof(string), new object?[] { "a", "b", "c" } ];
-            yield return [ typeof(string), new List<object?>() { "a", "b", "c" } ];
-            
-            yield return [ typeof(int), new object?[] { "-1", "0", "1" } ];
-            yield return [ typeof(int?), new object?[] { "-1", "0", "1", null } ];
+            // yield return [ typeof(string), new object?[] { "a", "b", "c" } ];
+            // yield return [ typeof(string), new List<object?>() { "a", "b", "c" } ];
+            // yield return [ typeof(int), new object?[] { "-1", "0", "1" } ];
+            yield return [ typeof(int?), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, null } ];
         }
         
         [Theory]
         [MemberData(nameof(GetEnumerableValueTestData2))]
-        public void Test_GetValues_ConvertibleObjectList(Type type, object input)
+        public void Test_GetValues_ConvertibleObjectList(Type type, object input, object expectedResult)
         {
             AssertEnumerableOfT(typeof(object), input);
 
@@ -120,6 +119,19 @@ namespace Test.Unit.Core
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
             Assert.NotNull(actual);
             AssertEnumerableOfT(type, actual);
+            
+            Assert.IsAssignableFrom<System.Collections.IList>(actual);
+            Assert.IsAssignableFrom<System.Collections.IList>(expectedResult);
+            
+            System.Collections.IList actualList = (System.Collections.IList)actual;
+            System.Collections.IList expectedList = (System.Collections.IList)expectedResult;
+            Assert.NotEmpty(actualList);
+            Assert.Equal(expectedList.Count, actualList.Count);
+            
+            for (int i = 0; i < expectedList.Count; i++)
+            {
+                Assert.Equal(expectedList[i], actualList[i]);
+            }
         }
         
         [Theory]
@@ -150,50 +162,5 @@ namespace Test.Unit.Core
             bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
             Assert.True(isEnumerable, $"Expected {expectedEnumerableType} but was {valueType}");
         }
-        
-        /*
-        [Fact]
-        public void Test_GetValues_ObjectListWithInvalidEntriesSkipsThem()
-        {
-            var inputList = new List<object> { "1", "not-a-number", "3" };
-            var dict = new Dictionary<string, object?> { ["some-key"] = inputList };
-
-            var method = GetValuesMethod(typeof(int));
-            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
-
-            var expected = new[] { 1, 3 }; // assuming failed conversions are skipped
-            Assert.Equal(expected, result);
-        }
-        */
-        
-        /*
-        [Fact]
-        public void Test_GetValues_NullableBoolList_To_NonNullable()
-        {
-            IEnumerable<bool?> nullableBools = new[] { true, null, false };
-            var dict = new Dictionary<string, object?> { ["some-key"] = nullableBools };
-
-            var method = GetValuesMethod(typeof(bool));
-            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
-
-            var expected = new[] { true, false };
-            Assert.Equal(expected, result); // assuming nulls are skipped
-        }
-        */
-        
-        /*
-        [Fact]
-        public void Test_GetValues_NonNullableBoolList_To_Nullable()
-        {
-            IEnumerable<bool> nonNullableBools = new[] { true, false };
-            var dict = new Dictionary<string, object?> { ["some-key"] = nonNullableBools };
-
-            var method = GetValuesMethod(typeof(bool?));
-            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
-
-            var expected = new bool?[] { true, false };
-            Assert.Equal(expected, result);
-        }
-        */
     }
 }

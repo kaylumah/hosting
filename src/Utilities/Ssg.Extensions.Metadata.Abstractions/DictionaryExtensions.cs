@@ -63,14 +63,11 @@ namespace System.Collections.Generic
             // Broaden support to any enumerable type (even ArrayList)
             if (value is IEnumerable<object> objectList)
             {
-                List<T> result = new List<T>();
+                List<T?> result = new List<T?>();
                 foreach (object original in objectList)
                 {
                     T? converted = (T?)original.ConvertValue(typeof(T));
-                    if (converted != null)
-                    {
-                        result.Add(converted);
-                    }
+                    result.Add(converted);
                 }
 
                 return result;
