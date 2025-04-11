@@ -16,7 +16,8 @@ namespace System.Collections.Generic
 
             string lookupKey = dictionary.LookupKey(key, caseInsensitive);
 
-            if (!dictionary.TryGetValue(lookupKey, out object? value))
+            bool exists = dictionary.TryGetValue(lookupKey, out object? value);
+            if (!exists)
             {
                 return default;
             }
@@ -35,7 +36,7 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public static IEnumerable<T>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static IEnumerable<T?> GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
@@ -44,41 +45,35 @@ namespace System.Collections.Generic
 
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
-                return default;
+                return [];
             }
 
             if (value is null)
             {
-                return default;
+                return [];
             }
 
             if (value is IEnumerable<T> exactMatch)
             {
                 return exactMatch;
             }
-
-            if (value is T singleValue)
+            
+            if (value is IEnumerable enumerable and not string)
             {
-                List<T> result = new List<T>() { singleValue };
-                return result;
-            }
-
-            if (value is IEnumerable<object> objectList)
-            {
-                List<T> result = new List<T>();
-                foreach (object original in objectList)
+                List<T?> result = new List<T?>();
+                foreach (object original in enumerable)
                 {
                     T? converted = (T?)original.ConvertValue(typeof(T));
-                    if (converted != null)
-                    {
-                        result.Add(converted);
-                    }
+                    result.Add(converted);
                 }
 
                 return result;
             }
-
-            throw new InvalidOperationException($"Cannot convert value of key '{key}' from {value?.GetType()} to IEnumerable<{typeof(T)}>.");
+            
+            // Fallback: delegate to GetValue<T?> and wrap in list
+            T? singleValue = dictionary.GetValue<T>(key, caseInsensitive);
+            List<T?> single = [singleValue];
+            return single;
         }
 
         public static void SetValue(this Dictionary<string, object?> dictionary, string key, object? value, bool caseInsensitive = true)

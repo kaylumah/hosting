@@ -58,8 +58,8 @@ namespace Ssg.Extensions.Metadata.Abstractions
 
         protected List<string> GetStringValues(string key)
         {
-            IEnumerable<string>? values = _InternalData.GetValues<string>(key);
-            List<string> result = values?.ToList() ?? new List<string>();
+            IEnumerable<string?>? values = _InternalData.GetValues<string>(key);
+            List<string> result = values?.OfType<string>().ToList() ?? new List<string>();
             return result;
         }
 
