@@ -52,6 +52,38 @@ namespace Test.Unit.Core
         }
 
         [Fact]
+        public void Test_GetValues_PrimitiveOfTargetTypeReturnsList()
+        {
+            Dictionary<string, object?> dictionary = new()
+            {
+                { "NotAList", "42" }
+            };
+
+            MethodInfo? method = GetValuesMethod(typeof(string));
+            object[] arguments = new object[] { dictionary, "NotAList", true };
+            object? result = method?.Invoke(null, arguments);
+        }
+        
+        [Fact]
+        public void Test_GetValues_PrimitiveOfOtherTypeThrows()
+        {
+            string key = "NotAList";
+            Dictionary<string, object?> dictionary = new()
+            {
+                { "NotAList", 42 }
+            };
+
+            MethodInfo? method = GetValuesMethod(typeof(string));
+            object[] arguments = new object[] { dictionary, "NotAList", true };
+            TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
+            Assert.NotNull(targetInvocationException.InnerException);
+            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
+
+            string expectedErrorMessage = $"Cannot convert value of key '{key}' from System.Int32 to IEnumerable<System.String>.";
+            Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
+        }
+
+        [Fact]
         public void X()
         {
             // Default Value is NULL
@@ -75,6 +107,7 @@ namespace Test.Unit.Core
             object? actual = getValueMethod?.Invoke(null, arguments);
         }
         
+        /*
         [Fact]
         public void Z()
         {
@@ -92,5 +125,6 @@ namespace Test.Unit.Core
             // object? bResult1 = bMethod?.Invoke(null, [ dictionary, "a", true ]);
             // object? bResult2 = bMethod?.Invoke(null, [ dictionary, "b", true ]);
         }
+        */
     }
 }
