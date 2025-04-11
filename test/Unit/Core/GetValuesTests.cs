@@ -101,6 +101,9 @@ namespace Test.Unit.Core
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
         {
+            // Handles all other IEnumerables (non-exact)
+            // TODO consider merging with [MemberData(nameof(SharedTestData.ValuesForTypeTestData), MemberType = typeof(SharedTestData))]
+            
             yield return [ typeof(string), new object?[] { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
             yield return [ typeof(string), new List<object?>() { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
             
