@@ -59,8 +59,11 @@ namespace Test.Unit.Core
             Type targetType = typeof(string);
             MethodInfo getValueMethod = GetValuesMethod(targetType);
             object[] arguments = [ dictionary, key, true ];
-            object? actual = getValueMethod?.Invoke(null, arguments);
-            Assert.Null(actual);
+            object? result = getValueMethod?.Invoke(null, arguments);
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<System.Collections.IList>(result);
+            System.Collections.IList collection = (System.Collections.IList)result;
+            Assert.Empty(collection);
         }
 
         [Fact]
@@ -72,8 +75,11 @@ namespace Test.Unit.Core
             Type targetType = typeof(string);
             MethodInfo getValueMethod = GetValuesMethod(targetType);
             object[] arguments = [ dictionary, key, true ];
-            object? actual = getValueMethod?.Invoke(null, arguments);
-            Assert.Null(actual);
+            object? result = getValueMethod?.Invoke(null, arguments);
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<System.Collections.IList>(result);
+            System.Collections.IList collection = (System.Collections.IList)result;
+            Assert.Empty(collection);
         }
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData()

@@ -36,7 +36,7 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public static IEnumerable<T?>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static IEnumerable<T?> GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
@@ -45,12 +45,12 @@ namespace System.Collections.Generic
 
             if (!dictionary.TryGetValue(lookupKey, out object? value))
             {
-                return default;
+                return [];
             }
 
             if (value is null)
             {
-                return default;
+                return [];
             }
 
             if (value is IEnumerable<T> exactMatch)
