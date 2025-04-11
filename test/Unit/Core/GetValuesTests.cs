@@ -152,6 +152,11 @@ namespace Test.Unit.Core
                                         list.GetType().IsGenericType &&
                                         list.GetType().GetGenericTypeDefinition() == typeof(List<>) &&
                                         list.GetType().GetGenericArguments()[0] == type;
+            
+            /*
+             * Type genericIEnumerable = typeof(IEnumerable<>);
+               Type expectedEnumerableType = genericIEnumerable.MakeGenericType(targetType);
+             */
 
         }
         
