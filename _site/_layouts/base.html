@@ -217,66 +217,20 @@
         });
     }
 
-    function createAdFallback2() {
-        const wrapper = document.createElement("div");
-        wrapper.className = "bg-white rounded-2xl border border-gray-200 p-6 text-center";
-
-        const title = document.createElement("p");
-        title.className = "text-lg font-semibold text-gray-900";
-        title.textContent = "Ad blocking? It's okay.";
-
-        const description = document.createElement("p");
-        description.className = "text-gray-700 mb-4";
-        description.textContent = "Please share to support us:";
-
-        const shareRow = document.createElement("div");
-        shareRow.className = "flex justify-center gap-4";
-
-        const links = [
-            {
-                href: "https://www.facebook.com/sharer/sharer.php?u=YOUR_URL",
-                icon: "/assets/icons/facebook.svg",
-                alt: "Facebook"
-            },
-            {
-                href: "https://twitter.com/intent/tweet?url=YOUR_URL&text=Check%20this%20out!",
-                icon: "/assets/icons/twitter.svg",
-                alt: "Twitter"
-            },
-            {
-                href: "https://www.linkedin.com/sharing/share-offsite/?url=YOUR_URL",
-                icon: "/assets/icons/linkedin.svg",
-                alt: "LinkedIn"
-            },
-            {
-                href: "https://www.reddit.com/submit?url=YOUR_URL&title=Check%20this%20out!",
-                icon: "/assets/icons/reddit.svg",
-                alt: "Reddit"
-            }
-        ];
-
-        links.forEach(link => {
-            const a = document.createElement("a");
-            a.href = link.href;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            const img = document.createElement("img");
-            img.src = link.icon;
-            img.alt = link.alt;
-            img.className = "h-6 w-6";
-            a.appendChild(img);
-            shareRow.appendChild(a);
-        });
-
-        wrapper.appendChild(title);
-        wrapper.appendChild(description);
-        wrapper.appendChild(shareRow);
-
-        return wrapper;
-    }
-
     function createAdFallback() {
 
+        const url = encodeURIComponent(window.location.href);
+        const title = encodeURIComponent(document.title);
+        
+        console.log("original url", window.location.href);
+        console.log("encoded url", url);
+        
+        console.log("facebook", `https://www.facebook.com/sharer/sharer.php?u=${url}`);
+        console.log("twitter/x", `https://twitter.com/intent/tweet?url=${url}&text=${title}`);
+        console.log("linkedin", `https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+        console.log("reddit", `https://www.reddit.com/submit?url=${url}&title=${title}`);
+        console.log("email", `mailto:?subject=${title}&body=Check this out: ${url}`);
+        
         const supportLinks = [
             {
                 href: "https://www.buymeacoffee.com/kaylumah",
