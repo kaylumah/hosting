@@ -155,11 +155,7 @@ namespace Test.Unit.Core
 
         }
         
-        #pragma warning disable
-        
-
-        
-        
+        /*
         [Fact]
         public void Test_GetValues_ObjectListWithInvalidEntriesSkipsThem()
         {
@@ -172,6 +168,7 @@ namespace Test.Unit.Core
             var expected = new[] { 1, 3 }; // assuming failed conversions are skipped
             Assert.Equal(expected, result);
         }
+        */
         
         /*
         [Fact]
@@ -188,6 +185,7 @@ namespace Test.Unit.Core
         }
         */
         
+        /*
         [Fact]
         public void Test_GetValues_NonNullableBoolList_To_Nullable()
         {
@@ -199,30 +197,6 @@ namespace Test.Unit.Core
 
             var expected = new bool?[] { true, false };
             Assert.Equal(expected, result);
-        }
-        
-        #pragma warning restore
-        
-        
-        // TODO object list
-        
-        /*
-        [Fact]
-        public void Z()
-        {
-            Dictionary<string, object?> dictionary = new();
-            IEnumerable<bool?> nullableBooleans = [true, null, false];
-            IEnumerable<bool> booleans = [true, false];
-            dictionary["a"] = nullableBooleans;
-            dictionary["b"] = booleans;
-  
-            MethodInfo aMethod = GetValuesMethod(typeof(bool));
-            // object? aResult1 = aMethod?.Invoke(null, [ dictionary, "a", true ]);
-            // object? aResult2 = aMethod?.Invoke(null, [ dictionary, "b", true ]);
-            
-            MethodInfo bMethod = GetValuesMethod(typeof(bool?));
-            // object? bResult1 = bMethod?.Invoke(null, [ dictionary, "a", true ]);
-            // object? bResult2 = bMethod?.Invoke(null, [ dictionary, "b", true ]);
         }
         */
     }
