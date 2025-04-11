@@ -175,6 +175,25 @@
     let lastWidth = window.innerWidth;
     let lastHeight = window.innerHeight;
 
+    function insertSecondaryAd() {
+        if (window.innerWidth < 1024) return;
+
+        const sidebar = document.querySelector("aside");
+        if (!sidebar) return;
+
+        const sidebarHeight = sidebar.offsetHeight;
+        console.log("sidebarHeight", sidebarHeight);
+
+        const widgets = Array.from(document.querySelectorAll("aside > .bg-white, aside > ins.adsbygoogle"));
+        const widgetsTotalHeight = widgets.reduce((sum, el) => sum + el.offsetHeight, 0);
+        console.log("widgets", widgets);
+        console.log("widgetsTotalHeight", widgetsTotalHeight);
+
+        if (sidebarHeight - widgetsTotalHeight > 400) {
+            console.log("we have space for more ads")
+        }
+    }
+
     window.addEventListener("resize", function() {
         clearTimeout(window.adResizeTimer);
 
@@ -194,6 +213,7 @@
     });
     
     function refreshAds() {
+        console.log("refreshAds");
         let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
         adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(oldAd => {
             const allowedAttributes = ["class", "style", "data-ad-client", "data-ad-slot", "data-ad-format", "data-full-width-responsive"];
@@ -334,6 +354,7 @@
             script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130074590591386";
 
             script.onload = function () {
+                insertSecondaryAd();
                 let adElements = Array.from(document.querySelectorAll(".adsbygoogle"));
                 adElements.filter(el => el.hasAttribute("data-ad-slot")).forEach(ad => {
                     checkAdStatus(ad);
