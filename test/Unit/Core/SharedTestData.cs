@@ -162,5 +162,46 @@ namespace Test.Unit.Core
             yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
             yield return [typeof(CultureInfo), "nl", new CultureInfo("nl")];
         }
+        
+        public static IEnumerable<object?[]> FromObjectValueToTypeTestData()
+        {
+            yield return [typeof(int), DayOfWeek.Sunday, 0];
+
+            // Int conversions
+            yield return [typeof(double), 42, 42.0];
+            yield return [typeof(bool), 0, false];
+            yield return [typeof(bool), 1, true];
+            yield return [typeof(long), int.MinValue, (long)int.MinValue];
+            yield return [typeof(long), int.MaxValue, (long)int.MaxValue];
+            yield return [typeof(string), 123, "123"];
+
+            // Double conversions
+            yield return [typeof(int), 3.14, 3];
+            yield return [typeof(int), 3.95, 4];
+            yield return [typeof(float), 3.14, 3.14f];
+            yield return [typeof(decimal), 3.14, (decimal)3.14];
+            yield return [typeof(string), 3.14, "3.14"];
+
+            // Bool conversions
+            yield return [typeof(string), true, "True"];
+            yield return [typeof(string), false, "False"];
+
+            // DateTime conversions
+#pragma warning disable RS0030
+            yield return [typeof(string), new DateTime(2024, 2, 1, 12, 34, 56, DateTimeKind.Utc), "02/01/2024 12:34:56"];
+#pragma warning restore RS0030
+
+            // Guid conversions (not supported)
+            Guid g = Guid.Parse("550e8400-e29b-41d4-a716-446655440000");
+            yield return [typeof(string), g, "550e8400-e29b-41d4-a716-446655440000"];
+
+            /*
+               // Int to nullable int
+               yield return [typeof(int?), 42, 42];
+
+               // Bool to nullable bool
+               yield return [typeof(bool?), true, true];
+             */
+        }
     }
 }
