@@ -321,6 +321,7 @@
     }
     
     function replaceWithFallback(ad) {
+        console.log("ad-fallback", ad);
         // (ad.tagName === "INS" && ad.hasAttribute("data-ad-slot") && ad.hasAttribute("data-ad-client"));
         // ad.style.display = "none";
         const fallback = createAdFallback();
