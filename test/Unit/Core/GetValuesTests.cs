@@ -87,6 +87,9 @@ namespace Test.Unit.Core
             MethodInfo? method = GetValuesMethod(typeof(string));
             object[] arguments = new object[] { dictionary, "NotAList", true };
             object? result = method?.Invoke(null, arguments);
+            
+            string[] expected = new[] { "42" };
+            Assert.Equal(expected, result);
         }
         
         [Fact]
@@ -108,7 +111,80 @@ namespace Test.Unit.Core
             Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
         }
         
-        // TODO exact match
+        [Fact]
+        public void Test_GetValues_ExactEnumerableMatchReturnsValue()
+        {
+            object expected = new string[] { "one", "two", "three" };
+            Type expectedElementType = typeof(string); // or any other type
+            bool isExpectedArray = expected is Array array && array.GetType().GetElementType() == expectedElementType;
+            
+            
+            Dictionary<string, object?> dict = new Dictionary<string, object?> { ["some-key"] = expected };
+
+            MethodInfo method = GetValuesMethod(typeof(string));
+            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
+
+            Assert.Equal(expected, result);
+        }
+        
+#pragma warning disable
+        [Fact]
+        public void Test_GetValues_ConvertibleObjectList()
+        {
+            var inputList = new List<object> { "1", "2", "3" };
+            var dict = new Dictionary<string, object?> { ["some-key"] = inputList };
+
+            var method = GetValuesMethod(typeof(int));
+            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
+
+            var expected = new[] { 1, 2, 3 };
+            Assert.Equal(expected, result);
+        }
+        
+        [Fact]
+        public void Test_GetValues_ObjectListWithInvalidEntriesSkipsThem()
+        {
+            var inputList = new List<object> { "1", "not-a-number", "3" };
+            var dict = new Dictionary<string, object?> { ["some-key"] = inputList };
+
+            var method = GetValuesMethod(typeof(int));
+            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
+
+            var expected = new[] { 1, 3 }; // assuming failed conversions are skipped
+            Assert.Equal(expected, result);
+        }
+        
+        /*
+        [Fact]
+        public void Test_GetValues_NullableBoolList_To_NonNullable()
+        {
+            IEnumerable<bool?> nullableBools = new[] { true, null, false };
+            var dict = new Dictionary<string, object?> { ["some-key"] = nullableBools };
+
+            var method = GetValuesMethod(typeof(bool));
+            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
+
+            var expected = new[] { true, false };
+            Assert.Equal(expected, result); // assuming nulls are skipped
+        }
+        */
+        
+        [Fact]
+        public void Test_GetValues_NonNullableBoolList_To_Nullable()
+        {
+            IEnumerable<bool> nonNullableBools = new[] { true, false };
+            var dict = new Dictionary<string, object?> { ["some-key"] = nonNullableBools };
+
+            var method = GetValuesMethod(typeof(bool?));
+            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
+
+            var expected = new bool?[] { true, false };
+            Assert.Equal(expected, result);
+        }
+        
+        #pragma warning restore
+        
+        
         // TODO object list
         
         /*
