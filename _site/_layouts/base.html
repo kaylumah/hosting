@@ -320,7 +320,7 @@
         if (window.innerWidth < 1024) return;
 
         const sidebar = document.querySelector("aside");
-        if (!sidebar) return;
+        if (!sidebar || document.getElementById("secondary-ad-wrapper")) return;
 
         const sidebarHeight = sidebar.offsetHeight;
 
@@ -330,6 +330,7 @@
         if (sidebarHeight - widgetsTotalHeight > 400) {
             const lastWidget = widgets[widgets.length - 1];
             const wrapper = document.createElement("div");
+            wrapper.id = "secondary-ad-wrapper";
             wrapper.className = "hidden lg:block";
 
             const newAd = document.createElement("ins");
