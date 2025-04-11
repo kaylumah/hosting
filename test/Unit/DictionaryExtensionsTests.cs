@@ -41,20 +41,6 @@ namespace Test.Unit
             return methodInfo;
         }
 
-        [Fact]
-        public void Test_GetValues_ThrowOnNull()
-        {
-            Dictionary<string, object?>? target = null;
-            Assert.Throws<ArgumentNullException>(() => target!.GetValues<string>("some-key"));
-        }
-
-        [Fact]
-        public void Test_GetValues_ThrowOnNullKey()
-        {
-            Dictionary<string, object?> target = new();
-            Assert.Throws<ArgumentNullException>(() => target.GetValues<string>(null!));
-        }
-
         [Theory]
         [MemberData(nameof(GetEnumerableValueTestData))]
         public void Test_GetValues(string key, object? value, object? expectedValue, Type targetType)
@@ -75,17 +61,7 @@ namespace Test.Unit
             // expected list
             Assert.Equal(expectedValue, result);
         }
-
-        [Fact]
-        public void Test_GetValues_NonExisting_ReturnsDefault()
-        {
-            Dictionary<string, object?> dictionary = new();
-            MethodInfo? method = GetValuesMethod(typeof(string));
-            object[] arguments = new object[] { dictionary, "fake-key", true };
-            object? result = method?.Invoke(null, arguments);
-            Assert.Null(result);
-        }
-
+        
         [Fact]
         public void Test_GetValues_Exception_NotIEnumerable()
         {

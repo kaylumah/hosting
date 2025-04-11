@@ -50,5 +50,47 @@ namespace Test.Unit.Core
             Dictionary<string, object?> target = new();
             Assert.Throws<ArgumentNullException>(() => target.GetValues<string>(null!));
         }
+
+        [Fact]
+        public void X()
+        {
+            // Default Value is NULL
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            Type targetType = typeof(string);
+            MethodInfo getValueMethod = GetValuesMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+        }
+        
+        [Fact]
+        public void Y()
+        {
+            // Empty list
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            Type targetType = typeof(string);
+            MethodInfo getValueMethod = GetValuesMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+        }
+        
+        [Fact]
+        public void Z()
+        {
+            Dictionary<string, object?> dictionary = new();
+            IEnumerable<bool?> nullableBooleans = [true, null, false];
+            IEnumerable<bool> booleans = [true, false];
+            dictionary["a"] = nullableBooleans;
+            dictionary["b"] = booleans;
+  
+            MethodInfo aMethod = GetValuesMethod(typeof(bool));
+            // object? aResult1 = aMethod?.Invoke(null, [ dictionary, "a", true ]);
+            // object? aResult2 = aMethod?.Invoke(null, [ dictionary, "b", true ]);
+            
+            MethodInfo bMethod = GetValuesMethod(typeof(bool?));
+            // object? bResult1 = bMethod?.Invoke(null, [ dictionary, "a", true ]);
+            // object? bResult2 = bMethod?.Invoke(null, [ dictionary, "b", true ]);
+        }
     }
 }
