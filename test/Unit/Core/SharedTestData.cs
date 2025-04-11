@@ -45,8 +45,29 @@ namespace Test.Unit.Core
             foreach (Type type in types)
             {
                 object[] values = GetSampleValues(type);
-                object?[] result = [type, values];
+                
+                /*
+                Array typedArray = Array.CreateInstance(type, values.Length);
+                for (int i = 0; i < values.Length; i++)
+                {
+                    typedArray.SetValue(values[i], i);
+                }
+
+                object?[] result = [type, typedArray];
                 yield return result;
+                */
+                
+                Type listType = typeof(List<>).MakeGenericType(type);
+                System.Collections.IList typedList = (System.Collections.IList)Activator.CreateInstance(listType)!;
+                foreach (object? value in values)
+                {
+                    typedList.Add(value);
+                }
+    
+                yield return [ type, typedList ];
+
+                // object?[] result = [type, values];
+                // yield return result;
             }
         }
 

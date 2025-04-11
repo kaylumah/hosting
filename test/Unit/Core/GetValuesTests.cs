@@ -81,17 +81,9 @@ namespace Test.Unit.Core
             System.Collections.IList collection = (System.Collections.IList)result;
             Assert.Empty(collection);
         }
-        
-        public static IEnumerable<object?[]> GetEnumerableValueTestData()
-        {
-            yield return [ typeof(string), Array.Empty<string>() ];
-            yield return [ typeof(string), new string[] { "a", "b", "c" } ];
-            yield return [ typeof(string), new List<string> { "a", "b", "c" } ];
-        }
 
         [Theory]
-        [MemberData(nameof(GetEnumerableValueTestData))]
-        // [MemberData(nameof(SharedTestData.ValuesForTypeTestData), MemberType = typeof(SharedTestData))]
+        [MemberData(nameof(SharedTestData.ValuesForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
         {
             AssertEnumerableOfT(type, value);
