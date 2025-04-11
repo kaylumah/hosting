@@ -36,7 +36,7 @@ namespace System.Collections.Generic
             return result;
         }
 
-        public static IEnumerable<T>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
+        public static IEnumerable<T?>? GetValues<T>(this Dictionary<string, object?> dictionary, string key, bool caseInsensitive = true)
         {
             ArgumentNullException.ThrowIfNull(dictionary);
             ArgumentNullException.ThrowIfNull(key);
