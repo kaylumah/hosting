@@ -67,16 +67,6 @@ namespace Test.Unit.Core
     
     public class GetValueTests
     {
-        // Exact Type Match (string -> string)
-        // caseInsensitive: true
-        // caseInsensitive: false
-        // from string, from int, etc
-        // Missing Key
-        // NullValue for Key
-        // Datetime -> Guid?
-        // notabool -> bool bool?
-
-        
         static readonly ConcurrentDictionary<Type, MethodInfo> _GetValueMethods;
         static readonly MethodInfo _GetValueMethod;
 
