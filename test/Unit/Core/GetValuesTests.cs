@@ -100,15 +100,14 @@ namespace Test.Unit.Core
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
         {
-            // yield return [ typeof(string), new object?[] { "a", "b", "c" } ];
-            // yield return [ typeof(string), new List<object?>() { "a", "b", "c" } ];
+            yield return [ typeof(string), new object?[] { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
+            yield return [ typeof(string), new List<object?>() { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
             
-            // yield return [ typeof(int), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, 0 } ];
-            // yield return [ typeof(int?), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, null } ];
+            yield return [ typeof(int), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, 0 } ];
+            yield return [ typeof(int?), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, null } ];
             
             yield return [ typeof(int?), new List<int> { 1, 2, 3 }, new int?[] { 1, 2, 3 } ];
 
-            // ArrayList to int?
             System.Collections.ArrayList arrayList = new System.Collections.ArrayList { "1", "2", null };
             yield return [ typeof(int?), arrayList, new int?[] { 1, 2, null } ];
         }
@@ -117,13 +116,12 @@ namespace Test.Unit.Core
         [MemberData(nameof(GetEnumerableValueTestData2))]
         public void Test_GetValues_ConvertibleObjectList(Type type, object input, object expectedResult)
         {
-            // AssertEnumerableOfT(typeof(object), input);
-
+            string key = "some-key";
             Dictionary<string, object?> dictionary = new();
-            dictionary["some-key"] = input;
+            dictionary[key] = input;
             
             MethodInfo method = GetValuesMethod(type);
-            object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+            object? actual = method.Invoke(null, [ dictionary, key, true ]);
             Assert.NotNull(actual);
             AssertEnumerableOfT(type, actual);
             
@@ -145,7 +143,6 @@ namespace Test.Unit.Core
         [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValues_SingleConvertibleValueReturnsList(Type targetType, object? inputValue)
         {
-            // Arrange
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = inputValue;
