@@ -52,7 +52,7 @@ namespace Test.Unit.Core
         }
         
         [Theory]
-        [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
+        [MemberData(nameof(SharedTestData.DefaultValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_NonExistingKeyReturnsDefaultValue(Type targetType, object? expected)
         {
             string key = "some-key";
@@ -64,7 +64,7 @@ namespace Test.Unit.Core
         }
         
         [Theory]
-        [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
+        [MemberData(nameof(SharedTestData.DefaultValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             string key = "some-key";

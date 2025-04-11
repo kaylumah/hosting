@@ -163,7 +163,7 @@ namespace Test.Unit.Core
         }
 
         [Theory]
-        [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
+        [MemberData(nameof(SharedTestData.DefaultValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_ConvertValue_NullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             object? actual = ObjectExtensions.ConvertValue(null, targetType);
