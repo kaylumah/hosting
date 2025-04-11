@@ -14,7 +14,7 @@ using Xunit;
 using Xunit.Abstractions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-namespace Test.Unit
+namespace Test.Unit.Core
 {
     public abstract class StronglyTypedIdTests<TStrongTypedId, TPrimitive>
         where TStrongTypedId : struct

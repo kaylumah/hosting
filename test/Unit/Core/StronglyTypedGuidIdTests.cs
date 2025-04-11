@@ -8,7 +8,7 @@ using Bogus;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Test.Unit
+namespace Test.Unit.Core
 {
     public class StronglyTypedGuidIdTests : StronglyTypedIdTests<TestGuidId, Guid>
     {
