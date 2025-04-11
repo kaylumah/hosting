@@ -141,6 +141,7 @@ namespace Test.Unit.Core
         {
             // Type of INT throws
             yield return [ typeof(string), new object[] { "a", "b", "c" } ];
+            yield return [ typeof(int), new object[] { "-1", "0", "1" } ];
         }
         
         [Theory]
