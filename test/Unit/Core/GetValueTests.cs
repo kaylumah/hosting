@@ -75,7 +75,7 @@ namespace Test.Unit.Core
         
         [Theory]
         [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
-        public void Test_GetValue_NullValueReturnsDefaultValue(Type targetType, object? expected)
+        public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();

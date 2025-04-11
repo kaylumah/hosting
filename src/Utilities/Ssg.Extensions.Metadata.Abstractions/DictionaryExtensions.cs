@@ -16,7 +16,8 @@ namespace System.Collections.Generic
 
             string lookupKey = dictionary.LookupKey(key, caseInsensitive);
 
-            if (!dictionary.TryGetValue(lookupKey, out object? value))
+            bool exists = dictionary.TryGetValue(lookupKey, out object? value);
+            if (!exists)
             {
                 return default;
             }
