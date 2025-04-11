@@ -11,29 +11,6 @@ namespace Test.Unit.Core
 {
     public class ConvertValueTests
     {
-        public static IEnumerable<object?[]> DefaultValueForNullValueTestData()
-        {
-            Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
-                [
-                    typeof(string),
-                    typeof(int),
-                    typeof(bool),
-                    typeof(Guid),
-#pragma warning disable RS0030
-                    typeof(DateTime),
-#pragma warning restore RS0030
-                    typeof(Uri)
-
-                ]
-            );
-            foreach (Type type in types)
-            {
-                object? defaultValue = type.DefaultForType();
-                object?[] result = [type, defaultValue];
-                yield return result;
-            }
-        }
-
         public static IEnumerable<object?[]> DefaultValueForEmptyStringValueTestData()
         {
             string[] values =
@@ -186,7 +163,7 @@ namespace Test.Unit.Core
         }
 
         [Theory]
-        [MemberData(nameof(DefaultValueForNullValueTestData))]
+        [MemberData(nameof(SharedTestData.DefaultValueForNullValueTestData), MemberType = typeof(SharedTestData))]
         public void Test_ConvertValue_NullValueReturnsDefaultValue(Type targetType, object? expected)
         {
             object? actual = ObjectExtensions.ConvertValue(null, targetType);
