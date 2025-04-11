@@ -21,18 +21,25 @@ namespace Test.Unit.Core
             };
         }
         
-        static object[] GetSampleValues(Type type)
+        static object?[] GetSampleValues(Type type)
         {
-            // todo faker?
             Type t = Nullable.GetUnderlyingType(type) ?? type;
 
-            return t switch
+            List<object?> values = t switch
             {
                 _ when t == typeof(string) => [ "Value" ],
-                _ when t == typeof(int) => [ -1, 0 , 1 ],
+                _ when t == typeof(int) => [ -1, 0, 1 ],
                 _ when t == typeof(Guid) => [ Guid.Empty ],
                 _ => throw new NotSupportedException($"No fuzz input for {type}")
             };
+
+            if (Nullable.GetUnderlyingType(type) != null)
+            {
+                values.Add(null);
+            }
+
+            object?[] result = values.ToArray();
+            return result;
         }
         
         public static IEnumerable<object?[]> ValuesForTypeTestData()
@@ -44,7 +51,7 @@ namespace Test.Unit.Core
 
             foreach (Type type in types)
             {
-                object[] values = GetSampleValues(type);
+                object?[] values = GetSampleValues(type);
                 
                 /*
                 Array typedArray = Array.CreateInstance(type, values.Length);
