@@ -58,14 +58,14 @@ namespace Test.Unit
         }
 
         [Fact]
-        public void Test_GetValue_ThrowOnNull()
+        public void Test_GetValue_ArgumentNullExceptionForNullDictionary()
         {
             Dictionary<string, object?>? target = null;
             Assert.Throws<ArgumentNullException>(() => target!.GetValue<string>("some-key"));
         }
 
         [Fact]
-        public void Test_GetValue_ThrowOnNullKey()
+        public void Test_GetValue_ArgumentNullExceptionForNullKey()
         {
             Dictionary<string, object?> target = new();
             Assert.Throws<ArgumentNullException>(() => target.GetValue<string>(null!));
