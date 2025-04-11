@@ -20,6 +20,35 @@ namespace Test.Unit.Core
                 _ => throw new NotSupportedException($"No fuzz input for {type}")
             };
         }
+        
+        static object[] GetSampleValues(Type type)
+        {
+            // todo faker?
+            Type t = Nullable.GetUnderlyingType(type) ?? type;
+
+            return t switch
+            {
+                _ when t == typeof(string) => [ "Value" ],
+                _ when t == typeof(int) => [ -1, 0 , 1 ],
+                _ when t == typeof(Guid) => [ Guid.Empty ],
+                _ => throw new NotSupportedException($"No fuzz input for {type}")
+            };
+        }
+        
+        public static IEnumerable<object?[]> ValuesForTypeTestData()
+        {
+            Type[] types = ConversionCapabilityHelper.WithNullableCounterparts([
+                typeof(string),
+                typeof(int)
+            ]);
+
+            foreach (Type type in types)
+            {
+                object[] values = GetSampleValues(type);
+                object?[] result = [type, values];
+                yield return result;
+            }
+        }
 
         public static IEnumerable<object?[]> ValueForTypeTestData()
         {

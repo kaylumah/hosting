@@ -91,6 +91,7 @@ namespace Test.Unit.Core
 
         [Theory]
         [MemberData(nameof(GetEnumerableValueTestData))]
+        // [MemberData(nameof(SharedTestData.ValuesForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
         {
             AssertEnumerableOfT(type, value);
