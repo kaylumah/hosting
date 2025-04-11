@@ -203,16 +203,8 @@
                     newAd.setAttribute(attr, oldAd.getAttribute(attr));
                 }
             });
-            
-            if (oldAd.nextElementSibling) {
-                oldAd.nextElementSibling.before(newAd);
-            } else if (oldAd.previousElementSibling) {
-                oldAd.previousElementSibling.after(newAd);
-            } else if (oldAd.parentElement) {
-                oldAd.parentElement.appendChild(newAd);
-            }
 
-            oldAd.remove();
+            oldAd.replaceWith(newAd);
             checkAdStatus(newAd);
         });
     }
