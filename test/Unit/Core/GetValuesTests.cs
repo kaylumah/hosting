@@ -110,24 +110,31 @@ namespace Test.Unit.Core
             string expectedErrorMessage = $"Cannot convert value of key '{key}' from System.Int32 to IEnumerable<System.String>.";
             Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
         }
-        
-        [Fact]
-        public void Test_GetValues_ExactEnumerableMatchReturnsValue()
+
+        public static IEnumerable<object?[]> GetEnumerableValueTestData()
         {
-            object expected = new string[] { "one", "two", "three" };
-            Type expectedElementType = typeof(string); // or any other type
-            bool isExpectedArray = expected is Array array && array.GetType().GetElementType() == expectedElementType;
-            
-            
-            Dictionary<string, object?> dict = new Dictionary<string, object?> { ["some-key"] = expected };
-
-            MethodInfo method = GetValuesMethod(typeof(string));
-            object? result = method.Invoke(null, new object[] { dict, "some-key", true });
-
-            Assert.Equal(expected, result);
+            yield return [ typeof(string), new string[] { "a", "b", "c" } ];
         }
         
-#pragma warning disable
+        [Theory]
+        [MemberData(nameof(GetEnumerableValueTestData))]
+        public void Test_GetValues_ExactEnumerableMatchReturnsValue(Type type, object value)
+        {
+            bool isExpectedArray = value is Array array && array.GetType().GetElementType() == type;
+            Assert.True(isExpectedArray);
+
+            Dictionary<string, object?> dictionary = new();
+            dictionary["some-key"] = value;
+            
+            MethodInfo method = GetValuesMethod(typeof(string));
+            object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+
+            Assert.Equal(value, actual);
+        }
+        
+        #pragma warning disable
+        
+
         [Fact]
         public void Test_GetValues_ConvertibleObjectList()
         {
