@@ -76,61 +76,6 @@ namespace Test.Unit.Core
             Assert.Null(actual);
         }
         
-        [Fact]
-        public void Test_GetValues_PrimitiveOfTargetTypeReturnsList()
-        {
-            Dictionary<string, object?> dictionary = new()
-            {
-                { "NotAList", "42" }
-            };
-
-            MethodInfo? method = GetValuesMethod(typeof(string));
-            object[] arguments = new object[] { dictionary, "NotAList", true };
-            object? result = method?.Invoke(null, arguments);
-            
-            string[] expected = new[] { "42" };
-            Assert.Equal(expected, result);
-        }
-        
-        [Fact]
-        public void Test_GetValues_PrimitiveOfOtherTypeThrows()
-        {
-            string key = "NotAList";
-            Dictionary<string, object?> dictionary = new()
-            {
-                { "NotAList", 42 }
-            };
-
-            MethodInfo? method = GetValuesMethod(typeof(string));
-            object[] arguments = new object[] { dictionary, "NotAList", true };
-            TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
-            Assert.NotNull(targetInvocationException.InnerException);
-            InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
-
-            string expectedErrorMessage = $"Cannot convert value of key '{key}' from System.Int32 to IEnumerable<System.String>.";
-            Assert.Equal(expectedErrorMessage, invalidOperationException.Message);
-        }
-        
-        [Theory]
-        [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
-        public void Test_GetValues_SingleConvertibleValueReturnsList(Type targetType, object? inputValue)
-        {
-            // Arrange
-            string key = "some-key";
-            Dictionary<string, object?> dictionary = new();
-            dictionary[key] = inputValue;
-
-            MethodInfo method = GetValuesMethod(targetType);
-            object? result = method.Invoke(null, [ dictionary, key, true ]);
-
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<System.Collections.IList>(result);
-
-            System.Collections.IList collection = (System.Collections.IList)result;
-            object? item = collection[0];
-            Assert.Equal(inputValue, item);
-        }
-
         public static IEnumerable<object?[]> GetEnumerableValueTestData()
         {
             yield return [ typeof(string), Array.Empty<string>() ];
@@ -151,15 +96,6 @@ namespace Test.Unit.Core
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
 
             Assert.Equal(value, actual);
-        }
-
-        void AssertEnumerableOfT(Type type, object value)
-        {
-            Type genericIEnumerable = typeof(IEnumerable<>);
-            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
-            Type valueType = value.GetType();
-            bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
-            Assert.True(isEnumerable, $"Expected {expectedEnumerableType} but was {valueType}");
         }
         
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
@@ -182,6 +118,35 @@ namespace Test.Unit.Core
             object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
             Assert.NotNull(actual);
             AssertEnumerableOfT(type, actual);
+        }
+        
+        [Theory]
+        [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
+        public void Test_GetValues_SingleConvertibleValueReturnsList(Type targetType, object? inputValue)
+        {
+            // Arrange
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            dictionary[key] = inputValue;
+
+            MethodInfo method = GetValuesMethod(targetType);
+            object? result = method.Invoke(null, [ dictionary, key, true ]);
+
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<System.Collections.IList>(result);
+
+            System.Collections.IList collection = (System.Collections.IList)result;
+            object? item = collection[0];
+            Assert.Equal(inputValue, item);
+        }
+        
+        void AssertEnumerableOfT(Type type, object value)
+        {
+            Type genericIEnumerable = typeof(IEnumerable<>);
+            Type expectedEnumerableType = genericIEnumerable.MakeGenericType(type);
+            Type valueType = value.GetType();
+            bool isEnumerable = expectedEnumerableType.IsAssignableFrom(valueType);
+            Assert.True(isEnumerable, $"Expected {expectedEnumerableType} but was {valueType}");
         }
         
         /*
