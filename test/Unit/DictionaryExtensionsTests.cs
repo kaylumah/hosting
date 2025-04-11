@@ -16,36 +16,18 @@ namespace Test.Unit
     
     public class DictionaryExtensionsTests
     {
-        static readonly MethodInfo _GetValueMethod;
         static readonly MethodInfo _GetValuesMethod;
-        static readonly ConcurrentDictionary<Type, MethodInfo> _GetValueMethods;
         static readonly ConcurrentDictionary<Type, MethodInfo> _GetValuesMethods;
 
         static DictionaryExtensionsTests()
         {
             Type type = typeof(DictionaryExtensions);
 
-            _GetValueMethod = type.GetMethod("GetValue")!;
-            Debug.Assert(_GetValueMethod != null);
-
             _GetValuesMethod = type.GetMethod("GetValues")!;
             Debug.Assert(_GetValuesMethod != null);
 
-            _GetValueMethods = new();
             _GetValuesMethods = new();
-            GetValueMethod(typeof(string));
             GetValuesMethod(typeof(string));
-        }
-
-        static MethodInfo GetValueMethod(Type target)
-        {
-            MethodInfo methodInfo = _GetValueMethods.GetOrAdd(target, (cacheKey) =>
-            {
-                MethodInfo result = _GetValueMethod.MakeGenericMethod(cacheKey);
-                return result;
-            });
-
-            return methodInfo;
         }
 
         static MethodInfo GetValuesMethod(Type target)
@@ -57,72 +39,6 @@ namespace Test.Unit
             });
 
             return methodInfo;
-        }
-
-        [Fact]
-        public void Test_GetValue_ArgumentNullExceptionForNullDictionary()
-        {
-            Dictionary<string, object?>? target = null;
-            Assert.Throws<ArgumentNullException>(() => target!.GetValue<string>("some-key"));
-        }
-
-        [Fact]
-        public void Test_GetValue_ArgumentNullExceptionForNullKey()
-        {
-            Dictionary<string, object?> target = new();
-            Assert.Throws<ArgumentNullException>(() => target.GetValue<string>(null!));
-        }
-
-        
-        
-        
-        
-        [Theory]
-        [MemberData(nameof(GetValueTestData))]
-        public void Test_GetValue(string key, object? value, object? expectedValue, Type targetType)
-        {
-            Dictionary<string, object?> dictionary = new();
-            dictionary.Add(key, value);
-
-            MethodInfo method = GetValueMethod(targetType);
-            object[] arguments = new object[] { dictionary, key, true };
-            object? result = method?.Invoke(null, arguments);
-            Assert.Equal(expectedValue, result);
-        }
-
-        [Theory]
-        [InlineData(typeof(string), null)]
-        [InlineData(typeof(int), 0)]
-        [InlineData(typeof(bool), false)]
-        public void Test_GetValue_NULL_ReturnsDefault(Type targetType, object? expectedValue)
-        {
-            string key = "my-key";
-            Dictionary<string, object?> dictionary = new()
-            {
-                { key, null }
-            };
-            MethodInfo method = GetValueMethod(targetType);
-            object[] arguments = new object[] { dictionary, key, true };
-            object? result = method?.Invoke(null, arguments);
-            Assert.Equal(expectedValue, result);
-        }
-
-        [Theory]
-        [InlineData(typeof(string), null)]
-        [InlineData(typeof(int), 0)]
-        [InlineData(typeof(bool), false)]
-        public void Test_GetValue_NonExisting_ReturnsDefault(Type targetType, object? expectedValue)
-        {
-            string key = "my-key";
-            Dictionary<string, object?> dictionary = new()
-            {
-                { key, null }
-            };
-            MethodInfo method = GetValueMethod(targetType);
-            string searchKey = key + "-fake";
-            object[] arguments = new object[] { dictionary, searchKey, true };
-            object? result = method?.Invoke(null, arguments);
-            Assert.Equal(expectedValue, result);
         }
 
         [Fact]
@@ -183,23 +99,6 @@ namespace Test.Unit
             TargetInvocationException targetInvocationException = Assert.Throws<TargetInvocationException>(() => method?.Invoke(null, arguments));
             Assert.NotNull(targetInvocationException.InnerException);
             InvalidOperationException invalidOperationException = Assert.IsType<InvalidOperationException>(targetInvocationException.InnerException);
-        }
-
-        public static IEnumerable<object[]> GetValueTestData()
-        {
-            // Considerations for later
-            // - GetValues supports single to List, should we offer the reverse?
-            // - Values with spaces "  42  "
-            // - Values with mixed-casing "TrUe"
-            // - Boundary values, int.MinValue
-
-            yield return new object[] { "stringValue", "Hello World", "Hello World", typeof(string) };
-            yield return new object[] { "intValue", 42, 42, typeof(int) };
-            yield return new object[] { "boolTrueValue", true, true, typeof(bool) };
-            yield return new object[] { "boolFalseValue", false, false, typeof(bool) };
-            yield return new object[] { "intAsStringValue", "42", 42, typeof(int) };
-            yield return new object[] { "boolTrueAsStringValue", "true", true, typeof(bool) };
-            yield return new object[] { "boolTrueAsStringValue", "false", false, typeof(bool) };
         }
 
         public static IEnumerable<object?[]> GetEnumerableValueTestData()
