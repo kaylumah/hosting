@@ -10,8 +10,6 @@ using Xunit;
 
 namespace Test.Unit.Core
 {
-    // TODO value conversion
-    
     public class GetValueTests
     {
         static readonly ConcurrentDictionary<Type, MethodInfo> _GetValueMethods;
@@ -86,6 +84,20 @@ namespace Test.Unit.Core
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = expected;
             MethodInfo getValueMethod = GetValueMethod(targetType);
+            object[] arguments = [ dictionary, key, true ];
+            object? actual = getValueMethod?.Invoke(null, arguments);
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [MemberData(nameof(SharedTestData.FromObjectValueToTypeTestData), MemberType = typeof(SharedTestData))]
+        [MemberData(nameof(SharedTestData.FromStringValueToTypeTestData), MemberType = typeof(SharedTestData))]
+        public void Test_GetValue_ReturnsConvertValue(Type type, object input, object expected)
+        {
+            string key = "some-key";
+            Dictionary<string, object?> dictionary = new();
+            dictionary[key] = input;
+            MethodInfo getValueMethod = GetValueMethod(type);
             object[] arguments = [ dictionary, key, true ];
             object? actual = getValueMethod?.Invoke(null, arguments);
             Assert.Equal(expected, actual);
