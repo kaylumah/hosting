@@ -275,11 +275,14 @@
     }
     
     function replaceWithFallback(ad) {
-        console.log("ad-fallback", ad);
-        // (ad.tagName === "INS" && ad.hasAttribute("data-ad-slot") && ad.hasAttribute("data-ad-client"));
-        // ad.style.display = "none";
-        const fallback = createAdFallback();
-        ad.replaceWith(fallback);
+        const adSlotAttr = "data-ad-slot";
+        if (ad.tagName === "INS" && ad.hasAttribute(adSlotAttr))
+        {
+            // ad.style.display = "none";
+            const fallback = createAdFallback();
+            fallback.setAttribute(adSlotAttr, ad.getAttribute(adSlotAttr));
+            ad.replaceWith(fallback);
+        }
     }
     
     function checkAdStatus(ad) {
