@@ -14,6 +14,10 @@
   name: C#
   description: for the C# programming language
   icon: /assets/icons/simpleicons/csharp.svg
+- id: gherkin
+  name: Gherkin
+  description: human readable test language
+  icon:  
 - id: git
   name: Git
   description: for the Git version control system
@@ -42,6 +46,10 @@
   name: OpenAPI
   description: for the OpenAPI Specification (formerly Swagger Specification)
   icon: /assets/icons/simpleicons/openapiinitiative.svg
+- id: powershell
+  name: PowerShell
+  description: cross-platform scripting language in .NET
+  icon:  
 - id: reqnroll
   name: Reqnroll
   description: Cucumber runner for .NET
@@ -50,6 +58,10 @@
   name: Rider
   description: for the JetBrains Rider IDE
   icon: /assets/icons/simpleicons/rider.svg
+- id: specflow
+  name: Specflow
+  description: Cucumber runner for .NET
+  icon:
 - id: swashbuckle
   name: Swashbuckle
   description: for the Swashbuckle swagger tooling in .NET
