@@ -20,6 +20,7 @@
       <email>max@kaylumah.nl</email>
     </author>
     <link href="https://BaseUrl_1/2025/04/05/tracking-nuget-updates-with-powershell.html" />
+    <category term="PowerShell" />
     <category term="NuGet" />
     <content type="html"><![CDATA[<p>Most of the time, managing NuGet dependencies in .NET projects is straightforward.
 Whether you believe in &quot;don't fix what's not broken&quot; or &quot;always update&quot;, there is always value in knowing about outdated packages.
