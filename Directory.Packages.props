@@ -33,7 +33,7 @@
     <!-- <PackageVersion Include="ReportGenerator" Version="5.1.20"/> -->
   </ItemGroup>
   <ItemGroup Label="Test">
-    <PackageVersion Include="Bogus" Version="35.6.2" />
+    <PackageVersion Include="Bogus" Version="35.6.3" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.4.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
