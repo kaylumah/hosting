@@ -27,8 +27,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             // https://stackoverflow.com/questions/12787449/html-agility-pack-removing-unwanted-tags-without-removing-content
             // https://stackoverflow.com/questions/60929281/number-of-words-by-htmlagilitypack
             HtmlNode documentNode = document.DocumentNode;
-            HtmlNodeCollection textNodes = documentNode.SelectNodes("//text()");
-            IEnumerable<string> innerTexts = textNodes.Select(node => node.InnerText);
+            HtmlNodeCollection? textNodes = documentNode.SelectNodes("//text()");
+            IEnumerable<string> innerTexts = textNodes?.Select(node => node.InnerText) ?? [];
 
             int result = 0;
             foreach (string text in innerTexts)

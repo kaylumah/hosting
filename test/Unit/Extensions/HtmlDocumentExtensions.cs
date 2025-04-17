@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using HtmlAgilityPack;
 
@@ -12,7 +13,8 @@ namespace Test.Unit.Utilities
     {
         public static List<(string Tag, string Value)> ToMetaTags(this HtmlDocument document)
         {
-            HtmlNodeCollection nodes = document.DocumentNode.SelectNodes("//meta");
+            HtmlNodeCollection? nodes = document.DocumentNode.SelectNodes("//meta");
+            Debug.Assert(nodes != null);
             // var node = document.DocumentNode.SelectSingleNode("//meta[@name='description']");
             // var node2 = document.DocumentNode.SelectSingleNode("//meta[@name='description']//@content");
             // var y = node.Attributes.SingleOrDefault(x => x.Name == "content");
