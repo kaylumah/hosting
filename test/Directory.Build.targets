@@ -8,20 +8,20 @@
   <!--    <Message Text="CoverletOutputFormat '$(CoverletOutputFormat)'" Importance="high" />-->
   <!--  </Target>-->
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+  <!-- <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
     <CollectCoverage>true</CollectCoverage>
     <CoverletOutputFormat>cobertura</CoverletOutputFormat>
     <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
     <ExcludeByFile>**/*.g.cs</ExcludeByFile>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">
     <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md -->
     <!--<PackageReference Include="ReportGenerator" />-->
-    <PackageReference Include="coverlet.msbuild">
+    <!-- <PackageReference Include="coverlet.msbuild">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    </PackageReference> -->
   </ItemGroup>
 
   <Target Condition="'$(IsTestProject)' == 'true'" Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest">
