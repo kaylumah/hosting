@@ -38,7 +38,7 @@
       <Loggers>
         <Logger friendlyName="trx" enabled="true">
           <Configuration>
-            <LogFileName>coverage.trx</LogFileName>
+            <!-- <LogFileName>coverage.trx</LogFileName> -->
           </Configuration>
         </Logger>
       </Loggers>
