@@ -94,7 +94,7 @@ jobs:
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
           dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
-          # Consider naming the log file
+          # TODO Consider naming the log file
           # --logger "trx;LogFileName=test-results.trx"
 
       - name: Run SiteGenerator
