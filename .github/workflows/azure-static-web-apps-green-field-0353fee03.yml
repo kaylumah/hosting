@@ -94,23 +94,6 @@ jobs:
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
           dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
-          # TODO Consider naming the log file
-          # --logger "trx;LogFileName=test-results.trx"
-
-      - name: Generate coverage summary
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: '**/coverage.cobertura.xml'
-          badge: true
-          format: markdown
-          output: both
-
-      - name: Test Reporter
-        uses: dorny/test-reporter@v1
-        with:
-          name: Unit Tests
-          path: '**/*.trx'
-          reporter: dotnet-trx
 
       - name: Run SiteGenerator
         shell: pwsh
