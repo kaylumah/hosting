@@ -105,6 +105,13 @@ jobs:
           format: markdown
           output: both
 
+      - name: Test Reporter
+        uses: dorny/test-reporter@v1
+        with:
+          name: Unit Tests
+          path: '**/*.trx'
+          reporter: dotnet-trx
+
       - name: Run SiteGenerator
         shell: pwsh
         run: |
