@@ -28,40 +28,15 @@
     <!--<ReportGenerator ReportFiles="@(CoverletReport)" TargetDirectory="../html-coverage-report"/>-->
   <!-- </Target> -->
 
-  <Target Name="GenerateHtmlCoverageReport"
-          Condition="'$(IsTestProject)' == 'true'"
-          AfterTargets="VSTest">
-
-          <PropertyGroup>
-            <CoverageRoot>$(MSBuildProjectDirectory)\TestResults</CoverageRoot>
-          </PropertyGroup>
-
-          <PropertyGroup>
-            <PowerShellCommand>dotnet pwsh</PowerShellCommand>
-            <!-- <PowerShellExecutionPolicy>Restricted</PowerShellExecutionPolicy> -->
-            <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
-            <OutdatedScript>../tools/Outdated.ps1</OutdatedScript>
-            <TargetProject>$(MSBuildProjectDirectory)/SSG.slnx</TargetProject>
-          </PropertyGroup>
-          <!-- <Exec Command='$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File "$(OutdatedScript)" -ProjectPath $(TargetProject)' /> -->
-           <!-- <Message Importance="High" Text="$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File $(OutdatedScript) -ProjectPath $(TargetProject)" /> -->
-
+  <Target Name="GenerateHtmlCoverageReport" Condition="'$(IsTestProject)' == 'true'" AfterTargets="VSTest">
            <PropertyGroup>
+            <CoverageRoot>$(MSBuildProjectDirectory)\TestResults</CoverageRoot>
             <PowerShellCommand>dotnet pwsh</PowerShellCommand>
             <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
-            <!-- <WorkingDir>$(RepoRoot)tools</WorkingDir> -->
             <WorkingDir>$(MSBuildThisFileDirectory)</WorkingDir>
             <ScriptRelativePath>Test.ps1</ScriptRelativePath>
-            <!-- <TargetProject>../SSG.slnx</TargetProject> -->
-          </PropertyGroup>
-      
-          <Message Importance="High" Text="Working $(WorkingDir)" />
-        
-          <Exec WorkingDirectory="$(WorkingDir)" Command='$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File "$(ScriptRelativePath)" -CoverageRoot "$(CoverageRoot)"' />
+          </PropertyGroup>        
+          <!-- <Exec WorkingDirectory="$(WorkingDir)" Command='$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File "$(ScriptRelativePath)" -CoverageRoot "$(CoverageRoot)"' /> -->
   </Target>
-
-
-
-
 
 </Project>
