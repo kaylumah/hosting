@@ -24,7 +24,7 @@
               </CodeCoverage>
             </Configuration>
           </DataCollector>
-          <DataCollector enabled="false" friendlyName="XPlat code coverage">
+          <DataCollector enabled="true" friendlyName="XPlat code coverage">
             <Configuration>
               <Format>cobertura</Format>
               <Exclude>[Test.Utilities]*</Exclude>
