@@ -95,6 +95,14 @@ jobs:
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
           dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
 
+      - name: Upload test and coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            TestResults/**/*.trx
+            TestResults/**/*.xml
+
       - name: Run SiteGenerator
         shell: pwsh
         run: |
