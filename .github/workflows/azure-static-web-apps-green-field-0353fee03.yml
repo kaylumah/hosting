@@ -97,6 +97,14 @@ jobs:
           # TODO Consider naming the log file
           # --logger "trx;LogFileName=test-results.trx"
 
+      - name: Generate coverage summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: '**/coverage.cobertura.xml'
+          badge: true
+          format: markdown
+          output: both
+
       - name: Run SiteGenerator
         shell: pwsh
         run: |
