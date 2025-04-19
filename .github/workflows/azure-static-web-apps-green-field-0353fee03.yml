@@ -100,8 +100,8 @@ jobs:
         with:
           name: test-results
           path: |
-            TestResults/**/*.trx
-            TestResults/**/*.xml
+            test/Unit/TestResults/**/*.trx
+            test/Unit/TestResults/**/*.xml
 
       - name: Run SiteGenerator
         shell: pwsh
