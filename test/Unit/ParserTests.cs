@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.Json;
 using Kaylumah.Ssg.Extensions.Data.Abstractions;
 using IParser = Kaylumah.Ssg.Extensions.Data.Abstractions.IParser;
@@ -39,9 +40,6 @@ namespace Test.Unit
             // - CSV without Header, header only
             // - CSV, JSON, Yaml invalid datatypes
             // - CSV, JSON, Yaml Nullability
-            // object
-            // dictionary<string, object?>
-            // Dto
         }
 
         [Fact]
@@ -72,7 +70,14 @@ namespace Test.Unit
                            Name;Age;
                            Max;30;
                            """;
-            object result = _CsvParser.Parse<object>(input);
+            object[] result = _CsvParser.Parse<object>(input);
+            
+            string typeName = result[0].GetType().Name;
+            Assert.Contains("FastDynamicObject", typeName); // Indirect check
+
+            dynamic row = result[0];
+            Assert.Equal("Max", row.Name);
+            Assert.Equal("30", row.Age);
         }
 
         [Fact]
@@ -83,6 +88,10 @@ namespace Test.Unit
                            Max;30;
                            """;
             Dictionary<string, object>[] result = _CsvParser.Parse<Dictionary<string, object>>(input);
+            
+            Assert.Single(result);
+            Assert.Equal("Max", result[0]["Name"]);
+            Assert.Equal("30", result[0]["Age"]); 
         }
 
         [Fact]
@@ -93,6 +102,9 @@ namespace Test.Unit
                            Max;30;
                            """;
             TestDto[] result = _CsvParser.Parse<TestDto>(input);
+            Assert.Single(result);
+            Assert.Equal("Max", result[0].Name);
+            Assert.Equal(30, result[0].Age);
         }
 
         [Fact]
