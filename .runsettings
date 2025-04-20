@@ -2,6 +2,7 @@
 <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md#advanced-options-supported-via-runsettings -->
 <!-- https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022 -->
 <!-- https://docs.microsoft.com/en-us/visualstudio/test/customizing-code-coverage-analysis -->
+<!-- https://learn.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022#example-runsettings-file -->
 <RunSettings>
     <!-- Configurations that affect the Test Framework -->
     <RunConfiguration>
