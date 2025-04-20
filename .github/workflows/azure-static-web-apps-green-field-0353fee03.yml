@@ -113,7 +113,8 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'
         with:
-          recreate: true
+          # recreate: true
+          header: code-coverage
           path: code-coverage-results.md
 
       # - name: Publish test results
