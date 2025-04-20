@@ -44,7 +44,6 @@
     <Project Path="src/Utilities/Identifiers/Kaylumah.Ssg.Utilities.Identifiers.csproj" />
     <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Data\Kaylumah.Ssg.Extensions.Data.csproj" />
     <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.Abstractions\Kaylumah.Ssg.Extensions.Metadata.Abstractions.csproj" />
-    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/E2e/Test.E2e.csproj" />
