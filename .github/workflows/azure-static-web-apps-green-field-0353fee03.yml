@@ -93,9 +93,48 @@ jobs:
         shell: pwsh
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
-          dotnet test --no-restore --no-build --configuration $BuildConfiguration --verbosity normal --logger trx test/Unit/Test.Unit.csproj
-          # Consider naming the log file
-          # --logger "trx;LogFileName=test-results.trx"
+          dotnet test --no-restore --no-build --configuration $BuildConfiguration test/Unit/Test.Unit.csproj
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          filename: test/Unit/TestResults/**/coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+    
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'
+        with:
+          # recreate: true
+          header: code-coverage
+          path: code-coverage-results.md
+
+      # - name: Publish test results
+      #   uses: dorny/test-reporter@v2
+      #   if: matrix.os == 'ubuntu-latest'
+      #   with:
+      #     name: Unit Tests
+      #     path: 'test/Unit/TestResults/**/*.trx'
+      #     reporter: dotnet-trx
+      #     only-summary: 'false'
+      #     use-actions-summary: 'true'
+
+      # - name: Upload test and coverage artifacts
+      #   uses: actions/upload-artifact@v4
+      #   if: matrix.os == 'ubuntu-latest'
+      #   with:
+      #     name: test-results
+      #     path: |
+      #       test/Unit/TestResults/**/*.trx
+      #       test/Unit/TestResults/**/*.xml
 
       - name: Run SiteGenerator
         shell: pwsh

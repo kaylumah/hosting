@@ -29,15 +29,12 @@
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- No longer used? -->
     <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
-    <!-- <PackageVersion Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" /> -->
-    <!-- <PackageVersion Include="ReportGenerator" Version="5.1.20"/> -->
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Bogus" Version="35.6.3" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.4.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.4" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.v3" Version="2.0.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.0.2" />

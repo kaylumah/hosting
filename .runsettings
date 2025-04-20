@@ -2,9 +2,14 @@
 <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md#advanced-options-supported-via-runsettings -->
 <!-- https://docs.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022 -->
 <!-- https://docs.microsoft.com/en-us/visualstudio/test/customizing-code-coverage-analysis -->
+<!-- https://learn.microsoft.com/en-us/visualstudio/test/configure-unit-tests-by-using-a-dot-runsettings-file?view=vs-2022#example-runsettings-file -->
 <RunSettings>
     <!-- Configurations that affect the Test Framework -->
     <RunConfiguration>
+        <!-- <ResultsDirectory>./TestResults</ResultsDirectory> -->
+        <!-- <TestSessionTimeout>10000</TestSessionTimeout> -->
+        <!-- <TestTimeout>1</TestTimeout> -->
+        <TreatNoTestsAsError>true</TreatNoTestsAsError>
         <EnvironmentVariables>
           <!--<PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-1121.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL>-->
         </EnvironmentVariables>
@@ -13,7 +18,7 @@
     <!-- Configurations for data collectors -->
     <DataCollectionRunSettings>
       <DataCollectors>
-          <DataCollector friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+          <DataCollector enabled="false" friendlyName="Code Coverage" uri="datacollector://Microsoft/CodeCoverage/2.0" assemblyQualifiedName="Microsoft.VisualStudio.Coverage.DynamicCoverageDataCollector, Microsoft.VisualStudio.TraceCollector, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
             <Configuration>
               <CodeCoverage>
                 <ModulePaths>
@@ -24,18 +29,46 @@
               </CodeCoverage>
             </Configuration>
           </DataCollector>
-          <DataCollector friendlyName="XPlat code coverage">
+          <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md#advanced-options-supported-via-runsettings -->
+          <DataCollector enabled="true" friendlyName="XPlat code coverage">
             <Configuration>
               <Format>cobertura</Format>
-              <Exclude>[Test.Utilities]*</Exclude>
+              <!-- package name="Ssg.Extensions.Metadata.Abstractions" -->
+              <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
+              <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md#excluding-from-coverage -->
+              <Exclude>
+                <!-- [Ssg.Extensions.Metadata.Abstractions]*, -->
+                <!-- [Kaylumah.Ssg.Manager.Site.Hosting]*, -->
+              </Exclude>
+              <!-- <ExcludeByAttribute>GeneratedCode,CompilerGenerated,Obsolete</ExcludeByAttribute> -->
+              <!-- <ExcludeByFile>**/*.g.cs,**/*.generated.cs,**/Ssg.Extensions.Metadata.Abstractions/*.cs</ExcludeByFile> -->
+              <IncludeTestAssembly>false</IncludeTestAssembly>
+              <UseSourceLink>true</UseSourceLink>
+              <DeterministicReport>true</DeterministicReport>
             </Configuration>
           </DataCollector>
       </DataCollectors>
     </DataCollectionRunSettings>
 
-    <!-- Configurations for data collectors -->
+    <!-- Configuration for loggers -->
     <LoggerRunSettings>
       <Loggers>
+        <Logger friendlyName="console" enabled="False">
+          <Configuration>
+              <Verbosity>quiet</Verbosity>
+          </Configuration>
+        </Logger>
+        <Logger friendlyName="trx" enabled="False">
+          <Configuration>
+            <!-- <LogFileName>foo.trx</LogFileName> -->
+          </Configuration>
+        </Logger>
+        <Logger friendlyName="html" enabled="False">
+          <Configuration>
+            <!-- <LogFileName>foo.html</LogFileName> -->
+          </Configuration>
+        </Logger>
+        <Logger friendlyName="blame" enabled="False" />
       </Loggers>
     </LoggerRunSettings>
 </RunSettings>
