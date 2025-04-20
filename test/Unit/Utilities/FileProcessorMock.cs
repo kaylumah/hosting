@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
-using TextFile = Kaylumah.Ssg.Manager.Site.Service.Files.Processor.TextFile;
 using Moq;
 using Test.Unit.Entities;
 using Test.Unit.Extensions;

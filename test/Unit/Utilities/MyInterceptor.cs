@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Reqnroll;
-using Reqnroll.Infrastructure;
 
 namespace Test.Unit
 {
