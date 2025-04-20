@@ -3,6 +3,8 @@
 
 using Kaylumah.Ssg.Extensions.Data.Abstractions;
 using Kaylumah.Ssg.Extensions.Data.Csv;
+using Kaylumah.Ssg.Extensions.Data.Json;
+using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Xunit;
 
 namespace Test.Unit
@@ -14,5 +16,37 @@ namespace Test.Unit
         {
             ICollectionParser csvParser = new CsvParser();
         }
+        
+        [Fact]
+        public void Test2()
+        {
+            IParser yamlParser = new YamlParser();
+        }
+        
+        [Fact]
+        public void Test3()
+        {
+            IParser jsonParser = new JsonParser();
+        }
+        
+        /*
+         * [Fact]
+           public void Test_YamlParser_Parse_ReturnsNullOnEmptyInput()
+           {
+               string input = string.Empty;
+               Dictionary<string, object> result = _Sut.Parse<Dictionary<string, object>>(input);
+               result.Should().BeNull();
+           }
+
+           [Fact]
+           public void Test_YamlParser_Parse_CanReturnDictionary()
+           {
+               string input = "title: doc1";
+               Dictionary<string, object> result = _Sut.Parse<Dictionary<string, object>>(input);
+               result.Should().NotBeNull();
+               result.ContainsKey("title").Should().BeTrue();
+               result["title"].Should().Be("doc1");
+           }
+         */
     }
 }
