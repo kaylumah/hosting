@@ -3,8 +3,8 @@
 
 using System.Collections.ObjectModel;
 using System.IO.Abstractions.TestingHelpers;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Reqnroll;
-using Ssg.Extensions.Metadata.Abstractions;
 using Test.Unit.Entities;
 
 namespace Test.Unit.Steps.Collections

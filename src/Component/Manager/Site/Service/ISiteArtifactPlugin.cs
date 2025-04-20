@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
-using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     public abstract class PublicationPageMetaData : PageMetaData
     {

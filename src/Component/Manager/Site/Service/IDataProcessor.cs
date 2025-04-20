@@ -8,7 +8,7 @@ using System.IO.Abstractions;
 using Kaylumah.Ssg.Extensions.Data.Csv;
 using Kaylumah.Ssg.Extensions.Data.Json;
 using Kaylumah.Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

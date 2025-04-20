@@ -2,7 +2,7 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
 {

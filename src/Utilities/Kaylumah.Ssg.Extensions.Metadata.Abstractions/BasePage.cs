@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     [DebuggerDisplay("PageMetaData '{Uri}'")]
     public abstract class BasePage

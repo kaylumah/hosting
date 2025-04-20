@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     class DescendingComparer<T> : IComparer<T> where T : IComparable<T>
     {

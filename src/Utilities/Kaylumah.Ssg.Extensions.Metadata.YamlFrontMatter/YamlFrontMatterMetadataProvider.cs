@@ -3,7 +3,7 @@
 
 using System.Text.RegularExpressions;
 using Kaylumah.Ssg.Extensions.Data.Yaml;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter
 {

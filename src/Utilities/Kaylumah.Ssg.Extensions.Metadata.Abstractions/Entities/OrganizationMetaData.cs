@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     [DebuggerDisplay("OrganizationMetaData '{FullName}'")]
     public class OrganizationMetaData

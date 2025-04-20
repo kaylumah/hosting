@@ -45,7 +45,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
             _ArticleCollection.AddRange(articleCollection);
             foreach (Article article in articleCollection)
             {
-                Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
+                Kaylumah.Ssg.Extensions.Metadata.Abstractions.PageMetaData pageMeta = article.ToPageMetaData();
                 MockFileData mockFile = MockFileDataFactory.EnrichedFile(string.Empty, pageMeta);
                 string postFileName = Path.Combine(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePostsDirectory, article.Uri!);
                 _MockFileSystem.AddFile(postFileName, mockFile);

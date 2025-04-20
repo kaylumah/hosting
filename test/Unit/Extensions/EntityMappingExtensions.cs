@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 // ReSharper disable once CheckNamespace
 namespace Test.Unit.Entities

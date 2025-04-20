@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 
-namespace Ssg.Extensions.Metadata.Abstractions
+namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     public class RenderHelperFunctions
     {
