@@ -29,6 +29,7 @@
               <Format>cobertura</Format>
               <!-- package name="Ssg.Extensions.Metadata.Abstractions" -->
               <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
+              <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md#excluding-from-coverage -->
               <Exclude>
                 [Ssg.Extensions.Metadata.Abstractions]*,
                 [Kaylumah.Ssg.Manager.Site.Hosting]*,
