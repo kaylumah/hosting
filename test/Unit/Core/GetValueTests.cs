@@ -18,14 +18,14 @@ namespace Test.Unit.Core
         static GetValueTests()
         {
             Type type = typeof(DictionaryExtensions);
-            
+
             _GetValueMethod = type.GetMethod("GetValue")!;
             Debug.Assert(_GetValueMethod != null);
-            
+
             _GetValueMethods = new();
             GetValueMethod(typeof(string));
         }
-        
+
         static MethodInfo GetValueMethod(Type target)
         {
             MethodInfo methodInfo = _GetValueMethods.GetOrAdd(target, (cacheKey) =>
@@ -36,7 +36,7 @@ namespace Test.Unit.Core
 
             return methodInfo;
         }
-        
+
         [Fact]
         public void Test_GetValue_ArgumentNullExceptionForNullDictionary()
         {
@@ -50,7 +50,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> target = new();
             Assert.Throws<ArgumentNullException>(() => target.GetValue<string>(null!));
         }
-        
+
         [Theory]
         [MemberData(nameof(SharedTestData.DefaultValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_NonExistingKeyReturnsDefaultValue(Type targetType, object? expected)
@@ -58,11 +58,11 @@ namespace Test.Unit.Core
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();
             MethodInfo getValueMethod = GetValueMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? actual = getValueMethod?.Invoke(null, arguments);
             Assert.Equal(expected, actual);
         }
-        
+
         [Theory]
         [MemberData(nameof(SharedTestData.DefaultValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValue_ExistingKeyWithNullValueReturnsDefaultValue(Type targetType, object? expected)
@@ -71,7 +71,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = null;
             MethodInfo getValueMethod = GetValueMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? actual = getValueMethod?.Invoke(null, arguments);
             Assert.Equal(expected, actual);
         }
@@ -84,7 +84,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = expected;
             MethodInfo getValueMethod = GetValueMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? actual = getValueMethod?.Invoke(null, arguments);
             Assert.Equal(expected, actual);
         }
@@ -98,7 +98,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = input;
             MethodInfo getValueMethod = GetValueMethod(type);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? actual = getValueMethod?.Invoke(null, arguments);
             Assert.Equal(expected, actual);
         }

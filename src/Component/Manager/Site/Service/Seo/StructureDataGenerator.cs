@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
 using Microsoft.Extensions.Logging;
 using Schema.NET;
-using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {

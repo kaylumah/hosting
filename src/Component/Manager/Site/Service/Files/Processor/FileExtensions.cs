@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {

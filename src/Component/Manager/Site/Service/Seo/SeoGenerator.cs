@@ -3,8 +3,8 @@
 
 using System.Text;
 using System.Xml;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
-using Ssg.Extensions.Metadata.Abstractions;
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo
 {
     public partial class SeoGenerator

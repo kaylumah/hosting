@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Data\Ssg.Extensions.Data.csproj" />
-    <ProjectReference Include="..\..\..\..\Utilities\Ssg.Extensions.Metadata.Abstractions\Ssg.Extensions.Metadata.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Kaylumah.Ssg.Extensions.Data\Kaylumah.Ssg.Extensions.Data.csproj" />
+    <ProjectReference Include="..\..\..\..\Utilities\Kaylumah.Ssg.Extensions.Metadata.Abstractions\Kaylumah.Ssg.Extensions.Metadata.Abstractions.csproj" />
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\AssemblyData\Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
     <ProjectReference Include="..\..\..\..\Utilities\Identifiers\Kaylumah.Ssg.Utilities.Identifiers.csproj" />

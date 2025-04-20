@@ -43,14 +43,14 @@
     <Project Path="src/Utilities/Configuration/Kaylumah.Ssg.Utilities.Configuration.csproj" />
     <Project Path="src/Utilities/Files/Kaylumah.Ssg.Utilities.Files.csproj" />
     <Project Path="src/Utilities/Identifiers/Kaylumah.Ssg.Utilities.Identifiers.csproj" />
-    <Project Path="src/Utilities/Ssg.Extensions.Data/Ssg.Extensions.Data.csproj" />
-    <Project Path="src/Utilities/Ssg.Extensions.Metadata.Abstractions/Ssg.Extensions.Metadata.Abstractions.csproj" />
-    <Project Path="src/Utilities/Ssg.Extensions.Metadata.YamlFrontMatter/Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
+    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Data\Kaylumah.Ssg.Extensions.Data.csproj" />
+    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.Abstractions\Kaylumah.Ssg.Extensions.Metadata.Abstractions.csproj" />
+    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
   </Folder>
   <Folder Name="/test/">
-    <File Path="test/Directory.Build.props" />
-    <File Path="test/Directory.Build.targets" />
     <Project Path="test/E2e/Test.E2e.csproj" />
     <Project Path="test/Unit/Test.Unit.csproj" />
+    <File Path="test/Directory.Build.props" />
+    <File Path="test/Directory.Build.targets" />
   </Folder>
 </Solution>

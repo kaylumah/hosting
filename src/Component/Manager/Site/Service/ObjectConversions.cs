@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

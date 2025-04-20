@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
@@ -19,7 +20,6 @@ using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 using Scriban;
 using Scriban.Runtime;
-using Ssg.Extensions.Metadata.Abstractions;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

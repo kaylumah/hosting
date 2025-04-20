@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Kaylumah.Ssg.Extensions.Data\Kaylumah.Ssg.Extensions.Data.csproj" />
+    <ProjectReference Include="..\Kaylumah.Ssg.Extensions.Metadata.Abstractions\Kaylumah.Ssg.Extensions.Metadata.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

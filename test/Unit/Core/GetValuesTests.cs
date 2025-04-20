@@ -11,7 +11,7 @@ using Xunit;
 namespace Test.Unit.Core
 {
     // TODO value conversion (single value)
-    
+
     public class GetValuesTests
     {
         static readonly MethodInfo _GetValuesMethod;
@@ -27,7 +27,7 @@ namespace Test.Unit.Core
             _GetValuesMethods = new();
             GetValuesMethod(typeof(string));
         }
-        
+
         static MethodInfo GetValuesMethod(Type target)
         {
             MethodInfo methodInfo = _GetValuesMethods.GetOrAdd(target, (cacheKey) =>
@@ -38,7 +38,7 @@ namespace Test.Unit.Core
 
             return methodInfo;
         }
-        
+
         [Fact]
         public void Test_GetValues_ArgumentNullExceptionForNullDictionary()
         {
@@ -52,7 +52,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> target = new();
             Assert.Throws<ArgumentNullException>(() => target.GetValues<string>(null!));
         }
-        
+
         [Fact]
         public void Test_GetValues_NonExistingKeyReturnsDefaultValue()
         {
@@ -60,7 +60,7 @@ namespace Test.Unit.Core
             Dictionary<string, object?> dictionary = new();
             Type targetType = typeof(string);
             MethodInfo getValueMethod = GetValuesMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? result = getValueMethod?.Invoke(null, arguments);
             Assert.NotNull(result);
             Assert.IsAssignableFrom<System.Collections.IList>(result);
@@ -76,7 +76,7 @@ namespace Test.Unit.Core
             dictionary[key] = null;
             Type targetType = typeof(string);
             MethodInfo getValueMethod = GetValuesMethod(targetType);
-            object[] arguments = [ dictionary, key, true ];
+            object[] arguments = [dictionary, key, true];
             object? result = getValueMethod?.Invoke(null, arguments);
             Assert.NotNull(result);
             Assert.IsAssignableFrom<System.Collections.IList>(result);
@@ -92,30 +92,30 @@ namespace Test.Unit.Core
 
             Dictionary<string, object?> dictionary = new();
             dictionary["some-key"] = value;
-            
+
             MethodInfo method = GetValuesMethod(type);
-            object? actual = method.Invoke(null, [ dictionary, "some-key", true ]);
+            object? actual = method.Invoke(null, [dictionary, "some-key", true]);
 
             Assert.Equal(value, actual);
         }
-        
+
         public static IEnumerable<object?[]> GetEnumerableValueTestData2()
         {
             // Handles all other IEnumerables (non-exact)
             // TODO consider merging with [MemberData(nameof(SharedTestData.ValuesForTypeTestData), MemberType = typeof(SharedTestData))]
-            
-            yield return [ typeof(string), new object?[] { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
-            yield return [ typeof(string), new List<object?>() { "a", "b", "c" }, new string[] { "a", "b", "c" } ];
-            
-            yield return [ typeof(int), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, 0 } ];
-            yield return [ typeof(int?), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, null } ];
-            
-            yield return [ typeof(int?), new List<int> { 1, 2, 3 }, new int?[] { 1, 2, 3 } ];
+
+            yield return [typeof(string), new object?[] { "a", "b", "c" }, new string[] { "a", "b", "c" }];
+            yield return [typeof(string), new List<object?>() { "a", "b", "c" }, new string[] { "a", "b", "c" }];
+
+            yield return [typeof(int), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, 0 }];
+            yield return [typeof(int?), new object?[] { "-1", "0", "1", null }, new int?[] { -1, 0, 1, null }];
+
+            yield return [typeof(int?), new List<int> { 1, 2, 3 }, new int?[] { 1, 2, 3 }];
 
             System.Collections.ArrayList arrayList = new System.Collections.ArrayList { "1", "2", null };
-            yield return [ typeof(int?), arrayList, new int?[] { 1, 2, null } ];
+            yield return [typeof(int?), arrayList, new int?[] { 1, 2, null }];
         }
-        
+
         [Theory]
         [MemberData(nameof(GetEnumerableValueTestData2))]
         public void Test_GetValues_ConvertibleObjectList(Type type, object input, object expectedResult)
@@ -123,26 +123,26 @@ namespace Test.Unit.Core
             string key = "some-key";
             Dictionary<string, object?> dictionary = new();
             dictionary[key] = input;
-            
+
             MethodInfo method = GetValuesMethod(type);
-            object? actual = method.Invoke(null, [ dictionary, key, true ]);
+            object? actual = method.Invoke(null, [dictionary, key, true]);
             Assert.NotNull(actual);
             AssertEnumerableOfT(type, actual);
-            
+
             Assert.IsAssignableFrom<System.Collections.IList>(actual);
             Assert.IsAssignableFrom<System.Collections.IList>(expectedResult);
-            
+
             System.Collections.IList actualList = (System.Collections.IList)actual;
             System.Collections.IList expectedList = (System.Collections.IList)expectedResult;
             Assert.NotEmpty(actualList);
             Assert.Equal(expectedList.Count, actualList.Count);
-            
+
             for (int i = 0; i < expectedList.Count; i++)
             {
                 Assert.Equal(expectedList[i], actualList[i]);
             }
         }
-        
+
         [Theory]
         [MemberData(nameof(SharedTestData.ValueForTypeTestData), MemberType = typeof(SharedTestData))]
         public void Test_GetValues_SingleConvertibleValueReturnsList(Type targetType, object? inputValue)
@@ -152,7 +152,7 @@ namespace Test.Unit.Core
             dictionary[key] = inputValue;
 
             MethodInfo method = GetValuesMethod(targetType);
-            object? result = method.Invoke(null, [ dictionary, key, true ]);
+            object? result = method.Invoke(null, [dictionary, key, true]);
 
             Assert.NotNull(result);
             Assert.IsAssignableFrom<System.Collections.IList>(result);
@@ -161,7 +161,7 @@ namespace Test.Unit.Core
             object? item = collection[0];
             Assert.Equal(inputValue, item);
         }
-        
+
         void AssertEnumerableOfT(Type type, object value)
         {
             Type genericIEnumerable = typeof(IEnumerable<>);
