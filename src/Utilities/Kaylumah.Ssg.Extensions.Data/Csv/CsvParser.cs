@@ -16,6 +16,7 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
     {
         T[] ICollectionParser.Parse<T>(string raw)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(raw);
             Type type = typeof(T);
             bool isDictionary = typeof(Dictionary<string, object>) == type;
 
