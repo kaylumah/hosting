@@ -26,6 +26,7 @@ namespace Test.Unit.FormerXunit
 
             IConfigurationRoot configuration = new ConfigurationBuilder().Build();
             ServiceProvider serviceProvider = new ServiceCollection()
+                .AddTestLogging()
                 .AddArtifactAccess(configuration)
                 .AddSingleton<IFileSystem>(fileSystemMock)
                 .BuildServiceProvider();
