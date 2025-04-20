@@ -31,6 +31,8 @@
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Service\Kaylumah.Ssg.Access.Artifact.Service.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\Component\Manager\Site\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
+    <ProjectReference Include="..\..\src\Component\Manager\Site\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
