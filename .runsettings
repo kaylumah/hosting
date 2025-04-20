@@ -6,6 +6,10 @@
 <RunSettings>
     <!-- Configurations that affect the Test Framework -->
     <RunConfiguration>
+        <!-- <ResultsDirectory>./TestResults</ResultsDirectory> -->
+        <!-- <TestSessionTimeout>10000</TestSessionTimeout> -->
+        <!-- <TestTimeout>1</TestTimeout> -->
+        <TreatNoTestsAsError>true</TreatNoTestsAsError>
         <EnvironmentVariables>
           <!--<PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-1121.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL>-->
         </EnvironmentVariables>
@@ -46,14 +50,25 @@
       </DataCollectors>
     </DataCollectionRunSettings>
 
-    <!-- Configurations for data collectors -->
+    <!-- Configuration for loggers -->
     <LoggerRunSettings>
       <Loggers>
-        <Logger friendlyName="trx" enabled="false">
+        <Logger friendlyName="console" enabled="True">
           <Configuration>
-            <!-- <LogFileName>coverage.trx</LogFileName> -->
+              <Verbosity>quiet</Verbosity>
           </Configuration>
         </Logger>
+        <Logger friendlyName="trx" enabled="True">
+          <Configuration>
+            <!-- <LogFileName>foo.trx</LogFileName> -->
+          </Configuration>
+        </Logger>
+        <Logger friendlyName="html" enabled="True">
+          <Configuration>
+            <!-- <LogFileName>foo.html</LogFileName> -->
+          </Configuration>
+        </Logger>
+        <Logger friendlyName="blame" enabled="True" />
       </Loggers>
     </LoggerRunSettings>
 </RunSettings>
