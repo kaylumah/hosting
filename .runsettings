@@ -32,8 +32,8 @@
               <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
               <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md#excluding-from-coverage -->
               <Exclude>
-                [Ssg.Extensions.Metadata.Abstractions]*,
-                [Kaylumah.Ssg.Manager.Site.Hosting]*,
+                <!-- [Ssg.Extensions.Metadata.Abstractions]*, -->
+                <!-- [Kaylumah.Ssg.Manager.Site.Hosting]*, -->
               </Exclude>
               <!-- <ExcludeByAttribute>GeneratedCode,CompilerGenerated,Obsolete</ExcludeByAttribute> -->
               <!-- <ExcludeByFile>**/*.g.cs,**/*.generated.cs,**/Ssg.Extensions.Metadata.Abstractions/*.cs</ExcludeByFile> -->
