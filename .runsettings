@@ -30,7 +30,8 @@
               <!-- package name="Ssg.Extensions.Metadata.Abstractions" -->
               <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
               <Exclude>
-                <!-- [Ssg.Extensions.Metadata.Abstractions]*, -->
+                [Ssg.Extensions.Metadata.Abstractions]*,
+                [Ssg.Extensions.Metadata.Abstractions]*,
               </Exclude>
             </Configuration>
           </DataCollector>
