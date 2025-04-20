@@ -21,6 +21,14 @@ namespace Test.Unit
         public void Test_YamlParser_1()
         {
             IYamlParser yamlParser = new YamlParser();
+
+            string input = string.Empty; // returns null
+            input = "foo: bar\n- invalidIndent"; // YamlDotNet.Core.YamlException
+            object result = yamlParser.Parse<object>(input);
+            // dictionary<string, object> // dictionary<string, object?>
+            // DTO
+            // Extra Properties (Ignored)
+            // (e.g., string instead of int)
         }
         
         [Fact]
