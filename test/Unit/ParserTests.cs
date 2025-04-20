@@ -71,7 +71,7 @@ namespace Test.Unit
                            Max;30;
                            """;
             object[] result = _CsvParser.Parse<object>(input);
-            
+
             string typeName = result[0].GetType().Name;
             Assert.Contains("FastDynamicObject", typeName); // Indirect check
 
@@ -88,10 +88,10 @@ namespace Test.Unit
                            Max;30;
                            """;
             Dictionary<string, object>[] result = _CsvParser.Parse<Dictionary<string, object>>(input);
-            
+
             Assert.Single(result);
             Assert.Equal("Max", result[0]["Name"]);
-            Assert.Equal("30", result[0]["Age"]); 
+            Assert.Equal("30", result[0]["Age"]);
         }
 
         [Fact]
