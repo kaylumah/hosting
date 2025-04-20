@@ -27,7 +27,9 @@
           <DataCollector enabled="true" friendlyName="XPlat code coverage">
             <Configuration>
               <Format>cobertura</Format>
-              <Exclude>[Test.Utilities]*</Exclude>
+              <!-- package name="Ssg.Extensions.Metadata.Abstractions" -->
+              <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
+              <Exclude>[Ssg.Extensions.Metadata.Abstractions]*</Exclude>
             </Configuration>
           </DataCollector>
       </DataCollectors>
@@ -36,7 +38,7 @@
     <!-- Configurations for data collectors -->
     <LoggerRunSettings>
       <Loggers>
-        <Logger friendlyName="trx" enabled="true">
+        <Logger friendlyName="trx" enabled="false">
           <Configuration>
             <!-- <LogFileName>coverage.trx</LogFileName> -->
           </Configuration>
