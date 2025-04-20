@@ -18,9 +18,9 @@ namespace Test.Unit
         }
         
         [Fact]
-        public void Test2()
+        public void Test_YamlParser_1()
         {
-            IParser yamlParser = new YamlParser();
+            IYamlParser yamlParser = new YamlParser();
         }
         
         [Fact]
