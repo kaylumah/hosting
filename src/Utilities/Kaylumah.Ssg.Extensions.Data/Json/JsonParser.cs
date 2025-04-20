@@ -3,9 +3,9 @@
 
 using System.Diagnostics;
 using System.Text.Json;
-using Ssg.Extensions.Data.Abstractions;
+using Kaylumah.Ssg.Extensions.Data.Abstractions;
 
-namespace Ssg.Extensions.Data.Json
+namespace Kaylumah.Ssg.Extensions.Data.Json
 {
     public class JsonParser : IJsonParser
     {

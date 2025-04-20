@@ -7,13 +7,13 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.YamlFrontMatter;
 using Xunit;
 

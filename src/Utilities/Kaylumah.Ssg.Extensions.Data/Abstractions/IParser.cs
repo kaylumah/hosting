@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Ssg.Extensions.Data.Abstractions
+namespace Kaylumah.Ssg.Extensions.Data.Abstractions
 {
     public interface IParser
     {

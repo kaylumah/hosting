@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using FluentAssertions;
-using Ssg.Extensions.Data.Yaml;
+using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Xunit;
 
 namespace Test.Unit.FormerXunit

@@ -8,9 +8,9 @@ using System.IO;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Ssg.Extensions.Data.Abstractions;
+using Kaylumah.Ssg.Extensions.Data.Abstractions;
 
-namespace Ssg.Extensions.Data.Csv
+namespace Kaylumah.Ssg.Extensions.Data.Csv
 {
     public class CsvParser : ICsvParser
     {

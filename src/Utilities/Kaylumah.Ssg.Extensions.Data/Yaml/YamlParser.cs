@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using Ssg.Extensions.Data.Abstractions;
+using Kaylumah.Ssg.Extensions.Data.Abstractions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Ssg.Extensions.Data.Yaml
+namespace Kaylumah.Ssg.Extensions.Data.Yaml
 {
     public class YamlParser : IYamlParser
     {
