@@ -70,53 +70,55 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
         Dictionary<string, object?>[] ParseDictionary(string raw, CsvConfiguration config)
         {
             List<Dictionary<string, object?>> records = new List<Dictionary<string, object?>>();
-            try
+            // try
+            // {
+            byte[] bytes = Encoding.UTF8.GetBytes(raw);
+            using MemoryStream stream = new MemoryStream(bytes);
+            using StreamReader reader = new StreamReader(stream);
+            using CsvReader csv = new CsvReader(reader, config);
+            csv.Read();
+            csv.ReadHeader();
+
+            if (csv.HeaderRecord != null)
             {
-                byte[] bytes = Encoding.UTF8.GetBytes(raw);
-                using MemoryStream stream = new MemoryStream(bytes);
-                using StreamReader reader = new StreamReader(stream);
-                using CsvReader csv = new CsvReader(reader, config);
-                csv.Read();
-                csv.ReadHeader();
-
-                if (csv.HeaderRecord != null)
+                while (csv.Read())
                 {
-                    while (csv.Read())
+                    Dictionary<string, object?> record = new Dictionary<string, object?>();
+                    bool isEmptyRecord = true;
+                    foreach (string header in csv.HeaderRecord)
                     {
-                        Dictionary<string, object?> record = new Dictionary<string, object?>();
-                        bool isEmptyRecord = true;
-                        foreach (string header in csv.HeaderRecord)
+                        string? field = csv.GetField(header);
+                        if (!string.IsNullOrEmpty(field))
                         {
-                            string? field = csv.GetField(header);
-                            if (!string.IsNullOrEmpty(field))
-                            {
-                                isEmptyRecord = false;
-                            }
-
-                            record[header] = field;
+                            isEmptyRecord = false;
                         }
 
-                        if (!isEmptyRecord)
-                        {
-                            records.Add(record);
-                        }
+                        record[header] = field;
+                    }
+
+                    if (!isEmptyRecord)
+                    {
+                        records.Add(record);
                     }
                 }
             }
-            catch (CsvHelperException ex)
-            {
-                Console.WriteLine($"CSV parsing error: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"IO error: {ex.Message}");
-            }
+            /*}
+
+catch (CsvHelperException ex)
+{
+    Console.WriteLine($"CSV parsing error: {ex.Message}");
+}
+catch (IOException ex)
+{
+    Console.WriteLine($"IO error: {ex.Message}");
+}
 #pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception ex)
+catch (Exception ex)
 #pragma warning restore CA1031 // Do not catch general exception types
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
+{
+    Console.WriteLine($"Unexpected error: {ex.Message}");
+}
+*/
 
             Dictionary<string, object?>[] result = records.ToArray();
             return result;
