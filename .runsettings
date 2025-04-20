@@ -29,7 +29,9 @@
               <Format>cobertura</Format>
               <!-- package name="Ssg.Extensions.Metadata.Abstractions" -->
               <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
-              <Exclude>[Ssg.Extensions.Metadata.Abstractions]*</Exclude>
+              <Exclude>
+                [Ssg.Extensions.Metadata.Abstractions]*
+              </Exclude>
             </Configuration>
           </DataCollector>
       </DataCollectors>
