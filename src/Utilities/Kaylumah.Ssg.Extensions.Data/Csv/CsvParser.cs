@@ -27,7 +27,7 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
             if (isDictionary)
             {
                 Dictionary<string, object?>[] unknownStructure = ParseDictionary(raw, config);
-                T[] records = unknownStructure as T[] ?? Array.Empty<T>();
+                T[] records = unknownStructure as T[] ?? [];
                 return records;
             }
             else
@@ -40,29 +40,12 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
         T[] ParseRecords<T>(string raw, CsvConfiguration config)
         {
             List<T> records = new List<T>();
-            try
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(raw);
-                using MemoryStream stream = new MemoryStream(bytes);
-                using StreamReader reader = new StreamReader(stream);
-                using CsvReader csvReader = new CsvReader(reader, config);
-                IEnumerable<T> internalRecords = csvReader.GetRecords<T>();
-                records.AddRange(internalRecords);
-            }
-            catch (CsvHelperException ex)
-            {
-                Console.WriteLine($"CSV parsing error: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"IO error: {ex.Message}");
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
+            byte[] bytes = Encoding.UTF8.GetBytes(raw);
+            using MemoryStream stream = new MemoryStream(bytes);
+            using StreamReader reader = new StreamReader(stream);
+            using CsvReader csvReader = new CsvReader(reader, config);
+            IEnumerable<T> internalRecords = csvReader.GetRecords<T>();
+            records.AddRange(internalRecords);
 
             T[] result = records.ToArray();
             return result;
@@ -71,8 +54,6 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
         Dictionary<string, object?>[] ParseDictionary(string raw, CsvConfiguration config)
         {
             List<Dictionary<string, object?>> records = new List<Dictionary<string, object?>>();
-            // try
-            // {
             byte[] bytes = Encoding.UTF8.GetBytes(raw);
             using MemoryStream stream = new MemoryStream(bytes);
             using StreamReader reader = new StreamReader(stream);
@@ -103,23 +84,6 @@ namespace Kaylumah.Ssg.Extensions.Data.Csv
                     }
                 }
             }
-            /*}
-
-catch (CsvHelperException ex)
-{
-    Console.WriteLine($"CSV parsing error: {ex.Message}");
-}
-catch (IOException ex)
-{
-    Console.WriteLine($"IO error: {ex.Message}");
-}
-#pragma warning disable CA1031 // Do not catch general exception types
-catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
-{
-    Console.WriteLine($"Unexpected error: {ex.Message}");
-}
-*/
 
             Dictionary<string, object?>[] result = records.ToArray();
             return result;
