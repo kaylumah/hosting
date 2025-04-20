@@ -4,13 +4,13 @@
 
   <Target Name="GenerateHtmlCoverageReport" Condition="'$(IsTestProject)' == 'true'" AfterTargets="VSTest">
            <PropertyGroup>
-            <CoverageRoot>$(MSBuildProjectDirectory)\TestResults</CoverageRoot>
             <PowerShellCommand>dotnet pwsh</PowerShellCommand>
             <PowerShellExecutionPolicy>Bypass</PowerShellExecutionPolicy>
             <WorkingDir>$(MSBuildThisFileDirectory)</WorkingDir>
-            <ScriptRelativePath>Test.ps1</ScriptRelativePath>
+            <ScriptRelativePath>TestReport.ps1</ScriptRelativePath>
+            <CoverageRoot>$(MSBuildProjectDirectory)\TestResults</CoverageRoot>
           </PropertyGroup>        
-          <!-- <Exec WorkingDirectory="$(WorkingDir)" Command='$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File "$(ScriptRelativePath)" -CoverageRoot "$(CoverageRoot)"' /> -->
+          <Exec WorkingDirectory="$(WorkingDir)" Command='$(PowerShellCommand) -ExecutionPolicy $(PowerShellExecutionPolicy) -NoProfile -File "$(ScriptRelativePath)" -CoverageRoot "$(CoverageRoot)"' />
   </Target>
 
 </Project>
