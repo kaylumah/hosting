@@ -24,7 +24,7 @@ namespace Test.Unit
             public int? Age
             { get; set; }
         }
-        
+
         readonly ICsvParser _CsvParser;
         readonly IJsonParser _JsonParser;
         readonly IYamlParser _YamlParser;
@@ -34,7 +34,7 @@ namespace Test.Unit
             _CsvParser = new CsvParser();
             _JsonParser = new JsonParser();
             _YamlParser = new YamlParser();
-            
+
             // TODO consider test cases
             // - CSV without Header, header only
             // - CSV, JSON, Yaml invalid datatypes
@@ -50,21 +50,21 @@ namespace Test.Unit
             string input = null!;
             Assert.Throws<ArgumentNullException>(() => _CsvParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_CsvParser_HandlesEmptyString()
         {
             string input = string.Empty;
             Assert.Throws<ArgumentException>(() => _CsvParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_CsvParser_HandlesWhitespaceString()
         {
             string input = "   ";
             Assert.Throws<ArgumentException>(() => _CsvParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_CsvParser_HandlesObject()
         {
@@ -74,7 +74,7 @@ namespace Test.Unit
                            """;
             object result = _CsvParser.Parse<object>(input);
         }
-        
+
         [Fact]
         public void Test_CsvParser_HandlesDictionary()
         {
@@ -82,9 +82,9 @@ namespace Test.Unit
                            Name;Age;
                            Max;30;
                            """;
-            Dictionary<string,object>[] result = _CsvParser.Parse<Dictionary<string,object>>(input);
+            Dictionary<string, object>[] result = _CsvParser.Parse<Dictionary<string, object>>(input);
         }
-        
+
         [Fact]
         public void Test_CsvParser_HandlesDto()
         {
@@ -94,28 +94,28 @@ namespace Test.Unit
                            """;
             TestDto[] result = _CsvParser.Parse<TestDto>(input);
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesNullValue()
         {
             string input = null!;
             Assert.Throws<ArgumentNullException>(() => _JsonParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesEmptyString()
         {
             string input = string.Empty;
             Assert.Throws<ArgumentException>(() => _JsonParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesWhitespaceString()
         {
             string input = "   ";
             Assert.Throws<ArgumentException>(() => _JsonParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesObject()
         {
@@ -126,8 +126,8 @@ namespace Test.Unit
                            }
                            """;
             object result = _JsonParser.Parse<object>(input);
-            Assert.IsType<System.Text.Json.JsonElement>(result);
-            if (result is System.Text.Json.JsonElement jsonElement)
+            Assert.IsType<JsonElement>(result);
+            if (result is JsonElement jsonElement)
             {
 #pragma warning disable
                 Assert.Equal("max", jsonElement.GetProperty("Name").GetString());
@@ -135,7 +135,7 @@ namespace Test.Unit
 #pragma warning restore
             }
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesDictionary()
         {
@@ -145,7 +145,7 @@ namespace Test.Unit
                             "Age": 30
                            }
                            """;
-            Dictionary<string,object> result = _JsonParser.Parse<Dictionary<string,object>>(input);
+            Dictionary<string, object> result = _JsonParser.Parse<Dictionary<string, object>>(input);
             Assert.True(result["Name"] is JsonElement);
             Assert.True(result["Age"] is JsonElement);
 
@@ -155,7 +155,7 @@ namespace Test.Unit
             Assert.Equal("max", name);
             Assert.Equal(30, age);
         }
-        
+
         [Fact]
         public void Test_JsonParser_HandlesDto()
         {
@@ -169,28 +169,28 @@ namespace Test.Unit
             Assert.Equal("max", result.Name);
             Assert.Equal(30, result.Age);
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesNullValue()
         {
             string input = null!;
             Assert.Throws<ArgumentNullException>(() => _YamlParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesEmptyString()
         {
             string input = string.Empty;
             Assert.Throws<ArgumentException>(() => _YamlParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesWhitespaceString()
         {
             string input = "   ";
             Assert.Throws<ArgumentException>(() => _YamlParser.Parse<object>(input));
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesObject()
         {
@@ -206,7 +206,7 @@ namespace Test.Unit
                 Assert.Equal("30", dictionary["age"]);
             }
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesDictionary()
         {
@@ -214,11 +214,11 @@ namespace Test.Unit
                            name: max
                            age: 30
                            """;
-            Dictionary<string,object> result = _YamlParser.Parse<Dictionary<string,object>>(input);
+            Dictionary<string, object> result = _YamlParser.Parse<Dictionary<string, object>>(input);
             Assert.Equal("max", result["name"]);
             Assert.Equal("30", result["age"]);
         }
-        
+
         [Fact]
         public void Test_YamlParser_HandlesDto()
         {
