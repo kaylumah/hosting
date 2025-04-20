@@ -36,7 +36,9 @@
               </Exclude>
               <!-- <ExcludeByAttribute>GeneratedCode,CompilerGenerated,Obsolete</ExcludeByAttribute> -->
               <!-- <ExcludeByFile>**/*.g.cs,**/*.generated.cs,**/Ssg.Extensions.Metadata.Abstractions/*.cs</ExcludeByFile> -->
+              <IncludeTestAssembly>false</IncludeTestAssembly>
               <UseSourceLink>true</UseSourceLink>
+              <DeterministicReport>true</DeterministicReport>
             </Configuration>
           </DataCollector>
       </DataCollectors>
