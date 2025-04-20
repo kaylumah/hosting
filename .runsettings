@@ -36,6 +36,7 @@
               </Exclude>
               <!-- <ExcludeByAttribute>GeneratedCode,CompilerGenerated,Obsolete</ExcludeByAttribute> -->
               <!-- <ExcludeByFile>**/*.g.cs,**/*.generated.cs,**/Ssg.Extensions.Metadata.Abstractions/*.cs</ExcludeByFile> -->
+              <UseSourceLink>true</UseSourceLink>
             </Configuration>
           </DataCollector>
       </DataCollectors>
