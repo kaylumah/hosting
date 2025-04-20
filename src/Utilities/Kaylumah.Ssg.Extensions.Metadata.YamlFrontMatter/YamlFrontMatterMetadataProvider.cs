@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Ssg.Extensions.Metadata.Abstractions;
 
-namespace Ssg.Extensions.Metadata.YamlFrontMatter
+namespace Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter
 {
     public partial class YamlFrontMatterMetadataProvider : IFrontMatterMetadataProvider
     {
