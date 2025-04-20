@@ -8,7 +8,6 @@ using System.Text;
 using System.Xml;
 using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Manager.Site.Service.RenderEngine;
-using Kaylumah.Ssg.Utilities;
 using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Manager.Site.Service.Seo

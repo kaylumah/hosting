@@ -6,7 +6,6 @@ using System.Linq;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Reqnroll;
-using Reqnroll.Assist;
 using Test.Unit.Entities;
 
 namespace Test.Unit
