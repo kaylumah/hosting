@@ -305,74 +305,189 @@ namespace Test.Unit
                            """;
             Assert.Throws<JsonException>(() => _parser.Parse<TestDto>(input));
         }
+    }
 
-        public class ParserTests
+    public class CsvParserTests
+    {
+        private readonly ICsvParser _parser = new CsvParser();
+
+        public class TestDto
         {
-            [Fact]
-            public void Test1()
-            {
-                ICollectionParser csvParser = new CsvParser();
-            }
+            public string? Name { get; set; }
+            public int Age { get; set; }
+        }
 
-            // TODO NULL string
-            // TODO DTO Parsing
+        [Fact]
+        public void Parse_EmptyString_ReturnsEmptyArray()
+        {
+            string input = """
 
-            [Fact]
-            public void Test_YamlParser_EmptyString()
-            {
-                IYamlParser yamlParser = new YamlParser();
-                string input = """
+                           """;
+            var result = _parser.Parse<TestDto>(input);
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
 
-                               """;
-                object result = yamlParser.Parse<object>(input);
-                Assert.Null(result);
-            }
+        [Fact]
+        public void Parse_HeaderOnly_ReturnsEmptyArray()
+        {
+            string input = """
+                           Name;Age
+                           """;
+            var result = _parser.Parse<TestDto>(input);
+            Assert.NotNull(result);
+            Assert.Empty(result);
+        }
 
-            [Fact]
-            public void Test_YamlParser_AsObjectReturnsDictionary()
-            {
-                IYamlParser yamlParser = new YamlParser();
-                string input = """
-                               title: doc1
-                               """;
-                object result = yamlParser.Parse<object>(input);
-                Assert.IsType<Dictionary<object, object>>(result);
-            }
+        [Fact]
+        public void Parse_SingleRowDto_ReturnsRecord()
+        {
+            string input = """
+                           Name;Age
+                           Alice;30
+                           """;
+            var result = _parser.Parse<TestDto>(input);
 
-            [Fact]
-            public void Test_YamlParser_ExplicitReturnsDictionary()
-            {
-                IYamlParser yamlParser = new YamlParser();
-                string input = """
-                               title: doc1
-                               """;
-                Dictionary<string, object> result = yamlParser.Parse<Dictionary<string, object>>(input);
-                Assert.IsType<Dictionary<string, object>>(result);
-            }
+            Assert.Single(result);
+            Assert.Equal("Alice", result[0].Name);
+            Assert.Equal(30, result[0].Age);
+        }
 
-            [Fact]
-            public void Test_YamlParser_IdentThrows()
-            {
-                // Does not throw?
-                IYamlParser yamlParser = new YamlParser();
-                string input = """
-                               key1: value1
-                                key2: 123
-                               """;
-                // object result = yamlParser.Parse<object>(input);
-                input = "{}";
-                Assert.Throws<SemanticErrorException>(() => yamlParser.Parse<object>(input));
-            }
+        [Fact]
+        public void Parse_MultipleRowsDto_ReturnsAllRecords()
+        {
+            string input = """
+                           Name;Age
+                           Bob;25
+                           Eve;40
+                           """;
+            var result = _parser.Parse<TestDto>(input);
 
-            // Pass {} [] "Hello World"
-            // Valid JSON will work
-            // Invalid JSON will not { title: "missing-quotes" }
+            Assert.Equal(2, result.Length);
+            Assert.Equal("Bob", result[0].Name);
+            Assert.Equal("Eve", result[1].Name);
+        }
 
-            [Fact]
-            public void Test3()
-            {
-                IParser jsonParser = new JsonParser();
-            }
+        [Fact]
+        public void Parse_SingleRowDictionary_ReturnsRecord()
+        {
+            string input = """
+                           Name;Age
+                           Charlie;28
+                           """;
+            var result = _parser.Parse<Dictionary<string, object>>(input);
+
+            Assert.Single(result);
+            Assert.Equal("Charlie", result[0]["Name"]);
+            Assert.Equal("28", result[0]["Age"]);
+        }
+
+        [Fact]
+        public void Parse_PartialRow_DictionaryHandlesNulls()
+        {
+            string input = """
+                           Name;Age
+                           Diana;
+                           """;
+            var result = _parser.Parse<Dictionary<string, object>>(input);
+
+            Assert.Single(result);
+            Assert.Equal("Diana", result[0]["Name"]);
+            Assert.Null(result[0]["Age"]);
+        }
+
+        [Fact]
+        public void Parse_InvalidRow_SkippedOrHandledGracefully()
+        {
+            string input = """
+                           Name;Age
+                           Ethan;invalid
+                           """;
+            var result = _parser.Parse<TestDto>(input);
+
+            // Expect 0 records because 'invalid' cannot be parsed as int
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void Parse_MissingHeader_ThrowsOrReturnsEmpty()
+        {
+            string input = """
+                           Alice;30
+                           """;
+            var result = _parser.Parse<TestDto>(input);
+
+            // Since HasHeaderRecord = true, this row will be skipped
+            Assert.Empty(result);
+        }
+    }
+
+    public class ParserTests
+    {
+        [Fact]
+        public void Test1()
+        {
+            ICollectionParser csvParser = new CsvParser();
+        }
+
+        // TODO NULL string
+        // TODO DTO Parsing
+
+        [Fact]
+        public void Test_YamlParser_EmptyString()
+        {
+            IYamlParser yamlParser = new YamlParser();
+            string input = """
+
+                           """;
+            object result = yamlParser.Parse<object>(input);
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Test_YamlParser_AsObjectReturnsDictionary()
+        {
+            IYamlParser yamlParser = new YamlParser();
+            string input = """
+                           title: doc1
+                           """;
+            object result = yamlParser.Parse<object>(input);
+            Assert.IsType<Dictionary<object, object>>(result);
+        }
+
+        [Fact]
+        public void Test_YamlParser_ExplicitReturnsDictionary()
+        {
+            IYamlParser yamlParser = new YamlParser();
+            string input = """
+                           title: doc1
+                           """;
+            Dictionary<string, object> result = yamlParser.Parse<Dictionary<string, object>>(input);
+            Assert.IsType<Dictionary<string, object>>(result);
+        }
+
+        [Fact]
+        public void Test_YamlParser_IdentThrows()
+        {
+            // Does not throw?
+            IYamlParser yamlParser = new YamlParser();
+            string input = """
+                           key1: value1
+                            key2: 123
+                           """;
+            // object result = yamlParser.Parse<object>(input);
+            input = "{}";
+            Assert.Throws<SemanticErrorException>(() => yamlParser.Parse<object>(input));
+        }
+
+        // Pass {} [] "Hello World"
+        // Valid JSON will work
+        // Invalid JSON will not { title: "missing-quotes" }
+
+        [Fact]
+        public void Test3()
+        {
+            IParser jsonParser = new JsonParser();
         }
     }
 }
