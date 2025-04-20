@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
-using System.Linq;
 using System.Text;
 using Test.Unit.Helpers;
 
