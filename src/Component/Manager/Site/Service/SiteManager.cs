@@ -119,7 +119,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .. assetArtifacts
             ];
 
-            OutputLocation outputLocation = new FileSystemOutputLocation(Constants.Directories.DestinationDirectory, false);
+            OutputLocation outputLocation = new FileSystemOutputLocation(Constants.Directories.DestinationDirectory);
             Artifact[] artifactArray = artifacts.ToArray();
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(outputLocation, artifactArray);
             await _ArtifactAccess.Store(storeArtifactsRequest).ConfigureAwait(false);
