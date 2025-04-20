@@ -116,6 +116,14 @@ jobs:
           recreate: true
           path: code-coverage-results.md
 
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: Unit Tests
+          path: 'test/Unit/TestResults/**/*.trx'
+          reporter: dotnet-trx
+
       # - name: Upload test and coverage artifacts
       #   uses: actions/upload-artifact@v4
       #   if: matrix.os == 'ubuntu-latest'
