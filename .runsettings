@@ -24,6 +24,7 @@
               </CodeCoverage>
             </Configuration>
           </DataCollector>
+          <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/VSTestIntegration.md#advanced-options-supported-via-runsettings -->
           <DataCollector enabled="true" friendlyName="XPlat code coverage">
             <Configuration>
               <Format>cobertura</Format>
