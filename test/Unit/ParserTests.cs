@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Kaylumah.Ssg.Extensions.Data.Abstractions;
 using IParser = Kaylumah.Ssg.Extensions.Data.Abstractions.IParser;
 using Kaylumah.Ssg.Extensions.Data.Csv;
@@ -13,7 +14,7 @@ using YamlDotNet.Core;
 
 namespace Test.Unit
 {
-    #pragma warning disable
+#pragma warning disable
     public class YamlParserTests
     {
         private readonly IYamlParser _parser = new YamlParser();
@@ -28,7 +29,7 @@ namespace Test.Unit
         public void Parse_EmptyString_ReturnsNull()
         {
             string input = """
-                           
+
                            """;
             object? result = _parser.Parse<object>(input);
             Assert.Null(result);
@@ -185,73 +186,193 @@ namespace Test.Unit
             Assert.Throws<YamlDotNet.Core.YamlException>(() => _parser.Parse<TestDto>(input));
         }
     }
-    
-    public class ParserTests
+
+    public class JsonParserTests
     {
-        [Fact]
-        public void Test1()
+        private readonly IJsonParser _parser = new JsonParser();
+
+        public class TestDto
         {
-            ICollectionParser csvParser = new CsvParser();
+            public string? Title { get; set; }
+            public int Count { get; set; }
         }
 
-        // TODO NULL string
-        // TODO DTO Parsing
-        
         [Fact]
-        public void Test_YamlParser_EmptyString()
+        public void Parse_EmptyString_ThrowsJsonException()
         {
-            IYamlParser yamlParser = new YamlParser();
             string input = """
-                           
+
                            """;
-            object result = yamlParser.Parse<object>(input);
-            Assert.Null(result);
+            Assert.Throws<JsonException>(() => _parser.Parse<object>(input));
         }
-        
+
         [Fact]
-        public void Test_YamlParser_AsObjectReturnsDictionary()
+        public void Parse_NullInput_ThrowsArgumentNullException()
         {
-            IYamlParser yamlParser = new YamlParser();
+            Assert.Throws<ArgumentNullException>(() => _parser.Parse<object>(null!));
+        }
+
+        [Fact]
+        public void Parse_ObjectJson_ReturnsDictionaryObject()
+        {
             string input = """
-                           title: doc1
+                           {
+                             "title": "doc1",
+                             "count": 42
+                           }
                            """;
-            object result = yamlParser.Parse<object>(input);
-            Assert.IsType<Dictionary<object, object>>(result);
+            var result = _parser.Parse<Dictionary<string, object>>(input);
+            Assert.Equal("doc1", result["title"]?.ToString());
+            Assert.Equal(42, Convert.ToInt32(result["count"]));
         }
-        
+
         [Fact]
-        public void Test_YamlParser_ExplicitReturnsDictionary()
+        public void Parse_ObjectJson_ReturnsDto()
         {
-            IYamlParser yamlParser = new YamlParser();
             string input = """
-                           title: doc1
+                           {
+                             "title": "doc1",
+                             "count": 42
+                           }
                            """;
-            Dictionary<string, object> result = yamlParser.Parse<Dictionary<string, object>>(input);
-            Assert.IsType<Dictionary<string, object>>(result);
+            var result = _parser.Parse<TestDto>(input);
+            Assert.Equal("doc1", result.Title);
+            Assert.Equal(42, result.Count);
         }
-        
+
         [Fact]
-        public void Test_YamlParser_IdentThrows()
+        public void Parse_EmptyObject_ReturnsEmptyDictionary()
         {
-            // Does not throw?
-            IYamlParser yamlParser = new YamlParser();
             string input = """
-                           key1: value1
-                            key2: 123
+                           {}
                            """;
-            // object result = yamlParser.Parse<object>(input);
-            input = "{}";
-            Assert.Throws<SemanticErrorException>(() => yamlParser.Parse<object>(input));
+            var result = _parser.Parse<Dictionary<string, object>>(input);
+            Assert.NotNull(result);
+            Assert.Empty(result);
         }
-        
-        // Pass {} [] "Hello World"
-        // Valid JSON will work
-        // Invalid JSON will not { title: "missing-quotes" }
-        
+
         [Fact]
-        public void Test3()
+        public void Parse_NullValue_ReturnsNullInDictionary()
         {
-            IParser jsonParser = new JsonParser();
+            string input = """
+                           {
+                             "title": null
+                           }
+                           """;
+            var result = _parser.Parse<Dictionary<string, object?>>(input);
+            Assert.Null(result["title"]);
+        }
+
+        [Fact]
+        public void Parse_StringScalar_ReturnsString()
+        {
+            string input = """
+                           "hello"
+                           """;
+            var result = _parser.Parse<string>(input);
+            Assert.Equal("hello", result);
+        }
+
+        [Fact]
+        public void Parse_ArrayJson_ReturnsList()
+        {
+            string input = """
+                           [1, 2, 3]
+                           """;
+            var result = _parser.Parse<List<int>>(input);
+            Assert.Equal(new[] { 1, 2, 3 }, result);
+        }
+
+        [Fact]
+        public void Parse_TrailingComma_ThrowsJsonException()
+        {
+            string input = """
+                           {
+                             "title": "oops",
+                           }
+                           """;
+            Assert.Throws<JsonException>(() => _parser.Parse<object>(input));
+        }
+
+        [Fact]
+        public void Parse_TypeMismatch_ThrowsJsonException()
+        {
+            string input = """
+                           {
+                             "title": "abc",
+                             "count": "not-a-number"
+                           }
+                           """;
+            Assert.Throws<JsonException>(() => _parser.Parse<TestDto>(input));
+        }
+
+        public class ParserTests
+        {
+            [Fact]
+            public void Test1()
+            {
+                ICollectionParser csvParser = new CsvParser();
+            }
+
+            // TODO NULL string
+            // TODO DTO Parsing
+
+            [Fact]
+            public void Test_YamlParser_EmptyString()
+            {
+                IYamlParser yamlParser = new YamlParser();
+                string input = """
+
+                               """;
+                object result = yamlParser.Parse<object>(input);
+                Assert.Null(result);
+            }
+
+            [Fact]
+            public void Test_YamlParser_AsObjectReturnsDictionary()
+            {
+                IYamlParser yamlParser = new YamlParser();
+                string input = """
+                               title: doc1
+                               """;
+                object result = yamlParser.Parse<object>(input);
+                Assert.IsType<Dictionary<object, object>>(result);
+            }
+
+            [Fact]
+            public void Test_YamlParser_ExplicitReturnsDictionary()
+            {
+                IYamlParser yamlParser = new YamlParser();
+                string input = """
+                               title: doc1
+                               """;
+                Dictionary<string, object> result = yamlParser.Parse<Dictionary<string, object>>(input);
+                Assert.IsType<Dictionary<string, object>>(result);
+            }
+
+            [Fact]
+            public void Test_YamlParser_IdentThrows()
+            {
+                // Does not throw?
+                IYamlParser yamlParser = new YamlParser();
+                string input = """
+                               key1: value1
+                                key2: 123
+                               """;
+                // object result = yamlParser.Parse<object>(input);
+                input = "{}";
+                Assert.Throws<SemanticErrorException>(() => yamlParser.Parse<object>(input));
+            }
+
+            // Pass {} [] "Hello World"
+            // Valid JSON will work
+            // Invalid JSON will not { title: "missing-quotes" }
+
+            [Fact]
+            public void Test3()
+            {
+                IParser jsonParser = new JsonParser();
+            }
         }
     }
 }
