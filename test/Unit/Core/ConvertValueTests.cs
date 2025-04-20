@@ -49,7 +49,7 @@ namespace Test.Unit.Core
                 yield return result;
             }
         }
-        
+
         public static IEnumerable<object?[]> StringValueThrowsTestData()
         {
             yield return [typeof(bool), "abc", typeof(FormatException)];

@@ -57,7 +57,7 @@ namespace System.Collections.Generic
             {
                 return exactMatch;
             }
-            
+
             if (value is IEnumerable enumerable and not string)
             {
                 List<T?> result = new List<T?>();
@@ -69,7 +69,7 @@ namespace System.Collections.Generic
 
                 return result;
             }
-            
+
             // Fallback: delegate to GetValue<T?> and wrap in list
             T? singleValue = dictionary.GetValue<T>(key, caseInsensitive);
             List<T?> single = [singleValue];

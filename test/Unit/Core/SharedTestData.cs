@@ -21,16 +21,16 @@ namespace Test.Unit.Core
                 _ => throw new NotSupportedException($"No fuzz input for {type}")
             };
         }
-        
+
         static object?[] GetSampleValues(Type type)
         {
             Type t = Nullable.GetUnderlyingType(type) ?? type;
 
             List<object?> values = t switch
             {
-                _ when t == typeof(string) => [ "Value" ],
-                _ when t == typeof(int) => [ -1, 0, 1 ],
-                _ when t == typeof(Guid) => [ Guid.Empty ],
+                _ when t == typeof(string) => ["Value"],
+                _ when t == typeof(int) => [-1, 0, 1],
+                _ when t == typeof(Guid) => [Guid.Empty],
                 _ => throw new NotSupportedException($"No fuzz input for {type}")
             };
 
@@ -42,7 +42,7 @@ namespace Test.Unit.Core
             object?[] result = values.ToArray();
             return result;
         }
-        
+
         public static IEnumerable<object?[]> ValuesForTypeTestData()
         {
             Type[] types = ConversionCapabilityHelper.WithNullableCounterparts([
@@ -53,7 +53,7 @@ namespace Test.Unit.Core
             foreach (Type type in types)
             {
                 object?[] values = GetSampleValues(type);
-                
+
                 /*
                 Array typedArray = Array.CreateInstance(type, values.Length);
                 for (int i = 0; i < values.Length; i++)
@@ -64,15 +64,15 @@ namespace Test.Unit.Core
                 object?[] result = [type, typedArray];
                 yield return result;
                 */
-                
+
                 Type listType = typeof(List<>).MakeGenericType(type);
                 System.Collections.IList typedList = (System.Collections.IList)Activator.CreateInstance(listType)!;
                 foreach (object? value in values)
                 {
                     typedList.Add(value);
                 }
-    
-                yield return [ type, typedList ];
+
+                yield return [type, typedList];
 
                 // object?[] result = [type, values];
                 // yield return result;
@@ -93,7 +93,7 @@ namespace Test.Unit.Core
                 yield return result;
             }
         }
-        
+
         public static IEnumerable<object?[]> DefaultValueForTypeTestData()
         {
             Type[] types = ConversionCapabilityHelper.WithNullableCounterparts(
@@ -117,7 +117,7 @@ namespace Test.Unit.Core
                 yield return result;
             }
         }
-        
+
         public static IEnumerable<object?[]> FromStringValueToTypeTestData()
         {
             yield return [typeof(bool), "true", true];
@@ -162,7 +162,7 @@ namespace Test.Unit.Core
             yield return [typeof(CultureInfo), "nl-NL", new CultureInfo("nl-NL")];
             yield return [typeof(CultureInfo), "nl", new CultureInfo("nl")];
         }
-        
+
         public static IEnumerable<object?[]> FromObjectValueToTypeTestData()
         {
             yield return [typeof(int), DayOfWeek.Sunday, 0];
