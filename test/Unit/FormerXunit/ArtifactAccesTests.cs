@@ -19,7 +19,7 @@ namespace Test.Unit.FormerXunit
     public class ArtifactAccessTests
     {
         [Fact]
-        public async Task Test_ArtifactAccess_StoreWithoutClean()
+        public async Task Test_ArtifactAccess_Store()
         {
             MockFileSystem fileSystemMock = new MockFileSystem();
             int currentCount = fileSystemMock.AllDirectories.Count();
@@ -32,7 +32,7 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", false);
+            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist");
             byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
             Artifact artifact = new Artifact("test.txt", emptyBytes);
             Artifact[] artifacts = new Artifact[1];
@@ -57,7 +57,7 @@ namespace Test.Unit.FormerXunit
 
             IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
 
-            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", false);
+            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist");
             byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
             string fileName = Path.Combine("assets", "test.txt");
             Artifact artifact = new Artifact(fileName, emptyBytes);
@@ -67,31 +67,6 @@ namespace Test.Unit.FormerXunit
             await sut.Store(storeArtifactsRequest);
             int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
             createdCount.Should().Be(2);
-        }
-
-        [Fact]
-        public async Task Test_ArtifactAccess_StoreWithClean()
-        {
-            MockFileSystem fileSystemMock = new MockFileSystem();
-            int currentCount = fileSystemMock.AllDirectories.Count();
-
-            IConfigurationRoot configuration = new ConfigurationBuilder().Build();
-            ServiceProvider serviceProvider = new ServiceCollection()
-                .AddArtifactAccess(configuration)
-                .AddSingleton<IFileSystem>(fileSystemMock)
-                .BuildServiceProvider();
-
-            IArtifactAccess sut = serviceProvider.GetRequiredService<IArtifactAccess>();
-
-            FileSystemOutputLocation fileSystemOutputLocation = new FileSystemOutputLocation("dist", true);
-            byte[] emptyBytes = Encoding.UTF8.GetBytes(string.Empty);
-            Artifact artifact = new Artifact("test.txt", emptyBytes);
-            Artifact[] artifacts = new Artifact[1];
-            artifacts[0] = artifact;
-            StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
-            await sut.Store(storeArtifactsRequest);
-            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-            createdCount.Should().Be(1);
         }
     }
 }
