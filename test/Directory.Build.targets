@@ -2,32 +2,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
-  <!--  <Target Name="CustomAfterBuildTarget" AfterTargets="Build">-->
-  <!--    <Message Text="IsTestProject '$(IsTestProject)'" Importance="high" />-->
-  <!--    <Message Text="CollectCoverage '$(CollectCoverage)'" Importance="high" />-->
-  <!--    <Message Text="CoverletOutputFormat '$(CoverletOutputFormat)'" Importance="high" />-->
-  <!--  </Target>-->
-
-  <!-- <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
-    <CollectCoverage>true</CollectCoverage>
-    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
-    <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
-    <ExcludeByFile>**/*.g.cs</ExcludeByFile>
-  </PropertyGroup> -->
-
-  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
-    <!-- https://github.com/coverlet-coverage/coverlet/blob/master/Documentation/MSBuildIntegration.md -->
-    <!--<PackageReference Include="ReportGenerator" />-->
-    <!-- <PackageReference Include="coverlet.msbuild">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference> -->
-  </ItemGroup>
-
-  <!-- <Target Condition="'$(IsTestProject)' == 'true'" Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest"> -->
-    <!--<ReportGenerator ReportFiles="@(CoverletReport)" TargetDirectory="../html-coverage-report"/>-->
-  <!-- </Target> -->
-
   <Target Name="GenerateHtmlCoverageReport" Condition="'$(IsTestProject)' == 'true'" AfterTargets="VSTest">
            <PropertyGroup>
             <CoverageRoot>$(MSBuildProjectDirectory)\TestResults</CoverageRoot>
