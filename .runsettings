@@ -31,7 +31,7 @@
               <!-- class name="Ssg.Extensions.Metadata.Abstractions.BasePage" -->
               <Exclude>
                 [Ssg.Extensions.Metadata.Abstractions]*,
-                [Ssg.Extensions.Metadata.Abstractions]*,
+                [Kaylumah.Ssg.Manager.Site.Hosting]*,
               </Exclude>
             </Configuration>
           </DataCollector>
