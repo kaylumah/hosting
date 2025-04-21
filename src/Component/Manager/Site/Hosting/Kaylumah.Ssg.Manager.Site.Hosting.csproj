@@ -7,6 +7,5 @@
   <ItemGroup>
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <ProjectReference Include="..\Service\Kaylumah.Ssg.Manager.Site.Service.csproj" />
-    <ProjectReference Include="..\..\..\..\Utilities\Configuration\Kaylumah.Ssg.Utilities.Configuration.csproj" />
   </ItemGroup>
 </Project>
