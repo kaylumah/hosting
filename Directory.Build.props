@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Code analysis properties">
+    <NuGetAuditMode>All</NuGetAuditMode>
     <!--https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props#code-analysis-properties-->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest</AnalysisLevel>
