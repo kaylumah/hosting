@@ -21,7 +21,7 @@ public class FeeCalculator : IFeeCalculator
     private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
     {
         var calculatedFee = amount * (percentage / 100);
-        if (calculatedFee  minimumFee)
+        if (calculatedFee < minimumFee)
         {
             return minimumFee;
         }
@@ -55,7 +55,7 @@ public class DatedFeeCalculator : IFeeCalculator
     private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
     {
         var calculatedFee = amount * (percentage / 100);
-        if (calculatedFee  minimumFee)
+        if (calculatedFee < minimumFee)
         {
             return minimumFee;
         }
@@ -92,7 +92,7 @@ public interface ISystemClock
 
 public class SystemClock : ISystemClock
 {
-    public DateTimeOffset Now = DateTimeOffset.Now;
+    public DateTimeOffset Now => DateTimeOffset.Now;
 }
 Our updated scenario looks like this:
 public class SystemClockFeeCalculator : IFeeCalculator
@@ -128,7 +128,7 @@ public class SystemClockFeeCalculator : IFeeCalculator
     private static decimal InternalCalculate(decimal amount, decimal percentage, decimal minimumFee)
     {
         var calculatedFee = amount * (percentage / 100);
-        if (calculatedFee  minimumFee)
+        if (calculatedFee < minimumFee)
         {
             return minimumFee;
         }
@@ -136,11 +136,11 @@ public class SystemClockFeeCalculator : IFeeCalculator
     }
 }
 With the use of a TestSystemClock or a Moq, we can test our behaviour every day of the week. See, we are improving quality already. In a previous article, "Adventures with Mock" you can read more about my preferred way of creating mocks.
-public sealed class SystemClockMock : MockISystemClock
+public sealed class SystemClockMock : Mock<ISystemClock>
 {
     public SystemClockMock SetupSystemTime(DateTimeOffset systemTime)
     {
-        Setup(x = x.Now).Returns(systemTime);
+        Setup(x => x.Now).Returns(systemTime);
         return this;
     }
 }
@@ -167,18 +167,18 @@ public void Test3_FakeClock_Tuesday()
 Force Wrapper over Static Reference
 Now that we have our SystemClock, how do we make sure every dev in our team uses it over just calling DateTimeOffset.Now?
 Finally, our Roslyn Analyzer comes into play. We can use Microsoft.CodeAnalysis.BannedApiAnalyzers, which triggers the build warning RS0030. I prefer to enable these warnings on every project under src, so I use a Directory.Build.props file to install the analyzer via NuGet.
-Project
-  Import Project=../Directory.Build.props /
-  ItemGroup
-    PackageReference Include=Microsoft.CodeAnalysis.BannedApiAnalyzers Version=3.3.2
-      PrivateAssetsall/PrivateAssets
-      IncludeAssetsruntime; build; native; contentfiles; analyzers/IncludeAssets
-    /PackageReference
-  /ItemGroup
-  ItemGroup
-    AdditionalFiles Include=$(MSBuildThisFileDirectory)/BannedSymbols.txt /
-  /ItemGroup
-/Project
+<Project>
+  <Import Project="../Directory.Build.props" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)/BannedSymbols.txt" />
+  </ItemGroup>
+</Project>
 All that remains is to create a file called BannedSymbols.txt with the following content
 note: I also blocked the use of DateTime in favour of DateTimeOffset.
 T:System.DateTime;Always use System.DateTimeOffset over System.DateTime

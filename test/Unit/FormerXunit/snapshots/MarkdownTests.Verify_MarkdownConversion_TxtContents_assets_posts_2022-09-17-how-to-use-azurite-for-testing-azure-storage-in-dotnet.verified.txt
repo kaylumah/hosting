@@ -19,7 +19,7 @@ azurite --silent --location c:\azurite --debug c:\azurite\debug.log
 If we create a demo app and install blob storage via dotnet add package Azure.Storage.Blobs. We can connect with the following snippet:
 using Azure.Storage.Blobs;
 
-var connectionString = DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;;
+var connectionString = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
 var blobServiceClient = new BlobServiceClient(connectionString);
 var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
 The snippet works because the connection string we provided is the default connection string for Azurite. It contains the default account known as devstoreaccount1 and connects over HTTP. The default connection string also assumes you are running blob, queue and table services. For example, on NPM you could run:
@@ -35,7 +35,7 @@ In the post "Working with Azure SDK for .NET" I made a point that connection str
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-var endpoint = new Uri(http://127.0.0.1:10000/devstoreaccount1);
+var endpoint = new Uri("http://127.0.0.1:10000/devstoreaccount1");
 var credential = new DefaultAzureCredential();
 var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions());
 var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
@@ -50,7 +50,7 @@ Update the endpoint Uri to HTTPS:
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-var endpoint = new Uri(https://127.0.0.1:10000/devstoreaccount1);
+var endpoint = new Uri("https://127.0.0.1:10000/devstoreaccount1");
 var credential = new DefaultAzureCredential();
 var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions());
 var properties = await blobServiceClient.GetPropertiesAsync().ConfigureAwait(false);
@@ -66,14 +66,14 @@ steps:
       cd azurite
       mkcert --install
       mkcert 127.0.0.1
-      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log 
-    displayName: Install and Run Azurite
+      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log &
+    displayName: "Install and Run Azurite"
 Unfortunately, adding a certificate to the trust store requires a password prompt. On an Azure-hosted agent, this does not work and causes the agent to be stuck. To me, this could mean one of two things. Either the Azure team does not test over HTTPS, or they have a different set of test tooling. As it turns out, they have a set of helpers to construct the service clients and disable SSL verification. Like this:
 using Azure.Core.Pipeline;
 using Azure.Identity;
 using Azure.Storage.Blobs;
 
-var endpoint = new Uri(https://127.0.0.1:10000/devstoreaccount1);
+var endpoint = new Uri("https://127.0.0.1:10000/devstoreaccount1");
 var credential = new DefaultAzureCredential();
 var blobServiceClient = new BlobServiceClient(endpoint, credential, new BlobClientOptions()
 {
@@ -92,8 +92,8 @@ steps:
       mkdir azurite
       cd azurite
       mkcert 127.0.0.1
-      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log 
-    displayName: Install and Run Azurite
+      azurite --oauth basic --cert 127.0.0.1.pem --key 127.0.0.1-key.pem --silent --location data --debug data\debug.log &
+    displayName: "Install and Run Azurite"
 How to use Azurite in my project?
 The testing helpers have more to it than disabling SSL but are not present on NuGet. So naturally, I raised an issue to the SDK team if they have any plans in that direction. Unfortunately, at this point, they have no interest in releasing their internal test tooling. The techniques I mentioned thus far can be used standalone. I, however, felt this was an excellent opportunity to create my first NuGet Package. The package cannot assume how anybody runs Azurite, so I introduced two classes. You can use AzuriteAccountBuilder to configure how things are run, like the account or the ports being used. The AzuriteAccount class provides access to stuff like the connection string. For convenience the package also creates helper methods to create BlobServiceClient, TableServiceClient or QueueServiceClient form an AzuriteAccount.
 My package is designed for use in a test project so let us create a new test project (i.e. dotnet new xunit) and add my package to it dotnet add package Kaylumah.Testing.Azurite --version 1.0.0.

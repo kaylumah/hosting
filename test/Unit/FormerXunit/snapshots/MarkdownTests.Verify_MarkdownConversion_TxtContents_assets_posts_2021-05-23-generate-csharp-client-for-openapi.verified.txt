@@ -14,39 +14,39 @@ dotnet add package System.ComponentModel.Annotations
 dotnet add package Newtonsoft.Json
 Safe the pet store OpenAPI JSON in the project we just created under the name swagger.json. We also need a nswag.json file with the following contents:
 {
-    runtime: NetCore31,
-    documentGenerator: {
-        fromDocument: {
-            json: swagger.json
+    "runtime": "NetCore31",
+    "documentGenerator": {
+        "fromDocument": {
+            "json": "swagger.json"
         }
     },
-    codeGenerators: {
-        openApiToCSharpClient: {
-            output: Client.g.cs
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "output": "Client.g.cs"
         }
     }
 }
 We use an MSBuild task that calls NSwag. Update the ...Sdks.Petstore.csproj project file to look like this.
-Project Sdk=Microsoft.NET.Sdk
+<Project Sdk="Microsoft.NET.Sdk">
 
-  PropertyGroup
-    TargetFrameworknetstandard2.0/TargetFramework
-  /PropertyGroup
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
 
-  ItemGroup
-    PackageReference Include=Newtonsoft.Json Version=13.0.1 /
-    PackageReference Include=NSwag.MSBuild Version=13.11.1
-      IncludeAssetsruntime; build; native; contentfiles; analyzers; buildtransitive/IncludeAssets
-      PrivateAssetsall/PrivateAssets
-    /PackageReference
-    PackageReference Include=System.ComponentModel.Annotations Version=5.0.0 /
-  /ItemGroup
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.MSBuild" Version="13.11.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
 
-  Target Name=GenerateSdk BeforeTargets=Build
-    Exec Command=$(NSwagExe_Core31) run nswag.json  /
-  /Target
+  <Target Name="GenerateSdk" BeforeTargets="Build">
+    <Exec Command="$(NSwagExe_Core31) run nswag.json " />
+  </Target>
 
-/Project
+</Project>
 After building the project, we have a file named Client.g.cs containing everything we need to consume the PetStore API. We can use a console application to verify that we can make API calls.
 dotnet new console --framework netcoreapp3.1 --output src/Client/ApiClient --name Kaylumah.GenerateCSharpClientForOpenAPI.Client.ApiClient
 An example call we can make with our API looks like this:
@@ -63,7 +63,7 @@ namespace Kaylumah.GenerateCSharpClientForOpenAPI.Client.ApiClient
             var httpClient = new HttpClient();
             var apiClient = new MyNamespace.Client(httpClient);
             var result = await apiClient.GetInventoryAsync();
-            Console.WriteLine(string.Join(|, result.Keys));
+            Console.WriteLine(string.Join("|", result.Keys));
         }
     }
 }
@@ -77,62 +77,62 @@ I encourage you to take a look at the documentation to see all configuration opt
 Settings Description ClientGeneratorBaseSettings Common settings for all client code generators. CSharpGeneratorBaseSettings Base settings for all C# code generators. CSharpClientGeneratorSettings Settings for C# clients. If you look closely at your build log, you see the following line Executing file 'nswag.json' with variables ''.... So how do we pass variables to NSwag? Update the statement to "$(NSwagExe_Core31) run nswag.json /variables:Configuration=$(Configuration)" . Here we define a variable named Configuration and assign it the MSBuild value for $(Configuration). If we build our project, the logline reads Executing file 'nswag.json' with variables 'Configuration=Debug'.... You also have the option to supply default values in your NSwag configuration. This way, you don't see it as part of your build log, but it helps omit parts from the command.
 Property Description namespace and contractsNamespace Control the namespace of the generated code generateContractsOutput and contractsOutputFilePath Control seperation of contract and implementation generateClientInterfaces create an interface exceptionClass and className control classnames operationGenerationMode how to create client for multiple endpoints After our modifications, our NSwag file looks like this.
 {
-    runtime: NetCore31,
-    defaultVariables: Configuration=Debug,
-    documentGenerator: {
-        fromDocument: {
-            json: $(InputDocument)
+    "runtime": "NetCore31",
+    "defaultVariables": "Configuration=Debug",
+    "documentGenerator": {
+        "fromDocument": {
+            "json": "$(InputDocument)"
         }
     },
-    codeGenerators: {
-        openApiToCSharpClient: {
-            generateClientInterfaces: true,
-            exceptionClass: $(SdkName)ApiException,
-            useBaseUrl: true,
-            generateBaseUrlProperty: true,
-            generateContractsOutput: true,
-            contractsNamespace: $(SdkNamespace).Interface,
-            contractsOutputFilePath: $(GeneratedContractFile),
-            className: $(SdkName)Client,
-            operationGenerationMode: SingleClientFromOperationId,
-            namespace: $(SdkNamespace).Service,
-            output: $(GeneratedClientFile)
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "generateClientInterfaces": true,
+            "exceptionClass": "$(SdkName)ApiException",
+            "useBaseUrl": true,
+            "generateBaseUrlProperty": true,
+            "generateContractsOutput": true,
+            "contractsNamespace": "$(SdkNamespace).Interface",
+            "contractsOutputFilePath": "$(GeneratedContractFile)",
+            "className": "$(SdkName)Client",
+            "operationGenerationMode": "SingleClientFromOperationId",
+            "namespace": "$(SdkNamespace).Service",
+            "output": "$(GeneratedClientFile)"
         }
     }
 }
 To pass all the values to NSwag, we update our csproj file to look like this. For demonstration purposes, I show that the name of the MSBuild variable does not need to match the NSwag variable. Do take care that the variable names passed to NSwag need to match the name in nswag.json
-Project Sdk=Microsoft.NET.Sdk
+<Project Sdk="Microsoft.NET.Sdk">
 
-  PropertyGroup
-    TargetFrameworknetstandard2.0/TargetFramework
-  /PropertyGroup
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
 
-  ItemGroup
-    PackageReference Include=Newtonsoft.Json Version=13.0.1 /
-    PackageReference Include=NSwag.MSBuild Version=13.11.1
-      IncludeAssetsruntime; build; native; contentfiles; analyzers; buildtransitive/IncludeAssets
-      PrivateAssetsall/PrivateAssets
-    /PackageReference
-    PackageReference Include=System.ComponentModel.Annotations Version=5.0.0 /
-  /ItemGroup
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NSwag.MSBuild" Version="13.11.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
 
-  Target Name=GenerateSdk BeforeTargets=Build
-    PropertyGroup
-        OpenAPIDocumentswagger.json/OpenAPIDocument
-        NSwagConfigurationnswag.json/NSwagConfiguration
+  <Target Name="GenerateSdk" BeforeTargets="Build">
+    <PropertyGroup>
+        <OpenAPIDocument>swagger.json</OpenAPIDocument>
+        <NSwagConfiguration>nswag.json</NSwagConfiguration>
 
-        SdkNamespace$(RootNamespace)/SdkNamespace
-        SdkNamePetStore/SdkName
-        GeneratedInterfaceFile$(SdkName).Interface.g.cs/GeneratedInterfaceFile
-        GeneratedServiceFile$(SdkName).Service.g.cs/GeneratedServiceFile
+        <SdkNamespace>$(RootNamespace)</SdkNamespace>
+        <SdkName>PetStore</SdkName>
+        <GeneratedInterfaceFile>$(SdkName).Interface.g.cs</GeneratedInterfaceFile>
+        <GeneratedServiceFile>$(SdkName).Service.g.cs</GeneratedServiceFile>
 
-    /PropertyGroup
-    Error Text=The OpenAPI document '$(OpenAPIDocument)' does not exists! Condition=!Exists('$(OpenAPIDocument)') /
-    Error Text=The NSwag configuration '$(NSwagConfiguration)' does not exists! Condition=!Exists('$(NSwagConfiguration)') /
-    Exec Command=$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),InputDocument=$(OpenAPIDocument),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile) /
-  /Target
+    </PropertyGroup>
+    <Error Text="The OpenAPI document '$(OpenAPIDocument)' does not exists!" Condition="!Exists('$(OpenAPIDocument)')" />
+    <Error Text="The NSwag configuration '$(NSwagConfiguration)' does not exists!" Condition="!Exists('$(NSwagConfiguration)')" />
+    <Exec Command="$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),InputDocument=$(OpenAPIDocument),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile)" />
+  </Target>
 
-/Project
+</Project>
 Generate client from API in your project
 Our second version generates the SDK based on a .NET Core API project in our solution, which can be very useful if you want to provide the client in a NuGet package to other projects/teams in your organization. The project setup will be almost identical to our file-based setup.
 dotnet new classlib --framework netstandard2.0 --output src/Sdks/FromNswagApi --name Kaylumah.GenerateCSharpClientForOpenAPI.Sdks.FromNswagApi
@@ -143,42 +143,42 @@ If we are going to create an SDK we first need to generate our API project. We g
 dotnet new webapi --framework netcoreapp3.1 --output src/Apis/Nswag/WeatherForecastApi --name Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Nswag.WeatherForecastApi
 Note that I am specifying the optional --framework option for creating the projects; this has two reasons. First, I prefer to use LTS versions of the Microsoft SDK and secondly, Microsoft made changes to the webapi template in the NET5 SDK that makes it opt-out to use OpenAPI and defaults to Swashbuckle, which I don't want in this case.
 {
-    runtime: NetCore31,
-    documentGenerator: {
-        aspNetCoreToOpenApi: {
-            project: ../../Apis/Nswag/WeatherForecastApi/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Nswag.WeatherForecastApi.csproj
+    "runtime": "NetCore31",
+    "documentGenerator": {
+        "aspNetCoreToOpenApi": {
+            "project": "../../Apis/Nswag/WeatherForecastApi/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Nswag.WeatherForecastApi.csproj"
         }
     },
-    codeGenerators: {
-        openApiToCSharpClient: {
-            generateClientInterfaces: true,
-            exceptionClass: $(SdkName)ApiException,
-            useBaseUrl: true,
-            generateBaseUrlProperty: true,
-            generateContractsOutput: true,
-            contractsNamespace: $(SdkNamespace).Interface,
-            contractsOutputFilePath: $(GeneratedContractFile),
-            className: $(SdkName)Client,
-            operationGenerationMode: SingleClientFromOperationId,
-            namespace: $(SdkNamespace).Service,
-            output: $(GeneratedClientFile)
+    "codeGenerators": {
+        "openApiToCSharpClient": {
+            "generateClientInterfaces": true,
+            "exceptionClass": "$(SdkName)ApiException",
+            "useBaseUrl": true,
+            "generateBaseUrlProperty": true,
+            "generateContractsOutput": true,
+            "contractsNamespace": "$(SdkNamespace).Interface",
+            "contractsOutputFilePath": "$(GeneratedContractFile)",
+            "className": "$(SdkName)Client",
+            "operationGenerationMode": "SingleClientFromOperationId",
+            "namespace": "$(SdkNamespace).Service",
+            "output": "$(GeneratedClientFile)"
         }
     }
 }
 Like before, we need a GenerateSdk target; the difference is that we don't have a swagger.json.
-Target Name=GenerateSdk BeforeTargets=Build
-PropertyGroup
-    NSwagConfigurationnswag.json/NSwagConfiguration
+<Target Name="GenerateSdk" BeforeTargets="Build">
+<PropertyGroup>
+    <NSwagConfiguration>nswag.json</NSwagConfiguration>
 
-    SdkNamespace$(RootNamespace)/SdkNamespace
-    SdkNameWeather/SdkName
-    GeneratedInterfaceFile$(SdkName).Interface.g.cs/GeneratedInterfaceFile
-    GeneratedServiceFile$(SdkName).Service.g.cs/GeneratedServiceFile
+    <SdkNamespace>$(RootNamespace)</SdkNamespace>
+    <SdkName>Weather</SdkName>
+    <GeneratedInterfaceFile>$(SdkName).Interface.g.cs</GeneratedInterfaceFile>
+    <GeneratedServiceFile>$(SdkName).Service.g.cs</GeneratedServiceFile>
 
-/PropertyGroup
-Error Text=The NSwag configuration '$(NSwagConfiguration)' does not exists! Condition=!Exists('$(NSwagConfiguration)') /
-Exec Command=$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile) /
-/Target
+</PropertyGroup>
+<Error Text="The NSwag configuration '$(NSwagConfiguration)' does not exists!" Condition="!Exists('$(NSwagConfiguration)')" />
+<Exec Command="$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile)" />
+</Target>
 If we try to build our project now, we get an error.
 Microsoft (R) Build Engine version 16.9.0+57a23d249 for .NET
 Copyright (C) Microsoft Corporation. All rights reserved.
@@ -192,7 +192,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
   Executing file 'nswag.json' with variables 'Configuration=Debug'...
   Launcher directory: /ExamplePath/.nuget/packages/nswag.msbuild/13.11.1/tools/NetCore31
   System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
-   --- System.InvalidOperationException: No service for type 'NSwag.Generation.IOpenApiDocumentGenerator' has been registered.
+   ---> System.InvalidOperationException: No service for type 'NSwag.Generation.IOpenApiDocumentGenerator' has been registered.
 The reason behind this error is that the tool requires NSwag in the API project. To do this, we need to install the NSwag.AspNetCore package with dotnet add package NSwag.AspNetCore.  The scope of this tutorial is not how to set up an API project with NSwag luckily, the guide is straightforward. We modify the ConfigureServices method in Startup.cs with services.AddOpenApiDocument(); and we add app.UseOpenApi(); and app.UseSwaggerUi3(); to the Configure method. We have an Open API specification for our WeatherForecast controller with these changes and can easily view and test it with Swagger UI.
 Now we can successfully generate a client for the WeatherForecastAPI!
 Generate client from Swashbuckle project
@@ -211,56 +211,56 @@ This allows us to run
 swagger tofile --output [output] [startupassembly] [swaggerdoc]`. For example, in the FromSwashbuckleApi folder we would run `dotnet swagger tofile --output swagger.json ../../Apis/Swashbuckle/WeatherForecastApi/bin/Debug/netcoreapp3.1/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi.dll v1
 At the moment, this returns an error if you target a netcoreapp3.1 project when using a net5 SDK. This issue describes a change in 6.x of the tool. A workaround for this is using a global.json file.
 {
-    sdk: {
-        version: 3.1.406,
-        rollForward: latestPatch
+    "sdk": {
+        "version": "3.1.406",
+        "rollForward": "latestPatch"
     }
 }
 Similar to the NSwag version, we still need to add Swashbuckle to the webapi. Luckily just as with NSwag the guide is straightforward.
-Target Name=GenerateOpenAPI BeforeTargets=GenerateSdk
-  Exec Command=dotnet swagger tofile --output swagger.json ../../Apis/Swashbuckle/WeatherForecastApi/bin/Debug/netcoreapp3.1/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi.dll v1 /
-/Target
+<Target Name="GenerateOpenAPI" BeforeTargets="GenerateSdk">
+  <Exec Command="dotnet swagger tofile --output swagger.json ../../Apis/Swashbuckle/WeatherForecastApi/bin/Debug/netcoreapp3.1/Kaylumah.GenerateCSharpClientForOpenAPI.Apis.Swashbuckle.WeatherForecastApi.dll v1" />
+</Target>
 
-Target Name=GenerateSdk BeforeTargets=Build
-  PropertyGroup
-    OpenAPIDocumentswagger.json/OpenAPIDocument
-    NSwagConfigurationnswag.json/NSwagConfiguration
+<Target Name="GenerateSdk" BeforeTargets="Build">
+  <PropertyGroup>
+    <OpenAPIDocument>swagger.json</OpenAPIDocument>
+    <NSwagConfiguration>nswag.json</NSwagConfiguration>
 
-    SdkNamespace$(RootNamespace)/SdkNamespace
-    SdkNameWeather/SdkName
-    GeneratedInterfaceFile$(SdkName).Interface.g.cs/GeneratedInterfaceFile
-    GeneratedServiceFile$(SdkName).Service.g.cs/GeneratedServiceFile
-  /PropertyGroup
-  Error Text=The OpenAPI document '$(OpenAPIDocument)' does not exists! Condition=!Exists('$(OpenAPIDocument)') /
-  Error Text=The NSwag configuration '$(NSwagConfiguration)' does not exists! Condition=!Exists('$(NSwagConfiguration)') /
-  Exec Command=$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),InputDocument=$(OpenAPIDocument),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile) /
-/Target
+    <SdkNamespace>$(RootNamespace)</SdkNamespace>
+    <SdkName>Weather</SdkName>
+    <GeneratedInterfaceFile>$(SdkName).Interface.g.cs</GeneratedInterfaceFile>
+    <GeneratedServiceFile>$(SdkName).Service.g.cs</GeneratedServiceFile>
+  </PropertyGroup>
+  <Error Text="The OpenAPI document '$(OpenAPIDocument)' does not exists!" Condition="!Exists('$(OpenAPIDocument)')" />
+  <Error Text="The NSwag configuration '$(NSwagConfiguration)' does not exists!" Condition="!Exists('$(NSwagConfiguration)')" />
+  <Exec Command="$(NSwagExe_Core31) run $(NSwagConfiguration) /variables:Configuration=$(Configuration),InputDocument=$(OpenAPIDocument),SdkName=$(SdkName),SdkNamespace=$(SdkNamespace),GeneratedClientFile=$(GeneratedServiceFile),GeneratedContractFile=$(GeneratedInterfaceFile)" />
+</Target>
 Now that we generated a second version of our Weather API, let's quickly compare the two.
 // Swashbuckle
-[System.CodeDom.Compiler.GeneratedCode(NSwag, 13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0)))]
+[System.CodeDom.Compiler.GeneratedCode("NSwag", "13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))")]
 public partial interface IWeatherClient
 {
-    /// returnsSuccess/returns
-    /// exception cref=WeatherApiExceptionA server side error occurred./exception
-    System.Threading.Tasks.TaskSystem.Collections.Generic.ICollectionWeatherForecast WeatherForecastAsync();
+    /// <returns>Success</returns>
+    /// <exception cref="WeatherApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> WeatherForecastAsync();
 
-    /// param name=cancellationTokenA cancellation token that can be used by other objects or threads to receive notice of cancellation./param
-    /// returnsSuccess/returns
-    /// exception cref=WeatherApiExceptionA server side error occurred./exception
-    System.Threading.Tasks.TaskSystem.Collections.Generic.ICollectionWeatherForecast WeatherForecastAsync(System.Threading.CancellationToken cancellationToken);
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+    /// <returns>Success</returns>
+    /// <exception cref="WeatherApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> WeatherForecastAsync(System.Threading.CancellationToken cancellationToken);
 
 }
 
 // NSwag
-[System.CodeDom.Compiler.GeneratedCode(NSwag, 13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0)))]
+[System.CodeDom.Compiler.GeneratedCode("NSwag", "13.11.1.0 (NJsonSchema v10.4.3.0 (Newtonsoft.Json v12.0.0.0))")]
 public partial interface IWeatherClient
 {
-    /// exception cref=WeatherApiExceptionA server side error occurred./exception
-    System.Threading.Tasks.TaskSystem.Collections.Generic.ICollectionWeatherForecast WeatherForecast_GetAsync();
+    /// <exception cref="WeatherApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> WeatherForecast_GetAsync();
 
-    /// param name=cancellationTokenA cancellation token that can be used by other objects or threads to receive notice of cancellation./param
-    /// exception cref=WeatherApiExceptionA server side error occurred./exception
-    System.Threading.Tasks.TaskSystem.Collections.Generic.ICollectionWeatherForecast WeatherForecast_GetAsync(System.Threading.CancellationToken cancellationToken);
+    /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+    /// <exception cref="WeatherApiException">A server side error occurred.</exception>
+    System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> WeatherForecast_GetAsync(System.Threading.CancellationToken cancellationToken);
 
 }
 Funnily enough, even in a specification as small as these, there can already be differences!

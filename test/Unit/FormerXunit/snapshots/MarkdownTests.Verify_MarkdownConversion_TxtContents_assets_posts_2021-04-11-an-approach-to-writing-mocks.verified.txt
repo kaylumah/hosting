@@ -75,7 +75,7 @@ namespace Kaylumah.AdventuresWithMock.Access.Article.Service
 {
     public class ArticleAccess : IArticleAccess
     {
-        public TaskCreateArticlesResponse CreateArticles(CreateArticlesRequest createArticlesRequest)
+        public Task<CreateArticlesResponse> CreateArticles(CreateArticlesRequest createArticlesRequest)
         {
             throw new NotImplementedException();
         }
@@ -85,7 +85,7 @@ namespace Kaylumah.AdventuresWithMock.Access.Article.Service
             throw new NotImplementedException();
         }
 
-        public TaskFilterArticleResponse FilterArticles(FilterArticleCriteria filterArticleCriteria = null)
+        public Task<FilterArticleResponse> FilterArticles(FilterArticleCriteria filterArticleCriteria = null)
         {
             throw new NotImplementedException();
         }
@@ -100,7 +100,7 @@ namespace Kaylumah.AdventuresWithMock.Access.Author.Service
 {
     public class AuthorAccess : IAuthorAccess
     {
-        public TaskFilterAuthorResponse FilterAuthors(FilterAuthorCriteria filterAuthorCriteria = null)
+        public Task<FilterAuthorResponse> FilterAuthors(FilterAuthorCriteria filterAuthorCriteria = null)
         {
             throw new NotImplementedException();
         }
@@ -136,7 +136,7 @@ namespace Kaylumah.AdventuresWithMock.Manager.Site.Service
                 AuthorIds = new int[] { authorId }
             });
 
-            var author = authorsResponse.Authors.SingleOrDefault(x = x.Id.Equals(authorId));
+            var author = authorsResponse.Authors.SingleOrDefault(x => x.Id.Equals(authorId));
 
             if (author == null)
             {
@@ -171,24 +171,24 @@ I have yet to explain the reason behind the article. Let us look at how we might
 public async Task Test_SiteManager_CreateArticle_Traditionally()
 {
     // Arange
-    var authorAccessMock = new MockIAuthorAccess();
-    authorAccessMock.Setup(x = x.FilterAuthors(It.IsFilterAuthorCriteria(p = p.AuthorIds.Contains(666)))).ReturnsAsync(new FilterAuthorResponse {
+    var authorAccessMock = new Mock<IAuthorAccess>();
+    authorAccessMock.Setup(x => x.FilterAuthors(It.Is<FilterAuthorCriteria>(p => p.AuthorIds.Contains(666)))).ReturnsAsync(new FilterAuthorResponse {
         Authors = new Author[] {
             new Author {
                 Id = 666,
-                DisplayName = Max,
+                DisplayName = "Max",
                 Verfied = true
             }
         }
     });
-    var articleAccessMock = new MockIArticleAccess();
-    articleAccessMock.Setup(x = x.CreateArticles(It.IsAnyCreateArticlesRequest())).ReturnsAsync(new CreateArticlesResponse {
+    var articleAccessMock = new Mock<IArticleAccess>();
+    articleAccessMock.Setup(x => x.CreateArticles(It.IsAny<CreateArticlesRequest>())).ReturnsAsync(new CreateArticlesResponse {
         Articles = new Article[] {
             new Article {
                 Id = 1,
                 AuthorId = 666,
-                Title = ...,
-                Description = ...
+                Title = "...",
+                Description = "..."
             }
         }
     });
@@ -196,14 +196,14 @@ public async Task Test_SiteManager_CreateArticle_Traditionally()
 
     // Act
     var request = new Kaylumah.AdventuresWithMock.Manager.Site.Interface.CreateArticleRequest { 
-        Title = Pretty Title,
-        Content = # AdventuresWithMock ...
+        Title = "Pretty Title",
+        Content = "# AdventuresWithMock ..."
     };
     await sut.CreateArticle(request);
 
     // Assert
-    authorAccessMock.Verify(x = x.FilterAuthors(It.IsAnyFilterAuthorCriteria()), Times.Once);
-    articleAccessMock.Verify(x = x.CreateArticles(It.IsAnyCreateArticlesRequest()), Times.Once);
+    authorAccessMock.Verify(x => x.FilterAuthors(It.IsAny<FilterAuthorCriteria>()), Times.Once);
+    articleAccessMock.Verify(x => x.CreateArticles(It.IsAny<CreateArticlesRequest>()), Times.Once);
 }
 That is a lot of code to test a simple scenario. It is in its current form, even four lines longer than the code under test. Even worse, it's primarily boilerplate to set up the test. I often find myself repeating similar code for every test. Which is a violation of the "Don't Repeat Yourself" principle. So I am going to propose an alternative set up to my mock code. All you need to do is create a subclass from Mock<T> for the system you want to stub, and you are good to go.
 Mocking Data Access
@@ -215,20 +215,20 @@ using Moq;
 
 namespace Test.Unit.Mocks
 {
-    public class AuthorAccessMock : MockIAuthorAccess
+    public class AuthorAccessMock : Mock<IAuthorAccess>
     {
-        public ListAuthor Authors { get; }
-        public AuthorAccessMock(ListAuthor authors)
+        public List<Author> Authors { get; }
+        public AuthorAccessMock(List<Author> authors)
         {
             Authors = authors;
 
-            Setup(x = x.FilterAuthors(It.IsAnyFilterAuthorCriteria()))
-                .ReturnsAsync((FilterAuthorCriteria criteria) = {
+            Setup(x => x.FilterAuthors(It.IsAny<FilterAuthorCriteria>()))
+                .ReturnsAsync((FilterAuthorCriteria criteria) => {
 
-                    IQueryableAuthor result = Authors.AsQueryable();
+                    IQueryable<Author> result = Authors.AsQueryable();
                     if (criteria != null)
                     {
-                        result = result.Where(x = criteria.AuthorIds.Contains(x.Id));
+                        result = result.Where(x => criteria.AuthorIds.Contains(x.Id));
                     }
 
                     return new FilterAuthorResponse {
@@ -243,8 +243,8 @@ So how does this impact our test? We create a new AuthorAccessMock and pass it t
 public async Task Test_SiteManager_CreateArticle_RepoMocksDemo1()
 {
     // Arange
-    var authorAccessMock = new AuthorAccessMock(new ListAuthor {
-        new Author { Id = 666, DisplayName = Max, Verfied = false }
+    var authorAccessMock = new AuthorAccessMock(new List<Author> {
+        new Author { Id = 666, DisplayName = "Max", Verfied = false }
     });
     var articleAccessMock = new ArticleAccessMock();
     ISiteManager sut = new SiteManager(articleAccessMock.Object, authorAccessMock.Object);
@@ -252,14 +252,14 @@ public async Task Test_SiteManager_CreateArticle_RepoMocksDemo1()
     // Act
     var request = new Kaylumah.AdventuresWithMock.Manager.Site.Interface.CreateArticleRequest
     {
-        Title = Pretty Title,
-        Content = # AdventuresWithMock ...
+        Title = "Pretty Title",
+        Content = "# AdventuresWithMock ..."
     };
     await sut.CreateArticle(request);
 
     // Assert
-    authorAccessMock.Verify(x = x.FilterAuthors(It.IsAnyFilterAuthorCriteria()), Times.Once);
-    articleAccessMock.Verify(x = x.CreateArticles(It.IsAnyCreateArticlesRequest()), Times.Never);
+    authorAccessMock.Verify(x => x.FilterAuthors(It.IsAny<FilterAuthorCriteria>()), Times.Once);
+    articleAccessMock.Verify(x => x.CreateArticles(It.IsAny<CreateArticlesRequest>()), Times.Never);
 }
 Our AuthorAccess was a bit boring. Let's extend on the stateful premise by building our ArticleAccessMock, which looks a lot like a CRUD repository. There are a couple of things in the following snippet I like to point out.
 I created another representation of our Article class, and this is so that our mock implementation does a soft delete. Since we are stateful, we can then make tests on that premise.
@@ -274,7 +274,7 @@ using Moq;
 
 namespace Test.Unit.Mocks
 {
-    public class ArticleAccessMock : MockIArticleAccess
+    public class ArticleAccessMock : Mock<IArticleAccess>
     {
         public class ArticleMock
         {
@@ -285,16 +285,16 @@ namespace Test.Unit.Mocks
             public bool Removed { get;set; }
         }
 
-        public ListCreateArticlesRequest CreateArticlesRequests { get; } = new ListCreateArticlesRequest();
-        public ListDeleteArticlesRequest DeleteArticlesRequests { get; } = new ListDeleteArticlesRequest();
+        public List<CreateArticlesRequest> CreateArticlesRequests { get; } = new List<CreateArticlesRequest>();
+        public List<DeleteArticlesRequest> DeleteArticlesRequests { get; } = new List<DeleteArticlesRequest>();
 
-        private ListArticleMock _articleState = new ListArticleMock();
+        private List<ArticleMock> _articleState = new List<ArticleMock>();
         private int _numberOfArticlesBeforeCreate = 0;
 
         public ArticleAccessMock()
         {
-            Setup(access = access.CreateArticles(It.IsAnyCreateArticlesRequest()))
-                .CallbackCreateArticlesRequest(request = {
+            Setup(access => access.CreateArticles(It.IsAny<CreateArticlesRequest>()))
+                .Callback<CreateArticlesRequest>(request => {
                     CreateArticlesRequests.Add(request);
                     _numberOfArticlesBeforeCreate = _articleState.Count;
                     var nextId = _numberOfArticlesBeforeCreate + 1;
@@ -310,10 +310,10 @@ namespace Test.Unit.Mocks
                         nextId++;
                     }
                 })
-                .ReturnsAsync(() = new CreateArticlesResponse {
+                .ReturnsAsync(() => new CreateArticlesResponse {
                     Articles = _articleState
                     .Skip(_numberOfArticlesBeforeCreate)
-                    .Select(x = new Article
+                    .Select(x => new Article
                     {
                         Id = x.Id,
                         AuthorId = x.AuthorId,
@@ -323,12 +323,12 @@ namespace Test.Unit.Mocks
                     .ToArray()
                 });
             
-            Setup(access = access.DeleteArticles(It.IsAnyDeleteArticlesRequest()))
-                .CallbackDeleteArticlesRequest(deleteArticlesRequest = {
+            Setup(access => access.DeleteArticles(It.IsAny<DeleteArticlesRequest>()))
+                .Callback<DeleteArticlesRequest>(deleteArticlesRequest => {
                     DeleteArticlesRequests.Add(deleteArticlesRequest);
                     foreach(var deleteArticleRequests in deleteArticlesRequest.DeleteArticleRequests)
                     {
-                        var existing = _articleState.SingleOrDefault(article = deleteArticleRequests.ArticleId == article.Id);
+                        var existing = _articleState.SingleOrDefault(article => deleteArticleRequests.ArticleId == article.Id);
                         if (existing != null)
                         {
                             existing.Removed = true;
@@ -337,9 +337,9 @@ namespace Test.Unit.Mocks
                 });
         }
 
-        public ArticleAccessMock SetupFilterArticles(ListArticle articles)
+        public ArticleAccessMock SetupFilterArticles(List<Article> articles)
         {
-            _articleState = articles.Select(x = new ArticleMock {
+            _articleState = articles.Select(x => new ArticleMock {
                 Id = x.Id,
                 AuthorId = x.AuthorId,
                 Content = x.Description,
@@ -347,17 +347,17 @@ namespace Test.Unit.Mocks
                 Removed = false
             }).ToList();
 
-            Setup(x = x.FilterArticles(It.IsAnyFilterArticleCriteria()))
-                .ReturnsAsync((FilterArticleCriteria criteria) = {
-                    IQueryableArticleMock result = _articleState.AsQueryable();
+            Setup(x => x.FilterArticles(It.IsAny<FilterArticleCriteria>()))
+                .ReturnsAsync((FilterArticleCriteria criteria) => {
+                    IQueryable<ArticleMock> result = _articleState.AsQueryable();
                     if (criteria != null)
                     {
-                        result = result.Where(x = criteria.ArticleIds.Contains(x.Id));
+                        result = result.Where(x => criteria.ArticleIds.Contains(x.Id));
                     }
                     return new FilterArticleResponse {
                         Articles = result
-                            .Where(x = !x.Removed)
-                            .Select(x = new Article {
+                            .Where(x => !x.Removed)
+                            .Select(x => new Article {
                                 Id = x.Id,
                                 AuthorId = x.AuthorId,
                                 Description = x.Content,
@@ -370,7 +370,7 @@ namespace Test.Unit.Mocks
             return this;
         }
 
-        public bool VerifyArticles(FuncListArticleMock, bool predicate)
+        public bool VerifyArticles(Func<List<ArticleMock>, bool> predicate)
         {
            return predicate(_articleState);
         }
@@ -382,7 +382,7 @@ public async Task Test_ArticleAccessMock_StatefullDemo1()
 {
     // Arange
     var articleAccessMock = new ArticleAccessMock()
-        .SetupFilterArticles(new ListArticle {});
+        .SetupFilterArticles(new List<Article> {});
     var sut = articleAccessMock.Object;
 
     // Act
@@ -391,13 +391,13 @@ public async Task Test_ArticleAccessMock_StatefullDemo1()
         CreateArticleRequests = new CreateArticleRequest[] {
             new CreateArticleRequest {
                 AuthorId = 666,
-                Description = 1,
-                Title = 1
+                Description = "1",
+                Title = "1"
             },
             new CreateArticleRequest {
                 AuthorId = 666,
-                Description = 2,
-                Title = 2
+                Description = "2",
+                Title = "2"
             }
         }
     });
@@ -417,19 +417,19 @@ public async Task Test_ArticleAccessMock_StatefullDemo1()
 
     // Assert
     initialResponse.Should().NotBeNull();
-    initialResponse.Articles.Count().Should().Be(0, No articles initially);
+    initialResponse.Articles.Count().Should().Be(0, "No articles initially");
 
     afterAddResponse.Should().NotBeNull();
-    afterAddResponse.Articles.Count().Should().Be(2, We created two articles);
+    afterAddResponse.Articles.Count().Should().Be(2, "We created two articles");
 
     afterRemoveResponse.Should().NotBeNull();
-    afterRemoveResponse.Articles.Count().Should().Be(1, There is only one article left);
+    afterRemoveResponse.Articles.Count().Should().Be(1, "There is only one article left");
 
     // Verify result with predicate logic instead if Mock.Verify()
-    articleAccessMock.VerifyArticles(articles = articles.Count(x = x.Removed) == 1).Should().BeTrue();
+    articleAccessMock.VerifyArticles(articles => articles.Count(x => x.Removed) == 1).Should().BeTrue();
 }
 You might ask yourself; Max, if you use a constructor to set up our mock, how would I deviate in my tests if I want to test error scenarios, for example? In that case, we might as well go full circle with the Fluent Mock approach. You could do it like the following snippet. You then choose to use the 'default' stateful mock or call the Setup methods you want to use.
-public ArticleAccessMock MakeStateful(ListArticle articles)
+public ArticleAccessMock MakeStateful(List<Article> articles)
 {
     return this
         .SetupFilterArticles(articles)
@@ -441,16 +441,16 @@ public ArticleAccessMock SetupDeleteArticles() { /* ... */ }
 public ArticleAccessMock SetupCreateArticles() { /* ... */ }
 Mocking ILogger
 I did say that Adam's article also inspired me. So let us see how ILogger can implement stateful mocks. First, a quick reminder of what we are going to Mock. The ILogger interface looks like this.
-/// summary
+/// <summary>
 /// Writes a log entry.
-/// /summary
-/// param name=logLevelEntry will be written on this level./param
-/// param name=eventIdId of the event./param
-/// param name=stateThe entry to be written. Can be also an object./param
-/// param name=exceptionThe exception related to this entry./param
-/// param name=formatterFunction to create a see cref=string/ message of the paramref name=state/ and paramref name=exception/./param
-/// typeparam name=TStateThe type of the object to be written./typeparam
-void LogTState(LogLevel logLevel, EventId eventId, TState state, Exception? exception, FuncTState, Exception?, string formatter);
+/// </summary>
+/// <param name="logLevel">Entry will be written on this level.</param>
+/// <param name="eventId">Id of the event.</param>
+/// <param name="state">The entry to be written. Can be also an object.</param>
+/// <param name="exception">The exception related to this entry.</param>
+/// <param name="formatter">Function to create a <see cref="string"/> message of the <paramref name="state"/> and <paramref name="exception"/>.</param>
+/// <typeparam name="TState">The type of the object to be written.</typeparam>
+void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter);
 I can not express how happy I am that I don't need to call the Logger like that. Luckily Microsoft offers a different extension method for every occasion. Unfortunately, Moq cannot test extension methods. Luckily for me, Adam figured out how to test it.
 Create a LoggerMock<T> class that implements Mock<ILogger<T>> we are not going to add something custom to it just yet.
 using Microsoft.Extensions.Logging;
@@ -458,24 +458,24 @@ using Moq;
 
 namespace Test.Unit.Mocks
 {
-    public class LoggerMockT : MockILoggerT
+    public class LoggerMock<T> : Mock<ILogger<T>>
     {
     }
 }
 At the same time, we will use the final result from Adam's post as a helper method to test our logging.
-public static MockILoggerT VerifyLoggingT(this MockILoggerT logger, string expectedMessage, LogLevel expectedLogLevel = LogLevel.Debug, Times? times = null)
+public static Mock<ILogger<T>> VerifyLogging<T>(this Mock<ILogger<T>> logger, string expectedMessage, LogLevel expectedLogLevel = LogLevel.Debug, Times? times = null)
 {
     times ??= Times.Once();
 
-    Funcobject, Type, bool state = (v, t) = v.ToString().CompareTo(expectedMessage) == 0;
+    Func<object, Type, bool> state = (v, t) => v.ToString().CompareTo(expectedMessage) == 0;
 
     logger.Verify(
-        x = x.Log(
-            It.IsLogLevel(l = l == expectedLogLevel),
-            It.IsAnyEventId(),
-            It.IsIt.IsAnyType((v, t) = state(v, t)),
-            It.IsAnyException(),
-            It.IsFuncIt.IsAnyType, Exception, string((v, t) = true)), (Times)times);
+        x => x.Log(
+            It.Is<LogLevel>(l => l == expectedLogLevel),
+            It.IsAny<EventId>(),
+            It.Is<It.IsAnyType>((v, t) => state(v, t)),
+            It.IsAny<Exception>(),
+            It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)), (Times)times);
 
     return logger;
 }
@@ -487,7 +487,7 @@ public class SiteManager : ISiteManager
     
     private readonly ILogger _logger;
 
-    public SiteManager(IArticleAccess articleAccess, IAuthorAccess authorAccess, ILoggerSiteManager logger)
+    public SiteManager(IArticleAccess articleAccess, IAuthorAccess authorAccess, ILogger<SiteManager> logger)
     {
         // ...
         _logger = logger;
@@ -502,7 +502,7 @@ public class SiteManager : ISiteManager
 
         if (author == null)
         {
-            _logger.LogWarning($No author found for {authorId});
+            _logger.LogWarning($"No author found for {authorId}");
             return;
         }
 
@@ -514,23 +514,23 @@ To put it to the test:
 public async Task Test_SiteManager_CreateArticle_TestLogging()
 {
     // Arange
-    var loggerMock = new LoggerMockSiteManager();
-    var authorAccessMock = new AuthorAccessMock(new ListAuthor {});
+    var loggerMock = new LoggerMock<SiteManager>();
+    var authorAccessMock = new AuthorAccessMock(new List<Author> {});
     var articleAccessMock = new ArticleAccessMock();
     ISiteManager sut = new SiteManager(articleAccessMock.Object, authorAccessMock.Object, loggerMock.Object);
 
     // Act
     var request = new Kaylumah.AdventuresWithMock.Manager.Site.Interface.CreateArticleRequest
     {
-        Title = Pretty Title,
-        Content = # AdventuresWithMock ...
+        Title = "Pretty Title",
+        Content = "# AdventuresWithMock ..."
     };
     await sut.CreateArticle(request);
 
     // Assert
-    authorAccessMock.Verify(x = x.FilterAuthors(It.IsAnyFilterAuthorCriteria()), Times.Once);
-    articleAccessMock.Verify(x = x.CreateArticles(It.IsAnyCreateArticlesRequest()), Times.Never);
-    loggerMock.VerifyLogging(No author found for 666, Microsoft.Extensions.Logging.LogLevel.Warning);
+    authorAccessMock.Verify(x => x.FilterAuthors(It.IsAny<FilterAuthorCriteria>()), Times.Once);
+    articleAccessMock.Verify(x => x.CreateArticles(It.IsAny<CreateArticlesRequest>()), Times.Never);
+    loggerMock.VerifyLogging("No author found for 666", Microsoft.Extensions.Logging.LogLevel.Warning);
 }
 Wait, did that just work on the first try? Did Adam's extension method not work on Mock<ILogger<T>>? Remember subclassing is an is a relation ship which means that our MockLogger qualifies for this extension method.
 What would happen if have a lot of traffic and log thousands upon thousands of requests. In that case, we can move to an alternative for methods such as LogInformation. For these scenarios, you can use LoggerMessage for high-performance logging.
@@ -541,11 +541,11 @@ namespace Kaylumah.AdventuresWithMock.Manager.Site.Service
 {
     public static class LoggerExtensions
     {
-        private static readonly ActionILogger, int, Exception _authorNotVerfied =
-            LoggerMessage.Defineint(
+        private static readonly Action<ILogger, int, Exception> _authorNotVerfied =
+            LoggerMessage.Define<int>(
                 LogLevel.Information,
                 EventIds.AuthorNotVerfied,
-                Author with Id {AuthorId} is not verfied!
+                "Author with Id {AuthorId} is not verfied!"
             );
 
         public static void LogAuthorNotVerfied(this ILogger logger, int authorId)
@@ -563,9 +563,9 @@ namespace Kaylumah.AdventuresWithMock.Manager.Site.Service
 public async Task Test_SiteManager_CreateArticle_TestLoggingExtensionMethod()
 {
     // Arange
-    var loggerMock = new LoggerMockSiteManager();
-    var authorAccessMock = new AuthorAccessMock(new ListAuthor {
-        new Author { Id = 666, DisplayName = Max, Verfied = false }
+    var loggerMock = new LoggerMock<SiteManager>();
+    var authorAccessMock = new AuthorAccessMock(new List<Author> {
+        new Author { Id = 666, DisplayName = "Max", Verfied = false }
     });
     var articleAccessMock = new ArticleAccessMock();
     ISiteManager sut = new SiteManager(articleAccessMock.Object, authorAccessMock.Object, loggerMock.Object);
@@ -573,22 +573,22 @@ public async Task Test_SiteManager_CreateArticle_TestLoggingExtensionMethod()
     // Act
     var request = new Kaylumah.AdventuresWithMock.Manager.Site.Interface.CreateArticleRequest
     {
-        Title = Pretty Title,
-        Content = # AdventuresWithMock ...
+        Title = "Pretty Title",
+        Content = "# AdventuresWithMock ..."
     };
     await sut.CreateArticle(request);
 
     // Assert
-    authorAccessMock.Verify(x = x.FilterAuthors(It.IsAnyFilterAuthorCriteria()), Times.Once);
-    articleAccessMock.Verify(x = x.CreateArticles(It.IsAnyCreateArticlesRequest()), Times.Never);
-    loggerMock.VerifyLogging(Author with Id 666 is not verfied!, Microsoft.Extensions.Logging.LogLevel.Information);
-    loggerMock.VerifyEventIdWasCalled(new Microsoft.Extensions.Logging.EventId(100, AuthorNotVerfied));
+    authorAccessMock.Verify(x => x.FilterAuthors(It.IsAny<FilterAuthorCriteria>()), Times.Once);
+    articleAccessMock.Verify(x => x.CreateArticles(It.IsAny<CreateArticlesRequest>()), Times.Never);
+    loggerMock.VerifyLogging("Author with Id 666 is not verfied!", Microsoft.Extensions.Logging.LogLevel.Information);
+    loggerMock.VerifyEventIdWasCalled(new Microsoft.Extensions.Logging.EventId(100, "AuthorNotVerfied"));
 
 }
 You are probably as surprised as I was that it did not work. As it turns out, LoggerMessage actual checks against LogLevel enabled. So add the following to our LoggerMock.
-public LoggerMockT SetupLogLevel(LogLevel logLevel, bool enabled = true)
+public LoggerMock<T> SetupLogLevel(LogLevel logLevel, bool enabled = true)
 {
-    Setup(x = x.IsEnabled(It.IsLogLevel(p = p.Equals(logLevel))))
+    Setup(x => x.IsEnabled(It.Is<LogLevel>(p => p.Equals(logLevel))))
         .Returns(enabled);
     return this;
 }
@@ -601,7 +601,7 @@ using Moq;
 
 namespace Test.Unit.Mocks
 {
-    public class LoggerMockT : MockILoggerT
+    public class LoggerMock<T> : Mock<ILogger<T>>
     {
         public class LogMessageMock
         {
@@ -610,19 +610,19 @@ namespace Test.Unit.Mocks
             public string Message { get;set; }
         }
 
-        public ListLogMessageMock Messsages { get; } = new ListLogMessageMock();
+        public List<LogMessageMock> Messsages { get; } = new List<LogMessageMock>();
 
         public LoggerMock()
         {
-            Setup(x = x.Log(
-                    It.IsAnyLogLevel(),
-                    It.IsAnyEventId(),
-                    It.IsIt.IsAnyType((v, t) = true),
-                    It.IsAnyException(),
-                    It.IsFuncIt.IsAnyType, Exception, string((v, t) = true)
+            Setup(x => x.Log(
+                    It.IsAny<LogLevel>(),
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((v, t) => true),
+                    It.IsAny<Exception>(),
+                    It.Is<Func<It.IsAnyType, Exception, string>>((v, t) => true)
                 )
             )
-            .Callback(new InvocationAction(invocation =
+            .Callback(new InvocationAction(invocation =>
             {
                 // https://stackoverflow.com/questions/52707702/how-do-you-mock-ilogger-loginformation
                 // https://github.com/moq/moq4/issues/918
@@ -634,7 +634,7 @@ namespace Test.Unit.Mocks
 
                 var invokeMethod = formatter
                     .GetType()
-                    .GetMethod(Invoke);
+                    .GetMethod("Invoke");
 
                 var logMessage = (string?)invokeMethod?.Invoke(formatter, new[] { state, exception });
                 Messsages.Add(new LogMessageMock {
@@ -645,9 +645,9 @@ namespace Test.Unit.Mocks
             }));
         }
 
-        public LoggerMockT SetupLogLevel(LogLevel logLevel, bool enabled = true)
+        public LoggerMock<T> SetupLogLevel(LogLevel logLevel, bool enabled = true)
         {
-            Setup(x = x.IsEnabled(It.IsLogLevel(p = p.Equals(logLevel))))
+            Setup(x => x.IsEnabled(It.Is<LogLevel>(p => p.Equals(logLevel))))
                 .Returns(enabled);
             return this;
         }
@@ -656,14 +656,14 @@ namespace Test.Unit.Mocks
 Mocking HttpClient
 Even though our article is getting to be on the length side, I found it helpful to include at least one more example. I could rewrite the filesystem sample I mentioned to match this pattern, but I decided to do that later. I thought it would be more useful to look into mocking an HttpClient. One option would be to hide HttpClient behind an interface, but since our ArticleAccess is already the lowest point in our architecture, I see no need to hide that we use a HttpClient.
 Since this is purely a demonstration, I am not going to set up an HTTP Server. Luckily we can use https://jsonplaceholder.typicode.com/posts for our needs. Suppose our CreateArticles method looked like this.
-public async TaskCreateArticlesResponse CreateArticles(CreateArticlesRequest createArticlesRequest)
+public async Task<CreateArticlesResponse> CreateArticles(CreateArticlesRequest createArticlesRequest)
 {
     // NOTE: not going to call them in a loop, just for demo purposes.
     var json = JsonSerializer.Serialize(createArticlesRequest.CreateArticleRequests.First());
-    var response = await _httpClient.PostAsync(https://jsonplaceholder.typicode.com/posts, new StringContent(json));
+    var response = await _httpClient.PostAsync("https://jsonplaceholder.typicode.com/posts", new StringContent(json));
     if (!response.IsSuccessStatusCode)
     {
-        throw new Exception(Something went horribly wrong!);
+        throw new Exception("Something went horribly wrong!");
     }
     var responseText = await response.Content.ReadAsStringAsync();
     // Map it to response
@@ -682,10 +682,10 @@ using Moq.Protected;
 
 namespace Test.Unit.Mocks
 {
-    public class HttpClientMock : MockHttpMessageHandler
+    public class HttpClientMock : Mock<HttpMessageHandler>
     {
-        private readonly ListTupleHttpStatusCode, HttpContent _responses;
-        public HttpClientMock(ListTupleHttpStatusCode, HttpContent responses) : base(MockBehavior.Strict)
+        private readonly List<Tuple<HttpStatusCode, HttpContent>> _responses;
+        public HttpClientMock(List<Tuple<HttpStatusCode, HttpContent>> responses) : base(MockBehavior.Strict)
         {
             _responses = responses;
             SetupResponses();
@@ -693,10 +693,10 @@ namespace Test.Unit.Mocks
 
         private void SetupResponses()
         {
-            var handlerPart = this.Protected().SetupSequenceTaskHttpResponseMessage(
-              SendAsync,
-              ItExpr.IsAnyHttpRequestMessage(),
-              ItExpr.IsAnyCancellationToken()
+            var handlerPart = this.Protected().SetupSequence<Task<HttpResponseMessage>>(
+              "SendAsync",
+              ItExpr.IsAny<HttpRequestMessage>(),
+              ItExpr.IsAny<CancellationToken>()
            );
 
             foreach (var item in _responses)
@@ -705,7 +705,7 @@ namespace Test.Unit.Mocks
             }
         }
 
-        private ISetupSequentialResultTaskHttpResponseMessage AdddReturnPart(ISetupSequentialResultTaskHttpResponseMessage handlerPart,
+        private ISetupSequentialResult<Task<HttpResponseMessage>> AdddReturnPart(ISetupSequentialResult<Task<HttpResponseMessage>> handlerPart,
         HttpStatusCode statusCode, HttpContent content)
         {
             return handlerPart.ReturnsAsync(new HttpResponseMessage()
@@ -727,17 +727,17 @@ The corresponding test would look like
 [Fact]
 public async Task Test_ArticleAccess_Returns200OK()
 {
-    var createArticleResponse = new StringContent({ 'id':'anId' }, Encoding.UTF8, application/json);
-    var httpClient = new HttpClientMock(new ListTupleHttpStatusCode, HttpContent {
-        new TupleHttpStatusCode, HttpContent(HttpStatusCode.OK, createArticleResponse),
+    var createArticleResponse = new StringContent("{ 'id':'anId' }", Encoding.UTF8, "application/json");
+    var httpClient = new HttpClientMock(new List<Tuple<HttpStatusCode, HttpContent>> {
+        new Tuple<HttpStatusCode, HttpContent>(HttpStatusCode.OK, createArticleResponse),
     });
     var articleAccess = new ArticleAccess(httpClient);
     await articleAccess.CreateArticles(new CreateArticlesRequest{
         CreateArticleRequests = new CreateArticleRequest[] {
             new CreateArticleRequest {
                 AuthorId = 666,
-                Description = ...,
-                Title = Demo
+                Description = "...",
+                Title = "Demo"
             }
         }
     });

@@ -9,7 +9,7 @@ Many of the projects in the repo follow this pattern:
 Concept.Abstractions provides interfaces
 .Concept provides default implementation for Concept.Abstractions
 Concept.Concrete technology specific implementation for Concept.Abstractions
-dotnet new sln --name SlnFilter
+dotnet new sln --name "SlnFilter"
 
 dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept.Abstractions --output src/Kaylumah.SlnFilter.Extensions.Concept.Abstractions
 dotnet new classlib --framework netstandard2.1 --name Kaylumah.SlnFilter.Extensions.Concept --output src/Kaylumah.SlnFilter.Extensions.Concept
@@ -48,14 +48,14 @@ The image below shows the difference between the three filters we created. It lo
 <picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20210717/decreasing-solution-build-time-with-filters/007_vs2019_slnf_project_overview.png" width="4284" height="1040"Visual Studio 2019 - Solution Filter Scenarios Compared</picture>
 For example, the SlnFilter.Alpha.slnf I created for Concept.ConcreteAlpha implementation looks like this:
 {
-  solution: {
-    path: SlnFilter.sln,
-    projects: [
-      src\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions.csproj,
-      src\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.csproj,
-      src\\Kaylumah.SlnFilter.Extensions.Concept\\Kaylumah.SlnFilter.Extensions.Concept.csproj,
-      test\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests.csproj,
-      test\\Kaylumah.SlnFilter.Extensions.Concept.Tests\\Kaylumah.SlnFilter.Extensions.Concept.Tests.csproj
+  "solution": {
+    "path": "SlnFilter.sln",
+    "projects": [
+      "src\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions\\Kaylumah.SlnFilter.Extensions.Concept.Abstractions.csproj",
+      "src\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.csproj",
+      "src\\Kaylumah.SlnFilter.Extensions.Concept\\Kaylumah.SlnFilter.Extensions.Concept.csproj",
+      "test\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests\\Kaylumah.SlnFilter.Extensions.Concept.ConcreteAlpha.Tests.csproj",
+      "test\\Kaylumah.SlnFilter.Extensions.Concept.Tests\\Kaylumah.SlnFilter.Extensions.Concept.Tests.csproj"
     ]
   }
 }
@@ -73,10 +73,10 @@ I discussed this feature at work as a potential workaround for an issue we had i
 The problem is the management of multiple solutions filters because the filters are inclusive with relative paths following the sln-filter location. A proposed improvement would be to use glob patterns to include/exclude projects. That would make it easier when following naming conventions to have always up-to-date filters.
 At a customer I work for, they use PowerShell as their script platform of choice, so I needed a deeper understanding of PowerShell. With PowerShell, it's reasonably easy to work with the file system and convert from and to JSON. So I thought, how hard can it be to script this.
 The following script loads the paths of all *.csproj present in the solution directory and filters them out by RegEx. It then writes it to disk in the .slnf-format.
-$inputSln = SlnFilter.sln
-$outputSlnFilter = SlnFilter.Generated.slnf
+$inputSln = "SlnFilter.sln"
+$outputSlnFilter = "SlnFilter.Generated.slnf"
 
-$projectFiles = Get-ChildItem -Recurse -Filter *.csproj -Name
+$projectFiles = Get-ChildItem -Recurse -Filter "*.csproj" -Name
 # $excludeFilters = @()
 $excludeFilters = @('.ConcreteBravo')
 
@@ -103,11 +103,11 @@ foreach ($project in $projectFiles)
 }
 
 $sln = New-Object -TypeName psobject
-$sln | Add-Member -MemberType NoteProperty -Name path -Value $inputSln
-$sln | Add-Member -MemberType NoteProperty -Name projects -value $targetProjects
+$sln | Add-Member -MemberType NoteProperty -Name "path" -Value $inputSln
+$sln | Add-Member -MemberType NoteProperty -Name "projects" -value $targetProjects
 
 $root = New-Object -TypeName psobject
-$root | Add-Member -MemberType NoteProperty -Name solution -value $sln
+$root | Add-Member -MemberType NoteProperty -Name "solution" -value $sln
 
 $root | ConvertTo-Json | Out-File $outputSlnFilter
 Closing Thoughts
