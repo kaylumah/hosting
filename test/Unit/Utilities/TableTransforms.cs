@@ -3,7 +3,6 @@
 
 using System;
 using Reqnroll;
-using Reqnroll.Assist;
 using Test.Unit.Entities;
 
 namespace Test.Unit

@@ -16,7 +16,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Time.Testing;
 using Reqnroll;
-using Reqnroll.Infrastructure;
 using Test.Unit.Utilities;
 using Test.Utilities;
 

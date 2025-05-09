@@ -2,7 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using Kaylumah.Ssg.Extensions.Data.Abstractions;
 using Kaylumah.Ssg.Extensions.Data.Csv;
 using Kaylumah.Ssg.Extensions.Data.Json;
 using Kaylumah.Ssg.Extensions.Data.Yaml;
@@ -10,12 +9,10 @@ using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
-using Kaylumah.Ssg.Manager.Site.Service.Feed;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Kaylumah.Ssg.Manager.Site.Service.Seo;
-using Kaylumah.Ssg.Manager.Site.Service.SiteMap;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;

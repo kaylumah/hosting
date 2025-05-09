@@ -38,14 +38,9 @@
     <Project Path="src/Component/Manager/Site/Service/Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </Folder>
   <Folder Name="/src/Utilities/">
-    <Project Path="src/Utilities/AssemblyData/Kaylumah.Ssg.Utilities.AssemblyData.csproj" />
     <Project Path="src/Utilities/Common/Kaylumah.Ssg.Utilities.Common.csproj" />
-    <Project Path="src/Utilities/Configuration/Kaylumah.Ssg.Utilities.Configuration.csproj" />
-    <Project Path="src/Utilities/Files/Kaylumah.Ssg.Utilities.Files.csproj" />
-    <Project Path="src/Utilities/Identifiers/Kaylumah.Ssg.Utilities.Identifiers.csproj" />
-    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Data\Kaylumah.Ssg.Extensions.Data.csproj" />
-    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.Abstractions\Kaylumah.Ssg.Extensions.Metadata.Abstractions.csproj" />
-    <Project Path="src\Utilities\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter\Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter.csproj" />
+    <Project Path="src\Utilities\Data\Kaylumah.Ssg.Extensions.Data.csproj" />
+    <Project Path="src\Utilities\Metadata\Kaylumah.Ssg.Extensions.Metadata.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/E2e/Test.E2e.csproj" />

@@ -15,44 +15,44 @@ The launchSettings.json file shouldn't store secrets
 Project Setup
 For our sample application, we will create a new project using the "Console Template" with dotnet new console. Since it is a console, we must create a Properties\launchSettings.json by hand. At a minimum, the file would look like this.
 {
-    $schema: https://json.schemastore.org/launchsettings.json,
-    profiles: {
-        DemoConsole.V0: {
-            commandName: Project
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "DemoConsole.V0": {
+            "commandName": "Project"
         }
     }
 }
 Since we are demoing features of launchSettings.json, it will not be a nice demo if we don't populate it.
 {
-    $schema: https://json.schemastore.org/launchsettings.json,
-    profiles: {
-        DemoConsole.V0: {
-            commandName: Project,
-            commandLineArgs: ,
-            environmentVariables: {
-                KAYLUMAH_ENVIRONMENT: Development
+    "$schema": "https://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "DemoConsole.V0": {
+            "commandName": "Project",
+            "commandLineArgs": "",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Development"
             }
         },
-        DemoConsole.V1: {
-            commandName: Project,
-            environmentVariables: {
-                KAYLUMAH_ENVIRONMENT: Production
+        "DemoConsole.V1": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production"
             }
         },
-        DemoConsole.V2: {
-            commandName: Project,
-            commandLineArgs: --mysetting myvalue,
-            environmentVariables: {
-                KAYLUMAH_ENVIRONMENT: Production
+        "DemoConsole.V2": {
+            "commandName": "Project",
+            "commandLineArgs": "--mysetting myvalue",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production"
             }
         },
-        DemoConsole.V3: {
-            commandName: Project,
-            commandLineArgs: --mysetting myvalue,
-            environmentVariables: {
-                KAYLUMAH_ENVIRONMENT: Production,
-                KAYLUMAH_FROMVARIABLE1: $(TargetFramework),
-                KAYLUMAH_FROMVARIABLE2: $(MyCustomProp)
+        "DemoConsole.V3": {
+            "commandName": "Project",
+            "commandLineArgs": "--mysetting myvalue",
+            "environmentVariables": {
+                "KAYLUMAH_ENVIRONMENT": "Production",
+                "KAYLUMAH_FROMVARIABLE1": "$(TargetFramework)",
+                "KAYLUMAH_FROMVARIABLE2": "$(MyCustomProp)"
             }
         }
     }
@@ -61,8 +61,8 @@ The console app will build an IConfiguration and print it to the console. Since 
 using Microsoft.Extensions.Configuration;
 
 IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-configurationBuilder.AddEnvironmentVariables(KAYLUMAH_);
-if (args is { Length:  0 })
+configurationBuilder.AddEnvironmentVariables("KAYLUMAH_");
+if (args is { Length: > 0 })
 {
     configurationBuilder.AddCommandLine(args);
 }
@@ -73,7 +73,7 @@ if (configuration is IConfigurationRoot configurationRoot)
     Console.WriteLine(configurationRoot.GetDebugView());
 }
 
-Console.WriteLine(Done...);
+Console.WriteLine("Done...");
 Console.ReadLine();
 If we run the project now, the output should be:
 ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
@@ -81,42 +81,42 @@ ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYL
 Done...
 We also generate a project from the webapi template. We slightly modify it so it contains a second profile, so it looks like this.
 {
-  $schema: https://json.schemastore.org/launchsettings.json,
-  iisSettings: {
-    windowsAuthentication: false,
-    anonymousAuthentication: true,
-    iisExpress: {
-      applicationUrl: http://localhost:33652,
-      sslPort: 44325
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:33652",
+      "sslPort": 44325
     }
   },
-  profiles: {
-    DemoApi: {
-      commandName: Project,
-      dotnetRunMessages: true,
-      launchBrowser: true,
-      launchUrl: swagger,
-      applicationUrl: https://localhost:7238;http://localhost:5200,
-      environmentVariables: {
-        ASPNETCORE_ENVIRONMENT: Development
+  "profiles": {
+    "DemoApi": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7238;http://localhost:5200",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    DemoApi.Production: {
-      commandName: Project,
-      dotnetRunMessages: true,
-      launchBrowser: true,
-      launchUrl: swagger,
-      applicationUrl: https://localhost:7238;http://localhost:5200,
-      environmentVariables: {
-        ASPNETCORE_ENVIRONMENT: Production
+    "DemoApi.Production": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7238;http://localhost:5200",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
-    IIS Express: {
-      commandName: IISExpress,
-      launchBrowser: true,
-      launchUrl: swagger,
-      environmentVariables: {
-        ASPNETCORE_ENVIRONMENT: Development
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
   }
@@ -132,20 +132,20 @@ As you see, the WebAPI variant shows more than just our launch profiles.
 Another aspect of development configuration is the ability to run more projects simultaneously. We can achieve this in Visual Studio by selecting multiple startup projects.  As far as I know, this function is user-specific, which would result in every developer repeating information. Luckily there is a handy plugin called SwitchStartUpProject.
 We can quickly provide multiple configurations. We can provide a ProfileName for each project that matches one in our launch settings. It is that simple.
 {
-    Version: 3,
-    ListAllProjects: false,
-    MultiProjectConfigurations: {
-        Demo: {
-            Projects: {
-                DemoConsole: {
-                    ProfileName: DemoConsole.V1
+    "Version": 3,
+    "ListAllProjects": false,
+    "MultiProjectConfigurations": {
+        "Demo": {
+            "Projects": {
+                "DemoConsole": {
+                    "ProfileName": "DemoConsole.V1"
                 },
-                DemoApi: {
-                    ProfileName: DemoApi
+                "DemoApi": {
+                    "ProfileName": "DemoApi"
                 }
             },
-            SolutionConfiguration: Release,
-            SolutionPlatform: x64
+            "SolutionConfiguration": "Release",
+            "SolutionPlatform": "x64"
         }
     }
 }
@@ -156,27 +156,27 @@ As it turns out, launchSettings has been supported in Rider for a long time. The
 A thing I like about Rider is that I don't need an additional plugin to support multiple start up projects.
 <picture><source type="image/webp" srcset="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png.webp" /><img loading="lazy" src="https://kaylumah.nl/assets/images/posts/20220607/launch-settings/rider_compound_configuration.png" width="3456" height="2144"JetBrains Rider - Compound Settings</picture>
 It's important to check Store as project file; otherwise, you won't share it with your team. In this particular example, it will look like this:
-component name=ProjectRunConfigurationManager
-  configuration default=false name=Console and API type=CompoundRunConfigurationType
-    toRun name=DemoApi: DemoApi.Production type=LaunchSettings /
-    toRun name=DemoConsole: DemoConsole.V3 type=LaunchSettings /
-    method v=2 /
-  /configuration
-/component
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Console and API" type="CompoundRunConfigurationType">
+    <toRun name="DemoApi: DemoApi.Production" type="LaunchSettings" />
+    <toRun name="DemoConsole: DemoConsole.V3" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
 Share debug configuration from Microsoft VS Code
 Last but not least is VS Code, the reason I started this article. When you open a .NET project in VS Code, you get prompted to create a launch.json file. A launch.json file is very similar to a launchSettings.json. Both options provide the means to choose a project, set command-line arguments and override environment variables. The default launch.json does not pass any additional configuration to the project. So what would be the logical output of our command?
 The answer might surprise you.
 Given the following configuration in launch.json
 {
-    name: .NET Core Launch (console),
-    type: coreclr,
-    request: launch,
-    preLaunchTask: build,
-    program: ${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll,
-    args: [],
-    cwd: ${workspaceFolder},
-    console: internalConsole,
-    stopAtEntry: false
+    "name": ".NET Core Launch (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "build",
+    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
+    "args": [],
+    "cwd": "${workspaceFolder}",
+    "console": "internalConsole",
+    "stopAtEntry": false
 }
 The output will be:
 ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
@@ -189,22 +189,22 @@ Only environmentVariables, applicationUrl and commandLineArgs properties are sup
 Settings in launch.json will take precedence over settings in launchSettings.json, so for example, if args is already set to something other than an empty string/array in launch.json then the launchSettings.json content will be ignored.
 Since you can provide arguments and environment variables in both launch.json and launchSettings.json, let's look at an example.
 {
-    name: .NET Core Launch (console),
-    type: coreclr,
-    request: launch,
-    preLaunchTask: build,
-    program: ${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll,
-    cwd: ${workspaceFolder},
-    console: internalConsole,
-    stopAtEntry: false,
-    launchSettingsProfile: DemoConsole.V2,
-    args: [
-        --othersetting,
-        vscode
+    "name": ".NET Core Launch (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "build",
+    "program": "${workspaceFolder}/bin/Debug/net6.0/DemoConsole.dll",
+    "cwd": "${workspaceFolder}",
+    "console": "internalConsole",
+    "stopAtEntry": false,
+    "launchSettingsProfile": "DemoConsole.V2",
+    "args": [
+        "--othersetting",
+        "vscode"
     ],
-    env: {
-        KAYLUMAH_ENVIRONMENT: Development,
-        KAYLUMAH_OTHER: From target
+    "env": {
+        "KAYLUMAH_ENVIRONMENT": "Development",
+        "KAYLUMAH_OTHER": "From target"
     }
 }
 ENVIRONMENT=Development (EnvironmentVariablesConfigurationProvider Prefix: 'KAYLUMAH_')
@@ -219,43 +219,43 @@ Since launch.json will win, the value for KAYLUMAH_ENVIRONMENT is Development.
 The default configuration for our web api looks slightly different because it adds support to open the browser after the project starts.
 Our base URL comes from the launchSettings.json, but the launchUrl gets ignored. You can achieve the same behaviour by updating the generated serverReadyAction with an uriFormat.
 {
-    version: 0.2.0,
-    configurations: [
+    "version": "0.2.0",
+    "configurations": [
         {
-            name: .NET Core Launch (web),
-            type: coreclr,
-            request: launch,
-            preLaunchTask: build,
-            program: ${workspaceFolder}/bin/Debug/net6.0/DemoApi.dll,
-            args: [],
-            cwd: ${workspaceFolder},
-            stopAtEntry: false,
-            serverReadyAction: {
-                action: openExternally,
-                pattern: \\bNow listening on:\\s+(https?://\\S+),
-                uriFormat: %s/swagger
+            "name": ".NET Core Launch (web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bin/Debug/net6.0/DemoApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/swagger"
             },
-            env: {
-                ASPNETCORE_ENVIRONMENT: Development
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            sourceFileMap: {
-                /Views: ${workspaceFolder}/Views
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
             }
         },
         {
-            name: .NET Core Attach,
-            type: coreclr,
-            request: attach
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
         }
     ]
 }
 Of the three IDEs, VS Code has the easiest way to share compound configurations. Just add the following to your launch.json:
-compounds: [
+"compounds": [
     {
-        name: Console + API,
-        configurations: [
-            Launch WebAPI,
-            Launch Console
+        "name": "Console + API",
+        "configurations": [
+            "Launch WebAPI",
+            "Launch Console"
         ]
     }
 ]
@@ -267,7 +267,7 @@ As it turns out the CLI also defaults to the first project in Properties\launchS
 dotnet run
 
 # Sets env var for current session
-$env:KAYLUMAH_COMMANDLINE=Session ENV var
+$env:KAYLUMAH_COMMANDLINE="Session ENV var"
 # prints COMMANDLINE + the default
 dotnet run
 If we don't want any launch profile just run dotnet run --no-launch-profile and to specify a profile run dotnet run --launch-profile "DemoConsole.V2"

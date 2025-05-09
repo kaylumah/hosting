@@ -2,9 +2,6 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Kaylumah.Ssg.Manager.Site.Service;
 using Markdig;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;

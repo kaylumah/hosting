@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -42,8 +40,8 @@ namespace Test.E2e
 
     public static class BasePageVerifier
     {
-        [ModuleInitializer]
-        public static void Init() => VerifyImageHash.Initialize();
+        // [ModuleInitializer]
+        // public static void Init() => VerifyImageHash.Initialize();
 
         public static async Task VerifyScreenshot(BasePageObject basePageObject)
         {

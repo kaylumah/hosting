@@ -29,7 +29,12 @@ namespace Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter
                 contents = contents.Replace(frontMatter, string.Empty).TrimStart();
             }
 
-            T data = _YamlParser.Parse<T>(frontMatterData);
+            T data = default(T)!;
+            if (!string.IsNullOrEmpty(frontMatterData))
+            {
+                data = _YamlParser.Parse<T>(frontMatterData);
+            }
+
             ParsedFile<T> result = new ParsedFile<T>(contents, data);
             return result;
         }

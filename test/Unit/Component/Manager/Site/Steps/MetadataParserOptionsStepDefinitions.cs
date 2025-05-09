@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
 using Reqnroll;
-using Reqnroll.Assist;
 
 namespace Test.Unit.Steps
 {
