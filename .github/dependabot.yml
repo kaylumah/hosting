@@ -54,12 +54,12 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
+      interval: daily
       time: '09:00'
       timezone: Europe/Amsterdam
-    ignore:
-      - dependency-name: "axios"
-      - dependency-name: "tar-fs"
+    # ignore:
+    #   - dependency-name: "axios"
+    #   - dependency-name: "tar-fs"
     assignees:
       - kaylumah
     groups:
