@@ -17,8 +17,6 @@ Write-Host "Using configuration '$BuildConfiguration'"
 Write-Host "Using framework '$TargetFramework'"
 Write-Host "Using base url '$BaseUrl'"
 
-$ReportScript = "$RepoRoot/tools/test-reports.ps1"
-
 [string] $DistFolder = "$RepoRoot/dist"
 if (Test-Path $DistFolder)
 { 
@@ -51,9 +49,6 @@ if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Test Failure"
 }
-
-# Disabled until https://github.com/SpecFlowOSS/SpecFlow/issues/2591 gets fixed
-# & $ReportScript -BuildConfiguration $BuildConfiguration
 
 dotnet "src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll" Site:Url=$BaseUrl
 if ($LASTEXITCODE -ne 0)
