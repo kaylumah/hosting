@@ -33,7 +33,7 @@ namespace Test.Unit.FormerXunit
             string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_{testParameter}";
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
-            settings.UseMethodName(methodName);
+            // settings.UseMethodName(methodName);
 
             await Verifier.Verify(html, "html", settings);
         }
@@ -53,7 +53,7 @@ namespace Test.Unit.FormerXunit
             string methodName = $"{nameof(Verify_MarkdownConversion_TxtContents)}_{testParameter}";
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
-            settings.UseMethodName(methodName);
+            // settings.UseMethodName(methodName);
 
             await Verifier.Verify(txt, "txt", settings);
         }
