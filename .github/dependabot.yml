@@ -63,6 +63,19 @@ updates:
     # ignore:
     #   - dependency-name: "axios"
     #   - dependency-name: "tar-fs"
+    allow:
+      - dependency-name: "@azure/functions"
+      - dependency-name: "@azure/static-web-apps-cli"
+      - dependency-name: "@tailwindcss/cli"
+      - dependency-name: "@tailwindcss/typography"
+      - dependency-name: "csso-cli"
+      - dependency-name: "html-minifier-terser"
+      - dependency-name: "pngquant-bin"
+      - dependency-name: "tailwindcss"
+      - dependency-name: "terser"
+      - dependency-name: "@types/node"
+      - dependency-name: "typescript"
+      - dependency-name: "rimraf"
     assignees:
       - kaylumah
     groups:
