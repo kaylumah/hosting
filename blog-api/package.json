@@ -14,7 +14,7 @@
     "@azure/functions": "4.7.2"
   },
   "devDependencies": {
-    "@types/node": "20.17.10",
+    "@types/node": "22.15.27",
     "typescript": "5.8.3",
     "rimraf": "5.0.10"
   },
