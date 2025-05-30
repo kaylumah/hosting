@@ -14,7 +14,7 @@
         "csso-cli": "4.0.2",
         "html-minifier-terser": "7.2.0",
         "pngquant-bin": "9.0.0",
-        "tailwindcss": "4.0.9",
+        "tailwindcss": "4.1.8",
         "terser": "5.40.0"
     }
 }
