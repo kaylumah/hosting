@@ -6,6 +6,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>$(NoWarn);xUnit1051</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Label="Code analysis properties">
