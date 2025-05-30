@@ -52,7 +52,10 @@ updates:
           - "version-update:semver-minor"
 
   - package-ecosystem: npm
-    directory: /
+    # directory: /
+    directories:
+      - /
+      - blog-api/
     schedule:
       interval: daily
       time: '09:00'
