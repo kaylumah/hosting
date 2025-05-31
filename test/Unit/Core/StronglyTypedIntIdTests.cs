@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using Bogus;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Test.Unit.Core
 {
