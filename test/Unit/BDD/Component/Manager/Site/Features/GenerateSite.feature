@@ -37,14 +37,21 @@ Feature: SiteManager GenerateSite
         Given the following site info:
           | Title    | Description | Language | Url                 | BaseUrl | SupportedFileExtensions |
           | Kaylumah | My Blog     | en       | https://example.com | <null>  | .html                   |
+        Given 'robots.txt' is an asset file with the following contents:
+        """
+        """
+#        Given 'robots.csv' is a data file with the following contents:
+#        """
+#        """
         When the site is generated:
         Then the scenario executed successfully:
         And the following artifacts are created:
-          | Path         |
-          | example.html |
-          | sitemap.xml  |
-          | sitemap_index.xml  |
-          | feed.xml     |
+          | Path                     |
+          | /_site/assets/robots.txt |
+          | example.html             |
+          | sitemap.xml              |
+          | sitemap_index.xml        |
+          | feed.xml                 |
         And the atom feed 'feed.xml' is verified:
         And the sitemap 'sitemap.xml' is verified:
         # And the html 'example.html' is verified:
