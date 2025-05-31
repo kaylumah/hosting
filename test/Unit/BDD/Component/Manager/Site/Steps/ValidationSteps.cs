@@ -3,6 +3,7 @@
 
 using FluentAssertions;
 using Reqnroll;
+using Test.Unit.BDD;
 
 namespace Test.Unit.Steps
 {

@@ -3,9 +3,10 @@
 
 using System;
 using Reqnroll;
+using Test.Unit.BDD.Extensions;
 using Test.Unit.Entities;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     [Binding]
     public class TableTransforms

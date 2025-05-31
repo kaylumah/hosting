@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Test.Unit;
+using Test.Unit.BDD;
 
 // ReSharper disable once CheckNamespace
 namespace Test.Utilities

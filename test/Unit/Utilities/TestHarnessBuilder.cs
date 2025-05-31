@@ -49,13 +49,31 @@ namespace Test.Utilities
 
         public TestHarness Build()
         {
+            TestHarness harness = Build(out _, out _);
+            return harness;
+        }
+
+        public TestHarness Build(out IServiceProvider serviceProvider)
+        {
+            TestHarness harness = Build(out serviceProvider, out _);
+            return harness;
+        }
+        
+        public TestHarness Build(out IConfigurationRoot configuration)
+        {
+            TestHarness harness = Build(out _, out configuration);
+            return harness;
+        }
+        
+        public TestHarness Build(out IServiceProvider serviceProvider, out IConfigurationRoot configuration)
+        {
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
             foreach (Action<IConfigurationBuilder> configurationRegistration in _ConfigurationRegistrationActions)
             {
                 configurationRegistration(configurationBuilder);
             }
 
-            IConfigurationRoot configuration = configurationBuilder.Build();
+            configuration = configurationBuilder.Build();
 
             ServiceCollection services = new ServiceCollection();
             foreach (Action<IServiceCollection, IConfiguration> serviceRegistrationAction in _ServiceRegistrationActions)
@@ -63,7 +81,11 @@ namespace Test.Utilities
                 serviceRegistrationAction(services, configuration);
             }
 
-            ServiceProvider serviceProvider = services.BuildServiceProvider(validateScopes: true);
+            ServiceProviderOptions serviceProviderOptions = new ServiceProviderOptions();
+            serviceProviderOptions.ValidateScopes = true;
+            serviceProviderOptions.ValidateOnBuild = true;
+            serviceProvider = services.BuildServiceProvider(serviceProviderOptions);
+
             TestHarness testHarness = serviceProvider.GetRequiredService<TestHarness>();
             return testHarness;
         }
