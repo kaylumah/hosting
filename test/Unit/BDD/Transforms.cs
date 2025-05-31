@@ -8,7 +8,7 @@ using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Reqnroll;
 using Test.Unit.Entities;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     [Binding]
     public class Transforms

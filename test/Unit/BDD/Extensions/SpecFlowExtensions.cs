@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Reqnroll;
 
-namespace Test.Unit
+namespace Test.Unit.BDD.Extensions
 {
     public static class SpecFlowExtensions
     {
