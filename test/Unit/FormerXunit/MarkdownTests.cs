@@ -26,13 +26,19 @@ namespace Test.Unit.FormerXunit
             string html = new MarkdownUtil("https://kaylumah.nl").ToHtml(rawContents);
             html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
 
+            /*
             string testParameter = path
                 .Replace("/", "_")
                 .Replace("\\", "_")
                 .Replace(".md", "");
             string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_{testParameter}";
+            */
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
+            // settings.UseMethodName(methodName);
+            // Simulate v3-style parameter name
+            string encodedPath = path.Replace("/", "-").Replace("\\", "-");
+            string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_path={encodedPath}";
             settings.UseMethodName(methodName);
 
             await Verifier.Verify(html, "html", settings);
@@ -46,13 +52,20 @@ namespace Test.Unit.FormerXunit
             string txt = new MarkdownUtil("https://kaylumah.nl").ToText(rawContents);
             txt = txt.Replace("/Users/maxhamulyak/", "/ExamplePath/");
 
+            /*
             string testParameter = path
                 .Replace("/", "_")
                 .Replace("\\", "_")
                 .Replace(".md", "");
             string methodName = $"{nameof(Verify_MarkdownConversion_TxtContents)}_{testParameter}";
+            */
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
+           
+            // settings.UseMethodName(methodName);
+            // Simulate v3-style parameter name
+            string encodedPath = path.Replace("/", "-").Replace("\\", "-");
+            string methodName = $"{nameof(Verify_MarkdownConversion_TxtContents)}_path={encodedPath}";
             settings.UseMethodName(methodName);
 
             await Verifier.Verify(txt, "txt", settings);
