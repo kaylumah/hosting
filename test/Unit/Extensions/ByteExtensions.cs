@@ -35,7 +35,7 @@ namespace Test.Unit.Utilities
             htmlDoc.LoadHtml(contents);
             return htmlDoc;
         }
-        
+
         public static FeedArtifact ToSyndicationFeed(this byte[] bytes, string fileName)
         {
             using MemoryStream stream = new MemoryStream(bytes);
@@ -45,7 +45,7 @@ namespace Test.Unit.Utilities
             FeedArtifact result = new FeedArtifact(fileName, feed);
             return result;
         }
-        
+
         public static SiteMapArtifact ToSiteMap(this byte[] bytes, string fileName)
         {
             using MemoryStream stream = new MemoryStream(bytes);
