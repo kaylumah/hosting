@@ -89,7 +89,7 @@ namespace Test.Unit.Component.Manager.Site.Steps
             System.Collections.Generic.List<string> actualArtifacts = _ArtifactAccess
                 .StoreArtifactRequests
                 .SelectMany(x => x.Artifacts)
-                .Select(x => x.Path)
+                .Select(x => x.Path.Replace(@"\", "/", StringComparison.InvariantCulture))
                 .ToList();
 
             string[] expectedArtifacts = table.Rows.Select(r => r[0]).ToArray();

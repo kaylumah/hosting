@@ -35,7 +35,7 @@ namespace Test.Unit.Architecture
             Hosting = hostingType.Assembly;
         }
     }
-    
+
     public abstract class ReferenceValidationTests
     {
         static readonly List<ComponentDefinition> _Components;
@@ -43,17 +43,17 @@ namespace Test.Unit.Architecture
         static ReferenceValidationTests()
         {
             Type artifactAccessHostingType = typeof(Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions);
-            ComponentDefinition<IArtifactAccess, ArtifactAccess> artifactAccess = new (artifactAccessHostingType);
+            ComponentDefinition<IArtifactAccess, ArtifactAccess> artifactAccess = new(artifactAccessHostingType);
 
             Type siteManagerHostingType = typeof(Kaylumah.Ssg.Manager.Site.Hosting.ServiceCollectionExtensions);
-            ComponentDefinition<ISiteManager, SiteManager> siteManager = new (siteManagerHostingType);
+            ComponentDefinition<ISiteManager, SiteManager> siteManager = new(siteManagerHostingType);
 
             _Components = new()
             {
                 artifactAccess,
                 siteManager
             };
-            
+
             Assembly[] knownAssemblies = AppDomain.CurrentDomain.GetAssemblies();
             List<Assembly> discoveredServiceAssemblies = knownAssemblies
                 .Where(a => a.GetName().Name?.EndsWith(".Hosting", StringComparison.InvariantCulture) == true)
@@ -62,16 +62,16 @@ namespace Test.Unit.Architecture
 
             IEnumerable<Assembly> assemblies = _Components.Select(component => component.Hosting!);
             List<Assembly> unregistered = discoveredServiceAssemblies.Except(assemblies).ToList();
-            
+
             if (0 < unregistered.Count)
             {
-                #pragma warning disable IDESIGN103
+#pragma warning disable IDESIGN103
                 string missingNames = string.Join(", ", unregistered.Select(a => a.GetName().Name));
                 throw new InvalidOperationException($"Missing ComponentDefinition registrations for: {missingNames}");
-                #pragma warning restore IDESIGN103
+#pragma warning restore IDESIGN103
             }
         }
-        
+
         protected abstract Type GetImplementationType();
 
         protected virtual Type[] GetAllowedDependencyTypes()
@@ -79,24 +79,24 @@ namespace Test.Unit.Architecture
             Type[] result = [];
             return result;
         }
-        
+
         [Fact]
         public void TestValidateArchitectureConstraints()
         {
             Type type = GetImplementationType();
             Assembly assembly = type.Assembly;
-            
+
             ComponentDefinition componentDefinition = _Components.Single(component => component.Service == assembly);
 
             componentDefinition.Hosting.Should().Reference(componentDefinition.Interface);
             componentDefinition.Hosting.Should().Reference(componentDefinition.Service);
-            
+
             componentDefinition.Interface.Should().NotReference(componentDefinition.Hosting);
             componentDefinition.Interface.Should().NotReference(componentDefinition.Service);
-            
+
             componentDefinition.Service.Should().NotReference(componentDefinition.Hosting);
             componentDefinition.Service.Should().Reference(componentDefinition.Interface);
-            
+
             Type[] dependencyTypes = GetAllowedDependencyTypes();
             List<ComponentDefinition> allowedComponents = new();
             foreach (Type dependencyType in dependencyTypes)
@@ -112,11 +112,11 @@ namespace Test.Unit.Architecture
                 // componentDefinition.Hosting.Should().NotReference(allowedComponent.Hosting);
                 // componentDefinition.Hosting.Should().NotReference(allowedComponent.Interface);
                 // componentDefinition.Hosting.Should().NotReference(allowedComponent.Service);
-            
+
                 componentDefinition.Interface.Should().NotReference(allowedComponent.Hosting);
                 componentDefinition.Interface.Should().NotReference(allowedComponent.Interface);
                 componentDefinition.Interface.Should().NotReference(allowedComponent.Service);
-            
+
                 componentDefinition.Service.Should().NotReference(allowedComponent.Hosting);
                 componentDefinition.Service.Should().Reference(allowedComponent.Interface);
                 componentDefinition.Service.Should().NotReference(allowedComponent.Service);
@@ -126,7 +126,7 @@ namespace Test.Unit.Architecture
                 .Except(allowedComponents)
                 .ToList();
             forbiddenComponents.Remove(componentDefinition);
-            
+
             foreach (ComponentDefinition forbidden in forbiddenComponents)
             {
                 componentDefinition.Service.Should().NotReference(forbidden.Interface);
@@ -144,7 +144,7 @@ namespace Test.Unit.Architecture
             return artifactAccess;
         }
     }
-    
+
     public class SiteManagerReferenceValidationTests : ReferenceValidationTests
     {
         protected override Type GetImplementationType()
