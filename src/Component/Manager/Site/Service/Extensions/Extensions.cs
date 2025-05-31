@@ -3,11 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using HtmlAgilityPack;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
+    [ExcludeFromCodeCoverage]
     public static class Extensions
     {
         public static int CountWords(this string source)

@@ -29,6 +29,11 @@ namespace Test.Unit.FormerXunit
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
 
+            // Simulate v3-style parameter name
+            string encodedPath = path.Replace("/", "-").Replace("\\", "-");
+            string methodName = $"{nameof(Verify_MarkdownConversion_HtmlContents)}_path={encodedPath}";
+            settings.UseMethodName(methodName);
+
             await Verifier.Verify(html, "html", settings);
         }
 
@@ -39,9 +44,14 @@ namespace Test.Unit.FormerXunit
             string rawContents = await File.ReadAllTextAsync(path);
             string txt = new MarkdownUtil("https://kaylumah.nl").ToText(rawContents);
             txt = txt.Replace("/Users/maxhamulyak/", "/ExamplePath/");
-            
+
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
+
+            // Simulate v3-style parameter name
+            string encodedPath = path.Replace("/", "-").Replace("\\", "-");
+            string methodName = $"{nameof(Verify_MarkdownConversion_TxtContents)}_path={encodedPath}";
+            settings.UseMethodName(methodName);
 
             await Verifier.Verify(txt, "txt", settings);
         }

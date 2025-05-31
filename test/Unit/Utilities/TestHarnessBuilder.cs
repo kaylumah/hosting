@@ -58,13 +58,13 @@ namespace Test.Utilities
             TestHarness harness = Build(out serviceProvider, out _);
             return harness;
         }
-        
+
         public TestHarness Build(out IConfigurationRoot configuration)
         {
             TestHarness harness = Build(out _, out configuration);
             return harness;
         }
-        
+
         public TestHarness Build(out IServiceProvider serviceProvider, out IConfigurationRoot configuration)
         {
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
