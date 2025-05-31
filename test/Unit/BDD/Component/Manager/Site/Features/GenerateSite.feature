@@ -47,7 +47,7 @@ Feature: SiteManager GenerateSite
         Then the scenario executed successfully:
         And the following artifacts are created:
           | Path                     |
-          | /_site/assets/robots.txt |
+          | assets/robots.txt        |
           | example.html             |
           | sitemap.xml              |
           | sitemap_index.xml        |
