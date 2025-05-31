@@ -38,24 +38,43 @@ namespace Test.Unit.Architecture
     
     public abstract class ReferenceValidationTests
     {
-        readonly List<ComponentDefinition> _Components;
-        
-        public ReferenceValidationTests()
+        static readonly List<ComponentDefinition> _Components;
+
+        static ReferenceValidationTests()
         {
             Type artifactAccessHostingType = typeof(Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions);
             ComponentDefinition<IArtifactAccess, ArtifactAccess> artifactAccess = new (artifactAccessHostingType);
 
             Type siteManagerHostingType = typeof(Kaylumah.Ssg.Manager.Site.Hosting.ServiceCollectionExtensions);
             ComponentDefinition<ISiteManager, SiteManager> siteManager = new (siteManagerHostingType);
+
+            _Components = new()
+            {
+                artifactAccess,
+                siteManager
+            };
             
-            _Components = new();
-            _Components.Add(artifactAccess);
-            _Components.Add(siteManager);
+            Assembly[] knownAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            List<Assembly> discoveredServiceAssemblies = knownAssemblies
+                .Where(a => a.GetName().Name?.EndsWith(".Hosting", StringComparison.InvariantCulture) == true)
+                .Distinct()
+                .ToList();
+
+            IEnumerable<Assembly> assemblies = _Components.Select(component => component.Hosting!);
+            List<Assembly> unregistered = discoveredServiceAssemblies.Except(assemblies).ToList();
+            
+            if (0 < unregistered.Count)
+            {
+                #pragma warning disable IDESIGN103
+                string missingNames = string.Join(", ", unregistered.Select(a => a.GetName().Name));
+                throw new InvalidOperationException($"Missing ComponentDefinition registrations for: {missingNames}");
+                #pragma warning restore IDESIGN103
+            }
         }
         
-        public abstract Type GetImplementationType();
+        protected abstract Type GetImplementationType();
 
-        public virtual Type[] GetAllowedDependencyTypes()
+        protected virtual Type[] GetAllowedDependencyTypes()
         {
             Type[] result = [];
             return result;
@@ -89,14 +108,18 @@ namespace Test.Unit.Architecture
 
             foreach (ComponentDefinition allowedComponent in allowedComponents)
             {
-                componentDefinition.Hosting.Should().Reference(allowedComponent.Interface);
-                componentDefinition.Hosting.Should().Reference(allowedComponent.Service);
+                // TODO this is wrong
+                // componentDefinition.Hosting.Should().NotReference(allowedComponent.Hosting);
+                // componentDefinition.Hosting.Should().NotReference(allowedComponent.Interface);
+                // componentDefinition.Hosting.Should().NotReference(allowedComponent.Service);
             
                 componentDefinition.Interface.Should().NotReference(allowedComponent.Hosting);
+                componentDefinition.Interface.Should().NotReference(allowedComponent.Interface);
                 componentDefinition.Interface.Should().NotReference(allowedComponent.Service);
             
                 componentDefinition.Service.Should().NotReference(allowedComponent.Hosting);
                 componentDefinition.Service.Should().Reference(allowedComponent.Interface);
+                componentDefinition.Service.Should().NotReference(allowedComponent.Service);
             }
 
             List<ComponentDefinition> forbiddenComponents = _Components
@@ -115,7 +138,7 @@ namespace Test.Unit.Architecture
 
     public class ArtifactAccessReferenceValidationTests : ReferenceValidationTests
     {
-        public override Type GetImplementationType()
+        protected override Type GetImplementationType()
         {
             Type artifactAccess = typeof(ArtifactAccess);
             return artifactAccess;
@@ -124,13 +147,13 @@ namespace Test.Unit.Architecture
     
     public class SiteManagerReferenceValidationTests : ReferenceValidationTests
     {
-        public override Type GetImplementationType()
+        protected override Type GetImplementationType()
         {
             Type siteManager = typeof(SiteManager);
             return siteManager;
         }
 
-        public override Type[] GetAllowedDependencyTypes()
+        protected override Type[] GetAllowedDependencyTypes()
         {
             Type[] result = new Type[1];
             result[0] = typeof(ArtifactAccess);
