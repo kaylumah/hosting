@@ -38,7 +38,7 @@ namespace Test.Unit.Architecture
     
     public abstract class ReferenceValidationTests
     {
-        List<ComponentDefinition> _Components;
+        readonly List<ComponentDefinition> _Components;
         
         public ReferenceValidationTests()
         {
@@ -54,6 +54,12 @@ namespace Test.Unit.Architecture
         }
         
         public abstract Type GetImplementationType();
+
+        public virtual Type[] GetAllowedDependencyTypes()
+        {
+            Type[] result = [];
+            return result;
+        }
         
         [Fact]
         public void TestValidateArchitectureConstraints()
@@ -71,6 +77,39 @@ namespace Test.Unit.Architecture
             
             componentDefinition.Service.Should().NotReference(componentDefinition.Hosting);
             componentDefinition.Service.Should().Reference(componentDefinition.Interface);
+            
+            Type[] dependencyTypes = GetAllowedDependencyTypes();
+            List<ComponentDefinition> allowedComponents = new();
+            foreach (Type dependencyType in dependencyTypes)
+            {
+                Assembly dependencyAssembly = dependencyType.Assembly;
+                ComponentDefinition dependencyDefinition = _Components.Single(component => component.Service == dependencyAssembly);
+                allowedComponents.Add(dependencyDefinition);
+            }
+
+            foreach (ComponentDefinition allowedComponent in allowedComponents)
+            {
+                componentDefinition.Hosting.Should().Reference(allowedComponent.Interface);
+                componentDefinition.Hosting.Should().Reference(allowedComponent.Service);
+            
+                componentDefinition.Interface.Should().NotReference(allowedComponent.Hosting);
+                componentDefinition.Interface.Should().NotReference(allowedComponent.Service);
+            
+                componentDefinition.Service.Should().NotReference(allowedComponent.Hosting);
+                componentDefinition.Service.Should().Reference(allowedComponent.Interface);
+            }
+
+            List<ComponentDefinition> forbiddenComponents = _Components
+                .Except(allowedComponents)
+                .ToList();
+            forbiddenComponents.Remove(componentDefinition);
+            
+            foreach (ComponentDefinition forbidden in forbiddenComponents)
+            {
+                componentDefinition.Service.Should().NotReference(forbidden.Interface);
+                componentDefinition.Service.Should().NotReference(forbidden.Service);
+                componentDefinition.Service.Should().NotReference(forbidden.Hosting);
+            }
         }
     }
 
@@ -89,6 +128,13 @@ namespace Test.Unit.Architecture
         {
             Type siteManager = typeof(SiteManager);
             return siteManager;
+        }
+
+        public override Type[] GetAllowedDependencyTypes()
+        {
+            Type[] result = new Type[1];
+            result[0] = typeof(ArtifactAccess);
+            return result;
         }
     }
 }
