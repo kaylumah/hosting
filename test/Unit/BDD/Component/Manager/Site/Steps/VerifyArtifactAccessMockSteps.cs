@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Reqnroll;
+using Test.Unit.BDD.Extensions;
 using Test.Unit.Extensions;
 using Test.Unit.Utilities;
 using VerifyXunit;

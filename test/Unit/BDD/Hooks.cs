@@ -5,7 +5,7 @@ using Reqnroll;
 using Reqnroll.Assist;
 using Reqnroll.Assist.ValueRetrievers;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     [Binding]
     public class Hooks

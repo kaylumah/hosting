@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using Test.Unit.BDD;
 using Test.Unit.Helpers;
 
 namespace Test.Unit.Entities

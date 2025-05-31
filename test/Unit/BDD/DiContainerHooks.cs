@@ -6,7 +6,7 @@ using Microsoft.Extensions.Time.Testing;
 using Reqnroll;
 using Reqnroll.BoDi;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     [Binding]
     public class DiContainerHooks

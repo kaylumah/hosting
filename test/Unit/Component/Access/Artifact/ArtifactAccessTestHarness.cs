@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Microsoft.Extensions.DependencyInjection;
+using Test.Unit.BDD;
 using Test.Utilities;
 
 namespace Test.Unit.Component.Access.Artifact

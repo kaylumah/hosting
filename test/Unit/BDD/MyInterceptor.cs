@@ -8,7 +8,7 @@ using Castle.DynamicProxy;
 using Newtonsoft.Json;
 using Reqnroll;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     public sealed class MyInterceptor : IAsyncInterceptor
     {

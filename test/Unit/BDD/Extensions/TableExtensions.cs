@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Reqnroll;
+using Test.Unit.BDD;
 using Test.Unit.Helpers;
 
-namespace Reqnroll
+namespace Test.Unit.BDD.Extensions
 {
     public static class TableExtensions
     {

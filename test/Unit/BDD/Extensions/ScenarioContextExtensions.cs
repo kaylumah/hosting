@@ -4,7 +4,7 @@
 using Reqnroll;
 using Reqnroll.Tracing;
 
-namespace Test.Unit.Extensions
+namespace Test.Unit.BDD.Extensions
 {
     public static class ScenarioContextExtensions
     {

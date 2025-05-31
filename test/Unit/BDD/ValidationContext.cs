@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     public class ValidationContext
     {

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
-namespace Test.Unit
+namespace Test.Unit.BDD
 {
     public static class Constants
     {

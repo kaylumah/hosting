@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Test.Unit.Helpers
+namespace Test.Unit.BDD
 {
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class GherkinTableHeaderAttribute : Attribute
