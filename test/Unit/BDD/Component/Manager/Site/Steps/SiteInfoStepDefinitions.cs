@@ -26,7 +26,7 @@ namespace Test.Unit.Steps
             _SiteInfo.Description = data.description;
             _SiteInfo.Lang = data.Language;
             _SiteInfo.SupportedFileExtensions = new HashSet<string>(data.supportedFileExtensions);
-            _SiteInfo.SupportedDataFileExtensions = new HashSet<string>() { ".yml" };
+            _SiteInfo.SupportedDataFileExtensions = new HashSet<string>() { ".yml", ".csv", ".json" };
         }
     }
 }
