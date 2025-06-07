@@ -11,18 +11,18 @@
     <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.12.1" />
     <PackageVersion Include="Markdig" Version="0.41.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.4" />
-    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.4" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
+    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.5" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="6.2.1" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.14" />
