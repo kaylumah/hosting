@@ -8,32 +8,32 @@
   <ItemGroup>
     <PackageVersion Include="Castle.Core" Version="5.2.1" />
     <PackageVersion Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
-    <PackageVersion Include="CsvHelper" Version="33.0.1" />
+    <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.12.1" />
-    <PackageVersion Include="Markdig" Version="0.41.1" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.5" />
-    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.5" />
+    <PackageVersion Include="Markdig" Version="0.41.2" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.6" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="6.2.1" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.14" />
-    <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.4" />
+    <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.6" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
     <!-- No longer used? -->
     <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Bogus" Version="35.6.3" />
-    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.5.0" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.6.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="xunit" Version="2.9.3" />
@@ -47,11 +47,11 @@
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="FluentAssertions" Version="[7.2.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.52.0" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.5.0" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.6.0" />
   </ItemGroup>
   <ItemGroup Label="Analyzers">
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.4" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="4.14.0" />
   </ItemGroup>
   <ItemGroup Label="Transitive Overrides">
      <!-- Schema.NET 13.0.0 references System.Text.Json 7.0.0 https://github.com/advisories/GHSA-hh2w-p6rv-4g7w -->
