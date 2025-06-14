@@ -226,7 +226,7 @@ namespace Test.Unit.Architecture
         [Fact]
         public void ValidateServices()
         {
-            IServiceCollection services = CreateDefaultServices();
+            IServiceCollection services = CreateDefaultServiceCollection();
 
             string[] namespaceTargets = Array.Empty<string>();
             ServiceDependencyValidatorOptions options = new ServiceDependencyValidatorOptions(namespaceTargets);
@@ -240,7 +240,7 @@ namespace Test.Unit.Architecture
             serviceDependencyValidator.Validate(services);
         }
 
-        protected virtual IServiceCollection CreateDefaultServices()
+        protected virtual IServiceCollection CreateDefaultServiceCollection()
         {
             IServiceCollection services = new ServiceCollection();
 
