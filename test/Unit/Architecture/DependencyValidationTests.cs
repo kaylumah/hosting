@@ -253,7 +253,7 @@ namespace Test.Unit.Architecture
             // TODO: this does not belong here
             services.AddFileSystem();
 
-            RegisterServiceDependencies(services, configurationManager);
+            ConfigureServices(services, configurationManager);
 
             return services;
         }
@@ -270,12 +270,12 @@ namespace Test.Unit.Architecture
             // Empty on purpose
         }
 
-        protected abstract void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration);
+        protected abstract void ConfigureServices(IServiceCollection services, IConfiguration configuration);
     }
 
     public class ArtifactAccessDependencyValidationTests : DependencyValidationTests
     {
-        protected override void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions.AddArtifactAccess(services, configuration);
         }
@@ -283,7 +283,7 @@ namespace Test.Unit.Architecture
 
     public class SiteManagerDependencyValidationTests : DependencyValidationTests
     {
-        protected override void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             Kaylumah.Ssg.Manager.Site.Hosting.ServiceCollectionExtensions.AddSiteManager(services, configuration);
             // TODO better solution for this?
