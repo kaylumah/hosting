@@ -245,7 +245,9 @@ namespace Test.Unit.Architecture
             IServiceCollection services = new ServiceCollection();
 
             ConfigurationManager configurationManager = CreateDefaultConfigurationManager();
-            // ConfigureComponent(configurationManager);
+            // This part is used for every test to register their own configuration
+            ConfigureComponent(configurationManager);
+            
             services.AddSingleton<IConfiguration>(configurationManager);
             services.AddSingleton<IConfigurationRoot>(configurationManager);
             services.AddSingleton<IConfigurationManager>(configurationManager);
@@ -253,6 +255,7 @@ namespace Test.Unit.Architecture
             // TODO: this does not belong here
             services.AddFileSystem();
 
+            // This part is used for every test to register their own dependencies
             ConfigureServices(services, configurationManager);
 
             return services;
@@ -264,18 +267,19 @@ namespace Test.Unit.Architecture
             return configurationManager;
         }
         
-        
-        protected virtual void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
-        {
-            // Empty on purpose
-        }
+        protected abstract void ConfigureComponent(IConfigurationManager configuration);
 
-        protected abstract void ConfigureServices(IServiceCollection services, IConfiguration configuration);
+        protected abstract void ConfigureServices(IServiceCollection services, IConfigurationManager configuration);
     }
 
     public class ArtifactAccessDependencyValidationTests : DependencyValidationTests
     {
-        protected override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureComponent(IConfigurationManager configuration)
+        {
+            // Empty on purpose
+        }
+
+        protected override void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions.AddArtifactAccess(services, configuration);
         }
@@ -283,7 +287,18 @@ namespace Test.Unit.Architecture
 
     public class SiteManagerDependencyValidationTests : DependencyValidationTests
     {
-        protected override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureComponent(IConfigurationManager configuration)
+        {
+            Dictionary<string, string?> data = new()
+            {
+                // TODO: can we do better than this for config?
+                { "Site:Lang", "en" },
+                { "Metadata:Defaults:Title", "Title" }
+            };
+            configuration.AddInMemoryCollection(data);
+        }
+
+        protected override void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             Kaylumah.Ssg.Manager.Site.Hosting.ServiceCollectionExtensions.AddSiteManager(services, configuration);
             // TODO better solution for this?
@@ -292,15 +307,6 @@ namespace Test.Unit.Architecture
             ArtifactAccessMock artifactAccessMock = new ArtifactAccessMock();
             IArtifactAccess artifactAccess = artifactAccessMock.Object;
             services.AddSingleton(artifactAccess);
-        }
-
-        protected override void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
-        {
-            Dictionary<string, string?> data = new Dictionary<string, string?>();
-            // TODO: can we do better than this for config?
-            data.Add("Site:Lang", "en");
-            data.Add("Metadata:Defaults:Title", "Title");
-            configurationBuilder.AddInMemoryCollection(data);
         }
     }
 }
