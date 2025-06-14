@@ -15,29 +15,29 @@ updates:
       timezone: Europe/Amsterdam
     assignees:
       - kaylumah
-    groups:
-      Microsoft:
-        patterns:
-          - Microsoft.Extensions.*
-          - System.*
-        exclude-patterns:
-          - System.IO.Abstractions
-          - System.IO.Abstractions.*
-      AzureFunction:
-        patterns:
-          - Microsoft.Azure.Functions.*
-      System.IO.Abstractions:
-        patterns:
-          - System.IO.Abstractions
-          - System.IO.Abstractions.*
-      Xunit:
-        patterns:
-          - xunit.runner.visualstudio
-          - xunit
-      Verify:
-        patterns:
-          - Verify.XunitV3
-          - Verify.Xunit
+    #groups:
+    #  Microsoft:
+    #    patterns:
+    #      - Microsoft.Extensions.*
+    #      - System.*
+    #    exclude-patterns:
+    #      - System.IO.Abstractions
+    #      - System.IO.Abstractions.*
+    #  AzureFunction:
+    #    patterns:
+    #      - Microsoft.Azure.Functions.*
+    #  System.IO.Abstractions:
+    #    patterns:
+    #      - System.IO.Abstractions
+    #      - System.IO.Abstractions.*
+    #  Xunit:
+    #    patterns:
+    #      - xunit.runner.visualstudio
+    #      - xunit
+    #  Verify:
+    #    patterns:
+    #      - Verify.XunitV3
+    #      - Verify.Xunit
     open-pull-requests-limit: 25
 
   - package-ecosystem: dotnet-sdk
