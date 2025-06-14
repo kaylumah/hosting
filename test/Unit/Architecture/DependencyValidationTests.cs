@@ -244,18 +244,27 @@ namespace Test.Unit.Architecture
         {
             IServiceCollection services = new ServiceCollection();
 
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            ApplyConfiguration(configurationBuilder);
-            IConfiguration configuration = configurationBuilder.Build();
+            ConfigurationManager configurationManager = CreateDefaultConfigurationManager();
+            // ConfigureComponent(configurationManager);
+            services.AddSingleton<IConfiguration>(configurationManager);
+            services.AddSingleton<IConfigurationRoot>(configurationManager);
+            services.AddSingleton<IConfigurationManager>(configurationManager);
 
             // TODO: this does not belong here
             services.AddFileSystem();
 
-            RegisterServiceDependencies(services, configuration);
+            RegisterServiceDependencies(services, configurationManager);
 
             return services;
         }
 
+        protected virtual ConfigurationManager CreateDefaultConfigurationManager()
+        {
+            ConfigurationManager configurationManager = new ConfigurationManager();
+            return configurationManager;
+        }
+        
+        
         protected virtual void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
         {
             // Empty on purpose
