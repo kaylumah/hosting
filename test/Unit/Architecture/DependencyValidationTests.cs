@@ -224,7 +224,7 @@ namespace Test.Unit.Architecture
     public abstract class DependencyValidationTests
     {
         [Fact]
-        public void ValidateServices()
+        public virtual void ValidateServices()
         {
             IServiceCollection services = CreateDefaultServiceCollection();
 
@@ -283,6 +283,12 @@ namespace Test.Unit.Architecture
         {
             Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions.AddArtifactAccess(services, configuration);
         }
+
+        [Fact]
+        public override void ValidateServices()
+        {
+            base.ValidateServices();
+        }
     }
 
     public class SiteManagerDependencyValidationTests : DependencyValidationTests
@@ -307,6 +313,12 @@ namespace Test.Unit.Architecture
             ArtifactAccessMock artifactAccessMock = new ArtifactAccessMock();
             IArtifactAccess artifactAccess = artifactAccessMock.Object;
             services.AddSingleton(artifactAccess);
+        }
+        
+        [Fact]
+        public override void ValidateServices()
+        {
+            base.ValidateServices();
         }
     }
 }
