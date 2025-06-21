@@ -247,7 +247,7 @@ namespace Test.Unit.Architecture
             ConfigurationManager configurationManager = CreateDefaultConfigurationManager();
             // This part is used for every test to register their own configuration
             ConfigureComponent(configurationManager);
-            
+
             services.AddSingleton<IConfiguration>(configurationManager);
             services.AddSingleton<IConfigurationRoot>(configurationManager);
             services.AddSingleton<IConfigurationManager>(configurationManager);
@@ -266,7 +266,7 @@ namespace Test.Unit.Architecture
             ConfigurationManager configurationManager = new ConfigurationManager();
             return configurationManager;
         }
-        
+
         protected abstract void ConfigureComponent(IConfigurationManager configuration);
 
         protected abstract void ConfigureServices(IServiceCollection services, IConfigurationManager configuration);
@@ -314,7 +314,7 @@ namespace Test.Unit.Architecture
             IArtifactAccess artifactAccess = artifactAccessMock.Object;
             services.AddSingleton(artifactAccess);
         }
-        
+
         [Fact]
         public override void ValidateServices()
         {
