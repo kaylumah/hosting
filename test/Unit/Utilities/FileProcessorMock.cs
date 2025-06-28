@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Kaylumah.Ssg.iFX.Test;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Processor;
 using Moq;
 using Test.Unit.Entities;

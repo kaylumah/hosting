@@ -19,7 +19,6 @@
     <!-- <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" /> -->
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Moq" />
     <PackageReference Include="Verify.Xunit" />
     <PackageReference Include="Castle.Core" />
     <PackageReference Include="Castle.Core.AsyncInterceptor" />

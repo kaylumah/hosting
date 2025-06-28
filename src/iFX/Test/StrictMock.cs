@@ -3,7 +3,7 @@
 
 using Moq;
 
-namespace Test.Unit.Utilities
+namespace Kaylumah.Ssg.iFX.Test
 {
     public class StrictMock<T> : Mock<T> where T : class
     {
