@@ -37,11 +37,8 @@
     <Project Path="src/Component/Manager/Site/Interface/Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <Project Path="src/Component/Manager/Site/Service/Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </Folder>
-  <Folder Name="/src/iFX/" />
-  <Folder Name="/src/iFX/Data/">
+  <Folder Name="/src/iFX/">
     <Project Path="src/iFX/Data/Kaylumah.Ssg.iFX.Data.csproj" />
-  </Folder>
-  <Folder Name="/src/iFX/Test/">
     <Project Path="src/iFX/Test/Kaylumah.Ssg.iFX.Test.csproj" />
   </Folder>
   <Folder Name="/src/Utilities/">
