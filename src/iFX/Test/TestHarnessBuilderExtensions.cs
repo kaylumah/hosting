@@ -10,8 +10,8 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
+        /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
+        /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
         /// TestHarness harness = TestHarnessBuilder.Create()
@@ -36,8 +36,8 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
+        /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
+        /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
         /// TestHarness harness = TestHarnessBuilder.Create()
