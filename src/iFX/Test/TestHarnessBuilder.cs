@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Kaylumah.Ssg.iFX.Test;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

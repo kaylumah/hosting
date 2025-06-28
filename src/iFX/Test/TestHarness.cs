@@ -10,7 +10,7 @@ using Castle.DynamicProxy;
 using Kaylumah.Ssg.Utilities.Common;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Utilities
+namespace Kaylumah.Ssg.iFX.Test
 {
     public sealed class TestHarness
     {
