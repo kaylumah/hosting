@@ -2,6 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -51,6 +53,29 @@ namespace Kaylumah.Ssg.iFX.Test
             services.TryAddSingleton(TimeProvider.System);
             services.AddLogging(ConfigureLogging);
 
+            return services;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection ReplaceFileSystem(this IServiceCollection services)
+        {
+            MockFileSystem MockFileSystemFactory(IServiceProvider serviceProvider)
+            {
+                TimeProvider timeProvider = serviceProvider.GetRequiredService<FakeTimeProvider>();
+                MockFileSystem mockFileSystem = new MockFileSystem();
+                mockFileSystem.MockTime(() => timeProvider.GetUtcNow().UtcDateTime);
+                return mockFileSystem;
+            }
+            
+            services.RemoveAll<IFileSystem>();
+            services.TryAddSingleton(TimeProvider.System);
+            services.AddSingleton(MockFileSystemFactory);
+            services.AddSingleton<IFileSystem>(serviceProvider => serviceProvider.GetRequiredService<MockFileSystem>());
+    
             return services;
         }
     }
