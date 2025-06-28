@@ -60,7 +60,7 @@ namespace Test.Unit.Component.Manager.Site
                     services.RemoveAll<TimeProvider>();
                     services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
-                    services.AddSingleton<IFileSystem>(mockFileSystem);
+                    services.ReplaceFileSystem(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
                 });

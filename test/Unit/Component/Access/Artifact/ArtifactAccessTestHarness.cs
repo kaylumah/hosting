@@ -27,7 +27,7 @@ namespace Test.Unit.Component.Access.Artifact
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Register((serviceCollection, configuration) =>
                 {
-                    serviceCollection.AddSingleton<IFileSystem>(mockFileSystem);
+                    serviceCollection.ReplaceFileSystem(mockFileSystem);
                     serviceCollection.AddArtifactAccess(configuration);
                 });
         }

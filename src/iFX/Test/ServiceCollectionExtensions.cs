@@ -63,10 +63,17 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceFileSystem(this IServiceCollection services)
         {
+            MockFileSystem mockFileSystem = new MockFileSystem();
+            services.ReplaceFileSystem(mockFileSystem);
+            
+            return services;
+        }
+
+        public static IServiceCollection ReplaceFileSystem(this IServiceCollection services, MockFileSystem mockFileSystem)
+        {
             MockFileSystem MockFileSystemFactory(IServiceProvider serviceProvider)
             {
                 TimeProvider timeProvider = serviceProvider.GetRequiredService<TimeProvider>();
-                MockFileSystem mockFileSystem = new MockFileSystem();
                 mockFileSystem.MockTime(() => timeProvider.GetUtcNow().UtcDateTime);
                 return mockFileSystem;
             }
