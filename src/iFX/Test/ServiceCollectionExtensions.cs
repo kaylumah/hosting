@@ -13,10 +13,10 @@ namespace Kaylumah.Ssg.iFX.Test
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Replaces <see cref="TimeProvider"/> with ...
+        /// Replaces the default <see cref="TimeProvider"/> registration with a testable <see cref="FakeTimeProvider"/>.
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
+        /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services)
         {
             services.RemoveAll<TimeProvider>();
@@ -29,8 +29,8 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <summary>
         /// Replaces <see cref="ILogger"/> with ...
         /// </summary>
-        /// <param name="services"></param>
-        /// <returns></returns>
+        /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceLogger(this IServiceCollection services)
         {
             // FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
