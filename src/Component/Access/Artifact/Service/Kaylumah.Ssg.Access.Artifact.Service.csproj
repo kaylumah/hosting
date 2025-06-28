@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Utilities\Common\Kaylumah.Ssg.Utilities.Common.csproj" />
+    <ProjectReference Include="..\..\..\..\iFX\Common\Kaylumah.Ssg.iFX.Common.csproj" />
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\iFX\Common\Kaylumah.Ssg.iFX.Common.csproj" />
     <ProjectReference Include="..\..\..\..\iFX\Contract\Kaylumah.Ssg.iFX.Contract.csproj" />
     <ProjectReference Include="..\..\..\..\iFX\Data\Kaylumah.Ssg.iFX.Data.csproj" />
     <ProjectReference Include="..\Interface\Kaylumah.Ssg.Manager.Site.Interface.csproj" />
     <ProjectReference Include="..\..\..\Access\Artifact\Interface\Kaylumah.Ssg.Access.Artifact.Interface.csproj" />
-    <ProjectReference Include="..\..\..\..\Utilities\Common\Kaylumah.Ssg.Utilities.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Schema.NET" />

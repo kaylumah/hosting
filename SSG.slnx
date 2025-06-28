@@ -38,13 +38,11 @@
     <Project Path="src/Component/Manager/Site/Service/Kaylumah.Ssg.Manager.Site.Service.csproj" />
   </Folder>
   <Folder Name="/src/iFX/">
+    <Project Path="src/iFX/Common/Kaylumah.Ssg.iFX.Common.csproj" />
+    <Project Path="src/iFX/Contract/Kaylumah.Ssg.iFX.Contract.csproj" />
     <Project Path="src/iFX/Data/Kaylumah.Ssg.iFX.Data.csproj" />
     <Project Path="src/iFX/Primitives/Kaylumah.Ssg.iFX.Primitives.csproj" />
     <Project Path="src/iFX/Test/Kaylumah.Ssg.iFX.Test.csproj" />
-    <Project Path="src\iFX\Contract\Kaylumah.Ssg.iFX.Contract.csproj" />
-  </Folder>
-  <Folder Name="/src/Utilities/">
-    <Project Path="src/Utilities/Common/Kaylumah.Ssg.Utilities.Common.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/E2e/Test.E2e.csproj" />
