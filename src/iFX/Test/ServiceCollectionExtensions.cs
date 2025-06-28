@@ -15,7 +15,7 @@ namespace Kaylumah.Ssg.iFX.Test
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Replaces the default <see cref="TimeProvider"/> registration with a testable <see cref="FakeTimeProvider"/>.
+        /// Replaces <see cref="TimeProvider"/> with a testable <see cref="FakeTimeProvider"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
@@ -29,7 +29,7 @@ namespace Kaylumah.Ssg.iFX.Test
         }
 
         /// <summary>
-        /// Replaces <see cref="ILogger"/> with ...
+        /// Replaces <see cref="ILogger"/> with a testable <see cref="FakeLogger"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
@@ -57,7 +57,7 @@ namespace Kaylumah.Ssg.iFX.Test
         }
 
         /// <summary>
-        /// 
+        /// Replaces <see cref="IFileSystem"/> with a testable <see cref="MockFileSystem"/>.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
