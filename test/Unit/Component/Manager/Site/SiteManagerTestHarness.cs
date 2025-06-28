@@ -44,6 +44,9 @@ namespace Test.Unit.Component.Manager.Site
                 { "Metadata", string.Empty }
             };
             TestHarnessBuilder = TestHarnessBuilder.Create()
+                .SetupTimeProvider(fakeTimeProvider)
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Configure(configurationBuilder =>
                 {
                     configurationBuilder.AddInMemoryCollection(config);
@@ -51,10 +54,7 @@ namespace Test.Unit.Component.Manager.Site
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
-                    services.RemoveAll<TimeProvider>();
-                    services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
-                    services.ReplaceFileSystem(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
                 });
