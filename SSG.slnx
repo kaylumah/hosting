@@ -39,6 +39,7 @@
   </Folder>
   <Folder Name="/src/iFX/">
     <Project Path="src/iFX/Data/Kaylumah.Ssg.iFX.Data.csproj" />
+    <Project Path="src/iFX/Primitives/Kaylumah.Ssg.iFX.Primitives.csproj" />
     <Project Path="src/iFX/Test/Kaylumah.Ssg.iFX.Test.csproj" />
   </Folder>
   <Folder Name="/src/Utilities/">
