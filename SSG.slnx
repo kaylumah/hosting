@@ -50,7 +50,6 @@
   </Folder>
   <Folder Name="/src/Utilities/">
     <Project Path="src/Utilities/Common/Kaylumah.Ssg.Utilities.Common.csproj" />
-    <Project Path="src\Utilities\Metadata\Kaylumah.Ssg.Extensions.Metadata.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/E2e/Test.E2e.csproj" />
