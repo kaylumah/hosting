@@ -56,5 +56,29 @@ namespace Kaylumah.Ssg.iFX.Test
             builder.Register(ReplaceLogger);
             return builder;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
+        /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
+        /// <example>
+        /// <code>
+        /// TestHarness harness = TestHarnessBuilder.Create()
+        ///     .SetupFileSystem()
+        ///     .Build(out IServiceProvider serviceProvider);
+        /// MockFileSystem mockFileSystem = serviceProvider.GetRequiredService&lt;MockFileSystem&gt;();
+        /// </code>
+        /// </example>
+        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder)
+        {
+            void ReplaceFileSystem(IServiceCollection services)
+            {
+                services.ReplaceFileSystem();
+            }
+            
+            builder.Register(ReplaceFileSystem);
+            return builder;
+        }
     }
 }
