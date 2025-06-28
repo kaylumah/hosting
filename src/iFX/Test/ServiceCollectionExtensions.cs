@@ -65,7 +65,7 @@ namespace Kaylumah.Ssg.iFX.Test
         {
             MockFileSystem MockFileSystemFactory(IServiceProvider serviceProvider)
             {
-                TimeProvider timeProvider = serviceProvider.GetRequiredService<FakeTimeProvider>();
+                TimeProvider timeProvider = serviceProvider.GetRequiredService<TimeProvider>();
                 MockFileSystem mockFileSystem = new MockFileSystem();
                 mockFileSystem.MockTime(() => timeProvider.GetUtcNow().UtcDateTime);
                 return mockFileSystem;
