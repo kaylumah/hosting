@@ -5,11 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
-using Kaylumah.Ssg.Extensions.Data.Abstractions;
-using IParser = Kaylumah.Ssg.Extensions.Data.Abstractions.IParser;
-using Kaylumah.Ssg.Extensions.Data.Csv;
-using Kaylumah.Ssg.Extensions.Data.Json;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
+using IParser = Kaylumah.Ssg.iFX.Data.Abstractions.IParser;
+using Kaylumah.Ssg.iFX.Data.Csv;
+using Kaylumah.Ssg.iFX.Data.Json;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 using Xunit;
 using YamlDotNet.Core;
 

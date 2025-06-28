@@ -2,11 +2,11 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using Kaylumah.Ssg.Extensions.Data.Abstractions;
+using Kaylumah.Ssg.iFX.Data.Abstractions;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Kaylumah.Ssg.Extensions.Data.Yaml
+namespace Kaylumah.Ssg.iFX.Data.Yaml
 {
     public class YamlParser : IYamlParser
     {

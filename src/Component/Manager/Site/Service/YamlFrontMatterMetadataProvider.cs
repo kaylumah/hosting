@@ -2,8 +2,8 @@
 // See LICENSE file in the project root for full license information.
 
 using System.Text.RegularExpressions;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 
 namespace Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter
 {
