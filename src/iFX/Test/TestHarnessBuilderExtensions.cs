@@ -1,7 +1,9 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions.TestingHelpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Time.Testing;
 
 namespace Kaylumah.Ssg.iFX.Test
 {
@@ -27,6 +29,17 @@ namespace Kaylumah.Ssg.iFX.Test
             void ReplaceTimeProvider(IServiceCollection services)
             {
                 services.ReplaceTimeProvider();
+            }
+
+            builder.Register(ReplaceTimeProvider);
+            return builder;
+        }
+        
+        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder, FakeTimeProvider fakeTimeProvider)
+        {
+            void ReplaceTimeProvider(IServiceCollection services)
+            {
+                services.ReplaceTimeProvider(fakeTimeProvider);
             }
 
             builder.Register(ReplaceTimeProvider);
@@ -76,7 +89,18 @@ namespace Kaylumah.Ssg.iFX.Test
             {
                 services.ReplaceFileSystem();
             }
-            
+
+            builder.Register(ReplaceFileSystem);
+            return builder;
+        }
+        
+        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder, MockFileSystem mockFileSystem)
+        {
+            void ReplaceFileSystem(IServiceCollection services)
+            {
+                services.ReplaceFileSystem(mockFileSystem);
+            }
+
             builder.Register(ReplaceFileSystem);
             return builder;
         }

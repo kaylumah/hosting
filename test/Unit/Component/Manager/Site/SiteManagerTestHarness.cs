@@ -31,7 +31,6 @@ namespace Test.Unit.Component.Manager.Site
         readonly ValidationContext _ValidationContext;
 
         public SiteManagerTestHarness(
-            IReqnrollOutputHelper reqnrollOutputHelper,
             ArtifactAccessMock artifactAccessMock,
             MockFileSystem mockFileSystem,
             FakeTimeProvider fakeTimeProvider,
@@ -44,23 +43,18 @@ namespace Test.Unit.Component.Manager.Site
                 { "Site", string.Empty },
                 { "Metadata", string.Empty }
             };
-            MyInterceptor interceptor = new MyInterceptor(reqnrollOutputHelper);
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Configure(configurationBuilder =>
                 {
                     configurationBuilder.AddInMemoryCollection(config);
                 })
-                .Register(services =>
-                {
-                    services.AddSingleton<IAsyncInterceptor>(interceptor);
-                })
+                .SetupTimeProvider(fakeTimeProvider)
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
-                    services.RemoveAll<TimeProvider>();
-                    services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
-                    services.ReplaceFileSystem(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
                 });
