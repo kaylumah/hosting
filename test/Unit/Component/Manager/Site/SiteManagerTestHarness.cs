@@ -7,6 +7,7 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Kaylumah.Ssg.iFX.Test;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -59,7 +60,7 @@ namespace Test.Unit.Component.Manager.Site
                     services.RemoveAll<TimeProvider>();
                     services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
-                    services.AddSingleton<IFileSystem>(mockFileSystem);
+                    services.ReplaceFileSystem(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
                 });

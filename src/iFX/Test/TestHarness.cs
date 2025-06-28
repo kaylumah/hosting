@@ -10,7 +10,7 @@ using Castle.DynamicProxy;
 using Kaylumah.Ssg.Utilities.Common;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Utilities
+namespace Kaylumah.Ssg.iFX.Test
 {
     public sealed class TestHarness
     {
@@ -19,11 +19,10 @@ namespace Test.Utilities
 
         public TestHarness(IServiceProvider serviceProvider)
         {
-
             _ServiceProvider = serviceProvider;
-#pragma warning disable IDESIGN103
-            _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
-#pragma warning restore IDESIGN103
+            IEnumerable<IAsyncInterceptor> asyncInterceptors = serviceProvider.GetServices<IAsyncInterceptor>();
+            IInterceptor[] interceptors = asyncInterceptors.ToInterceptors();
+            _Interceptors = new ReadOnlyCollection<IInterceptor>(interceptors);
         }
 
         public async Task TestService<T>(Func<T, Task> scenario) where T : class

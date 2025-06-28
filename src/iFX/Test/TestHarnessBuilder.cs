@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Utilities
+namespace Kaylumah.Ssg.iFX.Test
 {
     public sealed class TestHarnessBuilder
     {
