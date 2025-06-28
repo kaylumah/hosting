@@ -20,9 +20,17 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services)
+        { 
+            FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
+            services.ReplaceTimeProvider(fakeTimeProvider);
+            
+            return services;
+        }
+        
+        public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services, FakeTimeProvider fakeTimeProvider)
         {
             services.RemoveAll<TimeProvider>();
-            services.AddSingleton<FakeTimeProvider>();
+            services.AddSingleton(fakeTimeProvider);
             services.AddSingleton<TimeProvider>(serviceProvider => serviceProvider.GetRequiredService<FakeTimeProvider>());
             
             return services;

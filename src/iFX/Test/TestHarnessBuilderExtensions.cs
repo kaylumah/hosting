@@ -1,7 +1,9 @@
 // Copyright (c) Kaylumah, 2025. All rights reserved.
 // See LICENSE file in the project root for full license information.
 
+using System.IO.Abstractions.TestingHelpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Time.Testing;
 
 namespace Kaylumah.Ssg.iFX.Test
 {
@@ -11,6 +13,7 @@ namespace Kaylumah.Ssg.iFX.Test
         /// 
         /// </summary>
         /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
+        /// <param name="fakeTimeProvider"></param>
         /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
@@ -22,11 +25,18 @@ namespace Kaylumah.Ssg.iFX.Test
         /// fakeTimeProvider.SetUtcNow(time);
         /// </code>
         /// </example>
-        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder)
+        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder, FakeTimeProvider? fakeTimeProvider = null)
         {
             void ReplaceTimeProvider(IServiceCollection services)
             {
-                services.ReplaceTimeProvider();
+                if (fakeTimeProvider == null)
+                {
+                    services.ReplaceTimeProvider();
+                }
+                else
+                {
+                    services.ReplaceTimeProvider(fakeTimeProvider);
+                }
             }
 
             builder.Register(ReplaceTimeProvider);
@@ -61,6 +71,7 @@ namespace Kaylumah.Ssg.iFX.Test
         /// 
         /// </summary>
         /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
+        /// <param name="mockFileSystem"></param>
         /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
@@ -70,11 +81,18 @@ namespace Kaylumah.Ssg.iFX.Test
         /// MockFileSystem mockFileSystem = serviceProvider.GetRequiredService&lt;MockFileSystem&gt;();
         /// </code>
         /// </example>
-        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder)
+        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder, MockFileSystem? mockFileSystem = null)
         {
             void ReplaceFileSystem(IServiceCollection services)
             {
-                services.ReplaceFileSystem();
+                if (mockFileSystem == null)
+                {
+                    services.ReplaceFileSystem();
+                }
+                else
+                {
+                    services.ReplaceFileSystem(mockFileSystem);
+                }
             }
             
             builder.Register(ReplaceFileSystem);
