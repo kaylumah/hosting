@@ -48,16 +48,16 @@ namespace Test.Unit.Component.Manager.Site
                 {
                     configurationBuilder.AddInMemoryCollection(config);
                 })
+                .SetupTimeProvider(fakeTimeProvider)
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
                     services.AddSingleton(artifactAccessMock.Object);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
-                })
-                .SetupTimeProvider(fakeTimeProvider)
-                .SetupLogger()
-                .SetupFileSystem(mockFileSystem);
+                });
         }
 
         public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
