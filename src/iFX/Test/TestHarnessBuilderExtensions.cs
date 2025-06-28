@@ -33,6 +33,19 @@ namespace Kaylumah.Ssg.iFX.Test
             return builder;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
+        /// <example>
+        /// <code>
+        /// TestHarness harness = TestHarnessBuilder.Create()
+        ///                         .SetupLogger()
+        ///                         .Build(out IServiceProvider serviceProvider);
+        /// FakeLogCollector logCollector = serviceProvider.GetRequiredService&lt;FakeLogCollector&gt;();
+        /// </code>
+        /// </example>
         public static TestHarnessBuilder SetupLogger(this TestHarnessBuilder builder)
         {
             void ReplaceLogger(IServiceCollection services)
