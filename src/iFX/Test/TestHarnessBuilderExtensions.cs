@@ -13,7 +13,6 @@ namespace Kaylumah.Ssg.iFX.Test
         /// 
         /// </summary>
         /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
-        /// <param name="fakeTimeProvider"></param>
         /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
@@ -25,18 +24,22 @@ namespace Kaylumah.Ssg.iFX.Test
         /// fakeTimeProvider.SetUtcNow(time);
         /// </code>
         /// </example>
-        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder, FakeTimeProvider? fakeTimeProvider = null)
+        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder)
         {
             void ReplaceTimeProvider(IServiceCollection services)
             {
-                if (fakeTimeProvider == null)
-                {
-                    services.ReplaceTimeProvider();
-                }
-                else
-                {
-                    services.ReplaceTimeProvider(fakeTimeProvider);
-                }
+                services.ReplaceTimeProvider();
+            }
+
+            builder.Register(ReplaceTimeProvider);
+            return builder;
+        }
+        
+        public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder, FakeTimeProvider fakeTimeProvider)
+        {
+            void ReplaceTimeProvider(IServiceCollection services)
+            {
+                services.ReplaceTimeProvider(fakeTimeProvider);
             }
 
             builder.Register(ReplaceTimeProvider);
@@ -71,7 +74,6 @@ namespace Kaylumah.Ssg.iFX.Test
         /// 
         /// </summary>
         /// <param name="builder">The <see cref="TestHarnessBuilder"/> to configure.</param>
-        /// <param name="mockFileSystem"></param>
         /// <returns>The <see cref="TestHarnessBuilder"/> so that additional calls can be chained.</returns>
         /// <example>
         /// <code>
@@ -81,20 +83,24 @@ namespace Kaylumah.Ssg.iFX.Test
         /// MockFileSystem mockFileSystem = serviceProvider.GetRequiredService&lt;MockFileSystem&gt;();
         /// </code>
         /// </example>
-        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder, MockFileSystem? mockFileSystem = null)
+        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder)
         {
             void ReplaceFileSystem(IServiceCollection services)
             {
-                if (mockFileSystem == null)
-                {
-                    services.ReplaceFileSystem();
-                }
-                else
-                {
-                    services.ReplaceFileSystem(mockFileSystem);
-                }
+                services.ReplaceFileSystem();
             }
-            
+
+            builder.Register(ReplaceFileSystem);
+            return builder;
+        }
+        
+        public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder, MockFileSystem mockFileSystem)
+        {
+            void ReplaceFileSystem(IServiceCollection services)
+            {
+                services.ReplaceFileSystem(mockFileSystem);
+            }
+
             builder.Register(ReplaceFileSystem);
             return builder;
         }
