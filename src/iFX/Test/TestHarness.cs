@@ -19,11 +19,10 @@ namespace Kaylumah.Ssg.iFX.Test
 
         public TestHarness(IServiceProvider serviceProvider)
         {
-
             _ServiceProvider = serviceProvider;
-#pragma warning disable IDESIGN103
-            _Interceptors = new ReadOnlyCollection<IInterceptor>(serviceProvider.GetServices<IAsyncInterceptor>().ToInterceptors());
-#pragma warning restore IDESIGN103
+            IEnumerable<IAsyncInterceptor> asyncInterceptors = serviceProvider.GetServices<IAsyncInterceptor>();
+            IInterceptor[] interceptors = asyncInterceptors.ToInterceptors();
+            _Interceptors = new ReadOnlyCollection<IInterceptor>(interceptors);
         }
 
         public async Task TestService<T>(Func<T, Task> scenario) where T : class
