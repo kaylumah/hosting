@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using Kaylumah.Ssg.iFX.Test;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Test.Utilities
+namespace Kaylumah.Ssg.iFX.Test
 {
     public sealed class TestHarnessBuilder
     {
