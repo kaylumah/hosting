@@ -44,9 +44,6 @@ namespace Test.Unit.Component.Manager.Site
                 { "Metadata", string.Empty }
             };
             TestHarnessBuilder = TestHarnessBuilder.Create()
-                .SetupTimeProvider(fakeTimeProvider)
-                .SetupLogger()
-                .SetupFileSystem(mockFileSystem)
                 .Configure(configurationBuilder =>
                 {
                     configurationBuilder.AddInMemoryCollection(config);
@@ -57,7 +54,10 @@ namespace Test.Unit.Component.Manager.Site
                     services.AddSingleton(artifactAccessMock.Object);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
-                });
+                })
+                .SetupTimeProvider(fakeTimeProvider)
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem);
         }
 
         public async Task TestSiteManager(Func<ISiteManager, Task> scenario)
