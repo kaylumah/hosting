@@ -10,15 +10,30 @@ using Microsoft.Extensions.Time.Testing;
 
 namespace Kaylumah.Ssg.iFX.Test
 {
+    public static class ServiceCollectionExtensions
+    {
+        /// <summary>
+        /// Replaces <see cref="TimeProvider"/>
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services)
+        {
+            services.RemoveAll<TimeProvider>();
+            services.AddSingleton<FakeTimeProvider>();
+            services.AddSingleton<TimeProvider>(serviceProvider => serviceProvider.GetRequiredService<FakeTimeProvider>());
+            
+            return services;
+        }
+    }
+    
     public static class TestHarnessBuilderExtensions
     {
         public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder)
         {
             void ReplaceTimeProvider(IServiceCollection services)
             {
-                services.RemoveAll<TimeProvider>();
-                services.AddSingleton<FakeTimeProvider>();
-                services.AddSingleton<TimeProvider>(serviceProvider => serviceProvider.GetRequiredService<FakeTimeProvider>());
+                services.ReplaceTimeProvider();
             }
 
             builder.Register(ReplaceTimeProvider);
