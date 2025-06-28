@@ -41,12 +41,7 @@
     <Project Path="src/iFX/Data/Kaylumah.Ssg.iFX.Data.csproj" />
     <Project Path="src/iFX/Primitives/Kaylumah.Ssg.iFX.Primitives.csproj" />
     <Project Path="src/iFX/Test/Kaylumah.Ssg.iFX.Test.csproj" />
-    <Project Path="src\iFX\Contract\Kaylumah.Ssg.iFX.Contract.csproj" Type="Classic C#">
-      <Configuration Solution="Debug|x64" Project="Debug|Any CPU" />
-      <Configuration Solution="Debug|x86" Project="Debug|Any CPU" />
-      <Configuration Solution="Release|x64" Project="Release|Any CPU" />
-      <Configuration Solution="Release|x86" Project="Release|Any CPU" />
-    </Project>
+    <Project Path="src\iFX\Contract\Kaylumah.Ssg.iFX.Contract.csproj" />
   </Folder>
   <Folder Name="/src/Utilities/">
     <Project Path="src/Utilities/Common/Kaylumah.Ssg.Utilities.Common.csproj" />
