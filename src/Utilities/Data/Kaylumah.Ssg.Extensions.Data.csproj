@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="CsvHelper" />
-    <PackageReference Include="YamlDotNet" />
+    <ProjectReference Include="..\..\iFX\Data\Kaylumah.Ssg.iFX.Data.csproj" />
   </ItemGroup>
 </Project>
