@@ -25,9 +25,11 @@ namespace Test.Unit.Component.Access.Artifact
         {
             _ValidationContext = validationContext;
             TestHarnessBuilder = TestHarnessBuilder.Create()
+                .SetupTimeProvider()
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Register((serviceCollection, configuration) =>
                 {
-                    serviceCollection.ReplaceFileSystem(mockFileSystem);
                     serviceCollection.AddArtifactAccess(configuration);
                 });
         }
