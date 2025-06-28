@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.iFX.Test;
 using Moq;
 
 namespace Test.Unit.Utilities

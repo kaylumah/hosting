@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+</Project>
