@@ -1,1 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\iFX\Primitives\Kaylumah.Ssg.iFX.Primitives.csproj" />
+  </ItemGroup>
+</Project>
