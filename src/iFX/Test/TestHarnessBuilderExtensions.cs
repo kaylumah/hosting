@@ -13,7 +13,7 @@ namespace Kaylumah.Ssg.iFX.Test
     public static class ServiceCollectionExtensions
     {
         /// <summary>
-        /// Replaces <see cref="TimeProvider"/>
+        /// Replaces <see cref="TimeProvider"/> with ...
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -23,6 +23,32 @@ namespace Kaylumah.Ssg.iFX.Test
             services.AddSingleton<FakeTimeProvider>();
             services.AddSingleton<TimeProvider>(serviceProvider => serviceProvider.GetRequiredService<FakeTimeProvider>());
             
+            return services;
+        }
+
+        /// <summary>
+        /// Replaces <see cref="ILogger"/> with ...
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection ReplaceLogger(this IServiceCollection services)
+        {
+            // FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
+            
+            void ConfigureFakeLogger(FakeLogCollectorOptions options)
+            {
+                // Empty on purpose for now   
+            }
+            
+            void ConfigureLogging(ILoggingBuilder loggingBuilder)
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
+                loggingBuilder.AddFakeLogging(ConfigureFakeLogger);
+            }
+            
+            services.AddLogging(ConfigureLogging);
+
             return services;
         }
     }
@@ -42,23 +68,9 @@ namespace Kaylumah.Ssg.iFX.Test
 
         public static TestHarnessBuilder SetupLogger(this TestHarnessBuilder builder)
         {
-            // FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
-            
-            void ConfigureFakeLogger(FakeLogCollectorOptions options)
-            {
-                // Empty on purpose for now   
-            }
-            
-            void ConfigureLogging(ILoggingBuilder loggingBuilder)
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-                loggingBuilder.AddFakeLogging(ConfigureFakeLogger);
-            }
-            
             void ReplaceLogger(IServiceCollection services)
             {
-                services.AddLogging(ConfigureLogging);
+                services.ReplaceLogger();
             }
             
             builder.Register(ReplaceLogger);
