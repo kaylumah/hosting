@@ -33,20 +33,22 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceLogger(this IServiceCollection services)
         {
-            // FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
-            
-            void ConfigureFakeLogger(FakeLogCollectorOptions options)
+            void ConfigureLogger(FakeLogCollectorOptions options, TimeProvider timeProvider)
             {
-                // Empty on purpose for now   
+                options.TimeProvider = timeProvider;
             }
             
             void ConfigureLogging(ILoggingBuilder loggingBuilder)
             {
                 loggingBuilder.ClearProviders();
                 loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-                loggingBuilder.AddFakeLogging(ConfigureFakeLogger);
+                loggingBuilder.AddFakeLogging();
+
+                loggingBuilder.Services.AddOptions<FakeLogCollectorOptions>()
+                    .Configure<TimeProvider>(ConfigureLogger);
             }
             
+            services.TryAddSingleton(TimeProvider.System);
             services.AddLogging(ConfigureLogging);
 
             return services;

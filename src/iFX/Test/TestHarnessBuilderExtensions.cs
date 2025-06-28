@@ -15,8 +15,8 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <example>
         /// <code>
         /// TestHarness harness = TestHarnessBuilder.Create()
-        ///                         .SetupTimeProvider()
-        ///                         .Build(out IServiceProvider serviceProvider);
+        ///     .SetupTimeProvider()
+        ///     .Build(out IServiceProvider serviceProvider);
         /// FakeTimeProvider fakeTimeProvider = serviceProvider.GetRequiredService&lt;FakeTimeProvider&gt;();
         /// DateTimeOffset time = DateTimeOffset.Parse("2025-06-28T12:00:00Z", CultureInfo.InvariantCulture);
         /// fakeTimeProvider.SetUtcNow(time);
@@ -41,8 +41,8 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <example>
         /// <code>
         /// TestHarness harness = TestHarnessBuilder.Create()
-        ///                         .SetupLogger()
-        ///                         .Build(out IServiceProvider serviceProvider);
+        ///     .SetupLogger()
+        ///     .Build(out IServiceProvider serviceProvider);
         /// FakeLogCollector logCollector = serviceProvider.GetRequiredService&lt;FakeLogCollector&gt;();
         /// </code>
         /// </example>
