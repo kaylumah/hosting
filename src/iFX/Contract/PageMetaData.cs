@@ -19,11 +19,6 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
                 string result = GetString(nameof(Id));
                 return result;
             }
-            set
-            {
-                string strValue = value;
-                SetValue(nameof(Id), strValue);
-            }
         }
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
@@ -33,30 +28,8 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
         public bool Ads => GetBoolValue(nameof(Ads));
 
-        public string LdJson
-        {
-            get
-            {
-                string result = GetString(nameof(LdJson));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(LdJson), value);
-            }
-        }
-        public string MetaTags
-        {
-            get
-            {
-                string result = GetString(nameof(MetaTags));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(MetaTags), value);
-            }
-        }
+        public string LdJson => GetString(nameof(LdJson));
+        public string MetaTags => GetString(nameof(MetaTags));
         public string Layout => GetString(nameof(Layout));
         public string Image => GetString(nameof(Image));
         public Uri? WebImage => ResolveImageUri();
@@ -73,44 +46,11 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public string Name
-        {
-            get
-            {
-                string result = GetString(nameof(Name));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(Name), value);
-            }
-        }
+        public string Name => GetString(nameof(Name));
 
-        public string Collection
-        {
-            get
-            {
-                string result = GetString(nameof(Collection));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(Collection), value);
-            }
-        }
+        public string Collection => GetString(nameof(Collection));
 
-        public List<string> Tags
-        {
-            get
-            {
-                List<string>? tags = GetStringValues(nameof(Tags));
-                return tags;
-            }
-            set
-            {
-                SetValue(nameof(Tags), value);
-            }
-        }
+        public List<string> Tags => GetStringValues(nameof(Tags));
 
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => GetModifiedDate();
