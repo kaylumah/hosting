@@ -89,10 +89,6 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
                 string result = GetString(nameof(Collection));
                 return result;
             }
-            set
-            {
-                SetValue(nameof(Collection), value);
-            }
         }
 
         public List<string> Tags
