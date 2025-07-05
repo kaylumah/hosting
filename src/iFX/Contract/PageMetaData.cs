@@ -28,8 +28,30 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
         public bool Sitemap => GetBoolValue(nameof(Sitemap));
         public bool Ads => GetBoolValue(nameof(Ads));
 
-        public string LdJson => GetString(nameof(LdJson));
-        public string MetaTags => GetString(nameof(MetaTags));
+        public string LdJson
+        {
+            get
+            {
+                string result = GetString(nameof(LdJson));
+                return result;
+            }
+            set
+            {
+                SetValue(nameof(LdJson), value);
+            }
+        }
+        public string MetaTags
+        {
+            get
+            {
+                string result = GetString(nameof(MetaTags));
+                return result;
+            }
+            set
+            {
+                SetValue(nameof(MetaTags), value);
+            }
+        }
         public string Layout => GetString(nameof(Layout));
         public string Image => GetString(nameof(Image));
         public Uri? WebImage => ResolveImageUri();
