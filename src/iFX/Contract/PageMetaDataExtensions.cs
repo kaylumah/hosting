@@ -26,6 +26,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             Featured = (page) => page.Featured;
         }
 
+        /*
         public static PageMetaData WithLdJson(this PageMetaData page, string ldJson)
         {
             void AddLdJson(Dictionary<string, object?> data)
@@ -54,8 +55,10 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             Dictionary<string, object?> copy = new Dictionary<string, object?>(original);
             update(copy);
             PageMetaData pageMetaData = new PageMetaData(copy);
+            
             return pageMetaData;
         }
+        */
 
         public static string GetExtension(this PageMetaData pageMetaData)
         {
