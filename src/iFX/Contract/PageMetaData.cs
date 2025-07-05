@@ -80,10 +80,6 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
                 string result = GetString(nameof(Name));
                 return result;
             }
-            set
-            {
-                SetValue(nameof(Name), value);
-            }
         }
 
         public string Collection
