@@ -36,6 +36,17 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             PageMetaData result = page.With(AddLdJson);
             return result;
         }
+        
+        public static PageMetaData WithMetaTags(this PageMetaData page, string metaTags)
+        {
+            void AddMetaTags(Dictionary<string, object?> data)
+            {
+                data[nameof(PageMetaData.MetaTags)] = metaTags;
+            }
+
+            PageMetaData result = page.With(AddMetaTags);
+            return result;
+        }
 
         static PageMetaData With(this PageMetaData page, Action<Dictionary<string, object?>> update)
         {
