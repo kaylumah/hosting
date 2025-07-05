@@ -73,32 +73,11 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public string Name
-        {
-            get
-            {
-                string result = GetString(nameof(Name));
-                return result;
-            }
-        }
+        public string Name => GetString(nameof(Name));
 
-        public string Collection
-        {
-            get
-            {
-                string result = GetString(nameof(Collection));
-                return result;
-            }
-        }
+        public string Collection => GetString(nameof(Collection));
 
-        public List<string> Tags
-        {
-            get
-            {
-                List<string>? tags = GetStringValues(nameof(Tags));
-                return tags;
-            }
-        }
+        public List<string> Tags => GetStringValues(nameof(Tags));
 
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => GetModifiedDate();
