@@ -12,14 +12,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
         {
         }
 
-        public PageId Id
-        {
-            get
-            {
-                string result = GetString(nameof(Id));
-                return result;
-            }
-        }
+        public PageId Id => GetString(nameof(Id));
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));
