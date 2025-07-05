@@ -26,6 +26,26 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             Featured = (page) => page.Featured;
         }
 
+        public static PageMetaData WithLdJson(this PageMetaData page, string ldJson)
+        {
+            void AddLdJson(Dictionary<string, object?> data)
+            {
+                data[nameof(PageMetaData.LdJson)] = ldJson;
+            }
+
+            PageMetaData result = page.With(AddLdJson);
+            return result;
+        }
+
+        static PageMetaData With(this PageMetaData page, Action<Dictionary<string, object?>> update)
+        {
+            Dictionary<string, object?> original = page;
+            Dictionary<string, object?> copy = new Dictionary<string, object?>(original);
+            update(copy);
+            PageMetaData pageMetaData = new PageMetaData(copy);
+            return pageMetaData;
+        }
+
         public static string GetExtension(this PageMetaData pageMetaData)
         {
             string result = Path.GetExtension(pageMetaData.Uri);

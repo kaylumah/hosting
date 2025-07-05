@@ -22,7 +22,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
         {
             if (renderData.Page is PageMetaData pageMetaData)
             {
-                pageMetaData.LdJson = GenerateLdJson(renderData);
+                string ldJson = GenerateLdJson(renderData);
+                pageMetaData.WithLdJson(ldJson);
                 pageMetaData.MetaTags = _MetaTagGenerator.ToMetaTags(renderData);
             }
         }
