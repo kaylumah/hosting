@@ -62,12 +62,12 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
-            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             Dictionary<string, object> data = new();
@@ -89,12 +89,12 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
-            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -115,12 +115,12 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
-            pagePublicationPageMetaData.Id = DefaultPageId;
             items.Add(pagePublicationPageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
@@ -141,6 +141,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "organization", "001" },
                 { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
@@ -148,7 +149,6 @@ namespace Test.Unit
                 { "tags", new List<object> { "1" } }
             };
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
-            pagePublicationPageMetaData.Id = DefaultPageId;
             items.Add(pagePublicationPageMetaData);
 
             SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);

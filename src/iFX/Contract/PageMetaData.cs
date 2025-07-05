@@ -19,11 +19,6 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
                 string result = GetString(nameof(Id));
                 return result;
             }
-            set
-            {
-                string strValue = value;
-                SetValue(nameof(Id), strValue);
-            }
         }
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
