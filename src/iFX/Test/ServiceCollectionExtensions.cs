@@ -20,19 +20,19 @@ namespace Kaylumah.Ssg.iFX.Test
         /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
         public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services)
-        { 
+        {
             FakeTimeProvider fakeTimeProvider = new FakeTimeProvider();
             services.ReplaceTimeProvider(fakeTimeProvider);
-            
+
             return services;
         }
-        
+
         public static IServiceCollection ReplaceTimeProvider(this IServiceCollection services, FakeTimeProvider fakeTimeProvider)
         {
             services.RemoveAll<TimeProvider>();
             services.AddSingleton(fakeTimeProvider);
             services.AddSingleton<TimeProvider>(serviceProvider => serviceProvider.GetRequiredService<FakeTimeProvider>());
-            
+
             return services;
         }
 
@@ -47,7 +47,7 @@ namespace Kaylumah.Ssg.iFX.Test
             {
                 options.TimeProvider = timeProvider;
             }
-            
+
             void ConfigureLogging(ILoggingBuilder loggingBuilder)
             {
                 loggingBuilder.ClearProviders();
@@ -57,7 +57,7 @@ namespace Kaylumah.Ssg.iFX.Test
                 loggingBuilder.Services.AddOptions<FakeLogCollectorOptions>()
                     .Configure<TimeProvider>(ConfigureLogger);
             }
-            
+
             services.TryAddSingleton(TimeProvider.System);
             services.AddLogging(ConfigureLogging);
 
@@ -73,7 +73,7 @@ namespace Kaylumah.Ssg.iFX.Test
         {
             MockFileSystem mockFileSystem = new MockFileSystem();
             services.ReplaceFileSystem(mockFileSystem);
-            
+
             return services;
         }
 
@@ -85,12 +85,12 @@ namespace Kaylumah.Ssg.iFX.Test
                 mockFileSystem.MockTime(() => timeProvider.GetUtcNow().UtcDateTime);
                 return mockFileSystem;
             }
-            
+
             services.RemoveAll<IFileSystem>();
             services.TryAddSingleton(TimeProvider.System);
             services.AddSingleton(MockFileSystemFactory);
             services.AddSingleton<IFileSystem>(serviceProvider => serviceProvider.GetRequiredService<MockFileSystem>());
-    
+
             return services;
         }
     }

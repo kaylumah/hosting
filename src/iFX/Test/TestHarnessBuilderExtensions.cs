@@ -34,7 +34,7 @@ namespace Kaylumah.Ssg.iFX.Test
             builder.Register(ReplaceTimeProvider);
             return builder;
         }
-        
+
         public static TestHarnessBuilder SetupTimeProvider(this TestHarnessBuilder builder, FakeTimeProvider fakeTimeProvider)
         {
             void ReplaceTimeProvider(IServiceCollection services)
@@ -65,7 +65,7 @@ namespace Kaylumah.Ssg.iFX.Test
             {
                 services.ReplaceLogger();
             }
-            
+
             builder.Register(ReplaceLogger);
             return builder;
         }
@@ -93,7 +93,7 @@ namespace Kaylumah.Ssg.iFX.Test
             builder.Register(ReplaceFileSystem);
             return builder;
         }
-        
+
         public static TestHarnessBuilder SetupFileSystem(this TestHarnessBuilder builder, MockFileSystem mockFileSystem)
         {
             void ReplaceFileSystem(IServiceCollection services)

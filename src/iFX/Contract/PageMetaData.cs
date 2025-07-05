@@ -12,19 +12,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
         {
         }
 
-        public PageId Id
-        {
-            get
-            {
-                string result = GetString(nameof(Id));
-                return result;
-            }
-            set
-            {
-                string strValue = value;
-                SetValue(nameof(Id), strValue);
-            }
-        }
+        public PageId Id => GetString(nameof(Id));
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));
@@ -73,44 +61,11 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public string Name
-        {
-            get
-            {
-                string result = GetString(nameof(Name));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(Name), value);
-            }
-        }
+        public string Name => GetString(nameof(Name));
 
-        public string Collection
-        {
-            get
-            {
-                string result = GetString(nameof(Collection));
-                return result;
-            }
-            set
-            {
-                SetValue(nameof(Collection), value);
-            }
-        }
+        public string Collection => GetString(nameof(Collection));
 
-        public List<string> Tags
-        {
-            get
-            {
-                List<string>? tags = GetStringValues(nameof(Tags));
-                return tags;
-            }
-            set
-            {
-                SetValue(nameof(Tags), value);
-            }
-        }
+        public List<string> Tags => GetStringValues(nameof(Tags));
 
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => GetModifiedDate();
