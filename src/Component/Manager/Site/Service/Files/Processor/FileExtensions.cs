@@ -25,15 +25,29 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static PageMetaData ToPage(this TextFile file)
+        static void SetPageId(this TextFile file, Guid siteGuid)
         {
-            Dictionary<string, object?> data = file.ToDictionary();
-            PageMetaData result = new PageMetaData(data);
-            return result;
+            Guid pageGuid = file.CreatePageId(siteGuid);
+            file.MetaData["Id"] = pageGuid.ToString();
         }
 
-        internal static ArticlePublicationPageMetaData ToArticle(this TextFile file)
+        static Guid CreatePageId(this TextFile file, Guid siteGuid)
         {
+            Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
+            return pageGuid;
+        }
+
+        public static PageMetaData ToPage(this TextFile file, Guid siteGuid)
+        {
+            file.SetPageId(siteGuid);
+            Dictionary<string, object?> data = file.ToDictionary();
+            PageMetaData page = new PageMetaData(data);
+            return page;
+        }
+
+        public static ArticlePublicationPageMetaData ToArticle(this TextFile file, Guid siteGuid)
+        { 
+            file.SetPageId(siteGuid);
             Dictionary<string, object?> data = file.ToDictionary();
             ArticlePublicationPageMetaData result = new ArticlePublicationPageMetaData(data);
             string content = result.Content;
@@ -43,45 +57,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return result;
         }
 
-        internal static TalkPublicationPageMetaData ToTalk(this TextFile file)
+        public static TalkPublicationPageMetaData ToTalk(this TextFile file, Guid siteGuid)
         {
+            file.SetPageId(siteGuid);
             Dictionary<string, object?> data = file.ToDictionary();
             TalkPublicationPageMetaData result = new TalkPublicationPageMetaData(data);
             return result;
-        }
-
-        internal static string ToPageId(this TextFile file, Guid siteGuid)
-        {
-            Guid pageGuid = file.ToPageGuid(siteGuid);
-            string id = pageGuid.ToString();
-            return id;
-        }
-
-        internal static Guid ToPageGuid(this TextFile file, Guid siteGuid)
-        {
-            Guid pageGuid = siteGuid.CreatePageGuid(file.MetaData.Uri);
-            return pageGuid;
-        }
-
-        public static PageMetaData ToPage(this TextFile file, Guid siteGuid)
-        {
-            PageMetaData page = file.ToPage();
-            page.Id = file.ToPageId(siteGuid);
-            return page;
-        }
-
-        public static ArticlePublicationPageMetaData ToArticle(this TextFile file, Guid siteGuid)
-        {
-            ArticlePublicationPageMetaData page = file.ToArticle();
-            page.Id = file.ToPageId(siteGuid);
-            return page;
-        }
-
-        public static TalkPublicationPageMetaData ToTalk(this TextFile file, Guid siteGuid)
-        {
-            TalkPublicationPageMetaData publicationPage = file.ToTalk();
-            publicationPage.Id = file.ToPageId(siteGuid);
-            return publicationPage;
         }
     }
 }
