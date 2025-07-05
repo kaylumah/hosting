@@ -27,6 +27,8 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 
                 string metaTags = _MetaTagGenerator.ToMetaTags(renderData);
                 pageMetaData = pageMetaData.WithMetaTags(metaTags);
+
+                renderData.Page = pageMetaData;
             }
         }
 
