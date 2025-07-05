@@ -98,10 +98,6 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
                 List<string>? tags = GetStringValues(nameof(Tags));
                 return tags;
             }
-            set
-            {
-                SetValue(nameof(Tags), value);
-            }
         }
 
         public DateTimeOffset Published => GetPublishedDate();
