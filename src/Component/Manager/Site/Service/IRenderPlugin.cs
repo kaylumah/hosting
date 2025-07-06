@@ -33,7 +33,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 string ldJson = GenerateLdJson(renderData);
                 string metaTags = _MetaTagGenerator.ToMetaTags(renderData);
-                
+
                 pageMetaData.LdJson = ldJson;
                 pageMetaData.MetaTags = metaTags;
             }
@@ -44,7 +44,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             bool result = renderData.IsHtml();
             return result;
         }
-        
+
         string GenerateLdJson(RenderData renderData)
         {
             string json = _StructureDataGenerator.ToLdJson(renderData);

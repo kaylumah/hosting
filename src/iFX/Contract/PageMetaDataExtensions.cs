@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     public static class PageMetaDataExtensions
     {
-        public static readonly Func<PageMetaData, bool> Tags;
+        public static readonly Func<PublicationPageMetaData, bool> Tags;
 
         public static readonly Func<ArticlePublicationPageMetaData, bool> Series;
 
@@ -20,12 +20,12 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 
         static PageMetaDataExtensions()
         {
-            Tags = (page) => page.Tags != null && 0 < page.Tags.Count;
+            Tags = (page) => 0 < page.Tags.Count;
             Series = (page) => !string.IsNullOrEmpty(page.Series);
             Html = (page) => page.IsHtml();
             Featured = (page) => page.Featured;
         }
-        
+
         public static PageMetaData WithLdJson(this PageMetaData page, string ldJson)
         {
             void AddLdJson(Dictionary<string, object?> data)
@@ -36,7 +36,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             PageMetaData result = page.With(AddLdJson);
             return result;
         }
-        
+
         public static PageMetaData WithMetaTags(this PageMetaData page, string metaTags)
         {
             void AddMetaTags(Dictionary<string, object?> data)
@@ -54,10 +54,10 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             Dictionary<string, object?> copy = new Dictionary<string, object?>(original);
             update(copy);
             PageMetaData pageMetaData = new PageMetaData(copy);
-            
+
             return pageMetaData;
         }
-        
+
         public static string GetExtension(this PageMetaData pageMetaData)
         {
             string result = Path.GetExtension(pageMetaData.Uri);
@@ -85,13 +85,13 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> HasTag(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<PublicationPageMetaData> HasTag(this IEnumerable<PublicationPageMetaData> source)
         {
-            IEnumerable<PageMetaData> result = source.Where(Tags);
+            IEnumerable<PublicationPageMetaData> result = source.Where(Tags);
             return result;
         }
 
-        public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PageMetaData> source, string tag)
+        public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PublicationPageMetaData> source, string tag)
         {
             IEnumerable<PageMetaData> result = source
                 .HasTag()
