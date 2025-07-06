@@ -123,7 +123,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 SiteMetaData siteMetaData = renderData.Site;
                 Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
                 Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
-                string formattedTags = string.Join(", ", pageMetaData.Keywords);
+                string formattedKeywords = string.Join(", ", pageMetaData.Keywords);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
@@ -135,9 +135,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     CreateMetaTag("copyright", renderData.Site.Build.Copyright)
                 };
 
-                if (string.IsNullOrEmpty(formattedTags) == false)
+                if (string.IsNullOrEmpty(formattedKeywords) == false)
                 {
-                    string tag = CreateMetaTag("keywords", formattedTags);
+                    string tag = CreateMetaTag("keywords", formattedKeywords);
                     result.Add(tag);
                 }
 
