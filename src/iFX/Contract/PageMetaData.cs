@@ -65,7 +65,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 
         public string Collection => GetString(nameof(Collection));
 
-        public List<string> Tags => GetStringValues(nameof(Tags));
+        public List<string> Keywords => GetStringValues(nameof(Keywords));
 
         public DateTimeOffset Published => GetPublishedDate();
         public DateTimeOffset Modified => GetModifiedDate();

@@ -123,7 +123,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 SiteMetaData siteMetaData = renderData.Site;
                 Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
                 Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
-                string formattedTags = string.Join(", ", pageMetaData.Tags);
+                string formattedTags = string.Join(", ", pageMetaData.Keywords);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
@@ -263,7 +263,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     result.Add(imageTag);
                 }
 
-                if (pageMetaData is ArticlePublicationPageMetaData)
+                if (pageMetaData is ArticlePublicationPageMetaData articlePublicationPageMeta)
                 {
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                     {
@@ -278,7 +278,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
                     result.Add(publishedTag);
                     result.Add(modifiedTag);
-                    foreach (string tag in pageMetaData.Tags)
+                    foreach (string tag in articlePublicationPageMeta.Tags)
                     {
                         string htmlTag = CreateOpenGraphMetaTag("article:tag", tag);
                         result.Add(htmlTag);

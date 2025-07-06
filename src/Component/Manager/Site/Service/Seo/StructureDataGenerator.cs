@@ -205,7 +205,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             collectionPage.Url = pageMetaData.CanonicalUri;
             collectionPage.Name = pageMetaData.Title;
             collectionPage.Description = pageMetaData.Description;
-            string keywords = string.Join(',', pageMetaData.Tags);
+            string keywords = string.Join(',', pageMetaData.Keywords);
             collectionPage.Keywords = keywords;
             collectionPage.HasPart = new OneOrMany<ICreativeWork>(creativeWorks);
             return collectionPage;
@@ -225,7 +225,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
             blog.Url = pageMetaData.CanonicalUri;
             blog.Name = pageMetaData.Title;
             blog.Description = pageMetaData.Description;
-            string keywords = string.Join(',', pageMetaData.Tags);
+            string keywords = string.Join(',', pageMetaData.Keywords);
             blog.Keywords = keywords;
 #pragma warning disable RS0030 // DatePublished can be datetime so it is a false positive
             blog.DatePublished = pageMetaData.Published;

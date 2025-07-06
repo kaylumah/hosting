@@ -10,7 +10,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 {
     public static class PageMetaDataExtensions
     {
-        public static readonly Func<PageMetaData, bool> Tags;
+        public static readonly Func<PublicationPageMetaData, bool> Tags;
 
         public static readonly Func<ArticlePublicationPageMetaData, bool> Series;
 
@@ -20,7 +20,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 
         static PageMetaDataExtensions()
         {
-            Tags = (page) => page.Tags != null && 0 < page.Tags.Count;
+            Tags = (page) => 0 < page.Tags.Count;
             Series = (page) => !string.IsNullOrEmpty(page.Series);
             Html = (page) => page.IsHtml();
             Featured = (page) => page.Featured;
@@ -85,13 +85,13 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             return result;
         }
 
-        public static IEnumerable<PageMetaData> HasTag(this IEnumerable<PageMetaData> source)
+        public static IEnumerable<PublicationPageMetaData> HasTag(this IEnumerable<PublicationPageMetaData> source)
         {
-            IEnumerable<PageMetaData> result = source.Where(Tags);
+            IEnumerable<PublicationPageMetaData> result = source.Where(Tags);
             return result;
         }
 
-        public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PageMetaData> source, string tag)
+        public static IEnumerable<PageMetaData> FromTag(this IEnumerable<PublicationPageMetaData> source, string tag)
         {
             IEnumerable<PageMetaData> result = source
                 .HasTag()
