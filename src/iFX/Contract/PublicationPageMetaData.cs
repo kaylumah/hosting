@@ -8,7 +8,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
     public abstract class PublicationPageMetaData : PageMetaData
     {
         public List<string> Tags => GetStringValues(nameof(Tags));
-        
+
         public PublicationPageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
         }

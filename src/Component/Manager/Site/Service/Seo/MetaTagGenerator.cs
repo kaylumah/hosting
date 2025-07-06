@@ -128,7 +128,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 {
                     keywords.AddRange(publicationPageMetaData.Tags);
                 }
-    
+
                 string formattedKeywords = string.Join(", ", keywords);
                 List<string> result = new List<string>()
                 {

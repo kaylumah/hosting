@@ -46,7 +46,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
         }
 
         public static ArticlePublicationPageMetaData ToArticle(this TextFile file, Guid siteGuid)
-        { 
+        {
             file.SetPageId(siteGuid);
             Dictionary<string, object?> data = file.ToDictionary();
             ArticlePublicationPageMetaData result = new ArticlePublicationPageMetaData(data);
