@@ -50,7 +50,7 @@ namespace Test.Unit.Extensions
             pageDictionary.SetValue(nameof(ArticlePublicationPageMetaData.Feed), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Sitemap), "true");
             pageDictionary.SetValue(nameof(PageMetaData.Layout), "default.html");
-            pageDictionary.SetValue(nameof(PageMetaData.Tags), tags);
+            pageDictionary.SetValue(nameof(PageMetaData.Keywords), tags);
             PageMetaData result = new PageMetaData(pageDictionary);
             return result;
         }
