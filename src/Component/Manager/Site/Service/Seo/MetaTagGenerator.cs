@@ -123,7 +123,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 SiteMetaData siteMetaData = renderData.Site;
                 Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
                 Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
-                string formattedKeywords = string.Join(", ", pageMetaData.Keywords);
+                List<string> keywords = new List<string>(pageMetaData.Keywords);
+                if (pageMetaData is PublicationPageMetaData publicationPageMetaData)
+                {
+                    keywords.AddRange(publicationPageMetaData.Tags);
+                }
+    
+                string formattedKeywords = string.Join(", ", keywords);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
