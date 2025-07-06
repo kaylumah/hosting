@@ -16,6 +16,7 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
 
         public BasePage(Dictionary<string, object?> internalData)
         {
+            ArgumentNullException.ThrowIfNull(internalData);
             _InternalData = internalData;
         }
 
@@ -24,6 +25,17 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
             string? result = _InternalData.GetValue<string>(key);
             // TODO fix NULL suppression
             return result!;
+        }
+
+        protected string GetRequiredString(string key)
+        {
+            string? result = _InternalData.GetValue<string>(key);
+            if (string.IsNullOrEmpty(result))
+            {
+                throw new ArgumentException($"Missing required key '{key}'");
+            }
+
+            return result;
         }
 
         protected int GetInt(string key)

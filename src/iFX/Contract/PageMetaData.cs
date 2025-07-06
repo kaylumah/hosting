@@ -10,9 +10,10 @@ namespace Kaylumah.Ssg.Extensions.Metadata.Abstractions
     {
         public PageMetaData(Dictionary<string, object?> internalData) : base(internalData)
         {
+            _ = Id;
         }
 
-        public PageId Id => GetString(nameof(Id));
+        public PageId Id => GetRequiredString(nameof(Id));
         public string Title => GetString(nameof(Title));
         public string Description => GetString(nameof(Description));
         public string Language => GetString(nameof(Language));

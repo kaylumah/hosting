@@ -36,6 +36,7 @@ namespace Test.Unit.Extensions
         {
             List<object> tags = article.Tags.Cast<object>().ToList();
             Dictionary<string, object?> pageDictionary = new Dictionary<string, object?>();
+            pageDictionary.SetValue(nameof(PageMetaData.Id), article.Uri);
             pageDictionary.SetValue(nameof(PageMetaData.Uri), article.Uri);
             pageDictionary.SetValue(nameof(PageMetaData.Name), article.Uri);
             pageDictionary.SetValue(nameof(PageMetaData.Title), article.Title);
