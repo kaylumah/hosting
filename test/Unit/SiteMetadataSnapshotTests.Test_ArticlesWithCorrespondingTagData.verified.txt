@@ -36,14 +36,14 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Tags: [
+        1
+      ],
       Id: {
         Value: my-page
       },
       Sitemap: false,
       Ads: false,
-      Tags: [
-        1
-      ],
       Uri: example.html,
       BaseUri: http://127.0.0.1,
       CanonicalUri: http://127.0.0.1/example.html
@@ -54,14 +54,14 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Tags: [
+        1
+      ],
       Id: {
         Value: my-page
       },
       Sitemap: false,
       Ads: false,
-      Tags: [
-        1
-      ],
       Uri: example.html,
       BaseUri: http://127.0.0.1,
       CanonicalUri: http://127.0.0.1/example.html
@@ -72,14 +72,14 @@
       SocialShare: false,
       Feed: false,
       Featured: false,
+      Tags: [
+        1
+      ],
       Id: {
         Value: my-page
       },
       Sitemap: false,
       Ads: false,
-      Tags: [
-        1
-      ],
       Uri: example.html,
       BaseUri: http://127.0.0.1,
       CanonicalUri: http://127.0.0.1/example.html
