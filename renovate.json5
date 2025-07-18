@@ -1,52 +1,27 @@
 {
   extends: ["config:base"],
   dependencyDashboard: true,
-  regexManagers: [
-    {
-      // Match .NET tool versions in dotnet-tools.json
-      fileMatch: ["(^|/)\\.config/dotnet-tools\\.json$"],
-      matchStrings: [
-        "\"(?<depName>[a-zA-Z0-9\\-\\.]+)\":\\s*{\\s*\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      datasourceTemplate: "nuget",
-      versioningTemplate: "semver",
-      extractVersionTemplate: "{{currentValue}}",
-      depNameTemplate: "{{depName}}"
-    },
-    {
-      // global.json (.NET SDK)
-      fileMatch: ["(^|/)global\\.json$"],
-      matchStrings: [
-        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
-      ],
-      datasourceTemplate: "dotnet-version",
-      versioningTemplate: "loose",
-      depNameTemplate: "dotnet-sdk",
-      extractVersionTemplate: "{{currentValue}}"
-    }
-  ],
   packageRules: [
+    // NPM
     {
       matchManagers: ["npm"],
       enabled: false
     },
-    {
-      matchManagers: ["regex"],
-      matchDatasources: ["nuget"],
-      groupName: ".NET Tools"
-    },
-    {
-      matchManagers: ["regex"],
-      matchDatasources: ["dotnet-version"],
-      groupName: ".NET SDK"
-    },
-    // Ignore internal or local packages
+    
+    // Ignore internal package(s)
     {
       matchManagers: ["nuget"],
       matchPackageNames: ["IDesign.Analyzers"],
       enabled: false
     },
-    // Everything else
+
+    // SDK update group (global.json)
+    {
+      matchManagers: ["dotnet-version"],
+      groupName: ".NET SDK"
+    },
+
+    // All other NuGet updates
     {
       matchManagers: ["nuget"],
       groupName: "Other NuGet Updates"
