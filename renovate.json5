@@ -16,9 +16,10 @@
     },
 
     // All other NuGet updates
-    {
-      matchManagers: ["nuget"],
-      groupName: "Other NuGet Updates"
-    }
+    
+    //{
+    //  matchManagers: ["nuget"],
+    //  groupName: "Other NuGet Updates"
+    // }
   ]
 }
