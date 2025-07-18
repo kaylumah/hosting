@@ -39,6 +39,12 @@
       matchManagers: ["regex"],
       matchDatasources: ["dotnet-version"],
       groupName: ".NET SDK"
+    },
+    // Ignore internal or local packages
+    {
+      matchManagers: ["nuget"],
+      matchPackageNames: ["IDesign.Analyzers"],
+      enabled: false
     }
   ]
 }
