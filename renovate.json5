@@ -15,12 +15,6 @@
       enabled: false
     },
 
-    // SDK update group (global.json)
-    {
-      matchManagers: ["dotnet-version"],
-      groupName: ".NET SDK"
-    },
-
     // All other NuGet updates
     {
       matchManagers: ["nuget"],
