@@ -45,6 +45,11 @@
       matchManagers: ["nuget"],
       matchPackageNames: ["IDesign.Analyzers"],
       enabled: false
+    },
+    // Everything else
+    {
+      matchManagers: ["nuget"],
+      groupName: "Other NuGet Updates"
     }
   ]
 }
