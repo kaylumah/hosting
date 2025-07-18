@@ -1,5 +1,7 @@
 {
   extends: ["config:base"],
+  prConcurrentLimit: 99,
+  prHourlyLimit: 99,
   dependencyDashboard: true,
   packageRules: [
     // NPM
