@@ -27,7 +27,7 @@
   ],
   packageRules: [
     {
-      matchManagers: ["npm", "yarn"],
+      matchManagers: ["npm"],
       enabled: false
     },
     {
