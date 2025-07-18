@@ -12,6 +12,17 @@
       versioningTemplate: "semver",
       extractVersionTemplate: "{{currentValue}}",
       depNameTemplate: "{{depName}}"
+    },
+    {
+      // global.json (.NET SDK)
+      fileMatch: ["(^|/)global\\.json$"],
+      matchStrings: [
+        "\"version\":\\s*\"(?<currentValue>[^\"]+)\""
+      ],
+      datasourceTemplate: "dotnet-version",
+      versioningTemplate: "loose",
+      depNameTemplate: "dotnet-sdk",
+      extractVersionTemplate: "{{currentValue}}"
     }
   ],
   packageRules: [
@@ -23,6 +34,11 @@
       matchManagers: ["regex"],
       matchDatasources: ["nuget"],
       groupName: ".NET Tools"
+    },
+    {
+      matchManagers: ["regex"],
+      matchDatasources: ["dotnet-version"],
+      groupName: ".NET SDK"
     }
   ]
 }
