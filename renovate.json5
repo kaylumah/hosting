@@ -16,6 +16,10 @@
   ],
   packageRules: [
     {
+      matchManagers: ["npm", "yarn"],
+      enabled: false
+    },
+    {
       matchManagers: ["regex"],
       matchDatasources: ["nuget"],
       groupName: ".NET Tools"
