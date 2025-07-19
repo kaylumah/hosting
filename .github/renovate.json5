@@ -1,4 +1,6 @@
 {
+    // See https://docs.renovatebot.com/presets-default/
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    extends: [],
+    "extends": [],
+    "assignees": [ "kaylumah" ]
 }
