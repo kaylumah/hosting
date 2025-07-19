@@ -25,6 +25,15 @@
         },
 
         {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions"
+        },
+
+        {
             "description": "Schedule Microsoft package updates for Wednesdays (7–10 AM CET)",
             "schedule": ["* 7 * * 3"],
             "matchManagers": ["nuget"],
@@ -43,14 +52,6 @@
                 "Microsoft.Extensions.TimeProvider.Testing"
             ],
             "groupName": ".NET Platform Extensions"
-        },
-
-        {
-            "matchPackageNames": [
-                "System.IO.Abstractions",
-                "System.IO.Abstractions.TestingHelpers"
-            ],
-            "groupName": "System.IO Abstractions"
         },
 
         {
