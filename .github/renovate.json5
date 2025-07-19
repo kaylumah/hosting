@@ -67,7 +67,7 @@
             "reviewers": ["kaylumah"],
             "schedule": ["* 8-12 * * 1"],
             "prPriority": 10,
-            "groupName": "SDK",
+            "groupName": "SDK2",
             "addLabels": ["sdk"]
         },
 
@@ -75,7 +75,6 @@
             "description": ".NET local tools from dotnet-tools.json",
             "matchManagers": ["nuget"],
             "matchFiles": [".config/dotnet-tools.json"],
-            "groupName": "Tools",
             "addLabels": ["tools"]
         }
     ]
