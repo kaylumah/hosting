@@ -25,6 +25,12 @@
         },
 
         {
+            "description": "Add 'dotnet' label to all .NET packages",
+            "matchManagers": ["nuget"],
+            "addLabels": ["dotnet"]
+        },
+
+        {
             "matchManagers": ["nuget"],
             "matchPackageNames": [
                 "System.IO.Abstractions",
