@@ -32,7 +32,7 @@
 
         {
             "description": "Schedule Microsoft package updates for Wednesdays (7–10 AM CET)",
-            "schedule": ["0 6-9 * * 3"],
+            "schedule": ["0 7 * * 3"],
             "matchManagers": ["nuget"],
             "matchPackagePatterns": [
                 "^Microsoft\\.Extensions\\.",
