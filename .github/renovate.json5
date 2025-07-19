@@ -26,6 +26,16 @@
             "enabled": false
         },
 
+        // System.IO Abstractions
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions"
+        },
+
         // Microsoft + System Packages
         {
             "matchManagers": ["nuget"],
