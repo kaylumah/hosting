@@ -17,18 +17,9 @@
 
         {
             "matchManagers": ["nuget"],
-            "description": "Skip pinned versions",
-            "matchCurrentValue": "/^\\[[^,]+\\]$/",
-            "enabled": false
-        },
-
-        {
-            "matchManagers": ["nuget"],
             "matchPackageNames": [ "IDesign.Analyzers" ],
             "enabled": false
         },
-
-
 
         {
             "description": "Schedule Microsoft package updates for Wednesdays (7–10 AM CET)",
@@ -38,17 +29,18 @@
                 "^Microsoft\\.Extensions\\.",
                 "^System\\."
             ],
-            "groupName": "Microsoft + System Packages",
+            "groupName": "System + Microsoft Extensions",
             "labels": ["dependencies", "nuget", "microsoft"]
         },
 
         {
+            "description": "Microsoft packages outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
             "matchManagers": ["nuget"],
             "matchPackageNames": [
                 "Microsoft.Extensions.Diagnostics.Testing",
                 "Microsoft.Extensions.TimeProvider.Testing"
             ],
-            "groupName": "test"
+            "groupName": ".NET Platform Extensions"
         },
 
         {
