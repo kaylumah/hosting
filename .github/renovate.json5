@@ -28,13 +28,7 @@
             "enabled": false
         },
 
-        {
-            "matchPackageNames": [
-                "system.io.abstractions",
-                "system.io.abstractions.testinghelpers"
-            ],
-            "groupName": "System.IO Abstractions"
-        },
+
 
         {
             "matchManagers": ["nuget"],
@@ -52,6 +46,14 @@
                 "Microsoft.Extensions.Diagnostics.Testing",
                 "Microsoft.Extensions.TimeProvider.Testing"
             ]
+        },
+
+        {
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions"
         }
     ]
 }
