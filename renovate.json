@@ -1,6 +1,38 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ]
+    // See https://docs.renovatebot.com/presets-default/
+    // See also: https://docs.renovatebot.com/modules/manager/nuget/
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [],
+    "assignees": [ "kaylumah" ],
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 0,
+    "packageRules": [
+        // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
+
+        {
+            "matchManagers": ["npm"],
+            "enabled": false
+        },
+
+        {
+            "matchManagers": ["github-actions"],
+            "enabled": false
+        },
+
+        // Ignore internal package(s)
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [ "IDesign.Analyzers "],
+            "enabled": false
+        },
+
+        // Microsoft + System Packages
+        {
+            "matchManagers": ["nuget"],
+            "matchPackagePatterns": [
+                "^Microsoft\\.Extensions\\.",
+                "^System\\."
+            ]
+        }
+    ]
 }
