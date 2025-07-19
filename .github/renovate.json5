@@ -1,5 +1,6 @@
 {
     // See https://docs.renovatebot.com/presets-default/
+    // See also: https://docs.renovatebot.com/modules/manager/nuget/
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
     "assignees": [ "kaylumah" ]
