@@ -5,6 +5,7 @@
     "extends": [],
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
+    "allowComments": true,
     "packageRules": [
         // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
 
