@@ -50,6 +50,16 @@
                 "System.IO.Abstractions.TestingHelpers"
             ],
             "groupName": "System.IO Abstractions"
+        },
+
+        {
+            "description": ".NET SDK",
+            "matchManagers": ["nuget"],
+            "matchPackageNames": ["dotnet-sdk"],
+            "labels": ["dependencies", "nuget", "dotnet-sdk"],
+            "reviewers": ["kaylumah"],
+            "schedule": ["* 8-12 * * 1"],
+            "prPriority": 10
         }
     ]
 }
