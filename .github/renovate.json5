@@ -19,6 +19,14 @@
             "enabled": false
         },
 
+        // Ignore pinned package(s)
+        {
+            "matchManagers": ["nuget"],
+            "description": "Skip pinned versions",
+            "matchCurrentValue": "/^\\[[^,]+\\]$/",
+            "enabled": false
+        },
+
         // Ignore internal package(s)
         {
             "matchManagers": ["nuget"],
