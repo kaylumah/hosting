@@ -36,6 +36,15 @@
             "groupName": "System.IO Abstractions"
         },
 
+        // .NET Platform Extensions https://dotnet.microsoft.com/en-us/platform/support/policy/extensions
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "Microsoft.Extensions.Diagnostics.Testing",
+                "Microsoft.Extensions.TimeProvider.Testing"
+            ]
+        },
+
         // Microsoft + System Packages
         {
             "matchManagers": ["nuget"],
