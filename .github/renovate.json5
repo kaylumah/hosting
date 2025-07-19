@@ -5,6 +5,7 @@
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
     "timezone": "Europe/Amsterdam",
+    "labels": ["dependencies"],
     "packageRules": [
         {
             "matchManagers": ["npm"],
