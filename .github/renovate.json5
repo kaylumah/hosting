@@ -48,13 +48,12 @@
             "labels": ["dependencies", "nuget", "microsoft"]
         },
 
-                {
+        {
             "matchManagers": ["nuget"],
             "matchPackageNames": [
                 "Microsoft.Extensions.Diagnostics.Testing",
                 "Microsoft.Extensions.TimeProvider.Testing"
-            ],
-            "groupName": "WIP"
-        },
+            ]
+        }
     ]
 }
