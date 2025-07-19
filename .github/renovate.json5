@@ -4,6 +4,7 @@
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
+    "timezone": "Europe/Amsterdam",
     "packageRules": [
         {
             "matchManagers": ["npm"],
