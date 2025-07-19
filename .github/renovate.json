@@ -22,7 +22,7 @@
         // Ignore internal package(s)
         {
             "matchManagers": ["nuget"],
-            "matchPackageNames": [ "IDesign.Analyzers "],
+            "matchPackageNames": [ "IDesign.Analyzers" ],
             "enabled": false
         },
 
