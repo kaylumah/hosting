@@ -12,6 +12,15 @@
             "matchManagers": ["nuget"],
             "matchPackageNames": [ "IDesign.Analyzers "],
             "enabled": false
+        },
+
+        // Microsoft + System Packages
+        {
+            "matchManagers": ["nuget"],
+            "matchPackagePatterns": [
+                "^Microsoft\\.Extensions\\.",
+                "^System\\."
+            ]
         }
     ]
 }
