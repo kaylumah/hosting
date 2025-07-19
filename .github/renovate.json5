@@ -65,7 +65,7 @@
 
         {
             "description": ".NET local tools from dotnet-tools.json",
-            "matchManagers": ["dotnet"],
+            "matchManagers": ["nuget"],
             "matchFiles": [".config/dotnet-tools.json"],
             "groupName": "Tools"
         }
