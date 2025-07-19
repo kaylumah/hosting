@@ -5,8 +5,19 @@
     "extends": [],
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
+    "prConcurrentLimit": 0,
     "packageRules": [
         // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
+
+        {
+            "matchManagers": ["npm"],
+            "enabled": false
+        },
+
+        {
+            "matchManagers": ["github-actions"],
+            "enabled": false
+        },
 
         // Ignore internal package(s)
         {
