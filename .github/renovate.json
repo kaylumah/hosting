@@ -1,14 +1,10 @@
 {
-    // See https://docs.renovatebot.com/presets-default/
-    // See also: https://docs.renovatebot.com/modules/manager/nuget/
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
     "packageRules": [
-        // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
-
         {
             "matchManagers": ["npm"],
             "enabled": false
@@ -19,7 +15,6 @@
             "enabled": false
         },
 
-        // Ignore pinned package(s)
         {
             "matchManagers": ["nuget"],
             "description": "Skip pinned versions",
@@ -27,14 +22,12 @@
             "enabled": false
         },
 
-        // Ignore internal package(s)
         {
             "matchManagers": ["nuget"],
             "matchPackageNames": [ "IDesign.Analyzers" ],
             "enabled": false
         },
 
-        // System.IO Abstractions
         {
             "matchManagers": ["nuget"],
             "matchPackageNames": [
@@ -44,7 +37,6 @@
             "groupName": "System.IO Abstractions"
         },
 
-        // .NET Platform Extensions https://dotnet.microsoft.com/en-us/platform/support/policy/extensions
         {
             "matchManagers": ["nuget"],
             "matchPackageNames": [
@@ -53,7 +45,6 @@
             ]
         },
 
-        // Microsoft + System Packages
         {
             "matchManagers": ["nuget"],
             "matchPackagePatterns": [
