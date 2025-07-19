@@ -32,7 +32,6 @@
                 "^System\\."
             ],
             "groupName": "System + Microsoft Extensions",
-            "labels": ["dependencies", "nuget", "microsoft"]
         },
 
         {
@@ -57,7 +56,6 @@
             "description": ".NET SDK",
             "matchManagers": ["nuget"],
             "matchPackageNames": ["dotnet-sdk"],
-            "labels": ["dependencies", "nuget", "dotnet-sdk"],
             "reviewers": ["kaylumah"],
             "schedule": ["* 8-12 * * 1"],
             "prPriority": 10,
@@ -68,7 +66,6 @@
             "description": ".NET local tools from dotnet-tools.json",
             "matchManagers": ["dotnet"],
             "matchFiles": [".config/dotnet-tools.json"],
-            "labels": ["dependencies", "dotnet-tools", "local-tools"],
             "groupName": "Tools"
         }
     ]
