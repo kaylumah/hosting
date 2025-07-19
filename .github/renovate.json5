@@ -3,5 +3,15 @@
     // See also: https://docs.renovatebot.com/modules/manager/nuget/
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
-    "assignees": [ "kaylumah" ]
+    "assignees": [ "kaylumah" ],
+    "packageRules": [
+        // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
+
+        // Ignore internal package(s)
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [ "IDesign.Analyzers "],
+            "enabled": false
+        }
+    ]
 }
