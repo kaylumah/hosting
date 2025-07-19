@@ -1,0 +1,81 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [],
+    "assignees": [ "kaylumah" ],
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 0,
+    "timezone": "Europe/Amsterdam",
+    "labels": ["dependencies"],
+    "packageRules": [
+
+        {
+            "matchManagers": ["npm"],
+            "enabled": false
+        },
+
+        {
+            "matchManagers": ["github-actions"],
+            "enabled": false
+        },
+
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [ "IDesign.Analyzers" ],
+            "enabled": false
+        },
+
+        {
+            "description": "Add 'dotnet' label to all .NET packages",
+            "matchManagers": ["nuget"],
+            "addLabels": ["dotnet"]
+        },
+
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions"
+        },
+
+        {
+            "description": "Schedule Microsoft package updates for Wednesdays (7–10 AM CET)",
+            "schedule": ["* 7 * * 3"],
+            "matchManagers": ["nuget"],
+            "matchPackagePatterns": [
+                "^Microsoft\\.Extensions\\.",
+                "^System\\."
+            ],
+            "groupName": "System + Microsoft Extensions",
+        },
+
+        {
+            "description": "Microsoft packages outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "Microsoft.Extensions.Diagnostics.Testing",
+                "Microsoft.Extensions.TimeProvider.Testing"
+            ],
+            "groupName": ".NET Platform Extensions"
+        },
+
+        {
+            "description": ".NET SDK",
+            "matchManagers": ["nuget"],
+            "matchPackageNames": ["dotnet-sdk"],
+            "reviewers": ["kaylumah"],
+            "schedule": ["* 8-12 * * 1"],
+            "prPriority": 10,
+            "groupName": "SDK2",
+            "addLabels": ["sdk"]
+        },
+
+        {
+            "description": ".NET local tools from dotnet-tools.json",
+            "matchManagers": ["nuget"],
+            "matchFiles": [".config/dotnet-tools.json"],
+            "addLabels": ["tools"]
+        }
+    ]
+}
