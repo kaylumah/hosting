@@ -32,7 +32,9 @@
             "matchPackagePatterns": [
                 "^Microsoft\\.Extensions\\.",
                 "^System\\."
-            ]
+            ],
+            "groupName": "Microsoft + System Packages",
+            "labels": ["dependencies", "nuget", "microsoft"]
         }
     ]
 }
