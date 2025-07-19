@@ -30,9 +30,8 @@
 
         {
             "matchManagers": ["nuget"],
-            "matchPackageNames": [
-                "System.IO.Abstractions",
-                "System.IO.Abstractions.TestingHelpers"
+            "matchPackagePatterns": [
+                "^System\\.IO\\.Abstractions"
             ],
             "groupName": "System.IO Abstractions"
         },
