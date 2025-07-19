@@ -15,6 +15,7 @@
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
+     "enabledManagers": ["nuget"]
     "packageRules": [
         // TODO: https://docs.renovatebot.com/modules/manager/nuget/#disabling-updates-for-pinned-versions
 
