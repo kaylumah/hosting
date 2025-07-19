@@ -59,7 +59,16 @@
             "labels": ["dependencies", "nuget", "dotnet-sdk"],
             "reviewers": ["kaylumah"],
             "schedule": ["* 8-12 * * 1"],
-            "prPriority": 10
+            "prPriority": 10,
+            "groupName": "SDK"
+        },
+
+        {
+            "description": ".NET local tools from dotnet-tools.json",
+            "matchManagers": ["dotnet"],
+            "matchFiles": [".config/dotnet-tools.json"],
+            "labels": ["dependencies", "dotnet-tools", "local-tools"],
+            "groupName": "Tools"
         }
     ]
 }
