@@ -3,6 +3,15 @@
     // See also: https://docs.renovatebot.com/modules/manager/nuget/
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
+    "ignorePresets": [
+        ":automergeAll",
+        ":automergePatch",
+        ":prHourlyLimit2",
+        ":prConcurrentLimit20",
+        ":combinePatchMinorReleases",
+        ":group:monorepos",
+        ":semanticCommitTypeAll(chore)"
+    ],
     "assignees": [ "kaylumah" ],
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
