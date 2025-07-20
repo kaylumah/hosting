@@ -40,7 +40,7 @@
         },
 
         {
-            "description": "Schedule Microsoft package updates for Wednesdays (7–10 AM CET)",
+            "description": "Microsoft Package under regular support",
             "schedule": ["* 7 * * 3"],
             "matchManagers": ["nuget"],
             "matchPackagePatterns": [
