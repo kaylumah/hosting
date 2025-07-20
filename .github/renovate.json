@@ -25,6 +25,24 @@
         },
 
         {
+            "description": ".NET SDK",
+            "matchManagers": ["nuget"],
+            "matchPackageNames": ["dotnet-sdk"],
+            "reviewers": ["kaylumah"],
+            "schedule": ["* 8-12 * * 1"],
+            "prPriority": 10,
+            "groupName": "SDK2",
+            "addLabels": ["sdk"]
+        },
+
+        {
+            "description": ".NET local tools from dotnet-tools.json",
+            "matchManagers": ["nuget"],
+            "matchFiles": [".config/dotnet-tools.json"],
+            "addLabels": ["tools"]
+        },
+
+        {
             "description": "Microsoft packages inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
             "matchManagers": ["nuget"],
             "matchPackagePatterns": [
@@ -57,24 +75,6 @@
             "matchManagers": ["nuget"],
             "matchPackageNames": [ "IDesign.Analyzers" ],
             "enabled": false
-        },
-
-        {
-            "description": ".NET SDK",
-            "matchManagers": ["nuget"],
-            "matchPackageNames": ["dotnet-sdk"],
-            "reviewers": ["kaylumah"],
-            "schedule": ["* 8-12 * * 1"],
-            "prPriority": 10,
-            "groupName": "SDK2",
-            "addLabels": ["sdk"]
-        },
-
-        {
-            "description": ".NET local tools from dotnet-tools.json",
-            "matchManagers": ["nuget"],
-            "matchFiles": [".config/dotnet-tools.json"],
-            "addLabels": ["tools"]
         }
     ]
 }
