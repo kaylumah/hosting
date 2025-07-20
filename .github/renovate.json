@@ -52,14 +52,14 @@
             "matchManagers": [
                 "nuget"
             ],
-            "excludePackageNames": [
-                "dotnet-sdk"
-            ],
             "ignorePaths": [
                 ".config/dotnet-tools.json"
             ],
             "addLabels": [
                 "nuget"
+            ],
+            "matchPackageNames": [
+                "!dotnet-sdk"
             ]
         },
         {
@@ -83,7 +83,7 @@
             "matchManagers": [
                 "nuget"
             ],
-            "matchFiles": [
+            "matchFileNames": [
                 ".config/dotnet-tools.json"
             ],
             "addLabels": [
@@ -98,12 +98,12 @@
             "matchManagers": [
                 "nuget"
             ],
-            "matchPackagePatterns": [
-                "^Microsoft\\.Extensions\\.",
-                "^System\\."
-            ],
             "groupName": ".NET Extensions",
-            "prPriority": 9
+            "prPriority": 9,
+            "matchPackageNames": [
+                "/^Microsoft\\.Extensions\\./",
+                "/^System\\./"
+            ]
         },
         {
             "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
