@@ -12,6 +12,7 @@
         "dependencies"
     ],
     "enabledManagers": ["nuget"],
+    "gitAuthor": "Renovate Bot (Kaylumah) <renovate@kaylumah.nl>",
     "packageRules": [
         {
             "matchManagers": [
