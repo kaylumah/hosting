@@ -28,13 +28,15 @@
             ],
             "dependencyType": "direct",
             "ignorePresets": ["group:monorepos"],
+            "schedule": ["after 06:00 on Friday"],
             "labels": ["npm"]
         },
         {
             "matchManagers": [
                 "github-actions"
             ],
-            "enabled": false
+            "schedule": ["after 06:00 on Friday"],
+            "labels": ["github-actions"]
         },
         {
             "description": "Add 'dotnet' label to all .NET packages",
