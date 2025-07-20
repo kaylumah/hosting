@@ -19,24 +19,9 @@
         },
 
         {
-            "matchManagers": ["nuget"],
-            "matchPackageNames": [ "IDesign.Analyzers" ],
-            "enabled": false
-        },
-
-        {
             "description": "Add 'dotnet' label to all .NET packages",
             "matchManagers": ["nuget"],
             "addLabels": ["dotnet"]
-        },
-
-        {
-            "matchManagers": ["nuget"],
-            "matchPackageNames": [
-                "System.IO.Abstractions",
-                "System.IO.Abstractions.TestingHelpers"
-            ],
-            "groupName": "System.IO Abstractions"
         },
 
         {
@@ -57,6 +42,21 @@
                 "Microsoft.Extensions.TimeProvider.Testing"
             ],
             "groupName": ".NET Platform Extensions"
+        },
+
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions"
+        },
+
+        {
+            "matchManagers": ["nuget"],
+            "matchPackageNames": [ "IDesign.Analyzers" ],
+            "enabled": false
         },
 
         {
