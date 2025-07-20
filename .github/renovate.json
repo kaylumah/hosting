@@ -1,12 +1,4 @@
 {
-    // See https://docs.renovatebot.com/presets-default/
-    // See also: https://docs.renovatebot.com/modules/manager/nuget/
-    // {
-    //   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    //   "extends": [
-    //     "config:recommended"
-    //   ]
-    // }
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
     "assignees": [
@@ -19,23 +11,32 @@
     "labels": [
         "dependencies"
     ],
-    // "enabledManagers": ["nuget"],
     "gitAuthor": "Renovate Bot (Kaylumah) <renovate@kaylumah.nl>",
     "packageRules": [
         {
             "matchManagers": [
                 "npm"
             ],
-            "ignorePresets": ["group:monorepos"],
-            "schedule": ["after 06:00 on Friday"],
-            "labels": ["npm"]
+            "ignorePresets": [
+                "group:monorepos"
+            ],
+            "schedule": [
+                "after 06:00 on Friday"
+            ],
+            "labels": [
+                "npm"
+            ]
         },
         {
             "matchManagers": [
                 "github-actions"
             ],
-            "schedule": ["after 06:00 on Friday"],
-            "labels": ["github-actions"]
+            "schedule": [
+                "after 06:00 on Friday"
+            ],
+            "labels": [
+                "github-actions"
+            ]
         },
         {
             "description": "Add 'dotnet' label to all .NET packages",
@@ -63,7 +64,9 @@
         },
         {
             "description": ".NET SDK",
-            "schedule": ["after 06:00 on Wednesday"],
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
             "matchManagers": [
                 "nuget"
             ],
@@ -89,7 +92,9 @@
         },
         {
             "description": "Microsoft package(s) inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
-            "schedule": ["after 06:00 on Wednesday"],
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
             "matchManagers": [
                 "nuget"
             ],
@@ -102,7 +107,9 @@
         },
         {
             "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
-            "schedule": ["after 06:00 on Wednesday"],
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
             "matchManagers": [
                 "nuget"
             ],
@@ -123,7 +130,6 @@
                 "System.IO.Abstractions.TestingHelpers"
             ],
             "groupName": "System.IO Abstractions",
-            // reset
             "prPriority": 0
         },
         {
@@ -131,7 +137,6 @@
             "matchManagers": [
                 "nuget"
             ],
-            // prevents updates to dependencies like "FluentAssertions [7.2.0, 8.0.0)"
             "matchCurrentValue": "/^[\\[(][^\\],]+,[^\\])]+[\\])]/",
             "enabled": false
         },
