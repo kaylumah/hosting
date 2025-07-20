@@ -70,6 +70,13 @@
         },
 
         {
+        "description": "Skip pinned versions",
+        "matchManagers": ["nuget"],
+        "matchCurrentValue": "/^[\\[(][^,]+[\\])]/",
+        "enabled": false
+        },
+
+        {
             "description": "Package(s) from nuget-feed Local",
             "matchManagers": ["nuget"],
             "matchPackageNames": [ "IDesign.Analyzers" ],
