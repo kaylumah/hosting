@@ -1,95 +1,126 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [],
-    "assignees": [ "kaylumah" ],
+    "assignees": [
+        "kaylumah"
+    ],
     "prHourlyLimit": 0,
     "prConcurrentLimit": 0,
     "timezone": "Europe/Amsterdam",
-    "labels": ["dependencies"],
+    "labels": [
+        "dependencies"
+    ],
     "packageRules": [
-
         {
-            "matchManagers": ["npm"],
+            "matchManagers": [
+                "npm"
+            ],
             "enabled": false
         },
-
         {
-            "matchManagers": ["github-actions"],
+            "matchManagers": [
+                "github-actions"
+            ],
             "enabled": false
         },
-
         {
             "description": "Add 'dotnet' label to all .NET packages",
-            "matchManagers": ["nuget"],
-            "addLabels": ["dotnet"]
+            "matchManagers": [
+                "nuget"
+            ],
+            "addLabels": [
+                "dotnet"
+            ]
         },
-
         {
             "description": "Add 'dotnet' label to NuGet packages excluding SDK and tools",
-            "matchManagers": ["nuget"],
-            "excludePackageNames": ["dotnet-sdk"],
+            "matchManagers": [
+                "nuget"
+            ],
+            "excludePackageNames": [
+                "dotnet-sdk"
+            ],
             "excludePaths": [
                 ".config/dotnet-tools.json"
             ],
-            "addLabels": ["nuget"]
+            "addLabels": [
+                "nuget"
+            ]
         },
-
         {
             "description": ".NET SDK",
-            "matchManagers": ["nuget"],
-            "matchPackageNames": ["dotnet-sdk"],
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "dotnet-sdk"
+            ],
             "prPriority": 10,
-            "addLabels": ["sdk"]
+            "addLabels": [
+                "sdk"
+            ]
         },
-
         {
             "description": ".NET local tools from dotnet-tools.json",
-            "matchManagers": ["nuget"],
-            "matchFiles": [".config/dotnet-tools.json"],
-            "addLabels": ["tools"]
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchFiles": [
+                ".config/dotnet-tools.json"
+            ],
+            "addLabels": [
+                "tools"
+            ]
         },
-
         {
             "description": "Microsoft package(s) inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
-            "matchManagers": ["nuget"],
+            "matchManagers": [
+                "nuget"
+            ],
             "matchPackagePatterns": [
                 "^Microsoft\\.Extensions\\.",
                 "^System\\."
             ],
             "groupName": ".NET Extensions"
         },
-
         {
             "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
-            "matchManagers": ["nuget"],
+            "matchManagers": [
+                "nuget"
+            ],
             "matchPackageNames": [
                 "Microsoft.Extensions.Diagnostics.Testing",
                 "Microsoft.Extensions.TimeProvider.Testing"
             ],
             "groupName": ".NET Platform Extensions"
         },
-
         {
             "description": "Package(s) for https://github.com/TestableIO/System.IO.Abstractions",
-            "matchManagers": ["nuget"],
+            "matchManagers": [
+                "nuget"
+            ],
             "matchPackageNames": [
                 "System.IO.Abstractions",
                 "System.IO.Abstractions.TestingHelpers"
             ],
             "groupName": "System.IO Abstractions"
         },
-
         {
-        "description": "Skip pinned versions",
-        "matchManagers": ["nuget"],
-        "matchCurrentValue": "/^[\\[(][^,]+[\\])]/",
-        "enabled": false
+            "description": "Disable NuGet updates for version ranges",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchCurrentValue": "/^[\\[(][^\\],]+,[^\\])]+[\\])]/",
+            "enabled": false
         },
-
         {
             "description": "Package(s) from nuget-feed Local",
-            "matchManagers": ["nuget"],
-            "matchPackageNames": [ "IDesign.Analyzers" ],
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "IDesign.Analyzers"
+            ],
             "enabled": false
         }
     ]
