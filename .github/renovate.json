@@ -40,7 +40,7 @@
         },
 
         {
-            "description": "Microsoft packages inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
+            "description": "Microsoft package(s) inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
             "matchManagers": ["nuget"],
             "matchPackagePatterns": [
                 "^Microsoft\\.Extensions\\.",
@@ -50,7 +50,7 @@
         },
 
         {
-            "description": "Microsoft packages outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
+            "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
             "matchManagers": ["nuget"],
             "matchPackageNames": [
                 "Microsoft.Extensions.Diagnostics.Testing",
@@ -60,6 +60,7 @@
         },
 
         {
+            "description": "Package(s) for https://github.com/TestableIO/System.IO.Abstractions",
             "matchManagers": ["nuget"],
             "matchPackageNames": [
                 "System.IO.Abstractions",
