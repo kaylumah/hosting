@@ -50,6 +50,7 @@
         },
         {
             "description": ".NET SDK",
+            "schedule": ["after 06:00 on Wednesday"],
             "matchManagers": [
                 "nuget"
             ],
@@ -75,6 +76,7 @@
         },
         {
             "description": "Microsoft package(s) inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
+            "schedule": ["after 06:00 on Wednesday"],
             "matchManagers": [
                 "nuget"
             ],
@@ -86,6 +88,7 @@
         },
         {
             "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
+            "schedule": ["after 06:00 on Wednesday"],
             "matchManagers": [
                 "nuget"
             ],
