@@ -86,7 +86,8 @@
                 "^Microsoft\\.Extensions\\.",
                 "^System\\."
             ],
-            "groupName": ".NET Extensions"
+            "groupName": ".NET Extensions",
+            "prPriority": 9
         },
         {
             "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
@@ -98,7 +99,8 @@
                 "Microsoft.Extensions.Diagnostics.Testing",
                 "Microsoft.Extensions.TimeProvider.Testing"
             ],
-            "groupName": ".NET Platform Extensions"
+            "groupName": ".NET Platform Extensions",
+            "prPriority": 8
         },
         {
             "description": "Package(s) for https://github.com/TestableIO/System.IO.Abstractions",
