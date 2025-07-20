@@ -28,10 +28,7 @@
             "description": ".NET SDK",
             "matchManagers": ["nuget"],
             "matchPackageNames": ["dotnet-sdk"],
-            "reviewers": ["kaylumah"],
-            "schedule": ["* 8-12 * * 1"],
             "prPriority": 10,
-            "groupName": "SDK2",
             "addLabels": ["sdk"]
         },
 
