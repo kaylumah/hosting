@@ -25,6 +25,16 @@
         },
 
         {
+            "description": "Add 'dotnet' label to NuGet packages excluding SDK and tools",
+            "matchManagers": ["nuget"],
+            "excludePackageNames": ["dotnet-sdk"],
+            "excludePaths": [
+                ".config/dotnet-tools.json"
+            ],
+            "addLabels": ["nuget"]
+        },
+
+        {
             "description": ".NET SDK",
             "matchManagers": ["nuget"],
             "matchPackageNames": ["dotnet-sdk"],
