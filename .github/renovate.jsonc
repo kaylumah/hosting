@@ -118,6 +118,7 @@
             "matchManagers": [
                 "nuget"
             ],
+            // prevents updates to dependencies like "FluentAssertions [7.2.0, 8.0.0)"
             "matchCurrentValue": "/^[\\[(][^\\],]+,[^\\])]+[\\])]/",
             "enabled": false
         },
