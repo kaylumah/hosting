@@ -130,7 +130,8 @@
                 "System.IO.Abstractions.TestingHelpers"
             ],
             "groupName": "System.IO Abstractions",
-            "prPriority": 0
+            "prPriority": 0,
+            "schedule": []
         },
         {
             "description": "Disable NuGet updates for version ranges",
