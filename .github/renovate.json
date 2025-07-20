@@ -5,7 +5,7 @@
         "kaylumah"
     ],
     "prHourlyLimit": 0,
-    "prConcurrentLimit": 0,
+    "prConcurrentLimit": 3,
     "timezone": "Europe/Amsterdam",
     "dependencyDashboard": true,
     "labels": [
