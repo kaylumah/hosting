@@ -40,7 +40,7 @@
             "excludePackageNames": [
                 "dotnet-sdk"
             ],
-            "excludePaths": [
+            "ignorePaths": [
                 ".config/dotnet-tools.json"
             ],
             "addLabels": [
