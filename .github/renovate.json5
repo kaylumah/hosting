@@ -111,7 +111,9 @@
                 "System.IO.Abstractions",
                 "System.IO.Abstractions.TestingHelpers"
             ],
-            "groupName": "System.IO Abstractions"
+            "groupName": "System.IO Abstractions",
+            // reset
+            "prPriority": 0
         },
         {
             "description": "Disable NuGet updates for version ranges",
