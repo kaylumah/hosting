@@ -46,7 +46,7 @@
                 "^Microsoft\\.Extensions\\.",
                 "^System\\."
             ],
-            "groupName": "System + Microsoft Extensions"
+            "groupName": ".NET Extensions"
         },
 
         {
