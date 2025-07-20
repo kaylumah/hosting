@@ -11,6 +11,7 @@
     "labels": [
         "dependencies"
     ],
+    "enabledManagers": ["nuget"],
     "packageRules": [
         {
             "matchManagers": [
