@@ -140,7 +140,7 @@
             "matchPackageNames": [
                 "IDesign.Analyzers"
             ],
-            "enabled": true
+            "enabled": false
         }
     ]
 }
