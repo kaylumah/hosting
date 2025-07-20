@@ -14,7 +14,9 @@ namespace Test.E2e
 {
     public class ScreenshotFactAttribute : FactAttribute
     {
-        public ScreenshotFactAttribute() : base()
+        public ScreenshotFactAttribute(
+            [CallerFilePath] string? sourceFilePath = null,
+            [CallerLineNumber] int sourceLineNumber = -1) : base(sourceFilePath, sourceLineNumber)
         {
             // bool success = bool.TryParse(Environment.GetEnvironmentVariable("CI"), out bool ci);
             bool skipTest = true;// success && ci;
