@@ -138,7 +138,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             items.Add(pagePublicationPageMetaData);
 
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
 
             string html = ObjectConversions.ToDiagnosticHtml(siteMetaData, "json");
             await Verifier.Verify(html, _VerifySettings);
@@ -170,7 +170,7 @@ namespace Test.Unit
             items.Add(CreateArticle("1", new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 #pragma warning restore
 
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
@@ -186,7 +186,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
 
             RenderData renderData = new RenderData(siteMetaData, null!);
             string content =
@@ -217,7 +217,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -249,7 +249,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -282,7 +282,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId,  data: data, items: items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -346,14 +346,14 @@ namespace Test.Unit
         }
 
         static SiteMetaData CreateSiteMetaData(
-            SiteId? siteId, 
-            string? title = null, 
-            string? description = null, 
-            string? language = null, 
-            string? author = null, 
-            string? url = null, 
-            Dictionary<string, object>? data = null, 
-            BuildData? buildData = null, 
+            SiteId? siteId,
+            string? title = null,
+            string? description = null,
+            string? language = null,
+            string? author = null,
+            string? url = null,
+            Dictionary<string, object>? data = null,
+            BuildData? buildData = null,
             List<BasePage>? items = null)
         {
             siteId ??= new SiteId("<UNK>");
@@ -365,15 +365,15 @@ namespace Test.Unit
             buildData ??= (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             data ??= new();
             items ??= new();
-            
+
             SiteMetaData siteMetaData = new SiteMetaData(
                 siteId.Value,
-                title: title, 
-                description: description, 
-                language: language, 
-                author: author, 
-                url: url, 
-                data: data, 
+                title: title,
+                description: description,
+                language: language,
+                author: author,
+                url: url,
+                data: data,
                 buildData: buildData,
                 items: items);
             return siteMetaData;
