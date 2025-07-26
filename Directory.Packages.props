@@ -50,7 +50,8 @@
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.7.0" />
   </ItemGroup>
   <ItemGroup Label="Analyzers">
-    <!-- https://github.com/dotnet/roslyn-analyzers/tree/main -->
+    <!-- https://github.com/dotnet/roslyn-analyzers -->
+    <!-- https://github.com/dotnet/roslyn -->
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
     <PackageVersion Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="4.14.0" />
   </ItemGroup>
