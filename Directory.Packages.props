@@ -51,6 +51,8 @@
     <!-- See also: -->
     <!-- https://github.com/dotnet/roslyn-analyzers -->
     <!-- https://github.com/dotnet/roslyn -->
+    <!-- https://github.com/DotNetAnalyzers/IDisposableAnalyzers -->
+    <!-- https://github.com/DotNetAnalyzers/ReflectionAnalyzers -->
     <!-- No longer used? -->
     <!-- <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.31.0.96804" /> -->
     <PackageVersion Include="IDesign.Analyzers" Version="1.0.18" />
