@@ -30,7 +30,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <AdditionalFiles Include="$(BannedSymbolsFullPath)"/>
+    <AdditionalFiles Include="$(BannedSymbolsFullPath)" />
   </ItemGroup>
 
   <ItemGroup Label="IDesignAnalyzers" Condition="'$(EnableIDesignAnalyzers)' == 'true' AND Exists('$(UsingAnalyzerFullPath)')">
@@ -38,7 +38,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <AdditionalFiles Include="$(UsingAnalyzerFullPath)"/>
+    <AdditionalFiles Include="$(UsingAnalyzerFullPath)" />
   </ItemGroup>
   
   <ItemGroup Label="SonarAnalyzers" Condition="'$(EnableSonarAnalyzers)' == 'true'">
@@ -50,14 +50,14 @@
 
   <ItemGroup>
     <AssemblyMetadata Include="RootDirectory" Value="$(RootDirectory)" />
-    <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)"/>
-    <AssemblyMetadata Include="BuildId" Value="$(BuildId)"/>
-    <AssemblyMetadata Include="BuildNumber" Value="$(BuildNumber)"/>
+    <AssemblyMetadata Include="SdkVersion" Value="$(ArcadeSdkVersion)" />
+    <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
+    <AssemblyMetadata Include="BuildNumber" Value="$(BuildNumber)" />
   </ItemGroup>
   <Target Name="IncludeSourceRevisionId" BeforeTargets="GetAssemblyAttributes">
     <ItemGroup>
-      <AssemblyMetadata Include="SourceRevisionId" Value="$(SourceRevisionId)"/>
-      <AssemblyMetadata Include="RepositoryType" Value="$(RepositoryType)"/>
+      <AssemblyMetadata Include="SourceRevisionId" Value="$(SourceRevisionId)" />
+      <AssemblyMetadata Include="RepositoryType" Value="$(RepositoryType)" />
     </ItemGroup>
   </Target>
 
