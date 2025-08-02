@@ -50,7 +50,7 @@
                 
                 const langClass = [...code.classList].find(c => c.startsWith("language-"));
                 const lang = langClass?.split("-")[1];
-                loadPrismCore();
+                // loadPrismCore();
                 if (lang) {
                     loadPrismLanguage(lang);
                 }
@@ -59,6 +59,7 @@
             }
         });
     }, { threshold: 0.1 });
-    
+
+    loadPrismCore();
     blocks.forEach(block => observer.observe(block));
 })();
