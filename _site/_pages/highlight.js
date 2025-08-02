@@ -55,7 +55,7 @@
     };
     * */
 
-    const observer = new IntersectionObserver((entries, obs) => {
+    const observer = new IntersectionObserver((entries) => {
         console.log("entries", entries);
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -67,7 +67,7 @@
                 // loadPrismCore();
                 // if (lang) loadPrismLanguage(lang);
 
-                obs.unobserve(code);
+                observer.unobserve(code);
             } else {
                 console.log("skipping", entry);
             }
