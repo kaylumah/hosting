@@ -1,4 +1,11 @@
 (function() {
+
+    if (window.__prismAlreadyLoaded) {
+        return;
+    }
+    // Prevent duplicate instance of the script
+    window.__prismAlreadyLoaded = true;
+    
     const blocks = document.querySelectorAll('code[class^="language-"]');
     if (!blocks.length) 
     {
@@ -6,21 +13,12 @@
         return;
     }
 
-    console.log("code-blocks", blocks);
-    window.__loadedPrismLanguages = window.__loadedPrismLanguages || new Set();
-    /*
     const PRISM_CORE_ID = "prism-core";
     const PRISM_CSS_ID = "prism-css";
     const PRISM_LANG_PREFIX = "prism-lang-";
-    * 
+    window.__loadedPrismLanguages = window.__loadedPrismLanguages || new Set();
 
-    // Track loaded languages
-   
-    if (window.__prismAlreadyLoaded) return;
-    * */
-    /*
-    * 
-    * const loadPrismCore = () => {
+    const loadPrismCore = () => {
         if (!document.getElementById(PRISM_CSS_ID)) {
             const link = document.createElement("link");
             link.id = PRISM_CSS_ID;
@@ -36,28 +34,22 @@
             core.src = "https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js";
             document.head.appendChild(core);
         }
-
-        window.__prismAlreadyLoaded = true;
     };
-    * */
     
      const loadPrismLanguage = (lang) => {
-         console.log("Check for " + lang);
-        if (!lang || window.__loadedPrismLanguages.has(lang)) return;
+         if (!lang || window.__loadedPrismLanguages.has(lang)) {
+             return;
+         }
 
-         console.log("Need to load " + lang);
-
-
-         // const script = document.createElement("script");
-        // script.id = PRISM_LANG_PREFIX + lang;
-        // script.defer = true;
-        // script.src = `https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-${lang}.min.js`;
-        // script.onload = () => window.__loadedPrismLanguages.add(lang);
-        // document.head.appendChild(script);
+         const script = document.createElement("script");
+         script.id = PRISM_LANG_PREFIX + lang;
+         script.defer = true;
+         script.src = `https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-${lang}.min.js`;
+         script.onload = () => window.__loadedPrismLanguages.add(lang);
+         document.head.appendChild(script);
     };
 
     const observer = new IntersectionObserver((entries) => {
-        console.log("entries", entries);
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const code = entry.target;
@@ -70,14 +62,12 @@
                     loadPrismLanguage(lang);
                 }
 
-                console.log("completed for", entry);
                 observer.unobserve(code);
-            } else {
-                console.log("skipping", entry);
             }
         });
     }, { threshold: 0.1 });
 
+    // Preload Core
+    loadPrismCore();
     blocks.forEach(block => observer.observe(block));
-
 })();
