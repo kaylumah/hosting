@@ -61,8 +61,7 @@
         console.log("entries", entries);
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                console.log("intersecting", entry);
-                // const code = entry.target;
+                const code = entry.target;
                 
                 const langClass = [...code.classList].find(c => c.startsWith("language-"));
                 const lang = langClass?.split("-")[1];
@@ -72,6 +71,7 @@
                     loadPrismLanguage(lang);
                 }
 
+                console.log("completed for", entry);
                 observer.unobserve(code);
             } else {
                 console.log("skipping", entry);
