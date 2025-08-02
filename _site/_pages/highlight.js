@@ -1,9 +1,8 @@
 (function() {
-    console.log("loaded highlight.js");
-
     const blocks = document.querySelectorAll('code[class^="language-"]');
     if (!blocks.length) 
     {
+        // No code blocks on the page, no need to continue
         return;
     }
 
