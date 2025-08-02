@@ -1,11 +1,4 @@
 (function() {
-
-    if (window.__prismAlreadyLoaded) {
-        return;
-    }
-    // Prevent duplicate instance of the script
-    window.__prismAlreadyLoaded = true;
-    
     const blocks = document.querySelectorAll('code[class^="language-"]');
     if (!blocks.length) 
     {
@@ -40,12 +33,13 @@
          if (!lang || window.__loadedPrismLanguages.has(lang)) {
              return;
          }
+         window.__loadedPrismLanguages.add(lang);
 
          const script = document.createElement("script");
          script.id = PRISM_LANG_PREFIX + lang;
          script.defer = true;
          script.src = `https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-${lang}.min.js`;
-         script.onload = () => window.__loadedPrismLanguages.add(lang);
+         // script.onload = () => window.__loadedPrismLanguages.add(lang);
          document.head.appendChild(script);
     };
 
@@ -56,8 +50,7 @@
                 
                 const langClass = [...code.classList].find(c => c.startsWith("language-"));
                 const lang = langClass?.split("-")[1];
-                
-                // loadPrismCore();
+                loadPrismCore();
                 if (lang) {
                     loadPrismLanguage(lang);
                 }
@@ -66,8 +59,6 @@
             }
         });
     }, { threshold: 0.1 });
-
-    // Preload Core
-    loadPrismCore();
+    
     blocks.forEach(block => observer.observe(block));
 })();
