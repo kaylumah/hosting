@@ -324,6 +324,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             pageParsers["Announcement"] = textFile => textFile.ToPage(siteGuid);
             pageParsers["Article"] = textFile => textFile.ToArticle(siteGuid);
             pageParsers["Talk"] = textFile => textFile.ToTalk(siteGuid);
+            pageParsers["Snippet"] = textFile => textFile.ToSnippet(siteGuid);
 
             HashSet<string> knownTypes = pageParsers.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
             HashSet<string> seenTypes = data.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
