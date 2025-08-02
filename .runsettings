@@ -11,7 +11,7 @@
         <!-- <TestTimeout>1</TestTimeout> -->
         <TreatNoTestsAsError>true</TreatNoTestsAsError>
         <EnvironmentVariables>
-          <!--<PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-1121.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL>-->
+          <!--<PLAYWRIGHT_TEST_BASE_URL>https://green-field-0353fee03-1290.westeurope.1.azurestaticapps.net</PLAYWRIGHT_TEST_BASE_URL>-->
         </EnvironmentVariables>
     </RunConfiguration>
 
