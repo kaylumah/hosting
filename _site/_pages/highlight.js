@@ -87,7 +87,8 @@
 
     const LANG_ALIASES = {
         shell: 'bash',
-        sh: 'bash'
+        sh: 'bash',
+        cs: 'csharp'
     };
     
     for (const block of blocks) {
