@@ -85,10 +85,26 @@
 
     window.__loadedPrismLanguages = new Set(Object.keys(Prism.languages));
 
+    const LANG_ALIASES = {
+        shell: 'bash',
+        sh: 'bash',
+        yml: 'yaml',
+        js: 'javascript',
+        html: 'markup',
+    };
+    
     for (const block of blocks) {
         const langClass = [...block.classList].find((cls) => cls.startsWith('language-'));
-        const lang = langClass?.split('-')[1] || 'markup';
+        const rawLang = langClass?.split('-')[1] || 'markup';
 
+        const canonical = LANG_ALIASES[rawLang] || rawLang;
+        if (canonical !== rawLang) {
+            console.warn(`[Prism] Aliased '${rawLang}' → '${canonical}'`);
+            block.classList.remove(`language-${rawLang}`);
+            block.classList.add(`language-${canonical}`);
+        }
+
+        const lang = canonical;
         await loadLang(lang);
         try {
             Prism.highlightElement(block);
