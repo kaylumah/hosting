@@ -8,17 +8,17 @@
     }
 
     console.log("code-blocks", blocks);
+    window.__loadedPrismLanguages = window.__loadedPrismLanguages || new Set();
     /*
-    * const PRISM_CORE_ID = "prism-core";
+    const PRISM_CORE_ID = "prism-core";
     const PRISM_CSS_ID = "prism-css";
     const PRISM_LANG_PREFIX = "prism-lang-";
+    * 
 
     // Track loaded languages
-    window.__loadedPrismLanguages = window.__loadedPrismLanguages || new Set();
+   
     if (window.__prismAlreadyLoaded) return;
     * */
-    
-    
     /*
     * 
     * const loadPrismCore = () => {
@@ -42,18 +42,20 @@
     };
     * */
     
-    /*
-    * const loadPrismLanguage = (lang) => {
+     const loadPrismLanguage = (lang) => {
+         console.log("Check for " + lang);
         if (!lang || window.__loadedPrismLanguages.has(lang)) return;
 
-        const script = document.createElement("script");
-        script.id = PRISM_LANG_PREFIX + lang;
-        script.defer = true;
-        script.src = `https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-${lang}.min.js`;
-        script.onload = () => window.__loadedPrismLanguages.add(lang);
-        document.head.appendChild(script);
+         console.log("Need to load " + lang);
+
+
+         // const script = document.createElement("script");
+        // script.id = PRISM_LANG_PREFIX + lang;
+        // script.defer = true;
+        // script.src = `https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-${lang}.min.js`;
+        // script.onload = () => window.__loadedPrismLanguages.add(lang);
+        // document.head.appendChild(script);
     };
-    * */
 
     const observer = new IntersectionObserver((entries) => {
         console.log("entries", entries);
@@ -61,11 +63,14 @@
             if (entry.isIntersecting) {
                 console.log("intersecting", entry);
                 // const code = entry.target;
-                // const langClass = [...code.classList].find(c => c.startsWith("language-"));
-                // const lang = langClass?.split("-")[1];
-
+                
+                const langClass = [...code.classList].find(c => c.startsWith("language-"));
+                const lang = langClass?.split("-")[1];
+                
                 // loadPrismCore();
-                // if (lang) loadPrismLanguage(lang);
+                if (lang) {
+                    loadPrismLanguage(lang);
+                }
 
                 observer.unobserve(code);
             } else {
