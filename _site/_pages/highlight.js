@@ -87,10 +87,7 @@
 
     const LANG_ALIASES = {
         shell: 'bash',
-        sh: 'bash',
-        yml: 'yaml',
-        js: 'javascript',
-        html: 'markup',
+        sh: 'bash'
     };
     
     for (const block of blocks) {
