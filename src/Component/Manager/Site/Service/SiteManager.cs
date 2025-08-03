@@ -127,11 +127,17 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         Dictionary<string, object> GetSiteData()
         {
+            static bool NotADirectory(IFileSystemInfo file)
+            {
+                bool result = file.IsDirectory() == false;
+                return result;
+            }
+            
             Dictionary<string, object> result = new Dictionary<string, object>();
             string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
-                .Where(file => !file.IsDirectory())
+                .Where(NotADirectory)
                 .Where(file =>
                 {
                     string extension = Path.GetExtension(file.Name);
