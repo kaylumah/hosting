@@ -32,7 +32,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void Test2()
+        public void EmptyFile()
         {
             FileMetaData fileMetaData = new FileMetaData();
             TextFile textFile = CreateTextFile(fileMetaData);
