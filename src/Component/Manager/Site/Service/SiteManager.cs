@@ -127,8 +127,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         Dictionary<string, object> GetSiteData()
         {
-            
-            
+
             Dictionary<string, object> result = new Dictionary<string, object>();
             string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
@@ -154,7 +153,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             return result;
-            
+
             bool NotADirectory(IFileSystemInfo file)
             {
                 bool filterResult = file.IsDirectory() == false;
