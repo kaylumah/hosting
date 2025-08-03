@@ -24,7 +24,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void EmptyFileList()
+        public void EmptyFileList_ReturnsEmptyList()
         {
             TextFile[] files = [];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
@@ -32,7 +32,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void EmptyFile()
+        public void EmptyFile_Skipped()
         {
             FileMetaData fileMetaData = CreateFileMetaData();
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -42,7 +42,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void UnknownTypeThrows()
+        public void UnknownType_Throws()
         {
             FileMetaData fileMetaData = CreateFileMetaData("UnknownType");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -52,7 +52,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void StaticFile()
+        public void StaticTextFile_MapsTo_StaticContent()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Static", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -63,47 +63,47 @@ namespace Test.Unit.Component.Manager.Site
         }
         
         [Fact]
-        public void PageFile()
+        public void PageTextFile_MapsTo_()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Page", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().HaveCount(1);
-            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+            PageMetaData page = result[0].Should().BeOfType<PageMetaData>().Subject;
         }
         
         [Fact]
-        public void AnnouncementFile()
+        public void AnnouncementTextFile_MapsTo_()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Announcement", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().HaveCount(1);
-            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+            PageMetaData page = result[0].Should().BeOfType<PageMetaData>().Subject;
         }
         
         [Fact]
-        public void ArticleFile()
+        public void ArticleTextFile_MapsTo_()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Article", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().HaveCount(1);
-            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+            ArticlePublicationPageMetaData page = result[0].Should().BeOfType<ArticlePublicationPageMetaData>().Subject;
         }
         
         [Fact]
-        public void TalkFile()
+        public void TalkTextFile_MapsTo_()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Talk", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().HaveCount(1);
-            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+            TalkPublicationPageMetaData page = result[0].Should().BeOfType<TalkPublicationPageMetaData>().Subject;
         }
 
         FileMetaData CreateFileMetaData(string? type = null, string? uri = null)
