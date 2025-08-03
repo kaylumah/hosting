@@ -61,7 +61,7 @@ namespace Test.Unit.Component.Manager.Site
             result.Should().HaveCount(1);
             StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
         }
-        
+
         [Fact]
         public void PageTextFile_MapsTo_PageMetaData()
         {
@@ -72,7 +72,7 @@ namespace Test.Unit.Component.Manager.Site
             result.Should().HaveCount(1);
             PageMetaData page = result[0].Should().BeOfType<PageMetaData>().Subject;
         }
-        
+
         [Fact]
         public void AnnouncementTextFile_MapsTo_PageMetaData()
         {
@@ -83,7 +83,7 @@ namespace Test.Unit.Component.Manager.Site
             result.Should().HaveCount(1);
             PageMetaData page = result[0].Should().BeOfType<PageMetaData>().Subject;
         }
-        
+
         [Fact]
         public void ArticleTextFile_MapsTo_ArticlePublicationPageMetaData()
         {
@@ -94,7 +94,7 @@ namespace Test.Unit.Component.Manager.Site
             result.Should().HaveCount(1);
             ArticlePublicationPageMetaData page = result[0].Should().BeOfType<ArticlePublicationPageMetaData>().Subject;
         }
-        
+
         [Fact]
         public void TalkTextFile_MapsTo_TalkPublicationPageMetaData()
         {
@@ -104,6 +104,17 @@ namespace Test.Unit.Component.Manager.Site
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().HaveCount(1);
             TalkPublicationPageMetaData page = result[0].Should().BeOfType<TalkPublicationPageMetaData>().Subject;
+        }
+
+        [Fact]
+        public void CollectionTextFile_MapsTo_TalkPublicationPageMetaData()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Collection", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            CollectionPageMetaData page = result[0].Should().BeOfType<CollectionPageMetaData>().Subject;
         }
 
         FileMetaData CreateFileMetaData(string? type = null, string? uri = null)
