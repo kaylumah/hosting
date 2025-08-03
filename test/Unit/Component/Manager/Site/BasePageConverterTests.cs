@@ -40,7 +40,7 @@ namespace Test.Unit.Component.Manager.Site
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().BeEmpty();
         }
-        
+
         [Fact]
         public void UnknownType()
         {
@@ -51,12 +51,29 @@ namespace Test.Unit.Component.Manager.Site
             act.Should().Throw<InvalidOperationException>();
         }
 
-        FileMetaData CreateFileMetaData(string? type = null)
+        [Fact]
+        public void StaticFile()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Static", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+        }
+
+        FileMetaData CreateFileMetaData(string? type = null, string? uri = null)
         {
             FileMetaData fileMetaData = new();
+
             if (type != null)
             {
                 fileMetaData["type"] = type;
+            }
+
+            if (uri != null)
+            {
+                fileMetaData["uri"] = uri;
             }
 
             return fileMetaData;
