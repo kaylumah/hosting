@@ -21,11 +21,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 textFile.MetaData.SetValue(nameof(PageMetaData.BaseUri), baseUrl);
             }
 
-            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type ?? fallback;
-            });
+            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(GroupByType);
 
             Dictionary<string, List<TextFile>> data = filesGroupedByType
                 .ToDictionary(group => group.Key, group => group.ToList());
@@ -76,6 +72,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             return result;
+
+            static string GroupByType(TextFile file)
+            {
+                string? type = file.MetaData.GetValue<string?>("type");
+                string key = type ?? fallback;
+                return key;
+            }
         }
     }
 }
