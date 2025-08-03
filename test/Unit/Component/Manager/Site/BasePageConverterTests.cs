@@ -63,7 +63,7 @@ namespace Test.Unit.Component.Manager.Site
         }
         
         [Fact]
-        public void PageTextFile_MapsTo_()
+        public void PageTextFile_MapsTo_PageMetaData()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Page", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -74,7 +74,7 @@ namespace Test.Unit.Component.Manager.Site
         }
         
         [Fact]
-        public void AnnouncementTextFile_MapsTo_()
+        public void AnnouncementTextFile_MapsTo_PageMetaData()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Announcement", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -85,7 +85,7 @@ namespace Test.Unit.Component.Manager.Site
         }
         
         [Fact]
-        public void ArticleTextFile_MapsTo_()
+        public void ArticleTextFile_MapsTo_ArticlePublicationPageMetaData()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Article", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -96,7 +96,7 @@ namespace Test.Unit.Component.Manager.Site
         }
         
         [Fact]
-        public void TalkTextFile_MapsTo_()
+        public void TalkTextFile_MapsTo_TalkPublicationPageMetaData()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Talk", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
