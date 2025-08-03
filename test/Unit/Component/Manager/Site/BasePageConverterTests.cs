@@ -42,7 +42,7 @@ namespace Test.Unit.Component.Manager.Site
         }
 
         [Fact]
-        public void UnknownType()
+        public void UnknownTypeThrows()
         {
             FileMetaData fileMetaData = CreateFileMetaData("UnknownType");
             TextFile textFile = CreateTextFile(fileMetaData);
@@ -55,6 +55,50 @@ namespace Test.Unit.Component.Manager.Site
         public void StaticFile()
         {
             FileMetaData fileMetaData = CreateFileMetaData("Static", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+        }
+        
+        [Fact]
+        public void PageFile()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Page", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+        }
+        
+        [Fact]
+        public void AnnouncementFile()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Announcement", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+        }
+        
+        [Fact]
+        public void ArticleFile()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Article", "https://localhost");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            result.Should().HaveCount(1);
+            StaticContent page = result[0].Should().BeOfType<StaticContent>().Subject;
+        }
+        
+        [Fact]
+        public void TalkFile()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("Talk", "https://localhost");
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
