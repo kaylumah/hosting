@@ -34,11 +34,32 @@ namespace Test.Unit.Component.Manager.Site
         [Fact]
         public void EmptyFile()
         {
-            FileMetaData fileMetaData = new FileMetaData();
+            FileMetaData fileMetaData = CreateFileMetaData();
             TextFile textFile = CreateTextFile(fileMetaData);
             TextFile[] files = [textFile];
             List<BasePage> result = BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
             result.Should().BeEmpty();
+        }
+        
+        [Fact]
+        public void UnknownType()
+        {
+            FileMetaData fileMetaData = CreateFileMetaData("UnknownType");
+            TextFile textFile = CreateTextFile(fileMetaData);
+            TextFile[] files = [textFile];
+            Action act = () => BasePageConverter.ToPageMetadata(files, _SiteGuid, _BaseUrl);
+            act.Should().Throw<InvalidOperationException>();
+        }
+
+        FileMetaData CreateFileMetaData(string? type = null)
+        {
+            FileMetaData fileMetaData = new();
+            if (type != null)
+            {
+                fileMetaData["type"] = type;
+            }
+
+            return fileMetaData;
         }
 
         TextFile CreateTextFile(FileMetaData fileMetaData, string? encoding = null, byte[]? contents = null)
