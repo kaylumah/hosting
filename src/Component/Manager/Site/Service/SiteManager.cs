@@ -127,23 +127,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         Dictionary<string, object> GetSiteData()
         {
-            static bool NotADirectory(IFileSystemInfo file)
-            {
-                bool result = file.IsDirectory() == false;
-                return result;
-            }
+            
             
             Dictionary<string, object> result = new Dictionary<string, object>();
             string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
                 .Where(NotADirectory)
-                .Where(file =>
-                {
-                    string extension = Path.GetExtension(file.Name);
-                    bool result = extensions.Contains(extension);
-                    return result;
-                })
+                .Where(IsSupportedExtension)
                 .ToList();
 
             List<string> knownFileNames = _KnownFileProcessors.Select(x => x.KnownFileName).ToList();
@@ -163,6 +154,19 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             return result;
+            
+            bool NotADirectory(IFileSystemInfo file)
+            {
+                bool filterResult = file.IsDirectory() == false;
+                return filterResult;
+            }
+
+            bool IsSupportedExtension(IFileSystemInfo file)
+            {
+                string extension = Path.GetExtension(file.Name);
+                bool filterResult = extensions.Contains(extension);
+                return filterResult;
+            }
         }
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
