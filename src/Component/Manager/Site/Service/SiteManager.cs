@@ -127,7 +127,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         Dictionary<string, object> GetSiteData()
         {
-
             Dictionary<string, object> result = new Dictionary<string, object>();
             string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
@@ -137,7 +136,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
                 .ToList();
 
             List<string> knownFileNames = _KnownFileProcessors.Select(x => x.KnownFileName).ToList();
-            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(IsKnownFile).ToList();
             dataFiles = dataFiles.Except(knownFiles).ToList();
 
             foreach (IFileSystemInfo fileSystemInfo in knownFiles)
@@ -164,6 +163,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
                 string extension = Path.GetExtension(file.Name);
                 bool filterResult = extensions.Contains(extension);
+                return filterResult;
+            }
+
+            bool IsKnownFile(IFileSystemInfo file)
+            {
+                bool filterResult = knownFileNames.Contains(file.Name);
                 return filterResult;
             }
         }
