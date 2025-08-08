@@ -134,6 +134,19 @@
             "schedule": []
         },
         {
+            "description": "Package(s) for Verify",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "Verify.Xunit",
+                "Verify.XunitV3"
+            ],
+            "groupName": "Verify",
+            "prPriority": 0,
+            "schedule": []
+        },
+        {
             "description": "Disable NuGet updates for version ranges",
             "matchManagers": [
                 "nuget"
