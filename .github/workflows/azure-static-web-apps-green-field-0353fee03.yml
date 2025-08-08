@@ -194,7 +194,7 @@ jobs:
           global-json-file: global.json
 
       - name: Download site artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ format('site-{0}', 'ubuntu-latest') }}
           path: dist
