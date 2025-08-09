@@ -96,12 +96,10 @@ Pop-Location
 
 ## Multiple project same secret
 
-In Azure, I usually have a simple KeyVault instance per resource group, and not a KeyVault per executable.
-That's why I picked up the habit of prefixing / scoping secrets.
-In this case I have been prefixing them with `App1`.
+The previous iteration was already an improvement over our first script.
+But, for me it does not quit match the real-world. For instance, in Azure, I would create a KeyVault per resource group. I would not create multiple key vaults. For this, I picked up the habit of prefixing secrets per executable. For example, thus far in this blog I have used `App1`.
 
-Instead of setting secrets per project, we can also have a shared secret-id for a solution.
-This would mimic the behavior when deployed for production.
+If we now set the MSBuild property `<UserSecretsId>Project-5ea2d981-14f7-4487-93c0-d4b7e3dbebf1</UserSecretsId>`, we can apply it to all projects at once.
 
 ```ps
 #Requires -Version 7.4
@@ -130,8 +128,8 @@ $Config | ConvertTo-Json -Depth 10 | dotnet user-secrets set --id $SecretId
 
 ## Closing thoughts
 
-This concludes my post.
-TODO..
+User-secrets is a nice addition to the tool belt. Remembering the correct format of clearing/updating secrets, is not something you want to burden your team with. Wrapping it inside a script for convenience is my recommended approach.
+Depending on your deployment model I would go with either option 2 or option 3, keeping it as close to production as possible.
 
 ## References
 
