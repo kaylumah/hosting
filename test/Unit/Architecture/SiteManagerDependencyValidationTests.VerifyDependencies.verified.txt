@@ -306,7 +306,7 @@
       Mock: {
         CallBase: false,
         DefaultValueProvider: {},
-        Name: Mock<IArtifactAccess:1>,
+        Name: Mock<IArtifactAccess:#>,
         Setups: [
           {
             InnerMocks: [],
@@ -330,7 +330,7 @@
       Moq.IMocked`1[IArtifactAccess].Mock: {
         CallBase: false,
         DefaultValueProvider: {},
-        Name: Mock<IArtifactAccess:1>,
+        Name: Mock<IArtifactAccess:#>,
         Setups: [
           {
             InnerMocks: [],
@@ -354,7 +354,7 @@
       Interceptor: {
         CallBase: false,
         DefaultValueProvider: {},
-        Name: Mock<IArtifactAccess:1>,
+        Name: Mock<IArtifactAccess:#>,
         Setups: [
           {
             InnerMocks: [],
