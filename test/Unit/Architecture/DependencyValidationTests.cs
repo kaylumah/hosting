@@ -281,6 +281,7 @@ namespace Test.Unit.Architecture
             });
             
             settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.LocalTimeZone);
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.TimestampFrequency);
             
             // Ignore Keyed fields on ServiceDescriptor as we don't use them.
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);

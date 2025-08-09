@@ -153,7 +153,7 @@
     ServiceType: TimeProvider,
     ImplementationInstance: {
       LocalTimeZone: {Scrubbed},
-      TimestampFrequency: 1000000000
+      TimestampFrequency: {Scrubbed}
     }
   },
   {
