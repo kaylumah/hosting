@@ -1,15 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
-  "navigationFallback": {
-    "rewrite": "/api/fallback",
-    "exclude": [
-      "assets/*",
-      "*.{png,jpg,gif,svg,ico}"
-    ]
-  },
-  "platform": {
-    "apiRuntime": "node:18"
-  },
   "routes": [
     {
       "route": "/404.html",
