@@ -13,7 +13,7 @@ UserSecrets are stored in a (unencrypted) json file. Depending on platform they 
 
 ## Simple Variant
 
-The most simple variant is demonstrated by this PowerShell script.
+The simplest variant is demonstrated by this PowerShell script.
 Please note, in real-world scenario we would parameterize the script to allow entry of the secrets.
 For simplicity we use random GUIDs here.
 
@@ -97,7 +97,7 @@ Pop-Location
 ## Multiple project same secret
 
 The previous iteration was already an improvement over our first script.
-But, for me it does not quit match the real-world. For instance, in Azure, I would create a KeyVault per resource group. I would not create multiple key vaults. For this, I picked up the habit of prefixing secrets per executable. For example, thus far in this blog I have used `App1`.
+But, for me it does not quite match the real-world. For instance, in Azure, I would create a KeyVault per resource group. I would not create multiple key vaults. For this, I picked up the habit of prefixing secrets per executable. For example, thus far in this blog I have used `App1`.
 
 If we now set the MSBuild property `<UserSecretsId>Project-5ea2d981-14f7-4487-93c0-d4b7e3dbebf1</UserSecretsId>`, we can apply it to all projects at once.
 
