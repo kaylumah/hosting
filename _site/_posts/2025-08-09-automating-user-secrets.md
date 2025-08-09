@@ -70,7 +70,7 @@ The first version of the script works, but calling a command line for a ton of s
 Luckily, we can also bulk import by using a JSON file.
 The trick here is to create the object in PowerShell, convert it to JSON and run the `dotnet user-secrets` command.
 
-```
+```powershell
 #Requires -Version 7.4
 
 $ErrorActionPreference = "Stop"
