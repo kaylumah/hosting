@@ -1,47 +1,58 @@
 ﻿[
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfiguration,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfiguration,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfigurationRoot,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfigurationRoot,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfigurationManager,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfigurationManager,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    }
   },
   {
-    ServiceType: System.IO.Abstractions.IFileSystem,
-    Lifetime: Singleton,
-    Implementation: type:System.IO.Abstractions.FileSystem
+    ServiceType: IFileSystem,
+    ImplementationType: FileSystem
   },
   {
-    ServiceType: Microsoft.Extensions.Logging.ILogger`1,
-    Lifetime: Singleton,
-    Implementation: type:Microsoft.Extensions.Logging.Abstractions.NullLogger`1
+    ServiceType: ILogger<TCategoryName>,
+    ImplementationType: NullLogger<T>
   },
   {
-    ServiceType: Kaylumah.Ssg.Access.Artifact.Service.FileSystemStoreArtifactsStrategy,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Access.Artifact.Service.FileSystemStoreArtifactsStrategy
+    ServiceType: FileSystemStoreArtifactsStrategy,
+    ImplementationType: FileSystemStoreArtifactsStrategy
   },
   {
-    ServiceType: Kaylumah.Ssg.Access.Artifact.Service.IStoreArtifactsStrategy,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Access.Artifact.Service.IStoreArtifactsStrategy, Kaylumah.Ssg.Access.Artifact.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IStoreArtifactsStrategy,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IStoreArtifactsStrategy>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess
+    ServiceType: ArtifactAccess,
+    ImplementationType: ArtifactAccess
   },
   {
-    ServiceType: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess, Kaylumah.Ssg.Access.Artifact.Interface, Version=*, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess, Kaylumah.Ssg.Access.Artifact.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IArtifactAccess,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, IArtifactAccess>,
+      Target: ServiceCollectionExtensions.<>c__2<IArtifactAccess, ArtifactAccess>,
+      Method: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess AddProxiedService(System.IServiceProvider)
+    }
   }
 ]

@@ -1,247 +1,380 @@
 ﻿[
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfiguration,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfiguration,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfigurationRoot,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfigurationRoot,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Configuration.IConfigurationManager,
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Configuration.ConfigurationManager
+    ServiceType: IConfigurationManager,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    }
   },
   {
-    ServiceType: System.IO.Abstractions.IFileSystem,
-    Lifetime: Singleton,
-    Implementation: type:System.IO.Abstractions.FileSystem
+    ServiceType: IFileSystem,
+    ImplementationType: FileSystem
   },
   {
-    ServiceType: Microsoft.Extensions.Logging.ILogger`1,
-    Lifetime: Singleton,
-    Implementation: type:Microsoft.Extensions.Logging.Abstractions.NullLogger`1
+    ServiceType: ILogger<TCategoryName>,
+    ImplementationType: NullLogger<T>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IOptions`1,
-    Lifetime: Singleton,
-    Implementation: type:Microsoft.Extensions.Options.UnnamedOptionsManager`1
+    ServiceType: IOptions<TOptions>,
+    ImplementationType: UnnamedOptionsManager<TOptions>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IOptionsSnapshot`1,
     Lifetime: Scoped,
-    Implementation: type:Microsoft.Extensions.Options.OptionsManager`1
+    ServiceType: IOptionsSnapshot<TOptions>,
+    ImplementationType: OptionsManager<TOptions>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IOptionsMonitor`1,
-    Lifetime: Singleton,
-    Implementation: type:Microsoft.Extensions.Options.OptionsMonitor`1
+    ServiceType: IOptionsMonitor<TOptions>,
+    ImplementationType: OptionsMonitor<TOptions>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IOptionsFactory`1,
     Lifetime: Transient,
-    Implementation: type:Microsoft.Extensions.Options.OptionsFactory`1
+    ServiceType: IOptionsFactory<TOptions>,
+    ImplementationType: OptionsFactory<TOptions>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IOptionsMonitorCache`1,
-    Lifetime: Singleton,
-    Implementation: type:Microsoft.Extensions.Options.OptionsCache`1
+    ServiceType: IOptionsMonitorCache<TOptions>,
+    ImplementationType: OptionsCache<TOptions>
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IConfigureOptions<SiteInfo>,
+    ImplementationInstance: {
+      Name: ,
+      Action: {
+        Type: Action<SiteInfo>,
+        Target: ConfigurationBinder,
+        Method: Void Bind(Microsoft.Extensions.Configuration.IConfiguration, System.Object)
+      }
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IValidateOptions<SiteInfo>,
+    ImplementationInstance: {
+      Name: 
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.SiteInfo,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: SiteInfo,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, SiteInfo>,
+      Target: ServiceCollectionExtensions.<>c__5<SiteInfo>,
+      Method: Kaylumah.Ssg.Manager.Site.Service.SiteInfo SetupOptions(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IConfigureOptions<MetadataParserOptions>,
+    ImplementationInstance: {
+      Name: ,
+      Action: {
+        Type: Action<MetadataParserOptions>,
+        Target: ConfigurationBinder,
+        Method: Void Bind(Microsoft.Extensions.Configuration.IConfiguration, System.Object)
+      }
+    }
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
-    Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IValidateOptions<MetadataParserOptions>,
+    ImplementationInstance: {
+      Name: 
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: MetadataParserOptions,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, MetadataParserOptions>,
+      Target: ServiceCollectionExtensions.<>c__5<MetadataParserOptions>,
+      Method: Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions SetupOptions(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Processor.IFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.Files.Processor.FileProcessor
+    ServiceType: IFileProcessor,
+    ImplementationType: FileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Extensions.Metadata.Abstractions.IFrontMatterMetadataProvider,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter.YamlFrontMatterMetadataProvider
+    ServiceType: IFrontMatterMetadataProvider,
+    ImplementationType: YamlFrontMatterMetadataProvider
   },
   {
-    ServiceType: Kaylumah.Ssg.iFX.Data.Yaml.IYamlParser,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.iFX.Data.Yaml.YamlParser
+    ServiceType: IYamlParser,
+    ImplementationType: YamlParser
   },
   {
-    ServiceType: Kaylumah.Ssg.iFX.Data.Json.IJsonParser,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.iFX.Data.Json.JsonParser
+    ServiceType: IJsonParser,
+    ImplementationType: JsonParser
   },
   {
-    ServiceType: Kaylumah.Ssg.iFX.Data.Csv.ICsvParser,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.iFX.Data.Csv.CsvParser
+    ServiceType: ICsvParser,
+    ImplementationType: CsvParser
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Seo.StructureDataGenerator,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.Seo.StructureDataGenerator
+    ServiceType: StructureDataGenerator,
+    ImplementationType: StructureDataGenerator
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Seo.MetaTagGenerator,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.Seo.MetaTagGenerator
+    ServiceType: MetaTagGenerator,
+    ImplementationType: MetaTagGenerator
   },
   {
-    ServiceType: System.TimeProvider,
-    Lifetime: Singleton,
-    Implementation: instance:System.TimeProvider+SystemTimeProvider
+    ServiceType: TimeProvider,
+    ImplementationInstance: {
+      LocalTimeZone: MET,
+      TimestampFrequency: 1000000000
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.MarkdownContentPreprocessorStrategy,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.MarkdownContentPreprocessorStrategy
+    ServiceType: MarkdownContentPreprocessorStrategy,
+    ImplementationType: MarkdownContentPreprocessorStrategy
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.IContentPreprocessorStrategy,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.IContentPreprocessorStrategy, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IContentPreprocessorStrategy,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IContentPreprocessorStrategy>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.HtmlSeoRenderPlugin,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.HtmlSeoRenderPlugin
+    ServiceType: HtmlSeoRenderPlugin,
+    ImplementationType: HtmlSeoRenderPlugin
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IRenderPlugin,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IRenderPlugin, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IRenderPlugin,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IRenderPlugin>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.TagFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.TagFileProcessor
+    ServiceType: TagFileProcessor,
+    ImplementationType: TagFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.OrganizationFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.OrganizationFileProcessor
+    ServiceType: OrganizationFileProcessor,
+    ImplementationType: OrganizationFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.AuthorFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.AuthorFileProcessor
+    ServiceType: AuthorFileProcessor,
+    ImplementationType: AuthorFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.CsvFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.CsvFileProcessor
+    ServiceType: CsvFileProcessor,
+    ImplementationType: CsvFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.JsonFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.JsonFileProcessor
+    ServiceType: JsonFileProcessor,
+    ImplementationType: JsonFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.YamlFileProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.YamlFileProcessor
+    ServiceType: YamlFileProcessor,
+    ImplementationType: YamlFileProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.HtmlPostProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.HtmlPostProcessor
+    ServiceType: HtmlPostProcessor,
+    ImplementationType: HtmlPostProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.JsonPostProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.JsonPostProcessor
+    ServiceType: JsonPostProcessor,
+    ImplementationType: JsonPostProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.XmlPostProcessor,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.XmlPostProcessor
+    ServiceType: XmlPostProcessor,
+    ImplementationType: XmlPostProcessor
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Service.SiteManager,
-    Lifetime: Singleton,
-    Implementation: type:Kaylumah.Ssg.Manager.Site.Service.SiteManager
+    ServiceType: SiteManager,
+    ImplementationType: SiteManager
   },
   {
-    ServiceType: Kaylumah.Ssg.Manager.Site.Interface.ISiteManager,
-    Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Manager.Site.Interface.ISiteManager, Kaylumah.Ssg.Manager.Site.Interface, Version=*, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Manager.Site.Service.SiteManager, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
+    ServiceType: ISiteManager,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, ISiteManager>,
+      Target: ServiceCollectionExtensions.<>c__2<ISiteManager, SiteManager>,
+      Method: Kaylumah.Ssg.Manager.Site.Interface.ISiteManager AddProxiedService(System.IServiceProvider)
+    }
   },
   {
-    ServiceType: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess,
-    Lifetime: Singleton,
-    Implementation: instance:Castle.Proxies.IArtifactAccessProxy
+    ServiceType: IArtifactAccess,
+    ImplementationInstance: {
+      Mock: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      },
+      Moq.IMocked`1[IArtifactAccess].Mock: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      },
+      Interceptor: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      }
+    }
   }
 ]

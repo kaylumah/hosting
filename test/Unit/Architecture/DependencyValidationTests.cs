@@ -300,7 +300,15 @@ namespace Test.Unit.Architecture
             }
             
             settings.AddScrubber(ScrubAssemblyVersions);
-            await Verifier.Verify(views, settings);
+
+            // Ignore Keyed fields on ServiceDescriptor as we don't use them.
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationInstance);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationFactory);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.IsKeyedService);
+            
+            // await Verifier.Verify(views, settings);
+            await Verifier.Verify(services, settings);
         }
 
         protected virtual IServiceCollection CreateDefaultServiceCollection()
