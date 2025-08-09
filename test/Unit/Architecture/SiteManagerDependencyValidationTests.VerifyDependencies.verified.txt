@@ -152,7 +152,7 @@
   {
     ServiceType: TimeProvider,
     ImplementationInstance: {
-      LocalTimeZone: MET,
+      LocalTimeZone: {Scrubbed},
       TimestampFrequency: 1000000000
     }
   },

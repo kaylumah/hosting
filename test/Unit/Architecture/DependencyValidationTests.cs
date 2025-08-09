@@ -280,17 +280,7 @@ namespace Test.Unit.Architecture
                 sb.Append(cleaned);
             });
             
-            settings.AddScrubber(sb =>
-            {
-                string input = sb.ToString();
-                string cleaned = Regex.Replace(
-                    input,
-                    @"LocalTimeZone: [^\r\n]+",
-                    "LocalTimeZone: <timezone>"
-                );
-                sb.Clear();
-                sb.Append(cleaned);
-            });
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.LocalTimeZone);
             
             // Ignore Keyed fields on ServiceDescriptor as we don't use them.
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
