@@ -1,15 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/staticwebapp.config.json",
-  "navigationFallback": {
-    "rewrite": "/api/fallback",
-    "exclude": [
-      "assets/*",
-      "*.{png,jpg,gif,svg,ico}"
-    ]
-  },
-  "platform": {
-    "apiRuntime": "node:18"
-  },
   "routes": [
     {
       "route": "/404.html",
@@ -18,6 +8,11 @@
     {
       "route": "/favicon.ico",
       "redirect": "/assets/images/favicon.ico"
+    },
+    {
+      "route": "/2023/04/14/csharp-client-for-openapi-revistted.html",
+      "redirect": "/2023/04/14/csharp-client-for-openapi-revisited.html",
+      "statusCode": 301
     },
     {% for x in site.pages | array.sort "uri" | array.reverse %}
     {% if x.uri != "index.html" and x.uri != "404.html" %}

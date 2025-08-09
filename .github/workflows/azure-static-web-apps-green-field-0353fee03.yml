@@ -219,9 +219,9 @@ jobs:
           # repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
           app_location: "dist"
-          api_location: "blog-api"
+          api_location: ""
           output_location: ""
-          skip_app_build: true
+          skip_app_build: false
           skip_api_build: false
 
       - name: Post or Update Deployment URL in PR
