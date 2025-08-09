@@ -13,7 +13,7 @@ UserSecrets are stored in a (unencrypted) json file. Depending on platform they 
 
 ## Simple Variant
 
-The most similar variant is demonstrated by this PowerShell script.
+The most simple variant is demonstrated by this PowerShell script.
 Please note, in real-world scenario we would parameterize the script to allow entry of the secrets.
 For simplicity we use random GUIDs here.
 
@@ -35,20 +35,7 @@ dotnet user-secrets set "App1:ConnectionStrings:Secret2" $Secret2
 Pop-Location
 ```
 
-This produces one of two possible outputs. It does not know the secret filename
-For that you need `<UserSecretsId>[ANY-STRING-VALUE]</UserSecretsId>` to be present.
-
-Personally I prefer setting it like this in my Directory.Build.Targets
-The following ensures the UserSecretsId is always present for each project.
-Either explicitly or with a fallback.
-
-```xml
-<Project>
-  <PropertyGroup>
-      <UserSecretsId Condition="'$(UserSecretsId)' == ''">$(MSBuildProjectName)-dev-secrets</UserSecretsId>
-  </PropertyGroup>
-</Project>
-```
+This produces one of two possible outputs. 
 
 Failure output:
 ```output
@@ -61,6 +48,20 @@ Setting secrets for /Users/maxhamulyak/Dev/BlogTopics/_posts/Secrets/src/App1
 Successfully saved App1:ConnectionStrings:Secret1 to the secret store.
 Successfully saved App1:ConnectionStrings:Secret2 to the secret store.
 ```
+
+To be able to set secrets on a project level, the property UserSecretsId needs to be set.
+For example `<UserSecretsId>[ANY-STRING-VALUE]</UserSecretsId>`.
+Doing this for a large solution, project-by-project can be a hassle. So I prefer creating a Directory.Build.Targets file.
+We can then ensure each project either has an explicit or implicit secret id.
+
+```xml
+<Project>
+  <PropertyGroup>
+      <UserSecretsId Condition="'$(UserSecretsId)' == ''">$(MSBuildProjectName)-dev-secrets</UserSecretsId>
+  </PropertyGroup>
+</Project>
+```
+
 
 ## Multiple secrets at once
 
