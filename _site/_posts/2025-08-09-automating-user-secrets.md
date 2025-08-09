@@ -9,7 +9,7 @@ For dotnet developers Microsoft created a dev-time convenience to handle secret 
 No need for a shared infrastructure dependency, and no need for storing secrets in the repository.
 Add a helper script on top of it, and your dev shop will have a convenient way to get up and running.
 
-UserSecrets are stored in an unencrypted json file. Depending on platform they are in either `%APPDATA%\Microsoft\UserSecrets` or `~/.microsoft/usersecrets`.
+UserSecrets are stored in an unencrypted JSON file. Depending on platform they are in either `%APPDATA%\Microsoft\UserSecrets` or `~/.microsoft/usersecrets`.
 
 ## Simple Variant
 
