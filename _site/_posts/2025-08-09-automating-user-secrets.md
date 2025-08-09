@@ -94,7 +94,7 @@ $App1Config | ConvertTo-Json -Depth 5 | dotnet user-secrets set
 Pop-Location
 ```
 
-## Multiple project same secret
+## Using the Same Secret Across Multiple Projects
 
 The previous iteration was already an improvement over our first script.
 But, for me it does not quite match the real-world. For instance, in Azure, I would create a KeyVault per resource group. I would not create multiple key vaults. For this, I picked up the habit of prefixing secrets per executable. For example, thus far in this blog I have used `App1`.
