@@ -14,7 +14,7 @@ UserSecrets are stored in an unencrypted JSON file. Depending on platform they a
 ## Simple Variant
 
 The simplest variant is demonstrated by this PowerShell script.
-Please note, in a real-world scenario we would parameterize the script to allow entry of the secrets.
+Please note, in a real-world scenario you would parameterize the script to allow entry of the secrets.
 For simplicity we use random GUIDs here.
 
 ```powershell
