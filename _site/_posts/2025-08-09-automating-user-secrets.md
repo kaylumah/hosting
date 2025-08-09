@@ -3,7 +3,6 @@ title: Automating .NET User Secrets with PowerShell
 description:
 tags:
 ---
-
 For dotnet developers Microsoft created a dev-time convenience to handle secret values.
 No need for a shared infrastructure dependency, and no need for storing secrets in the repository.
 Add a helper script on top of it, and your dev shop will have a convenient way to get up and running.
