@@ -224,6 +224,10 @@ namespace Test.Unit.Architecture
         }
     }
 
+    public record ServiceDependencyView(string? ServiceType, string Lifetime, string Implementation)
+    {
+    }
+
     public abstract class DependencyValidationTests
     {
         [Fact]
@@ -246,14 +250,41 @@ namespace Test.Unit.Architecture
         [Fact]
         public virtual async Task VerifyDependencies()
         {
+            string Describe(ServiceDescriptor d)
+            {
+                if (d.ImplementationType is not null)
+                {
+                    return $"type:{d.ImplementationType.FullName}";
+                }
+
+                if (d.ImplementationInstance is not null)
+                {
+                    return $"instance:{d.ImplementationInstance.GetType().FullName}";
+                }
+
+                if (d.ImplementationFactory is not null)
+                {
+                    return $"factory:{d.ImplementationFactory.Method.DeclaringType?.FullName}";
+                }
+
+                return "unknown";
+            }
+
+            ServiceDependencyView Project(ServiceDescriptor serviceDescriptor)
+            {
+                string? serviceTypeName = serviceDescriptor.ServiceType?.FullName;
+                string lifetime = serviceDescriptor.Lifetime.ToString();
+                string implementation = Describe(serviceDescriptor);
+
+                ServiceDependencyView result = new(serviceTypeName, lifetime, implementation);
+                return result;
+            }
+
             IEnumerable<ServiceDescriptor> services = CreateDefaultServiceCollection();
+            IEnumerable<ServiceDependencyView> views = services.Select(Project);
+
             VerifySettings settings = new VerifySettings();
-            // Ignore Keyed fields on ServiceDescriptor as we don't use them.
-            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
-            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationInstance);
-            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationFactory);
-            // settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.IsKeyedService);
-            await Verifier.Verify(services, settings);
+            await Verifier.Verify(views, settings);
         }
 
         protected virtual IServiceCollection CreateDefaultServiceCollection()
