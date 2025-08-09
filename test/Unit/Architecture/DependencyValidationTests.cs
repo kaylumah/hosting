@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Utilities.Files;
@@ -284,6 +286,20 @@ namespace Test.Unit.Architecture
             IEnumerable<ServiceDependencyView> views = services.Select(Project);
 
             VerifySettings settings = new VerifySettings();
+            
+            static void ScrubAssemblyVersions(StringBuilder sb)
+            {
+                string input = sb.ToString();
+                string cleaned = Regex.Replace(
+                    input,
+                    @"Version=\d+\.\d+\.\d+\.\d+",
+                    "Version=*"
+                );
+                sb.Clear();
+                sb.Append(cleaned);
+            }
+            
+            settings.AddScrubber(ScrubAssemblyVersions);
             await Verifier.Verify(views, settings);
         }
 

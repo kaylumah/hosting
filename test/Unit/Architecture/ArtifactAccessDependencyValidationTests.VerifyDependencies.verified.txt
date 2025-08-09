@@ -32,7 +32,7 @@
   {
     ServiceType: Kaylumah.Ssg.Access.Artifact.Service.IStoreArtifactsStrategy,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Access.Artifact.Service.IStoreArtifactsStrategy, Kaylumah.Ssg.Access.Artifact.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Access.Artifact.Service.IStoreArtifactsStrategy, Kaylumah.Ssg.Access.Artifact.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess,
@@ -42,6 +42,6 @@
   {
     ServiceType: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess, Kaylumah.Ssg.Access.Artifact.Interface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess, Kaylumah.Ssg.Access.Artifact.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess, Kaylumah.Ssg.Access.Artifact.Interface, Version=*, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess, Kaylumah.Ssg.Access.Artifact.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   }
 ]

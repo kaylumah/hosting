@@ -50,34 +50,34 @@
     Implementation: type:Microsoft.Extensions.Options.OptionsCache`1
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
     Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
     Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.SiteInfo,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.SiteInfo, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    ServiceType: Microsoft.Extensions.Options.IConfigureOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
     Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: instance:Microsoft.Extensions.Options.ConfigureNamedOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
-    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]],
+    ServiceType: Microsoft.Extensions.Options.IValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]],
     Lifetime: Singleton,
-    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: instance:Microsoft.Extensions.Options.DataAnnotationValidateOptions`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__5`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Processor.IFileProcessor,
@@ -127,7 +127,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.IContentPreprocessorStrategy,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.IContentPreprocessorStrategy, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.Files.Preprocessor.IContentPreprocessorStrategy, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.HtmlSeoRenderPlugin,
@@ -137,7 +137,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IRenderPlugin,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IRenderPlugin, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IRenderPlugin, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.TagFileProcessor,
@@ -147,7 +147,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.OrganizationFileProcessor,
@@ -157,7 +157,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.AuthorFileProcessor,
@@ -167,7 +167,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownFileProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.CsvFileProcessor,
@@ -177,7 +177,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.JsonFileProcessor,
@@ -187,7 +187,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.YamlFileProcessor,
@@ -197,7 +197,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IKnownExtensionProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.HtmlPostProcessor,
@@ -207,7 +207,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.JsonPostProcessor,
@@ -217,7 +217,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.XmlPostProcessor,
@@ -227,7 +227,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.IPostProcessor,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__DisplayClass1_0`1[[Kaylumah.Ssg.Manager.Site.Service.IPostProcessor, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Service.SiteManager,
@@ -237,7 +237,7 @@
   {
     ServiceType: Kaylumah.Ssg.Manager.Site.Interface.ISiteManager,
     Lifetime: Singleton,
-    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Manager.Site.Interface.ISiteManager, Kaylumah.Ssg.Manager.Site.Interface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Manager.Site.Service.SiteManager, Kaylumah.Ssg.Manager.Site.Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+    Implementation: factory:Microsoft.Extensions.DependencyInjection.ServiceCollectionExtensions+<>c__2`2[[Kaylumah.Ssg.Manager.Site.Interface.ISiteManager, Kaylumah.Ssg.Manager.Site.Interface, Version=*, Culture=neutral, PublicKeyToken=null],[Kaylumah.Ssg.Manager.Site.Service.SiteManager, Kaylumah.Ssg.Manager.Site.Service, Version=*, Culture=neutral, PublicKeyToken=null]]
   },
   {
     ServiceType: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess,
