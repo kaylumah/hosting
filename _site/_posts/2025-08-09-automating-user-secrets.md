@@ -65,8 +65,9 @@ We can then ensure each project either has an explicit or implicit secret id.
 
 ## Multiple secrets at once
 
-Instead of doing secret by secret, project by project, we can also store secrets in bulk.
-By constructing an object and converting it to JSON we simplify the steps a lot.
+The first version of the script works, but calling a command line for a ton of secrets feels ineffective.
+Luckily, we can also bulk import by using a JSON file.
+The trick here is, create the object in PowerShell, convert it to JSON and run the `dotnet user-secrets ` command.
 
 ```
 #Requires -Version 7.4
