@@ -17,7 +17,7 @@ The simplest variant is demonstrated by this PowerShell script.
 Please note, in real-world scenario we would parameterize the script to allow entry of the secrets.
 For simplicity we use random GUIDs here.
 
-```ps
+```powershell
 #Requires -Version 7.4
 
 $ErrorActionPreference = "Stop"
@@ -101,7 +101,7 @@ But, for me it does not quite match the real-world. For instance, in Azure, I wo
 
 If we now set the MSBuild property `<UserSecretsId>Project-5ea2d981-14f7-4487-93c0-d4b7e3dbebf1</UserSecretsId>`, we can apply it to all projects at once.
 
-```ps
+```powershell
 #Requires -Version 7.4
 
 $ErrorActionPreference = "Stop"
