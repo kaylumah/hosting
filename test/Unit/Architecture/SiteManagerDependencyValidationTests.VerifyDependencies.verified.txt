@@ -1,0 +1,429 @@
+﻿[
+  {
+    ServiceType: IConfiguration,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigurationRoot,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigurationManager,
+    ImplementationInstance: {
+      Sources: [
+        {},
+        {
+          InitialData: {
+            Metadata:Defaults:Title: Title,
+            Site:Lang: en
+          }
+        }
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IFileSystem,
+    ImplementationType: FileSystem,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: ILogger<TCategoryName>,
+    ImplementationType: NullLogger<T>,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IOptions<TOptions>,
+    ImplementationType: UnnamedOptionsManager<TOptions>,
+    IsKeyedService: false
+  },
+  {
+    Lifetime: Scoped,
+    ServiceType: IOptionsSnapshot<TOptions>,
+    ImplementationType: OptionsManager<TOptions>,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IOptionsMonitor<TOptions>,
+    ImplementationType: OptionsMonitor<TOptions>,
+    IsKeyedService: false
+  },
+  {
+    Lifetime: Transient,
+    ServiceType: IOptionsFactory<TOptions>,
+    ImplementationType: OptionsFactory<TOptions>,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IOptionsMonitorCache<TOptions>,
+    ImplementationType: OptionsCache<TOptions>,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigureOptions<SiteInfo>,
+    ImplementationInstance: {
+      Name: ,
+      Action: {
+        Type: Action<SiteInfo>,
+        Target: ConfigurationBinder,
+        Method: Void Bind(Microsoft.Extensions.Configuration.IConfiguration, System.Object)
+      }
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IValidateOptions<SiteInfo>,
+    ImplementationInstance: {
+      Name: 
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: SiteInfo,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, SiteInfo>,
+      Target: ServiceCollectionExtensions.<>c__5<SiteInfo>,
+      Method: Kaylumah.Ssg.Manager.Site.Service.SiteInfo SetupOptions(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigureOptions<MetadataParserOptions>,
+    ImplementationInstance: {
+      Name: ,
+      Action: {
+        Type: Action<MetadataParserOptions>,
+        Target: ConfigurationBinder,
+        Method: Void Bind(Microsoft.Extensions.Configuration.IConfiguration, System.Object)
+      }
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IValidateOptions<MetadataParserOptions>,
+    ImplementationInstance: {
+      Name: 
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: MetadataParserOptions,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, MetadataParserOptions>,
+      Target: ServiceCollectionExtensions.<>c__5<MetadataParserOptions>,
+      Method: Kaylumah.Ssg.Manager.Site.Service.Files.Metadata.MetadataParserOptions SetupOptions(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IFileProcessor,
+    ImplementationType: FileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IFrontMatterMetadataProvider,
+    ImplementationType: YamlFrontMatterMetadataProvider,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IYamlParser,
+    ImplementationType: YamlParser,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IJsonParser,
+    ImplementationType: JsonParser,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: ICsvParser,
+    ImplementationType: CsvParser,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: StructureDataGenerator,
+    ImplementationType: StructureDataGenerator,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: MetaTagGenerator,
+    ImplementationType: MetaTagGenerator,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: TimeProvider,
+    ImplementationInstance: {
+      LocalTimeZone: MET,
+      TimestampFrequency: 1000000000
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: MarkdownContentPreprocessorStrategy,
+    ImplementationType: MarkdownContentPreprocessorStrategy,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IContentPreprocessorStrategy,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IContentPreprocessorStrategy>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: HtmlSeoRenderPlugin,
+    ImplementationType: HtmlSeoRenderPlugin,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IRenderPlugin,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IRenderPlugin>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: TagFileProcessor,
+    ImplementationType: TagFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: OrganizationFileProcessor,
+    ImplementationType: OrganizationFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: AuthorFileProcessor,
+    ImplementationType: AuthorFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownFileProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownFileProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: CsvFileProcessor,
+    ImplementationType: CsvFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: JsonFileProcessor,
+    ImplementationType: JsonFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: YamlFileProcessor,
+    ImplementationType: YamlFileProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IKnownExtensionProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IKnownExtensionProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: HtmlPostProcessor,
+    ImplementationType: HtmlPostProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: JsonPostProcessor,
+    ImplementationType: JsonPostProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: XmlPostProcessor,
+    ImplementationType: XmlPostProcessor,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IPostProcessor,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IPostProcessor>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: SiteManager,
+    ImplementationType: SiteManager,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: ISiteManager,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, ISiteManager>,
+      Target: ServiceCollectionExtensions.<>c__2<ISiteManager, SiteManager>,
+      Method: Kaylumah.Ssg.Manager.Site.Interface.ISiteManager AddProxiedService(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IArtifactAccess,
+    ImplementationInstance: {
+      Mock: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      },
+      Moq.IMocked`1[IArtifactAccess].Mock: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      },
+      Interceptor: {
+        CallBase: false,
+        DefaultValueProvider: {},
+        Name: Mock<IArtifactAccess:1>,
+        Setups: [
+          {
+            InnerMocks: [],
+            Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+            Expectation: {
+              Method: IArtifactAccess.Store(StoreArtifactsRequest request),
+              Arguments: [
+                IsAny()
+              ],
+              Expression: artifactAccess => artifactAccess.Store(IsAny())
+            },
+            Expression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsConditional: false,
+            IsOverridden: false,
+            IsVerifiable: false,
+            OriginalExpression: artifactAccess => artifactAccess.Store(IsAny()),
+            IsMatched: false
+          }
+        ]
+      }
+    },
+    IsKeyedService: false
+  }
+]

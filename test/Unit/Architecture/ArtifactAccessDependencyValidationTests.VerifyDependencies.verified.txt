@@ -1,0 +1,67 @@
+﻿[
+  {
+    ServiceType: IConfiguration,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigurationRoot,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IConfigurationManager,
+    ImplementationInstance: {
+      Sources: [
+        {}
+      ]
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IFileSystem,
+    ImplementationType: FileSystem,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: ILogger<TCategoryName>,
+    ImplementationType: NullLogger<T>,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: FileSystemStoreArtifactsStrategy,
+    ImplementationType: FileSystemStoreArtifactsStrategy,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IStoreArtifactsStrategy,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, object>,
+      Target: ServiceCollectionExtensions.<>c__DisplayClass1_0<IStoreArtifactsStrategy>,
+      Method: System.Object RegisterImplementationsAsSingleton(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  },
+  {
+    ServiceType: ArtifactAccess,
+    ImplementationType: ArtifactAccess,
+    IsKeyedService: false
+  },
+  {
+    ServiceType: IArtifactAccess,
+    ImplementationFactory: {
+      Type: Func<IServiceProvider, IArtifactAccess>,
+      Target: ServiceCollectionExtensions.<>c__2<IArtifactAccess, ArtifactAccess>,
+      Method: Kaylumah.Ssg.Access.Artifact.Interface.IArtifactAccess AddProxiedService(System.IServiceProvider)
+    },
+    IsKeyedService: false
+  }
+]
