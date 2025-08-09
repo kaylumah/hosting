@@ -3,6 +3,7 @@ title: Automating .NET User Secrets with PowerShell
 description: Manage secret configuration for dotnet projects using PowerShell
 tags:
   - powershell
+publishedtime: '12:30'
 commentid: '1304' 
 ---
 For dotnet developers Microsoft created a dev-time convenience to handle secret values.
