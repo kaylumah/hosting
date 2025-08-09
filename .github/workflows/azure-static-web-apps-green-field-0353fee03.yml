@@ -154,27 +154,27 @@ jobs:
           retention-days: 1
 
       #  Enable the following to do something with snapshot result(s)
-      - name: Check Verify Results
-        if: always()
-        run: |
-          $Output = & ./tools/Check-Snapshots.ps1
-          #  -TargetFolder Test/Unit
-          $Output = $Output | % { "." +$_ }
-          if ($Output.count -gt 0) {
-            New-Item -ItemType Directory "snapshots"
-            foreach ($File in $Output) {
-              Copy-Item $File -Destination snapshots
-            }
-          }
-        shell: pwsh
+      # - name: Check Verify Results
+      #   if: always()
+      #   run: |
+      #     $Output = & ./tools/Check-Snapshots.ps1
+      #     #  -TargetFolder Test/Unit
+      #     $Output = $Output | % { "." +$_ }
+      #     if ($Output.count -gt 0) {
+      #       New-Item -ItemType Directory "snapshots"
+      #       foreach ($File in $Output) {
+      #         Copy-Item $File -Destination snapshots
+      #       }
+      #     }
+      #   shell: pwsh
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: "snapshots-${{matrix.os}}"
-          path: snapshots
-          if-no-files-found: ignore
-          retention-days: 1
+      # - uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: "snapshots-${{matrix.os}}"
+      #     path: snapshots
+      #     if-no-files-found: ignore
+      #     retention-days: 1
 
   deploy:
     name: Deploy (for ubuntu-latest)
