@@ -1,7 +1,8 @@
 ---
 title: Automating .NET User Secrets with PowerShell
-description:
+description: manage secret configuration for dotnet projects using PowerShell
 tags:
+  - powershell
 ---
 For dotnet developers Microsoft created a dev-time convenience to handle secret values.
 No need for a shared infrastructure dependency, and no need for storing secrets in the repository.
