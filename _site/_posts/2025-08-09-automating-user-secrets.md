@@ -128,7 +128,7 @@ $Config | ConvertTo-Json -Depth 10 | dotnet user-secrets set --id $SecretId
 
 ## Closing thoughts
 
-User Secrets is a nice addition to the tool belt. Remembering the correct format of clearing/updating secrets, is not something you should burden your team with. Wrapping it inside a script for convenience is my recommended approach.
+User Secrets are a nice addition to the tool belt. Remembering the correct format of clearing/updating secrets, is not something you should burden your team with. Wrapping it inside a script for convenience is my recommended approach.
 Depending on your deployment model I would go with either option 2 or option 3, keeping it as close to production as possible.
 
 ## References
