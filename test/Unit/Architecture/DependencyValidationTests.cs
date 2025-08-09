@@ -5,12 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Test.Unit.Utilities;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 #nullable enable
@@ -238,6 +243,53 @@ namespace Test.Unit.Architecture
             ILogger<ServiceDependencyValidator> logger = loggerFactory.CreateLogger<ServiceDependencyValidator>();
             ServiceDependencyValidator serviceDependencyValidator = new ServiceDependencyValidator(options, logger);
             serviceDependencyValidator.Validate(services);
+        }
+
+        [Fact]
+        public virtual async Task VerifyDependencies()
+        {
+            IEnumerable<ServiceDescriptor> services = CreateDefaultServiceCollection();
+
+            VerifySettings settings = new VerifySettings();
+            
+            /*
+            static void ScrubAssemblyVersions(StringBuilder sb)
+            {
+                string input = sb.ToString();
+                string cleaned = Regex.Replace(
+                    input,
+                    @"Version=\d+\.\d+\.\d+\.\d+",
+                    "Version=*"
+                );
+                sb.Clear();
+                sb.Append(cleaned);
+            }
+            
+            settings.AddScrubber(ScrubAssemblyVersions);
+            */
+            
+            settings.AddScrubber(sb =>
+            {
+                string input = sb.ToString();
+                string cleaned = Regex.Replace(
+                    input,
+                    @"Mock<([^>:]+):\d+>",
+                    "Mock<$1:#>"
+                );
+                sb.Clear();
+                sb.Append(cleaned);
+            });
+            
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.LocalTimeZone);
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.TimestampFrequency);
+            
+            // Ignore Keyed fields on ServiceDescriptor as we don't use them.
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationInstance);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationFactory);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.IsKeyedService);
+            
+            await Verifier.Verify(services, settings);
         }
 
         protected virtual IServiceCollection CreateDefaultServiceCollection()
