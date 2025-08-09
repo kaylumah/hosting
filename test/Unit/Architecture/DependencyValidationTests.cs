@@ -251,7 +251,7 @@ namespace Test.Unit.Architecture
             IEnumerable<ServiceDescriptor> services = CreateDefaultServiceCollection();
 
             VerifySettings settings = new VerifySettings();
-            
+
             /*
             static void ScrubAssemblyVersions(StringBuilder sb)
             {
@@ -267,7 +267,7 @@ namespace Test.Unit.Architecture
             
             settings.AddScrubber(ScrubAssemblyVersions);
             */
-            
+
             settings.AddScrubber(sb =>
             {
                 string input = sb.ToString();
@@ -279,16 +279,16 @@ namespace Test.Unit.Architecture
                 sb.Clear();
                 sb.Append(cleaned);
             });
-            
+
             settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.LocalTimeZone);
             settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.TimestampFrequency);
-            
+
             // Ignore Keyed fields on ServiceDescriptor as we don't use them.
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationInstance);
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationFactory);
             settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.IsKeyedService);
-            
+
             await Verifier.Verify(services, settings);
         }
 
