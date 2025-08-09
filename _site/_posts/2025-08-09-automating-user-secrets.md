@@ -1,6 +1,6 @@
 ---
 title: Automating .NET User Secrets with PowerShell
-description: manage secret configuration for dotnet projects using PowerShell
+description: Manage secret configuration for dotnet projects using PowerShell
 tags:
   - powershell
 commentid: '1304' 
