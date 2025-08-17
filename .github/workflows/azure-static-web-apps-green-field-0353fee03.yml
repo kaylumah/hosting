@@ -45,7 +45,7 @@ jobs:
       deployUrl: ${{ steps.outputJobVariables.outputs.baseUrl }}
     steps:
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set TimeZone
         uses: hoang-rio/set-timezone@v1.4
@@ -181,7 +181,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_and_test      
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       
       - name: Use Node.js v20
         uses: actions/setup-node@v4
