@@ -67,7 +67,7 @@ jobs:
           "BaseUrl=$BaseUrl" >> $env:GITHUB_OUTPUT
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
@@ -189,7 +189,7 @@ jobs:
           node-version: 22
           
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
