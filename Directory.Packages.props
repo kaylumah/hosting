@@ -37,8 +37,8 @@
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.v3" Version="3.0.1" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />
-    <PackageVersion Include="Verify.Xunit" Version="30.10.0" />
-    <PackageVersion Include="Verify.XunitV3" Version="30.10.0" />
+    <PackageVersion Include="Verify.Xunit" Version="30.18.0" />
+    <PackageVersion Include="Verify.XunitV3" Version="30.18.0" />
     <PackageVersion Include="Verify.ImageHash" Version="2.1.2" />
     <PackageVersion Include="System.IO.Abstractions.TestingHelpers" Version="22.0.16" />
     <PackageVersion Include="Reqnroll.xUnit" Version="3.0.3" />
