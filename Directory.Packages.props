@@ -9,7 +9,7 @@
     <PackageVersion Include="Castle.Core" Version="5.2.1" />
     <PackageVersion Include="Castle.Core.AsyncInterceptor" Version="2.1.0" />
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
-    <PackageVersion Include="HtmlAgilityPack" Version="1.12.2" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.12.3" />
     <PackageVersion Include="Markdig" Version="0.41.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.8" />
