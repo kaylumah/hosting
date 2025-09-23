@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Bogus" Version="35.6.3" />
-    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.8.0" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.9.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="xunit" Version="2.9.3" />
@@ -45,7 +45,7 @@
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="FluentAssertions" Version="[7.2.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.55.0" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.8.0" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.9.0" />
   </ItemGroup>
   <ItemGroup Label="Analyzers">
     <!-- See also: -->
