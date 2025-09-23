@@ -8,7 +8,7 @@
         "dev": "TAILWIND_MODE=watch npm run build:tailwind -- --watch"
     },
     "devDependencies": {
-        "@azure/static-web-apps-cli": "2.0.6",
+        "@azure/static-web-apps-cli": "2.0.7",
         "@tailwindcss/cli": "4.1.13",
         "@tailwindcss/typography": "0.5.16",
         "csso-cli": "4.0.2",
