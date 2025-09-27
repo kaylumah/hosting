@@ -11,7 +11,7 @@ namespace Test.Unit
         [ModuleInitializer]
         public static void InitVerify()
         {
-            Console.WriteLine("[Verify] Module initializer started.");
+            // Console.WriteLine("[Verify] Module initializer started.");
 
             // Set shared / static settings for Verify in this file
         }
