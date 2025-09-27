@@ -1,9 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);xUnit1051</WarningsNotAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+    To enable the Microsoft Testing Platform 'dotnet test' experience, add property:
+      <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+
+    To enable the Microsoft Testing Platform native command line experience, add property:
+      <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+
+    For more information on Microsoft Testing Platform support in xUnit.net, please visit:
+      https://xunit.net/docs/getting-started/v3/microsoft-testing-platform
+    -->
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Bogus" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.v3" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -12,9 +29,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Reqnroll.xUnit" />
+    <PackageReference Include="Reqnroll.xUnit.v3" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Verify.Xunit" />
+    <PackageReference Include="Verify.XunitV3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +46,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
+  </ItemGroup>
+   <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
