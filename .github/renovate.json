@@ -1,0 +1,168 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [],
+    "assignees": [
+        "kaylumah"
+    ],
+    "prHourlyLimit": 0,
+    "prConcurrentLimit": 3,
+    "timezone": "Europe/Amsterdam",
+    "dependencyDashboard": true,
+    "labels": [
+        "dependencies"
+    ],
+    "gitAuthor": "Renovate Bot (Kaylumah) <renovate@kaylumah.nl>",
+    "packageRules": [
+        {
+            "matchManagers": [
+                "npm"
+            ],
+            "ignorePresets": [
+                "group:monorepos"
+            ],
+            "schedule": [
+                "after 06:00 on Friday"
+            ],
+            "labels": [
+                "npm"
+            ]
+        },
+        {
+            "matchManagers": [
+                "github-actions"
+            ],
+            "schedule": [
+                "after 06:00 on Friday"
+            ],
+            "labels": [
+                "github-actions"
+            ]
+        },
+        {
+            "description": "Add 'dotnet' label to all .NET packages",
+            "matchManagers": [
+                "nuget"
+            ],
+            "addLabels": [
+                "dotnet"
+            ]
+        },
+        {
+            "description": "Add 'dotnet' label to NuGet packages excluding SDK and tools",
+            "matchManagers": [
+                "nuget"
+            ],
+            "ignorePaths": [
+                ".config/dotnet-tools.json"
+            ],
+            "addLabels": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "!dotnet-sdk"
+            ]
+        },
+        {
+            "description": ".NET SDK",
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "dotnet-sdk"
+            ],
+            "prPriority": 10,
+            "addLabels": [
+                "sdk"
+            ]
+        },
+        {
+            "description": ".NET local tools from dotnet-tools.json",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchFileNames": [
+                ".config/dotnet-tools.json"
+            ],
+            "addLabels": [
+                "tools"
+            ]
+        },
+        {
+            "description": "Microsoft package(s) inside regular support https://dotnet.microsoft.com/en-us/platform/support/policy",
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
+            "matchManagers": [
+                "nuget"
+            ],
+            "groupName": ".NET Extensions",
+            "prPriority": 9,
+            "matchPackageNames": [
+                "/^Microsoft\\.Extensions\\./",
+                "/^System\\./"
+            ]
+        },
+        {
+            "description": "Microsoft package(s) outside of regular support https://dotnet.microsoft.com/en-us/platform/support/policy/extensions",
+            "schedule": [
+                "after 06:00 on Wednesday"
+            ],
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "Microsoft.Extensions.Diagnostics.Testing",
+                "Microsoft.Extensions.TimeProvider.Testing"
+            ],
+            "groupName": ".NET Platform Extensions",
+            "prPriority": 8
+        },
+        {
+            "description": "Package(s) for https://github.com/TestableIO/System.IO.Abstractions",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "System.IO.Abstractions",
+                "System.IO.Abstractions.TestingHelpers"
+            ],
+            "groupName": "System.IO Abstractions",
+            "prPriority": 0,
+            "schedule": []
+        },
+        {
+            "description": "Package(s) for Verify",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "Verify.Xunit",
+                "Verify.XunitV3"
+            ],
+            "groupName": "Verify",
+            "prPriority": 0,
+            "schedule": []
+        },
+        {
+            "description": "Disable NuGet updates for version ranges",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchCurrentValue": "/^[\\[(][^\\],]+,[^\\])]+[\\])]/",
+            "enabled": false
+        },
+        {
+            "description": "Package(s) from nuget-feed Local",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "IDesign.Analyzers"
+            ],
+            "enabled": false
+        }
+    ]
+}

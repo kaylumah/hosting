@@ -7,7 +7,9 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.iFX.Test;
 using Microsoft.Extensions.DependencyInjection;
+using Test.Unit.BDD;
 using Test.Utilities;
 
 namespace Test.Unit.Component.Access.Artifact
@@ -23,9 +25,11 @@ namespace Test.Unit.Component.Access.Artifact
         {
             _ValidationContext = validationContext;
             TestHarnessBuilder = TestHarnessBuilder.Create()
+                .SetupTimeProvider()
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Register((serviceCollection, configuration) =>
                 {
-                    serviceCollection.AddSingleton<IFileSystem>(mockFileSystem);
                     serviceCollection.AddArtifactAccess(configuration);
                 });
         }

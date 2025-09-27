@@ -2,7 +2,11 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using Kaylumah.Ssg.Utilities;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
@@ -35,7 +39,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             static Directories()
             {
-                string? value = Environment.GetEnvironmentVariable("TEST");
+                // string? value = Environment.GetEnvironmentVariable("TEST");
+                string? value = typeof(Directories)
+                    .Assembly
+                    .GetAttributes<AssemblyMetadataAttribute>()
+                    .SingleOrDefault(x => x.Key == "RootDirectory")
+                    ?.Value;
+
                 string source = "_site";
                 string output = "dist";
                 if (string.IsNullOrEmpty(value))

@@ -3,9 +3,9 @@
 
 using System;
 using System.Diagnostics;
-using Kaylumah.Ssg.Extensions.Data.Csv;
-using Kaylumah.Ssg.Extensions.Data.Json;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
+using Kaylumah.Ssg.iFX.Data.Csv;
+using Kaylumah.Ssg.iFX.Data.Json;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {

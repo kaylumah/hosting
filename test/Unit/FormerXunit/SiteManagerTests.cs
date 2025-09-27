@@ -7,7 +7,7 @@ using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -29,10 +29,10 @@ namespace Test.Unit.FormerXunit
             Mock<IArtifactAccess> artifactAccessMock = new Mock<IArtifactAccess>();
             MockFileSystem fileSystemMock = new MockFileSystem();
             fileSystemMock.Directory.CreateDirectory("_site");
-            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceLayoutsDirectory);
-            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourcePartialsDirectory);
-            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDataDirectory);
-            fileSystemMock.Directory.CreateDirectory(Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceAssetsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Constants.Directories.SourceLayoutsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Constants.Directories.SourcePartialsDirectory);
+            fileSystemMock.Directory.CreateDirectory(Constants.Directories.SourceDataDirectory);
+            fileSystemMock.Directory.CreateDirectory(Constants.Directories.SourceAssetsDirectory);
 
             Mock<IYamlParser> yamlParserMock = new Mock<IYamlParser>();
             ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();

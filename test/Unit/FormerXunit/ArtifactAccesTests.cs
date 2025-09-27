@@ -12,6 +12,7 @@ using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Access.Artifact.Service;
+using Kaylumah.Ssg.iFX.Test;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -31,8 +32,8 @@ namespace Test.Unit.FormerXunit
 
             IConfigurationRoot configuration = new ConfigurationBuilder().Build();
             await using ServiceProvider serviceProvider = new ServiceCollection()
-                .AddTestLogging()
                 .AddArtifactAccess(configuration)
+                .ReplaceLogger()
                 .AddSingleton<IFileSystem>(fileSystemMock)
                 .BuildServiceProvider();
 
@@ -77,7 +78,7 @@ namespace Test.Unit.FormerXunit
     
             IConfigurationRoot configuration = new ConfigurationBuilder().Build();
             ServiceProvider serviceProvider = new ServiceCollection()
-                .AddTestLogging()
+                .ReplaceLogger()
                 .AddArtifactAccess(configuration)
                 .AddSingleton<IFileSystem>(fileSystemMock)
                 .BuildServiceProvider();

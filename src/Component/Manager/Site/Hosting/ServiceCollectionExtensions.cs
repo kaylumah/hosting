@@ -2,11 +2,11 @@
 // See LICENSE file in the project root for full license information.
 
 using System;
-using Kaylumah.Ssg.Extensions.Data.Csv;
-using Kaylumah.Ssg.Extensions.Data.Json;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
 using Kaylumah.Ssg.Extensions.Metadata.YamlFrontMatter;
+using Kaylumah.Ssg.iFX.Data.Csv;
+using Kaylumah.Ssg.iFX.Data.Json;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
 using Kaylumah.Ssg.Manager.Site.Service.Files.Metadata;
@@ -38,8 +38,7 @@ namespace Kaylumah.Ssg.Manager.Site.Hosting
             services.AddSingleton<ICsvParser, CsvParser>();
             services.AddSingleton<StructureDataGenerator>();
             services.AddSingleton<MetaTagGenerator>();
-            services.AddSingleton<SeoGenerator>();
-            services.AddSingleton(TimeProvider.System);
+            services.TryAddSingleton(TimeProvider.System);
             services.RegisterImplementationsAsSingleton<IContentPreprocessorStrategy>();
             services.RegisterImplementationsAsSingleton<IRenderPlugin>();
             services.RegisterImplementationsAsSingleton<IKnownFileProcessor>();

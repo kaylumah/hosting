@@ -3,14 +3,14 @@
   "isRoot": true,
   "tools": {
     "dotnet-reportgenerator-globaltool": {
-      "version": "5.4.6",
+      "version": "5.4.14",
       "commands": [
         "reportgenerator"
       ],
       "rollForward": false
     },
     "powershell": {
-      "version": "7.5.1",
+      "version": "7.5.3",
       "commands": [
         "pwsh"
       ],

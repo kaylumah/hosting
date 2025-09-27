@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -30,19 +31,13 @@ namespace Test.Unit
         [Fact]
         public async Task Test_EmptySite_ResultsInDefaults()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
-            List<BasePage> items = new();
-            Dictionary<string, object> data = new();
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_OnlyTags()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
             TagMetaDataCollection tagMetaDataCollection = new();
             TagMetaData tagMetaData = new TagMetaData();
             tagMetaData.Id = "1";
@@ -50,36 +45,32 @@ namespace Test.Unit
             Dictionary<string, object> data = new() { { "tags", tagMetaDataCollection } };
 
             List<BasePage> items = new();
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_OnlyPages()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
-            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
             Dictionary<string, object> data = new();
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, items: items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_PagesWithCorrespondingTagData()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
             TagMetaDataCollection tagMetaDataCollection = new();
             TagMetaData tagMetaData = new TagMetaData();
             tagMetaData.Id = "1";
@@ -89,23 +80,21 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             PageMetaData pageMetaData = new PageMetaData(pageData);
-            pageMetaData.Id = DefaultPageId;
             items.Add(pageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_ArticlesWithCorrespondingTagData()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
             TagMetaDataCollection tagMetaDataCollection = new();
             TagMetaData tagMetaData = new TagMetaData();
             tagMetaData.Id = "1";
@@ -115,23 +104,21 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "baseuri", "http://127.0.0.1" },
                 { "uri", "example.html"},
                 { "tags", new List<object> { "1" } }
             };
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
-            pagePublicationPageMetaData.Id = DefaultPageId;
             items.Add(pagePublicationPageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_ArticlesWithCorrespondingTagData_AsPreview()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
-
             TagMetaDataCollection tagMetaDataCollection = new();
             TagMetaData tagMetaData = new TagMetaData();
             tagMetaData.Id = "1";
@@ -141,6 +128,7 @@ namespace Test.Unit
             List<BasePage> items = new();
             Dictionary<string, object?> pageData = new()
             {
+                { "id", DefaultPageId },
                 { "organization", "001" },
                 { "author", "N/A "},
                 { "baseuri", "http://127.0.0.1" },
@@ -148,10 +136,9 @@ namespace Test.Unit
                 { "tags", new List<object> { "1" } }
             };
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
-            pagePublicationPageMetaData.Id = DefaultPageId;
             items.Add(pagePublicationPageMetaData);
 
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
 
             string html = ObjectConversions.ToDiagnosticHtml(siteMetaData, "json");
             await Verifier.Verify(html, _VerifySettings);
@@ -160,7 +147,6 @@ namespace Test.Unit
         [Fact]
         public async Task Test_ArticlesWithCorrespondingYears()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             List<BasePage> items = new();
 
@@ -184,14 +170,13 @@ namespace Test.Unit
             items.Add(CreateArticle("1", new DateTimeOffset(2023, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 #pragma warning restore
 
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             await Verifier.Verify(siteMetaData, _VerifySettings);
         }
 
         [Fact]
         public async Task Test_Scriban_Handles_CrossSections()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
@@ -201,7 +186,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
 
             RenderData renderData = new RenderData(siteMetaData, null!);
             string content =
@@ -219,7 +204,6 @@ namespace Test.Unit
         [Fact]
         public async Task Test_Scriban_Handles_Diagnostic_Minimal()
         {
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             Dictionary<string, object?> pageData = new()
             {
@@ -233,8 +217,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
-
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -252,7 +235,6 @@ namespace Test.Unit
             authorMetaData.Id = new AuthorId("§");
             authorMetaDataCollection.Add(authorMetaData);
 
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             data["authors"] = authorMetaDataCollection;
             Dictionary<string, object?> pageData = new()
@@ -267,8 +249,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
-
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -301,8 +282,7 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
-
+            SiteMetaData siteMetaData = CreateSiteMetaData(DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -320,7 +300,6 @@ namespace Test.Unit
             tagMetaData.Id = new TagId("§");
             tagMetaDataCollection.Add(tagMetaData);
 
-            BuildData buildData = (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
             Dictionary<string, object> data = new();
             data["tags"] = tagMetaDataCollection;
             Dictionary<string, object?> pageData = new()
@@ -335,8 +314,8 @@ namespace Test.Unit
             ArticlePublicationPageMetaData pagePublicationPageMetaData = new ArticlePublicationPageMetaData(pageData);
             List<BasePage> items = new List<BasePage>();
             items.Add(pagePublicationPageMetaData);
-            SiteMetaData siteMetaData = new SiteMetaData(DefaultSiteId, "", "", "", "", "", data, buildData, items);
-
+            SiteMetaData siteMetaData =
+                CreateSiteMetaData(siteId: DefaultSiteId, data: data, items: items);
             RenderData renderData = new RenderData(siteMetaData, pagePublicationPageMetaData);
             string content =
                 """
@@ -364,6 +343,40 @@ namespace Test.Unit
 
             string renderedContent = await liquidTemplate.RenderAsync(context);
             return renderedContent;
+        }
+
+        static SiteMetaData CreateSiteMetaData(
+            SiteId? siteId,
+            string? title = null,
+            string? description = null,
+            string? language = null,
+            string? author = null,
+            string? url = null,
+            Dictionary<string, object>? data = null,
+            BuildData? buildData = null,
+            List<BasePage>? items = null)
+        {
+            siteId ??= new SiteId("<UNK>");
+            title ??= string.Empty;
+            description ??= string.Empty;
+            language ??= string.Empty;
+            author ??= string.Empty;
+            url ??= string.Empty;
+            buildData ??= (BuildData)RuntimeHelpers.GetUninitializedObject(typeof(BuildData));
+            data ??= new();
+            items ??= new();
+
+            SiteMetaData siteMetaData = new SiteMetaData(
+                siteId.Value,
+                title: title,
+                description: description,
+                language: language,
+                author: author,
+                url: url,
+                data: data,
+                buildData: buildData,
+                items: items);
+            return siteMetaData;
         }
     }
 }

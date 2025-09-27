@@ -72,9 +72,7 @@
       "WebImage": null,
       "Name": null,
       "Collection": null,
-      "Tags": [
-        "1"
-      ],
+      "Keywords": [],
       "Published": "0001-01-01T00:00:00+00:00",
       "Modified": "0001-01-01T00:00:00+00:00",
       "Uri": "example.html",
@@ -93,6 +91,9 @@
       "Series": null,
       "NumberOfWords": 0,
       "Duration": "00:00:00",
+      "Tags": [
+        "1"
+      ],
       "Id": "my-page",
       "Title": null,
       "Description": null,
@@ -108,9 +109,7 @@
       "WebImage": null,
       "Name": null,
       "Collection": null,
-      "Tags": [
-        "1"
-      ],
+      "Keywords": [],
       "Published": "0001-01-01T00:00:00+00:00",
       "Modified": "0001-01-01T00:00:00+00:00",
       "Uri": "example.html",

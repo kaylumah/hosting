@@ -5,12 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Kaylumah.Ssg.Access.Artifact.Interface;
 using Kaylumah.Ssg.Utilities.Files;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Test.Unit.Utilities;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 #nullable enable
@@ -224,9 +229,9 @@ namespace Test.Unit.Architecture
     public abstract class DependencyValidationTests
     {
         [Fact]
-        public void ValidateServices()
+        public virtual void ValidateServices()
         {
-            IServiceCollection services = CreateDefaultServices();
+            IServiceCollection services = CreateDefaultServiceCollection();
 
             string[] namespaceTargets = Array.Empty<string>();
             ServiceDependencyValidatorOptions options = new ServiceDependencyValidatorOptions(namespaceTargets);
@@ -240,41 +245,118 @@ namespace Test.Unit.Architecture
             serviceDependencyValidator.Validate(services);
         }
 
-        protected virtual IServiceCollection CreateDefaultServices()
+        [Fact]
+        public virtual async Task VerifyDependencies()
+        {
+            IEnumerable<ServiceDescriptor> services = CreateDefaultServiceCollection();
+
+            VerifySettings settings = new VerifySettings();
+
+            /*
+            static void ScrubAssemblyVersions(StringBuilder sb)
+            {
+                string input = sb.ToString();
+                string cleaned = Regex.Replace(
+                    input,
+                    @"Version=\d+\.\d+\.\d+\.\d+",
+                    "Version=*"
+                );
+                sb.Clear();
+                sb.Append(cleaned);
+            }
+            
+            settings.AddScrubber(ScrubAssemblyVersions);
+            */
+
+            settings.AddScrubber(sb =>
+            {
+                string input = sb.ToString();
+                string cleaned = Regex.Replace(
+                    input,
+                    @"Mock<([^>:]+):\d+>",
+                    "Mock<$1:#>"
+                );
+                sb.Clear();
+                sb.Append(cleaned);
+            });
+
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.LocalTimeZone);
+            settings.ScrubMember<TimeProvider>(timeProvider => timeProvider.TimestampFrequency);
+
+            // Ignore Keyed fields on ServiceDescriptor as we don't use them.
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationType);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationInstance);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.KeyedImplementationFactory);
+            settings.IgnoreMember<ServiceDescriptor>(serviceDescriptor => serviceDescriptor.IsKeyedService);
+
+            await Verifier.Verify(services, settings);
+        }
+
+        protected virtual IServiceCollection CreateDefaultServiceCollection()
         {
             IServiceCollection services = new ServiceCollection();
 
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            ApplyConfiguration(configurationBuilder);
-            IConfiguration configuration = configurationBuilder.Build();
+            ConfigurationManager configurationManager = CreateDefaultConfigurationManager();
+            // This part is used for every test to register their own configuration
+            ConfigureComponent(configurationManager);
+
+            services.AddSingleton<IConfiguration>(configurationManager);
+            services.AddSingleton<IConfigurationRoot>(configurationManager);
+            services.AddSingleton<IConfigurationManager>(configurationManager);
 
             // TODO: this does not belong here
             services.AddFileSystem();
 
-            RegisterServiceDependencies(services, configuration);
+            // This part is used for every test to register their own dependencies
+            ConfigureServices(services, configurationManager);
 
             return services;
         }
 
-        protected virtual void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
+        protected virtual ConfigurationManager CreateDefaultConfigurationManager()
         {
-            // Empty on purpose
+            ConfigurationManager configurationManager = new ConfigurationManager();
+            return configurationManager;
         }
 
-        protected abstract void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration);
+        protected abstract void ConfigureComponent(IConfigurationManager configuration);
+
+        protected abstract void ConfigureServices(IServiceCollection services, IConfigurationManager configuration);
     }
 
     public class ArtifactAccessDependencyValidationTests : DependencyValidationTests
     {
-        protected override void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureComponent(IConfigurationManager configuration)
+        {
+            // Empty on purpose
+        }
+
+        protected override void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             Kaylumah.Ssg.Access.Artifact.Hosting.ServiceCollectionExtensions.AddArtifactAccess(services, configuration);
+        }
+
+        [Fact]
+        public override void ValidateServices()
+        {
+            base.ValidateServices();
         }
     }
 
     public class SiteManagerDependencyValidationTests : DependencyValidationTests
     {
-        protected override void RegisterServiceDependencies(IServiceCollection services, IConfiguration configuration)
+        protected override void ConfigureComponent(IConfigurationManager configuration)
+        {
+            Dictionary<string, string?> data = new()
+            {
+                // TODO: can we do better than this for config?
+                { "Site:Lang", "en" },
+                { "Metadata:Defaults:Title", "Title" }
+            };
+            configuration.AddInMemoryCollection(data);
+        }
+
+        protected override void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             Kaylumah.Ssg.Manager.Site.Hosting.ServiceCollectionExtensions.AddSiteManager(services, configuration);
             // TODO better solution for this?
@@ -285,13 +367,10 @@ namespace Test.Unit.Architecture
             services.AddSingleton(artifactAccess);
         }
 
-        protected override void ApplyConfiguration(IConfigurationBuilder configurationBuilder)
+        [Fact]
+        public override void ValidateServices()
         {
-            Dictionary<string, string?> data = new Dictionary<string, string?>();
-            // TODO: can we do better than this for config?
-            data.Add("Site:Lang", "en");
-            data.Add("Metadata:Defaults:Title", "Title");
-            configurationBuilder.AddInMemoryCollection(data);
+            base.ValidateServices();
         }
     }
 }

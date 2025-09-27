@@ -7,6 +7,7 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Kaylumah.Ssg.iFX.Test;
 using Kaylumah.Ssg.Manager.Site.Hosting;
 using Kaylumah.Ssg.Manager.Site.Interface;
 using Kaylumah.Ssg.Manager.Site.Service;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Time.Testing;
 using Reqnroll;
+using Test.Unit.BDD;
 using Test.Unit.Utilities;
 using Test.Utilities;
 
@@ -29,7 +31,6 @@ namespace Test.Unit.Component.Manager.Site
         readonly ValidationContext _ValidationContext;
 
         public SiteManagerTestHarness(
-            IReqnrollOutputHelper reqnrollOutputHelper,
             ArtifactAccessMock artifactAccessMock,
             MockFileSystem mockFileSystem,
             FakeTimeProvider fakeTimeProvider,
@@ -42,23 +43,18 @@ namespace Test.Unit.Component.Manager.Site
                 { "Site", string.Empty },
                 { "Metadata", string.Empty }
             };
-            MyInterceptor interceptor = new MyInterceptor(reqnrollOutputHelper);
             TestHarnessBuilder = TestHarnessBuilder.Create()
                 .Configure(configurationBuilder =>
                 {
                     configurationBuilder.AddInMemoryCollection(config);
                 })
-                .Register(services =>
-                {
-                    services.AddSingleton<IAsyncInterceptor>(interceptor);
-                })
+                .SetupTimeProvider(fakeTimeProvider)
+                .SetupLogger()
+                .SetupFileSystem(mockFileSystem)
                 .Register((services, configuration) =>
                 {
                     services.AddSiteManager(configuration);
-                    services.RemoveAll<TimeProvider>();
-                    services.AddSingleton<TimeProvider>(fakeTimeProvider);
                     services.AddSingleton(artifactAccessMock.Object);
-                    services.AddSingleton<IFileSystem>(mockFileSystem);
                     services.AddSingleton(metadataParserOptions);
                     services.AddSingleton(siteInfo);
                 });
