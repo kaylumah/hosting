@@ -28,7 +28,7 @@ namespace Test.Unit.FormerXunit
 
             VerifySettings settings = new VerifySettings();
             settings.UseDirectory("snapshots");
-            
+
             await Verifier.Verify(html, "html", settings);
         }
 
