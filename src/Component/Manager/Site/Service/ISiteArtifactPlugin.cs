@@ -165,14 +165,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
         List<SyndicationItem> GetPosts(SiteMetaData siteMetaData)
         {
-            List<PageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)
+            List<ArticlePublicationPageMetaData> posts = RetrievePostPageMetaDatas(siteMetaData)
                 .ToList();
             List<SyndicationItem> result = new List<SyndicationItem>();
             if (0 < posts.Count)
             {
                 Dictionary<AuthorId, SyndicationPerson> persons = siteMetaData.ToPersons();
                 Dictionary<TagId, SyndicationCategory> tags = siteMetaData.ToCategories();
-                foreach (PageMetaData pageMetaData in posts)
+                foreach (ArticlePublicationPageMetaData pageMetaData in posts)
                 {
                     Uri pageUri = pageMetaData.CanonicalUri;
                     string pageUrl = pageUri.ToString();
@@ -206,7 +206,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             return result;
         }
 
-        static IEnumerable<PageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
+        static IEnumerable<ArticlePublicationPageMetaData> RetrievePostPageMetaDatas(SiteMetaData siteMetaData)
         {
             IEnumerable<ArticlePublicationPageMetaData> articles = siteMetaData.RecentArticles;
             IEnumerable<ArticlePublicationPageMetaData> feed = articles.Where(x => x.Feed);

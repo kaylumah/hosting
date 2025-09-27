@@ -1,12 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);xUnit1051</WarningsNotAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!--
+    To enable the Microsoft Testing Platform 'dotnet test' experience, add property:
+      <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+
+    To enable the Microsoft Testing Platform native command line experience, add property:
+      <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+
+    For more information on Microsoft Testing Platform support in xUnit.net, please visit:
+      https://xunit.net/docs/getting-started/v3/microsoft-testing-platform
+    -->
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Bogus" />
-    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" />
-    <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.v3" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -15,21 +29,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Reqnroll.xUnit" />
-    <!-- <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" /> -->
-    <PackageReference Include="System.IO.Abstractions.TestingHelpers" />
+    <PackageReference Include="Reqnroll.xUnit.v3" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Moq" />
-    <PackageReference Include="Verify.Xunit" />
-    <PackageReference Include="Castle.Core" />
-    <PackageReference Include="Castle.Core.AsyncInterceptor" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Verify.XunitV3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\iFX\Test\Kaylumah.Ssg.iFX.Test.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +46,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
+  </ItemGroup>
+   <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

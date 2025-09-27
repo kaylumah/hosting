@@ -74,6 +74,7 @@ namespace Test.Unit.BDD
         static FileFilterCriteria ToFileFilterCriteria(Table table)
         {
             FileFilterCriteria criteria = table.CreateInstance<FileFilterCriteria>();
+            criteria.RootDirectory = Kaylumah.Ssg.Manager.Site.Service.Constants.Directories.SourceDirectory;
             return criteria;
         }
 #pragma warning restore IDE0051

@@ -123,7 +123,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                 SiteMetaData siteMetaData = renderData.Site;
                 Uri feedUri = siteMetaData.AbsoluteUri("feed.xml");
                 Uri sitemapUri = siteMetaData.AbsoluteUri("sitemap.xml");
-                string formattedTags = string.Join(", ", pageMetaData.Tags);
+                List<string> keywords = new List<string>(pageMetaData.Keywords);
+                if (pageMetaData is PublicationPageMetaData publicationPageMetaData)
+                {
+                    keywords.AddRange(publicationPageMetaData.Tags);
+                }
+
+                string formattedKeywords = string.Join(", ", keywords);
                 List<string> result = new List<string>()
                 {
                     titleElement.OuterXml,
@@ -135,9 +141,9 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     CreateMetaTag("copyright", renderData.Site.Build.Copyright)
                 };
 
-                if (string.IsNullOrEmpty(formattedTags) == false)
+                if (string.IsNullOrEmpty(formattedKeywords) == false)
                 {
-                    string tag = CreateMetaTag("keywords", formattedTags);
+                    string tag = CreateMetaTag("keywords", formattedKeywords);
                     result.Add(tag);
                 }
 
@@ -263,7 +269,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     result.Add(imageTag);
                 }
 
-                if (pageMetaData is ArticlePublicationPageMetaData)
+                if (pageMetaData is ArticlePublicationPageMetaData articlePublicationPageMeta)
                 {
                     if (!string.IsNullOrEmpty(pageMetaData.Author) && renderData.Site.AuthorMetaData.Contains(pageMetaData.Author))
                     {
@@ -278,7 +284,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Seo
                     string modifiedTag = CreateOpenGraphMetaTag("article:modified_time", formattedModifiedTime);
                     result.Add(publishedTag);
                     result.Add(modifiedTag);
-                    foreach (string tag in pageMetaData.Tags)
+                    foreach (string tag in articlePublicationPageMeta.Tags)
                     {
                         string htmlTag = CreateOpenGraphMetaTag("article:tag", tag);
                         result.Add(htmlTag);

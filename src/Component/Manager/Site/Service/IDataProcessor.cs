@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using Kaylumah.Ssg.Extensions.Data.Csv;
-using Kaylumah.Ssg.Extensions.Data.Json;
-using Kaylumah.Ssg.Extensions.Data.Yaml;
 using Kaylumah.Ssg.Extensions.Metadata.Abstractions;
+using Kaylumah.Ssg.iFX.Data.Csv;
+using Kaylumah.Ssg.iFX.Data.Json;
+using Kaylumah.Ssg.iFX.Data.Yaml;
 
 namespace Kaylumah.Ssg.Manager.Site.Service
 {
