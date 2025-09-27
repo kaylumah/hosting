@@ -81,7 +81,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             List<BinaryFile> pageList = processed.ToList();
 
             List<TextFile> textFiles = pageList.OfType<TextFile>().ToList();
-            List<BasePage> pages = ToPageMetadata(textFiles, siteGuid, _SiteInfo.Url);
+            List<BasePage> pages = BasePageConverter.ToPageMetadata(textFiles, siteGuid, _SiteInfo.Url);
             BuildData buildData = EnrichSiteWithAssemblyData();
 
             string siteId = siteGuid.ToString();
@@ -131,17 +131,12 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             string dataDirectory = Constants.Directories.SourceDataDirectory;
             string[] extensions = _SiteInfo.SupportedDataFileExtensions.ToArray();
             List<IFileSystemInfo> dataFiles = _FileSystem.GetFiles(dataDirectory)
-                .Where(file => !file.IsDirectory())
-                .Where(file =>
-                {
-                    string extension = Path.GetExtension(file.Name);
-                    bool result = extensions.Contains(extension);
-                    return result;
-                })
+                .Where(NotADirectory)
+                .Where(IsSupportedExtension)
                 .ToList();
 
             List<string> knownFileNames = _KnownFileProcessors.Select(x => x.KnownFileName).ToList();
-            List<IFileSystemInfo> knownFiles = dataFiles.Where(file => knownFileNames.Contains(file.Name)).ToList();
+            List<IFileSystemInfo> knownFiles = dataFiles.Where(IsKnownFile).ToList();
             dataFiles = dataFiles.Except(knownFiles).ToList();
 
             foreach (IFileSystemInfo fileSystemInfo in knownFiles)
@@ -157,6 +152,25 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             }
 
             return result;
+
+            bool NotADirectory(IFileSystemInfo file)
+            {
+                bool filterResult = file.IsDirectory() == false;
+                return filterResult;
+            }
+
+            bool IsSupportedExtension(IFileSystemInfo file)
+            {
+                string extension = Path.GetExtension(file.Name);
+                bool filterResult = extensions.Contains(extension);
+                return filterResult;
+            }
+
+            bool IsKnownFile(IFileSystemInfo file)
+            {
+                bool filterResult = knownFileNames.Contains(file.Name);
+                return filterResult;
+            }
         }
 
         async Task<Artifact[]> GetRenderedArtifacts(SiteMetaData siteMetadata)
@@ -295,74 +309,6 @@ namespace Kaylumah.Ssg.Manager.Site.Service
 
             MetadataRenderResult[] results = renderedResults.ToArray();
             return results;
-        }
-
-        List<BasePage> ToPageMetadata(IEnumerable<TextFile> files, Guid siteGuid, string baseUrl)
-        {
-            const string fallback = "Unknown";
-            const string collectionType = "Collection";
-
-            foreach (TextFile textFile in files)
-            {
-                textFile.MetaData.SetValue(nameof(PageMetaData.BaseUri), baseUrl);
-            }
-
-            IEnumerable<IGrouping<string, TextFile>> filesGroupedByType = files.GroupBy(file =>
-            {
-                string? type = file.MetaData.GetValue<string?>("type");
-                return type ?? fallback;
-            });
-
-            Dictionary<string, List<TextFile>> data = filesGroupedByType
-                .ToDictionary(group => group.Key, group => group.ToList());
-
-            List<BasePage> result = new List<BasePage>();
-
-            Dictionary<string, Func<TextFile, BasePage>> pageParsers = new Dictionary<string, Func<TextFile, BasePage>>(StringComparer.OrdinalIgnoreCase);
-            pageParsers["Static"] = textFile => textFile.ToStatic();
-            pageParsers["Page"] = textFile => textFile.ToPage(siteGuid);
-            pageParsers["Announcement"] = textFile => textFile.ToPage(siteGuid);
-            pageParsers["Article"] = textFile => textFile.ToArticle(siteGuid);
-            pageParsers["Talk"] = textFile => textFile.ToTalk(siteGuid);
-            pageParsers["Snippet"] = textFile => textFile.ToSnippet(siteGuid);
-
-            HashSet<string> knownTypes = pageParsers.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            HashSet<string> seenTypes = data.Keys.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            seenTypes.Remove(collectionType);
-            seenTypes.Remove(fallback);
-            List<string> unknownTypes = seenTypes.Except(knownTypes).ToList();
-
-            if (0 < unknownTypes.Count)
-            {
-                throw new InvalidOperationException($"Unmapped metadata types found: {string.Join(", ", unknownTypes)}");
-            }
-
-            foreach ((string type, Func<TextFile, BasePage> parser) in pageParsers)
-            {
-                if (data.TryGetValue(type, out List<TextFile>? filesForType))
-                {
-                    foreach (TextFile file in filesForType)
-                    {
-                        BasePage page = parser(file);
-                        result.Add(page);
-                    }
-                }
-            }
-
-            if (data.TryGetValue(collectionType, out List<TextFile>? collections))
-            {
-                IEnumerable<PublicationPageMetaData> publicationMetaDataItems = result.OfType<PublicationPageMetaData>();
-                List<PublicationPageMetaData> publicationMetaDatas = publicationMetaDataItems.ToList();
-                foreach (TextFile file in collections)
-                {
-                    PageMetaData pageMetaData = file.ToPage(siteGuid);
-
-                    CollectionPageMetaData collectionPageMetaData = new CollectionPageMetaData(pageMetaData, publicationMetaDatas);
-                    result.Add(collectionPageMetaData);
-                }
-            }
-
-            return result;
         }
 
         BuildData EnrichSiteWithAssemblyData()
