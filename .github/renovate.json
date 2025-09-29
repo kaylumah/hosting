@@ -155,7 +155,7 @@
                 "xunit.v3",
                 "xunit.runner.visualstudio"
             ],
-            "groupName": "Verify",
+            "groupName": "xunit",
             "prPriority": 0,
             "schedule": []
         },
