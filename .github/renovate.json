@@ -147,6 +147,19 @@
             "schedule": []
         },
         {
+            "description": "Package(s) for xunit",
+            "matchManagers": [
+                "nuget"
+            ],
+            "matchPackageNames": [
+                "xunit.v3",
+                "xunit.runner.visualstudio"
+            ],
+            "groupName": "Verify",
+            "prPriority": 0,
+            "schedule": []
+        },
+        {
             "description": "Disable NuGet updates for version ranges",
             "matchManagers": [
                 "nuget"
