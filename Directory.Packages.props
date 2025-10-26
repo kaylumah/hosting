@@ -30,7 +30,7 @@
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
   <ItemGroup Label="Test">
-    <PackageVersion Include="Bogus" Version="35.6.4" />
+    <PackageVersion Include="Bogus" Version="35.6.5" />
     <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.9.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
