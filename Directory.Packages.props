@@ -24,7 +24,7 @@
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.9" />
     <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.9" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
-    <PackageVersion Include="Scriban" Version="6.4.0" />
+    <PackageVersion Include="Scriban" Version="6.5.0" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.16" />
     <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.9" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
