@@ -22,7 +22,7 @@ permissions:
 
 env:
   BuildConfiguration: Release
-  TargetFramework: net9.0
+  TargetFramework: net10.0
 
 jobs:
 

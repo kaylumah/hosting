@@ -11,27 +11,27 @@
     <PackageVersion Include="CsvHelper" Version="33.1.0" />
     <PackageVersion Include="HtmlAgilityPack" Version="1.12.4" />
     <PackageVersion Include="Markdig" Version="0.43.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="9.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.0" />
     <PackageVersion Include="Schema.NET" Version="13.0.0" />
     <PackageVersion Include="Scriban" Version="6.5.0" />
     <PackageVersion Include="System.IO.Abstractions" Version="22.0.16" />
-    <PackageVersion Include="System.ServiceModel.Syndication" Version="9.0.10" />
+    <PackageVersion Include="System.ServiceModel.Syndication" Version="10.0.0" />
     <PackageVersion Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
   <ItemGroup Label="Test">
     <PackageVersion Include="Bogus" Version="35.6.5" />
-    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.9.0" />
+    <PackageVersion Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="xunit.v3" Version="3.2.0" />
@@ -43,7 +43,7 @@
     <PackageVersion Include="Moq" Version="4.20.72" />
     <PackageVersion Include="FluentAssertions" Version="[7.2.0, 8.0.0)" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.55.0" />
-    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="9.9.0" />
+    <PackageVersion Include="Microsoft.Extensions.Diagnostics.Testing" Version="10.0.0" />
   </ItemGroup>
   <ItemGroup Label="Analyzers">
     <!-- See also: -->
@@ -62,6 +62,6 @@
   </ItemGroup>
   <ItemGroup Label="Transitive Overrides">
      <!-- Schema.NET 13.0.0 references System.Text.Json 7.0.0 https://github.com/advisories/GHSA-hh2w-p6rv-4g7w -->
-     <PackageVersion Include="System.Text.Json" Version="9.0.10" />
+     <PackageVersion Include="System.Text.Json" Version="10.0.0" />
   </ItemGroup>
 </Project>
