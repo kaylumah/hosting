@@ -186,7 +186,7 @@ jobs:
       - name: Use Node.js v20
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v5
