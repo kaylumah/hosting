@@ -145,7 +145,7 @@ jobs:
           dotnet src/Component/Client/SiteGenerator/bin/$BuildConfiguration/$TargetFramework/Kaylumah.Ssg.Client.SiteGenerator.dll Site:Url=$BaseUrl
 
       - name: Upload generated website
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: matrix.os == 'ubuntu-latest'
         with:
           name: ${{ format('site-{0}', matrix.os) }}
