@@ -60,9 +60,11 @@ namespace Kaylumah.Ssg.Manager.Site.Service
             {
 #pragma warning disable CA1848
 #pragma warning disable CA2254
+#pragma warning disable CA1873
                 _Logger.LogInformation($"The file '{artifact.Path}' has a change");
 #pragma warning restore CA1848
 #pragma warning restore CA2254
+#pragma warning restore CA1873
                 byte[] bytes = System.Text.Encoding.UTF8.GetBytes(formattedContent);
                 artifact.Contents = bytes;
             }

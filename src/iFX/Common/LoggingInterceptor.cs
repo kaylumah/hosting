@@ -8,7 +8,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Kaylumah.Ssg.Utilities.Common
 {
-#pragma warning disable CA1848, CA2254
+#pragma warning disable CA1848, CA2254, CA1873
+
     public class LoggingInterceptor : IAsyncInterceptor
     {
         readonly ILogger<LoggingInterceptor> _Logger;
@@ -36,7 +37,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation("Method {MethodName} executed in {ElapsedMilliseconds} ms.", invocation.Method.Name, stopwatch.ElapsedMilliseconds);
             }
         }
 
@@ -58,7 +59,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation("Method {MethodName} executed in {ElapsedMilliseconds} ms.", invocation.Method.Name, stopwatch.ElapsedMilliseconds);
             }
         }
 
@@ -72,7 +73,7 @@ namespace Kaylumah.Ssg.Utilities.Common
             finally
             {
                 stopwatch.Stop();
-                _Logger.LogInformation($"Method {invocation.Method.Name} executed in {stopwatch.ElapsedMilliseconds} ms.");
+                _Logger.LogInformation("Method {MethodName} executed in {ElapsedMilliseconds} ms.", invocation.Method.Name, stopwatch.ElapsedMilliseconds);
             }
         }
     }
