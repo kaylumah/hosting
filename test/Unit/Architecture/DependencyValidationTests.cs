@@ -18,7 +18,7 @@ using VerifyTests;
 using VerifyXunit;
 using Xunit;
 
-#nullable enable
+#pragma warning disable CA1873
 
 namespace Test.Unit.Architecture
 {
