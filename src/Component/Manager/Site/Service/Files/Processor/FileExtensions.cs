@@ -9,7 +9,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
 {
     public static class FileExtensions
     {
-        internal static Dictionary<string, object?> ToDictionary(this TextFile file)
+        static Dictionary<string, object?> ToDictionary(this TextFile file)
         {
             Dictionary<string, object?> result = new Dictionary<string, object?>(file.MetaData);
             // result.SetValue(nameof(file.LastModified), file.LastModified);
@@ -17,14 +17,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             result.SetValue(nameof(file.Name), file.Name);
             return result;
         }
-
-        internal static StaticContent ToStatic(this TextFile file)
-        {
-            Dictionary<string, object?> data = file.ToDictionary();
-            StaticContent result = new StaticContent(data);
-            return result;
-        }
-
+        
         static void SetPageId(this TextFile file, Guid siteGuid)
         {
             Guid pageGuid = file.CreatePageId(siteGuid);
@@ -37,6 +30,13 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             return pageGuid;
         }
 
+        public static StaticContent ToStatic(this TextFile file)
+        {
+            Dictionary<string, object?> data = file.ToDictionary();
+            StaticContent result = new StaticContent(data);
+            return result;
+        }
+        
         public static PageMetaData ToPage(this TextFile file, Guid siteGuid)
         {
             file.SetPageId(siteGuid);
@@ -62,6 +62,14 @@ namespace Kaylumah.Ssg.Manager.Site.Service.Files.Processor
             file.SetPageId(siteGuid);
             Dictionary<string, object?> data = file.ToDictionary();
             TalkPublicationPageMetaData result = new TalkPublicationPageMetaData(data);
+            return result;
+        }
+
+        public static SnippetThoughtPageMetaData ToSnippet(this TextFile file, Guid siteGuid)
+        {
+            file.SetPageId(siteGuid);
+            Dictionary<string, object?> data = file.ToDictionary();
+            SnippetThoughtPageMetaData result = new SnippetThoughtPageMetaData(data);
             return result;
         }
     }
