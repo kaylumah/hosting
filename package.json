@@ -9,7 +9,7 @@
     },
     "devDependencies": {
         "@azure/static-web-apps-cli": "2.0.8",
-        "@tailwindcss/cli": "4.1.18",
+        "@tailwindcss/cli": "4.2.1",
         "@tailwindcss/typography": "0.5.19",
         "csso-cli": "4.0.2",
         "html-minifier-terser": "7.2.0",
