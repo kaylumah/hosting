@@ -44,8 +44,4 @@
       <Visible>false</Visible>
     </Content>
   </ItemGroup>
-   <ItemGroup>
-    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-
 </Project>

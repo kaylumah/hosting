@@ -2,6 +2,22 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and Exists('$(RootDirectory)testconfig.json')">
+    <Content Include="$(RootDirectory)testconfig.json">
+      <TargetPath>$(AssemblyName).testconfig.json</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' == 'true' and Exists('$(RootDirectory)xunit.runner.json')">
+    <Content Include="$(RootDirectory)xunit.runner.json">
+      <TargetPath>xunit.runner.json</TargetPath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>false</Visible>
+    </Content>
+  </ItemGroup>
+
   <!-- <Target Name="GenerateHtmlCoverageReport" Condition="'$(IsTestProject)' == 'true'" AfterTargets="VSTest">
            <PropertyGroup>
             <PowerShellCommand>dotnet pwsh</PowerShellCommand>

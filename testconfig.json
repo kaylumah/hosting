@@ -1,0 +1,9 @@
+{
+  "codeCoverage": {
+    "Configuration": {
+      "Format": "cobertura",
+      "CoverageFileName": "coverage.cobertura.xml",
+      "IncludeTestAssembly": "false"
+    }
+  }
+}

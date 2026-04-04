@@ -44,8 +44,8 @@ if ($LASTEXITCODE -ne 0)
 }
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-[string] $CoverageOutput = Join-Path $RepoRoot "test/Unit/TestResults/coverage.cobertura.xml"
-dotnet test --no-restore --no-build --configuration $BuildConfiguration --project ./test/Unit/Test.Unit.csproj -- --coverage --coverage-output-format cobertura --coverage-output $CoverageOutput
+[string] $ResultsDirectory = Join-Path $RepoRoot "test/Unit/TestResults"
+dotnet test --no-restore --no-build --configuration $BuildConfiguration --project ./test/Unit/Test.Unit.csproj --results-directory $ResultsDirectory -- --coverage
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Test Failure"
