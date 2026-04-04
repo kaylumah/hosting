@@ -39,7 +39,7 @@ jobs:
       #     # $GitStatus
 
       - if: ${{ fromJSON(steps.git_diff.outputs.AssetsChanged) }}
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: assets
           recreate: true
