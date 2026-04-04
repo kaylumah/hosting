@@ -15,12 +15,11 @@ My favorite editor for writing Markdown is VSCode. While this separation is usef
 To illustrate this point, let’s look at an example. A typical directory structure looks like this:
 
 ```sh
-# generated with the command tree -L 2
-.
+# generated with the command tree -L 2.
 ├── _posts
-│   └── hello-world.md
+│   └── hello-world.md
 ├── assets
-│   └── logo.svg
+│   └── logo.svg
 └── index.html
 ```
 
