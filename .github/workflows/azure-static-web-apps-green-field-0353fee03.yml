@@ -93,7 +93,7 @@ jobs:
         shell: pwsh
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
-          dotnet test --no-restore --no-build --configuration $BuildConfiguration test/Unit/Test.Unit.csproj
+          dotnet test --no-restore --no-build --configuration $BuildConfiguration --project test/Unit/Test.Unit.csproj
 
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
