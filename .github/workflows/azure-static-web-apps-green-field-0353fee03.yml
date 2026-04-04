@@ -110,7 +110,7 @@ jobs:
           thresholds: '60 80'
     
       - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: github.event_name == 'pull_request' && matrix.os == 'ubuntu-latest'
         with:
           # recreate: true
@@ -225,7 +225,7 @@ jobs:
           skip_api_build: false
 
       - name: Post or Update Deployment URL in PR
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         if: github.event_name == 'pull_request'
         with:
           header: release
