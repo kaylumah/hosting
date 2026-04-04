@@ -1,12 +1,11 @@
 ﻿Many static website generators support writing blogs in Markdown. Jekyll and several other generators organize content, such as blog posts, and assets, like images and CSS files, into separate directories.
 My favorite editor for writing Markdown is VSCode. While this separation is useful for organization, it can be somewhat cumbersome when editing and previewing Markdown.
 To illustrate this point, let’s look at an example. A typical directory structure looks like this:
-# generated with the command tree -L 2
-.
+# generated with the command tree -L 2.
 ├── _posts
-│   └── hello-world.md
+│   └── hello-world.md
 ├── assets
-│   └── logo.svg
+│   └── logo.svg
 └── index.html
 Using the Markdown preview feature of VSCode that would look like this:
 <!-- code --profile "Blog" . -->
