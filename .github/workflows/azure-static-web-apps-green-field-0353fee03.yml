@@ -93,13 +93,14 @@ jobs:
         shell: pwsh
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
-          dotnet test --no-restore --no-build --configuration $BuildConfiguration --project test/Unit/Test.Unit.csproj
+          $CoverageOutput = Join-Path $PWD "test/Unit/TestResults/coverage.cobertura.xml"
+          dotnet test --no-restore --no-build --configuration $BuildConfiguration --project test/Unit/Test.Unit.csproj -- --coverage --coverage-output-format cobertura --coverage-output $CoverageOutput
 
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         if: matrix.os == 'ubuntu-latest'
         with:
-          filename: test/Unit/TestResults/**/coverage.cobertura.xml
+          filename: test/Unit/TestResults/coverage.cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown
