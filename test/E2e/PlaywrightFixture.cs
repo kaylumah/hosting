@@ -59,7 +59,8 @@ namespace Test.E2e
 
         public string GetBaseUrl()
         {
-            string result = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL") ?? "https://kaylumah.nl";
+            string? configuredValue = Environment.GetEnvironmentVariable("PLAYWRIGHT_TEST_BASE_URL");
+            string result = string.IsNullOrWhiteSpace(configuredValue) ? "https://kaylumah.nl" : configuredValue;
             return result;
         }
 
