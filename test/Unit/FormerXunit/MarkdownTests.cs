@@ -22,7 +22,7 @@ namespace Test.Unit.FormerXunit
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_HtmlContents(string path)
         {
-            string rawContents = await File.ReadAllTextAsync(path);
+            string rawContents = await File.ReadAllTextAsync(path, TestContext.Current.CancellationToken);
             string html = new MarkdownUtil("https://kaylumah.nl").ToHtml(rawContents);
             html = html.Replace("/Users/maxhamulyak/", "/ExamplePath/");
 
@@ -36,7 +36,7 @@ namespace Test.Unit.FormerXunit
         [MemberData(nameof(GetBlogPages))]
         public async Task Verify_MarkdownConversion_TxtContents(string path)
         {
-            string rawContents = await File.ReadAllTextAsync(path);
+            string rawContents = await File.ReadAllTextAsync(path, TestContext.Current.CancellationToken);
             string txt = new MarkdownUtil("https://kaylumah.nl").ToText(rawContents);
             txt = txt.Replace("/Users/maxhamulyak/", "/ExamplePath/");
 

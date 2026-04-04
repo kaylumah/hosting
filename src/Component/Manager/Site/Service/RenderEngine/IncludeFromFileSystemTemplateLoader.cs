@@ -41,7 +41,7 @@ namespace Kaylumah.Ssg.Manager.Site.Service.RenderEngine
             return result;
         }
 
-        public async ValueTask<string> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
+        public async ValueTask<string?> LoadAsync(TemplateContext context, SourceSpan callerSpan, string templatePath)
         {
             IFileInfo templateFileInfo = _FileSystem.GetFile(templatePath);
             using Stream templateReadStream = templateFileInfo.CreateReadStream();
