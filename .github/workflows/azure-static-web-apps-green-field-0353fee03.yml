@@ -93,13 +93,14 @@ jobs:
         shell: pwsh
         run: |
           $BuildConfiguration = "${{ env.BuildConfiguration }}"
-          dotnet test --no-restore --no-build --configuration $BuildConfiguration test/Unit/Test.Unit.csproj
+          $ResultsDirectory = Join-Path $PWD "test/Unit/TestResults"
+          dotnet test --no-restore --no-build --configuration $BuildConfiguration --project test/Unit/Test.Unit.csproj --results-directory $ResultsDirectory -- --coverage
 
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         if: matrix.os == 'ubuntu-latest'
         with:
-          filename: test/Unit/TestResults/**/coverage.cobertura.xml
+          filename: test/Unit/TestResults/coverage.cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown
@@ -245,7 +246,7 @@ jobs:
             $TargetFramework = "${{ env.TargetFramework }}"
             dotnet build test/E2e --configuration $BuildConfiguration
             & ./test/E2e/bin/$BuildConfiguration/$TargetFramework/playwright.ps1 install chromium --with-deps
-            dotnet test --no-build --configuration $BuildConfiguration test/E2e
+            dotnet test --no-build --configuration $BuildConfiguration --project test/E2e
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

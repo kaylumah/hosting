@@ -8,7 +8,7 @@ tags:
 commentid: '145'
 ---
 For .NET, the standard mechanism for sharing packages is NuGet. A `.nupkg` file is an archive that contains your compiled code (DLLs), other files related to your code, and a manifest containing metadata ([source](https://docs.microsoft.com/en-us/nuget/what-is-nuget)). This blog post will show you how data in this manifest can be controlled by using MSBuild.
-
+failur
 For simplification purposes, my sample project will consist of only a single class library project. I like you to keep in mind that this would scale to many projects as Microsoft did with the ["Microsoft.Extensions packages"](https://github.com/dotnet/runtime). The sky is the limit.
 
 ## Setup

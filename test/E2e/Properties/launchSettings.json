@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Test.E2e": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "PLAYWRIGHT_TEST_BASE_URL": "112313"
+      }
+    }
+  }
+}
