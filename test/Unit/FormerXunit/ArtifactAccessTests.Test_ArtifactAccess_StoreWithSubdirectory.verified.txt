@@ -1,0 +1,100 @@
+﻿{
+  FileSystem: {
+    Directories: [
+      /,
+      /dist,
+      /dist/assets,
+      /temp
+    ],
+    Files: [
+      /dist/assets/test.txt
+    ],
+    Contents: {
+      /dist/assets/test.txt: 
+    }
+  },
+  Logs: [
+    {
+      Level: Information,
+      State: [
+        {
+          {OriginalFormat}: Storing artifacts
+        }
+      ],
+      StructuredState: [
+        {
+          {OriginalFormat}: Storing artifacts
+        }
+      ],
+      Message: Storing artifacts,
+      Category: Kaylumah.Ssg.Access.Artifact.Service.ArtifactAccess,
+      LevelEnabled: true,
+      Timestamp: DateTimeOffset_1
+    },
+    {
+      State: [
+        {
+          DirectoryName: dist/assets
+        },
+        {
+          {OriginalFormat}: Creating directory `{DirectoryName}`
+        }
+      ],
+      StructuredState: [
+        {
+          DirectoryName: dist/assets
+        },
+        {
+          {OriginalFormat}: Creating directory `{DirectoryName}`
+        }
+      ],
+      Message: Creating directory `dist/assets`,
+      Category: Kaylumah.Ssg.Access.Artifact.Service.FileSystemStoreArtifactsStrategy,
+      LevelEnabled: true,
+      Timestamp: DateTimeOffset_2
+    },
+    {
+      Id: {
+        Id: 1,
+        Name: CreatingFile
+      },
+      State: [
+        {
+          FileName: dist/assets/test.txt
+        },
+        {
+          {OriginalFormat}: Creating file `{FileName}`
+        }
+      ],
+      StructuredState: [
+        {
+          FileName: dist/assets/test.txt
+        },
+        {
+          {OriginalFormat}: Creating file `{FileName}`
+        }
+      ],
+      Message: Creating file `dist/assets/test.txt`,
+      Category: Kaylumah.Ssg.Access.Artifact.Service.FileSystemStoreArtifactsStrategy,
+      LevelEnabled: true,
+      Timestamp: DateTimeOffset_3
+    },
+    {
+      Level: Information,
+      State: [
+        {
+          {OriginalFormat}: Method Store executed in X ms.
+        }
+      ],
+      StructuredState: [
+        {
+          {OriginalFormat}: Method Store executed in X ms.
+        }
+      ],
+      Message: Method Store executed in X ms.,
+      Category: Kaylumah.Ssg.Utilities.Common.LoggingInterceptor,
+      LevelEnabled: true,
+      Timestamp: DateTimeOffset_4
+    }
+  ]
+}
