@@ -6,13 +6,19 @@ using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kaylumah.Ssg.Access.Artifact.Hosting;
 using Kaylumah.Ssg.Access.Artifact.Interface;
+using Kaylumah.Ssg.Access.Artifact.Service;
 using Kaylumah.Ssg.iFX.Test;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging.Testing;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 namespace Test.Unit.FormerXunit
@@ -23,10 +29,9 @@ namespace Test.Unit.FormerXunit
         public async Task Test_ArtifactAccess_Store()
         {
             MockFileSystem fileSystemMock = new MockFileSystem();
-            int currentCount = fileSystemMock.AllDirectories.Count();
 
             IConfigurationRoot configuration = new ConfigurationBuilder().Build();
-            ServiceProvider serviceProvider = new ServiceCollection()
+            await using ServiceProvider serviceProvider = new ServiceCollection()
                 .AddArtifactAccess(configuration)
                 .ReplaceLogger()
                 .AddSingleton<IFileSystem>(fileSystemMock)
@@ -41,18 +46,39 @@ namespace Test.Unit.FormerXunit
             artifacts[0] = artifact;
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
             await sut.Store(storeArtifactsRequest);
-            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-            createdCount.Should().Be(1);
+            
+            var fileSystemSnapshot = new
+            {
+                Directories = fileSystemMock.AllDirectories.OrderBy(x => x).ToArray(),
+                Files = fileSystemMock.AllFiles.OrderBy(x => x).ToArray(),
+                Contents = fileSystemMock.AllFiles
+                    .ToDictionary(
+                        path => path,
+                        path => fileSystemMock.GetFile(path).TextContents)
+            };
+
+            FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
+            
+            var snapshot = new
+            {
+                FileSystem = fileSystemSnapshot,
+                Logs = collector.GetSnapshot()
+            };
+            
+            VerifySettings settings = new();
+            settings.ScrubLinesWithReplace(line =>
+                line.Contains("executed in") ? Regex.Replace(line, @"\d+ ms", "X ms") : line);
+            await Verifier.Verify(snapshot, settings);
         }
 
         [Fact]
         public async Task Test_ArtifactAccess_StoreWithSubdirectory()
         {
             MockFileSystem fileSystemMock = new MockFileSystem();
-            int currentCount = fileSystemMock.AllDirectories.Count();
-
+    
             IConfigurationRoot configuration = new ConfigurationBuilder().Build();
             ServiceProvider serviceProvider = new ServiceCollection()
+                .ReplaceLogger()
                 .AddArtifactAccess(configuration)
                 .AddSingleton<IFileSystem>(fileSystemMock)
                 .BuildServiceProvider();
@@ -67,8 +93,29 @@ namespace Test.Unit.FormerXunit
             artifacts[0] = artifact;
             StoreArtifactsRequest storeArtifactsRequest = new StoreArtifactsRequest(fileSystemOutputLocation, artifacts);
             await sut.Store(storeArtifactsRequest);
-            int createdCount = fileSystemMock.AllDirectories.Count() - currentCount;
-            createdCount.Should().Be(2);
+            
+            var fileSystemSnapshot = new
+            {
+                Directories = fileSystemMock.AllDirectories.OrderBy(x => x).ToArray(),
+                Files = fileSystemMock.AllFiles.OrderBy(x => x).ToArray(),
+                Contents = fileSystemMock.AllFiles
+                    .ToDictionary(
+                        path => path,
+                        path => fileSystemMock.GetFile(path).TextContents)
+            };
+            
+            FakeLogCollector collector = serviceProvider.GetRequiredService<FakeLogCollector>();
+            
+            var snapshot = new
+            {
+                FileSystem = fileSystemSnapshot,
+                Logs = collector.GetSnapshot()
+            };
+            
+            VerifySettings settings = new();
+            settings.ScrubLinesWithReplace(line =>
+                line.Contains("executed in") ? Regex.Replace(line, @"\d+ ms", "X ms") : line);
+            await Verifier.Verify(snapshot, settings);
         }
     }
 }
