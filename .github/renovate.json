@@ -134,7 +134,8 @@
             "schedule": []
         },
         {
-            "description": "Package(s) for Verify",
+            "description": "Keep Verify below v33 to avoid the Open Source Maintenance Fee change",
+            "allowedVersions": "<33.0.0",
             "matchManagers": [
                 "nuget"
             ],
