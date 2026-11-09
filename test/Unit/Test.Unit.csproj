@@ -5,30 +5,15 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <!--
-    To enable the Microsoft Testing Platform 'dotnet test' experience, add property:
-      <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
-
-    To enable the Microsoft Testing Platform native command line experience, add property:
-      <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
-
-    For more information on Microsoft Testing Platform support in xUnit.net, please visit:
-      https://xunit.net/docs/getting-started/v3/microsoft-testing-platform
-    -->
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bogus" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" />
     <PackageReference Include="xunit.v3" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Reqnroll.xUnit.v3" />
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Verify.XunitV3" />
@@ -37,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Component\Access\Artifact\Hosting\Kaylumah.Ssg.Access.Artifact.Hosting.csproj" />
     <ProjectReference Include="..\..\src\Component\Manager\Site\Hosting\Kaylumah.Ssg.Manager.Site.Hosting.csproj" />
-    <ProjectReference Include="..\..\src\iFX\Test\Kaylumah.Ssg.iFX.Test.csproj" />
   </ItemGroup>
 
   <ItemGroup>
