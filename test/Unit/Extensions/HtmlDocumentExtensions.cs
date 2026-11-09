@@ -24,9 +24,9 @@ namespace Test.Unit.Utilities
                 HtmlAttribute? keyAttribute = node.Attributes.SingleOrDefault(x => x.Name == "name")
                                    ?? node.Attributes.SingleOrDefault(x => x.Name == "property");
                 HtmlAttribute? valueAttribute = node.Attributes.SingleOrDefault(x => x.Name == "content");
-                if (keyAttribute != null && valueAttribute != null)
+                if (keyAttribute?.Value is string key && valueAttribute?.Value is string value)
                 {
-                    ValueTuple<string, string> result1 = new ValueTuple<string, string>(keyAttribute.Value, valueAttribute.Value);
+                    ValueTuple<string, string> result1 = new ValueTuple<string, string>(key, value);
                     result.Add(result1);
                 }
             }
