@@ -49,6 +49,8 @@ dotnet test --no-restore --no-build --configuration $BuildConfiguration `
     --coverage `
     --coverage-output-format cobertura `
     --coverage-output coverage.cobertura.xml `
+    --report-trx `
+    --report-trx-filename Test.Unit.trx `
     --results-directory "$PWD/test/Unit/TestResults"
 if ($LASTEXITCODE -ne 0)
 {
