@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
+using CsvHelper;
 using IParser = Kaylumah.Ssg.iFX.Data.Abstractions.IParser;
 using Kaylumah.Ssg.iFX.Data.Csv;
 using Kaylumah.Ssg.iFX.Data.Json;
@@ -14,9 +15,10 @@ using YamlDotNet.Core;
 
 namespace Test.Unit
 {
-    public class ParserTests
+    public partial class ParserTests
     {
-        internal sealed class TestDto
+        [CsvRecord]
+        internal sealed partial class TestDto
         {
             public string? Name
             { get; set; }
@@ -71,8 +73,8 @@ namespace Test.Unit
                            """;
             object[] result = _CsvParser.Parse<object>(input);
 
-            string typeName = result[0].GetType().Name;
-            Assert.Contains("FastDynamicObject", typeName); // Indirect check
+            object first = Assert.Single(result);
+            Assert.IsType<CsvDynamicRecord>(first);
 
             dynamic row = result[0];
             Assert.Equal("Max", row.Name);
@@ -91,6 +93,28 @@ namespace Test.Unit
             Assert.Single(result);
             Assert.Equal("Max", result[0]["Name"]);
             Assert.Equal("30", result[0]["Age"]);
+        }
+
+        [Fact]
+        public void Test_CsvParser_HandlesDictionaryRows()
+        {
+            string input = "Name;Age\n\"Max; Junior\";30\n;\nJane;25";
+            Dictionary<string, object>[] result = _CsvParser.Parse<Dictionary<string, object>>(input);
+
+            Assert.Equal(2, result.Length);
+            Assert.Equal("Max; Junior", result[0]["Name"]);
+            Assert.Equal("30", result[0]["Age"]);
+            Assert.Equal("Jane", result[1]["Name"]);
+            Assert.Equal("25", result[1]["Age"]);
+        }
+
+        [Fact]
+        public void Test_CsvParser_HandlesDictionaryHeaderOnly()
+        {
+            string input = "Name;Age";
+            Dictionary<string, object>[] result = _CsvParser.Parse<Dictionary<string, object>>(input);
+
+            Assert.Empty(result);
         }
 
         [Fact]

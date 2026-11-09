@@ -3,11 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text;
 using CsvHelper;
-using CsvHelper.Configuration;
 using Kaylumah.Ssg.iFX.Data.Abstractions;
 
 namespace Kaylumah.Ssg.iFX.Data.Csv
@@ -20,9 +16,15 @@ namespace Kaylumah.Ssg.iFX.Data.Csv
             Type type = typeof(T);
             bool isDictionary = typeof(Dictionary<string, object>) == type;
 
-            CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture);
-            config.Delimiter = ";";
-            config.HasHeaderRecord = true;
+#pragma warning disable IDESIGN103 // CsvReaderOptions properties are init-only.
+            CsvReaderOptions config = new CsvReaderOptions
+            {
+                Separator = ';',
+                HasHeader = true,
+                MalformedData = CsvMalformedDataHandling.Throw,
+                MissingField = CsvMissingFieldHandling.Throw
+            };
+#pragma warning restore IDESIGN103
 
             if (isDictionary)
             {
@@ -37,13 +39,10 @@ namespace Kaylumah.Ssg.iFX.Data.Csv
             }
         }
 
-        T[] ParseRecords<T>(string raw, CsvConfiguration config)
+        T[] ParseRecords<T>(string raw, CsvReaderOptions config)
         {
             List<T> records = new List<T>();
-            byte[] bytes = Encoding.UTF8.GetBytes(raw);
-            using MemoryStream stream = new MemoryStream(bytes);
-            using StreamReader reader = new StreamReader(stream);
-            using CsvReader csvReader = new CsvReader(reader, config);
+            using CsvReader csvReader = CsvReader.FromText(raw, config);
             IEnumerable<T> internalRecords = csvReader.GetRecords<T>();
             records.AddRange(internalRecords);
 
@@ -51,25 +50,20 @@ namespace Kaylumah.Ssg.iFX.Data.Csv
             return result;
         }
 
-        Dictionary<string, object?>[] ParseDictionary(string raw, CsvConfiguration config)
+        Dictionary<string, object?>[] ParseDictionary(string raw, CsvReaderOptions config)
         {
             List<Dictionary<string, object?>> records = new List<Dictionary<string, object?>>();
-            byte[] bytes = Encoding.UTF8.GetBytes(raw);
-            using MemoryStream stream = new MemoryStream(bytes);
-            using StreamReader reader = new StreamReader(stream);
-            using CsvReader csv = new CsvReader(reader, config);
-            csv.Read();
-            csv.ReadHeader();
+            using CsvReader csv = CsvReader.FromText(raw, config);
 
-            if (csv.HeaderRecord != null)
+            if (0 < csv.Headers.Count)
             {
                 while (csv.Read())
                 {
                     Dictionary<string, object?> record = new Dictionary<string, object?>();
                     bool isEmptyRecord = true;
-                    foreach (string header in csv.HeaderRecord)
+                    foreach (string header in csv.Headers)
                     {
-                        string? field = csv.GetField(header);
+                        string? field = csv.GetString(header);
                         if (!string.IsNullOrEmpty(field))
                         {
                             isEmptyRecord = false;
