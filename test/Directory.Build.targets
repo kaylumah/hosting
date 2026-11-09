@@ -2,6 +2,15 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <ProjectReference Include="$(RootDirectory)src/iFX/Test/Kaylumah.Ssg.iFX.Test.csproj" />
+    <AssemblyMetadata Include="RunSettingsFilePath" Value="$(RunSettingsFilePath)" />
+    <TestingPlatformBuilderHook Include="9b937ef7-5132-4b60-9c91-efc34f5d6b0b">
+      <DisplayName>Kaylumah runsettings support</DisplayName>
+      <TypeFullName>Kaylumah.Ssg.iFX.Test.RunSettingsExtension</TypeFullName>
+    </TestingPlatformBuilderHook>
+  </ItemGroup>
+
   <!-- <Target Name="GenerateHtmlCoverageReport" Condition="'$(IsTestProject)' == 'true'" AfterTargets="VSTest">
            <PropertyGroup>
             <PowerShellCommand>dotnet pwsh</PowerShellCommand>
