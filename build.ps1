@@ -44,7 +44,12 @@ if ($LASTEXITCODE -ne 0)
 }
 
 # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-dotnet test --no-restore --no-build --configuration $BuildConfiguration ./test/Unit/Test.Unit.csproj
+dotnet test --no-restore --no-build --configuration $BuildConfiguration `
+    --project test/Unit/Test.Unit.csproj `
+    --coverage `
+    --coverage-output-format cobertura `
+    --coverage-output coverage.cobertura.xml `
+    --results-directory "$PWD/test/Unit/TestResults"
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Test Failure"
