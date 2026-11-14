@@ -31,7 +31,7 @@ namespace Test.Unit.Utilities
                 {
                     List<BinaryFile> result = new List<BinaryFile>();
 
-                    if (_Articles.Any())
+                    if (_Articles.Count != 0)
                     {
                         result.AddRange(_Articles.ToPageMetaData().ToFile());
                     }
